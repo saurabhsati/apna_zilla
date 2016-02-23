@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Routing\UrlGenerator;
 use App\Http\Controllers\Controller;
+use Illuminate\Routing\UrlGenerator;
 use Sentinel;
 use Session;
 use Validator;
@@ -16,7 +17,8 @@ class AuthController extends Controller
 
  	public function __construct()
  	{
-
+ 		$this->profile_pic_base_path = base_path().'/public'.config('app.project.img_path.user_profile_pic');
+        $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');
  	}
 
 
@@ -167,16 +169,82 @@ class AuthController extends Controller
  	/* Edit Profile */
  	public function profile()
  	{
+
  		if ($user = Sentinel::getUser())
 		{
 			$arr_admin=$user->toArray();
 			return view('web_admin.login.admin_profile',compact('page_title','arr_admin'));
 		    // User is logged in and assigned to the `$user` variable.
+
+ 		$page_title ="Edit Profile";
+ 		if ($user = Sentinel::getUser())
+		{
+			$admin_arr=$user->toArray();
+			return view('web_admin.login.admin_profile',compact('page_title','admin_arr'));
+
 		}
  	}
- 	public function updateprofile()
+ 	public function updateprofile(Request $request)
  	{
+ 		$obj_admin = Sentinel::getUser();////Get Admin all information
+ 		 if($obj_admin)
+                {
+                       $admin_data   =   $obj_admin->toArray();
+                 }
+ 		$arr_rules 						= array();
+ 		$arr_rules['office_landline']		= 'required';
+ 		$arr_rules['street_address'] 	= 'required';
 
+ 		$validator = Validator::make($request->all(),$arr_rules);
+
+ 		if($validator->fails())
+ 		{
+ 			return redirect()->back()->withErrors($validator)->withInput();
+ 		}
+
+ 		 $profile_pic = $admin_data ['profile_pic']?$admin_data ['profile_pic']: "default.jpg";
+
+        if ($request->hasFile('profile_pic'))
+        {
+            $profile_pic_valiator = Validator::make(array('profile_pic'=>$request->file('profile_pic')),array(
+                                                'profile_pic' => 'mimes:jpg,jpeg,png'
+                                            ));
+
+            if ($request->file('profile_pic')->isValid() && $profile_pic_valiator->passes())
+            {
+
+                $cv_path = $request->file('profile_pic')->getClientOriginalName();
+                $image_extension = $request->file('profile_pic')->getClientOriginalExtension();
+                $image_name = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
+                $request->file('profile_pic')->move(
+                    $this->profile_pic_base_path, $image_name
+                );
+
+                $profile_pic = $image_name;
+            }
+            else
+            {
+                return redirect()->back();
+            }
+
+        }
+        $profile_pic 	=$profile_pic;
+ 		$office_landline 	  = $request->input('office_landline');
+ 		$street_address = $request->input('street_address');
+ 		$update_arr	=array();
+ 		$update_arr=array('profile_pic'=>$profile_pic,'office_landline'=>$office_landline,'street_address'=>$street_address);
+ 		$update_profile = Sentinel::update($obj_admin,$update_arr);
+ 			if($update_profile)
+ 			{
+ 				Session::flash('success','Profile Updated Successfully');
+
+ 			}
+ 			else
+ 			{
+ 				Session::flash('error','Error while updating profile');
+ 			}
+
+ 			return redirect()->back();
  	}
 
  	public function logout()
