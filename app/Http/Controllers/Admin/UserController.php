@@ -22,8 +22,6 @@ class UserController extends Controller
  	public function index()
  	{
  		$page_title = "Manage User";
-
-       
         $arr_user = array();
         $obj_user = Sentinel::getAllUsers();
       
