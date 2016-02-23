@@ -1,4 +1,4 @@
-    @extends('web_admin.template.admin')                
+    @extends('web_admin.template.admin')
 
 
     @section('main_content')
@@ -23,7 +23,7 @@
             <li>
                 <i class="fa fa-wrench"></i>
                 <a href="{{ url('/').'/web_admin/site_settings' }}">Site Setting</a>
-            </li>   
+            </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span>
@@ -60,7 +60,7 @@
                 </button>
                 {{ Session::get('success') }}
             </div>
-          @endif  
+          @endif
 
           @if(Session::has('error'))
             <div class="alert alert-danger alert-dismissible">
@@ -107,7 +107,7 @@
                     <span class='help-block'>{{ $errors->first('email') }}</span>
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="meta_keyword">Meta KeyWords<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
@@ -123,7 +123,13 @@
                     <span class='help-block'>{{ $errors->first('meta_desc') }}</span>
                 </div>
             </div>
-
+            <div class="form-group">
+                           <label class="col-sm-3 col-lg-2 control-label">Site Status</label>
+                           <div class="col-sm-6 col-lg-4 controls">
+                              <label class="radio"> <input type="radio" value="1" {{ $arr_site_setting['site_status']=='1' ? 'checked':'' }} name="site_status"> Online </label>
+                              <label class="radio"> <input type="radio" value="0" {{ $arr_site_setting['site_status']=='0' ? 'checked':'' }} name="site_status"> Offline </label>
+                           </div>
+                        </div>
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="facebook_url">Facebook url<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
@@ -148,7 +154,7 @@
                 </div>
             </div>
 
-            
+
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
                 <input type="submit"  class="btn btn-primary" value="Update">
@@ -167,4 +173,4 @@
 </div>
 <!-- END Main Content -->
 
-@stop                    
+@stop
