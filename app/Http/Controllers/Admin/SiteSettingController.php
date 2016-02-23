@@ -32,7 +32,7 @@ class SiteSettingController extends Controller
   		}
 
   		return view('web_admin.site_setting.index',compact('page_title','arr_site_setting'));
-  	}  
+  	}
 
   	public function update(Request $request, $enc_id)
   	{
@@ -62,11 +62,11 @@ class SiteSettingController extends Controller
   		$arr_data['meta_keyword'] 		 = $request->input('meta_keyword');
   		$arr_data['meta_desc'] 			 = $request->input('meta_desc');
   		$arr_data['site_email_address'] 		 = $request->input('email');
+      $arr_data['site_status']=$request->input('site_status');
   		$arr_data['fb_url'] 		 = $request->input('facebook_url');
   		$arr_data['twitter_url'] 		 = $request->input('twitter_url');
   		$arr_data['youtube_url'] 		 = $request->input('youtube_url');
-
-  		$site_setting_update = SiteSettingModel::where('site_settting_id',$id)->update($arr_data);
+      $site_setting_update = SiteSettingModel::where('site_settting_id',$id)->update($arr_data);
 
   		if($site_setting_update)
   		{
@@ -77,6 +77,6 @@ class SiteSettingController extends Controller
   			Session::flash('error','Error While Updating Website-Settings');
   		}
 
-  		return redirect('web_admin/site_settings');	
-  	}  
+  		return redirect('web_admin/site_settings');
+  	}
 }
