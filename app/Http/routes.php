@@ -32,6 +32,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 	Route::get('edit_profile','Admin\AuthController@profile');
 	Route::post('updateprofile','Admin\AuthController@updateprofile');
 
+
 	/* Users Module */
 	Route::group(['prefix'=>'users'], function ()
 	{

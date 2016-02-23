@@ -22,8 +22,9 @@ class UserController extends Controller
  	public function index()
  	{
  		$page_title = "Manage User";
+
         $arr_user = array();
-        $obj_user = Sentinel::getAllUsers();
+        $obj_user = Sentinel::createModel()->get();
       
         return view('web_admin.user.index',compact('page_title','obj_user'));
  	}	
@@ -144,6 +145,7 @@ class UserController extends Controller
             'd_o_b' => $d_o_b,
             'email' => $email,
             'password' => $password,
+            'marital_status' => $marital_status,
             'street_address' => $street_address,
             'city' =>$city,
             'area' => $area,
@@ -205,12 +207,22 @@ class UserController extends Controller
         $user_id = base64_decode($enc_id);
 
         $arr_rules = array();
+        $arr_rules['profile_pic'] = "required";
         $arr_rules['first_name'] = "required";
+        $arr_rules['middle_name'] = "required";
         $arr_rules['last_name'] = "required";
+        $arr_rules['gender'] = "required";
+        $arr_rules['d_o_b'] = "required";
+        $arr_rules['street_address'] = "required";
+        $arr_rules['city'] = "required";
+        $arr_rules['area'] = "required";
+        $arr_rules['occupation'] = "required";
+        $arr_rules['work_experience'] = "required";
         $arr_rules['email'] = "required|email";
         $arr_rules['password'] = "min:6";
-        $arr_rules['address'] = "required";
         $arr_rules['mobile_no'] = "required";
+        $arr_rules['home_landline'] = "required";
+        $arr_rules['office_landline'] = "required";
 
 
         $validator = Validator::make($request->all(),$arr_rules);
@@ -219,13 +231,21 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-
         $first_name       = $request->input('first_name');
+        $middle_name       = $request->input('middle_name');
         $last_name       = $request->input('last_name');
+        $gender       = $request->input('gender');
+        $d_o_b       = $request->input('d_o_b');
+        $street_address       = $request->input('street_address');
+        $city       = $request->input('city');
+        $area       = $request->input('area');
+        $occupation       = $request->input('occupation');
+        $work_experience       = $request->input('work_experience');
         $email      = $request->input('email');    
         $password   = $request->input('password',FALSE);
-        $address    = $request->input('address');
         $mobile_no     = $request->input('mobile_no');
+        $home_landline       = $request->input('home_landline');
+        $office_landline       = $request->input('office_landline');
 
         /* Duplication Check*/
 
@@ -264,11 +284,22 @@ class UserController extends Controller
         }
 
         $arr_data = [
+           
             'first_name' => $first_name,
+            'middle_name' => $middle_name,
             'last_name' => $last_name,
+            'gender' => $gender,
+            'd_o_b' => $d_o_b,
+            'street_address' => $street_address,
+            'city' => $city,
+            'area' => $area,
+            'occupation' => $occupation,
+            'work_experience' => $work_experience,
             'email' => $email,
-            'address' => $address,
+            'is_active' => '1',
             'mobile_no' => $mobile_no,
+            'home_landline' => $home_landline,
+            'office_landline' => $office_landline,
         ];
 
         if($password!=FALSE)
@@ -282,7 +313,6 @@ class UserController extends Controller
         }
         
         $user = Sentinel::findById($user_id);
-
 
         $status = Sentinel::update($user,$arr_data);
 

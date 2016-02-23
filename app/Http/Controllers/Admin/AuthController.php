@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Illuminate\Routing\UrlGenerator;
 use App\Http\Controllers\Controller;
 use Illuminate\Routing\UrlGenerator;
 use Sentinel;
@@ -168,6 +169,13 @@ class AuthController extends Controller
  	/* Edit Profile */
  	public function profile()
  	{
+
+ 		if ($user = Sentinel::getUser())
+		{
+			$arr_admin=$user->toArray();
+			return view('web_admin.login.admin_profile',compact('page_title','arr_admin'));
+		    // User is logged in and assigned to the `$user` variable.
+
  		$page_title ="Edit Profile";
  		if ($user = Sentinel::getUser())
 		{
