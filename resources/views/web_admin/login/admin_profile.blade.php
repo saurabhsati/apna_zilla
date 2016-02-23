@@ -1,9 +1,5 @@
     @extends('web_admin.template.admin')
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 6a4e005127bbd5dd2e9fd989c39b621c9ef19459
     @section('main_content')
     <!-- BEGIN Page Title -->
     <div class="page-title">
@@ -23,16 +19,7 @@
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span>
-<<<<<<< HEAD
-            <!-- <li>
-                <i class="fa fa-text-width"></i>
-                <a href="{{ url().'/web-admin/faq' }}">FAQ</a>
-            </li>
-            <span class="divider">
-                <i class="fa fa-angle-right"></i>
-            </span> -->
-=======
->>>>>>> 6a4e005127bbd5dd2e9fd989c39b621c9ef19459
+
             <li class="active">  {{ isset($page_title)?$page_title:"" }}</li>
         </ul>
     </div>
@@ -71,16 +58,11 @@
                   @endif
 
                     <form class="form-horizontal"
-<<<<<<< HEAD
-                        id="validation-form"
-                        method="POST"
-                        action="{{ url('/web-admin/update_profile')}}"
-=======
                         enctype="multipart/form-data"
                         id="validation-form"
                         method="POST"
                         action="{{ url('/web_admin/updateprofile')}}"
->>>>>>> 6a4e005127bbd5dd2e9fd989c39b621c9ef19459
+
                         >
                             {{ csrf_field() }}
                         <div class="form-group">
