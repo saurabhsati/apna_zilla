@@ -25,36 +25,36 @@
         <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
 
         <link rel="stylesheet" type="text/css" href="{{ url('/') }}/css/admin/select2.min.css" />
-       
+
        <!-- Auto load email address -->
         <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/chosen-bootstrap/chosen.min.css" />
 
         <!--basic scripts-->
 
-    
+
         <script>window.jQuery || document.write('<script src="{{ url('/') }}/assets/jquery/jquery-2.1.4.min.js"><\/script>')</script>
 
- 
+
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-        
- 
+
+
 
 
         <script src="{{ url('/') }}/js/admin/select2.min.js"></script>
 
         <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/jquery-tags-input/jquery.tagsinput.css" />
-    
+
         <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/bootstrap-duallistbox/duallistbox/bootstrap-duallistbox.css" />
         <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/dropzone/downloads/css/dropzone.css" />
         <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/bootstrap-colorpicker/css/colorpicker.css" />
-      
+
         <!-- Timepicker css -->
             <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/bootstrap-timepicker/compiled/timepicker.css" />
             <!-- <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/clockface/css/clockface.css" /> -->
         <!-- End -->
         <!-- Datepicker css -->
         <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/bootstrap-datepicker/css/datepicker.css" />
-        
+
     </head>
     <body>
 
@@ -328,7 +328,7 @@
                 <!-- BEGIN Button User -->
                 <li class="user-profile">
                     <a data-toggle="dropdown" href="#" class="user-menu dropdown-toggle">
-                        
+
                         <span class="hhh" id="user_info">
                             Admin
                         </span>
@@ -355,7 +355,12 @@
                                 Edit Profile
                             </a>
                         </li>-->
-
+                        <li>
+                            <a href="{{ url('/web_admin/edit_profile')}}">
+                                <i class="fa fa-cog"></i>
+                                Edit Profile
+                            </a>
+                        </li>
                         <li>
                             <a href="{{ url('/web_admin/change_password') }}">
                                 <i class="fa fa-cog"></i>
@@ -368,7 +373,7 @@
                                 <i class="fa fa-wrench"></i>
                                 Website Settings
                             </a>
-                        </li> 
+                        </li>
 
                         <li class="divider visible-xs"></li>
 
@@ -410,6 +415,6 @@
             <!-- END Navbar Buttons -->
         </div>
         <!-- END Navbar -->
-        
+
         <!-- BEGIN Container -->
         <div class="container" id="main-container">

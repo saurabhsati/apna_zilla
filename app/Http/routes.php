@@ -29,7 +29,8 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 	Route::get('logout','Admin\AuthController@logout');
 	Route::get('change_password','Admin\AuthController@change_password');
 	Route::post('update_password','Admin\AuthController@update_password');
-	Route::get('edit_profile','Admin\AuthController@update_password');
+	Route::get('edit_profile','Admin\AuthController@profile');
+	Route::post('updateprofile','Admin\AuthController@updateprofile');
 
 	/* Users Module */
 	Route::group(['prefix'=>'users'], function ()
