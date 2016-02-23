@@ -59,7 +59,7 @@
                    ">
             <a href="javascript:void(0)" class="dropdown-toggle">
                 <i class="fa fa-wrench"></i>
-                <span>Acocunts &amp; Setting</span>
+                <span>Accounts &amp; Setting</span>
                 <b class="arrow fa fa-angle-right"></b>
             </a>
             <ul class="submenu">
