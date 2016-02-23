@@ -1,0 +1,116 @@
+a,a:hover {text-decoration:none;}
+ul,ol {list-style:none;}
+.content {text-align:left; margin:25px 0;}
+.content-text {margin:0 0 15px;}
+.nav ul li {
+    margin: 0!important;
+    padding: 0;
+}
+.nav ul {
+    margin: 0!important;
+    padding: 0;
+}
+ol, ul{margin: 0!important;}
+/*------------------------------------*\
+    Flaunt JS Navigation
+\*------------------------------------*/
+.nav {position:relative; display:inline-block; font-size:14px; font-family:'Open Sans';   float: right;}
+.nav-list {text-align:left;}
+.nav-item {float:left; *display:inline; zoom:1; position:relative;}
+.nav-item a {  color: #fff;
+    display: block;
+    font-family: "open sans semibold";
+    font-size: 15px;
+    padding: 20px 17px;
+    text-transform: uppercase;}
+.nav-item a.last{background-image:none;}
+.nav-item > a:hover,.nav-item > a.act{ color:#d30006; text-decoration: none;}
+.nav-item-account{float:left; *display:inline; zoom:1; position:relative; margin-left:8px;} 
+.nav-item-account a {display:block; color:#FFF; padding:8px 21px; border-radius:3px; background:#fd3e4e;	margin-left:5px;	text-transform:uppercase;}
+.nav-item-account > a:hover,.nav-item-account > a.act{color:#ce3340; background:#FFF;}
+.nav-item:hover .nav-submenu {display:block;}
+.nav-item a:hover{color: #DA0000; text-decoration: none;}
+/* Navigation submenu */
+.nav-submenu {display:none; position:absolute; left:0; width:180px; z-index:999; border-right:0px; text-transform:capitalize; font-size:14px;}
+.nav-submenu-item a {background:url("../../images/front/bg_head.png") repeat scroll 0 0; border-bottom:1px solid #4a4a4a;  font-size:14px; display:block; padding:10px 12px; color:#cecece;	border-right:0px !important;  
+    text-transform: uppercase;}
+.nav-submenu-item a:hover {background:#d30006; text-decoration: none; color:#fff;}
+
+/* Mobile navigation */
+.nav-mobile { background:  url("../../images/front/nav_image.png") no-repeat scroll center center / 25px auto;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none;
+    height: 37px;
+    position: absolute;
+    right: 0;
+    top: 15px;
+    width: 37px;}
+
+/* Mobile navigation, clickable area for revealing <ul> */
+.nav-click { border-left: medium none;
+    cursor: pointer;
+    display: none;
+    height: 39px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;}
+.nav-click i{ background: url("../../images/front/drop.png") no-repeat scroll right center;
+    display: block;
+    height: 40px;
+    margin-left: 15px;
+    right: 0;
+    width: 94%;}
+
+/*------------------------------------*\
+    Media Queries
+\*------------------------------------*/
+@media all and (max-width: 980px){
+	.nav-item{margin-left:0px;}
+	.nav-item a{padding:8px 16px;}	
+	.nav-item-account{margin-left:0px;}
+	.nav-item-account a {padding:5px 16px; border-radius:3px; margin-left:10px;}
+    .nav-list {  top:15px !important;}
+}
+
+@media all and (max-width:800px){
+    
+    .nav-mobile {margin-right:0;}
+}
+@media all and (max-width: 767px){
+    .nav-mobile {
+    display: block;
+    margin-top: -50px!important;}
+   
+    .logo img {
+    max-width: 56%;
+}
+}
+@media only screen and (max-width: 640px) {/*768    640*/
+    
+    .nav-list{ top:15px!important;}
+}
+@media only screen and (min-width: 320px) and (max-width: 1024px) {/*768    640*/
+	.nav-mobile{/*top:-9px;*/}
+	.nav-item-account{float:none;}
+	.nav-item-account a {border-right:0px; display:block; color:#FFF; border-bottom:1px dotted #3f3f3f; background:#020202; padding:		 	15px; margin:0px; border-radius:0px;}	
+	.nav-item a{border-right:0px; display:block; color:#FFF; border-bottom:1px dotted #3f3f3f; background:#020202;}
+	.nav-item > a:hover, .nav-item > a.act{background:#D90000 ; color:#FFF; border-radius:0px;}
+	.nav-submenu-item a{color:#FFF; text-transform:capitalize; background:#383838; border-bottom:1px solid #000;}
+	.nav-submenu-item a:hover{background:#d90000; color:#FFF; text-transform:capitalize;}
+	.nav-mobile {display:block; margin-top:-55px;}
+	.nav {width:100%; padding:35px 0 0; margin-bottom: 10px;}
+	.nav-list {display:none;position: absolute;top: 1px;
+    text-align: left;
+    width: 100%;
+    z-index: 999;}
+	.nav-item {width:100%; float:none;}
+    .nav-item > a {font-size: 15px;padding: 9px;}
+    .nav-click {display:block;}
+	.nav-mobile-open {border-radius:5px 5px 0 0; -webkit-border-radius:5px 5px 0 0; -moz-border-radius:5px 5px 0 0;}
+	.nav-item:hover .nav-submenu {display:none;}
+	.nav-submenu {position:static;  width:100%;}
+      .nav-list{ top:17px;}
+}
