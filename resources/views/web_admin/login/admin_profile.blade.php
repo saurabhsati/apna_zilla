@@ -1,4 +1,4 @@
-    @extends('web-admin.template.admin')                
+    @extends('web_admin.template.admin')
 
 
     @section('main_content')
@@ -23,19 +23,19 @@
             <!-- <li>
                 <i class="fa fa-text-width"></i>
                 <a href="{{ url().'/web-admin/faq' }}">FAQ</a>
-            </li>   
+            </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span> -->
             <li class="active">  {{ isset($page_title)?$page_title:"" }}</li>
         </ul>
     </div>
-    
+
     <!-- END Breadcrumb -->
 
     <!-- BEGIN Main Content -->
-    
-    
+
+
     <div class="row">
         <div class="col-md-12">
             <div class="box box-pink">
@@ -53,7 +53,7 @@
                         </button>
                         {{ Session::get('success') }}
                     </div>
-                  @endif  
+                  @endif
 
                   @if(Session::has('error'))
                     <div class="alert alert-danger alert-dismissible">
@@ -64,9 +64,9 @@
                     </div>
                   @endif
 
-                    <form class="form-horizontal" 
-                        id="validation-form" 
-                        method="POST" 
+                    <form class="form-horizontal"
+                        id="validation-form"
+                        method="POST"
                         action="{{ url('/web-admin/update_profile')}}"
                         >
                             {{ csrf_field() }}
@@ -120,7 +120,7 @@
                                 <span class='help-block'>{{ $errors->first('contact') }}</span>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
                                 <button type="submit" class="btn btn-primary">Submit</button>
