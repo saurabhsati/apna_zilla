@@ -55,42 +55,104 @@ class CategoryController extends Controller
     {
         $arr_rules = array();
         $arr_rules['category'] = "required";
-        $arr_rules['is_active'] = "required";
-
+        $arr_rules['title'] = "required";
+        $arr_rules['cat_meta_keyword'] = "required";
+        $arr_rules['cat_meta_description'] = "required";
 
         $validator = Validator::make($request->all(),$arr_rules);
 
-        if($validator->fails())
-        { 
-            return redirect()->back()->withErrors($validator)->withInput();                                     
-        }
-
-                             /* Duplication Check */
-        $arr_data = $request->only(['category','is_active']);
-        if(CategoryModel::where('category',$arr_data['category'])->get()->count()>0)
+        if($validator->fails()==TRUE)
         {
-        	Session::flash('error','Category Already Exists');
-            return redirect()->back();	
+            return redirect()->back()->withErrors($validator)->withInput();
         }
+        
+        $category = $request->input('category');
+        $title = $request->input('title');
+        $is_priceable = $request->input('is_priceable','0');
+        $cat_meta_keyword = $request->input('cat_meta_keyword');
+        $cat_meta_description = $request->input('cat_meta_description');
+
+        $cat_slug = str_slug($title);
+
+        $cat_img = "default_category.png";
+        if((int)$category==0)
+        {
+            if ($request->hasFile('cat_img')) 
+            {
+                $cv_valiator = Validator::make(array('cat_img'=>$request->file('cat_img')),array(
+                                                    'cat_img' => 'mimes:jpg,jpeg,png'
+                                                )); 
+
+                if ($request->file('cat_img')->isValid() && $cv_valiator->passes())
+                {
+
+                    $cv_path = $request->file('cat_img')->getClientOriginalName();
+                    $image_extension = $request->file('cat_img')->getClientOriginalExtension();
+                    $image_name = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
+                    $request->file('cat_img')->move(
+                        $this->cat_img_path, $image_name
+                    );
+                  
+                    $cat_img = $image_name;     
+                }
+                else
+                {
+                    return redirect()->back();
+                }
+
+            }
+        }   
+
+        DB::beginTransaction();
+
+        /* Insert in Category */
+        $arr_cat = array();
+        $arr_cat['cat_desc'] = "NA";
+        $arr_cat['cat_slug'] = $cat_slug;
+        $arr_cat['parent'] = $category;
+        $arr_cat['cat_order'] = "0";
+        $arr_cat['is_active'] = "1";
+        $arr_cat['is_priceable'] = $is_priceable;
+        $arr_cat['cat_img'] = $cat_img;
+        $arr_cat['cat_thumb'] =$cat_img;
+
+        $arr_cat['cat_meta_keyword'] =$cat_meta_keyword;
+        $arr_cat['cat_meta_description'] =$cat_meta_description;
+
+        $cat_id = CategoryModel::create($arr_cat)->id;
+
+        $this->__update_unique_category_id($cat_id);
+
+        /* Insert in Category Lang */
+
+        $arr_cat_lang = array();
+        $arr_cat_lang['fk_cat_id'] = $cat_id;
+        $arr_cat_lang['title'] = $title;
+        $arr_cat_lang['meta_tag'] = $title;
+        $arr_cat_lang['meta_desc'] = "NA";
+        $arr_cat_lang['fk_lang_id'] = "1"; /* For English = 1*/
+            
+        
+        $cat_lang_id = CategoryLangModel::create($arr_cat_lang)->id;
 
 
-        $status = CategoryModel::create([
-            'category' => $arr_data['category'],
-            'is_active' => $arr_data['is_active'],
-        ]);
 
-
-        if($status)
-        {   
-            Session::flash('success','Category Created Successfully');
+        
+        if($cat_id==TRUE && $cat_lang_id==TRUE)
+        {
+            DB::commit();
+            Session::flash('success','Category Added Successfully');
         }
         else
         {
-            Session::flash('error','Problem Occured While Creating Category ');
-        }   
-
+            DB::rollback();
+            Session::flash('error','Problem Occured, While Adding Category');
+        }
+    
         return redirect()->back();
     }
+
+    
 
  	public function edit($enc_id)
  	{
