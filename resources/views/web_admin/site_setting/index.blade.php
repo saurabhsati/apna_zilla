@@ -1,6 +1,4 @@
     @extends('web_admin.template.admin')
-
-
     @section('main_content')
     <!-- BEGIN Page Title -->
     <div class="page-title">
@@ -31,11 +29,6 @@
         </ul>
     </div>
     <!-- END Breadcrumb -->
-
-
-
-
-
     <!-- BEGIN Main Content -->
     <div class="row">
       <div class="col-md-12">
@@ -165,12 +158,9 @@
     @else
         <h4>No Records Found</h4>
     @endif
-
-
 </div>
 </div>
 </div>
 </div>
 <!-- END Main Content -->
-
 @stop

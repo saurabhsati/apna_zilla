@@ -31,7 +31,22 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 	Route::post('update_password','Admin\AuthController@update_password');
 	Route::get('edit_profile','Admin\AuthController@profile');
 	Route::post('updateprofile','Admin\AuthController@updateprofile');
+	/* Front Pages */
+	Route::get('static_pages',['as'=>'static_pages', 'uses'=>'Admin\StaticPageController@index']);
 
+	  /*---------------------CMS Module-------------------------*/
+	   Route::group(array('prefix' => '/static_pages'), function()
+		{
+		Route::get('/',['as' => 'static_pages_manage' ,'uses' => 'Admin\StaticPageController@index']);
+		Route::get('create',['as' => 'static_pages_create' ,'uses' => 'Admin\StaticPageController@create']);
+		Route::get('edit/{enc_id}',['as' => 'static_pages_edit' ,'uses' => 'Admin\StaticPageController@edit']);
+		Route::any('store',['as' => 'static_pages_store' ,'uses' => 'Admin\StaticPageController@store']);
+		Route::get('delete/{enc_id}',['as' => 'static_pages_delete' ,'uses' => 'Admin\StaticPageController@delete']);
+		Route::post('update/{enc_id}',['as' => 'static_pages_update' ,'uses' => 'Admin\StaticPageController@update']);
+		Route::get('toggle_status/{enc_id}/{action}',['as' => 'static_pages_toggle_status' ,'uses' => 'Admin\StaticPageController@toggle_status']);
+		Route::post('multi_action',['as' => 'static_pages_multi_action' ,'uses' => 'Admin\StaticPageController@multi_action']);
+
+		});
 
 	/* Users Module */
 	Route::group(['prefix'=>'users'], function ()
