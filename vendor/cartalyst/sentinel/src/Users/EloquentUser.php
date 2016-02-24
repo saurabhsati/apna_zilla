@@ -58,7 +58,8 @@ class EloquentUser extends Model implements RoleableInterface, PermissibleInterf
         'street_address',
         'mobile_no',
         'home_landline',
-        'office_landline'
+        'office_landline',
+        'is_active'
     ];
 
     /**

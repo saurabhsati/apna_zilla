@@ -143,7 +143,7 @@
               </thead>
               <tbody>
                 
-                @if(isset($obj_user) && sizeof($obj_user)>0)
+               @if(isset($obj_user) && sizeof($obj_user)>0)
                   @foreach($obj_user as $key => $user)
                    @if(!$user->inRole('admin'))
                   <tr>
@@ -183,6 +183,7 @@
                         </a>   
 
                     </td>
+                    
                   </tr>
                   @endif
                   @endforeach

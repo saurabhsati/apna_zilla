@@ -68,10 +68,17 @@
             </div>
           @endif
 
-          <form class="form-horizontal" id="validation-form" method="POST" action="{{ url('/web_admin/users/update/'.base64_encode($arr_user_data['id'])) }} ' " enctype="multipart/form-data">
+
+        <form class="form-horizontal" 
+              id="validation-form" 
+              method="POST" 
+              action="{{ url('/web_admin/users/update/'.base64_encode($arr_user_data['id'])) }} ' " 
+              enctype="multipart/form-data">
+
 
 
            {{ csrf_field() }}
+
 
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="name">Profile Pic</label>
@@ -137,7 +144,7 @@
             </div>
 
 
-            <div class="form-group">
+           <!--  <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="gender">Gender<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                 <label class="radio">
@@ -151,14 +158,14 @@
             </div>
            <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="marital_status">Marital Status<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
+                <div class="col-sm-6 col-lg-4 controls"> -->
                     <!-- <input class="form-control"
                            name="marital_status"
                            id="marital_status"
                            data-rule-required="true"
                            placeholder="Enter Marital Status"
                            value="{{ isset($arr_user_data['marital_status'])?$arr_user_data['marital_status']:'' }}"/> -->
-                     <select class="form-control" data-placeholder="Choose a Category" name="marital_status" tabindex="1">
+       <!--               <select class="form-control" data-placeholder="Choose a Category" name="marital_status" tabindex="1">
                         <option value="" >Select...</option>
                         <option value="Married" {{ $arr_user_data['marital_status']=='Married'?"selected ='selected'":'' }}>Married</option>
                         <option value="Un Married" {{ $arr_user_data['marital_status']=='Un Married'?"selected='selected'":'' }}>Un Married</option>
@@ -167,7 +174,7 @@
                      </select>
                     <span class='help-block'>{{ $errors->first('marital_status') }}</span>
                 </div>
-            </div>
+            </div> -->
 
                 <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="d_o_b">Date Of Birth<i class="red">*</i></label>
@@ -292,9 +299,6 @@
                     <span class='help-block'>{{ $errors->first('office_landline') }}</span>
                 </div>
             </div>
-
-
-
 
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
