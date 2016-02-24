@@ -1,4 +1,4 @@
-    @extends('web_admin.template.admin')                
+    @extends('web_admin.template.admin')
 
 
     @section('main_content')
@@ -23,7 +23,7 @@
             <li>
                 <i class="fa fa-user"></i>
                 <a href="{{ url('/').'/web_admin/users' }}">Users</a>
-            </li>   
+            </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span>
@@ -56,7 +56,7 @@
                 </button>
                 {{ Session::get('success') }}
             </div>
-          @endif  
+          @endif
 
           @if(Session::has('error'))
             <div class="alert alert-danger alert-dismissible">
@@ -67,10 +67,10 @@
             </div>
           @endif
 
-          <form class="form-horizontal" 
-                id="validation-form" 
+          <form class="form-horizontal"
+                id="validation-form"
                 method="POST"
-                action="{{ url('/web_admin/users/store') }}" 
+                action="{{ url('/web_admin/users/store') }}"
                 enctype="multipart/form-data"
                 >
 
@@ -120,7 +120,7 @@
                      </label>
                      <label class="radio">
                         <input type="radio" name="gender" value="female" /> Female
-                     </label>  
+                     </label>
                   <span class='help-block'>{{ $errors->first('gender') }}</span>
                  </div>
                </div>
@@ -148,10 +148,10 @@
                   <div class="col-sm-6 col-lg-4 controls">
                      <select class="form-control" data-placeholder="Choose a Category" name="marital_status" tabindex="1">
                         <option value="">Select...</option>
-                        <option value="Category 1">Married</option>
-                        <option value="Category 2">Un Married</option>
-                        <option value="Category 3">Divorced</option>
-                        <option value="Category 4">Widowed</option>
+                        <option value="Married">Married</option>
+                        <option value="Un Married">Un Married</option>
+                        <option value="Divorced">Divorced</option>
+                        <option value="Widowed">Widowed</option>
                      </select>
                     <span class='help-block'>{{ $errors->first('marital_status') }}</span>
                   </div>
@@ -234,7 +234,7 @@
                 <input type="submit" class="btn btn-primary" value="Create">
             </div>
         </div>
-    
+
     </form>
 </div>
 </div>
@@ -266,4 +266,4 @@
     }
 </script>
 
-@stop                    
+@stop
