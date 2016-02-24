@@ -148,10 +148,10 @@
                   <div class="col-sm-6 col-lg-4 controls">
                      <select class="form-control" data-placeholder="Choose a Category" name="marital_status" tabindex="1">
                         <option value="">Select...</option>
-                        <option value="Category 1">Married</option>
-                        <option value="Category 2">Un Married</option>
-                        <option value="Category 3">Divorced</option>
-                        <option value="Category 4">Widowed</option>
+                        <option value="Married">Married</option>
+                        <option value="Un Married">Un Married</option>
+                        <option value="Divorced">Divorced</option>
+                        <option value="Widowed">Widowed</option>
                      </select>
                     <span class='help-block'>{{ $errors->first('marital_status') }}</span>
                   </div>
