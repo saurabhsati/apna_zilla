@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CategoryModel;
 use Session;
 use Validator;
+use DB;
 
 class CategoryController extends Controller
 {
@@ -31,12 +32,24 @@ class CategoryController extends Controller
  		return view('web_admin.category.index',compact('page_title','arr_category'));
  	}	
 
- 	public function create()
+ 	public function create(Request $request,$enc_cat_id=FALSE)
  	{
- 		$page_title = "Category: Create ";
+ 		$page_title = "Create Category";
 
- 		return view('web_admin.category.create',compact('page_title'));
- 	}
+        $arr_category = array();
+        $obj_category = CategoryModel::where('parent',0)->get();
+
+        if($obj_category!=FALSE)
+        {
+        foreach ($obj_category as $key => $category) 
+        {
+            $arr_category = $obj_category->toArray();
+        }
+
+        }
+        return view('web_admin.category.create',compact('page_title','arr_category','enc_cat_id'));
+    }
+
 
  	public function store(Request $request)
     {

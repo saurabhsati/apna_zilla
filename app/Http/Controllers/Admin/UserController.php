@@ -11,13 +11,13 @@ use Validator;
 class UserController extends Controller
 {
  	public function __construct()
- 	{
- 		$arr_except_auth_methods = array();
- 		$this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
+    {
+        $arr_except_auth_methods = array();
+        $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
 
-		$this->profile_pic_base_path = base_path().'/public'.config('app.project.img_path.user_profile_pic');
-        $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');
- 	}
+        $this->profile_pic_base_path = base_path().'/public'.config('app.project.img_path.user_profile_pic');
+        $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');      
+    }   
 
  	public function index()
  	{
@@ -192,62 +192,55 @@ class UserController extends Controller
 
  		$profile_pic_public_path = $this->profile_pic_public_path;
 
-
-        if(Sentinel::getUser()->inRole('restaurant_admin') == true)
-        {
-            return view('restaurant_admin.user.edit',compact('page_title','arr_user_data','profile_pic_public_path'));
-        }
-
-            return view('web_admin.user.edit',compact('page_title','arr_user_data','profile_pic_public_path'));
+        return view('web_admin.user.edit',compact('page_title','arr_user_data','profile_pic_public_path'));
 
  	}
 
  	public function update(Request $request, $enc_id)
     {
         $user_id = base64_decode($enc_id);
-
         $arr_rules = array();
-        //$arr_rules['profile_pic'] = "required";
+
         $arr_rules['first_name'] = "required";
         $arr_rules['middle_name'] = "required";
         $arr_rules['last_name'] = "required";
-        $arr_rules['gender'] = "required";
+        // $arr_rules['gender'] = "required";
         $arr_rules['d_o_b'] = "required";
-        $arr_rules['street_address'] = "required";
+        $arr_rules['email'] = "required";
+        $arr_rules['password'] = "min:6";
+        // $arr_rules['marital_status'] = "required";
         $arr_rules['city'] = "required";
         $arr_rules['area'] = "required";
-        $arr_rules['marital_status'] = "required";
         $arr_rules['occupation'] = "required";
         $arr_rules['work_experience'] = "required";
-        $arr_rules['email'] = "required|email";
-        $arr_rules['password'] = "min:6";
+        $arr_rules['street_address'] = "required";
         $arr_rules['mobile_no'] = "required";
         $arr_rules['home_landline'] = "required";
         $arr_rules['office_landline'] = "required";
-
+        
 
         $validator = Validator::make($request->all(),$arr_rules);
         if($validator->fails())
         {
-            return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();            
         }
 
-        $first_name       = $request->input('first_name');
-        $middle_name       = $request->input('middle_name');
-        $last_name       = $request->input('last_name');
-        $gender       = $request->input('gender');
-        $d_o_b       = date('y-m-d',strtotime($request->input('d_o_b')));
-        $street_address       = $request->input('street_address');
-        $city       = $request->input('city');
-        $area       = $request->input('area');
-        $occupation       = $request->input('marital_status');
-        $marital_status    = $request->input('occupation');
-        $work_experience       = $request->input('work_experience');
-        $email      = $request->input('email');
+        $first_name = $request->input('first_name');
+        $middle_name = $request->input('middle_name');
+        $last_name = $request->input('last_name');
+        // $gender = $request->input('gender');
+        $d_o_b = $request->input('d_o_b');
+        $email = $request->input('email');
         $password   = $request->input('password',FALSE);
-        $mobile_no     = $request->input('mobile_no');
-        $home_landline       = $request->input('home_landline');
-        $office_landline       = $request->input('office_landline');
+        // $marital_status = $request->input('marital_status');
+        $city = $request->input('city');
+        $area = $request->input('area');
+        $occupation = $request->input('occupation');
+        $work_experience = $request->input('work_experience');
+        $street_address = $request->input('street_address');
+        $mobile_no = $request->input('mobile_no');
+        $home_landline = $request->input('home_landline');
+        $office_landline = $request->input('office_landline');
 
         /* Duplication Check*/
 
@@ -260,11 +253,11 @@ class UserController extends Controller
         }
 
         $profile_pic = FALSE;
-        if ($request->hasFile('profile_pic'))
+        if ($request->hasFile('profile_pic')) 
         {
             $cv_valiator = Validator::make(array('profile_pic'=>$request->file('profile_pic')),array(
                                                 'profile_pic' => 'mimes:jpg,jpeg,png'
-                                            ));
+                                            )); 
 
             if ($request->file('profile_pic')->isValid() && $cv_valiator->passes())
             {
@@ -275,8 +268,8 @@ class UserController extends Controller
                 $request->file('profile_pic')->move(
                     $this->profile_pic_base_path, $image_name
                 );
-
-                $profile_pic = $image_name;
+              
+                $profile_pic = $image_name;     
             }
             else
             {
@@ -285,50 +278,50 @@ class UserController extends Controller
 
         }
 
-        $arr_data = [
-
+              $arr_data = [
             'first_name' => $first_name,
             'middle_name' => $middle_name,
             'last_name' => $last_name,
-            'gender' => $gender,
+            // 'gender' => $gender,
             'd_o_b' => $d_o_b,
-            'street_address' => $street_address,
+            'email' => $email,
+            // 'marital_status' => $marital_status,
             'city' => $city,
             'area' => $area,
             'occupation' => $occupation,
             'work_experience' => $work_experience,
-            'marital_status' => $marital_status,
-            'email' => $email,
-            'is_active' => '1',
+            'street_address' => $street_address,
             'mobile_no' => $mobile_no,
             'home_landline' => $home_landline,
             'office_landline' => $office_landline,
         ];
-        print_r($arr_data);exit;
+
         if($password!=FALSE)
         {
-            $arr_data['password'] = $password;
+            $arr_data['password'] = $password;  
         }
 
         if($profile_pic!=FALSE)
         {
-            $arr_data['profile_pic'] = $profile_pic;
+            $arr_data['profile_pic'] = $profile_pic;     
         }
-
+        
         $user = Sentinel::findById($user_id);
+
 
         $status = Sentinel::update($user,$arr_data);
 
         if($status)
-        {
+        {   
             Session::flash('success','User Updated Successfully');
         }
         else
         {
             Session::flash('error','Problem Occured While Updating User ');
-        }
+        }   
 
         return redirect()->back();
+
     }
 
 
@@ -381,25 +374,25 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function toggle_status($enc_id,$action)
+   public function toggle_status($enc_id,$action)
     {
         if($action=="activate")
-        {
+        {   
             $this->_activate($enc_id);
 
-            Session::flash('success','User(s) Activated Successfully');
+            Session::flash('success','User(s) Activated Successfully');                 
         }
         elseif($action=="block")
         {
-            $this->_block($enc_id);
+            $this->_block($enc_id); 
 
-            Session::flash('success','User(s) Blocked Successfully');
+            Session::flash('success','User(s) Blocked Successfully');                
         }
         elseif($action=="delete")
         {
-            $this->_delete($enc_id);
+            $this->_delete($enc_id); 
 
-            Session::flash('success','User(s) Deleted Successfully');
+            Session::flash('success','User(s) Deleted Successfully');                
         }
 
         return redirect()->back();
@@ -409,15 +402,22 @@ class UserController extends Controller
     {
         $id = base64_decode($enc_id);
 
-        return Sentinel::toggleStatus($id,1);
+        $user = Sentinel::createModel()->where('id',$id)->first(); 
+
+        $user->is_active = "1";
+
+        return $user->save();
     }
 
     protected function _block($enc_id)
     {
         $id = base64_decode($enc_id);
 
+        $user = Sentinel::createModel()->where('id',$id)->first(); 
 
-        return Sentinel::toggleStatus($id,0);
+        $user->is_active = "0";
+
+        return $user->save();
     }
 
     protected function _delete($enc_id)
