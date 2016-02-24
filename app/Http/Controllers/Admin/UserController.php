@@ -216,6 +216,7 @@ class UserController extends Controller
         $arr_rules['street_address'] = "required";
         $arr_rules['city'] = "required";
         $arr_rules['area'] = "required";
+        $arr_rules['marital_status'] = "required";
         $arr_rules['occupation'] = "required";
         $arr_rules['work_experience'] = "required";
         $arr_rules['email'] = "required|email";
@@ -239,7 +240,8 @@ class UserController extends Controller
         $street_address       = $request->input('street_address');
         $city       = $request->input('city');
         $area       = $request->input('area');
-        $occupation       = $request->input('occupation');
+        $occupation       = $request->input('marital_status');
+        $marital_status    = $request->input('occupation');
         $work_experience       = $request->input('work_experience');
         $email      = $request->input('email');
         $password   = $request->input('password',FALSE);
@@ -295,6 +297,7 @@ class UserController extends Controller
             'area' => $area,
             'occupation' => $occupation,
             'work_experience' => $work_experience,
+            'marital_status' => $marital_status,
             'email' => $email,
             'is_active' => '1',
             'mobile_no' => $mobile_no,
