@@ -2,7 +2,7 @@
 
 
     @section('main_content')
-    <link rel="stylesheet" type="text/css" href="{{ url('/assets/data-tables/latest/') }}/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url('/assets/data-tables/latest/') }}/dataTables.bootstrap.min.css"
     <!-- BEGIN Page Title -->
     <div class="page-title">
         <div>
@@ -16,14 +16,14 @@
         <ul class="breadcrumb">
             <li>
                 <i class="fa fa-home"></i>
-                <a href="{{ url('/web_admin/dashboard') }}">Dashboard</a>
+                <a href="{{ url('/').'/web_admin/dashboard' }}">Dashboard</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span>
             <li>
-                <i class="fa fa-bars"></i>
-                <a href="{{ url('/web_admin/categories') }}">Category</a>
+                <i class="fa fa-text-width"></i>
+                <a href="{{ url('/').'/web_admin/attribute/show/'.$enc_id }}">Attributes</a>
             </li>   
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
@@ -34,6 +34,9 @@
     <!-- END Breadcrumb -->
 
 
+
+
+
     <!-- BEGIN Main Content -->
     <div class="row">
       <div class="col-md-12">
@@ -41,7 +44,7 @@
           <div class="box">
             <div class="box-title">
               <h3>
-                <i class="fa fa-bars"></i>
+                <i class="fa fa-text-width"></i>
                 {{ isset($page_title)?$page_title:"" }}
             </h3>
             <div class="box-tool">
@@ -68,7 +71,7 @@
                 {{ Session::get('error') }}
             </div>
           @endif
-          <form class="form-horizontal" id="frm_manage" method="POST" action="{{ url('/web_admin/categories/multi_action') }}">
+          <form class="form-horizontal" id="frm_brand_manage" method="POST" action="{{ url().'/web_admin/attribute/multi_action' }}">
 
             {{ csrf_field() }}
 
@@ -81,17 +84,27 @@
             <div class="alert alert-danger" id="no_select" style="display:none;"></div>
             <div class="alert alert-warning" id="warning_msg" style="display:none;"></div>
           </div>
+
+            <div class="clearfix"></div>
+
+               <div class="btn-toolbar pull-left clearfix">
+                <a class="btn btn-sm btn-primary" href="{{ url('/web_admin/categories') }}">
+                  <i class='fa fa-arrow-left'></i> Back
+                </a>
+              </div>
+              
+
           <div class="btn-toolbar pull-right clearfix">
-            <!--- Add new record - - - -->
-                <div class="btn-group">
-                <a href="{{ url('/web_admin/categories/create')}}" class="btn btn-primary btn-add-new-records">Add Category/Sub Category</a> 
-                </div>
-            <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+            <div class="btn-group">
+              <a href="{{ url('/web_admin/attribute/create/'.$enc_id)}}" class="btn btn-primary btn-add-new-records">Create Attribute</a> 
+            </div>
+
             <div class="btn-group">
                 <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip" 
                     title="Multiple Unblock" 
                     href="javascript:void(0);" 
-                    onclick="javascript : return check_multi_action('frm_manage','activate');" 
+                    onclick="javascript : return check_multi_action('frm_brand_manage','activate');" 
                     style="text-decoration:none;">
 
                     <i class="fa fa-unlock"></i>
@@ -99,14 +112,14 @@
                 <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip" 
                    title="Multiple Block" 
                    href="javascript:void(0);" 
-                   onclick="javascript : return check_multi_action('frm_manage','block');"  
+                   onclick="javascript : return check_multi_action('frm_brand_manage','block');"  
                    style="text-decoration:none;">
                     <i class="fa fa-lock"></i>
                 </a> 
                 <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip" 
                    title="Multiple Delete" 
                    href="javascript:void(0);" 
-                   onclick="javascript : return check_multi_action('frm_manage','delete');"  
+                   onclick="javascript : return check_multi_action('frm_brand_manage','delete');"  
                    style="text-decoration:none;">
                    <i class="fa fa-trash-o"></i>
                 </a>
@@ -114,7 +127,7 @@
             <div class="btn-group"> 
                 <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip" 
                    title="Refresh" 
-                   href="{{ url('/web_admin/categories') }}"
+                   href="{{ url().'/web_admin/attribute/show/'.$enc_id}}"
                    style="text-decoration:none;">
                    <i class="fa fa-repeat"></i>
                 </a> 
@@ -126,66 +139,58 @@
 
             <input type="hidden" name="multi_action" value="" />
 
-            <table class="table table-advance"  id="user_manage" >
+            <table class="table table-advance"  id="brand_manage" >
               <thead>
                 <tr>
-                  <th style="width:5%"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
-                  <th style="width:10%">Sr. No.</th>
-                  <th style="width:30%">Category</th>
-                  <th style="width:30%">Sub Categories</th>
-                  <th style="width:15%">Status</th>
-                  <th style="width:15%">Action</th>
+                  <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
+                  <th>Front Label</th>
+                  <th>Code</th>                  
+                  <th>Frontend class</th>
+                  <th>Status</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-
-      
-                 @if(isset($arr_category) && sizeof($arr_category)>0)
-                  @foreach($arr_category as $key => $category)
+                
+                @if(sizeof($arr_attributes)>0)
+                  @foreach($arr_attributes as $attribute)
                   <tr>
                     <td> 
                       <input type="checkbox" 
                              name="checked_record[]"  
-                             value="{{ base64_encode($category['cat_id']) }}" /> 
+                             value="{{ base64_encode($attribute['attribute_id']) }}" /> 
                     </td>
-                    <td>{{  $key+1 }}</td>
+                    <td> {{ isset($attribute['frontend_label'])?$attribute['frontend_label']:'' }} </td>
+                    <td> {{ isset($attribute['attribute_code'])?$attribute['attribute_code']:'' }} </td>
+                    <td> {{ isset($attribute['frontend_class'])?$attribute['frontend_class']:'' }} </td>
+                    
 
-                    <td> {{ $category['cat_meta_keyword'] }} </td>
-
-                     <td>
-                        <a
-                          class="btn btn-info" 
-                          href="{{ url('/').'/web_admin/categories/sub_categories/'.base64_encode($category['cat_id']).'' }}"  title="View Sub Category">
-                          View
-                        </a>
-                        <a
-                          class="btn btn-info" 
-                          href="{{ url('/').'/web_admin/categories/create/'.base64_encode($category['cat_id']).'?src='.base64_encode('/web_admin/categories') }}"  title="Add Sub Category">
-                          Add
-                        </a>
-                      </td>
-
-                    <td width="250">
-                         @if($category['is_active']=="0")
-                        <a class="btn btn-danger" href="{{ url('/web_admin/categories/toggle_status/').'/'.base64_encode($category['cat_id']).'/activate' }}">
+                    <td width="250" style="text-align:center">
+                         @if($attribute['is_active']=="0")
+                        <a class="btn btn-danger" href="{{ url().'/web_admin/attribute/toggle_status/'.base64_encode($attribute['attribute_id']).'/activate' }}">
                             Block
                         </a>    
                               
-                        @elseif($category['is_active']=="1")
-                        <a  class="btn btn-success" href="{{ url('/web_admin/categories/toggle_status/').'/'.base64_encode($category['cat_id']).'/block' }}">
+                        @elseif($attribute['is_active']=="1")
+                        <a  class="btn btn-success" href="{{ url().'/web_admin/attribute/toggle_status/'.base64_encode($attribute['attribute_id']).'/block' }}">
                             Active
                         </a>   
                         @endif 
                     </td>
-                    <td> 
 
-                        <a href="{{ url('/web_admin/categories/edit/').'/'.base64_encode($category['cat_id']) }}" class="show-tooltip" title="Edit">
-                          <i class="fa fa-edit " ></i>
+
+                    <td width="100"> 
+
+                        <a href="{{ url().'/web_admin/attribute/edit/'.base64_encode($attribute['attribute_id']) }}">
+                          <i class="fa fa-edit" ></i>
                         </a>  
+                        &nbsp;
+
+                       
 
                         &nbsp;  
-                        <a href="{{ url('/web_admin/categories/delete/').'/'.base64_encode($category['cat_id']) }}" 
-                           onclick="javascript:return confirm_delete()" class="show-tooltip" title="Delete">
+                        <a href="{{ url().'/web_admin/attribute/toggle_status/'.base64_encode($attribute['attribute_id']).'/delete' }}" 
+                           onclick="javascript:return confirm_delete()">
                           <i class="fa fa-trash" ></i>
                         </a>   
 
@@ -210,7 +215,7 @@
 
    $(document).ready(function()
     {
-        $("#user_manage").DataTable();
+        $("#brand_manage").DataTable();
     });
 
     function confirm_delete()

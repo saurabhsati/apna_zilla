@@ -154,7 +154,7 @@
             <td>
                 <a
                   class="btn btn-info" 
-                  href="{{ url('/web_admin/attribute/show/').'/'.base64_encode($category['cat_id']) }}"  title="View Attribute">
+                  href="{{ url('/').'/web_admin/attribute/show/'.base64_encode($category['cat_id']) }}"  title="View Attribute">
                   View
               </a>
             </td>
@@ -176,7 +176,7 @@
 
               <a href="{{ url('/web_admin/categories/edit/').'/'.base64_encode($category['cat_id']) }}" class="show-tooltip" title="Edit">
                 <i class="fa fa-edit " ></i>
-              </a>  
+              </a> 
 
               &nbsp;  
               <a href="{{ url('/web_admin/categories/delete/').'/'.base64_encode($category['cat_id']) }}" 

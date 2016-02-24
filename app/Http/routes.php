@@ -108,6 +108,21 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 	/*------------------------- web_admin Contact Enquiry Related ------------------------------*/
 
+
+
+/*************************News Letter Module***********************************/
+
+
+	Route::group(array('prefix' => 'newsletter'), function()
+	{
+
+		Route::get('/',['as' => 'newsletter_manage' ,'uses' => 'Admin\NewsLetterController@index']);
+		
+
+	}); 
+
+/*****************************End************************************************/
+
 	/*-------------Deals Module------------*/
 	Route::group(['prefix'=>'deals'], function (){
 		Route::get('/{enc_id}','Admin\DealController@index');

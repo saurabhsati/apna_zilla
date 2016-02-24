@@ -8,6 +8,7 @@ use App\Models\CategoryModel;
 use Session;
 use Validator;
 use DB;
+use App\Http\Controllers\Common\GeneratorController;
 
 class CategoryController extends Controller
 {
@@ -121,24 +122,15 @@ class CategoryController extends Controller
 
         $cat_id = CategoryModel::create($arr_cat)->id;
 
-        $this->__update_unique_category_id($cat_id);
+            /* update public key in Category table*/
+            $public_key = (new GeneratorController)->alphaID($cat_id);  
+            
+            $category_instance = clone $category; 
+            $category_instance->update(['public_key'=>$public_key]);
 
         /* Insert in Category Lang */
 
-        $arr_cat_lang = array();
-        $arr_cat_lang['fk_cat_id'] = $cat_id;
-        $arr_cat_lang['title'] = $title;
-        $arr_cat_lang['meta_tag'] = $title;
-        $arr_cat_lang['meta_desc'] = "NA";
-        $arr_cat_lang['fk_lang_id'] = "1"; /* For English = 1*/
-            
-        
-        $cat_lang_id = CategoryLangModel::create($arr_cat_lang)->id;
-
-
-
-        
-        if($cat_id==TRUE && $cat_lang_id==TRUE)
+        if($cat_id==TRUE)
         {
             DB::commit();
             Session::flash('success','Category Added Successfully');
@@ -344,6 +336,12 @@ class CategoryController extends Controller
     {
     	$id = base64_decode($enc_id);
 		return CategoryModel::where('cat_id',$id)->delete();  
+    }
+
+      public function __update_unique_category_id($id)
+    {
+        if(!$id) return FALSE;
+        return CategoryModel::where('cat_id',$id)->update(array('public_id'=>alpha_id($id)));
     }
 
 }
