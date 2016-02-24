@@ -31,7 +31,16 @@
                 <li style="display: block;"><a href="{{ url('/web_admin/categories')}}">Manage</a> </li>
             </ul>
         </li>
-
+<li class="{{ Request::segment(2)=='static_pages'? 'active':'' }}">
+            <a href="javascript:void(0)" class="dropdown-toggle">
+                <i class="fa fa-files-o"></i>
+                <span>CMS</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+            <ul class="submenu">
+                <li style="display: block;"><a href="{{ url('/web_admin/static_pages')}}">Manage</a> </li>
+            </ul>
+        </li>
 
 
         <li class="{{ Request::segment(2)=='restaurants'?'active':'' }}
