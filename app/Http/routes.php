@@ -61,6 +61,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		Route::any('store',['as' => 'admin_countries_store' ,'uses' => 'Admin\CountryController@store']);
 
 		});
+
 		Route::group(array('prefix' => '/states'), function()
 		{
 
@@ -76,6 +77,37 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 		});
 
+		Route::group(array('prefix' => '/cities'), function()
+		{
+
+			Route::get('/',['as' => 'admin_cities_manage' ,'uses' => 'Admin\CityController@index']);
+			Route::get('show/{enc_id}',['as' => 'admin_cities_show' ,'uses' => 'Admin\CityController@show']);
+			Route::get('edit/{enc_id}',['as' => 'admin_cities_edit' ,'uses' => 'Admin\CityController@edit']);
+			Route::post('update/{enc_id}',['as' => 'admin_cities_update' ,'uses' => 'Admin\CityController@update']);
+			Route::get('create',['as' => 'admin_cities_create' ,'uses' => 'Admin\CityController@create']);
+			Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_cities_toggle_status' ,'uses' => 'Admin\CityController@toggle_status']);
+			Route::post('multi_action',['as' => 'admin_cities_block' ,'uses' => 'Admin\CityController@multi_action']);
+			Route::any('store',['as' => 'admin_cities_store' ,'uses' => 'Admin\CityController@store']);
+			Route::any('nearby_destinations/{enc_id}',['as' => 'admin_nearby_destinations' ,'uses' => 'Admin\CityController@nearby_destinations']);
+			Route::any('add_destinations',['as' => 'admin_add_destinations' ,'uses' => 'Admin\CityController@add_destinations']);
+			Route::get('delete/{enc_id}',['as' => 'admin_cities_delete' ,'uses' => 'Admin\CityController@delete']);
+
+		});
+
+
+		/* Comman function */
+		Route::group(array('prefix' => '/common'), function()
+		{
+			Route::get('get_states/{country_id}',['as' => 'get_states' ,'uses' => 'Common\CountryController@get_states']);
+			/*Route::get('get_cities/{state_id}',['as' => 'get_cities' ,'uses' => 'Common\CountryController@get_cities']);
+			Route::get('get_nearby_state/{state_id}/{country_id}',['as' => 'get_nearby_states' ,'uses' => 'Common\CountryController@get_nearby_state']);
+			Route::get('get_nearby_city/{city_id}/{state_id}',['as' => 'get_nearby_city' ,'uses' => 'Common\CountryController@get_nearby_city']);
+
+			Route::get('get_sub_category/{id}',['as' => 'get_sub_category' ,'uses' => 'Common\CategoryController@get_sub_category']);*/
+
+
+
+		});
 	/* Users Module */
 	Route::group(['prefix'=>'users'], function ()
 	{
