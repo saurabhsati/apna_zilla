@@ -144,10 +144,12 @@
                   @foreach($arr_category as $key => $category)
                   <tr>
                     <td> 
-                      <input type="checkbox" 
-                             name="checked_record[]"  
-                             value="{{ base64_encode($category['cat_id']) }}" /> 
+                  <input type="checkbox" 
+                         name="checked_record[]"  
+                         value="{{ base64_encode($category['cat_id']) }}" /> 
                     </td>
+
+
                     <td>{{  $key+1 }}</td>
 
                     <td> {{ $category['cat_meta_keyword'] }} </td>
@@ -177,22 +179,32 @@
                         </a>   
                         @endif 
                     </td>
-                    <td> 
 
-                        <a href="{{ url('/web_admin/categories/edit/').'/'.base64_encode($category['cat_id']) }}" class="show-tooltip" title="Edit">
-                          <i class="fa fa-edit " ></i>
-                        </a>  
+                <td> 
 
-                        &nbsp;  
-                        <a href="{{ url('/web_admin/categories/delete/').'/'.base64_encode($category['cat_id']) }}" 
-                           onclick="javascript:return confirm_delete()" class="show-tooltip" title="Delete">
-                          <i class="fa fa-trash" ></i>
-                        </a>   
+                 <a data-toggle="modal" 
+                 data-target="#show_category_title" 
+                 data-cat-id="{{ base64_encode($category['cat_id']) }}"
+               
+                 onclick="showEditCategory(this)" 
+                 >
+                <i class="fa fa-edit" title="Edit Category"></i>
+              </a>  
 
-                    </td>
-                  </tr>
-                  @endforeach
-                @endif
+              &nbsp;  
+              <a href="{{ url('/web_admin/categories/delete/').'/'.base64_encode($category['cat_id']) }}" 
+                 onclick="javascript:return confirm_delete()" class="show-tooltip" title="Delete">
+                <i class="fa fa-trash" ></i>
+              </a>   
+
+             </td>
+
+            </tr>
+             @endforeach
+            @endif
+           
+            
+  
                   
               </tbody>
             </table>
@@ -221,6 +233,37 @@
        }
        return false;
     }
+
+
+    function showEditCategory(ref)
+  {
+    var title_en    = $(ref).attr("data-title-en");
+    var title_de    = $(ref).attr("data-title-de");
+    var enc_cat_id = $(ref).attr("data-cat-id");
+    var is_priceable = $(ref).attr("data-is-priceable");
+
+    var cat_meta_keyword = $(ref).attr("data-cat-meta-keyword");
+    var cat_meta_description = $(ref).attr("data-cat-meta-description");
+
+    var frm_edit_category = $("#frm_edit_category");
+    $(frm_edit_category).find("input[name='title_en']").val(title_en);
+    $(frm_edit_category).find("input[name='enc_title_en_id']").val(title_en_id);
+    $(frm_edit_category).find("input[name='enc_cat_id']").val(enc_cat_id);
+
+    $(frm_edit_category).find("input[name='cat_meta_keyword']").val(cat_meta_keyword);
+    $(frm_edit_category).find("textarea[name='cat_meta_description']").html(cat_meta_description);
+    
+    if(parseInt(is_priceable)==1)
+    {
+      $(frm_edit_category).find("input[name='is_priceable']")[0].checked=true;  
+    }
+    else
+    {
+      $(frm_edit_category).find("input[name='is_priceable']")[0].checked=false;  
+    }
+
+    
+  }
 
     function check_multi_action(frm_id,action)
     {

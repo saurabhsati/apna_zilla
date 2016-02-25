@@ -71,7 +71,12 @@
                 {{ Session::get('error') }}
             </div>
           @endif
-          <form class="form-horizontal" id="frm_brand_manage" method="POST" action="{{ url().'/web_admin/attribute/multi_action' }}">
+
+          <form class="form-horizontal" 
+                id="frm_brand_manage" 
+                method="POST" 
+                action="{{ url('/').'/web_admin/attribute/multi_action' }}"
+                >
 
             {{ csrf_field() }}
 
@@ -127,7 +132,7 @@
             <div class="btn-group"> 
                 <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip" 
                    title="Refresh" 
-                   href="{{ url().'/web_admin/attribute/show/'.$enc_id}}"
+                   href="{{ url('/').'/web_admin/attribute/show/'.$enc_id}}"
                    style="text-decoration:none;">
                    <i class="fa fa-repeat"></i>
                 </a> 
@@ -167,12 +172,12 @@
 
                     <td width="250" style="text-align:center">
                          @if($attribute['is_active']=="0")
-                        <a class="btn btn-danger" href="{{ url().'/web_admin/attribute/toggle_status/'.base64_encode($attribute['attribute_id']).'/activate' }}">
+                        <a class="btn btn-danger" href="{{ url('/').'/web_admin/attribute/toggle_status/'.base64_encode($attribute['attribute_id']).'/activate' }}">
                             Block
                         </a>    
                               
                         @elseif($attribute['is_active']=="1")
-                        <a  class="btn btn-success" href="{{ url().'/web_admin/attribute/toggle_status/'.base64_encode($attribute['attribute_id']).'/block' }}">
+                        <a  class="btn btn-success" href="{{ url('/').'/web_admin/attribute/toggle_status/'.base64_encode($attribute['attribute_id']).'/block' }}">
                             Active
                         </a>   
                         @endif 
@@ -181,7 +186,7 @@
 
                     <td width="100"> 
 
-                        <a href="{{ url().'/web_admin/attribute/edit/'.base64_encode($attribute['attribute_id']) }}">
+                        <a href="{{ url('/').'/web_admin/attribute/edit/'.base64_encode($attribute['attribute_id']) }}">
                           <i class="fa fa-edit" ></i>
                         </a>  
                         &nbsp;
@@ -189,7 +194,7 @@
                        
 
                         &nbsp;  
-                        <a href="{{ url().'/web_admin/attribute/toggle_status/'.base64_encode($attribute['attribute_id']).'/delete' }}" 
+                        <a href="{{ url('/').'/web_admin/attribute/toggle_status/'.base64_encode($attribute['attribute_id']).'/delete' }}" 
                            onclick="javascript:return confirm_delete()">
                           <i class="fa fa-trash" ></i>
                         </a>   

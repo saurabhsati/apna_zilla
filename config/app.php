@@ -216,10 +216,25 @@ return [
     'project' => [
                     'name'=>'JustDial',
                     'img_path' =>[
-                                'user_profile_pic'=>'/uploads/users/profile_pic'
-                                ]
+                                'user_profile_pic'=>'/uploads/users/profile_pic',
+                                'category' => '/uploads/category',
+                                ],
 
-                ]
+
+                                'front_end_inputs' => [
+                                1=>"text",
+                                2=>"dropdown",
+                                3=>"checkBox",
+                                4=>"radio",
+                                5=>"year",
+                                6=>"date",
+                                7=>"multiSelect"
+                                
+                                ],
+
+                                
+
+                ],
     
    
 ];

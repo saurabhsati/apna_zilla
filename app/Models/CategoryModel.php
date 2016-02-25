@@ -21,12 +21,7 @@ class CategoryModel extends Model
      */
     public function parent_category()
     {
-        return $this->belongsTo('App\Model\Category','parent','cat_id');
-    }
-
-    public function parent_category_with_lang()
-    {
-        return $this->hasMany('App\Model\CategoryLang','fk_cat_id','parent');
+        return $this->belongsTo('App\Models\CategoryModel','parent','cat_id');
     }
 
     /**
@@ -34,18 +29,18 @@ class CategoryModel extends Model
      */
     public function child_category()
     {
-        return $this->hasMany('App\Model\Category','parent','cat_id');
+        return $this->hasMany('App\Models\CategoryModel','parent','cat_id');
     }
 
 
     public function brands()
     {
-        return $this->hasMany('App\Model\CategoryBrand','fk_cat_id','cat_id');   
+        return $this->hasMany('App\Models\CategoryBrandModel','fk_cat_id','cat_id');   
     }
 
     public function ads()
     {
-        return $this->hasMany('App\Model\Ad','subcategory_id_fk','cat_id');      
+        return $this->hasMany('App\Models\AdModel','subcategory_id_fk','cat_id');      
     }
 
     public function paginated_ads()
@@ -60,6 +55,6 @@ class CategoryModel extends Model
     
     public function attribute()
     {
-      return $this->hasMany('App\Model\Attribute','fk_category_id','cat_id');
+      return $this->hasMany('App\Models\AttributeModel','fk_category_id','cat_id');
     }
 }
