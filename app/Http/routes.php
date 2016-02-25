@@ -61,7 +61,20 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		Route::any('store',['as' => 'admin_countries_store' ,'uses' => 'Admin\CountryController@store']);
 
 		});
+		Route::group(array('prefix' => '/states'), function()
+		{
 
+			Route::get('/',['as' => 'admin_states_manage' ,'uses' => 'Admin\StateController@index']);
+			Route::get('show/{enc_id}',['as' => 'admin_states_show' ,'uses' => 'Admin\StateController@show']);
+			Route::get('edit/{enc_id}',['as' => 'admin_states_edit' ,'uses' => 'Admin\StateController@edit']);
+			Route::post('update/{enc_id}',['as' => 'admin_states_update' ,'uses' => 'Admin\StateController@update']);
+			Route::get('create',['as' => 'admin_states_create' ,'uses' => 'Admin\StateController@create']);
+			Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_states_toggle_status' ,'uses' => 'Admin\StateController@toggle_status']);
+			Route::post('multi_action',['as' => 'admin_states_block' ,'uses' => 'Admin\StateController@multi_action']);
+			Route::any('store',['as' => 'admin_states_store' ,'uses' => 'Admin\StateController@store']);
+			Route::get('delete/{enc_id}',['as' => 'admin_states_delete' ,'uses' => 'Admin\StateController@delete']);
+
+		});
 
 	/* Users Module */
 	Route::group(['prefix'=>'users'], function ()
