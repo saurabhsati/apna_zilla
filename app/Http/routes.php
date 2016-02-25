@@ -117,7 +117,16 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 	{
 
 		Route::get('/',['as' => 'newsletter_manage' ,'uses' => 'Admin\NewsLetterController@index']);
-		
+		Route::get('show/{enc_id}',['as' => 'newsletter_show' ,'uses' => 'Admin\NewsLetterController@show']);
+		Route::get('edit/{enc_id}',['as' => 'newsletter_edit' ,'uses' => 'Admin\NewsLetterController@edit']);
+		Route::post('update/{enc_id}',['as' => 'admin_newsletter_update' ,'uses' => 'Admin\NewsLetterController@update']);
+		Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_newsletter_toggle_status' ,'uses' => 'Admin\NewsLetterController@toggle_status']);
+		Route::post('multi_action',['as' => 'admin_newsletter_block' ,'uses' => 'Admin\NewsLetterController@multi_action']);
+		Route::get('create',['as' => 'admin_newsletter_create' ,'uses' => 'Admin\NewsLetterController@create']);
+		Route::any('store',['as' => 'admin_newsletter_store' ,'uses' => 'Admin\NewsLetterController@store']);
+		Route::get('compose',['as' => 'admin_newsletter_compose' ,'uses' => 'Admin\NewsLetterController@compose']);
+		Route::post('send_email',['as' => 'admin_newsletter_send_email' ,'uses' => 'Admin\NewsLetterController@send_email']);
+
 
 	}); 
 
