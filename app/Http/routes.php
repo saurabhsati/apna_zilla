@@ -47,6 +47,21 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		Route::post('multi_action',['as' => 'static_pages_multi_action' ,'uses' => 'Admin\StaticPageController@multi_action']);
 
 		});
+	   /* Location module */
+	   Route::group(array('prefix' => '/countries'), function()
+		{
+		Route::get('/',['as' => 'admin_countries_manage' ,'uses' => 'Admin\CountryController@index']);
+		Route::get('show/{enc_id}',['as' => 'admin_countries_show' ,'uses' => 'Admin\CountryController@show']);
+		Route::get('edit/{enc_id}',['as' => 'admin_countries_edit' ,'uses' => 'Admin\CountryController@edit']);
+		Route::post('update/{enc_id}',['as' => 'admin_countries_update' ,'uses' => 'Admin\CountryController@update']);
+		Route::get('create',['as' => 'admin_countries_create' ,'uses' => 'Admin\CountryController@create']);
+		Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_countries_toggle_status' ,'uses' => 'Admin\CountryController@toggle_status']);
+		Route::get('delete/{enc_id}',['as' => 'admin_countries_delete' ,'uses' => 'Admin\CountryController@delete']);
+		Route::post('multi_action',['as' => 'admin_countries_block' ,'uses' => 'Admin\CountryController@multi_action']);
+		Route::any('store',['as' => 'admin_countries_store' ,'uses' => 'Admin\CountryController@store']);
+
+		});
+
 
 	/* Users Module */
 	Route::group(['prefix'=>'users'], function ()
@@ -117,6 +132,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 	{
 
 		Route::get('/',['as' => 'newsletter_manage' ,'uses' => 'Admin\NewsLetterController@index']);
+
 		Route::get('show/{enc_id}',['as' => 'newsletter_show' ,'uses' => 'Admin\NewsLetterController@show']);
 		Route::get('edit/{enc_id}',['as' => 'newsletter_edit' ,'uses' => 'Admin\NewsLetterController@edit']);
 		Route::post('update/{enc_id}',['as' => 'admin_newsletter_update' ,'uses' => 'Admin\NewsLetterController@update']);
@@ -128,7 +144,9 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		Route::post('send_email',['as' => 'admin_newsletter_send_email' ,'uses' => 'Admin\NewsLetterController@send_email']);
 
 
-	}); 
+
+
+	});
 
 /*****************************End************************************************/
 
