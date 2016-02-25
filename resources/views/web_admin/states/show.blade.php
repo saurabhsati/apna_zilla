@@ -22,7 +22,7 @@
             </span>
             <li>
                 <i class="fa fa-desktop"></i>
-                <a href="{{ url('/').'/web_admin/newsletter' }}">News Letter</a>
+                <a href="{{ url('/').'/web_admin/states' }}">States</a>
             </li>   
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
@@ -40,21 +40,25 @@
                     <div class="col-md-12">
                         <div class="box">
                             <div class="box-title">
-                                <h3><i class="fa fa-file"></i> News Letter Subscribers Information</h3>
+                                <h3><i class="fa fa-file"></i> State Information</h3>
                                 <div class="box-tool">
                                   
                                 </div>
                             </div>
                             <div class="box-content">
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        <!-- <img class="img-responsive img-thumbnail" src="" alt=" logo" /> -->
-                                        <br/><br/>
+                                    <div class="col-md-2">  
+                                        @if(isset($arr_state[0]['state_image']))
+                                             <img class="img-responsive img-thumbnail"  src="{{ $state_public_img_path.$arr_state[0]['state_image']}}" alt="State logo" /> 
+                                        @endif
+                                        <br/>
                                     </div>
                                     <div class="col-md-9 user-profile-info">
-                                        <p><span>Name:</span>{{ isset($arr_newsletter['name'])?$arr_newsletter['name']:'' }}</p>  
-                                        <p><span>Email:</span> {{ isset($amail_address)?$amail_address:'' }}</p> 
-                                        <p><span>Status:</span> {{ ($arr_newsletter['is_active'])?'Active':'Deactive' }}</p>
+                                        <p><span>State Name:</span>{{ isset($arr_state[0]['state_title'])?$arr_state[0]['state_title']:'' }}</p>
+                                       
+                                        <p><span>Country Name:</span> {{ isset($arr_state[0]['country_details']['country_name'])?$arr_state[0]['country_details']['country_name']:'' }}</p>                                        
+                                         
+                                      
                                     </div>
                                 </div>
                             </div>

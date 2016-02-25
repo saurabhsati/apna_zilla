@@ -22,7 +22,7 @@
             </span>
             <li>
                 <i class="fa fa-desktop"></i>
-                <a href="{{ url('/').'/web_admin/countries' }}">Countries</a>
+                <a href="{{ url('/').'/web_admin/states' }}">States</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
@@ -53,7 +53,7 @@
         </div>
         <div class="box-content">
 
-           @if(Session::has('success'))
+          @if(Session::has('success'))
             <div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -74,7 +74,7 @@
           <form class="form-horizontal"
                 id="validation-form"
                 method="POST"
-                action="{{ url('/web_admin/countries/update/'.base64_encode($arr_country['id'])) }}"
+                action="{{ url('/web_admin/states/update/'.base64_encode($arr_state[0]['id'])) }}"
                 enctype="multipart/form-data"
                 files="true"
                 >
@@ -82,40 +82,39 @@
            {{ csrf_field() }}
 
 
-
-           <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="country_name">Country name<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control" name="country_name" data-rule-required="true"
-                        value="{{ isset($arr_country['country_name'])?$arr_country['country_name']:'' }}"
-                     />
-                    <span class='help-block'>{{ $errors->first('country_name') }}</span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="country_code">Country code <i class="red">*</i></label>
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="country_code">Country Name <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" name="country_code" data-rule-required="true"
-                        value="{{ isset($arr_country['country_code'])? strtoupper($arr_country['country_code']):'' }}"
+                        value="{{ isset($arr_state[0]['country_details']['country_name'])? strtoupper($arr_state[0]['country_details']['country_name']):'' }}" readonly
                     />
                     <span class='help-block'>{{ $errors->first('country_code') }}</span>
                 </div>
             </div>
 
+           <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="state">State name<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input class="form-control" name="state_title" data-rule-required="true"
+                        value="{{ isset($arr_state[0]['state_title'])?$arr_state[0]['state_title']:'' }}"
+                     />
+                    <span class='help-block'>{{ $errors->first('state') }}</span>
+                </div>
+            </div>
 
-             <div class="form-group">
+
+           <div class="form-group">
                             <label class="col-sm-3 col-lg-2 control-label"> Image <i class="red">*</i> </label>
                             <div class="col-sm-9 col-lg-10 controls">
                                <div class="fileupload fileupload-new" data-provides="fileupload">
                                   <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
-                                     <img src={{ $country_public_img_path.$arr_country['country_image']}} alt="" />
+                                     <img src={{ $state_public_img_path.$arr_state[0]['state_image']}} alt="" />
                                   </div>
                                   <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                                   <div>
                                      <span class="btn btn-default btn-file"><span class="fileupload-new" >Select image</span>
                                      <span class="fileupload-exists">Change</span>
-                                     <input type="file" class="file-input" name="image" id="ad_image"/></span>
+                                     <input type="file" class="file-input" name="image" id="image"/></span>
                                      <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
 
                                      <span  >
@@ -129,6 +128,8 @@
                                  <button class="btn btn-warning" onclick="return show_more_images()" id="show_more_images_button">Do you want to add slider images ? </button>  -->
                             </div>
                          </div>
+
+
 
 
             <div class="form-group">

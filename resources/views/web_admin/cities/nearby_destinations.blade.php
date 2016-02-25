@@ -21,16 +21,20 @@
                 <i class="fa fa-angle-right"></i>
             </span>
             <li>
-                <i class="fa fa-edit"></i>
-                <a href="{{ url('/').'/web_admin/newsletter' }}">News Letter</a>
+                <i class="fa fa-desktop"></i>
+                <a href="{{ url('/').'/web_admin/cities' }}">City</a>
             </li>   
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span>
-            <li class="active"><i class="fa fa-desktop"></i> Create</li>
+            <li class="active"><i class="fa fa-home"></i> Edit</li>
         </ul>
     </div>
     <!-- END Breadcrumb -->
+
+
+
+
 
     <!-- BEGIN Main Content -->
     <div class="row">
@@ -70,52 +74,53 @@
           <form class="form-horizontal" 
                 id="validation-form" 
                 method="POST" 
-                action="{{ url('/web_admin/newsletter/store') }}" 
+                action="{{ url('/web_admin/cities/add_destinations') }}"
                 enctype="multipart/form-data"
-          >
-
+                files="true"
+                >
 
            {{ csrf_field() }}
 
- 
- 
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="name">Name<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input type="text" class="form-control" id="name" name="name" data-rule-required="true" />
-                    <span class='help-block'>{{ $errors->first('name') }}</span>
-                </div>
-            </div>
-          
-            
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="email_address">Email Address<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input type="email" name="email_address" id="email_address" class="form-control" data-rule-required="true" data-rule-email="true">
-                   <span class='help-block'>{{ $errors->first('email_address') }}</span>
-               </div>
-            </div>
+            @if(isset($dest_ary) && sizeof($dest_ary)>0)
 
+               
+                <div class="form-group">
+                    <label class="col-sm-3 col-lg-2 control-label"><strong>Select Nearby Destinations</strong> </label>
+                    <div class="col-sm-9 col-lg-10 controls"> 
 
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="is_active">Status </label>
-                <div class="col-sm-6 col-lg-4 controls"> 
-                    <input type="checkbox"  name="is_active" value="1" 
-                      /> 
-                    <span class='help-block'>{{ $errors->first('is_active') }}</span>
-                </div>
-            </div>
+                    @for($d=0; $d < sizeof($dest_ary); $d++)
+ 
+                        <div class="col-md-3">
+                          <input type="checkbox"  <?php if($dest_ary[$d]['selected']=='1') { ?> checked="" <?php } ?>
+                           value="{{$dest_ary[$d]['city_id']}}" name="checkbox_{{$d}}" /> {{$dest_ary[$d]['city_title']}}
+                       </div>
+                        
+                    @endfor
+     
+                    </div>
+                 </div> 
                 
+                <input type="hidden" name="records" value="{{$d}}">
+                <input type="hidden" name="city" value="{{$enc_id}}">
+
+            @endif
+
+
+<br/></br>
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
-                <input type="submit"  class="btn btn-primary" value="Add">
+                <input type="submit"  class="btn btn-primary" value="Update">
+
             </div>
         </div>
+
+
     </form>
 </div>
 </div>
 </div>
 </div>
 <!-- END Main Content -->
-  
+
+
 @stop                    

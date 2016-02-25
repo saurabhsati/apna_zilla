@@ -1,7 +1,11 @@
     @extends('web_admin.template.admin')
+
+
     @section('main_content')
     <!-- BEGIN Page Title -->
-    <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/data-tables/latest/dataTables.bootstrap.min.css">
+
+     <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/data-tables/latest/dataTables.bootstrap.min.css">
+
     <div class="page-title">
         <div>
 
@@ -19,7 +23,7 @@
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
                 <i class="fa fa-desktop"></i>
-                <a href="{{ url('/').'/web_admin/countries' }}">Countries</a>
+                <a href="{{ url('/').'/web_admin/states' }}">States</a>
             </span>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
@@ -64,7 +68,7 @@
                 {{ Session::get('error') }}
             </div>
           @endif
-          <form class="form-horizontal" id="frm_manage" method="POST" action="{{ url('/').'/web_admin/countries/multi_action' }}">
+          <form class="form-horizontal" id="frm_manage" method="POST" action="{{ url('/').'/web_admin/states/multi_action' }}">
 
             {{ csrf_field() }}
 
@@ -78,14 +82,10 @@
             <div class="alert alert-warning" id="warning_msg" style="display:none;"></div>
           </div>
           <div class="btn-toolbar pull-right clearfix">
-
-
-          <div class="btn-group">
-          <a href="{{ url('/web_admin/countries/create')}}" class="btn btn-primary btn-add-new-records">Add New Country</a>
+         <div class="btn-group">
+          <a href="{{ url('/web_admin/states/create')}}" class="btn btn-primary btn-add-new-records">Add New state</a>
           </div>
-
-
-             <div class="btn-group">
+          <div class="btn-group">
             <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
                     title="Multiple Active/Unblock"
                     href="javascript:void(0);"
@@ -104,7 +104,9 @@
                     <i class="fa fa-lock"></i>
                 </a>
                 </div>
-           <div class="btn-group">
+
+
+             <div class="btn-group">
 
                 <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
                    title="Multiple Delete"
@@ -117,7 +119,7 @@
             <div class="btn-group">
                 <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
                    title="Refresh"
-                   href="{{ url('/').'/web_admin/countries' }}"
+                   href="{{ url('/').'/web_admin/states' }}"
                    style="text-decoration:none;">
                    <i class="fa fa-repeat"></i>
                 </a>
@@ -134,54 +136,51 @@
                 <tr>
                   <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" /></th>
                   <th>Image</th>
-                  <th>Country Name</th>
-                  <th>Country Code</th>
-                  <th>Action</th>
+                  <th>State/Region</th>
+                  <th>Country</th>
+                 <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                @if(sizeof($arr_countries)>0)
-                  @foreach($arr_countries as $country)
-                   <?php $show_url = '/web_admin/countries/edit/'.base64_encode($country['id']); ?>
+
+                @if(sizeof($arr_states)>0)
+                  @foreach($arr_states as $state)
+                   <?php $show_url = '/web_admin/states/edit/'.base64_encode($state['id']); ?>
 
                   <tr>
                     <td>
                       <input type="checkbox"
                              name="checked_record[]"
-                             value="{{ base64_encode($country['id']) }}" />
+                             value="{{ base64_encode($state['id']) }}" />
                     </td>
-                      <td  onclick="show_details('{{ url('/').$show_url }}')">
-                       <img src="{{ $country_public_img_path.$country['country_image']}}" alt=""  style="width:75px; height:50px;" />
-                        </td>
-                    <td  onclick="show_details('{{ url('/').$show_url }}')"> {{ $country['country_name'] }} </td>
-                    <td  onclick="show_details('{{ url('/').$show_url }}')"> {{ $country['country_code'] }} </td>
+                     <td  onclick="show_details('{{ url('/').$show_url }}')" >
+                     <img src="{{ $state_public_img_path.$state['state_image']}}" alt=""  style="width:75px; height:50px;" />   </td>
+                    <td  onclick="show_details('{{ url('/').$show_url }}')" > {{ $state['state_title'] }} </td>
+                    <td  onclick="show_details('{{ url('/').$show_url }}')" > {{ $state['country_details']['country_name'] }} </td>
 
                     <td>
-                      <a href="{{ url('/').'/web_admin/countries/show/'.base64_encode($country['id']) }}"
+                      <a href="{{ url('/').'/web_admin/states/show/'.base64_encode($state['id']) }}"
                           >
                           <i class="fa fa-eye" > </i>
                         </a>
                         &nbsp;
 
-                        <a href="{{ url('/').'/web_admin/countries/edit/'.base64_encode($country['id']) }}">
+                        <a href="{{ url('/').'/web_admin/states/edit/'.base64_encode($state['id']) }}">
                           <i class="fa fa-edit" ></i>
                         </a>
                         &nbsp;
-                         @if($country['is_active']==0)
-                        <a href="{{ url('/').'/web_admin/countries/toggle_status/'.base64_encode($country['id']).'/activate' }}">
+                        @if($state['is_active']==0)
+                        <a href="{{ url('/').'/web_admin/states/toggle_status/'.base64_encode($state['id']).'/activate' }}">
                             <i class="fa fa-lock" ></i>
                         </a>
 
-                        @elseif($country['is_active']==1)
-                        <a href="{{ url('/').'/web_admin/countries/toggle_status/'.base64_encode($country['id']).'/deactivate' }}">
+                        @elseif($state['is_active']==1)
+                        <a href="{{ url('/').'/web_admin/states/toggle_status/'.base64_encode($state['id']).'/deactivate' }}">
                             <i class="fa fa-unlock" ></i>
                         </a>
                         @endif
-
-
-
                         &nbsp;
-                       <a href="{{ url('/').'/web_admin/countries/delete/'.base64_encode($country['id'])}}"
+                     <a href="{{ url('/').'/web_admin/states/delete/'.base64_encode($state['id']) }}"
                        onclick="return confirm_delete();"
                            onclick="javascript:return confirm_delete()">
                           <i class="fa fa-trash" ></i>
@@ -193,7 +192,7 @@
               </tbody>
             </table>
           </div>
-        <div>   </div>
+        <div> </div>
 
           </form>
       </div>
@@ -211,7 +210,7 @@ function show_details(url)
 
     function confirm_delete()
     {
-       if(confirm("This will delete all regions/cities under this country. \n Are you sure ?"))
+       if(confirm('This will delete all cities under this Region/state. \n Are you sure ?'))
        {
         return true;
        }
@@ -253,11 +252,9 @@ function show_details(url)
       }
     }
 </script>
-
  <!--page specific plugin scripts-->
         <script type="text/javascript" src="{{ url('/') }}/assets/data-tables/latest/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="{{ url('/') }}/assets/data-tables/latest/dataTables.bootstrap.min.js"></script>
-
 @stop
 
 
