@@ -136,7 +136,6 @@
                   <th>Image</th>
                   <th>Country Name</th>
                   <th>Country Code</th>
-                  <th>Country Status </th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -156,19 +155,6 @@
                         </td>
                     <td  onclick="show_details('{{ url('/').$show_url }}')"> {{ $country['country_name'] }} </td>
                     <td  onclick="show_details('{{ url('/').$show_url }}')"> {{ $country['country_code'] }} </td>
-                    <td>
-                        @if($country['is_active']==0)
-                        <a href="{{ url('/').'/web_admin/countries/toggle_status/'.base64_encode($country['id']).'/activate' }}">
-                            <i class="fa fa-lock" ></i>
-                        </a>
-
-                        @elseif($country['is_active']==1)
-                        <a href="{{ url('/').'/web_admin/countries/toggle_status/'.base64_encode($country['id']).'/deactivate' }}">
-                            <i class="fa fa-unlock" ></i>
-                        </a>
-                        @endif
-                    </td>
-
 
                     <td>
                       <a href="{{ url('/').'/web_admin/countries/show/'.base64_encode($country['id']) }}"
@@ -180,7 +166,17 @@
                         <a href="{{ url('/').'/web_admin/countries/edit/'.base64_encode($country['id']) }}">
                           <i class="fa fa-edit" ></i>
                         </a>
+                        &nbsp;
+                         @if($country['is_active']==0)
+                        <a href="{{ url('/').'/web_admin/countries/toggle_status/'.base64_encode($country['id']).'/activate' }}">
+                            <i class="fa fa-lock" ></i>
+                        </a>
 
+                        @elseif($country['is_active']==1)
+                        <a href="{{ url('/').'/web_admin/countries/toggle_status/'.base64_encode($country['id']).'/deactivate' }}">
+                            <i class="fa fa-unlock" ></i>
+                        </a>
+                        @endif
 
 
 

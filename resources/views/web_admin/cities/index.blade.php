@@ -136,7 +136,6 @@
                   <th>Image</th>
                   <th>City</th>
                   <th>State/Region :: Country</th>
-                  <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -164,18 +163,7 @@
                     <td  onclick="show_details('{{ url('/').$show_url }}')" >
                     {{ isset($city['state_details']['state_title'])?$city['state_details']['state_title'].'::':''}}
                     {{ $city['country_details']['country_name'] }} </td>
-                    <td>
-                       @if($city['is_active']==0)
-                        <a href="{{ url('/').'/web_admin/cities/toggle_status/'.base64_encode($city['id']).'/activate' }}">
-                            <i class="fa fa-lock" ></i>
-                        </a>
 
-                        @elseif($city['is_active']==1)
-                        <a href="{{ url('/').'/web_admin/cities/toggle_status/'.base64_encode($city['id']).'/deactivate' }}">
-                            <i class="fa fa-unlock" ></i>
-                        </a>
-                        @endif
-                    </td>
                     <td>
                       <a href="{{ url('/').'/web_admin/cities/show/'.base64_encode($city['id']) }}"
                           >
@@ -187,6 +175,17 @@
                           <i class="fa fa-edit" ></i>
                         </a>
 
+                        &nbsp;
+                        @if($city['is_active']==0)
+                        <a href="{{ url('/').'/web_admin/cities/toggle_status/'.base64_encode($city['id']).'/activate' }}">
+                            <i class="fa fa-lock" ></i>
+                        </a>
+
+                        @elseif($city['is_active']==1)
+                        <a href="{{ url('/').'/web_admin/cities/toggle_status/'.base64_encode($city['id']).'/deactivate' }}">
+                            <i class="fa fa-unlock" ></i>
+                        </a>
+                        @endif
                         &nbsp;
                      <a href="{{ url('/').'/web_admin/cities/delete/'.base64_encode($city['id'])}}"
                        onclick="return confirm_delete();"

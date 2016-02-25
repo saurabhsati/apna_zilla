@@ -138,8 +138,7 @@
                   <th>Image</th>
                   <th>State/Region</th>
                   <th>Country</th>
-                  <th>State Status</th>
-                  <th>Action</th>
+                 <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -158,19 +157,6 @@
                      <img src="{{ $state_public_img_path.$state['state_image']}}" alt=""  style="width:75px; height:50px;" />   </td>
                     <td  onclick="show_details('{{ url('/').$show_url }}')" > {{ $state['state_title'] }} </td>
                     <td  onclick="show_details('{{ url('/').$show_url }}')" > {{ $state['country_details']['country_name'] }} </td>
-                    <td>
-                      @if($state['is_active']==0)
-                        <a href="{{ url('/').'/web_admin/states/toggle_status/'.base64_encode($state['id']).'/activate' }}">
-                            <i class="fa fa-lock" ></i>
-                        </a>
-
-                        @elseif($state['is_active']==1)
-                        <a href="{{ url('/').'/web_admin/states/toggle_status/'.base64_encode($state['id']).'/deactivate' }}">
-                            <i class="fa fa-unlock" ></i>
-                        </a>
-                        @endif
-                    </td>
-
 
                     <td>
                       <a href="{{ url('/').'/web_admin/states/show/'.base64_encode($state['id']) }}"
@@ -182,7 +168,17 @@
                         <a href="{{ url('/').'/web_admin/states/edit/'.base64_encode($state['id']) }}">
                           <i class="fa fa-edit" ></i>
                         </a>
+                        &nbsp;
+                        @if($state['is_active']==0)
+                        <a href="{{ url('/').'/web_admin/states/toggle_status/'.base64_encode($state['id']).'/activate' }}">
+                            <i class="fa fa-lock" ></i>
+                        </a>
 
+                        @elseif($state['is_active']==1)
+                        <a href="{{ url('/').'/web_admin/states/toggle_status/'.base64_encode($state['id']).'/deactivate' }}">
+                            <i class="fa fa-unlock" ></i>
+                        </a>
+                        @endif
                         &nbsp;
                      <a href="{{ url('/').'/web_admin/states/delete/'.base64_encode($state['id']) }}"
                        onclick="return confirm_delete();"
