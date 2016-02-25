@@ -134,6 +134,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_categories_toggle_status' ,'uses' => 'Admin\CategoryController@toggle_status']);
 		Route::post('multi_action',['as' => 'admin_categories_block' ,'uses' => 'Admin\CategoryController@multi_action']);
 		Route::post('store',['as' => 'admin_categories_store' ,'uses' => 'Admin\CategoryController@store']);
+		Route::get('delete/{enc_id}',['as' => 'admin_categories_delete' ,'uses' => 'Admin\CategoryController@delete']);
 
 		Route::get('sub_categories/{enc_id}',['as' => 'admin_sub_categories_store' ,'uses' => 'Admin\CategoryController@show_sub_categories']);
 		Route::post('sub_categories/update',['as' => 'admin_sub_categories_update' ,'uses' => 'Admin\CategoryController@update']);

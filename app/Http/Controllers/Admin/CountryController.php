@@ -18,9 +18,9 @@ class CountryController extends Controller
         $this->country_base_data_path = base_path().'/public/uploads/countries/data/';
         $this->country_public_img_path = url('/').'/uploads/countries/images/';
     }
+
     public function index()
     {
-
         $page_title = "Manage Countries";
         $arr_countries = array();
 
@@ -35,6 +35,8 @@ class CountryController extends Controller
 
         return view('web_admin.country.index',compact('page_title','arr_countries','country_public_img_path'));
     }
+
+
      public function show($enc_id)
     {
        $page_title = "Show Country";
@@ -50,8 +52,8 @@ class CountryController extends Controller
        $country_public_img_path = $this->country_public_img_path;
 
        return view('web_admin.country.show',compact('page_title','arr_country','country_public_img_path'));
-
     }
+
     public function edit($enc_id)
     {
         $id = base64_decode($enc_id);
@@ -68,6 +70,7 @@ class CountryController extends Controller
 
         return view('web_admin.country.edit',compact('page_title','arr_country','country_public_img_path'));
     }
+    
     public function update(Request $request, $enc_id)
     {
         $id = base64_decode($enc_id);
@@ -280,7 +283,6 @@ class CountryController extends Controller
                 {
                     foreach ($result_arry as $ary)
                     {
-
                         $arr_data = array();
                         $arr_data['country_name'] =  $ary['country_name'];
                         $arr_data['country_code'] =  $ary['country_code'];
@@ -320,9 +322,6 @@ class CountryController extends Controller
                                                   'country_slug' =>  $arr_data['country_slug']]);
                         }
 
-
-
-
                     } //foreach
 
                     if($success == 0)
@@ -344,7 +343,5 @@ class CountryController extends Controller
         });
 
     }
-
-
 
 }

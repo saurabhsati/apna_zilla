@@ -288,6 +288,7 @@ class CategoryController extends Controller
         return redirect()->back();
     }
 
+
     public function toggle_status($enc_id,$action)
     {
         if($action=="activate")
