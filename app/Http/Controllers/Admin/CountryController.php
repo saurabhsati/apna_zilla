@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\CountryModel;
+use App\Models\StateModel;
+use App\Models\CityModel;
 use Validator;
 use Session;
 class CountryController extends Controller
@@ -174,6 +176,8 @@ class CountryController extends Controller
      protected function _delete($enc_id)
     {
         $id = base64_decode($enc_id);
+        StateModel::where('countries_id',$id)->delete();
+        CityModel::where('countries_id',$id)->delete();
        return CountryModel::where('id',$id)->delete();
     }
      public function multi_action(Request $request)

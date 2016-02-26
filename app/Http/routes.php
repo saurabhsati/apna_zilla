@@ -94,6 +94,23 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 		});
 
+		Route::group(array('prefix' => '/zipcode'), function()
+		{
+
+			Route::get('/',['as' => 'admin_cities_manage' ,'uses' => 'Admin\ZipController@index']);
+			Route::get('create',['as' => 'admin_cities_create' ,'uses' => 'Admin\ZipController@create']);
+			Route::any('store',['as' => 'admin_cities_store' ,'uses' => 'Admin\ZipController@store']);
+			Route::get('show/{enc_id}',['as' => 'admin_cities_show' ,'uses' => 'Admin\ZipController@show']);
+			Route::get('edit/{enc_id}',['as' => 'admin_cities_edit' ,'uses' => 'Admin\ZipController@edit']);
+			Route::post('update/{enc_id}',['as' => 'admin_cities_update' ,'uses' => 'Admin\ZipController@update']);
+			Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_cities_toggle_status' ,'uses' => 'Admin\ZipController@toggle_status']);
+			Route::post('multi_action',['as' => 'admin_cities_block' ,'uses' => 'Admin\ZipController@multi_action']);
+
+			/*Route::any('nearby_destinations/{enc_id}',['as' => 'admin_nearby_destinations' ,'uses' => 'Admin\ZipController@nearby_destinations']);
+			Route::any('add_destinations',['as' => 'admin_add_destinations' ,'uses' => 'Admin\ZipController@add_destinations']);
+			*/Route::get('delete/{enc_id}',['as' => 'admin_cities_delete' ,'uses' => 'Admin\ZipController@delete']);
+
+		});
 
 		/* Comman function */
 		Route::group(array('prefix' => '/common'), function()
