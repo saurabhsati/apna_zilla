@@ -225,7 +225,7 @@ class ZipController extends Controller
     public function _parse_uploded_file($file_name)
     {
         $success = 1;
-        Excel::load($file_name, function($reader)
+        /*Excel::load($file_name, function($reader)
         {
             $results = $reader->get();
             if($results)
@@ -242,8 +242,7 @@ class ZipController extends Controller
                         $arr_data['latitude'] =  $ary['latitude'];
                         $arr_data['longitude'] =  $ary['longitude'];
 
-                        /* Duplication Check */
-                        $success = 1;
+                       $success = 1;
                         if(ZipModel::where('zipcode',$arr_data['zipcode'])->exists()==FALSE)
                         {
                             $status = ZipModel::create($arr_data);
@@ -288,7 +287,7 @@ class ZipController extends Controller
             }
 
 
-        });
+        });*/
 
     }
 
