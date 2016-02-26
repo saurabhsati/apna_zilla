@@ -1,4 +1,4 @@
-    @extends('web_admin.template.admin')                
+    @extends('web_admin.template.admin')
 
 
     @section('main_content')
@@ -23,7 +23,7 @@
                 <i class="fa fa-angle-right"></i>
                 <i class="fa fa-envelope"></i>
                 <a href="{{ url('/').'/web_admin/email_template' }}">Email Template</a>
-            </span> 
+            </span>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
                   <i class="fa fa-list"></i>
@@ -49,7 +49,7 @@
             </div>
         </div>
         <div class="box-content">
-        
+
           @if(Session::has('success'))
             <div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -57,7 +57,7 @@
                 </button>
                 {{ Session::get('success') }}
             </div>
-          @endif  
+          @endif
 
           @if(Session::has('error'))
             <div class="alert alert-danger alert-dismissible">
@@ -72,22 +72,22 @@
             {{ csrf_field() }}
 
             <div class="col-md-10">
-            
+
 
             <div id="ajax_op_status">
-                
+
             </div>
             <div class="alert alert-danger" id="no_select" style="display:none;"></div>
             <div class="alert alert-warning" id="warning_msg" style="display:none;"></div>
           </div>
           <div class="btn-toolbar pull-right clearfix">
-            <div class="btn-group"> 
-                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip" 
-                   title="Refresh" 
+            <div class="btn-group">
+                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
+                   title="Refresh"
                    href="{{ url('/').'/web_admin/email_template' }}"
                    style="text-decoration:none;">
                    <i class="fa fa-repeat"></i>
-                </a> 
+                </a>
             </div>
           </div>
           <br/>
@@ -100,44 +100,44 @@
               <thead>
                 <tr>
                   <th style="width:18px">Sr.No.</th>
-                  <th> Name</th> 
-                  <th> From</th> 
-                  <th> From email</th> 
-                  <th>Subject </th> 
+                  <th> Name</th>
+                  <th> From</th>
+                  <th> From email</th>
+                  <th>Subject </th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                
+
                 @if(sizeof($arr_email_template)>0)
                   @foreach($arr_email_template as $email_template)
                   <tr>
                     <td> {{ $email_template['id'] }} </td>
-                    <td> {{ $email_template['template_name'] }} </td> 
-                    <td> {{ $email_template['template_from'] }} </td> 
-                    <td> {{ $email_template['template_from_mail'] }} </td> 
-                    <td> {{ $email_template['template_subject'] }} </td>  
-                    <td> 
-                    <!--   <a href="{{ url('/').'/web_admin/email_template/show/'.base64_encode($email_template['id']) }}" 
+                    <td> {{ $email_template['template_name'] }} </td>
+                    <td> {{ $email_template['template_from'] }} </td>
+                    <td> {{ $email_template['template_from_mail'] }} </td>
+                    <td> {{ $email_template['template_subject'] }} </td>
+                    <td>
+                    <!--   <a href="{{ url('/').'/web_admin/email_template/show/'.base64_encode($email_template['id']) }}"
                           >
                           <i class="fa fa-eye" > </i>
                         </a>
                         &nbsp;   -->
- 
+
                         <a href="{{ url('/').'/web_admin/email_template/edit/'.base64_encode($email_template['id']) }}">
                           <i class="fa fa-edit" ></i>
-                        </a>  
-                        
+                        </a>
+
                     </td>
                   </tr>
                   @endforeach
                 @endif
-                 
+
               </tbody>
             </table>
           </div>
-        
-         
+
+
           </form>
       </div>
   </div>
@@ -158,7 +158,7 @@
 
     function check_multi_action(frm_id,action)
     {
-      
+
       if(action == 'delete')
       {
         if(confirm_delete() == false)
@@ -170,7 +170,7 @@
       {
         /* Get hidden input reference */
         var input_multi_action = jQuery('input[name="multi_action"]');
-        
+
         if(jQuery(input_multi_action).length)
         {
           /* Set Action in hidden input*/
@@ -191,6 +191,6 @@
       }
     }
 </script>
-@stop                    
+@stop
 
 

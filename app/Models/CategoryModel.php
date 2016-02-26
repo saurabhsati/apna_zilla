@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CategoryModel extends Model
 {
 	use SoftDeletes;
-	
+
     protected $table = "categories";
-     protected $fillable = ['cat_desc', 'cat_slug','cat_meta_description','cat_meta_keyword', 'parent','cat_img','cat_thumb','cat_order','is_active','cat_logo','is_priceable'];
+     protected $fillable = ['cat_desc', 'cat_slug','cat_meta_description','cat_meta_keyword','public_id', 'parent','cat_img','cat_thumb','cat_order','is_active','cat_logo','is_priceable'];
 
     /**
      *  Relation with  category_lang record .
@@ -35,12 +35,12 @@ class CategoryModel extends Model
 
     public function brands()
     {
-        return $this->hasMany('App\Models\CategoryBrandModel','fk_cat_id','cat_id');   
+        return $this->hasMany('App\Models\CategoryBrandModel','fk_cat_id','cat_id');
     }
 
     public function ads()
     {
-        return $this->hasMany('App\Models\AdModel','subcategory_id_fk','cat_id');      
+        return $this->hasMany('App\Models\AdModel','subcategory_id_fk','cat_id');
     }
 
     public function paginated_ads()
@@ -52,7 +52,7 @@ class CategoryModel extends Model
     {
         $this->child_category()->delete();
     }
-    
+
     public function attribute()
     {
       return $this->hasMany('App\Models\AttributeModel','fk_category_id','cat_id');

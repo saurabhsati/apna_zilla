@@ -16,10 +16,10 @@ class CategoryController extends Controller
  	{
  		$arr_except_auth_methods = array();
  		$this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
-        $this->cat_img_path = base_path().'/public/'.config('app.project.img_path.category');
+        $this->cat_img_path = base_path().'/public'.config('app.project.img_path.category');
         $this->cat_img_public_path = url('/').config('app.project.img_path.category');
 
- 	}   
+ 	}
 
  	public function index()
  	{
@@ -34,7 +34,7 @@ class CategoryController extends Controller
  		}
 
  		return view('web_admin.category.index',compact('page_title','arr_category'));
- 	}	
+ 	}
 
  	public function create(Request $request,$enc_cat_id=FALSE)
  	{
@@ -45,7 +45,7 @@ class CategoryController extends Controller
 
         if($obj_category!=FALSE)
         {
-        foreach ($obj_category as $key => $category) 
+        foreach ($obj_category as $key => $category)
         {
             $arr_category = $obj_category->toArray();
         }
@@ -69,7 +69,7 @@ class CategoryController extends Controller
         {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        
+
         $category = $request->input('category');
         $title = $request->input('title');
         $is_priceable = $request->input('is_priceable','0');
@@ -77,19 +77,19 @@ class CategoryController extends Controller
         $cat_meta_description = $request->input('cat_meta_description');
 
         $cat_slug = str_slug($title);
-        
-         /* update public key in Category table*/
-        $cat_id=CategoryModel::first()->cat_id;           
-        $public_id = (new GeneratorController)->alphaID($cat_id);  
 
+         /* update public key in Category table*/
+        $cat_id=CategoryModel::first()->cat_id;
+        $public_id = (new GeneratorController)->alphaID($cat_id);
+        //echo $public_id;exit;
         $cat_img = "default_category.png";
         if((int)$category==0)
         {
-            if ($request->hasFile('cat_img')) 
+            if ($request->hasFile('cat_img'))
             {
                 $cv_valiator = Validator::make(array('cat_img'=>$request->file('cat_img')),array(
                                                     'cat_img' => 'mimes:jpg,jpeg,png'
-                                                )); 
+                                                ));
 
                 if ($request->file('cat_img')->isValid() && $cv_valiator->passes())
                 {
@@ -100,8 +100,8 @@ class CategoryController extends Controller
                     $request->file('cat_img')->move(
                     $this->cat_img_path, $image_name
                     );
-                  
-                    $cat_img = $image_name;     
+
+                    $cat_img = $image_name;
                 }
                 else
                 {
@@ -109,7 +109,7 @@ class CategoryController extends Controller
                 }
 
             }
-        }   
+        }
 
 
         $arr_cat = array();
@@ -125,7 +125,6 @@ class CategoryController extends Controller
 
         $arr_cat['cat_meta_keyword'] =$cat_meta_keyword;
         $arr_cat['cat_meta_description'] =$cat_meta_description;
-        
         $status=CategoryModel::create($arr_cat);
         $status->save();
         /* Insert in Category Lang */
@@ -138,11 +137,11 @@ class CategoryController extends Controller
         {
             Session::flash('error','Problem Occured, While Adding Category');
         }
-    
+
         return redirect()->back();
     }
 
-    
+
 
  	public function edit($enc_id)
  	{
@@ -186,13 +185,13 @@ class CategoryController extends Controller
         $status = CategoryModel::where('id',$id)->update($arr_data);
 
         if($status)
-        {   
+        {
             Session::flash('success','Category Updated Successfully');
         }
         else
         {
             Session::flash('error','Problem Occured While Updating Category ');
-        }   
+        }
 
         return redirect()->back();
     }
@@ -220,7 +219,7 @@ class CategoryController extends Controller
 
         if($obj_category!=FALSE)
         {
-            foreach ($obj_category as $key => $category) 
+            foreach ($obj_category as $key => $category)
             {
                $category->child_category;
             }
@@ -233,7 +232,7 @@ class CategoryController extends Controller
         if($obj_category!=FALSE)
         {
           $arr_category = $obj_category->toArray();
-        }    
+        }
 
         return view('web_admin.category.show_sub_categories',compact('page_title','arr_sub_category','arr_category','enc_id'));
     }
@@ -265,24 +264,24 @@ class CategoryController extends Controller
 
         }
 
-        foreach ($checked_record as $key => $record_id) 
+        foreach ($checked_record as $key => $record_id)
         {
             if($multi_action=="activate")
             {
-               $this->_activate($record_id); 
-               Session::flash('success','Category(s) Activated Successfully'); 
+               $this->_activate($record_id);
+               Session::flash('success','Category(s) Activated Successfully');
             }
             elseif($multi_action=="block")
             {
-               $this->_block($record_id);    
-               Session::flash('success','Category(s) Blocked Successfully');   
+               $this->_block($record_id);
+               Session::flash('success','Category(s) Blocked Successfully');
             }
             elseif($multi_action=="delete")
             {
-               $this->_delete($record_id);    
-               Session::flash('success','Category(s) Deleted Successfully');  
+               $this->_delete($record_id);
+               Session::flash('success','Category(s) Deleted Successfully');
             }
-             
+
         }
 
         return redirect()->back();
@@ -292,16 +291,16 @@ class CategoryController extends Controller
     public function toggle_status($enc_id,$action)
     {
         if($action=="activate")
-        {   
+        {
             $this->_activate($enc_id);
 
-            Session::flash('success','Category(s) Activated Successfully');                 
+            Session::flash('success','Category(s) Activated Successfully');
         }
         elseif($action=="block")
         {
-            $this->_block($enc_id); 
+            $this->_block($enc_id);
 
-            Session::flash('success','Category(s) Blocked Successfully');                
+            Session::flash('success','Category(s) Blocked Successfully');
         }
         return redirect()->back();
     }
@@ -310,11 +309,11 @@ class CategoryController extends Controller
     {
         if($this->_delete($enc_id))
         {
-            Session::flash('success','Category(s) Deleted Successfully');                   
+            Session::flash('success','Category(s) Deleted Successfully');
         }
         else
         {
-            Session::flash('error','Problem Occured While Deleting Category(s)');                      
+            Session::flash('error','Problem Occured While Deleting Category(s)');
         }
         return redirect()->back();
     }
@@ -322,19 +321,19 @@ class CategoryController extends Controller
     protected function _activate($enc_id)
     {
         $id = base64_decode($enc_id);
-        return CategoryModel::where('cat_id',$id)->update(array('is_active'=>1));    
+        return CategoryModel::where('cat_id',$id)->update(array('is_active'=>1));
     }
 
     protected function _block($enc_id)
     {
         $id = base64_decode($enc_id);
-        return CategoryModel::where('cat_id',$id)->update(array('is_active'=>0));    
+        return CategoryModel::where('cat_id',$id)->update(array('is_active'=>0));
     }
 
     protected function _delete($enc_id)
     {
     	$id = base64_decode($enc_id);
-		return CategoryModel::where('cat_id',$id)->delete();  
+		return CategoryModel::where('cat_id',$id)->delete();
     }
 
       public function __update_unique_category_id($id)
