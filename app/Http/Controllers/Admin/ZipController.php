@@ -9,12 +9,13 @@ use App\Http\Controllers\Controller;
 use App\Models\ZipModel;
 use Validator;
 use Session;
+use Excel;
 class ZipController extends Controller
 {
     //
     public function __construct()
     {
-
+        $this->zip_base_data_path = base_path().'/public/uploads/zipcode/data/';
     }
     public function index()
     {
@@ -36,7 +37,41 @@ class ZipController extends Controller
     }
     public function store(Request $request)
     {
+        $form_data = array();
 
+        /*---------- File uploading code starts here ------------*/
+
+        $form_data = $request->all();
+
+        $fileName = "";
+        $file_url = "";
+
+        if ($request->hasFile('excel_file'))
+        {
+            $excel_file_name = $form_data['excel_file'];
+            $fileExtension = $request->file('excel_file')->getClientOriginalExtension();
+
+            if($fileExtension == 'csv' || $fileExtension == 'xls' || $fileExtension == 'xlsx')
+            {
+
+                $fileName = sha1(uniqid().$excel_file_name.uniqid()).'.'.$fileExtension;
+                $request->file('excel_file')->move($this->zip_base_data_path, $fileName);
+
+                $this->_parse_uploded_file($this->zip_base_data_path."/".$fileName);
+
+            }
+            else
+            {
+                 Session::flash('error','Invalid file extension');
+            }
+
+            $file_url = $fileName;
+        }
+
+
+        /*---------- File uploading code ends ------------*/
+
+       return redirect('/web_admin/zipcode/create');
     }
     public function show($enc_id)
     {
@@ -186,6 +221,75 @@ class ZipController extends Controller
          $id = base64_decode($enc_id);
         return ZipModel::where('id',$id)
                   ->delete();
+    }
+    public function _parse_uploded_file($file_name)
+    {
+        $success = 1;
+        Excel::load($file_name, function($reader)
+        {
+            $results = $reader->get();
+            if($results)
+            {
+                $result_arry =  $results->toArray();
+
+                if(sizeof($result_arry) > 0)
+                {
+                    foreach ($result_arry as $ary)
+                    {
+                        $arr_data = array();
+                        $arr_data['country_code'] =  $ary['country_code'];
+                        $arr_data['zipcode'] =  $ary['zipcode'];
+                        $arr_data['latitude'] =  $ary['latitude'];
+                        $arr_data['longitude'] =  $ary['longitude'];
+
+                        /* Duplication Check */
+                        $success = 1;
+                        if(ZipModel::where('zipcode',$arr_data['zipcode'])->exists()==FALSE)
+                        {
+                            $status = ZipModel::create($arr_data);
+                            if($status)
+                            {
+
+                                Session::flash('success','ZipCode Inserted Successfully');
+
+                            }
+                            else
+                            {
+                                $success = 0;
+                                Session::flash('error','Problem Occured, While  Insering record for Zip Code: '.$this->ZipModel->zipcode);
+                                 break;
+                            }
+                        }
+                        else
+                        {
+                            //update record
+                            CountryModel::where('zipcode',$arr_data['zipcode'])
+                                        ->update(['country_code' =>$arr_data['country_code'],
+                                                  'latitude' =>  $arr_data['latitude'],
+                                                   'longitude' =>  $arr_data['longitude']
+                                                  ]);
+                        }
+
+                    } //foreach
+
+                    if($success == 0)
+                    {
+                        Session::flash('error','Problem Occurred, While Inserting record for ZipCode :'.$this->ZipModel->zipcode);
+                        break;
+                    }
+                    else
+                    {
+                         Session::flash('success','ZipCode Inserted Successfully');
+                    }
+
+                } //if sizeof
+
+
+            }
+
+
+        });
+
     }
 
 }

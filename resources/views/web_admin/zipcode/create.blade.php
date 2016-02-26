@@ -67,7 +67,7 @@
             </div>
           @endif
 
-          <form class="form-horizontal" id="validation-form" method="POST" action="{{ url('/web_admin/countries/store') }}" enctype="multipart/form-data"
+          <form class="form-horizontal" id="validation-form" method="POST" action="{{ url('/web_admin/zipcode/store') }}" enctype="multipart/form-data"
           >
 
 
