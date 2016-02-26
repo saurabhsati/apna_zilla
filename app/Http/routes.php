@@ -105,11 +105,26 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::post('update/{enc_id}',['as' => 'admin_cities_update' ,'uses' => 'Admin\ZipController@update']);
 			Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_cities_toggle_status' ,'uses' => 'Admin\ZipController@toggle_status']);
 			Route::post('multi_action',['as' => 'admin_cities_block' ,'uses' => 'Admin\ZipController@multi_action']);
+			Route::get('delete/{enc_id}',['as' => 'admin_cities_delete' ,'uses' => 'Admin\ZipController@delete']);
 
-			/*Route::any('nearby_destinations/{enc_id}',['as' => 'admin_nearby_destinations' ,'uses' => 'Admin\ZipController@nearby_destinations']);
-			Route::any('add_destinations',['as' => 'admin_add_destinations' ,'uses' => 'Admin\ZipController@add_destinations']);
-			*/Route::get('delete/{enc_id}',['as' => 'admin_cities_delete' ,'uses' => 'Admin\ZipController@delete']);
+		});
+		/* Email Template Module */
+		Route::group(array('prefix' => '/email_template'), function()
+		{
+			Route::get('/',						['as' => 'admin_email_template_index'		,'uses' => 'Admin\EmailTemplateController@index']);
+			Route::get('create/',				['as' => 'admin_email_template_create' 		,'uses' => 'Admin\EmailTemplateController@create']);
+			Route::post('store/',				['as' => 'admin_email_template_store' 		,'uses' => 'Admin\EmailTemplateController@store']);
+			Route::get('edit/{coupon_id}',		['as' => 'admin_email_template_edit'		,'uses' => 'Admin\EmailTemplateController@edit']);
+			Route::post('update/{coupon_id}',	['as' => 'admin_email_template_update' 		,'uses' => 'Admin\EmailTemplateController@update']);
+		});
 
+		Route::group(array('prefix' => '/email_template'), function()
+		{
+			Route::get('/',						['as' => 'admin_email_template_index'		,'uses' => 'Admin\EmailTemplateController@index']);
+			Route::get('create/',				['as' => 'admin_email_template_create' 		,'uses' => 'Admin\EmailTemplateController@create']);
+			Route::post('store/',				['as' => 'admin_email_template_store' 		,'uses' => 'Admin\EmailTemplateController@store']);
+			Route::get('edit/{coupon_id}',		['as' => 'admin_email_template_edit'		,'uses' => 'Admin\EmailTemplateController@edit']);
+			Route::post('update/{coupon_id}',	['as' => 'admin_email_template_update' 		,'uses' => 'Admin\EmailTemplateController@update']);
 		});
 
 		/* Comman function */
@@ -121,8 +136,6 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::get('get_nearby_city/{city_id}/{state_id}',['as' => 'get_nearby_city' ,'uses' => 'Common\CountryController@get_nearby_city']);
 
 			Route::get('get_sub_category/{id}',['as' => 'get_sub_category' ,'uses' => 'Common\CategoryController@get_sub_category']);*/
-
-
 
 		});
 	/* Users Module */

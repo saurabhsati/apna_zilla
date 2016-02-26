@@ -3,12 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class EmailTemplate extends Model
+class EmailTemplateModel extends Model
 {
-	//use SoftDeletes;
-     protected $table = 'email_template';
+    //
+    protected $table = 'email_template';
 
     protected $fillable = ['template_name',
     						'template_subject',
@@ -18,5 +17,4 @@ class EmailTemplate extends Model
     						'template_variables',
     						'is_active'
     						];
-
 }

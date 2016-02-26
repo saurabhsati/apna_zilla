@@ -102,6 +102,17 @@
             </ul>
 
         </li>
+         <li class="<?php  if(Request::segment(2) == 'email_template'){ echo 'active'; } ?>">
+                        <a href="javascript:void(0)" class="dropdown-toggle">
+                            <i class="fa fa-envelope"></i>
+                            <span>Email Template</span>
+                            <b class="arrow fa fa-angle-right"></b>
+                        </a>
+
+                         <ul class="submenu">
+                            <li style="display: block;"><a href="{{ url('/web_admin/email_template')}}">Manage</a> </li>
+                        </ul>
+                    </li>
     </ul>
     <!-- END Navlist -->
     <!-- BEGIN Sidebar Collapse Button -->
