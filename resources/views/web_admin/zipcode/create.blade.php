@@ -22,7 +22,7 @@
             </span>
             <li>
                 <i class="fa fa-edit"></i>
-                <a href="{{ url('/').'/web_admin/countries' }}">ZipCode</a>
+                <a href="{{ url('/').'/web_admin/zipcode' }}">ZipCode</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
