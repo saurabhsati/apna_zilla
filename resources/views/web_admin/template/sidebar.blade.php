@@ -102,6 +102,18 @@
             </ul>
 
         </li>
+
+         <li class="{{ Request::segment(2)=='contact_enquiry'?'active':'' }}">
+            <a href="javascript:void(0)" class="dropdown-toggle">
+                <i class="fa fa-phone"></i>
+                <span>Contact Enquiry</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+            <ul class="submenu">
+                <li style="display: block;"><a href="{{ url('/web_admin/contact_enquiry')}}">Manage</a> </li>
+            </ul>
+        </li>
+
     </ul>
     <!-- END Navlist -->
     <!-- BEGIN Sidebar Collapse Button -->

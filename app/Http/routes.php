@@ -148,7 +148,6 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 	});
 
-
 	/*------------------------- web_admin Attribute Related ------------------------------*/
 
 	Route::group(array('prefix' => 'attribute'), function()
@@ -167,12 +166,20 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 	});
 
-	/*------------------------- web_admin Contact Enquiry Related ------------------------------*/
 
+	/*------------------------- web_admin Contact Enquiry Related ----------*--------------------*/
+
+	Route::group(array('prefix' => 'contact_enquiry'), function()
+	{
+		Route::get('/',['as' => 'list_contact_enquiry' ,'uses' => 'Admin\ContactEnquiryController@index']);
+		Route::get('show/{enc_id}',['as' => 'show_contact_enquiry' ,'uses' => 'Admin\ContactEnquiryController@show']); 
+
+	}); 
+
+    /*************************************End*****************************************************/
 
 
 /*************************News Letter Module***********************************/
-
 
 	Route::group(array('prefix' => 'newsletter'), function()
 	{
@@ -188,9 +195,6 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		Route::any('store',['as' => 'admin_newsletter_store' ,'uses' => 'Admin\NewsLetterController@store']);
 		Route::get('compose',['as' => 'admin_newsletter_compose' ,'uses' => 'Admin\NewsLetterController@compose']);
 		Route::post('send_email',['as' => 'admin_newsletter_send_email' ,'uses' => 'Admin\NewsLetterController@send_email']);
-
-
-
 
 	});
 
