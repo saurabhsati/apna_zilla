@@ -16,6 +16,9 @@ class CategoryController extends Controller
  	{
  		$arr_except_auth_methods = array();
  		$this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
+        $this->cat_img_path = base_path().'/public/'.config('app.project.img_path.category');
+        $this->cat_img_public_path = url('/').config('app.project.img_path.category');
+
  	}   
 
  	public function index()
@@ -74,6 +77,10 @@ class CategoryController extends Controller
         $cat_meta_description = $request->input('cat_meta_description');
 
         $cat_slug = str_slug($title);
+        
+         /* update public key in Category table*/
+        $cat_id=CategoryModel::first()->cat_id;           
+        $public_id = (new GeneratorController)->alphaID($cat_id);  
 
         $cat_img = "default_category.png";
         if((int)$category==0)
@@ -91,7 +98,7 @@ class CategoryController extends Controller
                     $image_extension = $request->file('cat_img')->getClientOriginalExtension();
                     $image_name = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
                     $request->file('cat_img')->move(
-                        $this->cat_img_path, $image_name
+                    $this->cat_img_path, $image_name
                     );
                   
                     $cat_img = $image_name;     
@@ -104,10 +111,9 @@ class CategoryController extends Controller
             }
         }   
 
-        DB::beginTransaction();
 
-        /* Insert in Category */
         $arr_cat = array();
+        $arr_cat['public_id']=$public_id;
         $arr_cat['cat_desc'] = "NA";
         $arr_cat['cat_slug'] = $cat_slug;
         $arr_cat['parent'] = $category;
@@ -119,25 +125,17 @@ class CategoryController extends Controller
 
         $arr_cat['cat_meta_keyword'] =$cat_meta_keyword;
         $arr_cat['cat_meta_description'] =$cat_meta_description;
-
-        $cat_id = CategoryModel::create($arr_cat)->id;
-
-            /* update public key in Category table*/
-            $public_key = (new GeneratorController)->alphaID($cat_id);  
-            
-            $category_instance = clone $category; 
-            $category_instance->update(['public_key'=>$public_key]);
-
+        
+        $status=CategoryModel::create($arr_cat);
+        $status->save();
         /* Insert in Category Lang */
 
-        if($cat_id==TRUE)
+        if($status)
         {
-            DB::commit();
             Session::flash('success','Category Added Successfully');
         }
         else
         {
-            DB::rollback();
             Session::flash('error','Problem Occured, While Adding Category');
         }
     
@@ -152,7 +150,7 @@ class CategoryController extends Controller
  		$page_title = "Category: Edit ";
 
  		$arr_data = array();
- 		$obj_data = CategoryModel::where('id',$id)->first();
+ 		$obj_data = CategoryModel::where('cat_id',$id)->first();
 
  		if($obj_data)
  		{
@@ -289,6 +287,7 @@ class CategoryController extends Controller
 
         return redirect()->back();
     }
+
 
     public function toggle_status($enc_id,$action)
     {

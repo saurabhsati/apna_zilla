@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Model\Category;
-use App\Model\Attribute;
-use App\Model\AttributeOptionValue;
-use App\Model\AttributeValidation;
+use App\Models\CategoryModel;
+use App\Models\AttributeModel;
+use App\Models\AttributeOptionValueModel;
+use App\Models\AttributeValidationModel;
 use Validator;
 use Session;
 
@@ -23,10 +23,10 @@ class AttributeController extends Controller
 
     public function __construct()
     {
-        $this->CategoryModel = new Category();
-        $this->AttributeModel = new Attribute();
-        $this->AttributeOptionValueModel = new AttributeOptionValue();
-        $this->AttributeValidationModel = new AttributeValidation();
+        $this->CategoryModel = new CategoryModel();
+        $this->AttributeModel = new AttributeModel();
+        $this->AttributeOptionValueModel = new AttributeOptionValueModel();
+        $this->AttributeValidationModel = new AttributeValidationModel();
     }
 
     /**
@@ -41,14 +41,14 @@ class AttributeController extends Controller
         $category_id = base64_decode($enc_id);
 
         $arr_front_end_inputs = config('app.project.front_end_inputs');
-        $arr_categoty = $this->CategoryModel->get();
+        $arr_categoty = CategoryModel::get();
 
         if ($arr_categoty)
         {
             $arr_categoty = $arr_categoty->toArray();
         }
 
-        $arr_attributes = $this->AttributeModel->where('fk_category_id',$category_id)->get();
+        $arr_attributes = AttributeModel::where('fk_category_id',$category_id)->get();
 
         foreach ($arr_attributes as $attribute) 
         {
@@ -81,7 +81,7 @@ class AttributeController extends Controller
         $arr_front_end_inputs = config('app.project.front_end_inputs');
 
         
-        $arr_category = $this->CategoryModel->where('cat_id',$category_id)->first();
+        $arr_category = CategoryModel::where('cat_id',$category_id)->first();
         if ($arr_category) 
         {
             $arr_category = $arr_category->ToArray();
@@ -113,21 +113,16 @@ class AttributeController extends Controller
         $arr_rules['attribute_code'] = "required";
         $arr_rules['frontend_input'] = "required";
         $arr_rules['frontend_label'] = "required";
-        $arr_rules['frontend_label_de'] = "required";
-
-
-
+      
         $arr_option_values = array();
 
         $from_data = $request->all();
         // /dd($from_data);
         
-
         if (isset($from_data['is_fillterable']) && $from_data['is_fillterable']==1) 
         {
             $arr_rules['front_fitter_type'] = "required";
         }
-
 
         $validator = Validator::make($request->all(),$arr_rules);
 
@@ -142,7 +137,7 @@ class AttributeController extends Controller
 
             $from_data['attribute_code'] = str_slug($from_data['attribute_code'], "_");
 
-            $status_attribute = $this->AttributeModel->create($from_data);
+            $status_attribute =AttributeModel::create($from_data);
             $att_id = $status_attribute->id;
         }
 

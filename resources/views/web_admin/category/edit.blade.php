@@ -73,14 +73,18 @@
 
           @if(isset($arr_data) && sizeof($arr_data)>0)
 
-          <form class="form-horizontal" id="validation-form" method="POST" action="{{ url('/web_admin/categories/update/'.base64_encode($arr_data['id'])) }} ' " enctype="multipart/form-data">
+          <form class="form-horizontal" 
+                id="validation-form" 
+                method="POST" 
+                action="{{ url('/web_admin/categories/update/'.base64_encode($arr_data['cat_id'])) }} ' " 
+                enctype="multipart/form-data">
 
            {{ csrf_field() }}
            <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="category">Category<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control" name="category" id="category"  placeholder="Category Name" data-rule-required="true" value="{{ $arr_data['category'] }}" />
-                    <span class='help-block'>{{ $errors->first('category') }}</span>
+                    <input class="form-control" name="category" id="category"  placeholder="Category Name" data-rule-required="true" value="{{ $arr_data['cat_meta_keyword'] }}" />
+                    <span class='help-block'>{{ $errors->first('cat_meta_keyword') }}</span>
                 </div>
             </div>
             <div class="form-group">
