@@ -1,4 +1,4 @@
-    @extends('web_admin.template.admin')                
+    @extends('web_admin.template.admin')
 
 
     @section('main_content')
@@ -24,7 +24,7 @@
             <li>
                 <i class="fa fa-bars"></i>
                 <a href="{{ url('/web_admin/categories') }}">Category</a>
-            </li>   
+            </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span>
@@ -50,7 +50,7 @@
             </div>
         </div>
         <div class="box-content">
-        
+
           @if(Session::has('success'))
             <div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -58,7 +58,7 @@
                 </button>
                 {{ Session::get('success') }}
             </div>
-          @endif  
+          @endif
 
           @if(Session::has('error'))
             <div class="alert alert-danger alert-dismissible">
@@ -73,10 +73,10 @@
             {{ csrf_field() }}
 
             <div class="col-md-10">
-            
+
 
             <div id="ajax_op_status">
-                
+
             </div>
             <div class="alert alert-danger" id="no_select" style="display:none;"></div>
             <div class="alert alert-warning" id="warning_msg" style="display:none;"></div>
@@ -84,40 +84,40 @@
           <div class="btn-toolbar pull-right clearfix">
             <!--- Add new record - - - -->
                 <div class="btn-group">
-                <a href="{{ url('/web_admin/categories/create')}}" class="btn btn-primary btn-add-new-records">Add Category/Sub Category</a> 
+                <a href="{{ url('/web_admin/categories/create')}}" class="btn btn-primary btn-add-new-records">Add Category/Sub Category</a>
                 </div>
             <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -->
             <div class="btn-group">
-                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip" 
-                    title="Multiple Unblock" 
-                    href="javascript:void(0);" 
-                    onclick="javascript : return check_multi_action('frm_manage','activate');" 
+                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
+                    title="Multiple Unblock"
+                    href="javascript:void(0);"
+                    onclick="javascript : return check_multi_action('frm_manage','activate');"
                     style="text-decoration:none;">
 
                     <i class="fa fa-unlock"></i>
-                </a> 
-                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip" 
-                   title="Multiple Block" 
-                   href="javascript:void(0);" 
-                   onclick="javascript : return check_multi_action('frm_manage','block');"  
+                </a>
+                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
+                   title="Multiple Block"
+                   href="javascript:void(0);"
+                   onclick="javascript : return check_multi_action('frm_manage','block');"
                    style="text-decoration:none;">
                     <i class="fa fa-lock"></i>
-                </a> 
-                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip" 
-                   title="Multiple Delete" 
-                   href="javascript:void(0);" 
-                   onclick="javascript : return check_multi_action('frm_manage','delete');"  
+                </a>
+                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
+                   title="Multiple Delete"
+                   href="javascript:void(0);"
+                   onclick="javascript : return check_multi_action('frm_manage','delete');"
                    style="text-decoration:none;">
                    <i class="fa fa-trash-o"></i>
                 </a>
             </div>
-            <div class="btn-group"> 
-                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip" 
-                   title="Refresh" 
+            <div class="btn-group">
+                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
+                   title="Refresh"
                    href="{{ url('/web_admin/categories') }}"
                    style="text-decoration:none;">
                    <i class="fa fa-repeat"></i>
-                </a> 
+                </a>
             </div>
           </div>
           <br/>
@@ -139,14 +139,14 @@
               </thead>
               <tbody>
 
-      
+
                  @if(isset($arr_category) && sizeof($arr_category)>0)
                   @foreach($arr_category as $key => $category)
                   <tr>
-                    <td> 
-                  <input type="checkbox" 
-                         name="checked_record[]"  
-                         value="{{ base64_encode($category['cat_id']) }}" /> 
+                    <td>
+                  <input type="checkbox"
+                         name="checked_record[]"
+                         value="{{ base64_encode($category['cat_id']) }}" />
                     </td>
 
 
@@ -156,12 +156,12 @@
 
                      <td>
                         <a
-                          class="btn btn-info" 
+                          class="btn btn-info"
                           href="{{ url('/').'/web_admin/categories/sub_categories/'.base64_encode($category['cat_id']).'' }}"  title="View Sub Category">
                           View
                         </a>
                         <a
-                          class="btn btn-info" 
+                          class="btn btn-info"
                           href="{{ url('/').'/web_admin/categories/create/'.base64_encode($category['cat_id']).'?src='.base64_encode('/web_admin/categories') }}"  title="Add Sub Category">
                           Add
                         </a>
@@ -171,41 +171,56 @@
                          @if($category['is_active']=="0")
                         <a class="btn btn-danger" href="{{ url('/web_admin/categories/toggle_status/').'/'.base64_encode($category['cat_id']).'/activate' }}">
                             Block
-                        </a>    
-                              
+                        </a>
+
                         @elseif($category['is_active']=="1")
                         <a  class="btn btn-success" href="{{ url('/web_admin/categories/toggle_status/').'/'.base64_encode($category['cat_id']).'/block' }}">
                             Active
-                        </a>   
-                        @endif 
+                        </a>
+                        @endif
                     </td>
 
-                <td> 
-
-                 <a data-toggle="modal" 
-                 data-target="#show_category_title" 
+                <td>
+<!--
+                 <a data-toggle="modal"
+                 data-target="#show_category_title"
                  data-cat-id="{{ base64_encode($category['cat_id']) }}"
-               
-                 onclick="showEditCategory(this)" 
+
+                 onclick="showEditCategory(this)"
                  >
                 <i class="fa fa-edit" title="Edit Category"></i>
-              </a>  
+              </a> -->
 
-              &nbsp;  
-              <a href="{{ url('/web_admin/categories/delete/').'/'.base64_encode($category['cat_id']) }}" 
+
+               <a data-toggle="modal"
+                 data-target="#show_category_title"
+                 data-title-en-id="{{ $category['cat_meta_keyword'] }}"
+                 data-title-en="{{ $category['cat_meta_keyword'] }}"
+                 data-cat-id="{{ base64_encode($category['cat_id']) }}"
+                 data-is-priceable="{{ $category['is_priceable'] }}"
+                 data-cat-meta-keyword="{{ $category['cat_meta_keyword'] }}"
+                 data-cat-meta-description="{{ $category['cat_meta_description'] }}"
+                 src="{{ $category['cat_img'] }}"
+                 onclick="showEditCategory(this)"
+                 >
+                <i class="fa fa-edit" title="Edit Category"></i>
+              </a>
+
+              &nbsp;
+              <a href="{{ url('/web_admin/categories/delete/').'/'.base64_encode($category['cat_id']) }}"
                  onclick="javascript:return confirm_delete()" class="show-tooltip" title="Delete">
                 <i class="fa fa-trash" ></i>
-              </a>   
+              </a>
 
              </td>
 
             </tr>
              @endforeach
             @endif
-           
-            
-  
-                  
+
+
+
+
               </tbody>
             </table>
           </div>
@@ -215,7 +230,12 @@
   </div>
 </div>
 </div>
+
+
+
+
 <!-- END Main Content -->
+
 <script type="text/javascript" src="{{ url('/assets/data-tables/latest') }}/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="{{ url('/assets/data-tables/latest') }}/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
@@ -247,22 +267,22 @@
 
     var frm_edit_category = $("#frm_edit_category");
     $(frm_edit_category).find("input[name='title_en']").val(title_en);
-    $(frm_edit_category).find("input[name='enc_title_en_id']").val(title_en_id);
-    $(frm_edit_category).find("input[name='enc_cat_id']").val(enc_cat_id);
+   /* $(frm_edit_category).find("input[name='enc_title_en_id']").val(title_en_id);
+    $(frm_edit_category).find("input[name='enc_cat_id']").val(enc_cat_id);*/
 
     $(frm_edit_category).find("input[name='cat_meta_keyword']").val(cat_meta_keyword);
     $(frm_edit_category).find("textarea[name='cat_meta_description']").html(cat_meta_description);
-    
+
     if(parseInt(is_priceable)==1)
     {
-      $(frm_edit_category).find("input[name='is_priceable']")[0].checked=true;  
+      $(frm_edit_category).find("input[name='is_priceable']")[0].checked=true;
     }
     else
     {
-      $(frm_edit_category).find("input[name='is_priceable']")[0].checked=false;  
+      $(frm_edit_category).find("input[name='is_priceable']")[0].checked=false;
     }
 
-    
+
   }
 
     function check_multi_action(frm_id,action)
@@ -272,7 +292,7 @@
       {
         /* Get hidden input reference */
         var input_multi_action = jQuery('input[name="multi_action"]');
-        
+
         if(jQuery(input_multi_action).length)
         {
           /* Set Action in hidden input*/
@@ -294,6 +314,6 @@
     }
 </script>
 
-@stop                    
+@stop
 
 
