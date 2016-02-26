@@ -139,8 +139,8 @@
             </tr>
           </thead>
           <tbody>
-           @if(isset($arr_category) && sizeof($arr_category)>0)
-              @foreach($arr_category as $key => $category)
+           @if(isset($arr_sub_category) && sizeof($arr_sub_category)>0)
+              @foreach($arr_sub_category as $key => $category)
 
            <tr>
               <td> 
@@ -149,7 +149,7 @@
                        value="{{ base64_encode($category['cat_id']) }}" /> 
               </td>
 
-            <td>Test</td>
+            <td>{{$category['cat_meta_keyword']}}</td>
 
             <td>
                 <a
