@@ -391,10 +391,9 @@ class NewsLetterController extends Controller
     }
 
 
-     public function _mail($array_data)
+       public function _mail($array_data)
     {
         
-      
         $mail_response = Mail::send('email.test', $array_data, function($message) use($array_data)
         {   
             $message->from($array_data['site_email_address'], $array_data['site_name']);
@@ -402,8 +401,7 @@ class NewsLetterController extends Controller
                     ->subject('JustDial :: Newsletter');
         });
 
-  
-        /* Mail Sent Successfully */
+          /* Mail Sent Successfully */
         if($mail_response==1)
         { 
             Session::flash('success','Email Sent Successfully '); 
@@ -411,13 +409,9 @@ class NewsLetterController extends Controller
         else
         {
             Session::flash('error','Problem Occured, While Sending Email'); 
-
         }
         return;
-
     }
-
- 
 
     public function __fetch_site_info()
     {
@@ -433,7 +427,6 @@ class NewsLetterController extends Controller
     public function __fetch_template_info($template_id)
     {
         return $arr_email_template = EmailTemplateModel::where('email_template_id',$template_id)->first()->toArray();   
-
     }
 
 }

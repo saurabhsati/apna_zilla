@@ -75,10 +75,7 @@
               action="{{ url('/web_admin/users/update/'.base64_encode($arr_user_data['id'])) }} ' " 
               enctype="multipart/form-data">
 
-
-
            {{ csrf_field() }}
-
 
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="name">Profile Pic</label>
@@ -188,6 +185,7 @@
                     <span class='help-block'>{{ $errors->first('d_o_b') }}</span>
                 </div>
             </div>
+
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="email">Email<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">

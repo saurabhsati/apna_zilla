@@ -21,7 +21,7 @@
                 <i class="fa fa-angle-right"></i>
             </span>
             <li>
-                <i class="fa fa-user"></i>
+              s  <i class="fa fa-user"></i>
                 <a href="{{ url('/').'/web_admin/users' }}">Users</a>
             </li>
             <span class="divider">
