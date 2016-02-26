@@ -10,6 +10,7 @@ use Validator;
 use Session;
 use App\Models\StateModel;
 use App\Models\CountryModel;
+use App\Models\CityModel;
 use App\Http\Controllers\Common\GeneratorController;
 class StateController extends Controller
 {
@@ -325,6 +326,7 @@ class StateController extends Controller
     protected function _delete($enc_id)
     {
     	 $id = base64_decode($enc_id);
+         CityModel::where('state_id',$id)->delete();
 		return StateModel::where('id',$id)
                   ->delete();
     }

@@ -41,7 +41,7 @@
                 <li style="display: block;"><a href="{{ url('/web_admin/static_pages')}}">Manage</a> </li>
             </ul>
         </li>
-<li class="<?php  if(Request::segment(2) == 'countries' || Request::segment(2) == 'states' || Request::segment(2) == 'cities' || Request::segment(2) == 'locations' ){ echo 'active'; } ?>">
+<li class="<?php  if(Request::segment(2) == 'countries' || Request::segment(2) == 'states' || Request::segment(2) == 'cities' || Request::segment(2) == 'zipcode' ){ echo 'active'; } ?>">
                         <a href="javascript:void(0)" class="dropdown-toggle">
                             <i class="fa fa-globe"></i>
                             <span>Locations</span>
@@ -52,7 +52,7 @@
                             <li class="<?php  if(Request::segment(2) == 'countries'){ echo 'active'; } ?>" style="display: block;"><a href="{{ url('/web_admin/countries')}}">Manage Country</a></li>
                             <li class="<?php  if(Request::segment(2) == 'states'){ echo 'active'; } ?>"><a href="{{ url('/web_admin/states')}}">Manage States</a></li>
                             <li class="<?php  if(Request::segment(2) == 'cities'){ echo 'active'; } ?>"><a href="{{ url('/web_admin/cities')}}">Manage Cities</a></li>
-                            <li class="<?php  if(Request::segment(2) == 'locations'){ echo 'active'; } ?>"><a href="{{ url('/web_admin/locations')}}">Manage Locations</a></li>
+                            <li class="<?php  if(Request::segment(2) == 'zipcode'){ echo 'active'; } ?>"><a href="{{ url('/web_admin/zipcode')}}">Manage ZipCode</a></li>
                         </ul>
                     </li>
 
