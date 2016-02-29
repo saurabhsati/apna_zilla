@@ -191,8 +191,6 @@
                         </a>  
                         &nbsp;
 
-                       
-
                         &nbsp;  
                         <a href="{{ url('/').'/web_admin/attribute/toggle_status/'.base64_encode($attribute['attribute_id']).'/delete' }}" 
                            onclick="javascript:return confirm_delete()">

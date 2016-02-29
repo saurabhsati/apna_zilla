@@ -43,7 +43,7 @@ class AttributeModel extends Model
      */
     public function option_values()
     {
-        return $this->hasMany('App\Models\AttributeOptionValue','attribute_id_fk','attribute_id');
+        return $this->hasMany('App\Models\AttributeOptionValueModel','attribute_id_fk','attribute_id');
     }
 
     public function delete_option_values()

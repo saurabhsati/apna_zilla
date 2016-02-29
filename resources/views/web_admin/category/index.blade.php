@@ -190,20 +190,9 @@
                  >
                 <i class="fa fa-edit" title="Edit Category"></i>
               </a> -->
-
-
-               <a data-toggle="modal"
-                 data-target="#show_category_title"
-                 data-title-en-id="{{ $category['cat_meta_keyword'] }}"
-                 data-title-en="{{ $category['cat_meta_keyword'] }}"
-                 data-cat-id="{{ base64_encode($category['cat_id']) }}"
-                 data-is-priceable="{{ $category['is_priceable'] }}"
-                 data-cat-meta-keyword="{{ $category['cat_meta_keyword'] }}"
-                 data-cat-meta-description="{{ $category['cat_meta_description'] }}"
-                 src="{{ $category['cat_img'] }}"
-                 onclick="showEditCategory(this)"
-                 >
-                <i class="fa fa-edit" title="Edit Category"></i>
+              <a href="{{ url('/web_admin/categories/edit/').'/'.base64_encode($category['cat_id']) }}" class="show-tooltip" title="Edit" >
+                
+                <i class="fa fa-edit" ></i>
               </a>
 
               &nbsp;
@@ -255,35 +244,6 @@
     }
 
 
-    function showEditCategory(ref)
-  {
-    var title_en    = $(ref).attr("data-title-en");
-    var title_de    = $(ref).attr("data-title-de");
-    var enc_cat_id = $(ref).attr("data-cat-id");
-    var is_priceable = $(ref).attr("data-is-priceable");
-
-    var cat_meta_keyword = $(ref).attr("data-cat-meta-keyword");
-    var cat_meta_description = $(ref).attr("data-cat-meta-description");
-
-    var frm_edit_category = $("#frm_edit_category");
-    $(frm_edit_category).find("input[name='title_en']").val(title_en);
-   /* $(frm_edit_category).find("input[name='enc_title_en_id']").val(title_en_id);
-    $(frm_edit_category).find("input[name='enc_cat_id']").val(enc_cat_id);*/
-
-    $(frm_edit_category).find("input[name='cat_meta_keyword']").val(cat_meta_keyword);
-    $(frm_edit_category).find("textarea[name='cat_meta_description']").html(cat_meta_description);
-
-    if(parseInt(is_priceable)==1)
-    {
-      $(frm_edit_category).find("input[name='is_priceable']")[0].checked=true;
-    }
-    else
-    {
-      $(frm_edit_category).find("input[name='is_priceable']")[0].checked=false;
-    }
-
-
-  }
 
     function check_multi_action(frm_id,action)
     {

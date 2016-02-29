@@ -159,7 +159,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		Route::get('/',['as' => 'admin_categories_manage' ,'uses' => 'Admin\CategoryController@index']);
 		Route::get('show/{enc_id}',['as' => 'admin_categories_show' ,'uses' => 'Admin\CategoryController@show']);
 		Route::get('edit/{enc_id}',['as' => 'admin_categories_edit' ,'uses' => 'Admin\CategoryController@edit']);
-		Route::post('update',['as' => 'admin_categories_update' ,'uses' => 'Admin\CategoryController@update']);
+		Route::post('update/{enc_id}',['as' => 'admin_categories_update' ,'uses' => 'Admin\CategoryController@update']);
 		Route::get('create/{cat_id?}',['as' => 'admin_categories_create' ,'uses' => 'Admin\CategoryController@create']);
 		Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_categories_toggle_status' ,'uses' => 'Admin\CategoryController@toggle_status']);
 		Route::post('multi_action',['as' => 'admin_categories_block' ,'uses' => 'Admin\CategoryController@multi_action']);

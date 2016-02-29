@@ -166,16 +166,14 @@ class AttributeController extends Controller
                
             }
         }
-
-        
-        
+       
 
 
         if (isset($arr_option_values) && sizeof($arr_option_values)>0) 
         {
            foreach ($arr_option_values as $key => $value) 
            {
-              $status = $this->AttributeOptionValueModel->create($value);
+              $status = AttributeOptionValueModel::create($value);
             
            }
         }
@@ -374,14 +372,12 @@ class AttributeController extends Controller
             $arr_rules['attribute_code'] = "required";
             $arr_rules['frontend_input'] = "required";
             $arr_rules['frontend_label'] = "required";
-            $arr_rules['frontend_label_de'] = "required";
 
             $arr_option_values = array();
 
             $from_data = $request->all();
             //dd($from_data);
             
-
             if (isset($from_data['is_fillterable']) && $from_data['is_fillterable']==1) 
             {
                 $arr_rules['front_fitter_type'] = "required";    
@@ -430,11 +426,11 @@ class AttributeController extends Controller
                {
                     if (isset($value['attribute_option_value_id']) && $value['attribute_option_value_id'] == 0) 
                     {
-                        $create_status_value = $this->AttributeOptionValueModel->create($value);   
+                        $create_status_value = AttributeOptionValueModel::create($value);   
                     }
                     elseif (isset($value['attribute_option_value_id']) && $value['attribute_option_value_id'] > 0) 
                     {
-                        $update_status_value = $this->AttributeOptionValueModel->where('attribute_option_value_id',$value['attribute_option_value_id'])->update($value);
+                        $update_status_value = AttributeOptionValueModel::where('attribute_option_value_id',$value['attribute_option_value_id'])->update($value);
                     }
                   
                }
@@ -481,7 +477,7 @@ class AttributeController extends Controller
         $opt_value_id = base64_decode($enc_id);
         if ($opt_value_id) 
         {
-            $status_delete = $this->AttributeOptionValueModel->where('attribute_option_value_id',$opt_value_id)
+            $status_delete = AttributeOptionValueModel::where('attribute_option_value_id',$opt_value_id)
                                                             ->delete();
         }
 

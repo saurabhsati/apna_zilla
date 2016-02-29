@@ -164,25 +164,73 @@ class CategoryController extends Controller
         $id = base64_decode($enc_id);
         $arr_rules = array();
         $arr_rules['category'] = "required";
+        $arr_rules['cat_meta_description'] = "required";
         $arr_rules['is_active'] = "required";
-
+       
         $validator = Validator::make($request->all(),$arr_rules);
         if($validator->fails())
         {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $arr_data = $request->only(['category','is_active']);
+        $category = $request->input('category');
+        $password   = $request->input('password',FALSE);
+        $cat_meta_description = $request->input('cat_meta_description');
+        $is_active = $request->input('is_active');
+        $is_priceable = $request->input('is_priceable');
+        $is_popular = $request->input('is_popular');
 
+        $cat_img = FALSE;
+        if ($request->hasFile('cat_img')) 
+        {
+            $cv_valiator = Validator::make(array('cat_img'=>$request->file('cat_img')),array(
+                                                'cat_img' => 'mimes:jpg,jpeg,png'
+                                            )); 
+
+            if ($request->file('cat_img')->isValid() && $cv_valiator->passes())
+            {
+
+                $cv_path = $request->file('cat_img')->getClientOriginalName();
+                $image_extension = $request->file('cat_img')->getClientOriginalExtension();
+                $image_name = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
+                $request->file('cat_img')->move(
+                    $this->cat_img_path, $image_name
+                );
+              
+                $cat_img = $image_name;     
+            }
+            else
+            {
+                return redirect()->back();
+            }
+        }
         /* Duplication Check*/
+        $arr_data = [
+            'cat_meta_keyword' => $category,
+            'cat_meta_description' => $cat_meta_description,
+            'is_active' => $is_active,
+            'is_priceable' => $is_priceable,
+            'is_popular' => $is_popular,
+        ];
 
-        if(CategoryModel::where('category',$arr_data['category'])->where('id','<>',$id)->get()->count()>0)
+        if($password!=FALSE)
+        {
+            $arr_data['password'] = $password;  
+        }
+
+        if($cat_img!=FALSE)
+        {
+            $arr_data['cat_img'] = $cat_img;     
+        }
+        
+
+        if(CategoryModel::where('cat_meta_keyword',$arr_data['cat_meta_keyword'])->where('cat_id','<>',$id)->get()->count()>0)
         {
             Session::flash('error','Category Already Exists');
             return redirect()->back();
         }
 
-        $status = CategoryModel::where('id',$id)->update($arr_data);
+        $status = CategoryModel::where('cat_id',$id)->update($arr_data);
 
         if($status)
         {

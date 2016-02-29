@@ -152,17 +152,18 @@
                      </label>
                   <span class='help-block'>{{ $errors->first('gender') }}</span>
                 </div>
-            </div>
-           <div class="form-group">
+            </div> -->
+
+          <!--  <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="marital_status">Marital Status<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls"> -->
-                    <!-- <input class="form-control"
+                <div class="col-sm-6 col-lg-4 controls"> 
+                     <input class="form-control"
                            name="marital_status"
                            id="marital_status"
                            data-rule-required="true"
                            placeholder="Enter Marital Status"
-                           value="{{ isset($arr_user_data['marital_status'])?$arr_user_data['marital_status']:'' }}"/> -->
-       <!--               <select class="form-control" data-placeholder="Choose a Category" name="marital_status" tabindex="1">
+                           value="{{ isset($arr_user_data['marital_status'])?$arr_user_data['marital_status']:'' }}"/> 
+                      <select class="form-control" data-placeholder="Choose a Category" name="marital_status" tabindex="1">
                         <option value="" >Select...</option>
                         <option value="Married" {{ $arr_user_data['marital_status']=='Married'?"selected ='selected'":'' }}>Married</option>
                         <option value="Un Married" {{ $arr_user_data['marital_status']=='Un Married'?"selected='selected'":'' }}>Un Married</option>
@@ -171,7 +172,7 @@
                      </select>
                     <span class='help-block'>{{ $errors->first('marital_status') }}</span>
                 </div>
-            </div> -->
+            </div>  -->
 
                 <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="d_o_b">Date Of Birth<i class="red">*</i></label>
@@ -285,7 +286,7 @@
 
 
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="mobile">Office Landline<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="office_landline">Office Landline<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
                            name="office_landline"
