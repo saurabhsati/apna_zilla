@@ -86,6 +86,18 @@ class ReviewController extends Controller
         $id = base64_decode($enc_id);
         return ReviewsModel::where('id',$id)->delete();
     }
+     public function delete($enc_id)
+    {
+        if($this->_delete($enc_id))
+        {
+            Session::flash('success','Review(s) Deleted Successfully');
+        }
+        else
+        {
+            Session::flash('error','Problem Occured While Deleting Review(s)');
+        }
+        return redirect()->back();
+    }
     public function multi_action(Request $request)
     {
         $arr_rules = array();
