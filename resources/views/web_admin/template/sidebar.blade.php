@@ -103,9 +103,10 @@
 
         </li>
     <li class="{{ Request::segment(2)=='reviews'? 'active':'' }}">
-            <a href="javascript:void(0)">
+            <a href="javascript:void(0)"  class="dropdown-toggle">
                 <i class="fa fa-star"></i>
                 <span>Reviews</span>
+                <b class="arrow fa fa-angle-right"></b>
             </a>
              <ul class="submenu">
                 <li style="display: block;"><a href="{{ url('/web_admin/reviews/MjU=')}}">Manage</a> </li>
