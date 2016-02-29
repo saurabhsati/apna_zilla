@@ -138,6 +138,30 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::get('get_sub_category/{id}',['as' => 'get_sub_category' ,'uses' => 'Common\CategoryController@get_sub_category']);*/
 
 		});
+
+		/*-------------Restaurant Reviews Module------------*/
+		Route::group(['prefix'=>'reviews'], function (){
+			Route::get('/{enc_id}','Admin\ReviewController@index');
+			Route::get('view/{enc_id}','Admin\ReviewController@view');
+			Route::get('delete/{enc_id}','Admin\ReviewController@delete');
+			Route::get('toggle_status/{enc_id}/{action}','Admin\ReviewController@toggle_status');
+			Route::post('multi_action','Admin\ReviewController@multi_action');
+		});
+
+		/*--------------------------     Front SLider Realted      ---------------------------*/
+
+		Route::group(array('prefix' => '/front_slider'), function()
+		{
+				Route::get('/',						['as' => 'admin_front_slider_index' 	,'uses' 	=> 'Admin\FrontSliderController@index']);
+				Route::get('create/',				['as' => 'admin_front_slider_create' 	,'uses' 	=> 'Admin\FrontSliderController@create']);
+				Route::post('store/',				['as' => 'admin_front_slider_store' 	,'uses' 	=> 'Admin\FrontSliderController@store']);
+				Route::get('edit/{slider_id}',		['as' => 'admin_front_slider_edit' 		,'uses' 	=> 'Admin\FrontSliderController@edit']);
+				Route::get('show/{slider_id}',		['as' => 'admin_front_slider_show' 		,'uses' 	=> 'Admin\FrontSliderController@show']);
+				Route::post('update/{slider_id}',	['as' => 'admin_front_slider_update' 	,'uses' 	=> 'Admin\FrontSliderController@update']);
+				Route::get('delete/{slider_id}',	['as' => 'admin_front_slider_delete' 	,'uses' 	=> 'Admin\FrontSliderController@delete']);
+				Route::post('multi_action',			['as' => 'admin_front_slider_multiaction','uses' 	=> 'Admin\FrontSliderController@multi_action']);
+				Route::any('save_order/{slider_id}/{order_id}',['as' => 'admin_front_slider_save_order' ,'uses' => 'Admin\FrontSliderController@save_order']);
+		});
 	/* Users Module */
 	Route::group(['prefix'=>'users'], function ()
 	{
@@ -201,9 +225,9 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 	Route::group(array('prefix' => 'contact_enquiry'), function()
 	{
 		Route::get('/',['as' => 'list_contact_enquiry' ,'uses' => 'Admin\ContactEnquiryController@index']);
-		Route::get('show/{enc_id}',['as' => 'show_contact_enquiry' ,'uses' => 'Admin\ContactEnquiryController@show']); 
+		Route::get('show/{enc_id}',['as' => 'show_contact_enquiry' ,'uses' => 'Admin\ContactEnquiryController@show']);
 
-	}); 
+	});
 
     /*************************************End*****************************************************/
 

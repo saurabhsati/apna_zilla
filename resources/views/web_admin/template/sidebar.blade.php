@@ -75,7 +75,7 @@
             </ul>
         </li>
 
-         <li class="{{ Request::segment(2)=='transactions'?'active':'' }}">
+         <li class="{{ Request::segment(2)=='newsletter'?'active':'' }}">
             <a href="javascript:void(0)" class="dropdown-toggle">
                 <i class="fa fa-credit-card"></i>
                 <span>News-Letter</span>
@@ -102,6 +102,26 @@
             </ul>
 
         </li>
+        <li class="{{ Request::segment(2)=='front_slider'?'active':'' }}">
+            <a href="javascript:void(0)" class="dropdown-toggle">
+                <i class="fa fa-youtube-play"></i>
+                <span>Front slider</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+            <ul class="submenu">
+                <li style="display: block;"><a href="{{ url('/web_admin/front_slider')}}">Manage</a> </li>
+            </ul>
+        </li>
+        <li class="{{ Request::segment(2)=='reviews'? 'active':'' }}">
+                <a href="javascript:void(0)"  class="dropdown-toggle">
+                    <i class="fa fa-star"></i>
+                    <span>Reviews</span>
+                    <b class="arrow fa fa-angle-right"></b>
+                </a>
+                 <ul class="submenu">
+                    <li style="display: block;"><a href="{{ url('/web_admin/reviews/MjU=')}}">Manage</a> </li>
+                </ul>
+            </li>
         <li class="<?php  if(Request::segment(2) == 'email_template'){ echo 'active'; } ?>">
                         <a href="javascript:void(0)" class="dropdown-toggle">
                             <i class="fa fa-envelope"></i>

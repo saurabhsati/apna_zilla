@@ -21,13 +21,15 @@
                 <i class="fa fa-angle-right"></i>
             </span>
             <li>
-                <i class="fa fa-desktop"></i>
-                <a href="{{ url('/').'/web_admin/zipcode' }}">Zipcode</a>
+                <i class="fa fa-star"></i>
+                @if(sizeof($arr_review_view)>0)
+                    <a href="{{ url('web_admin/reviews/'.base64_encode($arr_review_view['fk_id'])) }}">Reviews</a>
+                @endif
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span>
-            <li class="active"><i class="fa fa-desktop"></i> Edit</li>
+            <li class="active">  {{ isset($page_title)?$page_title:"" }}</li>
         </ul>
     </div>
     <!-- END Breadcrumb -->
@@ -43,7 +45,7 @@
           <div class="box">
             <div class="box-title">
               <h3>
-                <i class="fa fa-text-width"></i>
+                <i class="fa fa-star"></i>
                 {{ isset($page_title)?$page_title:"" }}
             </h3>
             <div class="box-tool">
@@ -71,82 +73,71 @@
             </div>
           @endif
 
-          <form class="form-horizontal"
-                id="validation-form"
-                method="POST"
-                action="{{ url('/web_admin/zipcode/update/'.base64_encode($arr_zipcode[0]['id'])) }}"
-                enctype="multipart/form-data"
-                files="true"
-                >
+          @if(sizeof($arr_review_view)>0)
+
+          <form class="form-horizontal" id="validation-form" method="POST" action="" enctype="multipart/form-data">
 
            {{ csrf_field() }}
-
-
-             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="zipcode"> ZipCode<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                     name="zipcode"
-                     data-rule-required="true"
-                     value="{{ isset($arr_zipcode[0]['zipcode'])? strtoupper($arr_zipcode[0]['zipcode']):'' }}"
-
-                    />
-                    <span class='help-block'>{{ $errors->first('country_code') }}</span>
-                </div>
-            </div>
-
            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="state">Country Code<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="email_id">Name</label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input
-                     class="form-control"
-                     name="country_code"
-                     data-rule-required="true"
-                     value="{{ isset($arr_zipcode[0]['country_code'])?$arr_zipcode[0]['country_code']:'' }}"
-                     readonly
-                     />
-                    <span class='help-block'>{{ $errors->first('state') }}</span>
+                    <input class="form-control" name="name" id="name"  value="{{ $arr_review_view['name'] }}" readonly="" />
+                    <span class='help-block'>{{ $errors->first('name') }}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="email_id">Mobile Number</label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input class="form-control" name="mobile_number" id="mobile_number"  value="{{ $arr_review_view['mobile_number'] }}" readonly="" />
+                    <span class='help-block'>{{ $errors->first('mobile_number') }}</span>
+                </div>
+            </div>
+           <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="email_id">Email Id</label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input class="form-control" name="email_id" id="email_id"  value="{{ $arr_review_view['email'] }}" readonly="" />
+                    <span class='help-block'>{{ $errors->first('email_id') }}</span>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="latitude">Latitude<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="rating">Rating</label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                     name="latitude"
-                     data-rule-required="true"
-                     value="{{ isset($arr_zipcode[0]['latitude'])? strtoupper($arr_zipcode[0]['latitude']):'' }}"
+                    @for($i=0; $i<$arr_review_view['ratings']; $i++)
+                        <i class="fa fa-star"></i>
+                    @endfor
 
-                    />
-                    <span class='help-block'>{{ $errors->first('country_code') }}</span>
+                    <span class='help-block'>{{ $errors->first('rating') }}</span>
                 </div>
             </div>
+
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="longitude">Longitude<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="message">Message</label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                     name="longitude"
-                     data-rule-required="true"
-                     value="{{ isset($arr_zipcode[0]['longitude'])? strtoupper($arr_zipcode[0]['longitude']):'' }}"
+                    <textarea class="form-control" name="message" id="message" readonly="">{{ $arr_review_view['message'] }}</textarea>
 
-                    />
-                    <span class='help-block'>{{ $errors->first('country_code') }}</span>
+                    <span class='help-block'>{{ $errors->first('message') }}</span>
                 </div>
             </div>
+
+
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
-                <input type="submit"  class="btn btn-primary" value="Update">
-
+              <a href="{{ url('web_admin/reviews/'.base64_encode($arr_review_view['fk_id'])) }}">
+                <input type="button"  class="btn btn-primary" value="Back">
+              </a>
             </div>
         </div>
 
 
     </form>
+
+    @endif
+
 </div>
 </div>
 </div>
 </div>
 <!-- END Main Content -->
-
 
 @stop
