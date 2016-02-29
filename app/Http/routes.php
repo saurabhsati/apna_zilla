@@ -138,6 +138,15 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::get('get_sub_category/{id}',['as' => 'get_sub_category' ,'uses' => 'Common\CategoryController@get_sub_category']);*/
 
 		});
+
+		/*-------------Restaurant Reviews Module------------*/
+		Route::group(['prefix'=>'reviews'], function (){
+			Route::get('/{enc_id}','Admin\ReviewController@index');
+			Route::get('view/{enc_id}','Admin\ReviewController@view');
+			Route::get('delete/{enc_id}','Admin\ReviewController@delete');
+			Route::get('toggle_status/{enc_id}/{action}','Admin\ReviewController@toggle_status');
+			Route::post('multi_action','Admin\ReviewController@multi_action');
+		});
 	/* Users Module */
 	Route::group(['prefix'=>'users'], function ()
 	{
@@ -201,9 +210,9 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 	Route::group(array('prefix' => 'contact_enquiry'), function()
 	{
 		Route::get('/',['as' => 'list_contact_enquiry' ,'uses' => 'Admin\ContactEnquiryController@index']);
-		Route::get('show/{enc_id}',['as' => 'show_contact_enquiry' ,'uses' => 'Admin\ContactEnquiryController@show']); 
+		Route::get('show/{enc_id}',['as' => 'show_contact_enquiry' ,'uses' => 'Admin\ContactEnquiryController@show']);
 
-	}); 
+	});
 
     /*************************************End*****************************************************/
 

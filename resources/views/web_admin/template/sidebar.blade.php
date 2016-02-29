@@ -102,6 +102,15 @@
             </ul>
 
         </li>
+    <li class="{{ Request::segment(2)=='reviews'? 'active':'' }}">
+            <a href="javascript:void(0)">
+                <i class="fa fa-star"></i>
+                <span>Reviews</span>
+            </a>
+             <ul class="submenu">
+                <li style="display: block;"><a href="{{ url('/web_admin/reviews/MjU=')}}">Manage</a> </li>
+            </ul>
+        </li>
         <li class="<?php  if(Request::segment(2) == 'email_template'){ echo 'active'; } ?>">
                         <a href="javascript:void(0)" class="dropdown-toggle">
                             <i class="fa fa-envelope"></i>
