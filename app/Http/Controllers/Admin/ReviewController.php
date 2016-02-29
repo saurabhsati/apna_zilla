@@ -28,13 +28,13 @@ class ReviewController extends Controller
             $arr_reviews = $obj_reviews->toArray();
         }
 
-    	$page_title = "Reviews: Manage ";
+    	$page_title = "Manage ";
 	    return view('web_admin.reviews.index',compact('page_title','arr_reviews'));
     }
     public function view($enc_id)
     {
     	$id = base64_decode($enc_id);
-        $page_title = "Reviews: View";
+        $page_title = "View";
 
         $arr_review_view = array();
         $obj_review_view =ReviewsModel::where('id',$id)->first();
