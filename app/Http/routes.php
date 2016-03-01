@@ -37,75 +37,75 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 	  /*---------------------CMS Module-------------------------*/
 	   Route::group(array('prefix' => '/static_pages'), function()
 		{
-		Route::get('/',['as' => 'static_pages_manage' ,'uses' => 'Admin\StaticPageController@index']);
-		Route::get('create',['as' => 'static_pages_create' ,'uses' => 'Admin\StaticPageController@create']);
-		Route::get('edit/{enc_id}',['as' => 'static_pages_edit' ,'uses' => 'Admin\StaticPageController@edit']);
-		Route::any('store',['as' => 'static_pages_store' ,'uses' => 'Admin\StaticPageController@store']);
-		Route::get('delete/{enc_id}',['as' => 'static_pages_delete' ,'uses' => 'Admin\StaticPageController@delete']);
-		Route::post('update/{enc_id}',['as' => 'static_pages_update' ,'uses' => 'Admin\StaticPageController@update']);
-		Route::get('toggle_status/{enc_id}/{action}',['as' => 'static_pages_toggle_status' ,'uses' => 'Admin\StaticPageController@toggle_status']);
-		Route::post('multi_action',['as' => 'static_pages_multi_action' ,'uses' => 'Admin\StaticPageController@multi_action']);
+		Route::get('/',							 	 ['as' => 'static_pages_manage' 		,'uses' => 'Admin\StaticPageController@index']);
+		Route::get('create',					 	 ['as' => 'static_pages_create' 		,'uses' => 'Admin\StaticPageController@create']);
+		Route::get('edit/{enc_id}',					 ['as' => 'static_pages_edit' 			,'uses' => 'Admin\StaticPageController@edit']);
+		Route::any('store',							 ['as' => 'static_pages_store' 			,'uses' => 'Admin\StaticPageController@store']);
+		Route::get('delete/{enc_id}',				 ['as' => 'static_pages_delete' 		,'uses' => 'Admin\StaticPageController@delete']);
+		Route::post('update/{enc_id}',				 ['as' => 'static_pages_update' 		,'uses' => 'Admin\StaticPageController@update']);
+		Route::get('toggle_status/{enc_id}/{action}',['as' => 'static_pages_toggle_status' 	,'uses' => 'Admin\StaticPageController@toggle_status']);
+		Route::post('multi_action',  				 ['as' => 'static_pages_multi_action' 	,'uses' => 'Admin\StaticPageController@multi_action']);
 
 		});
 	   /* Location module */
 	   Route::group(array('prefix' => '/countries'), function()
 		{
-		Route::get('/',['as' => 'admin_countries_manage' ,'uses' => 'Admin\CountryController@index']);
-		Route::get('show/{enc_id}',['as' => 'admin_countries_show' ,'uses' => 'Admin\CountryController@show']);
-		Route::get('edit/{enc_id}',['as' => 'admin_countries_edit' ,'uses' => 'Admin\CountryController@edit']);
-		Route::post('update/{enc_id}',['as' => 'admin_countries_update' ,'uses' => 'Admin\CountryController@update']);
-		Route::get('create',['as' => 'admin_countries_create' ,'uses' => 'Admin\CountryController@create']);
-		Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_countries_toggle_status' ,'uses' => 'Admin\CountryController@toggle_status']);
-		Route::get('delete/{enc_id}',['as' => 'admin_countries_delete' ,'uses' => 'Admin\CountryController@delete']);
-		Route::post('multi_action',['as' => 'admin_countries_block' ,'uses' => 'Admin\CountryController@multi_action']);
-		Route::any('store',['as' => 'admin_countries_store' ,'uses' => 'Admin\CountryController@store']);
+		Route::get('/',								 ['as' => 'admin_countries_manage' 			,'uses' => 'Admin\CountryController@index']);
+		Route::get('show/{enc_id}',					 ['as' => 'admin_countries_show'			,'uses' => 'Admin\CountryController@show']);
+		Route::get('edit/{enc_id}',					 ['as' => 'admin_countries_edit' 			,'uses' => 'Admin\CountryController@edit']);
+		Route::post('update/{enc_id}',				 ['as' => 'admin_countries_update'			,'uses' => 'Admin\CountryController@update']);
+		Route::get('create',						 ['as' => 'admin_countries_create' 			,'uses' => 'Admin\CountryController@create']);
+		Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_countries_toggle_status'	,'uses' => 'Admin\CountryController@toggle_status']);
+		Route::get('delete/{enc_id}',				 ['as' => 'admin_countries_delete' 			,'uses' => 'Admin\CountryController@delete']);
+		Route::post('multi_action',					 ['as' => 'admin_countries_block' 			,'uses' => 'Admin\CountryController@multi_action']);
+		Route::any('store',							 ['as' => 'admin_countries_store' 			,'uses' => 'Admin\CountryController@store']);
 
 		});
 
 		Route::group(array('prefix' => '/states'), function()
 		{
 
-			Route::get('/',['as' => 'admin_states_manage' ,'uses' => 'Admin\StateController@index']);
-			Route::get('show/{enc_id}',['as' => 'admin_states_show' ,'uses' => 'Admin\StateController@show']);
-			Route::get('edit/{enc_id}',['as' => 'admin_states_edit' ,'uses' => 'Admin\StateController@edit']);
-			Route::post('update/{enc_id}',['as' => 'admin_states_update' ,'uses' => 'Admin\StateController@update']);
-			Route::get('create',['as' => 'admin_states_create' ,'uses' => 'Admin\StateController@create']);
-			Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_states_toggle_status' ,'uses' => 'Admin\StateController@toggle_status']);
-			Route::post('multi_action',['as' => 'admin_states_block' ,'uses' => 'Admin\StateController@multi_action']);
-			Route::any('store',['as' => 'admin_states_store' ,'uses' => 'Admin\StateController@store']);
-			Route::get('delete/{enc_id}',['as' => 'admin_states_delete' ,'uses' => 'Admin\StateController@delete']);
+			Route::get('/',									['as' => 'admin_states_manage'		    ,'uses' => 'Admin\StateController@index']);
+			Route::get('show/{enc_id}',						['as' => 'admin_states_show' 			,'uses' => 'Admin\StateController@show']);
+			Route::get('edit/{enc_id}',						['as' => 'admin_states_edit' 			,'uses' => 'Admin\StateController@edit']);
+			Route::post('update/{enc_id}',					['as' => 'admin_states_update' 			,'uses' => 'Admin\StateController@update']);
+			Route::get('create',							['as' => 'admin_states_create'		  	,'uses' => 'Admin\StateController@create']);
+			Route::get('toggle_status/{enc_id}/{action}',	['as' => 'admin_states_toggle_status' 	,'uses' => 'Admin\StateController@toggle_status']);
+			Route::post('multi_action',						['as' => 'admin_states_block' 			,'uses' => 'Admin\StateController@multi_action']);
+			Route::any('store',								['as' => 'admin_states_store'			,'uses' => 'Admin\StateController@store']);
+			Route::get('delete/{enc_id}',					['as' => 'admin_states_delete' 			,'uses' => 'Admin\StateController@delete']);
 
 		});
 
 		Route::group(array('prefix' => '/cities'), function()
 		{
 
-			Route::get('/',['as' => 'admin_cities_manage' ,'uses' => 'Admin\CityController@index']);
-			Route::get('show/{enc_id}',['as' => 'admin_cities_show' ,'uses' => 'Admin\CityController@show']);
-			Route::get('edit/{enc_id}',['as' => 'admin_cities_edit' ,'uses' => 'Admin\CityController@edit']);
-			Route::post('update/{enc_id}',['as' => 'admin_cities_update' ,'uses' => 'Admin\CityController@update']);
-			Route::get('create',['as' => 'admin_cities_create' ,'uses' => 'Admin\CityController@create']);
-			Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_cities_toggle_status' ,'uses' => 'Admin\CityController@toggle_status']);
-			Route::post('multi_action',['as' => 'admin_cities_block' ,'uses' => 'Admin\CityController@multi_action']);
-			Route::any('store',['as' => 'admin_cities_store' ,'uses' => 'Admin\CityController@store']);
-			Route::any('nearby_destinations/{enc_id}',['as' => 'admin_nearby_destinations' ,'uses' => 'Admin\CityController@nearby_destinations']);
-			Route::any('add_destinations',['as' => 'admin_add_destinations' ,'uses' => 'Admin\CityController@add_destinations']);
-			Route::get('delete/{enc_id}',['as' => 'admin_cities_delete' ,'uses' => 'Admin\CityController@delete']);
+			Route::get('/',									['as' => 'admin_cities_manage'		  ,'uses' => 'Admin\CityController@index']);
+			Route::get('show/{enc_id}',						['as' => 'admin_cities_show' 		  ,'uses' => 'Admin\CityController@show']);
+			Route::get('edit/{enc_id}',						['as' => 'admin_cities_edit' 		  ,'uses' => 'Admin\CityController@edit']);
+			Route::post('update/{enc_id}',					['as' => 'admin_cities_update' 		  ,'uses' => 'Admin\CityController@update']);
+			Route::get('create',							['as' => 'admin_cities_create' 		  ,'uses' => 'Admin\CityController@create']);
+			Route::get('toggle_status/{enc_id}/{action}',	['as' => 'admin_cities_toggle_status' ,'uses' => 'Admin\CityController@toggle_status']);
+			Route::post('multi_action',						['as' => 'admin_cities_block' 		  ,'uses' => 'Admin\CityController@multi_action']);
+			Route::any('store',								['as' => 'admin_cities_store' 		  ,'uses' => 'Admin\CityController@store']);
+			Route::any('nearby_destinations/{enc_id}',		['as' => 'admin_nearby_destinations'  ,'uses' => 'Admin\CityController@nearby_destinations']);
+			Route::any('add_destinations',					['as' => 'admin_add_destinations'	  ,'uses' => 'Admin\CityController@add_destinations']);
+			Route::get('delete/{enc_id}',					['as' => 'admin_cities_delete' 		  ,'uses' => 'Admin\CityController@delete']);
 
 		});
 
 		Route::group(array('prefix' => '/zipcode'), function()
 		{
 
-			Route::get('/',['as' => 'admin_cities_manage' ,'uses' => 'Admin\ZipController@index']);
-			Route::get('create',['as' => 'admin_cities_create' ,'uses' => 'Admin\ZipController@create']);
-			Route::any('store',['as' => 'admin_cities_store' ,'uses' => 'Admin\ZipController@store']);
-			Route::get('show/{enc_id}',['as' => 'admin_cities_show' ,'uses' => 'Admin\ZipController@show']);
-			Route::get('edit/{enc_id}',['as' => 'admin_cities_edit' ,'uses' => 'Admin\ZipController@edit']);
-			Route::post('update/{enc_id}',['as' => 'admin_cities_update' ,'uses' => 'Admin\ZipController@update']);
-			Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_cities_toggle_status' ,'uses' => 'Admin\ZipController@toggle_status']);
-			Route::post('multi_action',['as' => 'admin_cities_block' ,'uses' => 'Admin\ZipController@multi_action']);
-			Route::get('delete/{enc_id}',['as' => 'admin_cities_delete' ,'uses' => 'Admin\ZipController@delete']);
+			Route::get('/',									['as' => 'admin_zipcode_manage'   		,'uses' => 'Admin\ZipController@index']);
+			Route::get('create',							['as' => 'admin_zipcode_create' 		,'uses' => 'Admin\ZipController@create']);
+			Route::any('store',								['as' => 'admin_zipcode_store'		    ,'uses' => 'Admin\ZipController@store']);
+			Route::get('show/{enc_id}',						['as' => 'admin_zipcode_show' 			,'uses' => 'Admin\ZipController@show']);
+			Route::get('edit/{enc_id}',						['as' => 'admin_zipcode_edit' 			,'uses' => 'Admin\ZipController@edit']);
+			Route::post('update/{enc_id}',					['as' => 'admin_zipcode_update' 		,'uses' => 'Admin\ZipController@update']);
+			Route::get('toggle_status/{enc_id}/{action}',	['as' => 'admin_zipcode_toggle_status'  ,'uses' => 'Admin\ZipController@toggle_status']);
+			Route::post('multi_action',						['as' => 'admin_zipcode_block'			,'uses' => 'Admin\ZipController@multi_action']);
+			Route::get('delete/{enc_id}',					['as' => 'admin_zipcode_delete' 		,'uses' => 'Admin\ZipController@delete']);
 
 		});
 		/* Email Template Module */
@@ -117,20 +117,26 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::get('edit/{coupon_id}',		['as' => 'admin_email_template_edit'		,'uses' => 'Admin\EmailTemplateController@edit']);
 			Route::post('update/{coupon_id}',	['as' => 'admin_email_template_update' 		,'uses' => 'Admin\EmailTemplateController@update']);
 		});
-
-		Route::group(array('prefix' => '/email_template'), function()
+		Route::group(array('prefix' => '/faq'), function()
 		{
-			Route::get('/',						['as' => 'admin_email_template_index'		,'uses' => 'Admin\EmailTemplateController@index']);
-			Route::get('create/',				['as' => 'admin_email_template_create' 		,'uses' => 'Admin\EmailTemplateController@create']);
-			Route::post('store/',				['as' => 'admin_email_template_store' 		,'uses' => 'Admin\EmailTemplateController@store']);
-			Route::get('edit/{coupon_id}',		['as' => 'admin_email_template_edit'		,'uses' => 'Admin\EmailTemplateController@edit']);
-			Route::post('update/{coupon_id}',	['as' => 'admin_email_template_update' 		,'uses' => 'Admin\EmailTemplateController@update']);
+
+			Route::get('/',								 ['as' => 'admin_faq_manage' 		,'uses' => 'Admin\FAQController@index']);
+			Route::get('create',						 ['as' => 'admin_faq_create' 		,'uses' => 'Admin\FAQController@create']);
+			Route::get('create_sub_page/{enc_id}',		 ['as' => 'admin_faq_create_subpage','uses' => 'Admin\FAQController@create_sub_page']);
+			Route::any('store',							 ['as' => 'admin_faq_store'  		,'uses' => 'Admin\FAQController@store']);
+			Route::get('show/{enc_id}',					 ['as' => 'admin_faq_show'          ,'uses' => 'Admin\FAQController@show']);
+			Route::get('edit/{enc_id}',					 ['as' => 'admin_faq_edit'          ,'uses' => 'Admin\FAQController@edit']);
+			Route::post('update/{enc_id}',				 ['as' => 'admin_faq_update'        ,'uses' => 'Admin\FAQController@update']);
+			Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_faq_toggle_status' ,'uses' => 'Admin\FAQController@toggle_status']);
+			Route::post('multi_action',					 ['as' => 'admin_faq_block' 		,'uses' => 'Admin\FAQController@multi_action']);
+			Route::get('delete/{enc_id}',				 ['as' => 'admin_faq_delete' 		,'uses' => 'Admin\FAQController@delete']);
+
 		});
 
 		/* Comman function */
 		Route::group(array('prefix' => '/common'), function()
 		{
-			Route::get('get_states/{country_id}',['as' => 'get_states' ,'uses' => 'Common\CountryController@get_states']);
+			Route::get('get_states/{country_id}',  ['as' => 'get_states' ,'uses' => 'Common\CountryController@get_states']);
 			/*Route::get('get_cities/{state_id}',['as' => 'get_cities' ,'uses' => 'Common\CountryController@get_cities']);
 			Route::get('get_nearby_state/{state_id}/{country_id}',['as' => 'get_nearby_states' ,'uses' => 'Common\CountryController@get_nearby_state']);
 			Route::get('get_nearby_city/{city_id}/{state_id}',['as' => 'get_nearby_city' ,'uses' => 'Common\CountryController@get_nearby_city']);
@@ -141,26 +147,26 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 		/*-------------Restaurant Reviews Module------------*/
 		Route::group(['prefix'=>'reviews'], function (){
-			Route::get('/{enc_id}','Admin\ReviewController@index');
-			Route::get('view/{enc_id}','Admin\ReviewController@view');
-			Route::get('delete/{enc_id}','Admin\ReviewController@delete');
-			Route::get('toggle_status/{enc_id}/{action}','Admin\ReviewController@toggle_status');
-			Route::post('multi_action','Admin\ReviewController@multi_action');
+			Route::get('/{enc_id}',       					['as' => 'admin_reviews_manage'     ,'uses' =>  'Admin\ReviewController@index']);
+			Route::get('view/{enc_id}',    					['as' => 'admin_reviews_view'       ,'uses' =>'Admin\ReviewController@view']);
+			Route::get('delete/{enc_id}',   				['as' => 'admin_reviews_delete'     ,'uses' =>'Admin\ReviewController@delete']);
+			Route::get('toggle_status/{enc_id}/{action}', 	['as' => 'admin_reviews_status'     ,'uses' =>'Admin\ReviewController@toggle_status']);
+			Route::post('multi_action',						['as' => 'admin_reviews_multiation' ,'uses' =>'Admin\ReviewController@multi_action']);
 		});
 
 		/*--------------------------     Front SLider Realted      ---------------------------*/
 
 		Route::group(array('prefix' => '/front_slider'), function()
 		{
-				Route::get('/',						['as' => 'admin_front_slider_index' 	,'uses' 	=> 'Admin\FrontSliderController@index']);
-				Route::get('create/',				['as' => 'admin_front_slider_create' 	,'uses' 	=> 'Admin\FrontSliderController@create']);
-				Route::post('store/',				['as' => 'admin_front_slider_store' 	,'uses' 	=> 'Admin\FrontSliderController@store']);
-				Route::get('edit/{slider_id}',		['as' => 'admin_front_slider_edit' 		,'uses' 	=> 'Admin\FrontSliderController@edit']);
-				Route::get('show/{slider_id}',		['as' => 'admin_front_slider_show' 		,'uses' 	=> 'Admin\FrontSliderController@show']);
-				Route::post('update/{slider_id}',	['as' => 'admin_front_slider_update' 	,'uses' 	=> 'Admin\FrontSliderController@update']);
-				Route::get('delete/{slider_id}',	['as' => 'admin_front_slider_delete' 	,'uses' 	=> 'Admin\FrontSliderController@delete']);
-				Route::post('multi_action',			['as' => 'admin_front_slider_multiaction','uses' 	=> 'Admin\FrontSliderController@multi_action']);
-				Route::any('save_order/{slider_id}/{order_id}',['as' => 'admin_front_slider_save_order' ,'uses' => 'Admin\FrontSliderController@save_order']);
+				Route::get('/',									['as' => 'admin_front_slider_index' 	  ,'uses' 	=> 'Admin\FrontSliderController@index']);
+				Route::get('create/',							['as' => 'admin_front_slider_create'      ,'uses' 	=> 'Admin\FrontSliderController@create']);
+				Route::post('store/',							['as' => 'admin_front_slider_store' 	  ,'uses' 	=> 'Admin\FrontSliderController@store']);
+				Route::get('edit/{slider_id}',					['as' => 'admin_front_slider_edit' 		  ,'uses' 	=> 'Admin\FrontSliderController@edit']);
+				Route::get('show/{slider_id}',					['as' => 'admin_front_slider_show' 		  ,'uses' 	=> 'Admin\FrontSliderController@show']);
+				Route::post('update/{slider_id}',				['as' => 'admin_front_slider_update' 	  ,'uses' 	=> 'Admin\FrontSliderController@update']);
+				Route::get('delete/{slider_id}',				['as' => 'admin_front_slider_delete' 	  ,'uses' 	=> 'Admin\FrontSliderController@delete']);
+				Route::post('multi_action',						['as' => 'admin_front_slider_multiaction' ,'uses' 	=> 'Admin\FrontSliderController@multi_action']);
+				Route::any('save_order/{slider_id}/{order_id}', ['as' => 'admin_front_slider_save_order'  ,'uses'   => 'Admin\FrontSliderController@save_order']);
 		});
 	/* Users Module */
 	Route::group(['prefix'=>'users'], function ()
