@@ -83,10 +83,9 @@
           <div class="btn-toolbar pull-right clearfix">
 
 
-          <div class="btn-group">
+          <!-- <div class="btn-group">
           <a href="{{ url('/web_admin/faq/create')}}" class="btn btn-primary btn-add-new-records">Add FAQ</a>
           </div>
-
 
              <div class="btn-group">
             <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
@@ -125,7 +124,8 @@
                    style="text-decoration:none;">
                    <i class="fa fa-repeat"></i>
                 </a>
-            </div>
+            </div>-->
+
           </div>
           <br/>
           <div class="clearfix"></div>
@@ -136,10 +136,9 @@
             <table class="table table-advance"  id="table1" >
               <thead>
                 <tr>
-                  <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change"  /></th>
+                  <!-- <th style="width:18px"> <input type="checkbox" hidden name="mult_change" id="mult_change"  /></th> -->
                   <th>Questions</th>
                   <th>Answer</th>
-                  <th>Sub Pages</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -148,26 +147,14 @@
                 @if(sizeof($faq_pages)>0)
                   @foreach($faq_pages as $faq_pages)
                   <tr>
-                    <td>
-                      <input type="checkbox"
+                    <!-- <td>
+                      <input type="checkbox" hidden
                              name="checked_record[]"
                              value="{{ base64_encode($faq_pages['id']) }}" />
-                    </td>
+                    </td> -->
                     <td> {{ $faq_pages['question'] }} </td>
                     <td> {{ str_limit($faq_pages['answer'], 50,'...') }} </td>
-                     @if(sizeof($sub_pages)>0)
-                     <td>
-                       &nbsp;  <a class=" show-tooltip" title ="Edit FAQ Sub Pages" href="{{ url('/').'/web_admin/faq/subpages/'.base64_encode($faq_pages['id']) }}">View FAQ Sub Pages</a>
-                      <!--  @foreach($sub_pages as $sub_page)
-                          @if($sub_page['parent'] == $faq_pages['id'])
-                              &nbsp;  <a class="fa fa-edit show-tooltip" title ="Edit FAQ Sub Pages" href="{{ url('/').'/web_admin/faq/edit/'.base64_encode($sub_page['id']) }}"></a><br/>
-                            <?php   $is_sub_page_exist  = 1;
-                             //break;
-                             ?>
-                          @endif
-                       @endforeach -->
-                       </td>
-                    @endif
+
                     <td>
                       &nbsp;
                       <a class="fa fa-edit show-tooltip" title ="Edit FAQ  Pages" href="{{ url('/').'/web_admin/faq/edit/'.base64_encode($faq_pages['id']) }}"></a>
@@ -183,10 +170,7 @@
                           <i class="fa fa-trash" ></i>
                         </a>
 
-                         <?php $is_sub_page_exist  = 0;  ?>
-                      @if($is_sub_page_exist == 0)
-                     &nbsp; <a class="glyphicon glyphicon-plus-sign" href="{{ url('/web_admin/faq/create_sub_page/'.base64_encode($faq_pages['id']))}}"></a>
-                    @endif
+
 
                     </td>
                   </tr>

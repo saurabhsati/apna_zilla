@@ -24,6 +24,15 @@ class FAQController extends Controller
         $sub_pages = $this->FaqModel->where('parent','!=',0)->get()->toArray();
         return view('web_admin.faq.index',compact('page_title','faq_pages','sub_pages'));
     }
+    public function subpages($enc_id)
+    {
+    	$id=base64_decode($enc_id);
+    	$faq_pages = $this->FaqModel->where('parent',$id)->get()->toArray();
+    	$page_title	="Manage Faq Sub Pages";
+
+        //$sub_pages = $this->FaqModel->where('parent','!=',0)->get()->toArray();
+        return view('web_admin.faq.subpages',compact('page_title','faq_pages'));
+    }
     public function create()
     {
     	$page_title ='Create FAQ';
@@ -200,7 +209,8 @@ class FAQController extends Controller
             Session::flash('success','Faq Page(s) Deactivate/Blocked Successfully');
         }
 
-        return redirect('/web_admin/faq');
+        //return redirect('/web_admin/faq');
+        return redirect()->back();
     }
 
     protected function _delete($enc_id)
