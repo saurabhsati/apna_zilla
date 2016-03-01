@@ -69,10 +69,10 @@
           @endif
 
 
-        <form class="form-horizontal" 
-              id="validation-form" 
-              method="POST" 
-              action="{{ url('/web_admin/users/update/'.base64_encode($arr_user_data['id'])) }} ' " 
+        <form class="form-horizontal"
+              id="validation-form"
+              method="POST"
+              action="{{ url('/web_admin/users/update/'.base64_encode($arr_user_data['id'])) }} ' "
               enctype="multipart/form-data">
 
            {{ csrf_field() }}
@@ -156,13 +156,13 @@
 
           <!--  <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="marital_status">Marital Status<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls"> 
+                <div class="col-sm-6 col-lg-4 controls">
                      <input class="form-control"
                            name="marital_status"
                            id="marital_status"
                            data-rule-required="true"
                            placeholder="Enter Marital Status"
-                           value="{{ isset($arr_user_data['marital_status'])?$arr_user_data['marital_status']:'' }}"/> 
+                           value="{{ isset($arr_user_data['marital_status'])?$arr_user_data['marital_status']:'' }}"/>
                       <select class="form-control" data-placeholder="Choose a Category" name="marital_status" tabindex="1">
                         <option value="" >Select...</option>
                         <option value="Married" {{ $arr_user_data['marital_status']=='Married'?"selected ='selected'":'' }}>Married</option>

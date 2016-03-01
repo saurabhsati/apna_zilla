@@ -29,8 +29,6 @@ class FAQController extends Controller
     	$id=base64_decode($enc_id);
     	$faq_pages = $this->FaqModel->where('parent',$id)->get()->toArray();
     	$page_title	="Manage Faq Sub Pages";
-
-        //$sub_pages = $this->FaqModel->where('parent','!=',0)->get()->toArray();
         return view('web_admin.faq.subpages',compact('page_title','faq_pages'));
     }
     public function create()

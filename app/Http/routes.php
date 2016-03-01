@@ -169,6 +169,20 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 				Route::post('multi_action',						['as' => 'admin_front_slider_multiaction' ,'uses' 	=> 'Admin\FrontSliderController@multi_action']);
 				Route::any('save_order/{slider_id}/{order_id}', ['as' => 'admin_front_slider_save_order'  ,'uses'   => 'Admin\FrontSliderController@save_order']);
 		});
+		/* Business Listing */
+		Route::group(['prefix'=>'business_listing'], function ()
+		{
+			Route::get('/','Admin\BusinessListingController@index');
+			Route::get('manage','Admin\BusinessListingController@index');
+			//Route::get('show/{enc_id}','Admin\BusinessListingController@show');
+			Route::get('edit/{enc_id}','Admin\BusinessListingController@edit');
+			Route::post('update/{enc_id}','Admin\BusinessListingController@update');
+			//Route::get('create','Admin\BusinessListingController@create');
+			Route::get('toggle_status/{enc_id}/{action}','Admin\BusinessListingController@toggle_status');
+			Route::post('multi_action','Admin\BusinessListingController@multi_action');
+			Route::any('store','Admin\BusinessListingController@store');
+		});
+
 	/* Users Module */
 	Route::group(['prefix'=>'users'], function ()
 	{

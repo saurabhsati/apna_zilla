@@ -20,7 +20,16 @@
                 <li style="display: block;"><a href="{{ url('/web_admin/users')}}">Manage</a> </li>
             </ul>
         </li>
-
+        <li class="{{ Request::segment(2)=='business_listing'? 'active':'' }}">
+            <a href="javascript:void(0)" class="dropdown-toggle">
+                <i class="fa fa-list"></i>
+                <span>Business Listing</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+            <ul class="submenu">
+                <li style="display: block;"><a href="{{ url('/web_admin/business_listing')}}">Manage</a> </li>
+            </ul>
+        </li>
          <li class="{{ Request::segment(2)=='categories'? 'active':'' }}">
             <a href="javascript:void(0)" class="dropdown-toggle">
                 <i class="fa fa-bars"></i>
