@@ -70,6 +70,7 @@ class BusinessListingController extends Controller
         }
         $form_data=$request->all();
         $arr_data['business_name']=$form_data['business_name'];
+        $arr_data['is_active']='2';
         $arr_data['business_cat']=$form_data['business_cat'];
         $arr_data['user_id']=$form_data['user_id'];
         $insert_data=$this->BusinessListingModel->create($arr_data);
