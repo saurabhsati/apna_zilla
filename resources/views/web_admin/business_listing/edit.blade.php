@@ -91,6 +91,23 @@
                     <span class='help-block'>{{ $errors->first('business_name') }}</span>
                 </div>
             </div>
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="business_cat">Business Category<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <select class="form-control"
+                           name="business_cat"
+                           id="business_cat"
+                           >
+                            @if(isset($arr_category) && sizeof($arr_category)>0)
+                            @foreach($arr_category as $category)
+                             <option value="{{ $category['cat_id'] }}" {{ $category['cat_id']==$business['business_cat']?'selected="selected"':'' }}> {{  $category['cat_meta_keyword'] }}</option>
+                            @endforeach
+                            @endif
+                           </select>
+                    <span class='help-block'>{{ $errors->first('business_cat') }}</span>
+                </div>
+            </div>
+            <input type="hidden" name="user_id" value="{{ isset($business['user_id'])?$business['user_id']:'' }}">
            <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="title">title<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">

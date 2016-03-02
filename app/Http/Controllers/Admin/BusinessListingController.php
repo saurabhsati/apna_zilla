@@ -9,15 +9,19 @@ use App\Http\Controllers\Controller;
 
 use App\Models\BusinessListingModel;
 use App\Models\UserModel;
+use App\Models\CategoryModel;
 use Validator;
 use Session;
+use Sentinel;
 class BusinessListingController extends Controller
 {
     //
     public function __construct()
     {
-    	 $this->UserModel = new UserModel();
-    	 $this->BusinessListingModel = new BusinessListingModel();
+    	$arr_except_auth_methods = array();
+        $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
+    	 //$this->UserModel = new UserModel();
+    	  $this->BusinessListingModel = new BusinessListingModel();
 
     }
     public function index()
@@ -32,18 +36,27 @@ class BusinessListingController extends Controller
  		$id = base64_decode($enc_id);
  		$page_title = "Business Listing: Edit ";
 
- 		$arr_business_data = array();
+ 		$business_data = array();
+ 		$obj_category = CategoryModel::where('parent','0')->get();
+
+ 		if($obj_category)
+ 		{
+ 			$arr_category = $obj_category->toArray();
+ 		}
  		$business_data=$this->BusinessListingModel->with(['user_details'])->where('id',$id)->get()->toArray();
- 		return view('web_admin.business_listing.edit',compact('page_title','business_data'));
+
+ 		return view('web_admin.business_listing.edit',compact('page_title','business_data','arr_category'));
 
  	}
  	public function update(Request $request,$enc_id)
  	{
- 		/*$id	=base64_decode($enc_id);
+ 		$id	=base64_decode($enc_id);
  		$form_data	= array();
+ 		$business_data = array();
  		$arr_rules = array();
 
  		$arr_rules['business_name'] = "required";
+ 		$arr_rules['business_cat'] = "required";
         $arr_rules['title'] = "required";
         $arr_rules['first_name'] = "required";
         $arr_rules['last_name'] = "required";
@@ -59,15 +72,25 @@ class BusinessListingController extends Controller
         {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        $form_data['business_name']      = $request->input('business_name');
+        $user_id=$request->input('user_id');
+        $user=Sentinel::createModel();
+
+        $business_data['business_name']      = $request->input('business_name');
+        $business_data['business_cat']=$request->input('business_cat');
+
         $form_data['title']      = $request->input('title');
-        $form_data['first_name ']= $request->input('first_name');
+        $form_data['first_name']= $request->input('first_name');
         $form_data['last_name'] = $request->input('last_name');
         $form_data['email']      = $request->input('email');
         $form_data['city']      = $request->input('city');
         $form_data['mobile_no']      = $request->input('mobile_no');
-        $business_data=$this->BusinessListingModel->with(['user_details'])->where('id',$id)->update($form_data);
-        if($business_data)
+
+		$user = Sentinel::findById($user_id);
+        $user_data = Sentinel::update($user['id'],$form_data);
+
+        $business_data=$this->BusinessListingModel->where('id',$id)->update($business_data);
+
+        if($business_data && $user_data)
         {
         	Session::flash('success','Business Updated successfully');
 
@@ -75,7 +98,7 @@ class BusinessListingController extends Controller
         else
         {
         	Session::flash('error','Error Occurred While Updating Business List ');
-        }*/
+        }
         return redirect()->back();
    	}
    	public function toggle_status($enc_id,$action)
