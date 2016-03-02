@@ -87,7 +87,7 @@
           <div class="btn-toolbar pull-right clearfix">
             <!--- Add new record - - - -->
                 <div class="btn-group">
-                <a href="{{ url('/web_admin/business_listing/create')}}" class="btn btn-primary btn-add-new-records">Add business</a>
+                <a href="{{ url('/web_admin/business_listing/create_location/'.base64_encode($id))}}" class="btn btn-primary btn-add-new-records">Add Location</a>
                 </div>
             <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -->
             <div class="btn-group">
@@ -133,72 +133,49 @@
               <thead>
                 <tr>
                   <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
-                  <th style="width:25px;">Business Name</th>
-                  <th style="width:25px;">Business Category Name</th>
-                  <th style="width:25px;">Title</th>
-                  <th style="width:50px;">Full Name</th>
-                  <th style="width:25px;">Email</th>
-                  <th style="width:25px;">Mobile No</th>
-                  <th>City</th>
-                  <th>Location</th>
-                  <th>Contact Info</th>
+                  <th >Building</th>
+                  <th >Street</th>
+                  <th >Landmark</th>
+                  <th >Area</th>
+                  <th >City</th>
+                  <th >Zicode/ Pincode</th>
+                  <th >State</th>
+                  <th >Country</th>
                   <th width="" style="text-align:center">Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
 
-               @if(isset($business_listing) && sizeof($business_listing)>0)
-                  @foreach($business_listing as $business)
+               @if(isset($business_locations) && sizeof($business_locations)>0)
+                  @foreach($business_locations as $location)
                   <tr>
                     <td>
                       <input type="checkbox"
                              name="checked_record[]"
-                             value="{{ base64_encode($business['id']) }}" />
+                             value="{{ base64_encode($location['id']) }}" />
                     </td>
-                    <td> {{ $business['business_name'] }} </td>
-                    <td> {{ $business['categoty_details']['title'] }} </td>
-                    <td> {{ $business['user_details']['title'] }} </td>
-                    <td> {{ $business['user_details']['first_name']." ".$business['user_details']['last_name'] }} </td>
-                    <td> {{ $business['user_details']['email'] }} </td>
-                    <td> {{ $business['user_details']['mobile_no'] }} </td>
-                     <td> {{ $business['user_details']['city'] }} </td>
-                     <td>
-                        <a
-                          class="btn btn-info"
-                          href="{{ url('/').'/web_admin/business_listing/location/'.base64_encode($business['id']) }}"  title="View Loaction">
-                          View
-                        </a>
-                        <a
-                          class="btn btn-info"
-                          href="{{ url('/').'/web_admin/business_listing/create_location/'.base64_encode($business['id']) }}"  title="Add Loaction">
-                          Add
-                        </a>
-                      </td>
-                      <td>
-                        <a
-                          class="btn btn-info"
-                          href="{{ url('/').'/web_admin/business_listing/contact_info/'.base64_encode($business['id']) }}"  title="View Conatct Info">
-                          View
-                        </a>
-                        <a
-                          class="btn btn-info"
-                          href="{{ url('/').'/web_admin/business_listing/create_contact_info/'.base64_encode($business['id']) }}"  title="Add Conatct Info">
-                          Add
-                        </a>
-                      </td>
+                    <td> {{ $location['building'] }} </td>
+                    <td> {{ $location['street'] }} </td>
+                    <td> {{ $location['landmark'] }} </td>
+                    <td> {{ $location['area'] }} </td>
+                    <td> {{ $location['city_details']['city_title'] }} </td>
+                    <td> {{ $location['zipcode_details']['zipcode'] }} </td>
+                    <td> {{ $location['state_details']['state_title'] }} </td>
+                    <td> {{ $location['country_details']['country_name'] }} </td>
+
                     <td width="" style="text-align:center">
-                         @if($business['is_active']=="0")
-                        <a class="btn btn-danger" href="{{ url('/web_admin/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/activate' }}">
+                         @if($location['is_active']=="0")
+                        <a class="btn btn-danger" href="{{ url('/web_admin/business_listing/location_toggle_status/').'/'.base64_encode($location['id']).'/activate' }}">
                             Block
                         </a>
 
-                        @elseif($business['is_active']=="1")
-                        <a  class="btn btn-success" href="{{ url('/web_admin/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/block' }}">
+                        @elseif($location['is_active']=="1")
+                        <a  class="btn btn-success" href="{{ url('/web_admin/business_listing/location_toggle_status/').'/'.base64_encode($location['id']).'/block' }}">
                             Active
                         </a>
-                         @elseif($business['is_active']=="2")
-                        <a  class="btn btn-info" href="{{ url('/web_admin/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/activate' }}">
+                         @elseif($location['is_active']=="2")
+                        <a  class="btn btn-info" href="{{ url('/web_admin/business_listing/location_toggle_status/').'/'.base64_encode($location['id']).'/activate' }}">
                             Pending
                         </a>
                         @endif
@@ -206,12 +183,12 @@
 
                     <td>
 
-                        <a href="{{ url('/web_admin/business_listing/edit/').'/'.base64_encode($business['id']) }}" class="show-tooltip" title="Edit">
+                        <a href="{{ url('/web_admin/business_listing/edit_location/').'/'.base64_encode($location['id'].'/'.base64_encode($id)) }}" class="show-tooltip" title="Edit">
                           <i class="fa fa-edit" ></i>
                         </a>
 
                         &nbsp;
-                        <a href="{{ url('/web_admin/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/delete' }}"
+                        <a href="{{ url('/web_admin/business_listing/location_toggle_status/').'/'.base64_encode($location['id']).'/delete' }}"
                            onclick="javascript:return confirm_delete()" class="show-tooltip" title="Delete">
                           <i class="fa fa-trash" ></i>
                         </a>

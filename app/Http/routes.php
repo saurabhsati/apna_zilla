@@ -177,11 +177,21 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			//Route::get('show/{enc_id}','Admin\BusinessListingController@show');
 			Route::get('edit/{enc_id}','Admin\BusinessListingController@edit');
 			Route::post('update/{enc_id}','Admin\BusinessListingController@update');
-			//Route::get('create','Admin\BusinessListingController@create');
+			Route::get('create','Admin\BusinessListingController@create');
 			Route::get('toggle_status/{enc_id}/{action}','Admin\BusinessListingController@toggle_status');
 			Route::post('multi_action','Admin\BusinessListingController@multi_action');
 			Route::any('store','Admin\BusinessListingController@store');
+
+			//Location
+			Route::get('/location/{enc_id}','Admin\BusinessListingController@location');
+			Route::get('create_location/{enc_id}','Admin\BusinessListingController@create_location');
+			Route::any('store_location/{enc_id}','Admin\BusinessListingController@store_location');
+			Route::get('edit_location/{enc_id}/','Admin\BusinessListingController@edit_location');
+			Route::post('update_location/{enc_id}','Admin\BusinessListingController@update_location');
+			Route::get('location_toggle_status/{enc_id}/{action}','Admin\BusinessListingController@location_toggle_status');
+			Route::post('multi_action_loc','Admin\BusinessListingController@multi_action_loc');
 		});
+
 
 	/* Users Module */
 	Route::group(['prefix'=>'users'], function ()

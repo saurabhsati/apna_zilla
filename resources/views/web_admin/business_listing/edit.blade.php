@@ -101,7 +101,7 @@
                            >
                             @if(isset($arr_category) && sizeof($arr_category)>0)
                             @foreach($arr_category as $category)
-                             <option value="{{ $category['cat_id'] }}" {{ $category['cat_id']==$business['business_cat']?'selected="selected"':'' }}> {{  $category['cat_meta_keyword'] }}</option>
+                             <option value="{{ $category['cat_id'] }}" {{ $category['cat_id']==$business['business_cat']?'selected="selected"':'' }}> {{  $category['title'] }}</option>
                             @endforeach
                             @endif
                            </select>
