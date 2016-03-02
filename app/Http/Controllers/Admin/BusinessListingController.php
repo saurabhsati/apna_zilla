@@ -409,6 +409,23 @@ class BusinessListingController extends Controller
     public function update_location(Request $request ,$enc_id)
     {
     	$id=base64_decode($enc_id);
+
+    	$arr_rules = array();
+
+ 		$arr_rules['building'] = "required";
+ 		$arr_rules['street'] = "required";
+        $arr_rules['landmark'] = "required";
+        $arr_rules['area'] = "required";
+        $arr_rules['city'] = "required";
+        $arr_rules['pincode'] = "required|email";
+        $arr_rules['state'] = "required";
+        $arr_rules['country'] = "required";
+        $validator=validator::make($request->all(),$arr_rules);
+
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
     	$form_data	= array();
     	$form_data['building']=$request->input('building');
 		$form_data['street']=$request->input('street');
