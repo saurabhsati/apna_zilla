@@ -349,12 +349,7 @@ class BusinessListingController extends Controller
     	$id=base64_decode($enc_id);
     	$page_title="Create Location";
 
-    	$obj_user_res = UserModel::where('role','sales')->get();
-        if( $obj_user_res != FALSE)
-        {
-            $arr_user = $obj_user_res->toArray();
-        }
-//print_r($arr_user);exit;
+
     	$obj_countries_res = CountryModel::get();
         if( $obj_countries_res != FALSE)
         {
@@ -378,7 +373,7 @@ class BusinessListingController extends Controller
         {
             $arr_state = $obj_state_res->toArray();
         }
-        return view('web_admin.business_listing.location.create',compact('page_title','arr_user','arr_state','arr_country','arr_zipcode','arr_city','id'));
+        return view('web_admin.business_listing.location.create',compact('page_title','arr_state','arr_country','arr_zipcode','arr_city','id'));
 
     }
     public function store_location($enc_id,Request $request )
@@ -387,7 +382,6 @@ class BusinessListingController extends Controller
     	$id=base64_decode($enc_id);
     	$form_data	= array();
     	$form_data['business_id']=$id;
-    	$form_data['user_id']=$request->input('user_id');
     	$form_data['building']=$request->input('building');
 		$form_data['street']=$request->input('street');
 		$form_data['landmark']=$request->input('landmark');
@@ -418,7 +412,7 @@ class BusinessListingController extends Controller
         $arr_rules['landmark'] = "required";
         $arr_rules['area'] = "required";
         $arr_rules['city'] = "required";
-        $arr_rules['pincode'] = "required|email";
+        $arr_rules['pincode'] = "required";
         $arr_rules['state'] = "required";
         $arr_rules['country'] = "required";
         $validator=validator::make($request->all(),$arr_rules);

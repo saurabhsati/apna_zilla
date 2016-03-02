@@ -157,7 +157,7 @@
                 <select class="form-control"  name="pincode" id="pincode">
                  @if(isset($arr_zipcode) && sizeof($arr_zipcode)>0)
                    @foreach($arr_zipcode as $zipcode)
-                <option value="{{ isset($zipcode['id'])?$zipcode['id']:'' }}" {{ $business_locations['pincode']==$zipcode['zipcode']?'selected="selected"':'' }}>{{ isset($zipcode['zipcode'])?$zipcode['zipcode']:'' }}
+                <option value="{{ isset($zipcode['id'])?$zipcode['id']:'' }}" {{ $business_locations['pincode']==$zipcode['id']?'selected="selected"':'' }}>{{ isset($zipcode['zipcode'])?$zipcode['zipcode']:'' }}
                 </option>
                 @endforeach
                 @endif

@@ -75,7 +75,7 @@
               enctype="multipart/form-data">
 
            {{ csrf_field() }}
-            <div class="form-group">
+           <!--  <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="user_id">Select User<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                 <select class="form-control"  name="user_id" id="user_id">
@@ -89,7 +89,7 @@
                   </select>
                     <span class='help-block'>{{ $errors->first('user_id') }}</span>
                 </div>
-            </div>
+            </div> -->
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="building">Building<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">

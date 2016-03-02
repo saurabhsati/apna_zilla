@@ -8,7 +8,6 @@ class BusinessLocationModel extends Model
 {
     protected $table='business_location';
     protected $fillable=[
-                        'user_id',
                         'business_id',
                         'building',
 					     'street',
