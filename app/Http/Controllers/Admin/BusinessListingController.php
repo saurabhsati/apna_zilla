@@ -20,15 +20,14 @@ class BusinessListingController extends Controller
     {
     	$arr_except_auth_methods = array();
         $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
-    	 //$this->UserModel = new UserModel();
-    	  $this->BusinessListingModel = new BusinessListingModel();
+    	$this->BusinessListingModel = new BusinessListingModel();
 
     }
     public function index()
     {
     	$page_title	='Manage Business Listing';
     	$business_listing	=array();
-    	$business_listing=$this->BusinessListingModel->with(['user_details'])->get()->toArray();
+    	$business_listing=$this->BusinessListingModel->with(['user_details','categoty_details'])->get()->toArray();
     	return view('web_admin.business_listing.index',compact('page_title','business_listing'));
     }
     public function edit($enc_id)

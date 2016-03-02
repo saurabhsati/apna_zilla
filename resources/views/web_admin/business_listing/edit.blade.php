@@ -91,6 +91,7 @@
                     <span class='help-block'>{{ $errors->first('business_name') }}</span>
                 </div>
             </div>
+
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="business_cat">Business Category<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
@@ -107,6 +108,7 @@
                     <span class='help-block'>{{ $errors->first('business_cat') }}</span>
                 </div>
             </div>
+
             <input type="hidden" name="user_id" value="{{ isset($business['user_id'])?$business['user_id']:'' }}">
            <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="title">title<i class="red">*</i></label>

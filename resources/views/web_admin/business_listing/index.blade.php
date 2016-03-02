@@ -134,6 +134,7 @@
                 <tr>
                   <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
                   <th>Business Name</th>
+                  <th>Category Name</th>
                   <th>Title</th>
                   <th>Full Name</th>
                   <th>Email</th>
@@ -153,8 +154,9 @@
                              name="checked_record[]"
                              value="{{ base64_encode($business['id']) }}" />
                     </td>
-                      <td> {{ $business['business_name'] }} </td>
-                        <td> {{ $business['user_details']['title'] }} </td>
+                    <td> {{ $business['business_name'] }} </td>
+                    <td> {{ $business['categoty_details']['cat_meta_keyword'] }} </td>
+                    <td> {{ $business['user_details']['title'] }} </td>
                     <td> {{ $business['user_details']['first_name']." ".$business['user_details']['last_name'] }} </td>
                     <td> {{ $business['user_details']['email'] }} </td>
                     <td> {{ $business['user_details']['mobile_no'] }} </td>
