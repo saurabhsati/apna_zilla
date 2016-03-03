@@ -98,7 +98,7 @@
                            name="street"
                            id="street"
                            data-rule-required="true"
-                           placeholder="Enter business_locations"
+                           placeholder="Enter Street"
                            value="{{ isset($business_locations['street'])?$business_locations['street']:'' }}"
                            />
                     <span class='help-block'>{{ $errors->first('street') }}</span>

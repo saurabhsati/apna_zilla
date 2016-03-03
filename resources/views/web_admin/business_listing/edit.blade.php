@@ -99,7 +99,7 @@
                            name="business_name"
                            id="business_name"
                            data-rule-required="true"
-                           placeholder="Enter First Name"
+                           placeholder="Enter Business Name"
                            value="{{ isset($business['business_name'])?$business['business_name']:'' }}"
                            />
                     <span class='help-block'>{{ $errors->first('business_name') }}</span>

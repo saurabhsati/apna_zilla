@@ -75,21 +75,7 @@
               enctype="multipart/form-data">
 
            {{ csrf_field() }}
-           <!--  <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="user_id">Select User<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                <select class="form-control"  name="user_id" id="user_id">
-                <option>Select User</option>
-                 @if(isset($arr_user) && sizeof($arr_user)>0)
-                 @foreach($arr_user as $user)
-                 <option value="{{ isset($user['id'])?$user['id']:'' }}" >{{ isset($user['first_name'] )?$user['first_name']:'' }}
-                 </option>
-                  @endforeach
-                  @endif
-                  </select>
-                    <span class='help-block'>{{ $errors->first('user_id') }}</span>
-                </div>
-            </div> -->
+
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="building">Building<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
@@ -110,7 +96,7 @@
                            name="street"
                            id="street"
                            data-rule-required="true"
-                           placeholder="Enter business_locations"
+                           placeholder="Enter Street"
                            value=""
                            />
                     <span class='help-block'>{{ $errors->first('street') }}</span>

@@ -11,6 +11,7 @@ use App\Models\BusinessListingModel;
 use App\Models\UserModel;
 use App\Models\CategoryModel;
 use App\Models\BusinessLocationModel;
+use App\Models\BusinessContactInfoModel;
 use App\Models\CountryModel;
 use App\Models\StateModel;
 use App\Models\ZipModel;
@@ -28,8 +29,10 @@ class BusinessListingController extends Controller
     	 //$this->UserModel = new UserModel();
     	  $this->BusinessListingModel = new BusinessListingModel();
     	  $this->BusinessLocationModel = new BusinessLocationModel();
+    	  $this->BusinessContactInfoModel= new BusinessContactInfoModel();
 
     }
+     /* Business Listing Start */
     public function index()
     {
     	$page_title	='Manage Business Listing';
@@ -261,6 +264,7 @@ class BusinessListingController extends Controller
         $Business = $this->BusinessListingModel->where('id',$id);
 		return $Business->delete();
     }
+      /* Business Listing End */
 
     /* Location Start */
     public function location($enc_id)
@@ -385,6 +389,21 @@ class BusinessListingController extends Controller
     }
     public function store_location($enc_id,Request $request )
     {
+    	$arr_rules	=	array();
+    	$arr_rules['building']='required';
+    	$arr_rules['street']='required';
+    	$arr_rules['landmark']='required';
+    	$arr_rules['area']='required';
+    	$arr_rules['city']='required';
+    	$arr_rules['pincode']='required';
+    	$arr_rules['state']='required';
+    	$arr_rules['country']='required';
+    	$validator = Validator::make($request->all(),$arr_rules);
+
+        if($validator->fails())
+        {
+            return redirect('/web_admin/business_listing/create_location/'.$enc_id)->withErrors($validator)->withInput();
+        }
 
     	$id=base64_decode($enc_id);
     	$form_data	= array();
@@ -501,4 +520,163 @@ class BusinessListingController extends Controller
 		return $Business->delete();
     }
     /* Location End */
+
+    /* Contact Info  Start */
+    public function contact_info($enc_id)
+    {
+    	$page_title	="Business Contact Information";
+    	$id =base64_decode($enc_id);
+    	$business_contact	=array();
+    	$business_contact=$this->BusinessContactInfoModel->with('business_details')->where('business_id',$id)->get()->toArray();
+    	return view('web_admin.business_listing.contactinfo.index',compact('page_title','business_contact','id'));
+    }
+    public function create_contact($enc_id)
+    {
+    	$id=base64_decode($enc_id);
+    	$page_title="Create Contact";
+        return view('web_admin.business_listing.contactinfo.create',compact('page_title','id'));
+
+    }
+    public function store_contact($enc_id,Request $request)
+    {
+    	$arr_rules['contact_person_name']='required';
+    	$arr_rules['mobile_number']='required';
+    	$arr_rules['landline_number']='required';
+    	$arr_rules['fax_no']='required';
+    	$arr_rules['toll_free_number']='required';
+    	$arr_rules['email_id']='required';
+    	$arr_rules['website']='required';
+    	$validator = Validator::make($request->all(),$arr_rules);
+
+        if($validator->fails())
+        {
+            return redirect('/web_admin/business_listing/create_contact/'.$enc_id)->withErrors($validator)->withInput();
+        }
+
+    	$id=base64_decode($enc_id);
+    	$form_data	= array();
+    	$form_data['business_id']=$id;
+    	$form_data['contact_person_name']=$request->input('contact_person_name');
+		$form_data['mobile_number']=$request->input('mobile_number');
+		$form_data['landline_number']=$request->input('landline_number');
+		$form_data['fax_no']=$request->input('fax_no');
+		$form_data['toll_free_number']=$request->input('toll_free_number');
+		$form_data['email_id']=$request->input('email_id');
+		$form_data['website']=$request->input('website');
+
+		$save_contact=$this->BusinessContactInfoModel->create($form_data);
+		if($save_contact)
+		{
+			Session::flash('success','Business Contact Created successfully');
+        }
+        else
+        {
+        	Session::flash('error','Error Occurred While Creating Business Contact');
+        }
+        return redirect()->back();
+    }
+    public function edit_contact($enc_id)
+    {
+    	$id=base64_decode($enc_id);
+    	$page_title="Edit Contact";
+        $business_contact	=array();
+    	$business_contact=$this->BusinessContactInfoModel->with('business_details')->where('id',$id)->first()->toArray();
+    	return view('web_admin.business_listing.contactinfo.edit',compact('page_title','business_contact'));
+    }
+    public function update_contact(Request $request,$enc_id)
+    {
+    	$id=base64_decode($enc_id);
+
+    	$arr_rules = array();
+
+ 		$arr_rules['contact_person_name']='required';
+    	$arr_rules['mobile_number']='required';
+    	$arr_rules['landline_number']='required';
+    	$arr_rules['fax_no']='required';
+    	$arr_rules['toll_free_number']='required';
+    	$arr_rules['email_id']='required';
+    	$arr_rules['website']='required';
+    	$validator = Validator::make($request->all(),$arr_rules);
+
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+    	$form_data	= array();
+    	$form_data['business_id']=$id;
+    	$form_data['contact_person_name']=$request->input('contact_person_name');
+		$form_data['mobile_number']=$request->input('mobile_number');
+		$form_data['landline_number']=$request->input('landline_number');
+		$form_data['fax_no']=$request->input('fax_no');
+		$form_data['toll_free_number']=$request->input('toll_free_number');
+		$form_data['email_id']=$request->input('email_id');
+		$form_data['website']=$request->input('website');
+		$update_contact=$this->BusinessContactInfoModel->where('id',$id)->update($form_data);
+		if($update_contact)
+		{
+			Session::flash('success','Business Contact Updated successfully');
+        }
+        else
+        {
+        	Session::flash('error','Error Occurred While Updating Business Contact  ');
+        }
+        return redirect()->back();
+    }
+     public function contact_toggle_status($enc_id,$action)
+    {
+        if($action=="delete")
+        {
+            $this->_delete_contact($enc_id);
+
+            Session::flash('success','Business Contact(s) Deleted Successfully');
+        }
+
+        return redirect()->back();
+    }
+
+     public function multi_action_contact(Request $request)
+    {
+        $arr_rules = array();
+        $arr_rules['multi_action'] = "required";
+        $arr_rules['checked_record'] = "required";
+
+
+        $validator = Validator::make($request->all(),$arr_rules);
+
+        if($validator->fails())
+        {
+            Session::flash('error','Please Select Any Record(s)');
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $multi_action = $request->input('multi_action');
+        $checked_record = $request->input('checked_record');
+
+        /* Check if array is supplied*/
+        if(is_array($checked_record) && sizeof($checked_record)<=0)
+        {
+            Session::flash('error','Problem Occured, While Doing Multi Action');
+            return redirect()->back();
+
+        }
+
+        foreach ($checked_record as $key => $record_id)
+        {
+           if($multi_action=="delete")
+            {
+               $this->_delete_contact($record_id);
+                Session::flash('success','Business Contact(s) Deleted Successfully');
+            }
+
+        }
+
+        return redirect()->back();
+    }
+     protected function _delete_contact($enc_id)
+    {
+    	$id = base64_decode($enc_id);
+        $Business = $this->BusinessContactInfoModel->where('id',$id);
+		return $Business->delete();
+    }
+    /* Contact Info  End */
 }

@@ -190,6 +190,15 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::post('update_location/{enc_id}','Admin\BusinessListingController@update_location');
 			Route::get('location_toggle_status/{enc_id}/{action}','Admin\BusinessListingController@location_toggle_status');
 			Route::post('multi_action_loc','Admin\BusinessListingController@multi_action_loc');
+
+			//Contact Info
+			Route::get('/contact_info/{enc_id}','Admin\BusinessListingController@contact_info');
+			Route::get('create_contact/{enc_id}','Admin\BusinessListingController@create_contact');
+			Route::any('store_contact/{enc_id}','Admin\BusinessListingController@store_contact');
+			Route::get('edit_contact/{enc_id}/','Admin\BusinessListingController@edit_contact');
+			Route::post('update_contact/{enc_id}','Admin\BusinessListingController@update_contact');
+			Route::get('contact_toggle_status/{enc_id}/{action}','Admin\BusinessListingController@contact_toggle_status');
+			Route::post('multi_action_contact','Admin\BusinessListingController@multi_action_contact');
 		});
 
 
