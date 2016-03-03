@@ -51,7 +51,7 @@ class BusinessListingController extends Controller
         {
             $arr_user = $obj_user_res->toArray();
         }
-        $obj_category = CategoryModel::where('parent','0')->get();
+        $obj_category = CategoryModel::where('parent','!=',[0])->get();
 
  		if($obj_category)
  		{
@@ -97,7 +97,7 @@ class BusinessListingController extends Controller
  		$page_title = "Business Listing: Edit ";
 
  		$business_data = array();
- 		$obj_category = CategoryModel::where('parent','0')->get();
+ 		$obj_category = CategoryModel::where('parent','!=',[0])->get();
 
  		if($obj_category)
  		{

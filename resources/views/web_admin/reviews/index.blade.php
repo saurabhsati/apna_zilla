@@ -156,7 +156,6 @@
                   <th>Email Id</th>
                   <th>Ratings</th>
                   <th>Message</th>
-                  <!-- <th>Status</th> -->
                   <th>Action</th>
                 </tr>
               </thead>
@@ -171,7 +170,7 @@
                              value="{{ base64_encode($_review['id']) }}" />
                     </td>
                     <td>{{ $key+1 }}</td>
-                  <!--   <td>
+                    <!-- <td>
                         {{ $_review['business_details']['business_name'] }}
                     </td> -->
                     <td>

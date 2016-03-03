@@ -166,7 +166,7 @@ class CategoryController extends Controller
         $arr_rules['category'] = "required";
         $arr_rules['cat_meta_description'] = "required";
         $arr_rules['is_active'] = "required";
-       
+
         $validator = Validator::make($request->all(),$arr_rules);
         if($validator->fails())
         {
@@ -181,11 +181,11 @@ class CategoryController extends Controller
         $is_popular = $request->input('is_popular');
 
         $cat_img = FALSE;
-        if ($request->hasFile('cat_img')) 
+        if ($request->hasFile('cat_img'))
         {
             $cv_valiator = Validator::make(array('cat_img'=>$request->file('cat_img')),array(
                                                 'cat_img' => 'mimes:jpg,jpeg,png'
-                                            )); 
+                                            ));
 
             if ($request->file('cat_img')->isValid() && $cv_valiator->passes())
             {
@@ -196,8 +196,8 @@ class CategoryController extends Controller
                 $request->file('cat_img')->move(
                     $this->cat_img_path, $image_name
                 );
-              
-                $cat_img = $image_name;     
+
+                $cat_img = $image_name;
             }
             else
             {
@@ -215,14 +215,14 @@ class CategoryController extends Controller
 
         if($password!=FALSE)
         {
-            $arr_data['password'] = $password;  
+            $arr_data['password'] = $password;
         }
 
         if($cat_img!=FALSE)
         {
-            $arr_data['cat_img'] = $cat_img;     
+            $arr_data['cat_img'] = $cat_img;
         }
-        
+
 
         if(CategoryModel::where('cat_meta_keyword',$arr_data['cat_meta_keyword'])->where('cat_id','<>',$id)->get()->count()>0)
         {
