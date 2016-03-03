@@ -2,6 +2,11 @@
 
 
     @section('main_content')
+    <style type="text/css">
+  .error_msg .error_business_image{
+    color:red;
+  }
+</style>
     <!-- BEGIN Page Title -->
     <div class="page-title">
         <div>
@@ -120,7 +125,113 @@
                     <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
             </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label"> Image <i class="red">*</i> </label>
+                <div class="col-sm-9 col-lg-10 controls">
+                   <div class="fileupload fileupload-new" data-provides="fileupload">
+                      <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
 
+                      </div>
+                      <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                      <div>
+                         <span class="btn btn-default btn-file"><span class="fileupload-new" >Select image</span>
+                         <span class="fileupload-exists">Change</span>
+                         <input type="file" class="file-input" name="main_image" id="ad_image"/></span>
+                         <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
+
+                         <span  >
+
+                         </span>
+
+                      </div>
+                   </div>
+                    <span class='help-block'>{{ $errors->first('image') }}</span>
+                     <!--<br/>
+                     <button class="btn btn-warning" onclick="return show_more_images()" id="show_more_images_button">Do you want to add slider images ? </button>  -->
+                </div>
+             </div>
+            <div class="form-group">
+            <div class="col-sm-5 col-md-7" style="float:right;">
+               <a href="javascript:void(0);" id='add-image'>
+                   <span class="glyphicon glyphicon-plus-sign" style="font-size: 20px;"></span>
+               </a>
+              <span style="margin-left:05px;">
+              <a href="javascript:void(0);" id='remove-image'>
+                  <span class="glyphicon glyphicon-minus-sign" style="font-size: 20px;"></span>
+              </a>
+              </span>
+             </div>
+                <label class="col-sm-3 col-lg-2 control-label"> Business Images <i class="red">*</i> </label>
+                <div class="col-sm-6 col-lg-4 controls">
+
+                <input type="file" name="business_image[]" id="business_image" class="pimg" data-rule-required="true"  />
+                <div class="error" id="error_business_image">{{ $errors->first('business_image') }}</div>
+                </div>
+                <div class="clr"></div><br/>
+                  <div class="error" id="error_set_default"></div>
+                  <div class="clr"></div>
+
+               <div id="append" class="class-add"></div>
+                <div class="error_msg" id="error_business_image" ></div>
+                <div class="error_msg" id="error_business_image1" ></div>
+               <label class="col-sm-3 col-lg-2 control-label"></label>
+
+                </div>
+
+
+
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="hours_of_operation">Hours Of Operation<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <textarea class="form-control"
+                           name="hours_of_operation"
+                           id="hours_of_operation"
+                           data-rule-required="true"
+                           placeholder="Enter Hours Of Operation"
+                           value=""
+                           ></textarea>
+                    <span class='help-block'>{{ $errors->first('hours_of_operation') }}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="company_info">Company Info<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <textarea class="form-control"
+                           name="company_info"
+                           id="company_info"
+                           data-rule-required="true"
+                           placeholder="Enter Company Info"
+                           value=""
+                           ></textarea>
+                    <span class='help-block'>{{ $errors->first('company_info') }}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="keywords">Keywords<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <textarea class="form-control"
+                           name="keywords"
+                           id="keywords"
+                           data-rule-required="true"
+                           placeholder="Enter Keywords"
+                           value=""
+                           ></textarea>
+                    <span class='help-block'>{{ $errors->first('keywords') }}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="youtube_link">Youtube Link<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input class="form-control"
+                           name="youtube_link"
+                           id="youtube_link"
+                           data-rule-required="true"
+                           placeholder="Enter Youtube Link"
+                           value=""
+                           />
+                    <span class='help-block'>{{ $errors->first('youtube_link') }}</span>
+                </div>
+            </div>
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
                 <input type="submit"  class="btn btn-primary" value="Add">
@@ -136,7 +247,51 @@
 <!-- END Main Content -->
 
 <script type="text/javascript">
+ $('#add-image').click(function(){
+   flag=1;
 
+            var img_val = jQuery("input[name='business_image[]']:last").val();
 
+            var img_length = jQuery("input[name='business_image[]']").length;
+
+            if(img_val == "")
+            {
+                  $('#error_business_image').css('margin-left','120px');
+                  $('#error_business_image').show();
+                  $('#error_business_image').fadeIn(3000);
+                  document.getElementById('error_business_image').innerHTML="The Image uploaded is required.";
+                  setTimeout(function(){
+                  $('#error_business_image').fadeOut(4000);
+                  },3000);
+
+                 flag=0;
+                 return false;
+            }
+            var chkimg = img_val.split(".");
+             var extension = chkimg[1];
+
+               if(extension!='jpg' && extension!='JPG' && extension!='png' && extension!='PNG' && extension!='jpeg' && extension!='JPEG'
+                 && extension!='gif' && extension!='GIF')
+               {
+                 $('#error_business_image1').css('margin-left','230px')
+                 $('#error_business_image1').show();
+                 $('#error_business_image1').fadeIn(3000);
+                 document.getElementById('error_business_image1').innerHTML="The file type you are attempting to upload is not allowed.";
+                 setTimeout(function(){
+                  $('#business_image').css('border-color','#dddfe0');
+                  $('#error_business_image1').fadeOut(4000);
+               },3000);
+               flag=0;
+                return false;
+              }
+           /*   var html='<div class="col-sm-6 col-lg-4 controls">
+                <input type="file" name="business_image[]" id="business_image" class="pimg" data-rule-required="true"  />
+                <div class="error" id="error_business_image">{{ $errors->first("business_image") }}</div>
+                </div>
+                <div class="clr"></div><br/>
+                  <div class="error" id="error_set_default"></div>
+                  <div class="clr"></div>';
+                  alert(html);*/
+});
 </script>
 @stop

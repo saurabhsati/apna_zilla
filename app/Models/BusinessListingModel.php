@@ -8,7 +8,17 @@ class BusinessListingModel extends Model
 {
     //
     protected $table='business';
-    protected $fillable=['business_name', 'user_id','is_active','business_cat','business_id'];
+    protected $fillable=['business_name',
+                         'user_id',
+                         'is_active',
+                         'business_cat',
+                         'business_id',
+                         'main_image',
+                         'hours_of_operation',
+                         'company_info',
+                         'keywords',
+                         'youtube_link',
+                         ];
      public function user_details()
     {
     	return $this->belongsTo('App\Models\UserModel','user_id','id');

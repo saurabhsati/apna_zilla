@@ -133,13 +133,14 @@
               <thead>
                 <tr>
                   <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
+                  <th style="width:25px;">Business Image</th>
                   <th style="width:25px;">Business Name</th>
                   <th style="width:25px;">Business Category Name</th>
-                  <th style="width:25px;">Title</th>
+                  <!-- <th style="width:25px;">Title</th> -->
                   <th style="width:50px;">Full Name</th>
                   <th style="width:25px;">Email</th>
                   <th style="width:25px;">Mobile No</th>
-                  <th>City</th>
+                 <!--  <th>City</th> -->
                   <th style="width:25px;">Reviews</th>
                   <th>Location</th>
                   <th>Contact Info</th>
@@ -157,13 +158,15 @@
                              name="checked_record[]"
                              value="{{ base64_encode($business['id']) }}" />
                     </td>
+                    <td>
+                    <img src="{{ $business_public_img_path.'/'.$business['main_image']}}" alt=""  style="width:75px; height:50px;" />   </td>
                     <td> {{ $business['business_name'] }} </td>
                     <td> {{ $business['categoty_details']['title'] }} </td>
-                    <td> {{ $business['user_details']['title'] }} </td>
+                 <!--    <td> {{ $business['user_details']['title'] }} </td> -->
                     <td> {{ $business['user_details']['first_name']." ".$business['user_details']['last_name'] }} </td>
                     <td> {{ $business['user_details']['email'] }} </td>
                     <td> {{ $business['user_details']['mobile_no'] }} </td>
-                     <td> {{ $business['user_details']['city'] }} </td>
+                    <!--  <td> {{ $business['user_details']['city'] }} </td> -->
 
 
                       @if( sizeof($business['reviews'])>0)

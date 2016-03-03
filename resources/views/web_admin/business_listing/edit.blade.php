@@ -123,85 +123,82 @@
                 </div>
             </div>
 
-            <!-- <input type="hidden" name="user_id" value="{{ isset($business['user_id'])?$business['user_id']:'' }}"> -->
-           <!-- <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="title">title<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="title"
-                           id="title"
-                           data-rule-required="true"
-                           placeholder="Enter First Name"
-                           value="{{ isset($business['user_details']['title'])?$business['user_details']['title']:'' }}"
-                           />
-                    <span class='help-block'>{{ $errors->first('title') }}</span>
-                </div>
-            </div>
+            <div class="form-group">
+                            <label class="col-sm-3 col-lg-2 control-label"> Image <i class="red">*</i> </label>
+                            <div class="col-sm-9 col-lg-10 controls">
+                               <div class="fileupload fileupload-new" data-provides="fileupload">
+                                  <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
+                                     <img src={{ $business_public_img_path.$business['main_image']}} alt="" />
+                                  </div>
+                                  <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                  <div>
+                                     <span class="btn btn-default btn-file"><span class="fileupload-new" >Select image</span>
+                                     <span class="fileupload-exists">Change</span>
+                                     <input type="file" class="file-input" name="main_image" id="main_image"/>
+                                      <input type="hidden" class="file-input" name="old_image" id="main_image" value="{{$business['main_image']}}"/>
+                                      </span>
+                                     <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
 
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="first_name">First Name<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="first_name"
-                           id="first_name"
-                           data-rule-required="true"
-                           placeholder="Enter First Name"
-                           value="{{ isset($business['user_details']['first_name'])?$business['user_details']['first_name']:'' }}"
-                           />
-                    <span class='help-block'>{{ $errors->first('first_name') }}</span>
-                </div>
-            </div>
-           <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="last_name">Last Name<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="last_name"
-                           id="last_name"
-                           data-rule-required="true"
-                           placeholder="Enter Last Name"
-                           value="{{ isset($business['user_details']['last_name'])?$business['user_details']['last_name']:'' }}"/>
-                    <span class='help-block'>{{ $errors->first('last_name') }}</span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="email">Email<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="email"
-                           id="email"
-                           data-rule-required="true"
-                           data-rule-email="true"
-                           placeholder="Enter Email"
-                           value="{{ isset($business['user_details']['email'])?$business['user_details']['email']:'' }}" />
+                                     <span  >
 
-                    <span class='help-block'>{{ $errors->first('email') }}</span>
-                </div>
-            </div>
-             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="city">City<i class="red">*</i></label>
+                                     </span>
+
+                                  </div>
+                               </div>
+                                <span class='help-block'>{{ $errors->first('main_image') }}</span>
+                                 <!--<br/>
+                                 <button class="btn btn-warning" onclick="return show_more_images()" id="show_more_images_button">Do you want to add slider images ? </button>  -->
+                            </div>
+                         </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="hours_of_operation">Hours Of Operation<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="city"
-                           id="city"
+                    <textarea class="form-control"
+                           name="hours_of_operation"
+                           id="hours_of_operation"
                            data-rule-required="true"
-                           placeholder="Enter City"
-                           value="{{ isset($business['user_details']['city'])?$business['user_details']['city']:'' }}"/>
-                    <span class='help-block'>{{ $errors->first('city') }}</span>
+                           placeholder="Enter Hours Of Operation"
+                            >{{ isset($business['hours_of_operation'])?$business['hours_of_operation']:'' }}</textarea>
+                    <span class='help-block'>{{ $errors->first('hours_of_operation') }}</span>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="mobile_no">Mobile No<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="company_info">Company Info<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <textarea class="form-control"
+                           name="company_info"
+                           id="company_info"
+                           data-rule-required="true"
+                           placeholder="Enter Company Info"
+                           >{{ isset($business['company_info'])?$business['company_info']:'' }}</textarea>
+                    <span class='help-block'>{{ $errors->first('company_info') }}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="keywords">Keywords<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <textarea class="form-control"
+                           name="keywords"
+                           id="keywords"
+                           data-rule-required="true"
+                           placeholder="Enter Keywords"
+                           >{{ isset($business['keywords'])?$business['keywords']:'' }}</textarea>
+                    <span class='help-block'>{{ $errors->first('keywords') }}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="youtube_link">Youtube Link<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
-                           name="mobile_no"
-                           id="mobile_no"
+                           name="youtube_link"
+                           id="youtube_link"
                            data-rule-required="true"
-                           placeholder="Enter Mobile No"
-                           value="{{ isset($business['user_details']['mobile_no'])?$business['user_details']['mobile_no']:'' }}"
+                           placeholder="Enter Youtube Link"
+                           value="{{ isset($business['youtube_link'])?$business['youtube_link']:'' }}"
                            />
-                    <span class='help-block'>{{ $errors->first('mobile_no') }}</span>
+                    <span class='help-block'>{{ $errors->first('youtube_link') }}</span>
                 </div>
-            </div> -->
+            </div>
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
                 <input type="submit"  class="btn btn-primary" value="Update">

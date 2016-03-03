@@ -31,16 +31,18 @@ class BusinessListingController extends Controller
     	  $this->BusinessListingModel = new BusinessListingModel();
     	  $this->BusinessLocationModel = new BusinessLocationModel();
     	  $this->BusinessContactInfoModel= new BusinessContactInfoModel();
-    	   $this->RestaurantReviewModel= new RestaurantReviewModel();
+    	  $this->RestaurantReviewModel= new RestaurantReviewModel();
+    	  $this->business_public_img_path = url('/')."/uploads/business/main_image/";
+    	  $this->business_base_img_path = base_path()."/public/uploads/business/main_image";
 
     }
      /* Business Listing Start */
     public function index()
     {
     	$page_title	='Manage Business Listing';
-
+    	$business_public_img_path = $this->business_public_img_path;
     	$business_listing=$this->BusinessListingModel->with(['categoty_details','user_details','reviews'])->get()->toArray();
-    	return view('web_admin.business_listing.index',compact('page_title','business_listing'));
+    	return view('web_admin.business_listing.index',compact('page_title','business_listing','business_public_img_path'));
     }
     public function create()
     {
@@ -66,7 +68,11 @@ class BusinessListingController extends Controller
     	$arr_rules['business_name']='required';
     	$arr_rules['business_cat']='required';
     	$arr_rules['user_id']='required';
-
+    	$arr_rules['main_image']='required';
+    	$arr_rules['hours_of_operation']='required';
+    	$arr_rules['company_info']='required';
+    	$arr_rules['keywords']='required';
+    	$arr_rules['youtube_link']='required';
     	$validator = Validator::make($request->all(),$arr_rules);
 
         if($validator->fails())
@@ -77,6 +83,28 @@ class BusinessListingController extends Controller
         $arr_data['business_name']=$form_data['business_name'];
         $arr_data['is_active']='2';
         $arr_data['business_cat']=$form_data['business_cat'];
+        if($request->hasFile('main_image'))
+        {
+            $fileName       = $form_data['main_image'];
+            $fileExtension  = strtolower($request->file('main_image')->getClientOriginalExtension());
+            if(in_array($fileExtension,['png','jpg','jpeg']))
+            {
+                  $filename =sha1(uniqid().$fileName.uniqid()).'.'.$fileExtension;
+                  $request->file('main_image')->move($this->business_base_img_path,$filename);
+            }
+            else
+            {
+                 Session::flash('error','Invalid file extension');
+            }
+
+            $file_url = $fileName;
+        }
+
+        $arr_data['main_image'] = $filename;
+        $arr_data['hours_of_operation']=$form_data['hours_of_operation'];
+    	$arr_data['company_info']=$form_data['company_info'];
+    	$arr_data['keywords']=$form_data['keywords'];
+    	$arr_data['youtube_link']=$form_data['youtube_link'];
         $arr_data['user_id']=$form_data['user_id'];
         $insert_data=$this->BusinessListingModel->create($arr_data);
          if($insert_data)
@@ -95,7 +123,7 @@ class BusinessListingController extends Controller
  	{
  		$id = base64_decode($enc_id);
  		$page_title = "Business Listing: Edit ";
-
+ 		$business_public_img_path = $this->business_public_img_path;
  		$business_data = array();
  		$obj_category = CategoryModel::where('parent','!=',[0])->get();
 
@@ -109,7 +137,7 @@ class BusinessListingController extends Controller
             $arr_user = $obj_user_res->toArray();
         }
  		$business_data=$this->BusinessListingModel->with(['user_details'])->where('id',$id)->get()->toArray();
- 		return view('web_admin.business_listing.edit',compact('page_title','business_data','arr_user','arr_category'));
+ 		return view('web_admin.business_listing.edit',compact('page_title','business_data','arr_user','arr_category','business_public_img_path'));
 
  	}
  	public function update(Request $request,$enc_id)
@@ -122,12 +150,10 @@ class BusinessListingController extends Controller
  		$arr_rules['business_name'] = "required";
  		$arr_rules['business_cat'] = "required";
  		$arr_rules['user_id'] = "required";
-       /* $arr_rules['title'] = "required";
-        $arr_rules['first_name'] = "required";
-        $arr_rules['last_name'] = "required";
-        $arr_rules['email'] = "required|email";
-        $arr_rules['city'] = "required";
-        $arr_rules['mobile_no'] = "required";*/
+        $arr_rules['hours_of_operation']='required';
+    	$arr_rules['company_info']='required';
+    	$arr_rules['keywords']='required';
+    	$arr_rules['youtube_link']='required';
 
 
 
@@ -142,19 +168,30 @@ class BusinessListingController extends Controller
         $business_data['business_name']      = $request->input('business_name');
         $business_data['business_cat']=$request->input('business_cat');
         $business_data['user_id']=$request->input('user_id');
+        $filename=$request->input('old_image');
+		if($request->hasFile('main_image'))
+        {
+            $fileName       = $request->file('main_image');
+            $fileExtension  = strtolower($request->file('main_image')->getClientOriginalExtension());
+            if(in_array($fileExtension,['png','jpg','jpeg']))
+            {
+                  $filename =sha1(uniqid().$fileName.uniqid()).'.'.$fileExtension;
+                  $request->file('main_image')->move($this->business_base_img_path,$filename);
+            }
+            else
+            {
+                 Session::flash('error','Invalid file extension');
+            }
 
+            $file_url = $fileName;
+        }
 
-       /* $form_data['title']      = $request->input('title');
-        $form_data['first_name']= $request->input('first_name');
-        $form_data['last_name'] = $request->input('last_name');
-        $form_data['email']      = $request->input('email');
-        $form_data['city']      = $request->input('city');
-        $form_data['mobile_no']      = $request->input('mobile_no');*/
-
-		/*$user = Sentinel::findById($user_id);
-        $user_data = Sentinel::update($user['id'],$form_data);
-*/
-        $business_data=$this->BusinessListingModel->where('id',$id)->update($business_data);
+        $business_data['main_image'] = $filename;
+        $business_data['hours_of_operation']=$request->input('hours_of_operation');
+    	$business_data['company_info']=$request->input('company_info');
+    	$business_data['keywords']=$request->input('keywords');
+    	$business_data['youtube_link']=$request->input('youtube_link');
+    	$business_data=$this->BusinessListingModel->where('id',$id)->update($business_data);
 
         if($business_data /*&& $user_data*/)
         {
