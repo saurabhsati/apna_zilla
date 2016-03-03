@@ -27,7 +27,7 @@
             <li>
 
             <i class="fa fa-star"></i>
-               <a href="{{ url('/web_admin/reviews/MjU=')}}">reviews</a>
+               <a href="{{ url('/web_admin/reviews/MjU=')}}">Reviews</a>
             </li>
 
             <span class="divider">
@@ -126,7 +126,7 @@
               @if(sizeof($arr_reviews)>0)
                   <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
                      title="Refresh"
-                     href="{{ url('/web_admin/reviews/'.base64_encode($arr_reviews[0]['fk_id'])) }}"
+                     href="{{ url('/web_admin/reviews/'.base64_encode($arr_reviews[0]['business_id'])) }}"
                      style="text-decoration:none;">
                      <i class="fa fa-repeat"></i>
                   </a>
@@ -146,6 +146,7 @@
                 <tr>
                   <th> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
                   <th>Sr. No.</th>
+                  <th>Business Name</th>
                   <th>Name</th>
                   <th>Mobile Number</th>
                   <th>Email Id</th>
@@ -166,6 +167,9 @@
                              value="{{ base64_encode($_review['id']) }}" />
                     </td>
                     <td>{{ $key+1 }}</td>
+                    <td>
+                        {{ $_review['business_details']['business_name'] }}
+                    </td>
                     <td>
                         {{ $_review['name'] }}
                     </td>

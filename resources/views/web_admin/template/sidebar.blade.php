@@ -128,7 +128,7 @@
                     <b class="arrow fa fa-angle-right"></b>
                 </a>
                  <ul class="submenu">
-                    <li style="display: block;"><a href="{{ url('/web_admin/reviews/MjU=')}}">Manage</a> </li>
+                    <li style="display: block;"><a href="{{ url('/web_admin/reviews/')}}">Manage</a> </li>
                 </ul>
             </li>
             <li class="{{ Request::segment(2)=='faq'? 'active':'' }}">

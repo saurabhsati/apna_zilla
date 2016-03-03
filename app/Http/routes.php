@@ -148,7 +148,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 		/*-------------Restaurant Reviews Module------------*/
 		Route::group(['prefix'=>'reviews'], function (){
-			Route::get('/{enc_id}',       					['as' => 'admin_reviews_manage'     ,'uses' =>  'Admin\ReviewController@index']);
+			Route::get('/',       							['as' => 'admin_reviews_manage'     ,'uses' =>  'Admin\ReviewController@index']);
 			Route::get('view/{enc_id}',    					['as' => 'admin_reviews_view'       ,'uses' =>'Admin\ReviewController@view']);
 			Route::get('delete/{enc_id}',   				['as' => 'admin_reviews_delete'     ,'uses' =>'Admin\ReviewController@delete']);
 			Route::get('toggle_status/{enc_id}/{action}', 	['as' => 'admin_reviews_status'     ,'uses' =>'Admin\ReviewController@toggle_status']);
