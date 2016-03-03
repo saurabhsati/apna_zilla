@@ -141,14 +141,7 @@
                 @endforeach
                 @endif
                 </select>
-                   <!--  <input class="form-control"
-                           name="city"
-                           id="city"
-                           data-rule-required="true"
-                           placeholder="Enter City"
-                           value="{{ isset($business_locations['city_details']['city_title'])?$business_locations['city_details']['city_title']:'' }}"
-                           /> -->
-                    <span class='help-block'>{{ $errors->first('city') }}</span>
+                  <span class='help-block'>{{ $errors->first('city') }}</span>
                 </div>
             </div>
             <div class="form-group">
@@ -162,13 +155,6 @@
                 @endforeach
                 @endif
                 </select>
-                   <!--  <input class="form-control"
-                           name="pincode"
-                           id="pincode"
-                           data-rule-required="true"
-                           placeholder="Enter pincode"
-                           value="{{ isset($business_locations['zipcode_details']['zipcode'])?$business_locations['zipcode_details']['zipcode']:'' }}"
-                           /> -->
                     <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
             </div>
@@ -183,14 +169,7 @@
                 @endforeach
                 @endif
                 </select>
-                   <!--  <input class="form-control"
-                           name="state"
-                           id="state"
-                           data-rule-required="true"
-                           placeholder="Enter state"
-                           value="{{ isset($business_locations['state_details']['state_title'])?$business_locations['state_details']['state_title']:'' }}"
-                           /> -->
-                    <span class='help-block'>{{ $errors->first('street') }}</span>
+                 <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
             </div>
             <div class="form-group">
@@ -204,14 +183,7 @@
                 @endforeach
                  @endif
                 </select>
-                   <!--  <input class="form-control"
-                           name="country"
-                           id="country"
-                           data-rule-required="true"
-                           placeholder="Enter Country"
-                           value="{{ isset($business_locations['country_details']['country_name'])?$business_locations['country_details']['country_name']:'' }}"
-                           /> -->
-                    <span class='help-block'>{{ $errors->first('street') }}</span>
+                   <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
             </div>
             <div class="form-group">
@@ -230,29 +202,7 @@
 <!-- END Main Content -->
 
 <script type="text/javascript">
-    var site_url = "{{url('/')}}";
 
-    function loadPreviewImage(ref)
-    {
-        var file = $(ref)[0].files[0];
-
-        var img = document.createElement("img");
-        reader = new FileReader();
-        reader.onload = (function (theImg) {
-            return function (evt) {
-                theImg.src = evt.target.result;
-                $('#preview_profile_pic').attr('src', evt.target.result);
-            };
-        }(img));
-        reader.readAsDataURL(file);
-        $("#removal_handle").show();
-    }
-
-    function clearPreviewImage()
-    {
-        $('#preview_profile_pic').attr('src',site_url+'/images/front/avatar.jpg');
-        $("#removal_handle").hide();
-    }
 
 </script>
 @stop

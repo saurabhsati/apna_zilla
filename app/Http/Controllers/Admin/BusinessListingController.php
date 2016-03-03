@@ -98,8 +98,13 @@ class BusinessListingController extends Controller
  		{
  			$arr_category = $obj_category->toArray();
  		}
+ 		$obj_user_res = UserModel::where('role','sales')->get();
+        if( $obj_user_res != FALSE)
+        {
+            $arr_user = $obj_user_res->toArray();
+        }
  		$business_data=$this->BusinessListingModel->with(['user_details'])->where('id',$id)->get()->toArray();
- 		return view('web_admin.business_listing.edit',compact('page_title','business_data','arr_category'));
+ 		return view('web_admin.business_listing.edit',compact('page_title','business_data','arr_user','arr_category'));
 
  	}
  	public function update(Request $request,$enc_id)
@@ -111,12 +116,13 @@ class BusinessListingController extends Controller
 
  		$arr_rules['business_name'] = "required";
  		$arr_rules['business_cat'] = "required";
-        $arr_rules['title'] = "required";
+ 		$arr_rules['user_id'] = "required";
+       /* $arr_rules['title'] = "required";
         $arr_rules['first_name'] = "required";
         $arr_rules['last_name'] = "required";
         $arr_rules['email'] = "required|email";
         $arr_rules['city'] = "required";
-        $arr_rules['mobile_no'] = "required";
+        $arr_rules['mobile_no'] = "required";*/
 
 
 
@@ -126,25 +132,26 @@ class BusinessListingController extends Controller
         {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        $user_id=$request->input('user_id');
         $user=Sentinel::createModel();
 
         $business_data['business_name']      = $request->input('business_name');
         $business_data['business_cat']=$request->input('business_cat');
+        $business_data['user_id']=$request->input('user_id');
 
-        $form_data['title']      = $request->input('title');
+
+       /* $form_data['title']      = $request->input('title');
         $form_data['first_name']= $request->input('first_name');
         $form_data['last_name'] = $request->input('last_name');
         $form_data['email']      = $request->input('email');
         $form_data['city']      = $request->input('city');
-        $form_data['mobile_no']      = $request->input('mobile_no');
+        $form_data['mobile_no']      = $request->input('mobile_no');*/
 
-		$user = Sentinel::findById($user_id);
+		/*$user = Sentinel::findById($user_id);
         $user_data = Sentinel::update($user['id'],$form_data);
-
+*/
         $business_data=$this->BusinessListingModel->where('id',$id)->update($business_data);
 
-        if($business_data && $user_data)
+        if($business_data /*&& $user_data*/)
         {
         	Session::flash('success','Business Updated successfully');
 

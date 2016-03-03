@@ -73,11 +73,25 @@
         <form class="form-horizontal"
               id="validation-form"
               method="POST"
-              action="{{ url('/web_admin/business_listing/update/'.base64_encode($business['id'])) }} ' "
+              action="{{ url('/web_admin/business_listing/update/'.base64_encode($business['id'])) }} "
               enctype="multipart/form-data">
 
            {{ csrf_field() }}
-
+           <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="user_id">Select User<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                <select class="form-control"  name="user_id" id="user_id">
+                <option value="">Select User</option>
+                 @if(isset($arr_user) && sizeof($arr_user)>0)
+                 @foreach($arr_user as $user)
+                 <option value="{{ isset($user['id'])?$user['id']:'' }}" {{ $user['id']==$business['user_id']?'selected=selected':'' }}>{{ isset($user['first_name'] )?$user['first_name']:'' }}
+                 </option>
+                  @endforeach
+                  @endif
+                  </select>
+                    <span class='help-block'>{{ $errors->first('user_id') }}</span>
+                </div>
+            </div>
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="business_name">Business Name<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
@@ -109,8 +123,8 @@
                 </div>
             </div>
 
-            <input type="hidden" name="user_id" value="{{ isset($business['user_id'])?$business['user_id']:'' }}">
-           <div class="form-group">
+            <!-- <input type="hidden" name="user_id" value="{{ isset($business['user_id'])?$business['user_id']:'' }}"> -->
+           <!-- <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="title">title<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
@@ -187,7 +201,7 @@
                            />
                     <span class='help-block'>{{ $errors->first('mobile_no') }}</span>
                 </div>
-            </div>
+            </div> -->
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
                 <input type="submit"  class="btn btn-primary" value="Update">
