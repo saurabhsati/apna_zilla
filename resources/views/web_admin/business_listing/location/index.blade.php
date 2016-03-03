@@ -22,7 +22,7 @@
                 <i class="fa fa-angle-right"></i>
             </span>
             <li>
-                <i class="fa fa-listing"></i>
+                <i class="fa fa-list"></i>
                 <a href="{{ url('/web_admin/business_listing') }}">Business Listing</a>
             </li>
             <span class="divider">

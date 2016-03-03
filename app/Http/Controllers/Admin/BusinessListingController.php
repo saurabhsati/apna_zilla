@@ -44,7 +44,7 @@ class BusinessListingController extends Controller
     {
     	$page_title="Create Business List";
 
-    	$obj_user_res = UserModel::where('role','sales')->get();
+    	$obj_user_res = UserModel::where('role','normal')->get();
         if( $obj_user_res != FALSE)
         {
             $arr_user = $obj_user_res->toArray();
@@ -101,7 +101,7 @@ class BusinessListingController extends Controller
  		{
  			$arr_category = $obj_category->toArray();
  		}
- 		$obj_user_res = UserModel::where('role','sales')->get();
+ 		$obj_user_res = UserModel::where('role','normal')->get();
         if( $obj_user_res != FALSE)
         {
             $arr_user = $obj_user_res->toArray();
