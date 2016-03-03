@@ -134,6 +134,7 @@
                 <tr>
                   <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
                   <th >Building</th>
+                  <th >Location Type</th>
                   <th >Street</th>
                   <th >Landmark</th>
                   <th >Area</th>
@@ -155,6 +156,7 @@
                              name="checked_record[]"
                              value="{{ base64_encode($location['id']) }}" />
                     </td>
+                    <td> {{ $location['type'] }} </td>
                     <td> {{ $location['building'] }} </td>
                     <td> {{ $location['street'] }} </td>
                     <td> {{ $location['landmark'] }} </td>

@@ -9,6 +9,7 @@ class BusinessLocationModel extends Model
     protected $table='business_location';
     protected $fillable=[
                         'business_id',
+                        'type',
                         'building',
 					     'street',
 					     'landmark',

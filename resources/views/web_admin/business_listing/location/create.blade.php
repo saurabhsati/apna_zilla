@@ -75,7 +75,17 @@
               enctype="multipart/form-data">
 
            {{ csrf_field() }}
-
+           <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="building">Type<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <select class="form-control" name="type" id="type">
+                           <option>Select Location Type</option>
+                           <option value="head">Head </option>
+                           <option value="branch">Branch</option>
+                           </select>
+                    <span class='help-block'>{{ $errors->first('type') }}</span>
+                </div>
+            </div>
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="building">Building<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">

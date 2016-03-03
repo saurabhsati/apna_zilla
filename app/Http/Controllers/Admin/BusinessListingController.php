@@ -392,6 +392,7 @@ class BusinessListingController extends Controller
     public function store_location($enc_id,Request $request )
     {
     	$arr_rules	=	array();
+    	$arr_rules['type']='required';
     	$arr_rules['building']='required';
     	$arr_rules['street']='required';
     	$arr_rules['landmark']='required';
@@ -410,6 +411,7 @@ class BusinessListingController extends Controller
     	$id=base64_decode($enc_id);
     	$form_data	= array();
     	$form_data['business_id']=$id;
+    	$form_data['type']=$request->input('type');
     	$form_data['building']=$request->input('building');
 		$form_data['street']=$request->input('street');
 		$form_data['landmark']=$request->input('landmark');
@@ -434,7 +436,7 @@ class BusinessListingController extends Controller
     	$id=base64_decode($enc_id);
 
     	$arr_rules = array();
-
+    	$arr_rules['type']='required';
  		$arr_rules['building'] = "required";
  		$arr_rules['street'] = "required";
         $arr_rules['landmark'] = "required";
@@ -450,6 +452,7 @@ class BusinessListingController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
     	$form_data	= array();
+    	$form_data['type']=$request->input('type');
     	$form_data['building']=$request->input('building');
 		$form_data['street']=$request->input('street');
 		$form_data['landmark']=$request->input('landmark');
