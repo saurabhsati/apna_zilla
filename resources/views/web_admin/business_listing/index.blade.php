@@ -183,7 +183,7 @@
                         </a>
                         <a
                           class="btn btn-info"
-                          href="{{ url('/').'/web_admin/business_listing/create_contact_info/'.base64_encode($business['id']) }}"  title="Add Conatct Info">
+                          href="{{ url('/').'/web_admin/business_listing/create_contact/'.base64_encode($business['id']) }}"  title="Add Conatct Info">
                           Add
                         </a>
                       </td>
