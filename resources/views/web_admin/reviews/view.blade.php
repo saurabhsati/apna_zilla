@@ -130,7 +130,7 @@
 
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
-              <a href="{{ url('web_admin/reviews/') }}">
+              <a href="{{ url('web_admin/reviews/'.base64_encode($arr_review_view['business_id'])) }}">
                 <input type="button"  class="btn btn-primary" value="Back">
               </a>
             </div>

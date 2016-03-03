@@ -20,7 +20,9 @@
                 <li style="display: block;"><a href="{{ url('/web_admin/users')}}">Manage</a> </li>
             </ul>
         </li>
-        <li class="{{ Request::segment(2)=='business_listing'? 'active':'' }}">
+        <li class="{{ Request::segment(2)=='business_listing'? 'active':'' }}
+                    {{ Request::segment(2)=='reviews'? 'active':'' }}
+        ">
             <a href="javascript:void(0)" class="dropdown-toggle">
                 <i class="fa fa-list"></i>
                 <span>Business Listing</span>
@@ -121,7 +123,7 @@
                 <li style="display: block;"><a href="{{ url('/web_admin/front_slider')}}">Manage</a> </li>
             </ul>
         </li>
-        <li class="{{ Request::segment(2)=='reviews'? 'active':'' }}">
+       <!--  <li class="{{ Request::segment(2)=='reviews'? 'active':'' }}">
                 <a href="javascript:void(0)"  class="dropdown-toggle">
                     <i class="fa fa-star"></i>
                     <span>Reviews</span>
@@ -130,7 +132,7 @@
                  <ul class="submenu">
                     <li style="display: block;"><a href="{{ url('/web_admin/reviews/')}}">Manage</a> </li>
                 </ul>
-            </li>
+            </li> -->
             <li class="{{ Request::segment(2)=='faq'? 'active':'' }}">
                 <a href="javascript:void(0)"  class="dropdown-toggle">
                     <i class="fa fa-question-circle"></i>

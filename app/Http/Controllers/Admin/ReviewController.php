@@ -17,23 +17,24 @@ class ReviewController extends Controller
     {
 
     }
-    public function index()
+    public function index($enc_id)
     {
 
-    	$obj_reviews = ReviewsModel::with(['business_details'])->get();
+        $id = base64_decode($enc_id);
+    	$obj_reviews = ReviewsModel::with(['business_details'])->where('business_id',$id)->get();
         $arr_reviews = array();
 
         if($obj_reviews)
         {
             $arr_reviews = $obj_reviews->toArray();
         }
-        $page_title = "Manage ";
-	    return view('web_admin.reviews.index',compact('page_title','arr_reviews'));
+        $page_title = "Business Review :Manage ";
+	    return view('web_admin.reviews.index',compact('page_title','arr_reviews','enc_id'));
     }
     public function view($enc_id)
     {
     	$id = base64_decode($enc_id);
-        $page_title = "View";
+        $page_title = " Business Review :View";
 
         $arr_review_view = array();
         $obj_review_view =ReviewsModel::with(['business_details'])->where('id',$id)->first();

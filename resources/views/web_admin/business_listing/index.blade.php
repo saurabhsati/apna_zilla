@@ -140,6 +140,7 @@
                   <th style="width:25px;">Email</th>
                   <th style="width:25px;">Mobile No</th>
                   <th>City</th>
+                  <th style="width:25px;">Reviews</th>
                   <th>Location</th>
                   <th>Contact Info</th>
                   <th width="" style="text-align:center">Status</th>
@@ -163,6 +164,13 @@
                     <td> {{ $business['user_details']['email'] }} </td>
                     <td> {{ $business['user_details']['mobile_no'] }} </td>
                      <td> {{ $business['user_details']['city'] }} </td>
+
+
+                      @if( sizeof($business['reviews'])>0)
+                      <td><a href="{{ url('web_admin/reviews/'.base64_encode($business['id'])) }}"> ( {{ sizeof($business['reviews']) }} ) </a></td>
+                      @else
+                       <td><a href="#"> ( {{ sizeof($business['reviews']) }} ) </a></td>
+                       @endif
                      <td>
                         <a
                           class="btn btn-info"

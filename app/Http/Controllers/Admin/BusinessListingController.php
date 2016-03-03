@@ -12,6 +12,7 @@ use App\Models\UserModel;
 use App\Models\CategoryModel;
 use App\Models\BusinessLocationModel;
 use App\Models\BusinessContactInfoModel;
+use App\Models\RestaurantReviewModel;
 use App\Models\CountryModel;
 use App\Models\StateModel;
 use App\Models\ZipModel;
@@ -30,14 +31,15 @@ class BusinessListingController extends Controller
     	  $this->BusinessListingModel = new BusinessListingModel();
     	  $this->BusinessLocationModel = new BusinessLocationModel();
     	  $this->BusinessContactInfoModel= new BusinessContactInfoModel();
+    	   $this->RestaurantReviewModel= new RestaurantReviewModel();
 
     }
      /* Business Listing Start */
     public function index()
     {
     	$page_title	='Manage Business Listing';
-    	$business_listing	=array();
-    	$business_listing=$this->BusinessListingModel->with(['categoty_details','user_details'])->get()->toArray();
+
+    	$business_listing=$this->BusinessListingModel->with(['categoty_details','user_details','reviews'])->get()->toArray();
     	return view('web_admin.business_listing.index',compact('page_title','business_listing'));
     }
     public function create()
