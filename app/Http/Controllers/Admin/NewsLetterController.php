@@ -87,7 +87,6 @@ class NewsLetterController extends Controller
         return view('web_admin.news_letter.edit',compact('page_title','arr_newsletter'));    
     }
 
-
     /*
     | update() : Update the specified resource/record
     | auther : Danish 
@@ -127,7 +126,6 @@ class NewsLetterController extends Controller
 
         return redirect('/web_admin/newsletter/edit/'.$enc_id); 
     }
-
 
      /*
     | toggle_status() : Activate,Deactive or delete specified resource/record 
@@ -195,7 +193,7 @@ class NewsLetterController extends Controller
     }
 
     /*
-    | _delete() : Delete coutry record
+    | _delete() : Delete country record
     | auther : Danish 
     | Date : 25/02/2016
     | @param  int  $enc_id

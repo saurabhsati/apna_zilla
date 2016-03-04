@@ -50,6 +50,7 @@ class EloquentUser extends Model implements RoleableInterface, PermissibleInterf
         'permissions',
         'gender',
         'd_o_b',
+        'role',
         'marital_status',
         'city',
         'area',

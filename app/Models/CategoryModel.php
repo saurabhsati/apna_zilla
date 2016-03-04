@@ -10,7 +10,20 @@ class CategoryModel extends Model
 	use SoftDeletes;
 
     protected $table = "categories";
-     protected $fillable = ['cat_desc', 'cat_slug','cat_meta_description','cat_meta_keyword','public_id', 'parent','cat_img','cat_thumb','cat_order','is_active','cat_logo','is_priceable'];
+     protected $fillable = ['cat_desc', 
+                            'cat_slug',
+                            'title',
+                            'cat_meta_description',
+                            'cat_meta_keyword',
+                            'public_id', 
+                            'parent',
+                            'cat_img',
+                            'cat_thumb',
+                            'cat_order',
+                            'is_active',
+                            'cat_logo',
+                            'is_priceable'
+                            ];
 
     /**
      *  Relation with  category_lang record .

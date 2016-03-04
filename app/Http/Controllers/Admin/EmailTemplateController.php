@@ -49,8 +49,7 @@ class EmailTemplateController extends Controller
         $arr_rules['template_subject'] 	= "required";
         $arr_rules['template_html'] 	= "required";
         $arr_rules['is_active'] 		= "required";
-
-        $arr_rules['variables'] 			= "required";
+        $arr_rules['variables'] 		= "required";
 
 
         $validator = Validator::make($request->all(),$arr_rules);
@@ -157,7 +156,7 @@ class EmailTemplateController extends Controller
         						'template_from' 	=> $template_from,
 								'template_subject' 	=> $template_subject,
         						'template_html' 	=> $template_html,
-        						'is_active' 		=> $is_active,
+         						'is_active' 		=> $is_active,
         		);
 
         $email_template = EmailTemplateModel::where('id',$id);

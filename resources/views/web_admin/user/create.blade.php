@@ -21,7 +21,7 @@
                 <i class="fa fa-angle-right"></i>
             </span>
             <li>
-              s  <i class="fa fa-user"></i>
+                <i class="fa fa-user"></i>
                 <a href="{{ url('/').'/web_admin/users' }}">Users</a>
             </li>
             <span class="divider">
@@ -111,39 +111,31 @@
                     <span class='help-block'>{{ $errors->first('last_name') }}</span>
                 </div>
             </div>
-
+            
               <div class="form-group">
-                  <label class="col-sm-3 col-lg-2 control-label">Gender</label>
+                  <label class="col-sm-3 col-lg-2 control-label">Role</label>
                   <div class="col-sm-9 col-lg-10 controls">
                      <label class="radio">
-                        <input type="radio" name="gender" value="male" /> Male
+                        <input type="radio" name="role" value="normal" /> Normal
                      </label>
                      <label class="radio">
-                        <input type="radio" name="gender" value="female" /> Female
+                        <input type="radio" name="role" value="sales" /> Sales
                      </label>
-                  <span class='help-block'>{{ $errors->first('gender') }}</span>
+                  <span class='help-block'>{{ $errors->first('role') }}</span>
                  </div>
-               </div>
+               </div> 
 
-               <div class="box-content">
-                   <div class="form-group">
-                      <label class="cdol-sm-3 col-lg-2 control-label">DOB</label>
-                      <div class="col-sm-5 col-lg-3 controls">
-                         <input class="form-control date-picker" id="d_o_b" name="d_o_b" size="16" type="text" value="12-02-2012" />
-                      </div>
-                 <span class='help-block'>{{ $errors->first('d_o_b') }}</span>
-                   </div>
-                   </div>
-
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="email">Email<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control" name="email" id="email" data-rule-required="true" placeholder="Enter Email" data-rule-email="true"/>
-                    <span class='help-block'>{{ $errors->first('email') }}</span>
-               </div>
-            </div>
-
+              <!--  <div class="box-content">
                <div class="form-group">
+                  <label class="cdol-sm-3 col-lg-2 control-label">DOB</label>
+                  <div class="col-sm-5 col-lg-3 controls">
+                     <input class="form-control date-picker" id="d_o_b" name="d_o_b" size="16" type="text" value="02-12-2012" />
+                  </div>
+                 <span class='help-block'>{{ $errors->first('d_o_b') }}</span>
+               </div>
+               </div> -->
+
+             <!--   <div class="form-group">
                   <label class="col-sm-3 col-lg-2 control-label">Marital Status</label>
                   <div class="col-sm-6 col-lg-4 controls">
                      <select class="form-control" data-placeholder="Choose a Category" name="marital_status" tabindex="1">
@@ -156,6 +148,15 @@
                     <span class='help-block'>{{ $errors->first('marital_status') }}</span>
                   </div>
                </div>
+ -->
+
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="email">Email<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input class="form-control" name="email" id="email" data-rule-required="true" placeholder="Enter Email" data-rule-email="true"/>
+                    <span class='help-block'>{{ $errors->first('email') }}</span>
+               </div>
+            </div>
 
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="password">Password<i class="red">*</i></label>

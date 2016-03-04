@@ -72,18 +72,6 @@
                    {{ Request::segment(2)=='dealsReviews'?'active':'' }}">
 
 
-
-        <li class="{{ Request::segment(2)=='transactions'?'active':'' }}">
-            <a href="javascript:void(0)" class="dropdown-toggle">
-                <i class="fa fa-credit-card"></i>
-                <span>Payments</span>
-                <b class="arrow fa fa-angle-right"></b>
-            </a>
-            <ul class="submenu">
-                <li style="display: block;"><a href="{{ url('/web_admin/transactions')}}">Manage</a> </li>
-            </ul>
-        </li>
-
          <li class="{{ Request::segment(2)=='newsletter'?'active':'' }}">
             <a href="javascript:void(0)" class="dropdown-toggle">
                 <i class="fa fa-credit-card"></i>
@@ -95,6 +83,16 @@
             </ul>
         </li>
 
+         <li class="{{ Request::segment(2)=='newsletter'?'active':'' }}">
+            <a href="javascript:void(0)" class="dropdown-toggle">
+                <i class="fa fa-credit-card"></i>
+                <span>Membership Plans</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+            <ul class="submenu">
+                <li style="display: block;"><a href="{{ url('/web_admin/newsletter')}}">Manage</a> </li>
+            </ul>
+        </li>
 
        <li class="{{ Request::segment(2)=='siteSettings'?'active':'' }}
                    {{ Request::segment(2)=='edit_profile'?'active':'' }}
