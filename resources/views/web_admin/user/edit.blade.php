@@ -141,7 +141,7 @@
             </div>
 
 
-           <!--  <div class="form-group">
+             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="gender">Gender<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                 <label class="radio">
@@ -152,9 +152,9 @@
                      </label>
                   <span class='help-block'>{{ $errors->first('gender') }}</span>
                 </div>
-            </div> -->
+            </div> 
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="role">Role<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                 <label class="radio">
@@ -165,9 +165,9 @@
                      </label>
                   <span class='help-block'>{{ $errors->first('role') }}</span>
                 </div>
-            </div>
+            </div> -->
 
-<!--            <div class="form-group">
+         <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="marital_status">Marital Status<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
           
@@ -190,10 +190,10 @@
                            id="d_o_b"
                            data-rule-required="true"
                            placeholder="Enter Date of Birth"
-                           value="{{ date('m-d-y',strtotime($arr_user_data['d_o_b'])) }}"/>
+                           value="{{ date('y-m-d',strtotime($arr_user_data['d_o_b'])) }}"/>
                     <span class='help-block'>{{ $errors->first('d_o_b') }}</span>
                 </div>
-            </div> -->
+            </div> 
 
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="email">Email<i class="red">*</i></label>

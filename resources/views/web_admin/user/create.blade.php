@@ -113,19 +113,19 @@
             </div>
             
               <div class="form-group">
-                  <label class="col-sm-3 col-lg-2 control-label">Role</label>
+                  <label class="col-sm-3 col-lg-2 control-label">Gender</label>
                   <div class="col-sm-9 col-lg-10 controls">
                      <label class="radio">
-                        <input type="radio" name="role" value="normal" /> Normal
+                        <input type="radio" name="gender" value="male" /> Male
                      </label>
                      <label class="radio">
-                        <input type="radio" name="role" value="sales" /> Sales
+                        <input type="radio" name="gender" value="female" /> Female
                      </label>
-                  <span class='help-block'>{{ $errors->first('role') }}</span>
+                  <span class='help-block'>{{ $errors->first('gender') }}</span>
                  </div>
-               </div> 
+               </div>  
 
-              <!--  <div class="box-content">
+             <div class="box-content">
                <div class="form-group">
                   <label class="cdol-sm-3 col-lg-2 control-label">DOB</label>
                   <div class="col-sm-5 col-lg-3 controls">
@@ -133,9 +133,9 @@
                   </div>
                  <span class='help-block'>{{ $errors->first('d_o_b') }}</span>
                </div>
-               </div> -->
+               </div> 
 
-             <!--   <div class="form-group">
+                <div class="form-group">
                   <label class="col-sm-3 col-lg-2 control-label">Marital Status</label>
                   <div class="col-sm-6 col-lg-4 controls">
                      <select class="form-control" data-placeholder="Choose a Category" name="marital_status" tabindex="1">
@@ -148,7 +148,7 @@
                     <span class='help-block'>{{ $errors->first('marital_status') }}</span>
                   </div>
                </div>
- -->
+            
 
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="email">Email<i class="red">*</i></label>

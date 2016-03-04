@@ -44,11 +44,12 @@ class BusinessListingController extends Controller
     	$business_listing=$this->BusinessListingModel->with(['categoty_details','user_details','reviews'])->get()->toArray();
     	return view('web_admin.business_listing.index',compact('page_title','business_listing','business_public_img_path'));
     }
+
     public function create()
     {
     	$page_title="Create Business List";
 
-    	$obj_user_res = UserModel::where('role','normal')->get();
+    	$obj_user_res = ::where('role','normal')->get();
         if( $obj_user_res != FALSE)
         {
             $arr_user = $obj_user_res->toArray();
@@ -62,6 +63,7 @@ class BusinessListingController extends Controller
 
         return view('web_admin.business_listing.create',compact('page_title','arr_user','arr_category'));
     }
+
     public function store(Request $request)
     {
     	$arr_rules	=	array();
@@ -119,6 +121,7 @@ class BusinessListingController extends Controller
         return redirect()->back();
 
     }
+
     public function edit($enc_id)
  	{
  		$id = base64_decode($enc_id);
@@ -140,6 +143,7 @@ class BusinessListingController extends Controller
  		return view('web_admin.business_listing.edit',compact('page_title','business_data','arr_user','arr_category','business_public_img_path'));
 
  	}
+
  	public function update(Request $request,$enc_id)
  	{
  		$id	=base64_decode($enc_id);
@@ -204,6 +208,7 @@ class BusinessListingController extends Controller
         }
         return redirect()->back();
    	}
+
    	public function toggle_status($enc_id,$action)
     {
         if($action=="activate")
@@ -227,6 +232,7 @@ class BusinessListingController extends Controller
 
         return redirect()->back();
     }
+    
     public function multi_action(Request $request)
     {
         $arr_rules = array();

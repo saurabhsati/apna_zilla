@@ -20,6 +20,18 @@
                 <li style="display: block;"><a href="{{ url('/web_admin/users')}}">Manage</a> </li>
             </ul>
         </li>
+
+         <li class="{{ Request::segment(2)=='users'? 'active':'' }}">
+            <a href="javascript:void(0)" class="dropdown-toggle">
+                <i class="fa fa-user"></i>
+                <span>Sales Person</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+            <ul class="submenu">
+                <li style="display: block;"><a href="{{ url('/web_admin/sales')}}">Manage</a> </li>
+            </ul>
+        </li>
+
         <li class="{{ Request::segment(2)=='business_listing'? 'active':'' }}
                     {{ Request::segment(2)=='reviews'? 'active':'' }}
         ">
@@ -32,6 +44,7 @@
                 <li style="display: block;"><a href="{{ url('/web_admin/business_listing')}}">Manage</a> </li>
             </ul>
         </li>
+
          <li class="{{ Request::segment(2)=='categories'? 'active':'' }}">
             <a href="javascript:void(0)" class="dropdown-toggle">
                 <i class="fa fa-bars"></i>
@@ -42,6 +55,7 @@
                 <li style="display: block;"><a href="{{ url('/web_admin/categories')}}">Manage</a> </li>
             </ul>
         </li>
+
 <li class="{{ Request::segment(2)=='static_pages'? 'active':'' }}">
             <a href="javascript:void(0)" class="dropdown-toggle">
                 <i class="fa fa-files-o"></i>
