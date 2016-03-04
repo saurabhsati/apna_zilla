@@ -111,7 +111,6 @@ class CategoryController extends Controller
             }
         }
 
-
         $arr_cat = array();
         $arr_cat['public_id']=$public_id;
         $arr_cat['cat_desc'] = "NA";
@@ -122,7 +121,7 @@ class CategoryController extends Controller
         $arr_cat['is_priceable'] = $is_priceable;
         $arr_cat['cat_img'] = $cat_img;
         $arr_cat['cat_thumb'] =$cat_img;
-
+        $arr_cat['title'] = $title;
         $arr_cat['cat_meta_keyword'] =$cat_meta_keyword;
         $arr_cat['cat_meta_description'] =$cat_meta_description;
         $status=CategoryModel::create($arr_cat);

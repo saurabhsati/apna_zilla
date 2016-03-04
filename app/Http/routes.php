@@ -14,25 +14,24 @@
 /* Admin Routes */
 
 Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
-{
-	Route::any('register_admin','Admin\AuthController@register_admin');
-	Route::any('register','Admin\AuthController@register');
-	Route::any('assign_role','Admin\AuthController@assignRole');
-	Route::any('activation','Admin\AuthController@activation');
-	Route::any('registerandactivate','Admin\AuthController@registerAndActivate');
+	{
+		Route::any('register_admin',				  ['as' => 'admin_register',			   'uses' => 'Admin\AuthController@register_admin']);
+		Route::any('register',						  ['as' => 'register',			   		   'uses' => 'Admin\AuthController@register']);
+		Route::any('assign_role',					  ['as' => 'assign_role',			       'uses' => 'Admin\AuthController@assignRole']);
+		Route::any('activation',					  ['as' => 'activation',			   	   'uses' => 'Admin\AuthController@activation']);
+		Route::any('registerandactivate',			  ['as' => 'register_and_active',		   'uses' => 'Admin\AuthController@registerAndActivate']);
 
-
-	Route::get('/','Admin\AuthController@show_login');
-	Route::get('login','Admin\AuthController@show_login');
-	Route::post('process_login','Admin\AuthController@process_login');
-	Route::get('dashboard','Admin\DashboardController@index');
-	Route::get('logout','Admin\AuthController@logout');
-	Route::get('change_password','Admin\AuthController@change_password');
-	Route::post('update_password','Admin\AuthController@update_password');
-	Route::get('edit_profile','Admin\AuthController@profile');
-	Route::post('updateprofile','Admin\AuthController@updateprofile');
-	/* Front Pages */
-	Route::get('static_pages',['as'=>'static_pages', 'uses'=>'Admin\StaticPageController@index']);
+		Route::get('/','Admin\AuthController@show_login');
+		Route::get('login',						 	  ['as' => 'admin_login',			   	   'uses' => 'Admin\AuthController@show_login']);
+		Route::post('process_login',				  ['as' => 'admin_process_login',		   'uses' => 'Admin\AuthController@process_login']);
+		Route::get('dashboard',						  ['as' => 'admin_dashboard',			   'uses' => 'Admin\DashboardController@index']);
+		Route::get('logout',						  ['as' => 'admin_logout',			   	   'uses' => 'Admin\AuthController@logout']);
+		Route::get('change_password',				  ['as' => 'admin_change_password',		   'uses' => 'Admin\AuthController@change_password']);
+		Route::post('update_password',				  ['as' => 'admin_update_password',		   'uses' => 'Admin\AuthController@update_password']);
+		Route::get('edit_profile',					  ['as' => 'admin_edit_profile',		   'uses' => 'Admin\AuthController@profile']);
+		Route::post('updateprofile',				  ['as' => 'admin_update_profile',		   'uses' => 'Admin\AuthController@updateprofile']);
+		/* Front Pages */
+		Route::get('static_pages',['as'=>'static_pages', 'uses'=>'Admin\StaticPageController@index']);
 
 	  /*---------------------CMS Module-------------------------*/
 	   Route::group(array('prefix' => '/static_pages'), function()
@@ -148,7 +147,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 		/*-------------Restaurant Reviews Module------------*/
 		Route::group(['prefix'=>'reviews'], function (){
-			Route::get('/{enc_id}',       							['as' => 'admin_reviews_manage'     ,'uses' =>  'Admin\ReviewController@index']);
+			Route::get('/{enc_id}',       					['as' => 'admin_reviews_manage'     ,'uses' =>  'Admin\ReviewController@index']);
 			Route::get('view/{enc_id}',    					['as' => 'admin_reviews_view'       ,'uses' =>'Admin\ReviewController@view']);
 			Route::get('delete/{enc_id}',   				['as' => 'admin_reviews_delete'     ,'uses' =>'Admin\ReviewController@delete']);
 			Route::get('toggle_status/{enc_id}/{action}', 	['as' => 'admin_reviews_status'     ,'uses' =>'Admin\ReviewController@toggle_status']);
@@ -189,34 +188,43 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 	/* Users Module */
 	Route::group(['prefix'=>'users'], function ()
 	{
-		Route::get('/','Admin\UserController@index');
-		Route::get('manage','Admin\UserController@index');
-		Route::get('show/{enc_id}','Admin\UserController@show');
-		Route::get('edit/{enc_id}','Admin\UserController@edit');
-		Route::post('update/{enc_id}','Admin\UserController@update');
-		Route::get('create','Admin\UserController@create');
-		Route::get('toggle_status/{enc_id}/{action}','Admin\UserController@toggle_status');
-		Route::post('multi_action','Admin\UserController@multi_action');
-		Route::any('store','Admin\UserController@store');
+		Route::get('/',       								['as' => 'admin_users_index'     				,'uses' =>'Admin\UserController@index']);
+		Route::get('manage',       							['as' => 'admin_users_manage'     				,'uses' =>'Admin\UserController@index']);
+		Route::get('show/{enc_id}',       					['as' => 'admin_users_show'    					,'uses' =>'Admin\UserController@show']);
+		Route::get('edit/{enc_id}',       					['as' => 'admin_users_edit'     				,'uses' =>'Admin\UserController@edit']);
+		Route::post('update/{enc_id}',       				['as' => 'admin_users_update'    			    ,'uses' =>'Admin\UserController@update']);
+		Route::get('create',       							['as' => 'admin_users_create'    			    ,'uses' =>'Admin\UserController@create']);
+		Route::get('toggle_status/{enc_id}/{action}',       ['as' => 'admin_users_toggle_status'     		,'uses' =>'Admin\UserController@toggle_status']);
+		Route::post('multi_action',       					['as' => 'admin_users_,multi_action'     		,'uses' =>'Admin\UserController@multi_action']);
+		Route::any('store',       							['as' => 'admin_users_store'     				,'uses' =>'Admin\UserController@store']);
 	});
 
+		/* Sales Module */
+	Route::group(['prefix'=>'sales'], function ()
+	{
+		Route::get('/',       								['as' => 'admin_sales_index'     				,'uses' =>'Admin\SalesController@index']);
+		Route::get('manage',       							['as' => 'admin_sales_manage'     				,'uses' =>'Admin\SalesController@index']);
+		Route::get('create',       							['as' => 'admin_sales_create'    			    ,'uses' =>'Admin\SalesController@create']);
+		Route::any('store',									['as' => 'admin_sales_store'    			    ,'uses' =>'Admin\SalesController@store']);
+
+	});
 
 	/* Categories Module */
 	Route::group(array('prefix' => 'categories'), function()
 	{
-		Route::get('/',['as' => 'admin_categories_manage' ,'uses' => 'Admin\CategoryController@index']);
-		Route::get('show/{enc_id}',['as' => 'admin_categories_show' ,'uses' => 'Admin\CategoryController@show']);
-		Route::get('edit/{enc_id}',['as' => 'admin_categories_edit' ,'uses' => 'Admin\CategoryController@edit']);
-		Route::post('update/{enc_id}',['as' => 'admin_categories_update' ,'uses' => 'Admin\CategoryController@update']);
-		Route::get('create/{cat_id?}',['as' => 'admin_categories_create' ,'uses' => 'Admin\CategoryController@create']);
-		Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_categories_toggle_status' ,'uses' => 'Admin\CategoryController@toggle_status']);
-		Route::post('multi_action',['as' => 'admin_categories_block' ,'uses' => 'Admin\CategoryController@multi_action']);
-		Route::post('store',['as' => 'admin_categories_store' ,'uses' => 'Admin\CategoryController@store']);
-		Route::get('delete/{enc_id}',['as' => 'admin_categories_delete' ,'uses' => 'Admin\CategoryController@delete']);
-		Route::get('sub_categories/{enc_id}',['as' => 'admin_sub_categories_store' ,'uses' => 'Admin\CategoryController@show_sub_categories']);
-		Route::post('sub_categories/update',['as' => 'admin_sub_categories_update' ,'uses' => 'Admin\CategoryController@update']);
-		Route::get('sub_categories/toggle_status/{enc_id}/{action}',['as' => 'admin_sub_categories_toggle_status' ,'uses' => 'Admin\CategoryController@toggle_status']);
-		Route::post('sub_categories/multi_action',['as' => 'admin_sub_categories_block' ,'uses' => 'Admin\CategoryController@multi_action']);
+		Route::get('/',												['as' => 'admin_categories_manage' 				,'uses' => 'Admin\CategoryController@index']);
+		Route::get('show/{enc_id}',									['as' => 'admin_categories_show' 				,'uses' => 'Admin\CategoryController@show']);
+		Route::get('edit/{enc_id}',									['as' => 'admin_categories_edit' 				,'uses' => 'Admin\CategoryController@edit']);
+		Route::post('update/{enc_id}',								['as' => 'admin_categories_update' 				,'uses' => 'Admin\CategoryController@update']);
+		Route::get('create/{cat_id?}',								['as' => 'admin_categories_create' 				,'uses' => 'Admin\CategoryController@create']);
+		Route::get('toggle_status/{enc_id}/{action}',				['as' => 'admin_categories_toggle_status' 		,'uses' => 'Admin\CategoryController@toggle_status']);
+		Route::post('multi_action',									['as' => 'admin_categories_block' 				,'uses' => 'Admin\CategoryController@multi_action']);
+		Route::post('store',										['as' => 'admin_categories_store' 				,'uses' => 'Admin\CategoryController@store']);
+		Route::get('delete/{enc_id}',								['as' => 'admin_categories_delete' 				,'uses' => 'Admin\CategoryController@delete']);
+		Route::get('sub_categories/{enc_id}',						['as' => 'admin_sub_categories_store' 			,'uses' => 'Admin\CategoryController@show_sub_categories']);
+		Route::post('sub_categories/update',						['as' => 'admin_sub_categories_update' 			,'uses' => 'Admin\CategoryController@update']);
+		Route::get('sub_categories/toggle_status/{enc_id}/{action}',['as' => 'admin_sub_categories_toggle_status' 	,'uses' => 'Admin\CategoryController@toggle_status']);
+		Route::post('sub_categories/multi_action',					['as' => 'admin_sub_categories_block' 			,'uses' => 'Admin\CategoryController@multi_action']);
 
 		/*Route::get('sub_categories/brands/{enc_id}',['as' => 'admin_sub_categories_brands' ,'uses' => 'Web_admin\CategoryController@show_brands']);
 		Route::get('sub_categories/brands/toggle_status/{enc_id}/{action}',['as' => 'admin_sub_categories_brands_toggle_status' ,'uses' => 'Web_admin\CategoryController@toggle_brand_status']);
@@ -229,17 +237,14 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 	Route::group(array('prefix' => 'attribute'), function()
 	{
-		Route::get('show/{enc_id}',['as' => 'admin_email_attribute_create' ,'uses' => 'Admin\AttributeController@show']);
-		Route::get('create/{enc_id}',['as' => 'admin_email_attribute_create' ,'uses' => 'Admin\AttributeController@create']);
-		Route::any('store',['as' => 'admin_email_attribute_store' ,'uses' => 'Admin\AttributeController@store']);
-
-		Route::get('edit/{enc_id}',['as' => 'admin_attribute_edit' ,'uses' => 'Admin\AttributeController@edit']);
-		Route::post('update/{enc_id}',['as' => 'admin_attribute_update' ,'uses' => 'Admin\AttributeController@update']);
-
-		Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_attribute_toggle_status' ,'uses' => 'Admin\AttributeController@toggle_status']);
-		Route::post('multi_action',['as' => 'admin_attribute_block' ,'uses' => 'Admin\AttributeController@multi_action']);
-
-		Route::get('delete_option_values/{enc_id}',['as' => 'admin_attribute_delete_option_values' ,'uses' => 'Admin\AttributeController@delete_option_values']);
+		Route::get('show/{enc_id}',									['as' => 'admin_email_attribute_create' 		,'uses' => 'Admin\AttributeController@show']);
+		Route::get('create/{enc_id}',								['as' => 'admin_email_attribute_create' 		,'uses' => 'Admin\AttributeController@create']);
+		Route::any('store',											['as' => 'admin_email_attribute_store' 			,'uses' => 'Admin\AttributeController@store']);
+		Route::get('edit/{enc_id}',									['as' => 'admin_attribute_edit' 				,'uses' => 'Admin\AttributeController@edit']);
+		Route::post('update/{enc_id}',								['as' => 'admin_attribute_update' 				,'uses' => 'Admin\AttributeController@update']);
+		Route::get('toggle_status/{enc_id}/{action}',				['as' => 'admin_attribute_toggle_status' 		,'uses' => 'Admin\AttributeController@toggle_status']);
+		Route::post('multi_action',									['as' => 'admin_attribute_block' 				,'uses' => 'Admin\AttributeController@multi_action']);
+		Route::get('delete_option_values/{enc_id}',					['as' => 'admin_attribute_delete_option_values' ,'uses' => 'Admin\AttributeController@delete_option_values']);
 
 	});
 
@@ -248,8 +253,8 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 	Route::group(array('prefix' => 'contact_enquiry'), function()
 	{
-		Route::get('/',['as' => 'list_contact_enquiry' ,'uses' => 'Admin\ContactEnquiryController@index']);
-		Route::get('show/{enc_id}',['as' => 'show_contact_enquiry' ,'uses' => 'Admin\ContactEnquiryController@show']);
+		Route::get('/',						['as' => 'list_contact_enquiry' ,'uses' => 'Admin\ContactEnquiryController@index']);
+		Route::get('show/{enc_id}',			['as' => 'show_contact_enquiry' ,'uses' => 'Admin\ContactEnquiryController@show']);
 
 	});
 
@@ -261,17 +266,16 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 	Route::group(array('prefix' => 'newsletter'), function()
 	{
 
-		Route::get('/',['as' => 'newsletter_manage' ,'uses' => 'Admin\NewsLetterController@index']);
-
-		Route::get('show/{enc_id}',['as' => 'newsletter_show' ,'uses' => 'Admin\NewsLetterController@show']);
-		Route::get('edit/{enc_id}',['as' => 'newsletter_edit' ,'uses' => 'Admin\NewsLetterController@edit']);
-		Route::post('update/{enc_id}',['as' => 'admin_newsletter_update' ,'uses' => 'Admin\NewsLetterController@update']);
-		Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_newsletter_toggle_status' ,'uses' => 'Admin\NewsLetterController@toggle_status']);
-		Route::post('multi_action',['as' => 'admin_newsletter_block' ,'uses' => 'Admin\NewsLetterController@multi_action']);
-		Route::get('create',['as' => 'admin_newsletter_create' ,'uses' => 'Admin\NewsLetterController@create']);
-		Route::any('store',['as' => 'admin_newsletter_store' ,'uses' => 'Admin\NewsLetterController@store']);
-		Route::get('compose',['as' => 'admin_newsletter_compose' ,'uses' => 'Admin\NewsLetterController@compose']);
-		Route::post('send_email',['as' => 'admin_newsletter_send_email' ,'uses' => 'Admin\NewsLetterController@send_email']);
+		Route::get('/',									['as' => 'newsletter_manage' 					,'uses' => 'Admin\NewsLetterController@index']);
+		Route::get('show/{enc_id}',						['as' => 'newsletter_show' 						,'uses' => 'Admin\NewsLetterController@show']);
+		Route::get('edit/{enc_id}',						['as' => 'newsletter_edit'					    ,'uses' => 'Admin\NewsLetterController@edit']);
+		Route::post('update/{enc_id}',					['as' => 'admin_newsletter_update' 				,'uses' => 'Admin\NewsLetterController@update']);
+		Route::get('toggle_status/{enc_id}/{action}',	['as' => 'admin_newsletter_toggle_status'		,'uses' => 'Admin\NewsLetterController@toggle_status']);
+		Route::post('multi_action',						['as' => 'admin_newsletter_block' 				,'uses' => 'Admin\NewsLetterController@multi_action']);
+		Route::get('create',							['as' => 'admin_newsletter_create' 				,'uses' => 'Admin\NewsLetterController@create']);
+		Route::any('store',								['as' => 'admin_newsletter_store' 				,'uses' => 'Admin\NewsLetterController@store']);
+		Route::get('compose',							['as' => 'admin_newsletter_compose' 			,'uses' => 'Admin\NewsLetterController@compose']);
+		Route::post('send_email',						['as' => 'admin_newsletter_send_email' 			,'uses' => 'Admin\NewsLetterController@send_email']);
 
 	});
 
@@ -322,8 +326,8 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 	/*-------------Website Setting Module------------*/
 	Route::group(['prefix'=>'site_settings'], function (){
-		Route::get('/','Admin\SiteSettingController@index');
-		Route::post('update/{enc_id}','Admin\SiteSettingController@update');
+		Route::get('/',								['as' => 'admin_site_settings_index'  ,'uses' => 'Admin\SiteSettingController@index']);
+		Route::post('update/{enc_id}',				['as' => 'admin_site_settings_update' ,'uses' => 'Admin\SiteSettingController@update']);
 	});
 	/*-------------End--------------------------*/
 

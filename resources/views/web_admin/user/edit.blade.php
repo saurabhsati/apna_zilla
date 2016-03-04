@@ -141,7 +141,7 @@
             </div>
 
 
-           <!--  <div class="form-group">
+             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="gender">Gender<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                 <label class="radio">
@@ -152,17 +152,25 @@
                      </label>
                   <span class='help-block'>{{ $errors->first('gender') }}</span>
                 </div>
+            </div> 
+
+            <!-- <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="role">Role<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                <label class="radio">
+                        <input type="radio" name="role" {{ $arr_user_data['role']=='normal'?"checked":'' }} value="normal" /> Normal
+                     </label>
+                     <label class="radio">
+                        <input type="radio" name="role" {{ $arr_user_data['role']=='sales'?"checked":'' }} value="sales" /> Sales
+                     </label>
+                  <span class='help-block'>{{ $errors->first('role') }}</span>
+                </div>
             </div> -->
 
-          <!--  <div class="form-group">
+         <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="marital_status">Marital Status<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                     <input class="form-control"
-                           name="marital_status"
-                           id="marital_status"
-                           data-rule-required="true"
-                           placeholder="Enter Marital Status"
-                           value="{{ isset($arr_user_data['marital_status'])?$arr_user_data['marital_status']:'' }}"/>
+          
                       <select class="form-control" data-placeholder="Choose a Category" name="marital_status" tabindex="1">
                         <option value="" >Select...</option>
                         <option value="Married" {{ $arr_user_data['marital_status']=='Married'?"selected ='selected'":'' }}>Married</option>
@@ -172,7 +180,7 @@
                      </select>
                     <span class='help-block'>{{ $errors->first('marital_status') }}</span>
                 </div>
-            </div>  -->
+            </div>  
 
                 <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="d_o_b">Date Of Birth<i class="red">*</i></label>
@@ -182,10 +190,10 @@
                            id="d_o_b"
                            data-rule-required="true"
                            placeholder="Enter Date of Birth"
-                           value="{{ date('m-d-y',strtotime($arr_user_data['d_o_b'])) }}"/>
+                           value="{{ date('y-m-d',strtotime($arr_user_data['d_o_b'])) }}"/>
                     <span class='help-block'>{{ $errors->first('d_o_b') }}</span>
                 </div>
-            </div>
+            </div> 
 
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="email">Email<i class="red">*</i></label>
@@ -305,8 +313,6 @@
 
             </div>
         </div>
-
-
     </form>
 </div>
 </div>
