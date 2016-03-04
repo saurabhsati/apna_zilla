@@ -8,10 +8,9 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Models\BusinessListingModel;
+use App\Models\BusinessImageUploadModel;
 use App\Models\UserModel;
 use App\Models\CategoryModel;
-use App\Models\BusinessLocationModel;
-use App\Models\BusinessContactInfoModel;
 use App\Models\RestaurantReviewModel;
 use App\Models\CountryModel;
 use App\Models\StateModel;
@@ -29,11 +28,13 @@ class BusinessListingController extends Controller
         $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
     	 //$this->UserModel = new UserModel();
     	  $this->BusinessListingModel = new BusinessListingModel();
-    	  $this->BusinessLocationModel = new BusinessLocationModel();
-    	  $this->BusinessContactInfoModel= new BusinessContactInfoModel();
     	  $this->RestaurantReviewModel= new RestaurantReviewModel();
+          $this->BusinessImageUploadModel=new BusinessImageUploadModel();
     	  $this->business_public_img_path = url('/')."/uploads/business/main_image/";
     	  $this->business_base_img_path = base_path()."/public/uploads/business/main_image";
+
+          $this->business_public_upload_img_path = url('/')."/uploads/business/business_upload_image/";
+          $this->business_base_upload_img_path = base_path()."/public/uploads/business/business_upload_image/";
 
     }
      /* Business Listing Start */
@@ -60,15 +61,59 @@ class BusinessListingController extends Controller
  			$arr_category = $obj_category->toArray();
  		}
 
-        return view('web_admin.business_listing.create',compact('page_title','arr_user','arr_category'));
+        $obj_countries_res = CountryModel::get();
+        if( $obj_countries_res != FALSE)
+        {
+            $arr_country = $obj_countries_res->toArray();
+        }
+        $obj_zipcode_res = ZipModel::get();
+        if( $obj_zipcode_res != FALSE)
+        {
+            $arr_zipcode = $obj_zipcode_res->toArray();
+        }
+        $arr_city = array();
+        $obj_city_res = CityModel::get();
+        if($obj_city_res != FALSE)
+        {
+            $arr_city = $obj_city_res->toArray();
+        }
+        $arr_state = array();
+        $obj_state_res = StateModel::get();
+
+        if( $obj_countries_res != FALSE)
+        {
+            $arr_state = $obj_state_res->toArray();
+        }
+
+        return view('web_admin.business_listing.create',compact('page_title','arr_user','arr_category','arr_country','arr_zipcode','arr_city','arr_state'));
     }
     public function store(Request $request)
     {
     	$arr_rules	=	array();
-    	$arr_rules['business_name']='required';
-    	$arr_rules['business_cat']='required';
+        //business fields
     	$arr_rules['user_id']='required';
-    	$arr_rules['main_image']='required';
+        $arr_rules['business_name']='required';
+        $arr_rules['main_image']='required';
+
+
+        //location fields
+        $arr_rules['building']='required';
+        $arr_rules['street']='required';
+        $arr_rules['landmark']='required';
+        $arr_rules['area']='required';
+        $arr_rules['city']='required';
+        $arr_rules['pincode']='required';
+        $arr_rules['state']='required';
+        $arr_rules['country']='required';
+        //contact info fields
+        $arr_rules['contact_person_name']='required';
+        $arr_rules['mobile_number']='required';
+        $arr_rules['landline_number']='required';
+        $arr_rules['fax_no']='required';
+        $arr_rules['toll_free_number']='required';
+        $arr_rules['email_id']='required';
+        $arr_rules['website']='required';
+        //other fields
     	$arr_rules['hours_of_operation']='required';
     	$arr_rules['company_info']='required';
     	$arr_rules['keywords']='required';
@@ -80,8 +125,12 @@ class BusinessListingController extends Controller
             return redirect('/web_admin/business_listing/create')->withErrors($validator)->withInput();
         }
         $form_data=$request->all();
-        $arr_data['business_name']=$form_data['business_name'];
+        $arr_data['user_id']=$form_data['user_id'];
         $arr_data['is_active']='2';
+        $arr_data['business_added_by']=$form_data['business_added_by'];
+        $arr_data['business_name']=$form_data['business_name'];
+
+
         $arr_data['business_cat']=$form_data['business_cat'];
         if($request->hasFile('main_image'))
         {
@@ -99,14 +148,56 @@ class BusinessListingController extends Controller
 
             $file_url = $fileName;
         }
-
         $arr_data['main_image'] = $filename;
+
+        //location input array
+        $arr_data['building']=$form_data['building'];
+        $arr_data['street']=$form_data['street'];
+        $arr_data['landmark']=$form_data['landmark'];
+        $arr_data['area']=$form_data['area'];
+        $arr_data['city']=$form_data['city'];
+        $arr_data['pincode']=$form_data['pincode'];
+        $arr_data['state']=$form_data['state'];
+        $arr_data['country']=$form_data['country'];
+
+        //Contact input array
+        $arr_data['contact_person_name']=$form_data['contact_person_name'];
+        $arr_data['mobile_number']=$form_data['mobile_number'];
+        $arr_data['landline_number']=$form_data['landline_number'];
+        $arr_data['fax_no']=$form_data['fax_no'];
+        $arr_data['toll_free_number']=$form_data['toll_free_number'];
+        $arr_data['email_id']=$form_data['email_id'];
+        $arr_data['website']=$form_data['website'];
+
+        //other input array
         $arr_data['hours_of_operation']=$form_data['hours_of_operation'];
     	$arr_data['company_info']=$form_data['company_info'];
     	$arr_data['keywords']=$form_data['keywords'];
     	$arr_data['youtube_link']=$form_data['youtube_link'];
-        $arr_data['user_id']=$form_data['user_id'];
-        $insert_data=$this->BusinessListingModel->create($arr_data);
+
+         $insert_data=$this->BusinessListingModel->create($arr_data);
+         $business_id=$insert_data->id;
+         $files = $request->file('business_image');
+         $file_count = count($files);
+         $uploadcount = 0;
+         foreach($files as $file) {
+         $destinationPath = $this->business_base_upload_img_path;
+         $fileName = $file->getClientOriginalName();
+            $fileExtension  = strtolower($file->getClientOriginalExtension());
+            if(in_array($fileExtension,['png','jpg','jpeg']))
+            {
+                  $filename =sha1(uniqid().$fileName.uniqid()).'.'.$fileExtension;
+                  $file->move($destinationPath,$filename);
+                  $arr_insert['image_name']=$filename;
+                  $arr_insert['business_id']=$business_id;
+                  $insert_data1=$this->BusinessImageUploadModel->create($arr_insert);
+                  $uploadcount ++;
+            }
+            else
+            {
+                 Session::flash('error','Invalid file extension');
+            }
+        }
          if($insert_data)
         {
         	Session::flash('success','Business Created successfully');
@@ -124,6 +215,7 @@ class BusinessListingController extends Controller
  		$id = base64_decode($enc_id);
  		$page_title = "Business Listing: Edit ";
  		$business_public_img_path = $this->business_public_img_path;
+        $business_base_upload_img_path =$this->business_public_upload_img_path;
  		$business_data = array();
  		$obj_category = CategoryModel::where('parent','!=',[0])->get();
 
@@ -136,8 +228,40 @@ class BusinessListingController extends Controller
         {
             $arr_user = $obj_user_res->toArray();
         }
- 		$business_data=$this->BusinessListingModel->with(['user_details'])->where('id',$id)->get()->toArray();
- 		return view('web_admin.business_listing.edit',compact('page_title','business_data','arr_user','arr_category','business_public_img_path'));
+
+        $obj_countries_res = CountryModel::get();
+        if( $obj_countries_res != FALSE)
+        {
+            $arr_country = $obj_countries_res->toArray();
+        }
+        $obj_zipcode_res = ZipModel::get();
+        if( $obj_zipcode_res != FALSE)
+        {
+            $arr_zipcode = $obj_zipcode_res->toArray();
+        }
+        $arr_city = array();
+        $obj_city_res = CityModel::get();
+        if($obj_city_res != FALSE)
+        {
+            $arr_city = $obj_city_res->toArray();
+        }
+        $arr_state = array();
+        $obj_state_res = StateModel::get();
+
+        if( $obj_countries_res != FALSE)
+        {
+            $arr_state = $obj_state_res->toArray();
+        }
+         $arr_upload_image = array();
+        $obj_upload_image_res = BusinessImageUploadModel::where('business_id',$id)->get();
+
+        if( $obj_upload_image_res != FALSE)
+        {
+            $arr_upload_image = $obj_upload_image_res->toArray();
+        }
+        $business_data=$this->BusinessListingModel->with(['user_details','city_details','zipcode_details','country_details','state_details','image_upload_details'])->where('id',$id)->get()->toArray();
+ 		//dd($business_data);
+        return view('web_admin.business_listing.edit',compact('page_title','business_data','arr_user','arr_category','business_public_img_path','business_base_upload_img_path','arr_state','arr_country','arr_zipcode','arr_city','arr_upload_image'));
 
  	}
  	public function update(Request $request,$enc_id)
@@ -150,6 +274,9 @@ class BusinessListingController extends Controller
  		$arr_rules['business_name'] = "required";
  		$arr_rules['business_cat'] = "required";
  		$arr_rules['user_id'] = "required";
+
+
+
         $arr_rules['hours_of_operation']='required';
     	$arr_rules['company_info']='required';
     	$arr_rules['keywords']='required';
@@ -168,6 +295,8 @@ class BusinessListingController extends Controller
         $business_data['business_name']      = $request->input('business_name');
         $business_data['business_cat']=$request->input('business_cat');
         $business_data['user_id']=$request->input('user_id');
+
+
         $filename=$request->input('old_image');
 		if($request->hasFile('main_image'))
         {
@@ -187,12 +316,59 @@ class BusinessListingController extends Controller
         }
 
         $business_data['main_image'] = $filename;
+
+       //location input array
+        $business_data['building']=$request->input('building');
+        $business_data['street']=$request->input('street');
+        $business_data['landmark']=$request->input('landmark');
+        $business_data['area']=$request->input('area');
+        $business_data['city']=$request->input('city');
+        $business_data['pincode']=$request->input('pincode');
+        $business_data['state']=$request->input('state');
+        $business_data['country']=$request->input('country');
+
+        //Contact input array
+        $business_data['contact_person_name']=$request->input('contact_person_name');
+        $business_data['mobile_number']=$request->input('mobile_number');
+        $business_data['landline_number']=$request->input('landline_number');
+        $business_data['fax_no']=$request->input('fax_no');
+        $business_data['toll_free_number']=$request->input('toll_free_number');
+        $business_data['email_id']=$request->input('email_id');
+        $business_data['website']=$request->input('website');
+
+        //other input array
+
+
+
         $business_data['hours_of_operation']=$request->input('hours_of_operation');
     	$business_data['company_info']=$request->input('company_info');
     	$business_data['keywords']=$request->input('keywords');
     	$business_data['youtube_link']=$request->input('youtube_link');
-    	$business_data=$this->BusinessListingModel->where('id',$id)->update($business_data);
+        $business_data=$this->BusinessListingModel->where('id',$id)->update($business_data);
 
+         $files = $request->file('business_image');
+          $file_count = count($files);
+          if($file_count>0){
+         $uploadcount = 0;
+         foreach($files as $file) {
+         $destinationPath = $this->business_base_upload_img_path;
+         $fileName = $file->getClientOriginalName();
+            $fileExtension  = strtolower($file->getClientOriginalExtension());
+            if(in_array($fileExtension,['png','jpg','jpeg']))
+            {
+                  $filename =sha1(uniqid().$fileName.uniqid()).'.'.$fileExtension;
+                  $file->move($destinationPath,$filename);
+                  $arr_insert['image_name']=$filename;
+                  $arr_insert['business_id']=$business_id;
+                  $update_data1=$this->BusinessImageUploadModel->where('business_id',$id)->update($arr_insert);
+                  $uploadcount ++;
+            }
+            else
+            {
+                 Session::flash('error','Invalid file extension');
+            }
+        }
+      }
         if($business_data /*&& $user_data*/)
         {
         	Session::flash('success','Business Updated successfully');
@@ -204,6 +380,17 @@ class BusinessListingController extends Controller
         }
         return redirect()->back();
    	}
+    public function show($enc_id)
+    {
+        $id = base64_decode($enc_id);
+        $page_title = "Business Listing: Show ";
+        $business_public_img_path = $this->business_public_img_path;
+         $business_base_upload_img_path =$this->business_public_upload_img_path;
+        $business_data = array();
+        $business_data=$this->BusinessListingModel->with(['user_details','city_details','zipcode_details','country_details','state_details','categoty_details','image_upload_details'])->where('id',$id)->get()->toArray();
+         return view('web_admin.business_listing.show',compact('page_title','business_data','business_public_img_path','business_base_upload_img_path'));
+
+    }
    	public function toggle_status($enc_id,$action)
     {
         if($action=="activate")
@@ -305,420 +492,4 @@ class BusinessListingController extends Controller
     }
       /* Business Listing End */
 
-    /* Location Start */
-    public function location($enc_id)
-    {
-    	$page_title	="Business Locations";
-    	$id =base64_decode($enc_id);
-    	$business_locations	=array();
-    	$business_locations=$this->BusinessLocationModel->with('city_details','zipcode_details','country_details','state_details')->where('business_id',$id)->get()->toArray();
-    	return view('web_admin.business_listing.location.index',compact('page_title','business_locations','id'));
-    }
-     public function multi_action_loc(Request $request)
-    {
-        $arr_rules = array();
-        $arr_rules['multi_action'] = "required";
-        $arr_rules['checked_record'] = "required";
-
-
-        $validator = Validator::make($request->all(),$arr_rules);
-
-        if($validator->fails())
-        {
-            Session::flash('error','Please Select Any Record(s)');
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        $multi_action = $request->input('multi_action');
-        $checked_record = $request->input('checked_record');
-
-        /* Check if array is supplied*/
-        if(is_array($checked_record) && sizeof($checked_record)<=0)
-        {
-            Session::flash('error','Problem Occured, While Doing Multi Action');
-            return redirect()->back();
-
-        }
-
-        foreach ($checked_record as $key => $record_id)
-        {
-            if($multi_action=="activate")
-            {
-               $this->_activate_loc($record_id);
-               Session::flash('success','Business Location(s) Activated Successfully');
-            }
-            elseif($multi_action=="block")
-            {
-               $this->_block_loc($record_id);
-               Session::flash('success','Business Location(s) Blocked Successfully');
-            }
-            elseif($multi_action=="delete")
-            {
-               $this->_delete_loc($record_id);
-                Session::flash('success','Business Location(s) Deleted Successfully');
-            }
-
-        }
-
-        return redirect()->back();
-    }
-    public function edit_location($enc_id)
-    {
-    	$id=base64_decode($enc_id);
-    	$page_title="Edit Location";
-
-    	$obj_countries_res = CountryModel::get();
-        if( $obj_countries_res != FALSE)
-        {
-            $arr_country = $obj_countries_res->toArray();
-        }
-        $obj_zipcode_res = ZipModel::get();
-        if( $obj_zipcode_res != FALSE)
-        {
-            $arr_zipcode = $obj_zipcode_res->toArray();
-        }
-        $arr_city = array();
-        $obj_city_res = CityModel::get();
-        if($obj_city_res != FALSE)
-        {
-            $arr_city = $obj_city_res->toArray();
-        }
-        $arr_state = array();
-        $obj_state_res = StateModel::get();
-
-        if( $obj_countries_res != FALSE)
-        {
-            $arr_state = $obj_state_res->toArray();
-        }
-        $business_locations	=array();
-    	$business_locations=$this->BusinessLocationModel->with('city_details','zipcode_details','country_details','state_details')->where('id',$id)->first()->toArray();
-    	return view('web_admin.business_listing.location.edit',compact('page_title','business_locations','arr_state','arr_country','arr_zipcode','arr_city'));
-    }
-    public function create_location($enc_id)
-    {
-    	$id=base64_decode($enc_id);
-    	$page_title="Create Location";
-
-
-    	$obj_countries_res = CountryModel::get();
-        if( $obj_countries_res != FALSE)
-        {
-            $arr_country = $obj_countries_res->toArray();
-        }
-        $obj_zipcode_res = ZipModel::get();
-        if( $obj_zipcode_res != FALSE)
-        {
-            $arr_zipcode = $obj_zipcode_res->toArray();
-        }
-        $arr_city = array();
-        $obj_city_res = CityModel::get();
-        if($obj_city_res != FALSE)
-        {
-            $arr_city = $obj_city_res->toArray();
-        }
-        $arr_state = array();
-        $obj_state_res = StateModel::get();
-
-        if( $obj_countries_res != FALSE)
-        {
-            $arr_state = $obj_state_res->toArray();
-        }
-        return view('web_admin.business_listing.location.create',compact('page_title','arr_state','arr_country','arr_zipcode','arr_city','id'));
-
-    }
-    public function store_location($enc_id,Request $request )
-    {
-    	$arr_rules	=	array();
-    	$arr_rules['type']='required';
-    	$arr_rules['building']='required';
-    	$arr_rules['street']='required';
-    	$arr_rules['landmark']='required';
-    	$arr_rules['area']='required';
-    	$arr_rules['city']='required';
-    	$arr_rules['pincode']='required';
-    	$arr_rules['state']='required';
-    	$arr_rules['country']='required';
-    	$validator = Validator::make($request->all(),$arr_rules);
-
-        if($validator->fails())
-        {
-            return redirect('/web_admin/business_listing/create_location/'.$enc_id)->withErrors($validator)->withInput();
-        }
-
-    	$id=base64_decode($enc_id);
-    	$form_data	= array();
-    	$form_data['business_id']=$id;
-    	$form_data['type']=$request->input('type');
-    	$form_data['building']=$request->input('building');
-		$form_data['street']=$request->input('street');
-		$form_data['landmark']=$request->input('landmark');
-		$form_data['area']=$request->input('area');
-		$form_data['city']=$request->input('city');
-		$form_data['pincode']=$request->input('pincode');
-		$form_data['state']=$request->input('state');
-		$form_data['country']=$request->input('country');
-		$save_locations=$this->BusinessLocationModel->create($form_data);
-		if($save_locations)
-		{
-			Session::flash('success','Business Location Created successfully');
-        }
-        else
-        {
-        	Session::flash('error','Error Occurred While Creating Business Location  ');
-        }
-        return redirect()->back();
-    }
-    public function update_location(Request $request ,$enc_id)
-    {
-    	$id=base64_decode($enc_id);
-
-    	$arr_rules = array();
-    	$arr_rules['type']='required';
- 		$arr_rules['building'] = "required";
- 		$arr_rules['street'] = "required";
-        $arr_rules['landmark'] = "required";
-        $arr_rules['area'] = "required";
-        $arr_rules['city'] = "required";
-        $arr_rules['pincode'] = "required";
-        $arr_rules['state'] = "required";
-        $arr_rules['country'] = "required";
-        $validator=validator::make($request->all(),$arr_rules);
-
-        if($validator->fails())
-        {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-    	$form_data	= array();
-    	$form_data['type']=$request->input('type');
-    	$form_data['building']=$request->input('building');
-		$form_data['street']=$request->input('street');
-		$form_data['landmark']=$request->input('landmark');
-		$form_data['area']=$request->input('area');
-		$form_data['city']=$request->input('city');
-		$form_data['pincode']=$request->input('pincode');
-		$form_data['state']=$request->input('state');
-		$form_data['country']=$request->input('country');
-		$update_locations=$this->BusinessLocationModel->where('id',$id)->update($form_data);
-		if($update_locations)
-		{
-			Session::flash('success','Business Location Updated successfully');
-        }
-        else
-        {
-        	Session::flash('error','Error Occurred While Updating Business Location  ');
-        }
-        return redirect()->back();
-
-    }
-    public function location_toggle_status($enc_id,$action)
-    {
-        if($action=="activate")
-        {
-            $this->_activate_loc($enc_id);
-
-            Session::flash('success','Business location(s) Activated Successfully');
-        }
-        elseif($action=="block")
-        {
-            $this->_block_loc($enc_id);
-
-            Session::flash('success','Business location(s) Blocked Successfully');
-        }
-        elseif($action=="delete")
-        {
-            $this->_delete_loc($enc_id);
-
-            Session::flash('success','Business location(s) Deleted Successfully');
-        }
-
-        return redirect()->back();
-    }
-      protected function _activate_loc($enc_id)
-    {
-        $id = base64_decode($enc_id);
-
-        $Business = $this->BusinessLocationModel->where('id',$id)->first();
-
-        $Business->is_active = "1";
-
-        return $Business->save();
-    }
-
-    protected function _block_loc($enc_id)
-    {
-        $id = base64_decode($enc_id);
-
-        $Business = $this->BusinessLocationModel->where('id',$id)->first();
-
-        $Business->is_active = "0";
-
-        return $Business->save();
-    }
-
-    protected function _delete_loc($enc_id)
-    {
-    	$id = base64_decode($enc_id);
-        $Business = $this->BusinessLocationModel->where('id',$id);
-		return $Business->delete();
-    }
-    /* Location End */
-
-    /* Contact Info  Start */
-    public function contact_info($enc_id)
-    {
-    	$page_title	="Business Contact Information";
-    	$id =base64_decode($enc_id);
-    	$business_contact	=array();
-    	$business_contact=$this->BusinessContactInfoModel->with('business_details')->where('business_id',$id)->get()->toArray();
-    	return view('web_admin.business_listing.contactinfo.index',compact('page_title','business_contact','id'));
-    }
-    public function create_contact($enc_id)
-    {
-    	$id=base64_decode($enc_id);
-    	$page_title="Create Contact";
-        return view('web_admin.business_listing.contactinfo.create',compact('page_title','id'));
-
-    }
-    public function store_contact($enc_id,Request $request)
-    {
-    	$arr_rules['contact_person_name']='required';
-    	$arr_rules['mobile_number']='required';
-    	$arr_rules['landline_number']='required';
-    	$arr_rules['fax_no']='required';
-    	$arr_rules['toll_free_number']='required';
-    	$arr_rules['email_id']='required';
-    	$arr_rules['website']='required';
-    	$validator = Validator::make($request->all(),$arr_rules);
-
-        if($validator->fails())
-        {
-            return redirect('/web_admin/business_listing/create_contact/'.$enc_id)->withErrors($validator)->withInput();
-        }
-
-    	$id=base64_decode($enc_id);
-    	$form_data	= array();
-    	$form_data['business_id']=$id;
-    	$form_data['contact_person_name']=$request->input('contact_person_name');
-		$form_data['mobile_number']=$request->input('mobile_number');
-		$form_data['landline_number']=$request->input('landline_number');
-		$form_data['fax_no']=$request->input('fax_no');
-		$form_data['toll_free_number']=$request->input('toll_free_number');
-		$form_data['email_id']=$request->input('email_id');
-		$form_data['website']=$request->input('website');
-
-		$save_contact=$this->BusinessContactInfoModel->create($form_data);
-		if($save_contact)
-		{
-			Session::flash('success','Business Contact Created successfully');
-        }
-        else
-        {
-        	Session::flash('error','Error Occurred While Creating Business Contact');
-        }
-        return redirect()->back();
-    }
-    public function edit_contact($enc_id)
-    {
-    	$id=base64_decode($enc_id);
-    	$page_title="Edit Contact";
-        $business_contact	=array();
-    	$business_contact=$this->BusinessContactInfoModel->with('business_details')->where('id',$id)->first()->toArray();
-    	return view('web_admin.business_listing.contactinfo.edit',compact('page_title','business_contact'));
-    }
-    public function update_contact(Request $request,$enc_id)
-    {
-    	$id=base64_decode($enc_id);
-
-    	$arr_rules = array();
-
- 		$arr_rules['contact_person_name']='required';
-    	$arr_rules['mobile_number']='required';
-    	$arr_rules['landline_number']='required';
-    	$arr_rules['fax_no']='required';
-    	$arr_rules['toll_free_number']='required';
-    	$arr_rules['email_id']='required';
-    	$arr_rules['website']='required';
-    	$validator = Validator::make($request->all(),$arr_rules);
-
-        if($validator->fails())
-        {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-    	$form_data	= array();
-    	$form_data['business_id']=$id;
-    	$form_data['contact_person_name']=$request->input('contact_person_name');
-		$form_data['mobile_number']=$request->input('mobile_number');
-		$form_data['landline_number']=$request->input('landline_number');
-		$form_data['fax_no']=$request->input('fax_no');
-		$form_data['toll_free_number']=$request->input('toll_free_number');
-		$form_data['email_id']=$request->input('email_id');
-		$form_data['website']=$request->input('website');
-		$update_contact=$this->BusinessContactInfoModel->where('id',$id)->update($form_data);
-		if($update_contact)
-		{
-			Session::flash('success','Business Contact Updated successfully');
-        }
-        else
-        {
-        	Session::flash('error','Error Occurred While Updating Business Contact  ');
-        }
-        return redirect()->back();
-    }
-     public function contact_toggle_status($enc_id,$action)
-    {
-        if($action=="delete")
-        {
-            $this->_delete_contact($enc_id);
-
-            Session::flash('success','Business Contact(s) Deleted Successfully');
-        }
-
-        return redirect()->back();
-    }
-
-     public function multi_action_contact(Request $request)
-    {
-        $arr_rules = array();
-        $arr_rules['multi_action'] = "required";
-        $arr_rules['checked_record'] = "required";
-
-
-        $validator = Validator::make($request->all(),$arr_rules);
-
-        if($validator->fails())
-        {
-            Session::flash('error','Please Select Any Record(s)');
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        $multi_action = $request->input('multi_action');
-        $checked_record = $request->input('checked_record');
-
-        /* Check if array is supplied*/
-        if(is_array($checked_record) && sizeof($checked_record)<=0)
-        {
-            Session::flash('error','Problem Occured, While Doing Multi Action');
-            return redirect()->back();
-
-        }
-
-        foreach ($checked_record as $key => $record_id)
-        {
-           if($multi_action=="delete")
-            {
-               $this->_delete_contact($record_id);
-                Session::flash('success','Business Contact(s) Deleted Successfully');
-            }
-
-        }
-
-        return redirect()->back();
-    }
-     protected function _delete_contact($enc_id)
-    {
-    	$id = base64_decode($enc_id);
-        $Business = $this->BusinessContactInfoModel->where('id',$id);
-		return $Business->delete();
-    }
-    /* Contact Info  End */
-}
+   }
