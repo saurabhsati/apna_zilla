@@ -23,7 +23,7 @@
             <li>
                 <i class="fa fa-star"></i>
                 @if(sizeof($arr_review_view)>0)
-                    <a href="{{ url('web_admin/reviews/'.base64_encode($arr_review_view['fk_id'])) }}">Reviews</a>
+                    <a href="{{ url('web_admin/reviews/'.base64_encode($arr_review_view['business_id'])) }}">Reviews</a>
                 @endif
             </li>
             <span class="divider">
@@ -79,6 +79,13 @@
 
            {{ csrf_field() }}
            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="email_id">Business Name</label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input class="form-control" name="name" id="name"  value="{{ $arr_review_view['business_details']['business_name'] }}" readonly="" />
+                    <span class='help-block'>{{ $errors->first('name') }}</span>
+                </div>
+            </div>
+           <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="email_id">Name</label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" name="name" id="name"  value="{{ $arr_review_view['name'] }}" readonly="" />
@@ -123,7 +130,7 @@
 
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
-              <a href="{{ url('web_admin/reviews/'.base64_encode($arr_review_view['fk_id'])) }}">
+              <a href="{{ url('web_admin/reviews/'.base64_encode($arr_review_view['business_id'])) }}">
                 <input type="button"  class="btn btn-primary" value="Back">
               </a>
             </div>

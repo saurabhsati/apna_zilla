@@ -22,7 +22,7 @@
                 <i class="fa fa-angle-right"></i>
             </span>
             <li>
-                <i class="fa fa-listing"></i>
+                <i class="fa fa-list"></i>
                 <a href="{{ url('/web_admin/business_listing') }}">Business Listing</a>
             </li>
             <span class="divider">
@@ -44,7 +44,7 @@
           <div class="box">
             <div class="box-title">
               <h3>
-                <i class="fa fa-business"></i>
+                <i class="fa fa-list"></i>
                 {{ isset($page_title)?$page_title:"" }}
             </h3>
             <div class="box-tool">
@@ -71,7 +71,7 @@
                 {{ Session::get('error') }}
             </div>
           @endif
-          <form class="form-horizontal" id="frm_manage" method="POST" action="{{ url('/web_admin/business_listing/multi_action') }}">
+          <form class="form-horizontal" id="frm_manage" method="POST" action="{{ url('/web_admin/business_listing/multi_action_loc') }}">
 
             {{ csrf_field() }}
 
@@ -86,9 +86,9 @@
           </div>
           <div class="btn-toolbar pull-right clearfix">
             <!--- Add new record - - - -->
-                <!-- <div class="btn-group">
+                <div class="btn-group">
                 <a href="{{ url('/web_admin/business_listing/create')}}" class="btn btn-primary btn-add-new-records">Add business</a>
-                </div> -->
+                </div>
             <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -->
             <div class="btn-group">
                 <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
@@ -133,13 +133,18 @@
               <thead>
                 <tr>
                   <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
-                  <th>Business Name</th>
-                  <th>Title</th>
-                  <th>Full Name</th>
-                  <th>Email</th>
-                  <th>Mobile No</th>
-                  <th>City</th>
-                  <th width="250" style="text-align:center">Status</th>
+                  <th style="width:25px;">Business Image</th>
+                  <th style="width:25px;">Business Name</th>
+                  <th style="width:25px;">Business Category Name</th>
+                  <!-- <th style="width:25px;">Title</th> -->
+                  <th style="width:50px;">Full Name</th>
+                  <th style="width:25px;">Email</th>
+                  <th style="width:25px;">Mobile No</th>
+                 <!--  <th>City</th> -->
+                  <th style="width:25px;">Reviews</th>
+                  <th>Location</th>
+                  <th>Contact Info</th>
+                  <th width="" style="text-align:center">Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -153,13 +158,47 @@
                              name="checked_record[]"
                              value="{{ base64_encode($business['id']) }}" />
                     </td>
-                      <td> {{ $business['business_name'] }} </td>
-                        <td> {{ $business['user_details']['title'] }} </td>
+                    <td>
+                    <img src="{{ $business_public_img_path.'/'.$business['main_image']}}" alt=""  style="width:75px; height:50px;" />   </td>
+                    <td> {{ $business['business_name'] }} </td>
+                    <td> {{ $business['categoty_details']['title'] }} </td>
+                 <!--    <td> {{ $business['user_details']['title'] }} </td> -->
                     <td> {{ $business['user_details']['first_name']." ".$business['user_details']['last_name'] }} </td>
                     <td> {{ $business['user_details']['email'] }} </td>
                     <td> {{ $business['user_details']['mobile_no'] }} </td>
-                     <td> {{ $business['user_details']['city'] }} </td>
-                    <td width="250" style="text-align:center">
+                    <!--  <td> {{ $business['user_details']['city'] }} </td> -->
+
+
+                      @if( sizeof($business['reviews'])>0)
+                      <td><a href="{{ url('web_admin/reviews/'.base64_encode($business['id'])) }}"> ( {{ sizeof($business['reviews']) }} ) </a></td>
+                      @else
+                       <td><a href="#"> ( {{ sizeof($business['reviews']) }} ) </a></td>
+                       @endif
+                     <td>
+                        <a
+                          class="btn btn-info"
+                          href="{{ url('/').'/web_admin/business_listing/location/'.base64_encode($business['id']) }}"  title="View Loaction">
+                          View
+                        </a>
+                        <a
+                          class="btn btn-info"
+                          href="{{ url('/').'/web_admin/business_listing/create_location/'.base64_encode($business['id']) }}"  title="Add Loaction">
+                          Add
+                        </a>
+                      </td>
+                      <td>
+                        <a
+                          class="btn btn-info"
+                          href="{{ url('/').'/web_admin/business_listing/contact_info/'.base64_encode($business['id']) }}"  title="View Conatct Info">
+                          View
+                        </a>
+                        <a
+                          class="btn btn-info"
+                          href="{{ url('/').'/web_admin/business_listing/create_contact/'.base64_encode($business['id']) }}"  title="Add Conatct Info">
+                          Add
+                        </a>
+                      </td>
+                    <td width="" style="text-align:center">
                          @if($business['is_active']=="0")
                         <a class="btn btn-danger" href="{{ url('/web_admin/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/activate' }}">
                             Block

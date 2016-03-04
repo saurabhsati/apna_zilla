@@ -2,7 +2,6 @@
 
 
     @section('main_content')
-
     <link rel="stylesheet" type="text/css" href="{{ url('/assets/data-tables/latest/') }}/dataTables.bootstrap.min.css">
     <!-- BEGIN Page Title -->
     <div class="page-title">
@@ -19,17 +18,13 @@
                 <i class="fa fa-home"></i>
                 <a href="{{ url('/web_admin/dashboard') }}">Dashboard</a>
             </li>
-
             <span class="divider">
-               <i class="fa fa-angle-right"></i>
-
+                <i class="fa fa-angle-right"></i>
             </span>
             <li>
-
-            <i class="fa fa-list"></i>
-               <a href="{{ url('/web_admin/business_listing') }}">Business Listing</a>
+                <i class="fa fa-listing"></i>
+                <a href="{{ url('/web_admin/business_listing') }}">Business Listing</a>
             </li>
-
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span>
@@ -49,16 +44,7 @@
           <div class="box">
             <div class="box-title">
               <h3>
-                <i class="fa fa-star  "></i>
-
-                @if(isset($arr_reviews) && sizeof($arr_reviews)>0)
-
-                      {{ $arr_reviews[0]['business_details']['business_name'] }}
-
-                  @endif
-                   <span class="divider">
-                  <i class="fa fa-angle-right"></i>
-                </span>
+                <i class="fa fa-phone"></i>
                 {{ isset($page_title)?$page_title:"" }}
             </h3>
             <div class="box-tool">
@@ -85,24 +71,27 @@
                 {{ Session::get('error') }}
             </div>
           @endif
-          <form class="form-horizontal" id="frm_manage" method="POST" action="{{ url('/web_admin/reviews/multi_action') }}">
+          <form class="form-horizontal" id="frm_manage" method="POST" action="{{ url('/web_admin/business_listing/multi_action_contact') }}">
 
             {{ csrf_field() }}
 
             <div class="col-md-10">
+
+
             <div id="ajax_op_status">
+
             </div>
             <div class="alert alert-danger" id="no_select" style="display:none;"></div>
             <div class="alert alert-warning" id="warning_msg" style="display:none;"></div>
           </div>
           <div class="btn-toolbar pull-right clearfix">
             <!--- Add new record - - - -->
-               <div class="btn-group">
-
+                <div class="btn-group">
+                <a href="{{ url('/web_admin/business_listing/create_contact/'.base64_encode($id))}}" class="btn btn-primary btn-add-new-records">Add Contact</a>
                 </div>
             <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -->
             <div class="btn-group">
-                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
+                <!-- <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
                     title="Multiple Unblock"
                     href="javascript:void(0);"
                     onclick="javascript : return check_multi_action('frm_manage','activate');"
@@ -116,7 +105,7 @@
                    onclick="javascript : return check_multi_action('frm_manage','block');"
                    style="text-decoration:none;">
                     <i class="fa fa-lock"></i>
-                </a>
+                </a> -->
                 <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
                    title="Multiple Delete"
                    href="javascript:void(0);"
@@ -126,99 +115,71 @@
                 </a>
             </div>
             <div class="btn-group">
-
-              @if(sizeof($arr_reviews)>0)
-                  <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
-                     title="Refresh"
-                     href="{{ url('/web_admin/reviews/'.$enc_id) }}"
-                     style="text-decoration:none;">
-                     <i class="fa fa-repeat"></i>
-                  </a>
-
-               @endif
-
+                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
+                   title="Refresh"
+                   href="{{ url('/web_admin/business_listing') }}"
+                   style="text-decoration:none;">
+                   <i class="fa fa-repeat"></i>
+                </a>
             </div>
           </div>
-          <br/><br/>
+          <br/>
           <div class="clearfix"></div>
           <div class="table-responsive" style="border:0">
 
             <input type="hidden" name="multi_action" value="" />
 
-            <table class="table table-advance"  id="user_manage" >
+            <table class="table table-advance"  id="business_manage" >
               <thead>
                 <tr>
-                  <th> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
-                  <th>Sr. No.</th>
-                  <!-- <th>Business Name</th> -->
-                  <th>Name</th>
-                  <th>Mobile Number</th>
-                  <th>Email Id</th>
-                  <th>Ratings</th>
-                  <th>Message</th>
+                  <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
+                  <th >Business Name</th>
+                  <th >Contact Person Name</th>
+                  <th >Mobile Number</th>
+                  <th >Land line Number</th>
+                  <th >Fax No</th>
+                  <th >Toll Free Number</th>
+                  <th >Email Id</th>
+                  <th >website</th>
+                 <!--  <th width="" style="text-align:center">Status</th> -->
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-              @if(sizeof($arr_reviews)>0)
-              @foreach($arr_reviews as $key => $_review)
 
+               @if(isset($business_contact) && sizeof($business_contact)>0)
+                  @foreach($business_contact as $contact)
                   <tr>
                     <td>
                       <input type="checkbox"
                              name="checked_record[]"
-                             value="{{ base64_encode($_review['id']) }}" />
+                             value="{{ base64_encode($contact['id']) }}" />
                     </td>
-                    <td>{{ $key+1 }}</td>
-                    <!-- <td>
-                        {{ $_review['business_details']['business_name'] }}
-                    </td> -->
-                    <td>
-                        {{ $_review['name'] }}
-                    </td>
-                    <td>
-                        {{ $_review['mobile_number'] }}
-                    </td>
-                    <td>
-                        {{ $_review['email'] }}
-                    </td>
-                    <td>
-                      @for($i=0; $i<$_review['ratings']; $i++)
-                        <i class="fa fa-star"></i>
-                      @endfor
-
-                    </td>
-                    <td>
-                        {{ $_review['message'] }}
-                    </td>
-
+                    <td> {{ $contact['business_details']['business_name'] }} </td>
+                    <td> {{ $contact['contact_person_name'] }} </td>
+                    <td> {{ $contact['mobile_number'] }} </td>
+                    <td> {{ $contact['landline_number'] }} </td>
+                    <td> {{ $contact['fax_no'] }} </td>
+                    <td> {{ $contact['toll_free_number'] }} </td>
+                    <td> {{ $contact['email_id'] }} </td>
+                    <td> {{ $contact['website'] }} </td>
 
                     <td>
 
-                        <a href="{{ url('/web_admin/reviews/view/'.base64_encode($_review['id'])) }}" class="show-tooltip" title="View">
-                          <i class="fa fa-eye" ></i>
+                        <a href="{{ url('/web_admin/business_listing/edit_contact/').'/'.base64_encode($contact['id'].'/'.base64_encode($id)) }}" class="show-tooltip" title="Edit">
+                          <i class="fa fa-edit" ></i>
                         </a>
-                        &nbsp;
-                    @if($_review['is_active']=="0")
-                        <a  href="{{ url('/web_admin/reviews/toggle_status/').'/'.base64_encode($_review['id']).'/activate' }}">
-                         <i class="fa fa-lock" ></i>
-                         </a>
-                        @elseif($_review['is_active']=="1")
 
-                        <a  href="{{ url('/web_admin/reviews/toggle_status/').'/'.base64_encode($_review['id']).'/block' }}">
-                        <i class="fa fa-unlock" ></i>
-                        </a>
-                       @endif
                         &nbsp;
-                        <a href="{{ url('/web_admin/reviews/delete/'.base64_encode($_review['id']))}}"
+                        <a href="{{ url('/web_admin/business_listing/contact_toggle_status/').'/'.base64_encode($contact['id']).'/delete' }}"
                            onclick="javascript:return confirm_delete()" class="show-tooltip" title="Delete">
                           <i class="fa fa-trash" ></i>
                         </a>
 
                     </td>
-                  </tr>
 
-                @endforeach
+                  </tr>
+                  @endforeach
                 @endif
 
               </tbody>
@@ -237,7 +198,7 @@
 
    $(document).ready(function()
     {
-        $("#user_manage").DataTable();
+        $("#business_manage").DataTable();
     });
 
     function confirm_delete()
