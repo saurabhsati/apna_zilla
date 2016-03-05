@@ -2,11 +2,6 @@
 
 
     @section('main_content')
-    <style type="text/css">
-  .error_msg .error_business_image{
-    color:red;
-  }
-</style>
     <!-- BEGIN Page Title -->
     <div class="page-title">
         <div>
@@ -27,7 +22,7 @@
             </span>
             <li>
                 <i class="fa fa-user"></i>
-                <a href="{{ url('/web_admin/business_listing') }}">Business  Listing</a>
+                <a href="{{ url('/').'/web_admin/sales_user' }}">Users</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
@@ -36,7 +31,6 @@
         </ul>
     </div>
     <!-- END Breadcrumb -->
-
 
     <!-- BEGIN Main Content -->
     <div class="row">
@@ -73,225 +67,204 @@
             </div>
           @endif
 
-        <form class="form-horizontal"
-              id="validation-form"
-              method="POST"
-              action="{{ url('/web_admin/sales/store/') }}"
-              enctype="multipart/form-data">
+          <form class="form-horizontal"
+                id="validation-form"
+                method="POST"
+                action="{{ url('/web_admin/sales_user/store') }}"
+                enctype="multipart/form-data"
+                >
+
 
            {{ csrf_field() }}
+
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="user_id">Select User<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="name">Profile Pic</label>
                 <div class="col-sm-6 col-lg-4 controls">
-                <select class="form-control"  name="user_id" id="user_id">
-                <option>Select User</option>
-                 @if(isset($arr_user) && sizeof($arr_user)>0)
-                 @foreach($arr_user as $user)
-                 <option value="{{ isset($user['id'])?$user['id']:'' }}" >{{ isset($user['first_name'] )?$user['first_name']:'' }}
-                 </option>
-                  @endforeach
-                  @endif
-                  </select>
-                    <span class='help-block'>{{ $errors->first('user_id') }}</span>
+                    <img src="{{url('/')}}/images/front/avatar.jpg" width="200" height="200" id="preview_profile_pic"  />
+                    <span class="btn btn-danger" id="removal_handle" style="display:none;" onclick="clearPreviewImage()">X</span>
+                    <input class="form-control" name="profile_pic" id="profile_pic" type="file" onchange="loadPreviewImage(this)"/>
+
+                    <span class='help-block'>{{ $errors->first('profile_pic') }}</span>
                 </div>
             </div>
+
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="business_name">Business Name<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="first_name">First Name<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="business_name"
-                           id="business_name"
-                           data-rule-required="true"
-                           placeholder="Enter Business Name"
-                           value=""
-                           />
-                    <span class='help-block'>{{ $errors->first('business_name') }}</span>
+                    <input class="form-control" name="first_name" id="first_name" placeholder="Enter First Name " data-rule-required="true" />
+                    <span class='help-block'>{{ $errors->first('first_name') }}</span>
                 </div>
             </div>
-             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="street">Business Category <i class="red">*</i></label>
+
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="middle_name">Middle Name<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                   <select class="form-control"
-                           name="business_cat"
-                           id="business_cat"
-                           >
-                            @if(isset($arr_category) && sizeof($arr_category)>0)
-                            <option>Select Business Category</option>
-                            @foreach($arr_category as $category)
-                             <option value="{{ $category['cat_id'] }}" > {{  $category['title'] }}</option>
-                            @endforeach
-                            @endif
-                           </select>
-                    <span class='help-block'>{{ $errors->first('street') }}</span>
+                    <input class="form-control" name="middle_name" id="middle_name" placeholder="Enter Middle Name " data-rule-required="true" />
+                    <span class='help-block'>{{ $errors->first('middle_name') }}</span>
                 </div>
             </div>
+
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label"> Image <i class="red">*</i> </label>
-                <div class="col-sm-9 col-lg-10 controls">
-                   <div class="fileupload fileupload-new" data-provides="fileupload">
-                      <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
-
-                      </div>
-                      <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-                      <div>
-                         <span class="btn btn-default btn-file"><span class="fileupload-new" >Select image</span>
-                         <span class="fileupload-exists">Change</span>
-                         <input type="file" class="file-input" name="main_image" id="ad_image"/></span>
-                         <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
-
-                         <span  >
-
-                         </span>
-
-                      </div>
-                   </div>
-                    <span class='help-block'>{{ $errors->first('image') }}</span>
-                     <!--<br/>
-                     <button class="btn btn-warning" onclick="return show_more_images()" id="show_more_images_button">Do you want to add slider images ? </button>  -->
-                </div>
-             </div>
-            <div class="form-group">
-            <div class="col-sm-5 col-md-7" style="float:right;">
-               <a href="javascript:void(0);" id='add-image'>
-                   <span class="glyphicon glyphicon-plus-sign" style="font-size: 20px;"></span>
-               </a>
-              <span style="margin-left:05px;">
-              <a href="javascript:void(0);" id='remove-image'>
-                  <span class="glyphicon glyphicon-minus-sign" style="font-size: 20px;"></span>
-              </a>
-              </span>
-             </div>
-                <label class="col-sm-3 col-lg-2 control-label"> Business Images <i class="red">*</i> </label>
+                <label class="col-sm-3 col-lg-2 control-label" for="last_name">Last Name<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-
-                <input type="file" name="business_image[]" id="business_image" class="pimg" data-rule-required="true"  />
-                <div class="error" id="error_business_image">{{ $errors->first('business_image') }}</div>
-                </div>
-                <div class="clr"></div><br/>
-                  <div class="error" id="error_set_default"></div>
-                  <div class="clr"></div>
-
-               <div id="append" class="class-add"></div>
-                <div class="error_msg" id="error_business_image" ></div>
-                <div class="error_msg" id="error_business_image1" ></div>
-               <label class="col-sm-3 col-lg-2 control-label"></label>
-
-                </div>
-
-
-
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="hours_of_operation">Hours Of Operation<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <textarea class="form-control"
-                           name="hours_of_operation"
-                           id="hours_of_operation"
-                           data-rule-required="true"
-                           placeholder="Enter Hours Of Operation"
-                           value=""
-                           ></textarea>
-                    <span class='help-block'>{{ $errors->first('hours_of_operation') }}</span>
+                    <input class="form-control" name="last_name" id="last_name"  placeholder="Enter Last Name" data-rule-required="true" />
+                    <span class='help-block'>{{ $errors->first('last_name') }}</span>
                 </div>
             </div>
+            
+              <div class="form-group">
+                  <label class="col-sm-3 col-lg-2 control-label">Gender</label>
+                  <div class="col-sm-9 col-lg-10 controls">
+                     <label class="radio">
+                        <input type="radio" name="gender" value="male" /> Male
+                     </label>
+                     <label class="radio">
+                        <input type="radio" name="gender" value="female" /> Female
+                     </label>
+                  <span class='help-block'>{{ $errors->first('gender') }}</span>
+                 </div>
+               </div>  
+
+             <div class="box-content">
+               <div class="form-group">
+                  <label class="cdol-sm-3 col-lg-2 control-label">DOB</label>
+                  <div class="col-sm-5 col-lg-3 controls">
+                     <input class="form-control date-picker" id="d_o_b" name="d_o_b" size="16" type="text" value="02-12-2012" />
+                  </div>
+                 <span class='help-block'>{{ $errors->first('d_o_b') }}</span>
+               </div>
+               </div> 
+
+                <div class="form-group">
+                  <label class="col-sm-3 col-lg-2 control-label">Marital Status</label>
+                  <div class="col-sm-6 col-lg-4 controls">
+                     <select class="form-control" data-placeholder="Choose a Category" name="marital_status" tabindex="1">
+                        <option value="">Select...</option>
+                        <option value="Married">Married</option>
+                        <option value="Un Married">Un Married</option>
+                        <option value="Divorced">Divorced</option>
+                        <option value="Widowed">Widowed</option>
+                     </select>
+                    <span class='help-block'>{{ $errors->first('marital_status') }}</span>
+                  </div>
+               </div>
+            
+
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="company_info">Company Info<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="email">Email<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <textarea class="form-control"
-                           name="company_info"
-                           id="company_info"
-                           data-rule-required="true"
-                           placeholder="Enter Company Info"
-                           value=""
-                           ></textarea>
-                    <span class='help-block'>{{ $errors->first('company_info') }}</span>
+                    <input class="form-control" name="email" id="email" data-rule-required="true" placeholder="Enter Email" data-rule-email="true"/>
+                    <span class='help-block'>{{ $errors->first('email') }}</span>
+               </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="password">Password<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input type="password" class="form-control" name="password" id="password"  data-rule-required="true" data-rule-minlength="6"/>
+                    <span class='help-block'>{{ $errors->first('password') }}</span>
                 </div>
             </div>
+
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="keywords">Keywords<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="street_address">Street Address<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <textarea class="form-control"
-                           name="keywords"
-                           id="keywords"
-                           data-rule-required="true"
-                           placeholder="Enter Keywords"
-                           value=""
-                           ></textarea>
-                    <span class='help-block'>{{ $errors->first('keywords') }}</span>
+                    <textarea name="street_address" id="street_address" data-rule-required="true" placeholder="Enter Street Address" class="form-control" ></textarea>
+                    <span class='help-block'>{{ $errors->first('street_address') }}</span>
                 </div>
             </div>
+
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="youtube_link">Youtube Link<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="city">City<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="youtube_link"
-                           id="youtube_link"
-                           data-rule-required="true"
-                           placeholder="Enter Youtube Link"
-                           value=""
-                           />
-                    <span class='help-block'>{{ $errors->first('youtube_link') }}</span>
+                    <input class="form-control" name="city" id="city" placeholder="Enter City " data-rule-required="true" />
+                    <span class='help-block'>{{ $errors->first('city') }}</span>
                 </div>
             </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="area">Area<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input class="form-control" name="area" id="area"  placeholder="Enter Area " data-rule-required="true" />
+                    <span class='help-block'>{{ $errors->first('area') }}</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="occupation">Occupation<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input class="form-control" name="occupation" id="occupation"  placeholder="Enter Occupation " data-rule-required="true" />
+                    <span class='help-block'>{{ $errors->first('occupation') }}</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="work_experience">Work Experience<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input class="form-control" name="work_experience" id="work_experience"  placeholder="Enter Work Experience " data-rule-required="true" />
+                    <span class='help-block'>{{ $errors->first('work_experience') }}</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="mobile_no">Mobile No<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input class="form-control" name="mobile_no" id="mobile_no"  placeholder="Enter Mobile No " data-rule-required="true" />
+                    <span class='help-block'>{{ $errors->first('mobile_no') }}</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="home_landline">Home Landline<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input class="form-control" name="home_landline" id="home_landline"  placeholder="Enter Home Landline No " data-rule-required="true" />
+                    <span class='help-block'>{{ $errors->first('home_landline') }}</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+            <label class="col-sm-3 col-lg-2 control-label" for="office_landline">Office Landline<i class="red">*</i></label>
+            <div class="col-sm-6 col-lg-4 controls">
+                <input class="form-control" name="office_landline" id="office_landline"  placeholder="Enter Office Landline No " data-rule-required="true" />
+                <span class='help-block'>{{ $errors->first('office_landline') }}</span>
+            </div>
+           </div>
+
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
-                <input type="submit"  class="btn btn-primary" value="Add">
-
+                <input type="submit" class="btn btn-primary" value="Create">
             </div>
         </div>
-      </form>
 
+    </form>
 </div>
 </div>
 </div>
 </div>
 <!-- END Main Content -->
-
 <script type="text/javascript">
- $('#add-image').click(function(){
-   flag=1;
+    var site_url = "{{url('/')}}";
+    function loadPreviewImage(ref)
+    {
+        var file = $(ref)[0].files[0];
 
-            var img_val = jQuery("input[name='business_image[]']:last").val();
+        var img = document.createElement("img");
+        reader = new FileReader();
+        reader.onload = (function (theImg) {
+            return function (evt) {
+                theImg.src = evt.target.result;
+                $('#preview_profile_pic').attr('src', evt.target.result);
+            };
+        }(img));
+        reader.readAsDataURL(file);
+        $("#removal_handle").show();
+    }
 
-            var img_length = jQuery("input[name='business_image[]']").length;
-
-            if(img_val == "")
-            {
-                  $('#error_business_image').css('margin-left','120px');
-                  $('#error_business_image').show();
-                  $('#error_business_image').fadeIn(3000);
-                  document.getElementById('error_business_image').innerHTML="The Image uploaded is required.";
-                  setTimeout(function(){
-                  $('#error_business_image').fadeOut(4000);
-                  },3000);
-
-                 flag=0;
-                 return false;
-            }
-            var chkimg = img_val.split(".");
-             var extension = chkimg[1];
-
-               if(extension!='jpg' && extension!='JPG' && extension!='png' && extension!='PNG' && extension!='jpeg' && extension!='JPEG'
-                 && extension!='gif' && extension!='GIF')
-               {
-                 $('#error_business_image1').css('margin-left','230px')
-                 $('#error_business_image1').show();
-                 $('#error_business_image1').fadeIn(3000);
-                 document.getElementById('error_business_image1').innerHTML="The file type you are attempting to upload is not allowed.";
-                 setTimeout(function(){
-                  $('#business_image').css('border-color','#dddfe0');
-                  $('#error_business_image1').fadeOut(4000);
-               },3000);
-               flag=0;
-                return false;
-              }
-           /*   var html='<div class="col-sm-6 col-lg-4 controls">
-                <input type="file" name="business_image[]" id="business_image" class="pimg" data-rule-required="true"  />
-                <div class="error" id="error_business_image">{{ $errors->first("business_image") }}</div>
-                </div>
-                <div class="clr"></div><br/>
-                  <div class="error" id="error_set_default"></div>
-                  <div class="clr"></div>';
-                  alert(html);*/
-});
+    function clearPreviewImage()
+    {
+        $('#preview_profile_pic').attr('src',site_url+'/images/front/avatar.jpg');
+        $("#removal_handle").hide();
+    }
 </script>
+
 @stop
