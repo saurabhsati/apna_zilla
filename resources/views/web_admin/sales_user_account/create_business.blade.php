@@ -27,7 +27,7 @@
             </span>
             <li>
                 <i class="fa fa-user"></i>
-                <a href="{{ url('/web_admin/sales/create_business') }}">Business  Listing</a>
+                <a href="{{ url('/web_admin/sales/business_listing') }}">Business  Listing</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
@@ -76,7 +76,7 @@
         <form class="form-horizontal"
               id="validation-form"
               method="POST"
-              action="{{ url('/web_admin/business_listing/store/') }}"
+              action="{{ url('/web_admin/sales/store_business') }}"
               enctype="multipart/form-data">
 
            {{ csrf_field() }}
@@ -122,7 +122,7 @@
                             @endforeach
                             @endif
                            </select>
-                    <span class='help-block'>{{ $errors->first('street') }}</span>
+                    <span class='help-block'>{{ $errors->first('business_cat') }}</span>
                 </div>
             </div>
             <div class="form-group">
