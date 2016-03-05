@@ -24,7 +24,7 @@ class UserController extends Controller
  		$page_title = "Manage User";
 
         $arr_user = array();
-        $obj_user = Sentinel::createModel()->get();
+        $obj_user = Sentinel::createModel()->where('role','=','normal')->get();
 
         return view('web_admin.user.index',compact('page_title','obj_user'));
  	}
@@ -144,7 +144,7 @@ class UserController extends Controller
             'email' => $email,
             'password' => $password,
             'marital_status' => $marital_status,
-            // 'role' => $role,
+             'role' => "normal",
             'street_address' => $street_address,
             'city' =>$city,
             'area' => $area,
@@ -161,20 +161,6 @@ class UserController extends Controller
         {
 			/* Assign Normal Users Role */
 	        $user = Sentinel::findById($status->id);
-            $find_role = $user['role'];
-
-            if($find_role=='normal')
-            {
-            $role = Sentinel::findRoleBySlug('user');
-	        $user->roles()->attach($role);
-            }
-
-            elseif($find_role=='sales');
-            {
-                $role = Sentinel::findRoleBySlug('sales');
-                $user->roles()->attach($role);
-            }
-
             Session::flash('success','User Created Successfully');
         }
         else

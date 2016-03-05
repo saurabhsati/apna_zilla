@@ -201,18 +201,31 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 	});
 
 		/* Sales Module */
-	Route::group(['prefix'=>'sales'], function ()
+	Route::group(['prefix'=>'sales_user'], function ()
 	{
 		Route::get('/',       								['as' => 'admin_sales_index'     				,'uses' =>'Admin\SalesController@index']);
 		Route::get('manage',       							['as' => 'admin_sales_manage'     				,'uses' =>'Admin\SalesController@index']);
 		Route::get('create',       							['as' => 'admin_sales_create'    			    ,'uses' =>'Admin\SalesController@create']);
-		Route::any('store',									['as' => 'admin_sales_store'    			    ,'uses' =>'Admin\SalesController@store']);
+		Route::post('store',								['as' => 'admin_sales_store'    			    ,'uses' =>'Admin\SalesController@store']);
+		Route::get('edit/{enc_id}',							['as' => 'admin_sales_edit'    			        ,'uses' =>'Admin\SalesController@edit']);
+		Route::post('update/{enc_id}',						['as' => 'admin_sales_update'    			    ,'uses' =>'Admin\SalesController@update']);
+		Route::get('toggle_status/{enc_id}/{action}',       ['as' => 'admin_sales_toggle_status'     		,'uses' =>'Admin\SalesController@toggle_status']);
+		Route::post('multi_action',       					['as' => 'admin_sales_multi_action'     		,'uses' =>'Admin\SalesController@multi_action']);
 
 	});
 
-	/* Categories Module */
-	Route::group(array('prefix' => 'categories'), function()
+	Route::group(['prefix'=>'sales'], function ()
 	{
+		Route::get('/',										['as' => 'sales_user_dashboard'             	,'uses' =>'Admin\SalesAccountController@index']);
+		Route::get('business_listing',						['as' => 'sales_user_business_list'             ,'uses' =>'Admin\SalesAccountController@business_listing']);
+		Route::get('create_business',						['as' => 'sales_user_create_business'           ,'uses' =>'Admin\SalesAccountController@create_business']);
+		Route::get('profile',								['as' => 'sales_user_profile'            	    ,'uses' =>'Admin\SalesAccountController@profile']);
+
+	});
+	
+
+	/* Categories Module */
+	Route::group(array('prefix' => 'categories'), function()	{
 		Route::get('/',												['as' => 'admin_categories_manage' 				,'uses' => 'Admin\CategoryController@index']);
 		Route::get('show/{enc_id}',									['as' => 'admin_categories_show' 				,'uses' => 'Admin\CategoryController@show']);
 		Route::get('edit/{enc_id}',									['as' => 'admin_categories_edit' 				,'uses' => 'Admin\CategoryController@edit']);

@@ -23,7 +23,7 @@
             </span>
             <li>
                 <i class="fa fa-user"></i>
-                <a href="{{ url('/web_admin/users') }}">Sales Person</a>
+                <a href="{{ url('/web_admin/sales_user') }}">Sales User</a>
             </li>   
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
@@ -32,9 +32,6 @@
         </ul>
       </div>
     <!-- END Breadcrumb -->
-
-
-
 
 
     <!-- BEGIN Main Content -->
@@ -87,7 +84,7 @@
           <div class="btn-toolbar pull-right clearfix">
             <!--- Add new record - - - -->
                 <div class="btn-group">
-                <a href="{{ url('/web_admin/sales/create')}}" class="btn btn-primary btn-add-new-records">Add Business</a> 
+                <a href="{{ url('/web_admin/sales_user/create')}}" class="btn btn-primary btn-add-new-records">Add Sales User</a> 
                 </div>
             <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -->
             <div class="btn-group">
@@ -117,7 +114,7 @@
             <div class="btn-group"> 
                 <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip" 
                    title="Refresh" 
-                   href="{{ url('/web_admin/users') }}"
+                   href="{{ url('/web_admin/sales_user') }}"
                    style="text-decoration:none;">
                    <i class="fa fa-repeat"></i>
                 </a> 
@@ -172,7 +169,7 @@
                     
                     <td> 
 
-                        <a href="{{ url('/web_admin/users/edit/').'/'.base64_encode($user->id) }}" class="show-tooltip" title="Edit">
+                        <a href="{{ url('/web_admin/sales_user/edit/').'/'.base64_encode($user->id) }}" class="show-tooltip" title="Edit">
                           <i class="fa fa-edit" ></i>
                         </a>  
 
