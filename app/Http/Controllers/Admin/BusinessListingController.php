@@ -54,7 +54,7 @@ class BusinessListingController extends Controller
         {
             $arr_user = $obj_user_res->toArray();
         }
-        $obj_category = CategoryModel::where('parent','!=',[0])->get();
+        $obj_category = CategoryModel::get();
 
  		if($obj_category)
  		{
@@ -84,15 +84,17 @@ class BusinessListingController extends Controller
         {
             $arr_state = $obj_state_res->toArray();
         }
-
+        //dd($arr_category);
         return view('web_admin.business_listing.create',compact('page_title','arr_user','arr_category','arr_country','arr_zipcode','arr_city','arr_state'));
     }
     public function store(Request $request)
     {
-    	$arr_rules	=	array();
+
+        $arr_rules	=	array();
         //business fields
     	$arr_rules['user_id']='required';
         $arr_rules['business_name']='required';
+        $arr_rules['business_cat']='required';
         $arr_rules['main_image']='required';
 
 
@@ -130,8 +132,14 @@ class BusinessListingController extends Controller
         $arr_data['business_added_by']=$form_data['business_added_by'];
         $arr_data['business_name']=$form_data['business_name'];
 
+        $business_cat=$form_data['business_cat'];
+        if(sizeof($business_cat)>0){
+        $business_categories=implode(',',$business_cat);
+        $arr_data['business_cat']=$business_categories;
 
-        $arr_data['business_cat']=$form_data['business_cat'];
+        }
+
+
         if($request->hasFile('main_image'))
         {
             $fileName       = $form_data['main_image'];
@@ -175,7 +183,7 @@ class BusinessListingController extends Controller
     	$arr_data['keywords']=$form_data['keywords'];
     	$arr_data['youtube_link']=$form_data['youtube_link'];
 
-         $insert_data=$this->BusinessListingModel->create($arr_data);
+        $insert_data=$this->BusinessListingModel->create($arr_data);
          $business_id=$insert_data->id;
          $files = $request->file('business_image');
          $file_count = count($files);
@@ -217,7 +225,7 @@ class BusinessListingController extends Controller
  		$business_public_img_path = $this->business_public_img_path;
         $business_base_upload_img_path =$this->business_public_upload_img_path;
  		$business_data = array();
- 		$obj_category = CategoryModel::where('parent','!=',[0])->get();
+ 		$obj_category = CategoryModel::get();
 
  		if($obj_category)
  		{
@@ -260,8 +268,7 @@ class BusinessListingController extends Controller
             $arr_upload_image = $obj_upload_image_res->toArray();
         }
         $business_data=$this->BusinessListingModel->with(['user_details','city_details','zipcode_details','country_details','state_details','image_upload_details'])->where('id',$id)->get()->toArray();
- 		//dd($business_data);
-        return view('web_admin.business_listing.edit',compact('page_title','business_data','arr_user','arr_category','business_public_img_path','business_base_upload_img_path','arr_state','arr_country','arr_zipcode','arr_city','arr_upload_image'));
+ 		 return view('web_admin.business_listing.edit',compact('page_title','business_data','arr_user','arr_category','business_public_img_path','business_base_upload_img_path','arr_state','arr_country','arr_zipcode','arr_city','arr_upload_image'));
 
  	}
  	public function update(Request $request,$enc_id)
@@ -295,9 +302,13 @@ class BusinessListingController extends Controller
         $business_data['business_name']      = $request->input('business_name');
         $business_data['business_cat']=$request->input('business_cat');
         $business_data['user_id']=$request->input('user_id');
+        $business_cat=$request->input('business_cat');
+        if(sizeof($business_cat)>0){
+        $business_categories=implode(',',$business_cat);
+        $business_data['business_cat']=$business_categories;
 
-
-        $filename=$request->input('old_image');
+        }
+         $filename=$request->input('old_image');
 		if($request->hasFile('main_image'))
         {
             $fileName       = $request->file('main_image');
