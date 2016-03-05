@@ -142,8 +142,6 @@
                   <th style="width:25px;">Mobile No</th>
                  <!--  <th>City</th> -->
                   <th style="width:25px;">Reviews</th>
-                  <th>Location</th>
-                  <th>Contact Info</th>
                   <th width="" style="text-align:center">Status</th>
                   <th>Action</th>
                 </tr>
@@ -174,30 +172,7 @@
                       @else
                        <td><a href="#"> ( {{ sizeof($business['reviews']) }} ) </a></td>
                        @endif
-                     <td>
-                        <a
-                          class="btn btn-info"
-                          href="{{ url('/').'/web_admin/business_listing/location/'.base64_encode($business['id']) }}"  title="View Loaction">
-                          View
-                        </a>
-                        <a
-                          class="btn btn-info"
-                          href="{{ url('/').'/web_admin/business_listing/create_location/'.base64_encode($business['id']) }}"  title="Add Loaction">
-                          Add
-                        </a>
-                      </td>
-                      <td>
-                        <a
-                          class="btn btn-info"
-                          href="{{ url('/').'/web_admin/business_listing/contact_info/'.base64_encode($business['id']) }}"  title="View Conatct Info">
-                          View
-                        </a>
-                        <a
-                          class="btn btn-info"
-                          href="{{ url('/').'/web_admin/business_listing/create_contact/'.base64_encode($business['id']) }}"  title="Add Conatct Info">
-                          Add
-                        </a>
-                      </td>
+
                     <td width="" style="text-align:center">
                          @if($business['is_active']=="0")
                         <a class="btn btn-danger" href="{{ url('/web_admin/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/activate' }}">
@@ -216,7 +191,10 @@
                     </td>
 
                     <td>
-
+                      <a href="{{ url('/web_admin/business_listing/show/').'/'.base64_encode($business['id']) }}" class="show-tooltip" title="Edit">
+                          <i class="fa fa-eye" ></i>
+                        </a>
+                         &nbsp;
                         <a href="{{ url('/web_admin/business_listing/edit/').'/'.base64_encode($business['id']) }}" class="show-tooltip" title="Edit">
                           <i class="fa fa-edit" ></i>
                         </a>
