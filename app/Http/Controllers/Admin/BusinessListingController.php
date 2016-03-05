@@ -347,26 +347,30 @@ class BusinessListingController extends Controller
         $business_data=$this->BusinessListingModel->where('id',$id)->update($business_data);
 
          $files = $request->file('business_image');
-          $file_count = count($files);
+
+         $file_count = count($files);
           if($file_count>0){
          $uploadcount = 0;
          foreach($files as $file) {
-         $destinationPath = $this->business_base_upload_img_path;
-         $fileName = $file->getClientOriginalName();
-            $fileExtension  = strtolower($file->getClientOriginalExtension());
-            if(in_array($fileExtension,['png','jpg','jpeg']))
-            {
-                  $filename =sha1(uniqid().$fileName.uniqid()).'.'.$fileExtension;
-                  $file->move($destinationPath,$filename);
-                  $arr_insert['image_name']=$filename;
-                  $arr_insert['business_id']=$business_id;
-                  $update_data1=$this->BusinessImageUploadModel->where('business_id',$id)->update($arr_insert);
-                  $uploadcount ++;
-            }
-            else
-            {
-                 Session::flash('error','Invalid file extension');
-            }
+         if($file!=null)
+         {
+             $destinationPath = $this->business_base_upload_img_path;
+             $fileName = $file->getClientOriginalName();
+                $fileExtension  = strtolower($file->getClientOriginalExtension());
+                if(in_array($fileExtension,['png','jpg','jpeg']))
+                {
+                      $filename =sha1(uniqid().$fileName.uniqid()).'.'.$fileExtension;
+                      $file->move($destinationPath,$filename);
+                      $arr_insert['image_name']=$filename;
+                      $arr_insert['business_id']=$id;
+                      $insert_data1=$this->BusinessImageUploadModel->create($arr_insert);
+                      $uploadcount ++;
+                }
+                else
+                {
+                     Session::flash('error','Invalid file extension');
+                }
+        }
         }
       }
         if($business_data /*&& $user_data*/)
@@ -380,12 +384,29 @@ class BusinessListingController extends Controller
         }
         return redirect()->back();
    	}
+    public function delete_gallery(Request $request)
+    {
+       $business_base_upload_img_path =$this->business_base_upload_img_path;
+        $image_name=$request->input('image_name');
+        $id=$request->input('id');
+        $Business = $this->BusinessImageUploadModel->where('id',$id);
+        $res= $Business->delete();
+        if($res)
+        {
+             $business_base_upload_img_path.$image_name;
+           if(unlink($business_base_upload_img_path.$image_name))
+           {
+            echo "done";
+           }
+        }
+
+    }
     public function show($enc_id)
     {
         $id = base64_decode($enc_id);
         $page_title = "Business Listing: Show ";
         $business_public_img_path = $this->business_public_img_path;
-         $business_base_upload_img_path =$this->business_public_upload_img_path;
+        $business_base_upload_img_path =$this->business_public_upload_img_path;
         $business_data = array();
         $business_data=$this->BusinessListingModel->with(['user_details','city_details','zipcode_details','country_details','state_details','categoty_details','image_upload_details'])->where('id',$id)->get()->toArray();
          return view('web_admin.business_listing.show',compact('page_title','business_data','business_public_img_path','business_base_upload_img_path'));

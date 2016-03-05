@@ -167,32 +167,64 @@
                           <div class="form-group">
                             <label class="col-sm-3 col-lg-2 control-label"> Uploded Image <i class="red">*</i> </label>
                             <div class="col-sm-9 col-lg-10 controls">
-                               <div class="fileupload fileupload-new" data-provides="fileupload">
+                               <div class="fileupload fileupload-new business_upload_image_" data-provides="fileupload">
                                  @foreach($business['image_upload_details'] as $image)
 
-                                  <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
-                                     <img src={{ $business_base_upload_img_path.$image['image_name']}} alt="" />
+                                  <div class="fileupload-new img-thumbnail main" style="width: 200px; height: 150px;" data-image="{{ $image['image_name'] }}">
+                                     <img style="width:150px;height:122px"
+                                      src={{ $business_base_upload_img_path.$image['image_name']}} alt="" />
+                                     <div class="caption">
+                                     <p class="pull-left">
+                                        <a href="javascript:void(0);"class="delete_image" data-image="{{ $image['image_name'] }}" onclick="javascript: return delete_gallery('<?php echo $image['id'] ;?>','<?php echo $image['image_name'];?>')">
+                                         <span class="glyphicon glyphicon-minus-sign " style="font-size: 20px;"></span></a>
+                                     </p>
+                                    </div>
                                   </div>
+                              <!--     <a href="javascript:void(0);" onclick="javascript: return delete_gallery($image['business_id'],$image['image_name'],$business['id'])">
+                                     <span class="glyphicon glyphicon-minus-sign" style="font-size: 20px;"></span></a> -->
                                   <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-                                 <div>
-                                     <span class="btn btn-default btn-file"><span class="fileupload-new" >Select image</span>
-                                     <span class="fileupload-exists">Change</span>
-                                     <input type="file" class="file-input" name="business_image" id="business_image"/>
-                                      <input type="hidden" class="file-input" name="business_image" id="business_image" value="{{$image['image_name']}}"/>
-                                      </span>
-                                     <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
 
-                                     <span  >
-
-                                     </span>
-
-                                  </div>
                                   @endforeach
+                    <div class="error" id="err_delete_image"></div>
+
                                </div>
                                 <span class='help-block'>{{ $errors->first('main_image') }}</span>
                             </div>
 
                          </div>
+                         <div class="form-group">
+                          <label class="col-sm-3 col-lg-2 control-label" for="building">
+                           <a href="" class="add_more">Add More Image</a></label>
+                         </div>
+                          <div class="form-group add_more_image" style="display: none;">
+                          <div class="col-sm-5 col-md-7" style="float:right;">
+                             <a href="javascript:void(0);" id='add-image'>
+                                 <span class="glyphicon glyphicon-plus-sign" style="font-size: 20px;"></span>
+                             </a>
+                            <span style="margin-left:05px;">
+                            <a href="javascript:void(0);" id='remove-image'>
+                                <span class="glyphicon glyphicon-minus-sign" style="font-size: 20px;"></span>
+                            </a>
+                            </span>
+                           </div>
+                              <label class="col-sm-3 col-lg-2 control-label">Add More Business Images <i class="red">*</i> </label>
+                              <div class="col-sm-6 col-lg-4 controls">
+
+                              <input type="file" name="business_image[]" id="business_image" class="pimg"   />
+                              <div class="error" id="error_business_image">{{ $errors->first('business_image') }}</div>
+
+                              <div class="clr"></div><br/>
+                                <div class="error" id="error_set_default"></div>
+                                <div class="clr"></div>
+
+                             <div id="append" class="class-add"></div>
+                              <div class="error_msg" id="error_business_image" ></div>
+                              <div class="error_msg" id="error_business_image1" ></div>
+                             <label class="col-sm-3 col-lg-2 control-label"></label>
+
+                              </div>
+                              </div>
+
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="building">Building<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
@@ -464,27 +496,78 @@
 <script type="text/javascript">
     var site_url = "{{url('/')}}";
 
-    function loadPreviewImage(ref)
-    {
-        var file = $(ref)[0].files[0];
 
-        var img = document.createElement("img");
-        reader = new FileReader();
-        reader.onload = (function (theImg) {
-            return function (evt) {
-                theImg.src = evt.target.result;
-                $('#preview_profile_pic').attr('src', evt.target.result);
-            };
-        }(img));
-        reader.readAsDataURL(file);
-        $("#removal_handle").show();
-    }
+function delete_gallery(id,image_name)
+{
+  var _token = $('input[name=_token]').val();
+  var dataString = { id:id, image_name:image_name, _token: _token };
+  var url_delete= site_url+'/web_admin/business_listing/delete_gallery';
+  $.post( url_delete, dataString)
+      .done(function( data ) {
+        if(data=='done'){
+             $('#err_delete_image').html('<div style="color:green">Product deleted successfully.</div>');
+             var request_id=$('.delete_image').parents('.main').attr('data-image');
+             $('div[data-image="'+request_id+'"]').remove();
+        }
+      });
+}
 
-    function clearPreviewImage()
-    {
-        $('#preview_profile_pic').attr('src',site_url+'/images/front/avatar.jpg');
-        $("#removal_handle").hide();
-    }
+
+$('#add-image').click(function(){
+   flag=1;
+
+            var img_val = jQuery("input[name='business_image[]']:last").val();
+
+            var img_length = jQuery("input[name='business_image[]']").length;
+
+            if(img_val == "")
+            {
+                  $('#error_business_image').css('margin-left','120px');
+                  $('#error_business_image').show();
+                  $('#error_business_image').fadeIn(3000);
+                  document.getElementById('error_business_image').innerHTML="The Image uploaded is required.";
+                  setTimeout(function(){
+                  $('#error_business_image').fadeOut(4000);
+                  },3000);
+
+                 flag=0;
+                 return false;
+            }
+            var chkimg = img_val.split(".");
+             var extension = chkimg[1];
+
+               if(extension!='jpg' && extension!='JPG' && extension!='png' && extension!='PNG' && extension!='jpeg' && extension!='JPEG'
+                 && extension!='gif' && extension!='GIF')
+               {
+                 $('#error_business_image1').css('margin-left','230px')
+                 $('#error_business_image1').show();
+                 $('#error_business_image1').fadeIn(3000);
+                 document.getElementById('error_business_image1').innerHTML="The file type you are attempting to upload is not allowed.";
+                 setTimeout(function(){
+                  $('#business_image').css('border-color','#dddfe0');
+                  $('#error_business_image1').fadeOut(4000);
+               },3000);
+               flag=0;
+                return false;
+              }
+              var html='<div>'+
+                       '<input type="file" name="business_image[]" id="business_image" class="pimg" data-rule-required="true"  />'+
+                       '<div class="error" id="error_business_image">{{ $errors->first("business_image") }}</div>'+
+                       '</div>'+
+                       '<div class="clr"></div><br/>'+
+                       '<div class="error" id="error_set_default"></div>'+
+                       '<div class="clr"></div>';
+                  jQuery("#append").append(html);
+
+});
+    $('#remove-image').click(function(){
+     var html= $("#append").find("input[name='business_image[]']:last");
+     html.remove();
+            });
+    $('.add_more').click(function(){
+      $(".add_more_image").removeAttr("style");
+return false;
+    });
 
 </script>
 @stop

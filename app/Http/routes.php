@@ -180,6 +180,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::get('toggle_status/{enc_id}/{action}','Admin\BusinessListingController@toggle_status');
 			Route::post('multi_action','Admin\BusinessListingController@multi_action');
 			Route::any('store','Admin\BusinessListingController@store');
+			Route::post('delete_gallery','Admin\BusinessListingController@delete_gallery');
 
 
 		});
