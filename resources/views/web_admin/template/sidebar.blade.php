@@ -34,6 +34,7 @@
 
         <li class="{{ Request::segment(2)=='business_listing'? 'active':'' }}
                     {{ Request::segment(2)=='reviews'? 'active':'' }}
+                     {{ Request::segment(2)=='deals'? 'active':'' }}
         ">
             <a href="javascript:void(0)" class="dropdown-toggle">
                 <i class="fa fa-list"></i>
@@ -99,7 +100,7 @@
             </ul>
         </li>
 
-        
+
 
        <li class="{{ Request::segment(2)=='siteSettings'?'active':'' }}
                    {{ Request::segment(2)=='edit_profile'?'active':'' }}

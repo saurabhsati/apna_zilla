@@ -17,6 +17,7 @@ class DealController extends Controller
     {
     	$this->BusinessListingModel = new BusinessListingModel();
     	$this->DealModel=new DealModel();
+        $this->deal_public_img_path = url('/')."/uploads/deal/";
     	$this->deal_image_path = base_path().'/public/uploads/deal/';
     }
     public function index($enc_id)
@@ -24,7 +25,7 @@ class DealController extends Controller
     	$page_title='Manage Deals';
     	$id=base64_decode($enc_id);
     	$arr_restaurant = array();
-
+        $deal_public_img_path = $this->deal_public_img_path;
         $obj_business = $this->BusinessListingModel->where('id',$id)->first();
 
         if($obj_business)
@@ -36,7 +37,7 @@ class DealController extends Controller
         {
             $arr_deal = $obj_deal->toArray();
         }
-    	return view('web_admin.deal.index',compact('page_title','arr_business','arr_deal'));
+    	return view('web_admin.deal.index',compact('page_title','arr_business','arr_deal','deal_public_img_path'));
     }
     public function create($enc_id)
     {
@@ -122,6 +123,96 @@ class DealController extends Controller
 		 	Session::flash('error','Problem Occurred While Creating Deal');
 		}
 		return redirect()->back();
+    }
+    public function edit($enc_id)
+    {
+        $page_title='Edit Deal';
+        $deal_public_img_path = $this->deal_public_img_path;
+        $id=base64_decode($enc_id);
+        $obj_deal_arr=$this->DealModel->with('business_info')->where('id',$id)->first();
+         if($obj_deal_arr)
+        {
+            $deal_arr = $obj_deal_arr->toArray();
+        }
+        return view('web_admin.deal.edit',compact('page_title','deal_arr','deal_public_img_path'));
+    }
+    public function update(Request $request,$enc_id)
+    {
+        $id=    base64_decode($enc_id);
+        $arr_rule   = array();
+        $arr_rule['name']='required';
+        $arr_rule['price']='required';
+        $arr_rule['discount_price']='required';
+        $arr_rule['description']='required';
+        $arr_rule['deal_type']='required';
+        $arr_rule['start_day']='required';
+        $arr_rule['end_day']='required';
+        $arr_rule['start_time']='required';
+        $arr_rule['end_time']='required';
+        $arr_rule['is_active']='required';
+
+        $validator=Validator::make($request->all(),$arr_rule);
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        $form_data  = $request->all();
+        $image_name=$form_data['old_image'];
+        if($request->hasFile('deal_image'))///image loaded/Not
+        {
+                $arr_image               =  array();
+                $arr_image['deal_image'] = $request->file('deal_image');
+                $arr_image['deal_image'] = 'mimes:jpg,jpeg,png';;
+
+                $image_validate = Validator::make(array('deal_image'=>$request->file('deal_image')),
+                                                  array('deal_image'=>'mimes:jpg,jpeg,png'));
+
+
+                if($request->file('deal_image')->isValid() && $image_validate->passes())
+                {
+                    $image_path         =   $request->file('deal_image')->getClientOriginalName();
+                    $image_extention    =   $request->file('deal_image')->getClientOriginalExtension();
+                    $image_name         =   sha1(uniqid().$image_path.uniqid()).'.'.$image_extention;
+
+                    $final_image = $request->file('deal_image')->move($this->deal_image_path, $image_name);
+
+                     $get_path = $this->deal_image_path.$form_data['old_image'];
+
+                        $unlink_deal_image = FALSE;
+                        if(is_readable($get_path))
+                        {
+                            $unlink_deal_image = unlink($get_path);
+
+                        }
+               }
+                else
+                {
+                    return redirect()->back();
+                }
+            }
+
+
+            $data_arr['name']=$form_data['name'];
+            $data_arr['price']=$form_data['price'];
+            $data_arr['deal_image']=$image_name ;
+            $data_arr['discount_price']=$form_data['discount_price'];
+            $data_arr['description']=$form_data['description'];
+            $data_arr['deal_type']=$form_data['deal_type'];
+            $data_arr['start_day']=date('Y-m-d',strtotime($form_data['start_day']));
+            $data_arr['end_day']=date('Y-m-d',strtotime($form_data['end_day']));
+            $data_arr['start_time']=$form_data['start_time'];
+            $data_arr['end_time']=$form_data['end_time'];
+            $data_arr['is_active']=$form_data['is_active'];
+            $deal_update = $this->DealModel->where('id',$id)->update($data_arr);
+            if($deal_update)
+            {
+                Session::flash('success','Deal Updated Successfully');
+            }
+            else
+            {
+                Session::flash('error','Problem Occurred While Updating Deal');
+            }
+            return redirect()->back();
     }
     public function toggle_status($enc_id,$action)////$enc_id = Deal id
     {

@@ -124,10 +124,10 @@
                 </a>
             </div>
             <div class="btn-group">
-             @if(isset($arr_restaurant) && sizeof($arr_restaurant)>0)
+             @if(isset($arr_business) && sizeof($arr_business)>0)
                 <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
                    title="Refresh"
-                   href="{{ url('/web_admin/deals/'.base64_encode($arr_restaurant['id'])) }}"
+                   href="{{ url('/web_admin/deals/'.base64_encode($arr_business['id'])) }}"
                    style="text-decoration:none;">
                    <i class="fa fa-repeat"></i>
                 </a>
@@ -146,9 +146,10 @@
                   <th> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
                   <th>Sr. No.</th>
                   <th>Business</th>
+                  <th>Deal Image</th>
                   <th>Deal Name</th>
                   <th>Deal Type</th>
-                  <th>Reedem</th>
+                  <th>Discount Price</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
@@ -167,6 +168,8 @@
                     <td>
                           {{ $deal['business_info']['business_name'] }}
                     </td>
+                      <td>
+                    <img src="{{ $deal_public_img_path.'/'.$deal['deal_image']}}" alt=""  style="width:75px; height:50px;" />   </td>
                     <td>{{ $deal['name'] }}</td>
                     <td>
                       @if($deal['deal_type']=='1')
@@ -177,11 +180,9 @@
                         {{ 'Featured Deal' }}
                       @endif
                     </td>
-
-
-
-                    <td><a href="#">( {{ $deal['redeem_count'] }}  ) </a></td>
-
+                     <td>
+                          {{ $deal['discount_price'] }}
+                    </td>
                     <td width="250">
                          @if($deal['is_active']=="0")
                         <a class="btn btn-danger" href="{{ url('/web_admin/deals/toggle_status/').'/'.base64_encode($deal['id']).'/activate' }}">
