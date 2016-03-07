@@ -1,8 +1,8 @@
-    @extends('web_admin.template.admin')
+@extends('web_admin.template.admin')
 
+@section('main_content')
 
-    @section('main_content')
-    <link rel="stylesheet" type="text/css" href="{{ url('/assets/data-tables/latest/') }}/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{{ url('/assets/data-tables/latest/') }}/dataTables.bootstrap.min.css">
     <!-- BEGIN Page Title -->
     <div class="page-title">
         <div>
@@ -22,7 +22,7 @@
                 <i class="fa fa-angle-right"></i>
             </span>
             <li>
-                <i class="fa fa-list"></i>
+                <i class="fa fa-money"></i>
                 <a href="{{ url('/web_admin/business_listing') }}">Business Listing</a>
             </li>
             <span class="divider">
@@ -44,7 +44,14 @@
           <div class="box">
             <div class="box-title">
               <h3>
-                <i class="fa fa-list"></i>
+                <i class="fa fa-money"></i>
+
+                @if(isset($arr_restaurant) && sizeof($arr_restaurant)>0)
+                  {{ $arr_restaurant['name'] }}
+                @endif
+                <span class="divider">
+                  <i class="fa fa-angle-right"></i>
+                </span>
                 {{ isset($page_title)?$page_title:"" }}
             </h3>
             <div class="box-tool">
@@ -71,7 +78,7 @@
                 {{ Session::get('error') }}
             </div>
           @endif
-          <form class="form-horizontal" id="frm_manage" method="POST" action="{{ url('/web_admin/business_listing/multi_action_loc') }}">
+          <form class="form-horizontal" id="frm_manage" method="POST" action="{{ url('/web_admin/deals/multi_action') }}">
 
             {{ csrf_field() }}
 
@@ -87,7 +94,9 @@
           <div class="btn-toolbar pull-right clearfix">
             <!--- Add new record - - - -->
                 <div class="btn-group">
-                <a href="{{ url('/web_admin/business_listing/create')}}" class="btn btn-primary btn-add-new-records">Add business</a>
+                 @if(isset($arr_business) && sizeof($arr_business)>0)
+                    <a href="{{ url('/web_admin/deals/create/'.base64_encode($arr_business['id']))}}" class="btn btn-primary btn-add-new-records">Add Deal</a>
+                  @endif
                 </div>
             <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -->
             <div class="btn-group">
@@ -115,12 +124,14 @@
                 </a>
             </div>
             <div class="btn-group">
+             @if(isset($arr_business) && sizeof($arr_business)>0)
                 <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
                    title="Refresh"
-                   href="{{ url('/web_admin/business_listing') }}"
+                   href="{{ url('/web_admin/deals/'.base64_encode($arr_business['id'])) }}"
                    style="text-decoration:none;">
                    <i class="fa fa-repeat"></i>
                 </a>
+             @endif
             </div>
           </div>
           <br/>
@@ -129,97 +140,74 @@
 
             <input type="hidden" name="multi_action" value="" />
 
-            <table class="table table-advance"  id="business_manage" >
+            <table class="table table-advance"  id="user_manage" >
               <thead>
                 <tr>
-                  <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
-                  <th style="width:25px;">Business Image</th>
-                  <th style="width:25px;">Business Name</th>
-                  <th style="width:25px;">Business Category Name</th>
-                  <!-- <th style="width:25px;">Title</th> -->
-                  <th style="width:50px;">Full Name</th>
-                  <th style="width:25px;">Email</th>
-                  <th style="width:25px;">Mobile No</th>
-                 <!--  <th>City</th> -->
-                  <th style="width:25px;">Reviews</th>
-                  <th style="width:25px;">Deals</th>
-                  <th width="" style="text-align:center">Status</th>
+                  <th> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
+                  <th>Sr. No.</th>
+                  <th>Business</th>
+                  <th>Deal Image</th>
+                  <th>Deal Name</th>
+                  <th>Deal Type</th>
+                  <th>Discount Price</th>
+                  <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
 
-               @if(isset($business_listing) && sizeof($business_listing)>0)
-                  @foreach($business_listing as $business)
+                @if(isset($arr_deal) && sizeof($arr_deal)>0)
+                  @foreach($arr_deal as $key => $deal)
                   <tr>
                     <td>
                       <input type="checkbox"
                              name="checked_record[]"
-                             value="{{ base64_encode($business['id']) }}" />
+                             value="{{ base64_encode($deal['id']) }}" />
                     </td>
+                    <td>{{ $key+1 }}</td>
                     <td>
-                    <img src="{{ $business_public_img_path.'/'.$business['main_image']}}" alt=""  style="width:75px; height:50px;" />   </td>
-                    <td> {{ $business['business_name'] }} </td>
-                    <td> {{ $business['categoty_details']['title'] }} </td>
-                 <!--    <td> {{ $business['user_details']['title'] }} </td> -->
-                    <td> {{ $business['user_details']['first_name']." ".$business['user_details']['last_name'] }} </td>
-                    <td> {{ $business['user_details']['email'] }} </td>
-                    <td> {{ $business['user_details']['mobile_no'] }} </td>
-                    <!--  <td> {{ $business['user_details']['city'] }} </td> -->
-
-
-                      @if( sizeof($business['reviews'])>0)
-                      <td><a href="{{ url('web_admin/reviews/'.base64_encode($business['id'])) }}"> ( {{ sizeof($business['reviews']) }} ) </a></td>
-                      @else
-                       <td><a href="#"> ( {{ sizeof($business['reviews']) }} ) </a></td>
-                       @endif
-
-                    <td>
-                       @if($business['is_active']!="1")
-                           <a class="btn btn-info" href="#">
-                           Add Deal
-                            </a>
-                       @elseif($business['is_active']=="1")
-                           <a class="btn btn-warning" href="{{ url('/web_admin/deals/'.base64_encode($business['id'])) }}">
-                             Add Deal
-                          </a>
-                       @endif
-
+                          {{ $deal['business_info']['business_name'] }}
                     </td>
-                    <td width="" style="text-align:center">
-                         @if($business['is_active']=="0")
-                        <a class="btn btn-danger" href="{{ url('/web_admin/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/activate' }}">
+                      <td>
+                    <img src="{{ $deal_public_img_path.'/'.$deal['deal_image']}}" alt=""  style="width:75px; height:50px;" />   </td>
+                    <td>{{ $deal['name'] }}</td>
+                    <td>
+                      @if($deal['deal_type']=='1')
+                        {{ 'Normal Deal' }}
+                      @elseif($deal['deal_type']=='2')
+                        {{ 'Instant Deal' }}
+                      @elseif($deal['deal_type']=='3')
+                        {{ 'Featured Deal' }}
+                      @endif
+                    </td>
+                     <td>
+                          {{ $deal['discount_price'] }}
+                    </td>
+                    <td width="250">
+                         @if($deal['is_active']=="0")
+                        <a class="btn btn-danger" href="{{ url('/web_admin/deals/toggle_status/').'/'.base64_encode($deal['id']).'/activate' }}">
                             Block
                         </a>
 
-                        @elseif($business['is_active']=="1")
-                        <a  class="btn btn-success" href="{{ url('/web_admin/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/block' }}">
+                        @elseif($deal['is_active']=="1")
+                        <a  class="btn btn-success" href="{{ url('/web_admin/deals/toggle_status/').'/'.base64_encode($deal['id']).'/block' }}">
                             Active
-                        </a>
-                         @elseif($business['is_active']=="2")
-                        <a  class="btn btn-info" href="{{ url('/web_admin/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/activate' }}">
-                            Pending
                         </a>
                         @endif
                     </td>
-
                     <td>
-                      <a href="{{ url('/web_admin/business_listing/show/').'/'.base64_encode($business['id']) }}" class="show-tooltip" title="Edit">
-                          <i class="fa fa-eye" ></i>
-                        </a>
-                         &nbsp;
-                        <a href="{{ url('/web_admin/business_listing/edit/').'/'.base64_encode($business['id']) }}" class="show-tooltip" title="Edit">
+                     <a href="#">
+                        <a href="{{ url('/web_admin/deals/edit/').'/'.base64_encode($deal['id']) }}" class="show-tooltip" title="Edit">
                           <i class="fa fa-edit" ></i>
                         </a>
 
                         &nbsp;
-                        <a href="{{ url('/web_admin/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/delete' }}"
+                        <a href="{{ url('/web_admin/deals/delete/').'/'.base64_encode($deal['id']) }}"
                            onclick="javascript:return confirm_delete()" class="show-tooltip" title="Delete">
                           <i class="fa fa-trash" ></i>
                         </a>
 
                     </td>
-
                   </tr>
                   @endforeach
                 @endif
@@ -240,7 +228,7 @@
 
    $(document).ready(function()
     {
-        $("#business_manage").DataTable();
+        $("#user_manage").DataTable();
     });
 
     function confirm_delete()
@@ -282,5 +270,3 @@
 </script>
 
 @stop
-
-

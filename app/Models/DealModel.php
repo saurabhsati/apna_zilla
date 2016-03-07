@@ -11,10 +11,10 @@ class DealModel extends Model
 
     protected $table = 'deals';
 
-    protected $fillable = ['restaurant_id',
-    					   'cuisine_id',
+    protected $fillable = ['business_id',
     					   'name',
     					   'price',
+                           'discount_price',
     					   'description',
     					   'deal_image',
     					   'deal_type',
@@ -23,23 +23,10 @@ class DealModel extends Model
                            'start_time',
                            'end_time'];
 
-    public function restaurant_info()
+    public function business_info()
     {
-        return $this->belongsTo('App\Models\RestaurantModel','restaurant_id','id');
-    }                       
-
-    public function dish_list()
-    {
-        return $this->hasMany('App\Models\DealDishModel','deal_id','id');
+        return $this->belongsTo('App\Models\BusinessListingModel','business_id','id');
     }
 
-    public function deal_type()
-    {
-        return $this->hasMany('App\Models\DealReviewModel','restaurant_id','restaurant_id');
-    }
 
-   /* public function deal_review()
-    {
-        return $this->belongsTo('App\Models\DealReviewModel','id','deal_id');
-    }*/
 }

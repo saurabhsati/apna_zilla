@@ -83,16 +83,16 @@ class FAQController extends Controller
             if($this->FaqModel->save())
             {
 
-                Session::flash('success','Page Inserted Successfully');
+                Session::flash('success','FAQ Page Created Successfully');
             }
             else
             {
-                Session::flash('error','Problem occured, While Creating Page');
+                Session::flash('error','Problem occurred, While Creating FAQ Page');
             }
         }
         else
         {
-            Session::flash('error','This Page record already exists');
+            Session::flash('error','This FAQ Page record already exists');
         }
 
 
@@ -180,7 +180,7 @@ class FAQController extends Controller
         }
         else
         {
-            Session::flash('error','Problem occured, While Updating static Page');
+            Session::flash('error','Problem occurred, While Updating FAQ Page');
         }
 
         return redirect('/web_admin/faq/edit/'.$enc_id);
@@ -266,7 +266,7 @@ class FAQController extends Controller
         /* Check if array is supplied*/
         if(is_array($checked_record) && sizeof($checked_record)<=0)
         {
-            Session::flash('error','Problem occured, While Doing Multi Action');
+            Session::flash('error','Problem occurred, While Doing Multi Action');
             return redirect('/web_admin/faq');
 
         }

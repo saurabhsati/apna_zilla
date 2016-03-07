@@ -53,7 +53,7 @@ class FrontSliderController extends Controller
         $validator = Validator::make($request->all(),$arr_rules);
         if($validator->fails())
         {
-            Session::flash('error','Invalid input');
+            Session::flash('error','Please Fill All required Fields.');
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
