@@ -369,7 +369,7 @@
                         </li>
 
                         <li>
-                            <a href="{{ url('/web_admin/siteSettings')}}">
+                            <a href="{{ url('/web_admin/site_settings')}}">
                                 <i class="fa fa-wrench"></i>
                                 Website Settings
                             </a>
