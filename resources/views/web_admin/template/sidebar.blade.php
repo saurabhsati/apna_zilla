@@ -102,7 +102,7 @@
 
 
 
-       <li class="{{ Request::segment(2)=='siteSettings'?'active':'' }}
+       <li class="{{ Request::segment(2)=='site_settings'?'active':'' }}
                    {{ Request::segment(2)=='edit_profile'?'active':'' }}
                    ">
             <a href="javascript:void(0)" class="dropdown-toggle">
@@ -112,7 +112,7 @@
             </a>
             <ul class="submenu">
             <li style="display: block;" class="{{ Request::segment(2)=='edit_profile'?'active':'' }}"><a href="{{ url('/web_admin/edit_profile')}}">Profile </a> </li>
-                <li style="display: block;" class="{{ Request::segment(2)=='siteSettings'?'active':'' }}"><a href="{{ url('/web_admin/site_settings')}}">Manage Website Setting</a> </li>
+                <li style="display: block;" class="{{ Request::segment(2)=='site_settings'?'active':'' }}"><a href="{{ url('/web_admin/site_settings')}}">Manage Website Setting</a> </li>
                 <!-- <li style="display: block;"><a href="#">Manage Payment Setting</a> </li> -->
             </ul>
 
