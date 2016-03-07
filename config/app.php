@@ -218,6 +218,10 @@ return [
                     'img_path' =>[
                                 'user_profile_pic'=>'/uploads/users/profile_pic',
                                 'category' => '/uploads/category',
+                                'business_public_img_path' =>' /uploads/business/main_image',
+                                'business_base_img_path' => '/uploads/business/main_image',
+                                'business_public_upload_img_path' => '/uploads/business/business_upload_image',
+                                'business_base_upload_img_path' => '/uploads/business/business_upload_image',
                                 ],
 
 

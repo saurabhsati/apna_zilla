@@ -218,9 +218,11 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 	{
 		Route::get('/',										['as' => 'sales_user_dashboard'             	,'uses' =>'Admin\SalesAccountController@index']);
 		Route::get('business_listing',						['as' => 'sales_user_business_list'             ,'uses' =>'Admin\SalesAccountController@business_listing']);
-		Route::get('create_business',						['as' => 'sales_user_create_business'           ,'uses' =>'Admin\SalesAccountController@create_business']);
+		Route::get('create_business/{enc_id}',				['as' => 'sales_user_create_business'           ,'uses' =>'Admin\SalesAccountController@create_business']);
 		Route::post('store_business',						['as' => 'sales_user_store_business'            ,'uses' =>'Admin\SalesAccountController@store_business']);
 		Route::get('profile',								['as' => 'sales_user_profile'            	    ,'uses' =>'Admin\SalesAccountController@profile']);
+		Route::get('create_user',							['as' => 'sales_user_create_user'          	    ,'uses' =>'Admin\SalesAccountController@create_user']);
+		Route::post('store_user',							['as' => 'sales_user_store_user'          	    ,'uses' =>'Admin\SalesAccountController@store_user']);
 
 	});
 	
@@ -250,7 +252,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 	/*------------------------- web_admin Attribute Related ------------------------------*/
 
-	Route::group(array('prefix' => 'attribute'), function()
+	/*Route::group(array('prefix' => 'attribute'), function()
 	{
 		Route::get('show/{enc_id}',									['as' => 'admin_email_attribute_create' 		,'uses' => 'Admin\AttributeController@show']);
 		Route::get('create/{enc_id}',								['as' => 'admin_email_attribute_create' 		,'uses' => 'Admin\AttributeController@create']);
@@ -261,7 +263,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		Route::post('multi_action',									['as' => 'admin_attribute_block' 				,'uses' => 'Admin\AttributeController@multi_action']);
 		Route::get('delete_option_values/{enc_id}',					['as' => 'admin_attribute_delete_option_values' ,'uses' => 'Admin\AttributeController@delete_option_values']);
 
-	});
+	});*/
 
 
 	/*------------------------- web_admin Contact Enquiry Related ----------*--------------------*/
