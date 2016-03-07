@@ -104,6 +104,7 @@
 
        <li class="{{ Request::segment(2)=='site_settings'?'active':'' }}
                    {{ Request::segment(2)=='edit_profile'?'active':'' }}
+                   {{ Request::segment(2)=='change_password'?'active':'' }}
                    ">
             <a href="javascript:void(0)" class="dropdown-toggle">
                 <i class="fa fa-wrench"></i>
@@ -112,6 +113,7 @@
             </a>
             <ul class="submenu">
             <li style="display: block;" class="{{ Request::segment(2)=='edit_profile'?'active':'' }}"><a href="{{ url('/web_admin/edit_profile')}}">Profile </a> </li>
+            <li style="display: block;" class="{{ Request::segment(2)=='change_password'?'active':'' }}"><a href="{{ url('/web_admin/change_password')}}">Change Password</a> </li>
                 <li style="display: block;" class="{{ Request::segment(2)=='site_settings'?'active':'' }}"><a href="{{ url('/web_admin/site_settings')}}">Manage Website Setting</a> </li>
                 <!-- <li style="display: block;"><a href="#">Manage Payment Setting</a> </li> -->
             </ul>
