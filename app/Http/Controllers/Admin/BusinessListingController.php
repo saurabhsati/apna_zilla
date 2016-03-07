@@ -30,10 +30,10 @@ class BusinessListingController extends Controller
     	  $this->BusinessListingModel = new BusinessListingModel();
     	  $this->RestaurantReviewModel= new RestaurantReviewModel();
           $this->BusinessImageUploadModel=new BusinessImageUploadModel();
-    	  $this->business_public_img_path = url('/')."/uploads/business/main_image/";
-    	  $this->business_base_img_path = base_path()."/public/uploads/business/main_image";
+    	   $this->business_public_img_path = url('/')."/uploads/business/main_image/";
+    	   $this->business_base_img_path = base_path()."/public/uploads/business/main_image";
 
-          $this->business_public_upload_img_path = url('/')."/uploads/business/business_upload_image/";
+           $this->business_public_upload_img_path = url('/')."/uploads/business/business_upload_image/";
           $this->business_base_upload_img_path = base_path()."/public/uploads/business/business_upload_image/";
 
     }

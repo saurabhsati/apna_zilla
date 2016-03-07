@@ -133,7 +133,7 @@
               <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
 
               <th>Sub Category</th>
-              <th>Attributes</th>
+             <!--  <th>Attributes</th> -->
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -150,7 +150,7 @@
               </td>
 
             <td>{{$category['cat_meta_keyword']}}</td>
-
+<!-- 
             <td>
                 <a
                   class="btn btn-info" 
@@ -158,7 +158,7 @@
                   View
               </a>
             </td>
-
+ -->
            <td width="250">
                          @if($category['is_active']=="0")
                         <a class="btn btn-danger" href="{{ url('/web_admin/categories/toggle_status/').'/'.base64_encode($category['cat_id']).'/activate' }}">

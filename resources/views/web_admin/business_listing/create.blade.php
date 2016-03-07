@@ -20,14 +20,14 @@
         <ul class="breadcrumb">
             <li>
                 <i class="fa fa-home"></i>
-                <a href="{{ url('/').'/web_admin/dashboard' }}">Dashboard</a>
+                <a href="{{ url('/').'/web_admin/sales' }}">Dashboard</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span>
             <li>
                 <i class="fa fa-user"></i>
-                <a href="{{ url('/web_admin/business_listing') }}">Business  Listing</a>
+                <a href="{{ url('/web_admin/sales/business_listing') }}">Business  Listing</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
