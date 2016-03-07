@@ -171,20 +171,33 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		/* Business Listing */
 		Route::group(['prefix'=>'business_listing'], function ()
 		{
-			Route::get('/','Admin\BusinessListingController@index');
-			Route::get('manage','Admin\BusinessListingController@index');
-			Route::get('show/{enc_id}','Admin\BusinessListingController@show');
-			Route::get('edit/{enc_id}','Admin\BusinessListingController@edit');
-			Route::post('update/{enc_id}','Admin\BusinessListingController@update');
-			Route::get('create','Admin\BusinessListingController@create');
-			Route::get('toggle_status/{enc_id}/{action}','Admin\BusinessListingController@toggle_status');
-			Route::post('multi_action','Admin\BusinessListingController@multi_action');
-			Route::any('store','Admin\BusinessListingController@store');
-			Route::post('delete_gallery','Admin\BusinessListingController@delete_gallery');
+			Route::get('/',							 	 ['as' => 'admin_business_listing_index' 	  ,'uses' 	=>'Admin\BusinessListingController@index']);
+			Route::get('manage',					 	 ['as' => 'admin_business_listing_manage' 	  ,'uses' 	=>'Admin\BusinessListingController@index']);
+			Route::get('show/{enc_id}',					 ['as' => 'admin_business_listing_show' 	  ,'uses' 	=>'Admin\BusinessListingController@show']);
+			Route::get('edit/{enc_id}',					 ['as' => 'admin_business_listing_edit' 	  ,'uses' 	=>'Admin\BusinessListingController@edit']);
+			Route::post('update/{enc_id}',				 ['as' => 'admin_business_listing_update' 	  ,'uses' 	=>'Admin\BusinessListingController@update']);
+			Route::get('create',						 ['as' => 'admin_business_listing_create' 	  ,'uses' 	=>'Admin\BusinessListingController@create']);
+			Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_business_listing_status' 	  ,'uses' 	=>'Admin\BusinessListingController@toggle_status']);
+			Route::post('multi_action',					 ['as' => 'admin_business_listing_multiaction','uses' 	=>'Admin\BusinessListingController@multi_action']);
+			Route::any('store',							 ['as' => 'admin_business_listing_store' 	  ,'uses' 	=>'Admin\BusinessListingController@store']);
+			Route::post('delete_gallery',				 ['as' => 'admin_business_listing_delete' 	  ,'uses' 	=>'Admin\BusinessListingController@delete_gallery']);
 
 
 		});
+		/*-------------Deals Module------------*/
+	    Route::group(['prefix'=>'deals'], function (){
 
+		Route::get('/{enc_id}',							['as' => 'admin_deals_index' 	  ,'Admin\DealController@index']);
+		Route::get('create/{enc_id}',					['as' => 'admin_deals_create' 	  ,'Admin\DealController@create']);
+		Route::post('store',							['as' => 'admin_deals_store' 	  ,'Admin\DealController@store']);
+		Route::get('edit/{enc_id}',						['as' => 'admin_deals_edit' 	  ,'Admin\DealController@edit']);
+		Route::post('update/{enc_id}',					['as' => 'admin_deals_update' 	  ,'Admin\DealController@update']);
+		Route::get('delete/{enc_id}',					['as' => 'admin_deals_delete' 	  ,'Admin\DealController@delete']);
+		Route::get('toggle_status/{enc_id}/{action}',   ['as' => 'admin_deals_status' 	  ,'Admin\DealController@toggle_status']);
+		Route::post('multi_action',						['as' => 'admin_deals_multiaction','Admin\DealController@multi_action']);
+
+	});
+	/*-------------End--------------------------*/
 
 	/* Users Module */
 	Route::group(['prefix'=>'users'], function ()
@@ -222,7 +235,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		Route::get('profile',								['as' => 'sales_user_profile'            	    ,'uses' =>'Admin\SalesAccountController@profile']);
 
 	});
-	
+
 
 	/* Categories Module */
 	Route::group(array('prefix' => 'categories'), function()	{
