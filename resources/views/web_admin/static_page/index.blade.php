@@ -145,7 +145,7 @@
                   <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
                   <th>Page Name</th>
                   <th>Page Slug</th>
-                  <th>Status</th>
+                  <th width="250" style="text-align:center">Status</th>
                   <th>Action</th>
 
                 </tr>

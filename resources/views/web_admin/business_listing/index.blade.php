@@ -135,7 +135,7 @@
                   <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
                   <th style="width:25px;">Business Image</th>
                   <th style="width:25px;">Business Name</th>
-                  <th style="width:25px;">Business Category Name</th>
+                  <th style="width:40px;">Business Category::Sub Category</th>
                   <!-- <th style="width:25px;">Title</th> -->
                   <th style="width:50px;">Full Name</th>
                   <th style="width:25px;">Email</th>
@@ -160,7 +160,33 @@
                     <td>
                     <img src="{{ $business_public_img_path.'/'.$business['main_image']}}" alt=""  style="width:75px; height:50px;" />   </td>
                     <td> {{ $business['business_name'] }} </td>
-                    <td> {{ $business['categoty_details']['title'] }} </td>
+                    <?php if(isset($business['business_cat']) && sizeof($business['business_cat'])>0){
+                    $arr=explode(',',$business['business_cat']) ;}
+                   ?>
+                  <td>
+                   <?php
+
+                   foreach ($arr as $key => $value) {
+                    foreach ($arr_sub_category as $sub_category) {
+                      if($value==$sub_category['cat_id'])
+                      {
+                         foreach ($arr_main_category as $main_category) {
+
+                          if($sub_category['parent']==$main_category['cat_id'])
+                          {
+                            echo $main_category['title'].' :: ';
+                          }
+
+
+                          }
+                          echo $sub_category['title'].' <br/>';
+                       }
+                    }
+                  }
+                  ?>
+                  </td>
+
+
                  <!--    <td> {{ $business['user_details']['title'] }} </td> -->
                     <td> {{ $business['user_details']['first_name']." ".$business['user_details']['last_name'] }} </td>
                     <td> {{ $business['user_details']['email'] }} </td>

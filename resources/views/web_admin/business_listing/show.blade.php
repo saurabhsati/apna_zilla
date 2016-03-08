@@ -122,15 +122,31 @@
             </div>
 
              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="business_cat">Business Category<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="business_cat">Business Categories<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                <input class="form-control"
+                <?php if(isset($business_data['business_cat']) && sizeof($business_data['business_cat'])>0){
+                    $arr=explode(',',$business_data['business_cat']) ;}
+                   foreach ($arr as $key => $value) {
+                    foreach ($arr_sub_category as $sub_category) {
+                      if($value==$sub_category['cat_id'])
+                      {
+                         foreach ($arr_main_category as $main_category) {
+                          if($sub_category['parent']==$main_category['cat_id'])
+                          {
+                            ?>
+                          <input class="form-control"
                            name="user_id"
                            id="user_id"
                            data-rule-required="true"
                            readonly="true"
-                           value="{{ isset($business_data['categoty_details']['title'])?$business_data['user_details']['first_name']:'' }}"
+                           value="<?php echo $main_category['title'].' :: ';}}?><?php echo $sub_category['title'].'  ';?>"
                            />
+                         <?php
+                       }
+                    }
+                  }
+                      ?>
+
                     <span class='help-block'>{{ $errors->first('business_cat') }}</span>
                 </div>
             </div>
