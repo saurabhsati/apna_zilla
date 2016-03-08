@@ -150,7 +150,8 @@
               </td>
 
             <td>{{$category['title']}}</td>
-<!-- 
+            
+          <!-- 
             <td>
                 <a
                   class="btn btn-info" 
@@ -158,7 +159,7 @@
                   View
               </a>
             </td>
- -->
+          -->
            <td width="250">
                          @if($category['is_active']=="0")
                         <a class="btn btn-danger" href="{{ url('/web_admin/categories/toggle_status/').'/'.base64_encode($category['cat_id']).'/activate' }}">

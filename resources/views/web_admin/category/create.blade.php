@@ -130,13 +130,6 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="is_priceable">Priceable<i class="red">*</i></label>
-                <div class="col-sm-1 col-lg-1 controls">
-                    <input class="form-control" id="is_priceable"  type="checkbox" name="is_priceable" value="1" />
-                    <span class='help-block'>{{ $errors->first('is_priceable') }}</span>
-                </div>
-            </div>
             
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="is_popular">Popular<i class="red">*</i></label>
