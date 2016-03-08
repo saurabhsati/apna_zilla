@@ -84,7 +84,7 @@
                         <option value="0" onclick="enableLogo()">Main Category </option>
                         @if(sizeof($arr_category)>0)
                             @foreach($arr_category as $category)
-                        <option value="{{$category['cat_id']}}" onclick="disableLogo()" >{{$category['cat_meta_keyword']}}
+                        <option value="{{$category['cat_id']}}" onclick="disableLogo()" >{{$category['title']}}
                         </option>
                             @endforeach
                         @endif

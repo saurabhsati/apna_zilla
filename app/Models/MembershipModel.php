@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class MembershipModel extends Model
 {
-    protected $table = 'membership';
+    protected $table = 'membership_plans';
 
-    protected $fillable = ['membership',
+    protected $fillable = [ 'plan_id',
+    						'title',
+    						'description',
     						'price',
-    						'no_normal_deals',
-    						'no_instant_deals',
-    						'no_featured_deals',
-    						'description'];
+    						'validity',
+    						'description'
+    					  ];
 }

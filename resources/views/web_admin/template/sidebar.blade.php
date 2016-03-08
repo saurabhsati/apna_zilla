@@ -149,6 +149,18 @@
                     <li style="display: block;"><a href="{{ url('/web_admin/faq')}}">Manage</a> </li>
                 </ul>
             </li>
+
+               <li class="{{ Request::segment(2)=='faq'? 'active':'' }}">
+                <a href="javascript:void(0)"  class="dropdown-toggle">
+                    <i class="fa fa-question-circle"></i>
+                    <span>Membership Plans</span>
+                    <b class="arrow fa fa-angle-right"></b>
+                </a>
+                 <ul class="submenu">
+                    <li style="display: block;"><a href="{{ url('/web_admin/membership')}}">Manage</a> </li>
+                </ul>
+            </li>
+
         <li class="<?php  if(Request::segment(2) == 'email_template'){ echo 'active'; } ?>">
                         <a href="javascript:void(0)" class="dropdown-toggle">
                             <i class="fa fa-envelope"></i>
@@ -160,6 +172,7 @@
                             <li style="display: block;"><a href="{{ url('/web_admin/email_template')}}">Manage</a> </li>
                         </ul>
          </li>
+
          <li class="{{ Request::segment(2)=='contact_enquiry'?'active':'' }}">
                     <a href="javascript:void(0)" class="dropdown-toggle">
                         <i class="fa fa-phone"></i>

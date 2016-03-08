@@ -8,6 +8,8 @@ use App\Models\UserModel;
 use App\Models\CategoryModel;
 use App\Models\BusinessListingModel;
 use App\Models\BusinessImageUploadModel;
+use App\Models\RestaurantReviewModel;
+
 use App\Models\CountryModel;
 use App\Models\ZipModel;
 use App\Models\CityModel;
@@ -20,16 +22,18 @@ class SalesAccountController extends Controller
 {
  	public function __construct()
     {
-        $arr_except_auth_methods = array();
+       $arr_except_auth_methods = array();
         $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
-        // $this->UserModel = new UserModel();
-        // // $this->BusinessListingModel = new BusinessListingModel();
-        // $this->BusinessImageUploadModel=new BusinessImageUploadModel();
-        // $this->business_public_img_path = base_path().'/public'.config('app.project.img_path.business_base_img_path');
-        // $this->business_base_img_path = base_path().'/public'.config('app.project.img_path.business_base_img_path');
+          $this->UserModel = new UserModel();
+          $this->BusinessListingModel = new BusinessListingModel();
+          $this->RestaurantReviewModel= new RestaurantReviewModel();
+          $this->BusinessImageUploadModel=new BusinessImageUploadModel();
+           $this->business_public_img_path = url('/')."/uploads/business/main_image/";
+           $this->business_base_img_path = base_path()."/public/uploads/business/main_image";
 
-        // $this->business_public_upload_img_path = base_path().'/public'.config('app.project.img_path.business_public_upload_img_path');
-        // $this->business_base_upload_img_path = base_path().'/public'.config('app.project.img_path.business_base_upload_img_path');
+           $this->business_public_upload_img_path = url('/')."/uploads/business/business_upload_image/";
+          $this->business_base_upload_img_path = base_path()."/public/uploads/business/business_upload_image/";
+
         $this->profile_pic_base_path = base_path().'/public'.config('app.project.img_path.user_profile_pic');
         $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');      
     }   
@@ -174,6 +178,7 @@ class SalesAccountController extends Controller
         if($status)
         {
             $enc_id = base64_encode($status->id);
+
             /* Assign Normal Users Role */
             $user = Sentinel::findById($status->id);
             Session::flash('success','User Created Successfully');
@@ -230,6 +235,8 @@ class SalesAccountController extends Controller
 
  	public function store_business(Request $request)
     {
+        //dd($request->all());
+       
     	$arr_rules	=	array();
         //business fields
         $arr_rules['business_name']='required';
@@ -264,16 +271,19 @@ class SalesAccountController extends Controller
         }
         $form_data=$request->all();
         // Decoding user id
-        $arr_data['user_id'] = $form_data['user_id'];
         // $user_id=BusinessListingModel::first()->user_id;
         // $public_seller_id = (new GeneratorController)->alphaID($user_id);
 
         $arr_data['is_active']='2';
         $arr_data['business_added_by']=$form_data['business_added_by'];
         $arr_data['business_name']=$form_data['business_name'];
+        
+        $business_cat=$form_data['business_cat'];
+        if(sizeof($business_cat)>0){
+        $business_categories=implode(',',$business_cat);
+        $arr_data['business_cat']=$business_categories;
 
-
-        $arr_data['business_cat']=$form_data['business_cat'];
+        }
         if($request->hasFile('main_image'))
         {
             $fileName       = $form_data['main_image'];
@@ -292,7 +302,8 @@ class SalesAccountController extends Controller
         }
         // $arr_data['public_seller_id'] = $public_seller_id;
         $arr_data['main_image'] = $filename;
-
+        $enc_id = $form_data['user_id'];
+        $arr_data['user_id'] =base64_decode($enc_id);
         //location input array
         $arr_data['building']=$form_data['building'];
         $arr_data['street']=$form_data['street'];

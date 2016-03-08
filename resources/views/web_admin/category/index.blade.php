@@ -152,7 +152,7 @@
 
                     <td>{{  $key+1 }}</td>
 
-                    <td> {{ $category['cat_meta_keyword'] }} </td>
+                    <td> {{ $category['title'] }} </td>
 
                      <td>
                         <a

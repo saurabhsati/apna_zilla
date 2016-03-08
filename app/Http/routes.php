@@ -213,7 +213,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		Route::any('store',       							['as' => 'admin_users_store'     				,'uses' =>'Admin\UserController@store']);
 	});
 
-		/* Sales Module */
+		/* Sales User Module */
 	Route::group(['prefix'=>'sales_user'], function ()
 	{
 		Route::get('/',       								['as' => 'admin_sales_index'     				,'uses' =>'Admin\SalesController@index']);
@@ -227,6 +227,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 	});
 
+     /* Sales User Dashboard*/
 	Route::group(['prefix'=>'sales'], function ()
 	{
 		Route::get('/',										['as' => 'sales_user_dashboard'             	,'uses' =>'Admin\SalesAccountController@index']);
@@ -262,22 +263,17 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		Route::post('sub_categories/brands/attach',['as' => 'admin_sub_categories_brands_attach' ,'uses' => 'Web_admin\CategoryController@attach_brand']);*/
 
 	});
+	
 
-	/*------------------------- web_admin Attribute Related ------------------------------*/
-
-	/*Route::group(array('prefix' => 'attribute'), function()
+		/* Sales User Module */
+	Route::group(['prefix'=>'membership'], function ()
 	{
-		Route::get('show/{enc_id}',									['as' => 'admin_email_attribute_create' 		,'uses' => 'Admin\AttributeController@show']);
-		Route::get('create/{enc_id}',								['as' => 'admin_email_attribute_create' 		,'uses' => 'Admin\AttributeController@create']);
-		Route::any('store',											['as' => 'admin_email_attribute_store' 			,'uses' => 'Admin\AttributeController@store']);
-		Route::get('edit/{enc_id}',									['as' => 'admin_attribute_edit' 				,'uses' => 'Admin\AttributeController@edit']);
-		Route::post('update/{enc_id}',								['as' => 'admin_attribute_update' 				,'uses' => 'Admin\AttributeController@update']);
-		Route::get('toggle_status/{enc_id}/{action}',				['as' => 'admin_attribute_toggle_status' 		,'uses' => 'Admin\AttributeController@toggle_status']);
-		Route::post('multi_action',									['as' => 'admin_attribute_block' 				,'uses' => 'Admin\AttributeController@multi_action']);
-		Route::get('delete_option_values/{enc_id}',					['as' => 'admin_attribute_delete_option_values' ,'uses' => 'Admin\AttributeController@delete_option_values']);
+		Route::get('/',       								['as' => 'admin_membershp_index'     				,'uses' => 'Admin\MembershipController@index']);
+		Route::get('edit/{enc_id}',							['as' => 'admin_membershp_edit' 					,'uses' => 'Admin\MembershipController@edit']);
+		Route::post('update/{enc_id}',						['as' => 'admin_membershp_update' 					,'uses' => 'Admin\MembershipController@update']);
 
-	});*/
-
+	});
+	
 
 	/*------------------------- web_admin Contact Enquiry Related ----------*--------------------*/
 
