@@ -42,8 +42,20 @@ class BusinessListingController extends Controller
     {
     	$page_title	='Manage Business Listing';
     	$business_public_img_path = $this->business_public_img_path;
+
+        $obj_main_category = CategoryModel::where('parent','0')->get();
+       if($obj_main_category)
+        {
+            $arr_main_category = $obj_main_category->toArray();
+        }
+        $obj_sub_category = CategoryModel::where('parent','!=','0')->get();
+        if($obj_sub_category)
+        {
+            $arr_sub_category = $obj_sub_category->toArray();
+        }
     	$business_listing=$this->BusinessListingModel->with(['categoty_details','user_details','reviews'])->get()->toArray();
-    	return view('web_admin.business_listing.index',compact('page_title','business_listing','business_public_img_path'));
+    	//dd($arr_category);
+        return view('web_admin.business_listing.index',compact('page_title','business_listing','business_public_img_path','arr_main_category','arr_sub_category'));
     }
     public function create()
     {
@@ -418,9 +430,19 @@ class BusinessListingController extends Controller
         $page_title = "Business Listing: Show ";
         $business_public_img_path = $this->business_public_img_path;
         $business_base_upload_img_path =$this->business_public_upload_img_path;
+        $obj_main_category = CategoryModel::where('parent','0')->get();
+        if($obj_main_category)
+        {
+            $arr_main_category = $obj_main_category->toArray();
+        }
+        $obj_sub_category = CategoryModel::where('parent','!=','0')->get();
+        if($obj_sub_category)
+        {
+            $arr_sub_category = $obj_sub_category->toArray();
+        }
         $business_data = array();
         $business_data=$this->BusinessListingModel->with(['user_details','city_details','zipcode_details','country_details','state_details','categoty_details','image_upload_details'])->where('id',$id)->get()->toArray();
-         return view('web_admin.business_listing.show',compact('page_title','business_data','business_public_img_path','business_base_upload_img_path'));
+         return view('web_admin.business_listing.show',compact('page_title','business_data','business_public_img_path','business_base_upload_img_path','arr_main_category','arr_sub_category'));
 
     }
    	public function toggle_status($enc_id,$action)
