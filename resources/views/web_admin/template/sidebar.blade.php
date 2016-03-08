@@ -101,7 +101,6 @@
         </li>
 
 
-
        <li class="{{ Request::segment(2)=='site_settings'?'active':'' }}
                    {{ Request::segment(2)=='edit_profile'?'active':'' }}
                    {{ Request::segment(2)=='change_password'?'active':'' }}

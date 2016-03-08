@@ -34,7 +34,7 @@ class UserController extends Controller
  		$page_title = "User: Create ";
 
  		return view('web_admin.user.create',compact('page_title'));
- 	}
+ 	}                                                                                                                 
 
     public function register_admin(Request $request)
     {

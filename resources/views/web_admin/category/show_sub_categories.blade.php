@@ -149,7 +149,7 @@
                        value="{{ base64_encode($category['cat_id']) }}" /> 
               </td>
 
-            <td>{{$category['cat_meta_keyword']}}</td>
+            <td>{{$category['title']}}</td>
 <!-- 
             <td>
                 <a
