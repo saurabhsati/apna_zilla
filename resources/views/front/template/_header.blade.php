@@ -8,7 +8,7 @@
       <meta name="keywords" content="Right Next" />
       <meta name="author" content="Right Next" />
       <!-- ======================================================================== -->
-      <title> Right Next </title>
+      <title> Right Next :: {{ isset($page_title)?$page_title:"" }}</title>
       <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
       <!-- Bootstrap Core CSS -->
       <link href="{{ url('/') }}/assets/front/css/bootstrap.css" rel="stylesheet" type="text/css" />

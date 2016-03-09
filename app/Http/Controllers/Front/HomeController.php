@@ -16,12 +16,13 @@ class HomeController extends Controller
     public function index()
     {
     	$arr_category = array();
+    	$page_title	='Home';
  		$obj_category = CategoryModel::where('is_popular','1')->get();
 
  		if($obj_category)
  		{
  			$arr_category = $obj_category->toArray();
  		}
- 		return view('front.home');
+ 		return view('front.home',compact('page_title'));
     }
 }

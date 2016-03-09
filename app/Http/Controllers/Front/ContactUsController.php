@@ -11,6 +11,7 @@ class ContactUsController extends Controller
 {
     public function index()
     {
-    	return view('front.contact_us');
+    	$page_title='Contact Us';
+    	return view('front.contact_us',compact('page_title'));
     }
 }
