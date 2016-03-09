@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\SalesUser;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -17,6 +17,7 @@ use App\Models\StateModel;
 use Sentinel;
 use Session;
 use Validator;
+
 
 class SalesAccountController extends Controller
 {
@@ -42,21 +43,55 @@ class SalesAccountController extends Controller
  	{
  		$page_title = "Sales User Dashboard";
 
- 		return view('web_admin.sales_user_account.dashboard',compact('page_title'));
+ 		return view('sales_user.account.dashboard',compact('page_title'));
  	}
+
+    public function login()
+    {
+         return view('sales_user.account.login');
+    }
+
+    public function process_login(Request $request)
+    {
+        $arr_creds =  array();
+        $arr_creds['email'] = $request->input('email');
+        $arr_creds['password'] = $request->input('password');
+
+        $user = Sentinel::authenticate($arr_creds);
+
+        if($user)
+        {
+            /* Check if Users Role is Sales */
+            $role = Sentinel::findRoleBySlug('sales');
+            if(Sentinel::inRole($role))
+            {
+                return redirect('sales_user/dashboard');
+            }
+            else
+            {
+                Session::flash('error','Not Sufficient Privileges');
+                return redirect()->back();
+            }
+        }
+        else
+        {
+            Session::flash('error','Invalid Credentials');
+            return redirect()->back();
+        }
+    }
 
  	public function business_listing()
  	{
  	$page_title	='Manage Business Listing';
    
-    return view('web_admin.sales_user_account.index',compact('page_title'));                                           
+    return view('sales_user.business.index',compact('page_title'));                                           
  	}
 
  	public function profile()
  	{
  		$page_title = "Sales User Profile";
 
- 		return view('web_admin.sales_user_account.profile',compact('page_title'));
+ 		return view('sales_user.account.profile',compact('page_title'));
  	}
 
  	
@@ -64,7 +99,7 @@ class SalesAccountController extends Controller
     {
         $page_title = "Create User ";
 
-        return view('web_admin.sales_user_account.create_user',compact('page_title','enc_id'));
+        return view('sales_user.user.create_user',compact('page_title','enc_id'));
     }
 
     public function store_user(Request $request)
@@ -188,7 +223,7 @@ class SalesAccountController extends Controller
             Session::flash('error','Problem Occured While Creating User ');
         }
 
-        return Redirect::to('web_admin/sales/create_business/'.$enc_id);    
+        return Redirect::to('sales_user/business/create_business/'.$enc_id);    
     }
 
     public function create_business(Request $request,$enc_id=FALSE)
@@ -229,7 +264,7 @@ class SalesAccountController extends Controller
             $arr_state = $obj_state_res->toArray();
         }
 
-        return view('web_admin.sales_user_account.create_business',compact('page_title','arr_category','arr_country','arr_zipcode','arr_city','arr_state','enc_id'));
+        return view('sales_user.business.create_business',compact('page_title','arr_category','arr_country','arr_zipcode','arr_city','arr_state','enc_id'));
     }
 
 
@@ -267,7 +302,7 @@ class SalesAccountController extends Controller
 
         if($validator->fails())
         {
-            return redirect('/web_admin/sales/create_business')->withErrors($validator)->withInput();
+            return redirect('/sales_user/business/create_business')->withErrors($validator)->withInput();
         }
         $form_data=$request->all();
         // Decoding user id
@@ -303,7 +338,9 @@ class SalesAccountController extends Controller
         // $arr_data['public_seller_id'] = $public_seller_id;
         $arr_data['main_image'] = $filename;
         $enc_id = $form_data['user_id'];
+
         $arr_data['user_id'] =base64_decode($enc_id);
+
         //location input array
         $arr_data['building']=$form_data['building'];
         $arr_data['street']=$form_data['street'];
@@ -365,5 +402,14 @@ class SalesAccountController extends Controller
         return redirect()->back();
 
     }
+
+
+
+   public function logout()
+    {
+        Sentinel::logout();
+        return redirect('/sales_user');
+    }
+
  	
  }

@@ -145,8 +145,6 @@
 
 
                 <a class="btn btn-primary" href="{{ url('/web_admin/categories') }}">Back</a>
-
-
             </div>
 
             <input type="hidden" name="preload_category" disabled="disabled" value="{{ $enc_cat_id }}" />

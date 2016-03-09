@@ -16,14 +16,14 @@
         <ul class="breadcrumb">
             <li>
                 <i class="fa fa-home"></i>
-                <a href="{{ url('/web_admin/sales') }}">Dashboard</a>
+                <a href="{{ url('sales_user/dashboard') }}">Dashboard</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span>
             <li>
                 <i class="fa fa-list"></i>
-                <a href="{{ url('/web_admin/sales/business_listing') }}">Business Listing</a>
+                <a href="{{ url('/sales_user/business/business_listing') }}">Business Listing</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
@@ -84,7 +84,7 @@
           <div class="btn-toolbar pull-right clearfix">
             <!--- Add new record - - - -->
                 <div class="btn-group">
-                <a href="{{ url('/web_admin/sales/create_user')}}" class="btn btn-primary btn-add-new-records">Add User</a>
+                <a href="{{ url('/sales_user/users/create_user')}}" class="btn btn-primary btn-add-new-records">Add User</a>
                 </div>
             <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -->
             <div class="btn-group">

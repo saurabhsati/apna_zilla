@@ -130,15 +130,15 @@
               <thead>
                 <tr>
                   <th style="width:5%"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
-                  <th style="width:10%">Sr. No.</th>
+                  <th style="width:10%">Sr.No.</th>
                   <th style="width:30%">Category</th>
+                  <th style="width:30%">Sort Order</th>
                   <th style="width:30%">Sub Categories</th>
                   <th style="width:15%">Status</th>
                   <th style="width:15%">Action</th>
                 </tr>
               </thead>
               <tbody>
-
 
                  @if(isset($arr_category) && sizeof($arr_category)>0)
                   @foreach($arr_category as $key => $category)
@@ -153,6 +153,8 @@
                     <td>{{  $key+1 }}</td>
 
                     <td> {{ $category['title'] }} </td>
+
+                   <td> {{ $category['cat_order'] }} </td>
 
                      <td>
                         <a
@@ -206,9 +208,6 @@
             </tr>
              @endforeach
             @endif
-
-
-
 
               </tbody>
             </table>

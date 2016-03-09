@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\SalesUser;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -8,6 +8,8 @@ use App\Models\CategoryModel;
 use Sentinel;
 use Session;
 use Validator;
+use App\Http\Controllers\Common\GeneratorController;
+
 
 class SalesController extends Controller
 {
@@ -146,8 +148,19 @@ class SalesController extends Controller
 
         if($status)
         {
-			/* Assign Normal Users Role */
-	        $user = Sentinel::findById($status->id);
+			/* Assign Sales Users Role */
+            $enc_id=$status->id;
+            $public_id = (new GeneratorController)->alphaID($enc_id);
+
+            
+            //$user = Sentinel::create('public_id');
+            $role = Sentinel::findRoleBySlug('sales');
+
+            $user = Sentinel::findById($status->id);
+        //$user = Sentinel::getUser();
+
+            $user->roles()->attach($role);
+
             Session::flash('success','User Created Successfully');
         }
         else
@@ -157,6 +170,7 @@ class SalesController extends Controller
 
         return redirect()->back();
 	}
+    
 public function edit($enc_id)
  	{
  		$id = base64_decode($enc_id);
