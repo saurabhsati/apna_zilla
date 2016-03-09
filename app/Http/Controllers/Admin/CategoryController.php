@@ -118,7 +118,6 @@ class CategoryController extends Controller
         $arr_cat['parent'] = $category;
         $arr_cat['cat_order'] = "0";
         $arr_cat['is_active'] = "1";
-        $arr_cat['is_priceable'] = $is_priceable;
         $arr_cat['cat_img'] = $cat_img;
         $arr_cat['cat_thumb'] =$cat_img;
         $arr_cat['title'] = $title;
@@ -208,7 +207,6 @@ class CategoryController extends Controller
             'cat_meta_keyword' => $category,
             'cat_meta_description' => $cat_meta_description,
             'is_active' => $is_active,
-            'is_priceable' => $is_priceable,
             'is_popular' => $is_popular,
         ];
 

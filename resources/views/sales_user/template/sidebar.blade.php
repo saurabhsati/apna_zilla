@@ -4,7 +4,7 @@
 
 
         <li class="{{ Request::segment(2)=='dashboard'? 'active':'' }}">
-            <a href="{{ url('/sales_user')}}">
+            <a href="{{ url('/sales_user/dashboard')}}">
                 <i class="fa fa-dashboard"></i>
                 <span>Dashboard</span>
             </a>
