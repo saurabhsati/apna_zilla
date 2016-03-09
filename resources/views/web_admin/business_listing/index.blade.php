@@ -156,7 +156,8 @@
                     <td>
                     <img src="{{ $business_public_img_path.'/'.$business['main_image']}}" alt=""  style="width:75px; height:50px;" />   </td>
                     <td> {{ $business['business_name'] }} </td>
-                    <?php if(isset($business['business_cat']) && sizeof($business['business_cat'])>0){
+                    <?php
+                    if(isset($business['business_cat']) && sizeof($business['business_cat'])>0){
                     $arr=explode(',',$business['business_cat']) ;}
                    ?>
                   <td>

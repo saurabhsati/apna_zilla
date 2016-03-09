@@ -15,10 +15,12 @@ class ListingController extends Controller
     }
     public function index()
     {
-    	return view('front.listing.index');
+        $page_title ='Listing';
+    	return view('front.listing.index',compact('page_title'));
     }
     public function list_details()
     {
-    	return view('front.listing.detail');
+        $page_title ='List Details';
+    	return view('front.listing.detail',compact('page_title'));
     }
 }

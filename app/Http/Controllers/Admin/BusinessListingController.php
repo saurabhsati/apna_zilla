@@ -8,10 +8,12 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Models\BusinessListingModel;
+use App\Models\BusinessCategoryModel;
 use App\Models\BusinessImageUploadModel;
 use App\Models\UserModel;
 use App\Models\CategoryModel;
 use App\Models\RestaurantReviewModel;
+
 use App\Models\CountryModel;
 use App\Models\StateModel;
 use App\Models\ZipModel;
@@ -30,6 +32,7 @@ class BusinessListingController extends Controller
     	  $this->BusinessListingModel = new BusinessListingModel();
     	  $this->RestaurantReviewModel= new RestaurantReviewModel();
           $this->BusinessImageUploadModel=new BusinessImageUploadModel();
+
     	   $this->business_public_img_path = url('/')."/uploads/business/main_image/";
     	   $this->business_base_img_path = base_path()."/public/uploads/business/main_image";
 
@@ -143,13 +146,8 @@ class BusinessListingController extends Controller
         $arr_data['is_active']='2';
         $arr_data['business_added_by']=$form_data['business_added_by'];
         $arr_data['business_name']=$form_data['business_name'];
-
         $business_cat=$form_data['business_cat'];
-        if(sizeof($business_cat)>0){
-        $business_categories=implode(',',$business_cat);
-        $arr_data['business_cat']=$business_categories;
 
-        }
 
 
         if($request->hasFile('main_image'))
@@ -195,8 +193,15 @@ class BusinessListingController extends Controller
     	$arr_data['keywords']=$form_data['keywords'];
     	$arr_data['youtube_link']=$form_data['youtube_link'];
 
-        $insert_data=$this->BusinessListingModel->create($arr_data);
-         $business_id=$insert_data->id;
+          $insert_data=$this->BusinessListingModel->create($arr_data);
+          $business_id=$insert_data->id;
+          foreach ($business_cat as $key => $value) {
+          $arr_cat_data['business_id']=$business_id;
+          $arr_cat_data['category_id']=$value;
+          $insert_data=BusinessCategoryModel::create($arr_cat_data);
+        }
+
+
          $files = $request->file('business_image');
          $file_count = count($files);
          $uploadcount = 0;
@@ -367,6 +372,11 @@ class BusinessListingController extends Controller
     	$business_data['company_info']=$request->input('company_info');
     	$business_data['keywords']=$request->input('keywords');
     	$business_data['youtube_link']=$request->input('youtube_link');
+         foreach ($business_cat as $key => $value) {
+          $arr_cat_data['business_id']=$business_id;
+          $arr_cat_data['category_id']=$value;
+          $insert_data=BusinessCategoryModel::create($arr_cat_data);
+        }
         $business_data=$this->BusinessListingModel->where('id',$id)->update($business_data);
 
          $files = $request->file('business_image');

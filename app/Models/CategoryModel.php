@@ -10,12 +10,12 @@ class CategoryModel extends Model
 	use SoftDeletes;
 
     protected $table = "categories";
-     protected $fillable = ['cat_desc', 
+     protected $fillable = ['cat_desc',
                             'cat_slug',
                             'title',
                             'cat_meta_description',
                             'cat_meta_keyword',
-                            'public_id', 
+                            'public_id',
                             'parent',
                             'cat_img',
                             'cat_thumb',
@@ -69,5 +69,9 @@ class CategoryModel extends Model
     public function attribute()
     {
       return $this->hasMany('App\Models\AttributeModel','fk_category_id','cat_id');
+    }
+     public function business_details()
+    {
+        return $this->belongsTo('App\Models\BusinessListingModel','cat_id','business_cat');
     }
 }
