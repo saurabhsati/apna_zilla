@@ -9,15 +9,28 @@
                <span></span>
             </div>
             <div class="cate-count-block">
+<?php
+/*echo'<pre>';
+print_r($arr_category);
+print_r($sec_arr);*/
+?>
                <ul>
+                  @if(isset($arr_category) && sizeof($arr_category)>0)
+                  @foreach($arr_category as $category)
                   <li>
                      <a href="#">
-                     <span class="cate-img"><img src="{{ url('/') }}/assets/front/images/cate-img1.png" alt="" /></span>
-                     <span class="cate-txt">Hospital</span>
-                     <span class="cate-count">( 14 )</span>
+                     <span class="cate-img"><img src="{{ $cat_img_path.'/'.$category['cat_img']}}" alt="" height="19px" width="30px" /></span>
+                     <span class="cate-txt">{{ ucfirst($category['title']) }}</span>
+                     <?php
+                     ?>
+
+                     <span class="cate-count"><?php if(array_key_exists($category['cat_id'],$sec_arr)){echo '('.$sec_arr[$category['cat_id']].')';}else{ echo "(0)";}?> </span>
+
                      </a>
                   </li>
-                  <li>
+                  @endforeach
+                  @endif
+                  <!-- <li>
                      <a href="#">
                      <span class="cate-img"><img src="{{ url('/') }}/assets/front/images/cate-img2.png" alt="" /></span>
                      <span class="cate-txt">Security Services</span>
@@ -149,7 +162,7 @@
                      <span class="cate-txt">Pest Control</span>
                      <span class="cate-count">( 14 )</span>
                      </a>
-                  </li>
+                  </li> -->
                </ul>
                <div class="clearfix"></div>
             </div>
