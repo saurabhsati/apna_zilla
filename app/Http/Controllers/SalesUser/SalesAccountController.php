@@ -59,6 +59,7 @@ class SalesAccountController extends Controller
 
         $user = Sentinel::authenticate($arr_creds);
 
+
         if($user)
         {
             /* Check if Users Role is Sales */
@@ -82,7 +83,7 @@ class SalesAccountController extends Controller
 
  	public function business_listing()
  	{
- 	$page_title	='Manage Business Listing';
+ 	$page_title	='Manage Business Listing';    
    
     return view('sales_user.business.index',compact('page_title'));                                           
  	}
@@ -393,7 +394,6 @@ class SalesAccountController extends Controller
          if($insert_data)
         {
         	Session::flash('success','Business Created successfully');
-
         }
         else
         {
@@ -403,7 +403,54 @@ class SalesAccountController extends Controller
 
     }
 
+public function multi_action(Request $request)
+    {
+        $arr_rules = array();
+        $arr_rules['multi_action'] = "required";
+        $arr_rules['checked_record'] = "required";
 
+
+        $validator = Validator::make($request->all(),$arr_rules);
+
+        if($validator->fails())
+        {
+            Session::flash('error','Please Select Any Record(s)');
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $multi_action = $request->input('multi_action');
+        $checked_record = $request->input('checked_record');
+
+        /* Check if array is supplied*/
+        if(is_array($checked_record) && sizeof($checked_record)<=0)
+        {
+            Session::flash('error','Problem Occured, While Doing Multi Action');
+            return redirect()->back();
+
+        }
+
+        foreach ($checked_record as $key => $record_id)
+        {
+            if($multi_action=="activate")
+            {
+               $this->_activate($record_id);
+               Session::flash('success','Business(es) Activated Successfully');
+            }
+            elseif($multi_action=="block")
+            {
+               $this->_block($record_id);
+               Session::flash('success','Business(es) Blocked Successfully');
+            }
+            elseif($multi_action=="delete")
+            {
+               $this->_delete($record_id);
+                Session::flash('success','Business(es) Deleted Successfully');
+            }
+
+        }
+
+        return redirect()->back();
+    }
 
    public function logout()
     {

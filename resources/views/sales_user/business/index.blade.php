@@ -68,11 +68,16 @@
                 {{ Session::get('error') }}
             </div>
           @endif
-          <form class="form-horizontal" id="frm_manage" method="POST" action="{{ url('/web_admin/business_listing/multi_action_loc') }}">
+
+          <form class="form-horizontal" 
+                id="frm_manage" 
+                method="POST" 
+                action="{{ url('/sales_user/business/multi_action') }}"
+                >
 
             {{ csrf_field() }}
 
-            <div class="col-md-10">
+          <div class="col-md-10">
 
 
             <div id="ajax_op_status">
@@ -132,15 +137,14 @@
                   <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
                   <th style="width:25px;">Business Image</th>
                   <th style="width:25px;">Business Name</th>
-                  <th style="width:25px;">Business Category Name</th>
+                  <th style="width:40px;">Business Category::Sub Category</th>
                   <!-- <th style="width:25px;">Title</th> -->
                   <th style="width:50px;">Full Name</th>
                   <th style="width:25px;">Email</th>
                   <th style="width:25px;">Mobile No</th>
                  <!--  <th>City</th> -->
                   <th style="width:25px;">Reviews</th>
-                  <th>Location</th>
-                  <th>Contact Info</th>
+                  <th style="width:25px;">Deals</th>
                   <th width="" style="text-align:center">Status</th>
                   <th>Action</th>
                 </tr>
@@ -158,7 +162,33 @@
                     <td>
                     <img src="{{ $business_public_img_path.'/'.$business['main_image']}}" alt=""  style="width:75px; height:50px;" />   </td>
                     <td> {{ $business['business_name'] }} </td>
-                    <td> {{ $business['categoty_details']['title'] }} </td>
+                    <?php if(isset($business['business_cat']) && sizeof($business['business_cat'])>0){
+                    $arr=explode(',',$business['business_cat']) ;}
+                   ?>
+                  <td>
+                   <?php
+
+                   foreach ($arr as $key => $value) {
+                    foreach ($arr_sub_category as $sub_category) {
+                      if($value==$sub_category['cat_id'])
+                      {
+                         foreach ($arr_main_category as $main_category) {
+
+                          if($sub_category['parent']==$main_category['cat_id'])
+                          {
+                            echo $main_category['title'].' :: ';
+                          }
+
+
+                          }
+                          echo $sub_category['title'].' <br/>';
+                       }
+                    }
+                  }
+                  ?>
+                  </td>
+
+
                  <!--    <td> {{ $business['user_details']['title'] }} </td> -->
                     <td> {{ $business['user_details']['first_name']." ".$business['user_details']['last_name'] }} </td>
                     <td> {{ $business['user_details']['email'] }} </td>
@@ -171,30 +201,19 @@
                       @else
                        <td><a href="#"> ( {{ sizeof($business['reviews']) }} ) </a></td>
                        @endif
-                     <td>
-                        <a
-                          class="btn btn-info"
-                          href="{{ url('/').'/web_admin/business_listing/location/'.base64_encode($business['id']) }}"  title="View Loaction">
-                          View
-                        </a>
-                        <a
-                          class="btn btn-info"
-                          href="{{ url('/').'/web_admin/business_listing/create_location/'.base64_encode($business['id']) }}"  title="Add Loaction">
-                          Add
-                        </a>
-                      </td>
-                      <td>
-                        <a
-                          class="btn btn-info"
-                          href="{{ url('/').'/web_admin/business_listing/contact_info/'.base64_encode($business['id']) }}"  title="View Conatct Info">
-                          View
-                        </a>
-                        <a
-                          class="btn btn-info"
-                          href="{{ url('/').'/web_admin/business_listing/create_contact/'.base64_encode($business['id']) }}"  title="Add Conatct Info">
-                          Add
-                        </a>
-                      </td>
+
+                    <td>
+                       @if($business['is_active']!="1")
+                           <a class="btn btn-info" href="#">
+                           Add Deal
+                            </a>
+                       @elseif($business['is_active']=="1")
+                           <a class="btn btn-warning" href="{{ url('/web_admin/deals/'.base64_encode($business['id'])) }}">
+                             Add Deal
+                          </a>
+                       @endif
+
+                    </td>
                     <td width="" style="text-align:center">
                          @if($business['is_active']=="0")
                         <a class="btn btn-danger" href="{{ url('/web_admin/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/activate' }}">
@@ -213,7 +232,10 @@
                     </td>
 
                     <td>
-
+                      <a href="{{ url('/web_admin/business_listing/show/').'/'.base64_encode($business['id']) }}" class="show-tooltip" title="Edit">
+                          <i class="fa fa-eye" ></i>
+                        </a>
+                         &nbsp;
                         <a href="{{ url('/web_admin/business_listing/edit/').'/'.base64_encode($business['id']) }}" class="show-tooltip" title="Edit">
                           <i class="fa fa-edit" ></i>
                         </a>

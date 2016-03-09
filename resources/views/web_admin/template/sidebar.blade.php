@@ -28,7 +28,7 @@
                 <b class="arrow fa fa-angle-right"></b>
             </a>
             <ul class="submenu">
-                <li style="display: block;"><a href="{{ url('/web_admin/sales_user_add')}}">Manage</a> </li>
+                <li style="display: block;"><a href="{{ url('/web_admin/sales_user')}}">Manage</a> </li>
             </ul>
         </li>
 
