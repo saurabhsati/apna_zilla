@@ -33,31 +33,32 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		/* Front Pages */
 		Route::get('static_pages',['as'=>'static_pages', 'uses'=>'Admin\StaticPageController@index']);
 
-	  /*---------------------CMS Module-------------------------*/
+	  /*---------------------CMS Module Start-------------------------*/
 	   Route::group(array('prefix' => '/static_pages'), function()
 		{
-		Route::get('/',							 	 ['as' => 'static_pages_manage' 		,'uses' => 'Admin\StaticPageController@index']);
-		Route::get('create',					 	 ['as' => 'static_pages_create' 		,'uses' => 'Admin\StaticPageController@create']);
-		Route::get('edit/{enc_id}',					 ['as' => 'static_pages_edit' 			,'uses' => 'Admin\StaticPageController@edit']);
-		Route::any('store',							 ['as' => 'static_pages_store' 			,'uses' => 'Admin\StaticPageController@store']);
-		Route::get('delete/{enc_id}',				 ['as' => 'static_pages_delete' 		,'uses' => 'Admin\StaticPageController@delete']);
-		Route::post('update/{enc_id}',				 ['as' => 'static_pages_update' 		,'uses' => 'Admin\StaticPageController@update']);
-		Route::get('toggle_status/{enc_id}/{action}',['as' => 'static_pages_toggle_status' 	,'uses' => 'Admin\StaticPageController@toggle_status']);
-		Route::post('multi_action',  				 ['as' => 'static_pages_multi_action' 	,'uses' => 'Admin\StaticPageController@multi_action']);
+			Route::get('/',							 	 ['as' => 'static_pages_manage' 		,'uses' => 'Admin\StaticPageController@index']);
+			Route::get('create',					 	 ['as' => 'static_pages_create' 		,'uses' => 'Admin\StaticPageController@create']);
+			Route::get('edit/{enc_id}',					 ['as' => 'static_pages_edit' 			,'uses' => 'Admin\StaticPageController@edit']);
+			Route::any('store',							 ['as' => 'static_pages_store' 			,'uses' => 'Admin\StaticPageController@store']);
+			Route::get('delete/{enc_id}',				 ['as' => 'static_pages_delete' 		,'uses' => 'Admin\StaticPageController@delete']);
+			Route::post('update/{enc_id}',				 ['as' => 'static_pages_update' 		,'uses' => 'Admin\StaticPageController@update']);
+			Route::get('toggle_status/{enc_id}/{action}',['as' => 'static_pages_toggle_status' 	,'uses' => 'Admin\StaticPageController@toggle_status']);
+			Route::post('multi_action',  				 ['as' => 'static_pages_multi_action' 	,'uses' => 'Admin\StaticPageController@multi_action']);
 
 		});
+ 		/*---------------------CMS Module End-------------------------*/
 	   /* Location module */
 	   Route::group(array('prefix' => '/countries'), function()
 		{
-		Route::get('/',								 ['as' => 'admin_countries_manage' 			,'uses' => 'Admin\CountryController@index']);
-		Route::get('show/{enc_id}',					 ['as' => 'admin_countries_show'			,'uses' => 'Admin\CountryController@show']);
-		Route::get('edit/{enc_id}',					 ['as' => 'admin_countries_edit' 			,'uses' => 'Admin\CountryController@edit']);
-		Route::post('update/{enc_id}',				 ['as' => 'admin_countries_update'			,'uses' => 'Admin\CountryController@update']);
-		Route::get('create',						 ['as' => 'admin_countries_create' 			,'uses' => 'Admin\CountryController@create']);
-		Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_countries_toggle_status'	,'uses' => 'Admin\CountryController@toggle_status']);
-		Route::get('delete/{enc_id}',				 ['as' => 'admin_countries_delete' 			,'uses' => 'Admin\CountryController@delete']);
-		Route::post('multi_action',					 ['as' => 'admin_countries_block' 			,'uses' => 'Admin\CountryController@multi_action']);
-		Route::any('store',							 ['as' => 'admin_countries_store' 			,'uses' => 'Admin\CountryController@store']);
+			Route::get('/',								 ['as' => 'admin_countries_manage' 			,'uses' => 'Admin\CountryController@index']);
+			Route::get('show/{enc_id}',					 ['as' => 'admin_countries_show'			,'uses' => 'Admin\CountryController@show']);
+			Route::get('edit/{enc_id}',					 ['as' => 'admin_countries_edit' 			,'uses' => 'Admin\CountryController@edit']);
+			Route::post('update/{enc_id}',				 ['as' => 'admin_countries_update'			,'uses' => 'Admin\CountryController@update']);
+			Route::get('create',						 ['as' => 'admin_countries_create' 			,'uses' => 'Admin\CountryController@create']);
+			Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_countries_toggle_status'	,'uses' => 'Admin\CountryController@toggle_status']);
+			Route::get('delete/{enc_id}',				 ['as' => 'admin_countries_delete' 			,'uses' => 'Admin\CountryController@delete']);
+			Route::post('multi_action',					 ['as' => 'admin_countries_block' 			,'uses' => 'Admin\CountryController@multi_action']);
+			Route::any('store',							 ['as' => 'admin_countries_store' 			,'uses' => 'Admin\CountryController@store']);
 
 		});
 
@@ -107,7 +108,9 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::get('delete/{enc_id}',					['as' => 'admin_zipcode_delete' 		,'uses' => 'Admin\ZipController@delete']);
 
 		});
-		/* Email Template Module */
+
+		/* Email Template Module Start*/
+
 		Route::group(array('prefix' => '/email_template'), function()
 		{
 			Route::get('/',						['as' => 'admin_email_template_index'		,'uses' => 'Admin\EmailTemplateController@index']);
@@ -116,6 +119,10 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::get('edit/{coupon_id}',		['as' => 'admin_email_template_edit'		,'uses' => 'Admin\EmailTemplateController@edit']);
 			Route::post('update/{coupon_id}',	['as' => 'admin_email_template_update' 		,'uses' => 'Admin\EmailTemplateController@update']);
 		});
+
+		/* Email Template Module End*/
+
+		/* FAQ Module Start*/
 		Route::group(array('prefix' => '/faq'), function()
 		{
 
@@ -132,29 +139,26 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::get('delete/{enc_id}',				 ['as' => 'admin_faq_delete' 		,'uses' => 'Admin\FAQController@delete']);
 
 		});
+		/* FAQ Module End */
 
 		/* Comman function */
+
 		Route::group(array('prefix' => '/common'), function()
 		{
 			Route::get('get_states/{country_id}',  ['as' => 'get_states' ,'uses' => 'Common\CountryController@get_states']);
-			/*Route::get('get_cities/{state_id}',['as' => 'get_cities' ,'uses' => 'Common\CountryController@get_cities']);
-			Route::get('get_nearby_state/{state_id}/{country_id}',['as' => 'get_nearby_states' ,'uses' => 'Common\CountryController@get_nearby_state']);
-			Route::get('get_nearby_city/{city_id}/{state_id}',['as' => 'get_nearby_city' ,'uses' => 'Common\CountryController@get_nearby_city']);
-
-			Route::get('get_sub_category/{id}',['as' => 'get_sub_category' ,'uses' => 'Common\CategoryController@get_sub_category']);*/
-
 		});
 
-		/*-------------Restaurant Reviews Module------------*/
-		Route::group(['prefix'=>'reviews'], function (){
+		/*-------------Business Reviews Module Start------------*/
+		Route::group(['prefix'=>'reviews'], function(){
 			Route::get('/{enc_id}',       					['as' => 'admin_reviews_manage'     ,'uses' =>  'Admin\ReviewController@index']);
 			Route::get('view/{enc_id}',    					['as' => 'admin_reviews_view'       ,'uses' =>'Admin\ReviewController@view']);
 			Route::get('delete/{enc_id}',   				['as' => 'admin_reviews_delete'     ,'uses' =>'Admin\ReviewController@delete']);
 			Route::get('toggle_status/{enc_id}/{action}', 	['as' => 'admin_reviews_status'     ,'uses' =>'Admin\ReviewController@toggle_status']);
 			Route::post('multi_action',						['as' => 'admin_reviews_multiation' ,'uses' =>'Admin\ReviewController@multi_action']);
 		});
+		/*-------------Business Reviews Module End ------------*/
 
-		/*--------------------------     Front SLider Realted      ---------------------------*/
+		/*--------------------------     Front SLider Start     ---------------------------*/
 
 		Route::group(array('prefix' => '/front_slider'), function()
 		{
@@ -168,8 +172,10 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 				Route::post('multi_action',						['as' => 'admin_front_slider_multiaction' ,'uses' 	=> 'Admin\FrontSliderController@multi_action']);
 				Route::any('save_order/{slider_id}/{order_id}', ['as' => 'admin_front_slider_save_order'  ,'uses'   => 'Admin\FrontSliderController@save_order']);
 		});
-		/* Business Listing */
-		Route::group(['prefix'=>'business_listing'], function ()
+		/*--------------------------     Front SLider End     ---------------------------*/
+
+		/* --------------------------   Business Listing start --------------------------   */
+		Route::group(['prefix'=>'business_listing'], function()
 		{
 			Route::get('/',							 	 ['as' => 'admin_business_listing_index' 	  ,'uses' 	=>'Admin\BusinessListingController@index']);
 			Route::get('manage',					 	 ['as' => 'admin_business_listing_manage' 	  ,'uses' 	=>'Admin\BusinessListingController@index']);
@@ -184,23 +190,25 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 
 		});
-		/*-------------Deals Module------------*/
-	    Route::group(['prefix'=>'deals'], function (){
+        /* --------------------------   Business Listing End --------------------------   */
+		/*-------------Deals Module Start ------------*/
+	    Route::group(['prefix'=>'deals'], function()
+	    {
 
-		Route::get('/{enc_id}',							['as' => 'admin_deals_index' 	  ,'Admin\DealController@index']);
-		Route::get('create/{enc_id}',					['as' => 'admin_deals_create' 	  ,'Admin\DealController@create']);
-		Route::post('store',							['as' => 'admin_deals_store' 	  ,'Admin\DealController@store']);
-		Route::get('edit/{enc_id}',						['as' => 'admin_deals_edit' 	  ,'Admin\DealController@edit']);
-		Route::post('update/{enc_id}',					['as' => 'admin_deals_update' 	  ,'Admin\DealController@update']);
-		Route::get('delete/{enc_id}',					['as' => 'admin_deals_delete' 	  ,'Admin\DealController@delete']);
-		Route::get('toggle_status/{enc_id}/{action}',   ['as' => 'admin_deals_status' 	  ,'Admin\DealController@toggle_status']);
-		Route::post('multi_action',						['as' => 'admin_deals_multiaction','Admin\DealController@multi_action']);
+			Route::get('/{enc_id}',							['as' => 'admin_deals_index' 	  ,'Admin\DealController@index']);
+			Route::get('create/{enc_id}',					['as' => 'admin_deals_create' 	  ,'Admin\DealController@create']);
+			Route::post('store',							['as' => 'admin_deals_store' 	  ,'Admin\DealController@store']);
+			Route::get('edit/{enc_id}',						['as' => 'admin_deals_edit' 	  ,'Admin\DealController@edit']);
+			Route::post('update/{enc_id}',					['as' => 'admin_deals_update' 	  ,'Admin\DealController@update']);
+			Route::get('delete/{enc_id}',					['as' => 'admin_deals_delete' 	  ,'Admin\DealController@delete']);
+			Route::get('toggle_status/{enc_id}/{action}',   ['as' => 'admin_deals_status' 	  ,'Admin\DealController@toggle_status']);
+			Route::post('multi_action',						['as' => 'admin_deals_multiaction','Admin\DealController@multi_action']);
 
-	});
-	/*-------------End--------------------------*/
+	   });
+	    /*-------------Deals Module End ------------*/
 
 	/* Users Module */
-	Route::group(['prefix'=>'users'], function ()
+	Route::group(['prefix'=>'users'], function()
 	{
 		Route::get('/',       								['as' => 'admin_users_index'     				,'uses' =>'Admin\UserController@index']);
 		Route::get('manage',       							['as' => 'admin_users_manage'     				,'uses' =>'Admin\UserController@index']);
@@ -214,7 +222,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 	});
 
 		/* Sales User Module */
-	Route::group(['prefix'=>'sales_user'], function ()
+	Route::group(['prefix'=>'sales_user'], function()
 	{
 		Route::get('/',       								['as' => 'admin_sales_index'     				,'uses' =>'Admin\SalesController@index']);
 		Route::get('manage',       							['as' => 'admin_sales_manage'     				,'uses' =>'Admin\SalesController@index']);
@@ -257,23 +265,20 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		Route::get('sub_categories/toggle_status/{enc_id}/{action}',['as' => 'admin_sub_categories_toggle_status' 	,'uses' => 'Admin\CategoryController@toggle_status']);
 		Route::post('sub_categories/multi_action',					['as' => 'admin_sub_categories_block' 			,'uses' => 'Admin\CategoryController@multi_action']);
 
-		/*Route::get('sub_categories/brands/{enc_id}',['as' => 'admin_sub_categories_brands' ,'uses' => 'Web_admin\CategoryController@show_brands']);
-		Route::get('sub_categories/brands/toggle_status/{enc_id}/{action}',['as' => 'admin_sub_categories_brands_toggle_status' ,'uses' => 'Web_admin\CategoryController@toggle_brand_status']);
-		Route::post('sub_categories/brands/multi_action',['as' => 'admin_sub_categories_brands_multi_action' ,'uses' => 'Web_admin\CategoryController@brand_multi_action']);
-		Route::post('sub_categories/brands/attach',['as' => 'admin_sub_categories_brands_attach' ,'uses' => 'Web_admin\CategoryController@attach_brand']);*/
+
 
 	});
-	
+
 
 		/* Sales User Module */
-	Route::group(['prefix'=>'membership'], function ()
+	Route::group(['prefix'=>'membership'], function()
 	{
 		Route::get('/',       								['as' => 'admin_membershp_index'     				,'uses' => 'Admin\MembershipController@index']);
 		Route::get('edit/{enc_id}',							['as' => 'admin_membershp_edit' 					,'uses' => 'Admin\MembershipController@edit']);
 		Route::post('update/{enc_id}',						['as' => 'admin_membershp_update' 					,'uses' => 'Admin\MembershipController@update']);
 
 	});
-	
+
 
 	/*------------------------- web_admin Contact Enquiry Related ----------*--------------------*/
 
@@ -307,150 +312,23 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 /*****************************End************************************************/
 
-	/*-------------Deals Module------------*/
-	Route::group(['prefix'=>'deals'], function (){
-		Route::get('/{enc_id}','Admin\DealController@index');
-		Route::get('create/{enc_id}','Admin\DealController@create');
-		Route::post('store','Admin\DealController@store');
-		Route::get('edit/{enc_id}','Admin\DealController@edit');
-		Route::post('update/{enc_id}','Admin\DealController@update');
-		Route::get('delete/{enc_id}','Admin\DealController@delete');
-		Route::get('toggle_status/{enc_id}/{action}','Admin\DealController@toggle_status');
-		Route::post('multi_action','Admin\DealController@multi_action');
-		Route::get('get_dishes/{enc_id}','Admin\DealController@get_dishes');
-		Route::get('delete_dish/{id}','Admin\DealController@delete_dish');
-	});
-	/*-------------End--------------------------*/
 
-	/*-------------Deals Reviews Module------------*/
-	Route::group(['prefix'=>'dealsReviews'], function (){
-		Route::get('/{enc_id}','Admin\DealReviewController@index');
-		Route::get('view/{enc_id}','Admin\DealReviewController@view');
-		Route::get('delete/{enc_id}','Admin\DealReviewController@delete');
-		Route::get('toggle_status/{enc_id}/{action}','Admin\DealReviewController@toggle_status');
-		Route::post('multi_action','Admin\DealReviewController@multi_action');
-	});
-	/*-------------End--------------------------*/
 
-	/*-------------Restaurant Reviews Module------------*/
-	Route::group(['prefix'=>'restaurantReviews'], function (){
-		Route::get('/{enc_id}','Admin\RestaurantReviewController@index');
-		Route::get('view/{enc_id}','Admin\RestaurantReviewController@view');
-		Route::get('delete/{enc_id}','Admin\RestaurantReviewController@delete');
-		Route::get('toggle_status/{enc_id}/{action}','Admin\RestaurantReviewController@toggle_status');
-		Route::post('multi_action','Admin\RestaurantReviewController@multi_action');
-	});
-	/*-------------End--------------------------*/
 
-	/*-------------Memberships Module------------*/
-	Route::group(['prefix'=>'memberships'], function (){
-		Route::get('/','Admin\MembershipController@index');
-		Route::get('edit/{enc_id}','Admin\MembershipController@edit');
-		Route::post('update/{enc_id}','Admin\MembershipController@update');
-	});
-	/*-------------End--------------------------*/
 
-	/*-------------Website Setting Module------------*/
-	Route::group(['prefix'=>'site_settings'], function (){
-		Route::get('/',								['as' => 'admin_site_settings_index'  ,'uses' => 'Admin\SiteSettingController@index']);
-		Route::post('update/{enc_id}',				['as' => 'admin_site_settings_update' ,'uses' => 'Admin\SiteSettingController@update']);
-	});
-	/*-------------End--------------------------*/
 
-	/*-------------Payment Records Module------------*/
-	Route::group(['prefix'=>'transactions'], function (){
-		Route::get('/','Admin\TransactionController@index');
-		Route::get('view/{enc_id}','Admin\TransactionController@view');
-	});
-	/*-------------End--------------------------*/
+
+
+
+
+
+
 });
 
 
 /*--------------Restaurant Admin Routes ---------------------------*/
 
-Route::group(['prefix'=>'/restaurant_admin','middleware'=>['web']], function ()
-{
-	Route::get('/','Restaurant_Admin\AuthController@show_login');
-	Route::get('login','Restaurant_Admin\AuthController@show_login');
-	Route::post('login','Restaurant_Admin\AuthController@process_login');
-	Route::get('dashboard','Restaurant_Admin\DashboardController@index');
-	Route::get('logout','Restaurant_Admin\AuthController@logout');
 
-
-	/*------------Edit profile Restaurant user-----------------------------------*/
-
-	Route::group(['prefix'=>'users'], function()
-	{
-		//Route::get('edit/{enc_id}','Admin\UserController@edit');
-		//Route::post('update/{enc_id}','Admin\UserController@update');
-		Route::get('change_password','Restaurant_Admin\AuthController@change_password');
-		Route::post('change_password','Restaurant_Admin\AuthController@update_password');
-	});
-	/*----------------------End-------------------------------------*/
-
-
-		/*-------------Deals Reviews Module------------*/
-		Route::group(['prefix'=>'deal_reviews'], function ()
-		{
-			Route::get('/{enc_id}','Restaurant_Admin\DealReviewController@index');
-			Route::get('view/{enc_id}','Restaurant_Admin\DealReviewController@view');
-			Route::get('delete/{enc_id}','Restaurant_Admin\DealReviewController@delete');
-			Route::get('toggle_status/{enc_id}/{action}','Restaurant_Admin\DealReviewController@toggle_status');
-			Route::post('multi_action','Restaurant_Admin\DealReviewController@multi_action');
-		});
-		/*-------------End--------------------------*/
-
-		/*-------------Restaurant Reviews Module------------*/
-		Route::group(['prefix'=>'restaurant_reviews'], function ()
-		{
-			Route::get('/','Restaurant_Admin\RestaurantReviewController@index');
-			Route::get('view/{enc_id}','Restaurant_Admin\RestaurantReviewController@view');
-			Route::get('delete/{enc_id}','Restaurant_Admin\RestaurantReviewController@delete');
-			Route::get('toggle_status/{enc_id}/{action}','Restaurant_Admin\RestaurantReviewController@toggle_status');
-			Route::post('multi_action','Restaurant_Admin\RestaurantReviewController@multi_action');
-		});
-		/*-------------End--------------------------*/
-
-
-		/*-------------Deals Reviews Module------------*/
-		Route::group(['prefix'=>'dish_reviews'], function ()
-		{
-			Route::get('/{enc_id}','Restaurant_Admin\DishReviewController@index');
-			Route::get('view/{enc_id}','Restaurant_Admin\DishReviewController@view');
-			Route::get('delete/{enc_id}','Restaurant_Admin\DishReviewController@delete');
-			Route::get('toggle_status/{enc_id}/{action}','Restaurant_Admin\DishReviewController@toggle_status');
-			Route::post('multi_action','Restaurant_Admin\DishReviewController@multi_action');
-		});
-		/*-------------End--------------------------*/
-
-			/*-------------Payment Records Module------------*/
-			Route::group(['prefix'=>'transactions'], function ()
-			{
-				Route::get('/','Restaurant_Admin\TransactionController@index');
-				/*Route::get('view/{enc_id}','Restaurant_Admin\TransactionController@view');*/
-			});
-			/*-------------End--------------------------*/
-
-		/*-------------Paypal Payment intigration--------*/
-
-		Route::group(['prefix'=>'membership_buy'], function ()
-		{
-			Route::get('/{enc_id}/{enc_user_id}','Restaurant_Admin\PaypalController@membership_buy');
-			Route::get('/normal_pay/{enc_id}/{enc_user_id}','Restaurant_Admin\PaypalController@postPayment');
-			Route::get('/getPaymentStatus/','Restaurant_Admin\PaypalController@getPaymentStatus');
-			Route::get('/recurring_form/{enc_id}/{enc_user_id}','Restaurant_Admin\PaypalController@recurringForm');
-
-			Route::get('/recurring_payment','Restaurant_Admin\PaypalController@billing_with_payplay');
-			Route::get('/billing_with_payplay','Restaurant_Admin\PaypalController@billing_with_payplay');
-			Route::get('/billing_update','Restaurant_Admin\PaypalController@billing_update');
-
-			Route::get('/execute_agreement','Restaurant_Admin\PaypalController@execute_agreement');
-
-		});
-
-		/*-----------------------------------------------*/
-
-});
 
 /*--------------------------WEB SERVICES-------------------------*/
 
