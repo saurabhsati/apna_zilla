@@ -10,6 +10,7 @@ class BusinessListingModel extends Model
     protected $table='business';
     protected $fillable=['business_name',
                          'user_id',
+                         'seller_public_id',
                          'is_active',
                          'business_cat',
                          'business_added_by',

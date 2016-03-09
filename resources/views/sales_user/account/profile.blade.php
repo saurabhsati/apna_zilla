@@ -118,6 +118,4 @@
           <br/>
           <div class="clearfix"></div>
 
-
-
-    @stop
+@stop

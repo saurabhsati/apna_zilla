@@ -273,9 +273,6 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 	Route::group(['prefix'=>'sales_user'], function ()
 
-
-
-
 	{
 		Route::get('/',       								['as' => 'admin_sales_index'     				,'uses' =>'SalesUser\SalesController@index']);
 		Route::get('manage',       							['as' => 'admin_sales_manage'     				,'uses' =>'SalesUser\SalesController@index']);
@@ -389,9 +386,9 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 	Route::group(['prefix'=>'/sales_user','middleware'=>['web']], function ()
 
-	{
-
-		Route::get('/',										['as' => 'sales_user_login'             		,'uses' =>'SalesUser\SalesAccountController@login']);
+	{    
+        Route::get('/','SalesUser\SalesAccountController@login');  
+		Route::get('login',									['as' => 'sales_user_login'             		,'uses' =>'SalesUser\SalesAccountController@login']);
 		Route::post('process_login',				  		['as' => 'sales_user_process_login'          	,'uses' =>'SalesUser\SalesAccountController@process_login']);
 		Route::get('dashboard',								['as' => 'sales_user_dashboard'             	,'uses' =>'SalesUser\SalesAccountController@index']);
 		Route::get('profile',								['as' => 'sales_user_profile'            	    ,'uses' =>'SalesUser\SalesAccountController@profile']);
@@ -416,6 +413,8 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		Route::post('multi_action',						    ['as' => 'sales_user_multiaction'				,'uses' =>'SalesUser\SalesAccountController@multi_action']);
 
 	  });
+
+
 		/*------------- Sales User added Deals Module under business list ------------*/
 		Route::group(['prefix'=>'deals'], function (){
 			Route::get('/{enc_id}',						 ['as' => 'sales_deals_index'             		,'uses' =>'SalesUser\DealController@index']);

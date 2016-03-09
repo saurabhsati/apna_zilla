@@ -175,7 +175,6 @@ class CategoryController extends Controller
         $password   = $request->input('password',FALSE);
         $cat_meta_description = $request->input('cat_meta_description');
         $is_active = $request->input('is_active');
-        $is_priceable = $request->input('is_priceable');
         $is_popular = $request->input('is_popular');
 
         $cat_img = FALSE;

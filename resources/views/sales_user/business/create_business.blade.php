@@ -471,8 +471,8 @@
                 <input type="submit"  class="btn btn-primary" value="Add">
 
             </div>
-<!--              <input type="hidden" name="user_id" value="{{ $enc_id }}" />
- -->
+             <input type="hidden" name="user_id" value="{{ $enc_id }}" />
+
         </div>
  </form>
 
