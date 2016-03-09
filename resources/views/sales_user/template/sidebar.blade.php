@@ -4,7 +4,7 @@
 
 
         <li class="{{ Request::segment(2)=='dashboard'? 'active':'' }}">
-            <a href="{{ url('/web_admin/sales')}}">
+            <a href="{{ url('/sales_user')}}">
                 <i class="fa fa-dashboard"></i>
                 <span>Dashboard</span>
             </a>
@@ -17,7 +17,7 @@
                 <b class="arrow fa fa-angle-right"></b>
             </a>
             <ul class="submenu">
-                <li style="display: block;"><a href="{{ url('/web_admin/sales/profile')}}">Manage</a> </li>
+                <li style="display: block;"><a href="{{ url('/sales_user/profile')}}">Manage</a> </li>
             </ul>
         </li>
 
@@ -28,7 +28,7 @@
                 <b class="arrow fa fa-angle-right"></b>
             </a>
             <ul class="submenu">
-                <li style="display: block;"><a href="{{ url('/web_admin/sales/business_listing')}}">Manage</a> </li>
+                <li style="display: block;"><a href="{{ url('/sales_user/business/business_listing')}}">Manage</a> </li>
             </ul>
         </li>
 

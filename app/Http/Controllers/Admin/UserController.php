@@ -160,7 +160,14 @@ class UserController extends Controller
         if($status)
         {
 			/* Assign Normal Users Role */
-	        $user = Sentinel::findById($status->id);
+
+            $role = Sentinel::findRoleBySlug('normal');
+
+            $user = Sentinel::findById($status->id);
+        //$user = Sentinel::getUser();
+
+            $user->roles()->attach($role);
+            
             Session::flash('success','User Created Successfully');
         }
         else
