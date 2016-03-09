@@ -19,8 +19,8 @@ class SalesController extends Controller
         $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
 
         $this->profile_pic_base_path = base_path().'/public'.config('app.project.img_path.user_profile_pic');
-        $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');      
-    }   
+        $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');
+    }
 
  	public function index()
  	{
@@ -28,7 +28,7 @@ class SalesController extends Controller
 
         $arr_user = array();
         $obj_user = Sentinel::createModel()->where('role','=','sales')->get();
-        
+
         return view('web_admin.sales_user.index',compact('page_title','obj_user'));
  	}
 
@@ -63,11 +63,11 @@ class SalesController extends Controller
 
         $validator = Validator::make($request->all(),$arr_rules);
 
-        if($validator->fails())                                                                 
+        if($validator->fails())
         {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-                                                                
+
         $first_name       = $request->input('first_name');
         $middle_name       = $request->input('middle_name');
         $last_name       = $request->input('last_name');
@@ -152,7 +152,11 @@ class SalesController extends Controller
             $enc_id=$status->id;
             $public_id = (new GeneratorController)->alphaID($enc_id);
 
+<<<<<<< HEAD
             $insert_public_id = UserModel::where('id', '=', $enc_id)->update(array('public_id' => $public_id));
+=======
+
+>>>>>>> a6fd66a0558a919e30963c9de8aa93626880b7b1
             //$user = Sentinel::create('public_id');
             $role = Sentinel::findRoleBySlug('sales');
 
@@ -170,7 +174,7 @@ class SalesController extends Controller
 
         return redirect()->back();
 	}
-    
+
 public function edit($enc_id)
  	{
  		$id = base64_decode($enc_id);
@@ -218,11 +222,11 @@ public function edit($enc_id)
         {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-     
+
         $first_name = $request->input('first_name');
         $middle_name = $request->input('middle_name');
         $last_name = $request->input('last_name');
-        $email      = $request->input('email');  
+        $email      = $request->input('email');
         $password   = $request->input('password',FALSE);
         $street_address      = $request->input('street_address');
         $gender         = $request->input('gender');
@@ -245,11 +249,11 @@ public function edit($enc_id)
         }
 
          $profile_pic = FALSE;
-        if ($request->hasFile('profile_pic')) 
+        if ($request->hasFile('profile_pic'))
         {
             $cv_valiator = Validator::make(array('profile_pic'=>$request->file('profile_pic')),array(
                                                 'profile_pic' => 'mimes:jpg,jpeg,png'
-                                            )); 
+                                            ));
 
             if ($request->file('profile_pic')->isValid() && $cv_valiator->passes())
             {
@@ -260,8 +264,8 @@ public function edit($enc_id)
                 $request->file('profile_pic')->move(
                     $this->profile_pic_base_path, $image_name
                 );
-              
-                $profile_pic = $image_name;     
+
+                $profile_pic = $image_name;
             }
             else
             {
@@ -290,26 +294,26 @@ public function edit($enc_id)
 
         if($password!=FALSE)
         {
-            $arr_data['password'] = $password;  
+            $arr_data['password'] = $password;
         }
 
         if($profile_pic!=FALSE)
         {
-            $arr_data['profile_pic'] = $profile_pic;     
+            $arr_data['profile_pic'] = $profile_pic;
         }
-        
+
         $user = Sentinel::findById($user_id);
 
         $status = Sentinel::update($user,$arr_data);
 
         if($status)
-        {   
+        {
             Session::flash('success','User Updated Successfully');
         }
         else
         {
             Session::flash('error','Problem Occured While Updating User ');
-        }   
+        }
 
         return redirect()->back();
 
@@ -366,22 +370,22 @@ public function edit($enc_id)
    public function toggle_status($enc_id,$action)
     {
         if($action=="activate")
-        {   
+        {
             $this->_activate($enc_id);
 
-            Session::flash('success','User(s) Activated Successfully');                 
+            Session::flash('success','User(s) Activated Successfully');
         }
         elseif($action=="block")
         {
-            $this->_block($enc_id); 
+            $this->_block($enc_id);
 
-            Session::flash('success','User(s) Blocked Successfully');                
+            Session::flash('success','User(s) Blocked Successfully');
         }
         elseif($action=="delete")
         {
-            $this->_delete($enc_id); 
+            $this->_delete($enc_id);
 
-            Session::flash('success','User(s) Deleted Successfully');                
+            Session::flash('success','User(s) Deleted Successfully');
         }
 
         return redirect()->back();
@@ -391,7 +395,7 @@ public function edit($enc_id)
     {
         $id = base64_decode($enc_id);
 
-        $user = Sentinel::createModel()->where('id',$id)->first(); 
+        $user = Sentinel::createModel()->where('id',$id)->first();
 
         $user->is_active = "1";
 
@@ -402,7 +406,7 @@ public function edit($enc_id)
     {
         $id = base64_decode($enc_id);
 
-        $user = Sentinel::createModel()->where('id',$id)->first(); 
+        $user = Sentinel::createModel()->where('id',$id)->first();
 
         $user->is_active = "0";
 
