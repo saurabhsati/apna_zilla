@@ -152,11 +152,10 @@ class SalesController extends Controller
             $enc_id=$status->id;
             $public_id = (new GeneratorController)->alphaID($enc_id);
 
-<<<<<<< HEAD
-            $insert_public_id = UserModel::where('id', '=', $enc_id)->update(array('public_id' => $public_id));
-=======
 
->>>>>>> a6fd66a0558a919e30963c9de8aa93626880b7b1
+            $insert_public_id = UserModel::where('id', '=', $enc_id)->update(array('public_id' => $public_id));
+
+
             //$user = Sentinel::create('public_id');
             $role = Sentinel::findRoleBySlug('sales');
 
