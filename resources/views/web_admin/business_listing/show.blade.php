@@ -434,6 +434,25 @@
                 </div>
             </div>
             <div class="form-group">
+                            <label class="col-sm-3 col-lg-2 control-label"> Business Services  <i class="red">*</i> </label>
+                            <div class="col-sm-9 col-lg-10 controls">
+                               <div class="fileupload fileupload-new business_upload_image_" data-provides="fileupload">
+                                 @foreach($business['service'] as $service)
+
+                                  <div class="fileupload-new img-thumbnail main" style="width: 300px; height: 45px;" data-service="{{ $service['name'] }}">
+                                     <input class="form-control" type="text" name="service" id="service" class="pimg"  value="{{ $service['name']}}" readonly="true"/>
+                                  </div>
+                                   <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 100px; line-height: 20px;"></div>
+
+                                  @endforeach
+                    <div class="error" id="err_delete_service"></div>
+
+                               </div>
+                                <span class='help-block'>{{ $errors->first('main_image') }}</span>
+                            </div>
+
+                         </div>
+            <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
                 <input type="hidden"  class="btn btn-primary" value="Update">
 
