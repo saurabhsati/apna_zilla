@@ -22,18 +22,21 @@ use Validator;
 class SalesAccountController extends Controller
 {
  	public function __construct()
-    {
+    {   
        $arr_except_auth_methods = array();
+       $arr_except_auth_methods[] = 'login';
+       $arr_except_auth_methods[] = 'process_login';
+       
         $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
-          $this->UserModel = new UserModel();
-          $this->BusinessListingModel = new BusinessListingModel();
-          $this->RestaurantReviewModel= new RestaurantReviewModel();
-          $this->BusinessImageUploadModel=new BusinessImageUploadModel();
-           $this->business_public_img_path = url('/')."/uploads/business/main_image/";
-           $this->business_base_img_path = base_path()."/public/uploads/business/main_image";
+        $this->UserModel = new UserModel();
+        $this->BusinessListingModel = new BusinessListingModel();
+        $this->RestaurantReviewModel= new RestaurantReviewModel();
+        $this->BusinessImageUploadModel=new BusinessImageUploadModel();
+        $this->business_public_img_path = url('/')."/uploads/business/main_image/";
+        $this->business_base_img_path = base_path()."/public/uploads/business/main_image";
 
-           $this->business_public_upload_img_path = url('/')."/uploads/business/business_upload_image/";
-          $this->business_base_upload_img_path = base_path()."/public/uploads/business/business_upload_image/";
+        $this->business_public_upload_img_path = url('/')."/uploads/business/business_upload_image/";
+        $this->business_base_upload_img_path = base_path()."/public/uploads/business/business_upload_image/";
 
         $this->profile_pic_base_path = base_path().'/public'.config('app.project.img_path.user_profile_pic');
         $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');      
@@ -47,7 +50,7 @@ class SalesAccountController extends Controller
  	}
 
     public function login()
-    {
+    {   
          return view('sales_user.account.login');
     }
 
@@ -56,6 +59,12 @@ class SalesAccountController extends Controller
         $arr_creds =  array();
         $arr_creds['email'] = $request->input('email');
         $arr_creds['password'] = $request->input('password');
+
+        $record = UserModel::where('email','=',$arr_creds['email'])
+                              ->get()->toArray();
+
+        $public_id = $record[0]['public_id'];        
+        
 
         $user = Sentinel::authenticate($arr_creds);
 
@@ -66,6 +75,7 @@ class SalesAccountController extends Controller
             $role = Sentinel::findRoleBySlug('sales');
             if(Sentinel::inRole($role))
             {
+                Session::put('public_id', $public_id);
                 return redirect('sales_user/dashboard');
             }
             else
@@ -83,10 +93,29 @@ class SalesAccountController extends Controller
 
  	public function business_listing()
  	{
- 	$page_title	='Manage Business Listing';    
-   
-    return view('sales_user.business.index',compact('page_title'));                                           
+        $page_title = "Business Listing";
+
+        $public_id = session('public_id');
+
+        $obj_business_info = BusinessListingModel::where('seller_public_id','=',$public_id)->get();
+
+        if( $obj_business_info != FALSE)
+        {
+            $arr_business_info = $obj_business_info->toArray();
+        }
+
+       $user_id = $arr_business_info[0]['user_id'];
+        
+       $obj_user_info = UserModel::where('id','=',$user_id)->get();
+
+        if($obj_user_info != FALSE)
+        {
+            $arr_user_info = $obj_user_info->toArray();
+        }
+
+        return view('sales_user.business.index',compact('page_title','arr_business_info','arr_user_info'));                                     
  	}
+
 
  	public function profile()
  	{
@@ -339,9 +368,12 @@ class SalesAccountController extends Controller
         // $arr_data['public_seller_id'] = $public_seller_id;
         $arr_data['main_image'] = $filename;
         $enc_id = $form_data['user_id'];
+        $public_id = session('public_id');
 
+        $arr_data['seller_public_id'] = $public_id;
         $arr_data['user_id'] =base64_decode($enc_id);
 
+    
         //location input array
         $arr_data['building']=$form_data['building'];
         $arr_data['street']=$form_data['street'];

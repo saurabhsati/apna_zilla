@@ -22,7 +22,7 @@ class CategoryModel extends Model
                             'cat_order',
                             'is_active',
                             'cat_logo',
-                            'is_priceable'
+                            'is_popular',
                             ];
 
     /**

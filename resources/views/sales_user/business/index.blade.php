@@ -135,72 +135,41 @@
               <thead>
                 <tr>
                   <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
-                  <th style="width:25px;">Business Image</th>
-                  <th style="width:25px;">Business Name</th>
-                  <th style="width:40px;">Business Category::Sub Category</th>
-                  <!-- <th style="width:25px;">Title</th> -->
-                  <th style="width:50px;">Full Name</th>
-                  <th style="width:25px;">Email</th>
-                  <th style="width:25px;">Mobile No</th>
-                 <!--  <th>City</th> -->
-                  <th style="width:25px;">Reviews</th>
-                  <th style="width:25px;">Deals</th>
-                  <th width="" style="text-align:center">Status</th>
-                  <th>Action</th>
+                <th>Business Name</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Mobile No</th>
+               <th>Deals</th>
+
+
                 </tr>
               </thead>
               <tbody>
 
-               @if(isset($business_listing) && sizeof($business_listing)>0)
-                  @foreach($business_listing as $business)
+               @if(isset($arr_business_info) && sizeof($arr_business_info)>0)
+                  @foreach($arr_business_info as $business)
                   <tr>
+
                     <td>
                       <input type="checkbox"
                              name="checked_record[]"
                              value="{{ base64_encode($business['id']) }}" />
                     </td>
-                    <td>
-                    <img src="{{ $business_public_img_path.'/'.$business['main_image']}}" alt=""  style="width:75px; height:50px;" />   </td>
-                    <td> {{ $business['business_name'] }} </td>
-                    <?php if(isset($business['business_cat']) && sizeof($business['business_cat'])>0){
-                    $arr=explode(',',$business['business_cat']) ;}
-                   ?>
-                  <td>
-                   <?php
 
-                   foreach ($arr as $key => $value) {
-                    foreach ($arr_sub_category as $sub_category) {
-                      if($value==$sub_category['cat_id'])
-                      {
-                         foreach ($arr_main_category as $main_category) {
+                    <td> {{ $business['business_name'] }} 
+               
+                </td>
 
-                          if($sub_category['parent']==$main_category['cat_id'])
-                          {
-                            echo $main_category['title'].' :: ';
-                          }
+                  @foreach($arr_user_info as $user)
+                
+                <td> {{ $user['first_name']." ".$user['last_name'] }} </td>
 
+                <td> {{$user['email']}} </td>
 
-                          }
-                          echo $sub_category['title'].' <br/>';
-                       }
-                    }
-                  }
-                  ?>
-                  </td>
-
-
-                 <!--    <td> {{ $business['user_details']['title'] }} </td> -->
-                    <td> {{ $business['user_details']['first_name']." ".$business['user_details']['last_name'] }} </td>
-                    <td> {{ $business['user_details']['email'] }} </td>
-                    <td> {{ $business['user_details']['mobile_no'] }} </td>
-                    <!--  <td> {{ $business['user_details']['city'] }} </td> -->
-
-
-                      @if( sizeof($business['reviews'])>0)
-                      <td><a href="{{ url('web_admin/reviews/'.base64_encode($business['id'])) }}"> ( {{ sizeof($business['reviews']) }} ) </a></td>
-                      @else
-                       <td><a href="#"> ( {{ sizeof($business['reviews']) }} ) </a></td>
-                       @endif
+                <td> 
+                {{$user['mobile_no']}} 
+                @endforeach
+                </td>
 
                     <td>
                        @if($business['is_active']!="1")
@@ -214,44 +183,11 @@
                        @endif
 
                     </td>
-                    <td width="" style="text-align:center">
-                         @if($business['is_active']=="0")
-                        <a class="btn btn-danger" href="{{ url('/web_admin/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/activate' }}">
-                            Block
-                        </a>
+                  
+                </tr>
 
-                        @elseif($business['is_active']=="1")
-                        <a  class="btn btn-success" href="{{ url('/web_admin/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/block' }}">
-                            Active
-                        </a>
-                         @elseif($business['is_active']=="2")
-                        <a  class="btn btn-info" href="{{ url('/web_admin/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/activate' }}">
-                            Pending
-                        </a>
-                        @endif
-                    </td>
-
-                    <td>
-                      <a href="{{ url('/web_admin/business_listing/show/').'/'.base64_encode($business['id']) }}" class="show-tooltip" title="Edit">
-                          <i class="fa fa-eye" ></i>
-                        </a>
-                         &nbsp;
-                        <a href="{{ url('/web_admin/business_listing/edit/').'/'.base64_encode($business['id']) }}" class="show-tooltip" title="Edit">
-                          <i class="fa fa-edit" ></i>
-                        </a>
-
-                        &nbsp;
-                        <a href="{{ url('/web_admin/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/delete' }}"
-                           onclick="javascript:return confirm_delete()" class="show-tooltip" title="Delete">
-                          <i class="fa fa-trash" ></i>
-                        </a>
-
-                    </td>
-
-                  </tr>
                   @endforeach
-                @endif
-
+                    @endif
               </tbody>
             </table>
           </div>
