@@ -69,7 +69,7 @@
           @endif
 
 @if(isset($business_data) && sizeof($business_data)>0)
-  @foreach($business_data as $business_data)
+  @foreach($business_data as $business)
 <form class="form-horizontal"
               id="validation-form"
               method="POST"
@@ -100,7 +100,7 @@
                            id="user_id"
                            data-rule-required="true"
                            readonly="true"
-                           value="{{ isset($business_data['user_details']['first_name'])?$business_data['user_details']['first_name']:'' }}"
+                           value="{{ isset($business['user_details']['first_name'])?$business['user_details']['first_name']:'' }}"
                            />
 
                     <span class='help-block'>{{ $errors->first('user_id') }}</span>
@@ -115,7 +115,7 @@
                            data-rule-required="true"
                            placeholder="Enter Business Name"
                            readonly="true"
-                           value="{{ isset($business_data['business_name'])?$business_data['business_name']:'' }}"
+                           value="{{ isset($business['business_name'])?$business['business_name']:'' }}"
                            />
                     <span class='help-block'>{{ $errors->first('business_name') }}</span>
                 </div>
@@ -126,7 +126,7 @@
                 <div class="col-sm-6 col-lg-4 controls">
                 <?php
                 $arr_selected=array();
-                 foreach($business_data['category'] as $sel_category){
+                 foreach($business['category'] as $sel_category){
                   array_push($arr_selected,$sel_category['category_id']);}
 
                    foreach ($arr_selected as $key => $value) {
@@ -159,7 +159,7 @@
                             <div class="col-sm-9 col-lg-10 controls">
                                <div class="fileupload fileupload-new" data-provides="fileupload">
                                   <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
-                                     <img src={{ $business_public_img_path.$business_data['main_image']}} alt="" />
+                                     <img src={{ $business_public_img_path.$business['main_image']}} alt="" />
                                   </div>
                                   <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
 
@@ -172,10 +172,10 @@
                             <label class="col-sm-3 col-lg-2 control-label"> Uploded Image <i class="red">*</i> </label>
                             <div class="col-sm-9 col-lg-10 controls">
                                <div class="fileupload fileupload-new" data-provides="fileupload">
-                                 @foreach($business_data['image_upload_details'] as $business_data)
+                                 @foreach($business['image_upload_details'] as $business_data_img)
 
                                   <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
-                                     <img src={{ $business_base_upload_img_path.$business_data['image_name']}} alt="" />
+                                     <img src={{ $business_base_upload_img_path.$business_data_img['image_name']}} alt="" />
                                   </div>
                                   <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                                   @endforeach
@@ -192,7 +192,7 @@
                            id="building"
                            data-rule-required="true"
                            placeholder="Enter Building"
-                           value="{{ isset($business_data['building'])?$business_data['building']:'' }}"
+                           value="{{ isset($business['building'])?$business['building']:'' }}"
                            />
                     <span class='help-block'>{{ $errors->first('building') }}</span>
                 </div>
@@ -205,7 +205,7 @@
                            id="street"
                            data-rule-required="true"
                            placeholder="Enter Street"
-                           value="{{ isset($business_data['street'])?$business_data['street']:'' }}"
+                           value="{{ isset($business['street'])?$business['street']:'' }}"
                            />
                     <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
@@ -218,7 +218,7 @@
                            id="landmark"
                            data-rule-required="true"
                            placeholder="Enter Landmark"
-                           value="{{ isset($business_data['landmark'])?$business_data['landmark']:'' }}"
+                           value="{{ isset($business['landmark'])?$business['landmark']:'' }}"
                            />
                     <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
@@ -231,7 +231,7 @@
                            id="area"
                            data-rule-required="true"
                            placeholder="Enter Area"
-                           value="{{ isset($business_data['area'])?$business_data['area']:'' }}"
+                           value="{{ isset($business['area'])?$business['area']:'' }}"
                            />
                     <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
@@ -244,7 +244,7 @@
                            id="user_id"
                            data-rule-required="true"
                            readonly="true"
-                           value="{{ isset($business_data['city_details']['city_title'])?$business_data['city_details']['city_title']:'' }}"
+                           value="{{ isset($business['city_details']['city_title'])?$business['city_details']['city_title']:'' }}"
                            />
                   <span class='help-block'>{{ $errors->first('city') }}</span>
                 </div>
@@ -257,7 +257,7 @@
                            id="user_id"
                            data-rule-required="true"
                            readonly="true"
-                           value="{{ isset($business_data['zipcode_details']['zipcode'])?$business_data['zipcode_details']['zipcode']:'' }}"
+                           value="{{ isset($business['zipcode_details']['zipcode'])?$business['zipcode_details']['zipcode']:'' }}"
                            />
                     <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
@@ -270,7 +270,7 @@
                            id="user_id"
                            data-rule-required="true"
                            readonly="true"
-                           value="{{ isset($business_data['state_details']['state_title'])?$business_data['state_details']['state_title']:'' }}"
+                           value="{{ isset($business['state_details']['state_title'])?$business['state_details']['state_title']:'' }}"
                            />
                  <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
@@ -283,7 +283,7 @@
                            id="user_id"
                            data-rule-required="true"
                            readonly="true"
-                           value="{{ isset($business_data['country_details']['country_name'])?$business_data['country_details']['country_name']:'' }}"
+                           value="{{ isset($business['country_details']['country_name'])?$business['country_details']['country_name']:'' }}"
                            />
                <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
@@ -296,7 +296,7 @@
                            id="contact_person_name"
                            data-rule-required="true"
                            placeholder="Enter Contact Person Name"
-                           value="{{ isset($business_data['contact_person_name'])?$business_data['contact_person_name']:'' }}"
+                           value="{{ isset($business['contact_person_name'])?$business['contact_person_name']:'' }}"
                            />
                     <span class='help-block'>{{ $errors->first('contact_person_name') }}</span>
                 </div>
@@ -309,7 +309,7 @@
                            id="mobile_number"
                            data-rule-required="true"
                            placeholder="Enter Mobile Number"
-                           value="{{ isset($business_data['mobile_number'])?$business_data['mobile_number']:'' }}"
+                           value="{{ isset($business['mobile_number'])?$business['mobile_number']:'' }}"
                            />
                     <span class='help-block'>{{ $errors->first('mobile_number') }}</span>
                 </div>
@@ -322,7 +322,7 @@
                            id="landline_number"
                            data-rule-required="true"
                            placeholder="Enter Landline Number"
-                           value="{{ isset($business_data['landline_number'])?$business_data['landline_number']:'' }}"
+                           value="{{ isset($business['landline_number'])?$business['landline_number']:'' }}"
                            />
                     <span class='help-block'>{{ $errors->first('landline_number') }}</span>
                 </div>
@@ -335,7 +335,7 @@
                            id="fax_no"
                            data-rule-required="true"
                            placeholder="Enter Fax No"
-                           value="{{ isset($business_data['fax_no'])?$business_data['fax_no']:'' }}"
+                           value="{{ isset($business['fax_no'])?$business['fax_no']:'' }}"
                            />
                     <span class='help-block'>{{ $errors->first('fax_no') }}</span>
                 </div>
@@ -349,7 +349,7 @@
                            id="toll_free_number"
                            data-rule-required="true"
                            placeholder="Enter Toll Free Number"
-                           value="{{ isset($business_data['toll_free_number'])?$business_data['toll_free_number']:'' }}"
+                           value="{{ isset($business['toll_free_number'])?$business['toll_free_number']:'' }}"
                            />
                     <span class='help-block'>{{ $errors->first('toll_free_number') }}</span>
                 </div>
@@ -362,7 +362,7 @@
                            id="email_id"
                            data-rule-required="true"
                            placeholder="Enter Email Id"
-                           value="{{ isset($business_data['email_id'])?$business_data['email_id']:'' }}"
+                           value="{{ isset($business['email_id'])?$business['email_id']:'' }}"
                            />
                     <span class='help-block'>{{ $errors->first('email_id') }}</span>
                 </div>
@@ -375,7 +375,7 @@
                            id="website"
                            data-rule-required="true"
                            placeholder="Enter Website"
-                           value="{{ isset($business_data['website'])?$business_data['website']:'' }}"
+                           value="{{ isset($business['website'])?$business['website']:'' }}"
                            />
                     <span class='help-block'>{{ $errors->first('website') }}</span>
                 </div>
@@ -392,7 +392,7 @@
                            id="hours_of_operation"
                            data-rule-required="true"
                            placeholder="Enter Hours Of Operation"
-                            >{{ isset($business_data['hours_of_operation'])?$business_data['hours_of_operation']:'' }}</textarea>
+                            >{{ isset($business['hours_of_operation'])?$business['hours_of_operation']:'' }}</textarea>
                     <span class='help-block'>{{ $errors->first('hours_of_operation') }}</span>
                 </div>
             </div>
@@ -404,7 +404,7 @@
                            id="company_info"
                            data-rule-required="true"
                            placeholder="Enter Company Info"
-                           >{{ isset($business_data['company_info'])?$business_data['company_info']:'' }}</textarea>
+                           >{{ isset($business['company_info'])?$business['company_info']:'' }}</textarea>
                     <span class='help-block'>{{ $errors->first('company_info') }}</span>
                 </div>
             </div>
@@ -416,7 +416,7 @@
                            id="keywords"
                            data-rule-required="true"
                            placeholder="Enter Keywords"
-                           >{{ isset($business_data['keywords'])?$business_data['keywords']:'' }}</textarea>
+                           >{{ isset($business['keywords'])?$business['keywords']:'' }}</textarea>
                     <span class='help-block'>{{ $errors->first('keywords') }}</span>
                 </div>
             </div>
@@ -428,11 +428,30 @@
                            id="youtube_link"
                            data-rule-required="true"
                            placeholder="Enter Youtube Link"
-                           value="{{ isset($business_data['youtube_link'])?$business_data['youtube_link']:'' }}"
+                           value="{{ isset($business['youtube_link'])?$business['youtube_link']:'' }}"
                            />
                     <span class='help-block'>{{ $errors->first('youtube_link') }}</span>
                 </div>
             </div>
+            <div class="form-group">
+                            <label class="col-sm-3 col-lg-2 control-label"> Business Services  <i class="red">*</i> </label>
+                            <div class="col-sm-9 col-lg-10 controls">
+                               <div class="fileupload fileupload-new business_upload_image_" data-provides="fileupload">
+                                 @foreach($business['service'] as $service)
+
+                                  <div class="fileupload-new img-thumbnail main" style="width: 300px; height: 45px;" data-service="{{ $service['name'] }}">
+                                     <input class="form-control" type="text" name="service" id="service" class="pimg"  value="{{ $service['name']}}" readonly="true"/>
+                                  </div>
+                                   <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 100px; line-height: 20px;"></div>
+
+                                  @endforeach
+                    <div class="error" id="err_delete_service"></div>
+
+                               </div>
+                                <span class='help-block'>{{ $errors->first('main_image') }}</span>
+                            </div>
+
+                         </div>
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
                 <input type="hidden"  class="btn btn-primary" value="Update">

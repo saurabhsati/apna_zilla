@@ -9,11 +9,7 @@
                <span></span>
             </div>
             <div class="cate-count-block">
-<?php
-/*echo'<pre>';
-print_r($arr_category);
-print_r($sec_arr);*/
-?>
+
                <ul>
                   @if(isset($arr_category) && sizeof($arr_category)>0)
                   @foreach($arr_category as $category)
@@ -24,7 +20,7 @@ print_r($sec_arr);*/
                      <?php
                      ?>
 
-                     <span class="cate-count"><?php if(array_key_exists($category['cat_id'],$sec_arr)){echo '('.$sec_arr[$category['cat_id']].')';}else{ echo "(0)";}?> </span>
+                     <span class="cate-count"><?php if(array_key_exists($category['cat_id'],$category_business)){echo '('.$category_business[$category['cat_id']].')';}else{ echo "(0)";}?> </span>
 
                      </a>
                   </li>

@@ -27,37 +27,40 @@ class HomeController extends Controller
  		}
 
  		$arr_business = array();
- 		$obj_business = BusinessListingModel::select('business_cat','id')->get();
- 		if($obj_business)
+ 		$obj_business_listing = BusinessListingModel::with(['category'])->get();
+ 		if($obj_business_listing)
  		{
- 			$arr_business = $obj_business->toArray();
+ 			$arr_business = $obj_business_listing->toArray();
 
  		}
-
- 		$sec_arr=array();
- 		foreach($arr_business as $business)
+ 		$category_business=array();
+ 		foreach ($arr_business as $business)
  		{
- 			$arr=array();
- 			$arr[]=explode(',',$business['business_cat']);
 
-
- 			foreach($arr[0] as $key =>$value)
+ 			if(sizeof($business['category'])>0)
  			{
+	 			foreach ($business['category'] as $key => $cat)
+	 			{
+	 				if(!array_key_exists($cat['category_id'], $category_business))
+	 				{
+	 				  $category_business[$cat['category_id']]=1;
+	 			    }
+	 			    else
+	 			    {
+	 			    	$category_business[$cat['category_id']]=$category_business[$cat['category_id']]+1;
+	 			    }
 
- 				if(!array_key_exists($value,$sec_arr))
- 				{
- 					$sec_arr[$value]='1';
  				}
- 				else
- 				{
- 					$v = $sec_arr[$value]+1;
- 					$sec_arr[$value]=$v;
- 				}
+	 		}
+	 		else
+	 		{
+	 			$category_business[$value['id']]='0';
+	 		}
 
- 			}
 
  		}
+
  		 $cat_img_path = url('/').config('app.project.img_path.category');
- 		return view('front.home',compact('page_title','arr_category','arr_category','sec_arr','cat_img_path'));
+ 		return view('front.home',compact('page_title','arr_category','category_business','cat_img_path'));
     }
 }
