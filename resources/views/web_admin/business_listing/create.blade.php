@@ -98,7 +98,7 @@
                 <label class="col-sm-3 col-lg-2 control-label" for="user_id">Select User Unique Email Id<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                 <select class="form-control"  name="user_id" id="user_id">
-                <option>Select User Unique Email Id</option>
+                <option value="">Select User Unique Email Id</option>
                  @if(isset($arr_user) && sizeof($arr_user)>0)
                  @foreach($arr_user as $user)
                  <option value="{{ isset($user['id'])?$user['id']:'' }}" >{{ isset($user['email'] )?$user['email']:'' }}

@@ -98,7 +98,7 @@
                 <option value="">Select User</option>
                  @if(isset($arr_user) && sizeof($arr_user)>0)
                  @foreach($arr_user as $user)
-                 <option value="{{ isset($user['id'])?$user['id']:'' }}" {{ $user['id']==$business['user_id']?'selected=selected':'' }}>{{ isset($user['first_name'] )?$user['first_name']:'' }}
+                 <option value="{{ isset($user['id'])?$user['id']:'' }}" {{ $user['id']==$business['user_id']?'selected=selected':'' }}>{{ isset($user['email'] )?$user['email']:'' }}
                  </option>
                   @endforeach
                   @endif
