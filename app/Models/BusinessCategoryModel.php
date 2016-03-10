@@ -11,4 +11,5 @@ class BusinessCategoryModel extends Model
                          'business_id',
                          'category_id'
                          ];
+
 }

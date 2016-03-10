@@ -138,10 +138,10 @@
                            <div class="heading_bor"></div>
                            <div class="menu_name">
                               <ul>
-                                 <li><a href="{{ url('/') }}/CMS/aboutus" class="{{ Request::segment(2)=='aboutus'? 'act':'' }}"><i class="fa fa-square"></i> About Us</a></li>
+                                 <li><a href="{{ url('/') }}/page/aboutus" class="{{ Request::segment(2)=='aboutus'? 'act':'' }}"><i class="fa fa-square"></i> About Us</a></li>
                                  <li><a href="#"><i class="fa fa-square" class=""></i>Careers</a></li>
-                                 <li><a href="{{ url('/') }}/CMS/page/terms-of-use" class="{{ Request::segment(2)=='terms-of-use'? 'act':'' }}"><i class="fa fa-square"></i>Terms &amp; Conditions</a></li>
-                                 <li><a href="{{ url('/') }}/CMS/page/privacy" class="{{ Request::segment(2)=='privacy'? 'act':'' }}"><i class="fa fa-square"></i>Privacy Policy </a></li>
+                                 <li><a href="{{ url('/') }}/page/terms-of-use" class="{{ Request::segment(2)=='terms-of-use'? 'act':'' }}"><i class="fa fa-square"></i>Terms &amp; Conditions</a></li>
+                                 <li><a href="{{ url('/') }}/page/privacy" class="{{ Request::segment(2)=='privacy'? 'act':'' }}"><i class="fa fa-square"></i>Privacy Policy </a></li>
                                  <li><a href="{{ url('/') }}/contact_us" class="{{ Request::segment(1)=='contact_us'? 'act':'' }}"><i class="fa fa-square"></i> Contact Us</a></li>
                               </ul>
                            </div>
