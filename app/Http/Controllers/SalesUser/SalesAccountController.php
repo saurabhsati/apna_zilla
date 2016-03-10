@@ -117,13 +117,6 @@ class SalesAccountController extends Controller
  	}
 
 
- 	public function profile()
- 	{
- 		$page_title = "Sales User Profile";
-
- 		return view('sales_user.account.profile',compact('page_title'));
- 	}
-
  	
     public function create_user(Request $request,$enc_id=FALSE)
     {
@@ -435,7 +428,133 @@ class SalesAccountController extends Controller
 
     }
 
-public function multi_action(Request $request)
+
+    public function edit_profile()
+    {
+        if ($user = Sentinel::getUser())
+        {
+            $page_title ="Edit Profile";
+        
+            $sales_user_arr=$user->toArray();
+            return view('sales_user.account.profile',compact('page_title','sales_user_arr'));
+        }
+    }
+
+     public function update_profile(Request $request)
+    {
+        $obj_sales_user = Sentinel::getUser();////Get Sales User's all information
+        
+        if($obj_sales_user)
+        {
+            $arr_sales_user = $obj_sales_user->toArray();
+        }
+
+        $arr_rules = array();
+        $arr_rules['office_landline']   = 'required';
+        $arr_rules['street_address']    = 'required';
+
+        $validator = Validator::make($request->all(),$arr_rules);
+
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+         $profile_pic = $arr_sales_user ['profile_pic']?$arr_sales_user ['profile_pic']: "default.jpg";
+
+        if ($request->hasFile('profile_pic'))
+        {
+            $profile_pic_valiator = Validator::make(array('profile_pic'=>$request->file('profile_pic')),array(
+                                                'profile_pic' => 'mimes:jpg,jpeg,png'
+                                            ));
+
+            if ($request->file('profile_pic')->isValid() && $profile_pic_valiator->passes())
+            {
+
+                $cv_path = $request->file('profile_pic')->getClientOriginalName();
+                $image_extension = $request->file('profile_pic')->getClientOriginalExtension();
+                $image_name = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
+                $request->file('profile_pic')->move(
+                    $this->profile_pic_base_path, $image_name
+                );
+
+                $profile_pic = $image_name;
+            }
+            else
+            {
+                return redirect()->back();
+            }
+
+        }
+        $profile_pic    =$profile_pic;
+        $office_landline      = $request->input('office_landline');
+        $street_address = $request->input('street_address');
+        $update_arr =array();
+        $update_arr=array('profile_pic'=>$profile_pic,'office_landline'=>$office_landline,'street_address'=>$street_address);
+        $update_profile = Sentinel::update($obj_sales_user,$update_arr);
+
+        if($update_profile)
+            {
+                Session::flash('success','Profile Updated Successfully');
+            }
+            else
+            {
+                Session::flash('error','Error while updating profile');
+            }
+
+            return redirect()->back();
+    }
+
+    public function change_password()
+    {
+        $page_title = 'Change Password';
+        return view('sales_user.account.change_password',compact('page_title'));
+    }
+
+    public function update_password(Request $request)
+    {
+        $obj_sales_user = Sentinel::getUser();////Get Admin all information
+
+        $arr_rules                      = array();
+        $arr_rules['current_password']  = 'required';
+        $arr_rules['new_password']      = 'required';
+        $arr_rules['confirm_password']  = 'required';
+
+        $validator = Validator::make($request->all(),$arr_rules);
+
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $old_password     = $request->input('current_password');
+        $new_password     = $request->input('new_password');
+        $confirm_password = $request->input('confirm_password');
+
+        if(Hash::check($old_password,$obj_sales_user->password))////check old_password==detabase password
+        {
+
+            $update_password = Sentinel::update($obj_sales_user,['password'=>$new_password]);
+            if($update_password)
+            {
+                Session::flash('success','Password Changed Successfully');
+
+            }
+            else
+            {
+                Session::flash('error','Error while changing password');
+            }
+
+            return redirect()->back();
+        }
+        else
+        {
+            Session::flash('error','Incorrect Old Password');
+            return redirect()->back();
+        }
+    }
+
+    public function multi_action(Request $request)
     {
         $arr_rules = array();
         $arr_rules['multi_action'] = "required";

@@ -105,8 +105,8 @@
            <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="category">Category<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control" name="category" id="category"  placeholder="Category Name" data-rule-required="true" value="{{ $arr_data['cat_meta_keyword'] }}" />
-                    <span class='help-block'>{{ $errors->first('cat_meta_keyword') }}</span>
+                    <input class="form-control" name="category" id="category"  placeholder="Category Name" data-rule-required="true" value="{{ $arr_data['title'] }}" />
+                    <span class='help-block'>{{ $errors->first('title') }}</span>
                 </div>
             </div>
 

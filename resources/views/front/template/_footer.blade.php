@@ -77,6 +77,15 @@
 
       <!--registration popup start here-->
       <div id="reg_poup" class="modal fade" role="dialog" style="overflow:auto;">
+
+                     <form id="validation-form" 
+                           method="POST"
+                           action="{{ url('/web_admin/front_users/store') }}" 
+                           >
+
+      {{ csrf_field() }}
+
+
          <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -87,21 +96,26 @@
                <div class="modal-body">
                   <div class="login_box">
                      <div class="title_login">New account sign up</div>
+
                      <div class="user_box">
-                        <div class="label_form">User Name</div>
-                        <input type="text" class="input_box" placeholder="Enter User Name"/>
+                        <div class="label_form">First Name</div>
+                        <input type="text" name="first_name" class="input_box" placeholder="Enter First Name"/>
+                     </div>
+                     <div class="user_box">
+                        <div class="label_form">Last Name</div>
+                        <input type="text" name="last_name" class="input_box" placeholder="Enter Last Name"/>
                      </div>
                      <div class="user_box">
                         <div class="label_form">Email</div>
-                        <input type="text" class="input_box" placeholder="Enter Email Address"/>
+                        <input type="text" name="email" class="input_box" placeholder="Enter Email Address"/>
                      </div>
                      <div class="user_box">
                         <div class="label_form">Password</div>
-                        <input type="password" class="input_box" placeholder="Enter Password"/>
+                        <input type="password" name="password" class="input_box" placeholder="Enter Password"/>
                      </div>
                      <div class="user_box">
                         <div class="label_form">Confirm Password</div>
-                        <input type="password" class="input_box" placeholder="Enter Confirm Password"/>
+                        <input type="password" name="confirm_password" class="input_box" placeholder="Enter Confirm Password"/>
                      </div>
                      <div class="terms_service"><input type="checkbox" class="chk_bx"/> Yes, I agree with Terms of services</div>
                      <div class="clr"></div>
@@ -117,8 +131,10 @@
                <div class="clr"></div>
             </div>
          </div>
+         </form>
       </div>
       <!--registration popup end here-->
+
  <!--Footer-->
       <footer>
          <div class="footer_links">

@@ -175,7 +175,13 @@ class CategoryController extends Controller
         $password   = $request->input('password',FALSE);
         $cat_meta_description = $request->input('cat_meta_description');
         $is_active = $request->input('is_active');
-        $is_popular = $request->input('is_popular');
+        $check_popular = $request->input('is_popular');
+
+        if($check_popular=="on")
+        $is_popular = 1;
+
+        else
+        $is_popular = 0;
 
         $cat_img = FALSE;
         if ($request->hasFile('cat_img'))
@@ -191,7 +197,7 @@ class CategoryController extends Controller
                 $image_extension = $request->file('cat_img')->getClientOriginalExtension();
                 $image_name = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
                 $request->file('cat_img')->move(
-                    $this->cat_img_path, $image_name
+                $this->cat_img_path, $image_name
                 );
 
                 $cat_img = $image_name;
@@ -203,7 +209,7 @@ class CategoryController extends Controller
         }
         /* Duplication Check*/
         $arr_data = [
-            'cat_meta_keyword' => $category,
+            'title' => $category,
             'cat_meta_description' => $cat_meta_description,
             'is_active' => $is_active,
             'is_popular' => $is_popular,
@@ -220,7 +226,7 @@ class CategoryController extends Controller
         }
 
 
-        if(CategoryModel::where('cat_meta_keyword',$arr_data['cat_meta_keyword'])->where('cat_id','<>',$id)->get()->count()>0)
+        if(CategoryModel::where('title',$arr_data['title'])->where('cat_id','<>',$id)->get()->count()>0)
         {
             Session::flash('error','Category Already Exists');
             return redirect()->back();

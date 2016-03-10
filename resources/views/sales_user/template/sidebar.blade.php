@@ -17,7 +17,7 @@
                 <b class="arrow fa fa-angle-right"></b>
             </a>
             <ul class="submenu">
-                <li style="display: block;"><a href="{{ url('/sales_user/profile')}}">Manage</a> </li>
+                <li style="display: block;"><a href="{{ url('/sales_user/edit_profile')}}">Manage</a> </li>
             </ul>
         </li>
 
