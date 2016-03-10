@@ -124,9 +124,12 @@
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="business_cat">Business Categories<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                <?php if(isset($business_data['business_cat']) && sizeof($business_data['business_cat'])>0){
-                    $arr=explode(',',$business_data['business_cat']) ;}
-                   foreach ($arr as $key => $value) {
+                <?php
+                $arr_selected=array();
+                 foreach($business_data['category'] as $sel_category){
+                  array_push($arr_selected,$sel_category['category_id']);}
+
+                   foreach ($arr_selected as $key => $value) {
                     foreach ($arr_sub_category as $sub_category) {
                       if($value==$sub_category['cat_id'])
                       {

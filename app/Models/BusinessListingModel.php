@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class BusinessListingModel extends Model
 {
     //
@@ -69,6 +69,14 @@ class BusinessListingModel extends Model
     public function image_upload_details()
     {
         return $this->hasMany('App\Models\BusinessImageUploadModel','business_id','id');
+    }
+     public function services()
+    {
+        return $this->hasMany('App\Models\BusinessImageUploadModel','business_id','id');
+    }
+    public function service()
+    {
+        return $this->hasMany('App\Models\BusinessServiceModel','business_id','id');
     }
 
 }

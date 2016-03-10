@@ -125,7 +125,7 @@
             <div class="form-group">
             <label class="col-sm-3 col-lg-2 control-label" for="business_cat">Business Category <i class="red">*</i></label>
             <div class="col-sm-6 col-lg-4 controls">
-            <select class="form-control" name="business_cat[]" id="business_cat" multiple ="true">
+            <select class="form-control" name="business_cat[]" id="business_cat" onchange="updateCategoryOptGroup(this)" multiple="">
             <option> Select Business Categories</option>
              @if(isset($arr_category) && sizeof($arr_category)>0)
              @foreach($arr_category as $category)
@@ -133,9 +133,8 @@
                       <optgroup label="{{ $category['title'] }}" >
                           @foreach($arr_category as $subcategory)
                             @if( $subcategory['parent']==$category['cat_id'])
-                              <option  name="sub_cat" id="sub_cat" value="{{ $subcategory['cat_id'] }}">
-                             <!--  <input type="checkbox" name="main_cat" id="main_cat" value="{{ $subcategory['cat_id'] }}"> -->
-                                 {{ $subcategory['title'] }}
+                              <option  name="sub_cat" id="sub_cat" value="{{ $subcategory['cat_id'] }}" >
+                             {{ $subcategory['title'] }}
                               </option  name="sub_cat" id="sub_cat">
                              @endif
                              @endforeach
@@ -144,7 +143,7 @@
               @endif
               @endforeach
               @endif
-            </select>
+            </select><a href="javascript:void(0);" onclick="clearCategoryOptGroup(this)">Clear Selected Option</a>
             <span class='help-block'>{{ $errors->first('business_cat') }}</span>
             </div>
             </div>
@@ -477,6 +476,43 @@
                     <span class='help-block'>{{ $errors->first('youtube_link') }}</span>
                 </div>
             </div>
+
+            <div class="form-group">
+                          <label class="col-sm-3 col-lg-2 control-label" for="building">
+                           <a href="" class="add_serc">Add Services</a></label>
+                         </div>
+                          <div class="form-group add_more_service" style="display: none;">
+                          <div class="col-sm-5 col-md-7" style="float:right;">
+                             <a href="javascript:void(0);" id='add-service'>
+                                 <span class="glyphicon glyphicon-plus-sign" style="font-size: 20px;"></span>
+                             </a>
+                            <span style="margin-left:05px;">
+                            <a href="javascript:void(0);" id='remove-service'>
+                                <span class="glyphicon glyphicon-minus-sign" style="font-size: 20px;"></span>
+                            </a>
+                            </span>
+                           </div>
+                              <label class="col-sm-3 col-lg-2 control-label">Add More Business Services <i class="red">*</i> </label>
+                              <div class="col-sm-6 col-lg-4 controls">
+
+                              <input class="form-control" type="text" name="business_service[]" id="business_service" class="pimg"   />
+                              <div class="error" id="error_business_service">{{ $errors->first('business_service') }}</div>
+
+                              <div class="clr"></div><br/>
+                                <div class="error" id="error_set_default"></div>
+                                <div class="clr"></div>
+
+                             <div id="append_service" class="class-add"></div>
+                              <div class="error_msg" id="error_business_image" ></div>
+                              <div class="error_msg" id="error_business_image1" ></div>
+                             <label class="col-sm-3 col-lg-2 control-label"></label>
+
+                              </div>
+                              </div>
+
+
+
+
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
                 <input type="submit"  class="btn btn-primary" value="Add">
@@ -544,5 +580,73 @@
      html.remove();
             });
 
+function updateCategoryOptGroup(ref)
+{
+  var arr_optgroup_ref = $(ref).find('optgroup');
+  var current_option_grp =$(ref).find("option:selected").parent('optgroup');
+
+  $.each(arr_optgroup_ref,function(index,optgroup)
+  {
+    if($(optgroup).attr('label')!=$(current_option_grp).attr('label'))
+    {
+      $(optgroup).attr('disabled','disabled');
+    }
+    else
+    {
+      $(optgroup).removeAttr('disabled');
+    }
+
+
+  });
+
+}
+function clearCategoryOptGroup()
+{
+  var arr_optgroup_ref = $('#business_cat').find('optgroup');
+    $.each(arr_optgroup_ref,function(index,optgroup)
+  {
+          $(optgroup).removeAttr('disabled');
+
+  });
+}
+ $('.add_serc').click(function(){
+      $(".add_more_service").removeAttr("style");
+return false;
+    });
+$('#add-service').click(function(){
+  flag=1;
+
+            var img_val = jQuery("input[name='business_service[]']:last").val();
+
+            var img_length = jQuery("input[name='business_service[]']").length;
+
+            if(img_val == "")
+            {
+                  $('#error_business_service').css('margin-left','120px');
+                  $('#error_business_service').show();
+                  $('#error_business_service').fadeIn(3000);
+                  document.getElementById('error_business_service').innerHTML="The Services is required.";
+                  setTimeout(function(){
+                  $('#error_business_service').fadeOut(4000);
+                  },3000);
+
+                 flag=0;
+                 return false;
+            }
+
+              var service_html='<div>'+
+                       '<input type="text" class="form-control" name="business_service[]" id="business_service" class="pimg" data-rule-required="true"  />'+
+                       '<div class="error" id="error_business_image">{{ $errors->first("business_service") }}</div>'+
+                       '</div>'+
+                       '<div class="clr"></div><br/>'+
+                       '<div class="error" id="error_set_default"></div>'+
+                       '<div class="clr"></div>';
+                  jQuery("#append_service").append(service_html);
+
+});
+    $('#remove-service').click(function(){
+     var html= $("#append_service").find("input[name='business_service[]']:last");
+     html.remove();
+            });
 </script>
 @stop

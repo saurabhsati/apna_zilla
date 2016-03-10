@@ -13,7 +13,7 @@ use App\Models\BusinessImageUploadModel;
 use App\Models\UserModel;
 use App\Models\CategoryModel;
 use App\Models\RestaurantReviewModel;
-
+use App\Models\BusinessServiceModel;
 use App\Models\CountryModel;
 use App\Models\StateModel;
 use App\Models\ZipModel;
@@ -148,9 +148,7 @@ class BusinessListingController extends Controller
         $arr_data['business_added_by']=$form_data['business_added_by'];
         $arr_data['business_name']=$form_data['business_name'];
         $business_cat=$form_data['business_cat'];
-
-
-
+        $business_service=$form_data['business_service'];
         if($request->hasFile('main_image'))
         {
             $fileName       = $form_data['main_image'];
@@ -215,7 +213,12 @@ class BusinessListingController extends Controller
             $insert_data->category()->attach($bussiness_category->save());*/
         }
 
-
+        foreach ($business_service as $key => $value)
+        {
+            $arr_serv_data['business_id']=$business_id;
+            $arr_serv_data['name']=$value;
+            $insert_data = BusinessServiceModel::create($arr_serv_data);
+        }
 
 
          $files = $request->file('business_image');
@@ -300,7 +303,8 @@ class BusinessListingController extends Controller
         {
             $arr_upload_image = $obj_upload_image_res->toArray();
         }
-        $business_data=BusinessListingModel::with(['category','user_details','city_details','zipcode_details','country_details','state_details','image_upload_details'])->where('id',$id)->get()->toArray();
+
+        $business_data=BusinessListingModel::with(['category','user_details','city_details','zipcode_details','country_details','state_details','image_upload_details','service'])->where('id',$id)->get()->toArray();
  		//dd($business_data);
          return view('web_admin.business_listing.edit',compact('page_title','business_data','arr_user','arr_category','business_public_img_path','business_base_upload_img_path','arr_state','arr_country','arr_zipcode','arr_city','arr_upload_image'));
 
@@ -308,7 +312,10 @@ class BusinessListingController extends Controller
  	public function update(Request $request,$enc_id)
  	{
  		$id	=base64_decode($enc_id);
- 		$form_data	= array();
+        $arr_all  = array();
+        $arr_all=$request->all();
+        $business_service=$arr_all['business_service'];
+        $form_data	= array();
  		$business_data = array();
  		$arr_rules = array();
 
@@ -316,7 +323,23 @@ class BusinessListingController extends Controller
  		$arr_rules['business_cat'] = "required";
  		$arr_rules['user_id'] = "required";
 
-
+        //location fields
+        $arr_rules['building']='required';
+        $arr_rules['street']='required';
+        $arr_rules['landmark']='required';
+        $arr_rules['area']='required';
+        $arr_rules['city']='required';
+        $arr_rules['pincode']='required';
+        $arr_rules['state']='required';
+        $arr_rules['country']='required';
+        //contact info fields
+        $arr_rules['contact_person_name']='required';
+        $arr_rules['mobile_number']='required';
+        $arr_rules['landline_number']='required';
+        $arr_rules['fax_no']='required';
+        $arr_rules['toll_free_number']='required';
+        $arr_rules['email_id']='required';
+        $arr_rules['website']='required';
 
         $arr_rules['hours_of_operation']='required';
     	$arr_rules['company_info']='required';
@@ -334,15 +357,32 @@ class BusinessListingController extends Controller
         $user=Sentinel::createModel();
 
         $business_data['business_name']      = $request->input('business_name');
-        $business_data['business_cat']=$request->input('business_cat');
         $business_data['user_id']=$request->input('user_id');
-        $business_cat=$request->input('business_cat');
-        if(sizeof($business_cat)>0){
-        $business_categories=implode(',',$business_cat);
-        $business_data['business_cat']=$business_categories;
 
+        $business_category = BusinessCategoryModel::where('business_id',$id);
+        $res= $business_category->delete();
+        if($res)
+        {
+         $business_cat=$request->input('business_cat');
+
+            foreach ($business_cat as $key => $value)
+            {
+                $arr_cat_data['business_id']=$id;
+                $arr_cat_data['category_id']=$value;
+                $insert_data = BusinessCategoryModel::create($arr_cat_data);
+            }
         }
-         $filename=$request->input('old_image');
+         $ser_count = count($business_service);
+        if($ser_count>0){
+            foreach ($business_service as $key => $value)
+            {
+                $arr_serv_data['business_id']=$id;
+                $arr_serv_data['name']=$value;
+                $insert_data = BusinessServiceModel::create($arr_serv_data);
+            }
+       }
+
+        $filename=$request->input('old_image');
 		if($request->hasFile('main_image'))
         {
             $fileName       = $request->file('main_image');
@@ -389,11 +429,7 @@ class BusinessListingController extends Controller
     	$business_data['company_info']=$request->input('company_info');
     	$business_data['keywords']=$request->input('keywords');
     	$business_data['youtube_link']=$request->input('youtube_link');
-         foreach ($business_cat as $key => $value) {
-          $arr_cat_data['business_id']=$business_id;
-          $arr_cat_data['category_id']=$value;
-          $insert_data=BusinessCategoryModel::create($arr_cat_data);
-        }
+
         $business_data=BusinessListingModel::where('id',$id)->update($business_data);
 
          $files = $request->file('business_image');
@@ -451,6 +487,19 @@ class BusinessListingController extends Controller
         }
 
     }
+    public function delete_service(Request $request)
+    {
+       $id=$request->input('id');
+        $service = BusinessServiceModel::where('id',$id);
+        $res= $service->delete();
+        if($res)
+        {
+
+            echo "done";
+
+        }
+
+    }
     public function show($enc_id)
     {
         $id = base64_decode($enc_id);
@@ -468,7 +517,7 @@ class BusinessListingController extends Controller
             $arr_sub_category = $obj_sub_category->toArray();
         }
         $business_data = array();
-        $business_data=BusinessListingModel::with(['user_details','city_details','zipcode_details','country_details','state_details','categoty_details','image_upload_details'])->where('id',$id)->get()->toArray();
+        $business_data=BusinessListingModel::with(['user_details','city_details','zipcode_details','country_details','state_details','category','image_upload_details'])->where('id',$id)->get()->toArray();
          return view('web_admin.business_listing.show',compact('page_title','business_data','business_public_img_path','business_base_upload_img_path','arr_main_category','arr_sub_category'));
 
     }

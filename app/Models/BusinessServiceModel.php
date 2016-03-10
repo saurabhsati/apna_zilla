@@ -4,12 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-class BusinessCategoryModel extends Model
+class BusinessServiceModel extends Model
 {
-     protected $table='business_category';
-     protected $fillable=[
+	protected $table='business_service';
+    protected $fillable=[
                          'business_id',
-                         'category_id'
+                         'name'
                          ];
-
 }

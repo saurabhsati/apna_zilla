@@ -213,7 +213,8 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_business_listing_status' 	  ,'uses' 	=>'Admin\BusinessListingController@toggle_status']);
 			Route::post('multi_action',					 ['as' => 'admin_business_listing_multiaction','uses' 	=>'Admin\BusinessListingController@multi_action']);
 			Route::any('store',							 ['as' => 'admin_business_listing_store' 	  ,'uses' 	=>'Admin\BusinessListingController@store']);
-			Route::post('delete_gallery',				 ['as' => 'admin_business_listing_delete' 	  ,'uses' 	=>'Admin\BusinessListingController@delete_gallery']);
+			Route::post('delete_gallery',				 ['as' => 'admin_business_listing_gallery_delete' 	  ,'uses' 	=>'Admin\BusinessListingController@delete_gallery']);
+			Route::post('delete_service',				 ['as' => 'admin_business_listing_service_delete' 	  ,'uses' 	=>'Admin\BusinessListingController@delete_service']);
 
 
 		});
@@ -386,8 +387,8 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 	Route::group(['prefix'=>'/sales_user','middleware'=>['web']], function ()
 
-	{    
-        Route::get('/','SalesUser\SalesAccountController@login');  
+	{
+        Route::get('/','SalesUser\SalesAccountController@login');
 		Route::get('login',									['as' => 'sales_user_login'             		,'uses' =>'SalesUser\SalesAccountController@login']);
 		Route::post('process_login',				  		['as' => 'sales_user_process_login'          	,'uses' =>'SalesUser\SalesAccountController@process_login']);
 		Route::get('dashboard',								['as' => 'sales_user_dashboard'             	,'uses' =>'SalesUser\SalesAccountController@index']);
