@@ -14,10 +14,10 @@
 
 Route::get('/','Front\HomeController@index');
 
-Route::group(array('prefix' => '/CMS'), function()
+Route::group(array('prefix' => '/page'), function()
 {
 	Route::get('aboutus',							 	 ['as' => 'about_us' 		,'uses' => 'Front\CMSController@aboutus']);
-	Route::get('page/{slug}',							 ['as' => 'static_page' 		,'uses' => 'Front\CMSController@page']);
+	Route::get('{slug}',							 ['as' => 'static_page' 		,'uses' => 'Front\CMSController@page']);
 });
 
 Route::get('contact_us','Front\ContactUsController@index');

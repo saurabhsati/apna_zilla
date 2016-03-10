@@ -130,9 +130,10 @@
                       <optgroup label="{{ $category['title'] }}" >
                           @foreach($arr_category as $subcategory)
                             @if( $subcategory['parent']==$category['cat_id'])
-                           <?php  $subcategories=explode(',',$business['business_cat']);
+                           <?php  echo '<pre>';
+                           print_r($business['category']);
                            ?>
-                              <option  name="sub_cat" id="sub_cat" value="{{ $subcategory['cat_id'] }}"  <?php if(in_array($subcategory['cat_id'],$subcategories)){ echo 'selected="selected"'; }?> >
+                              <option  name="sub_cat" id="sub_cat" value="{{ $subcategory['cat_id'] }}"  <?php if(in_array($subcategory['cat_id'],$business['category'])){ echo 'selected="selected"'; }?> >
                              <!--  <input type="checkbox" name="main_cat" id="main_cat" value="{{ $subcategory['cat_id'] }}"> -->
                                  {{ $subcategory['title'] }}
                               </option  name="sub_cat" id="sub_cat">

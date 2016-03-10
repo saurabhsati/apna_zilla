@@ -39,9 +39,10 @@ class BusinessListingModel extends Model
     {
     	return $this->belongsTo('App\Models\UserModel','user_id','id');
     }
-     public function categoty_details()
+
+    public function category()
     {
-    	return $this->belongsTo('App\Models\CategoryModel','business_cat','cat_id');
+    	return $this->hasMany('App\Models\BusinessCategoryModel','business_id','id');
     }
     public function reviews()
     {
@@ -69,4 +70,5 @@ class BusinessListingModel extends Model
     {
         return $this->hasMany('App\Models\BusinessImageUploadModel','business_id','id');
     }
+
 }

@@ -156,16 +156,12 @@
                     <td>
                     <img src="{{ $business_public_img_path.'/'.$business['main_image']}}" alt=""  style="width:75px; height:50px;" />   </td>
                     <td> {{ $business['business_name'] }} </td>
-                    <?php
-                    if(isset($business['business_cat']) && sizeof($business['business_cat'])>0){
-                    $arr=explode(',',$business['business_cat']) ;}
-                   ?>
+
                   <td>
                    <?php
-
-                   foreach ($arr as $key => $value) {
-                    foreach ($arr_sub_category as $sub_category) {
-                      if($value==$sub_category['cat_id'])
+                 foreach ($business['category'] as $business_category) {
+                 foreach ($arr_sub_category as $sub_category) {
+                      if($business_category['category_id']==$sub_category['cat_id'])
                       {
                          foreach ($arr_main_category as $main_category) {
 
@@ -178,8 +174,8 @@
                           }
                           echo $sub_category['title'].' <br/>';
                        }
-                    }
-                  }
+                     }
+                   }
                   ?>
                   </td>
 
