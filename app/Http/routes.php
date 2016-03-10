@@ -14,6 +14,12 @@
 
 Route::get('/','Front\HomeController@index');
 
+/*--------------------------Front-login-section-------------------------------*/
+
+Route::any('/facebook/register','Front\AuthController@register_via_facebook');
+
+/*---------------------------------End----------------------------------------*/
+
 Route::group(array('prefix' => '/page'), function()
 {
 	Route::get('aboutus',							 	 ['as' => 'about_us' 		,'uses' => 'Front\CMSController@aboutus']);

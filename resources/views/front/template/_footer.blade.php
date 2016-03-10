@@ -20,7 +20,9 @@
                      </div>
                      <div class="login_social">
                         <div class="title_login"> Log in with social accounts</div>
-                        <img src="{{ url('/') }}/assets/front/images/fb_login.png" alt="facebook login"/>
+                        <a href="javascript:void(0);" onclick="FBLogin()">
+                           <img src="{{ url('/') }}/assets/front/images/fb_login.png" alt="facebook login"/>
+                        </a>
                         <img src="{{ url('/') }}/assets/front/images/twitter_login.png" alt="facebook login"/>
                      </div>
                      <div class="clr"></div>
@@ -288,6 +290,11 @@
              });
          });
       </script>
+
+      @if(!Auth::check())
+      <script type="text/javascript" language="javascript" src="{{ url('/') }}/js/front/fb_auth.js"></script>
+      @endif
+
         <!-- Listing details Tabbing End -->
          <script src="{{ url('/') }}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>
             <link href="{{ url('/') }}/assets/front/css/easy-responsive-tabs.css" rel="stylesheet" type="text/css" />
