@@ -356,24 +356,19 @@
                             </a>
                         </li>-->
                         <li>
-                            <a href="{{ url('/web_admin/edit_profile')}}">
+                            <a href="{{ url('/sales_user/edit_profile')}}">
                                 <i class="fa fa-cog"></i>
                                 Edit Profile
                             </a>
                         </li>
                         <li>
-                            <a href="{{ url('/web_admin/change_password') }}">
+                            <a href="{{ url('/sales_user/change_password') }}">
                                 <i class="fa fa-cog"></i>
                                 Change Password
                             </a>
                         </li>
 
-                        <li>
-                            <a href="{{ url('/web_admin/siteSettings')}}">
-                                <i class="fa fa-wrench"></i>
-                                Website Settings
-                            </a>
-                        </li>
+                      
 
                         <li class="divider visible-xs"></li>
 
@@ -402,7 +397,7 @@
                         <li class="divider"></li>
 
                         <li>
-                            <a href="{{ url('/web_admin/logout') }}">
+                            <a href="{{ url('/sales_user/logout') }}">
                                 <i class="fa fa-off"></i>
                                 Logout
                             </a>

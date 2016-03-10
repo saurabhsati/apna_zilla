@@ -286,6 +286,11 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 	});
 
+	Route::group(['prefix' => 'front_users'], function()
+
+	{
+		Route::post('store',								['as' => 'admin_front_users_store'    		    ,'uses' =>'Admin\FrontUserController@store']);
+	});
 
 
 	/* Categories Module */
@@ -386,15 +391,18 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 	                       /* Sales User Dashboard*/
 
 	Route::group(['prefix'=>'/sales_user','middleware'=>['web']], function ()
-
 	{
-        Route::get('/','SalesUser\SalesAccountController@login');
-		Route::get('login',									['as' => 'sales_user_login'             		,'uses' =>'SalesUser\SalesAccountController@login']);
+
+        Route::get('/',										['as' => 'sales_user_login'						,'uses' =>'SalesUser\SalesAccountController@login']);
+	    Route::get('login',									['as' => 'sales_user_login'             		,'uses' =>'SalesUser\SalesAccountController@login']);
 		Route::post('process_login',				  		['as' => 'sales_user_process_login'          	,'uses' =>'SalesUser\SalesAccountController@process_login']);
 		Route::get('dashboard',								['as' => 'sales_user_dashboard'             	,'uses' =>'SalesUser\SalesAccountController@index']);
 		Route::get('profile',								['as' => 'sales_user_profile'            	    ,'uses' =>'SalesUser\SalesAccountController@profile']);
+		Route::get('edit_profile',							['as' => 'sales_user_edit_profile'            	,'uses' =>'SalesUser\SalesAccountController@edit_profile']);
+		Route::post('update_profile',						['as' => 'sales_user_update_profile'            ,'uses' =>'SalesUser\SalesAccountController@update_profile']);
+		Route::get('change_password',						['as' => 'sales_user_change_password'           ,'uses' =>'SalesUser\SalesAccountController@change_password']);
+		Route::post('update_password',						['as' => 'sales_user_update_password'           ,'uses' =>'SalesUser\SalesAccountController@update_password']);
 		Route::get('logout',								['as' => 'sales_user_logout'            	    ,'uses' =>'SalesUser\SalesAccountController@logout']);
-
 
 		Route::group(array('prefix' => '/users'), function()
 		{
