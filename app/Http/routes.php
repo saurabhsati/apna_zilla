@@ -13,6 +13,11 @@
 
 
 Route::get('/','Front\HomeController@index');
+Route::group(['prefix'=>'/city','middleware'=>['web']], function ()
+{
+  Route::get('all-options/ct-{cat_id}','Front\CategorySearchController@get_business');
+  Route::get('{cat_slug}/{cat_id}','Front\CategorySearchController@index');
+});
 
 Route::group(array('prefix' => '/page'), function()
 {

@@ -78,9 +78,9 @@
       <!--registration popup start here-->
       <div id="reg_poup" class="modal fade" role="dialog" style="overflow:auto;">
 
-                     <form id="validation-form" 
+                     <form id="validation-form"
                            method="POST"
-                           action="{{ url('/web_admin/front_users/store') }}" 
+                           action="{{ url('/web_admin/front_users/store') }}"
                            >
 
       {{ csrf_field() }}

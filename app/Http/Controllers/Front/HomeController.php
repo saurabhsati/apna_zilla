@@ -20,10 +20,17 @@ class HomeController extends Controller
     	$page_title	='Home';
 
     	$arr_category = array();
- 		$obj_category = CategoryModel::where('is_popular','1')->get();
- 		if($obj_category)
+    	$where_arr=array('is_popular'=>1,'parent'=>0);
+    	$obj_main_category = CategoryModel::where($where_arr)->get();
+ 		if($obj_main_category)
  		{
- 			$arr_category = $obj_category->toArray();
+ 			$arr_category = $obj_main_category->toArray();
+ 		}
+
+ 		$obj_sub_category = CategoryModel::where('parent','!=',0)->get();
+ 		if($obj_sub_category)
+ 		{
+ 			$sub_category = $obj_sub_category->toArray();
  		}
 
  		$arr_business = array();
@@ -59,8 +66,9 @@ class HomeController extends Controller
 
 
  		}
-
+ 		//dd($sub_category);
  		 $cat_img_path = url('/').config('app.project.img_path.category');
- 		return view('front.home',compact('page_title','arr_category','category_business','cat_img_path'));
+ 		return view('front.home',compact('page_title','arr_category','sub_category','category_business','cat_img_path'));
     }
+
 }

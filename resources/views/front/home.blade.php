@@ -9,21 +9,42 @@
                <span></span>
             </div>
             <div class="cate-count-block">
-
+            <?php
+            //echo '<pre>';
+            //print_r($arr_category);
+            ?>
                <ul>
                   @if(isset($arr_category) && sizeof($arr_category)>0)
                   @foreach($arr_category as $category)
+                   <?php $count=0; ?>
                   <li>
-                     <a href="#">
-                     <span class="cate-img"><img src="{{ $cat_img_path.'/'.$category['cat_img']}}" alt="" height="19px" width="30px" /></span>
-                     <span class="cate-txt">{{ ucfirst($category['title']) }}</span>
+                     <a href="{{ url('/') }}/city/{{$category['cat_slug']}}/{{$category['cat_id']}}">
+                     <span class="cate-img"><img src="{{ $cat_img_path.'/'.$category['cat_img']}}" alt="" height="30px" width="30px" /></span>
+                     <span class="cate-txt">{{ ucfirst($category['title'])}}</span>
+                     <span class="cate-count">
+                      @foreach($sub_category as $subcategory)
                      <?php
-                     ?>
-
-                     <span class="cate-count"><?php if(array_key_exists($category['cat_id'],$category_business)){echo '('.$category_business[$category['cat_id']].')';}else{ echo "(0)";}?> </span>
-
+                      if($subcategory['parent']==$category['cat_id'])
+                           {
+                               if(array_key_exists($subcategory['cat_id'],$category_business))
+                                    {
+                                       if($count==0)
+                                       {
+                                            $count=$category_business[$subcategory['cat_id']];
+                                       }
+                                       else
+                                       {
+                                              $count=$count+$category_business[$subcategory['cat_id']];
+                                       }
+                                    }
+                           }
+                      ?>
+                      @endforeach
+                      <?php echo '('.$count.')';?>
+                    </span>
                      </a>
                   </li>
+
                   @endforeach
                   @endif
                   <!-- <li>
