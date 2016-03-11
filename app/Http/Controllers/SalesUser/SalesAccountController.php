@@ -605,7 +605,7 @@ class SalesAccountController extends Controller
 
    public function logout()
     {
-        Sentinel::logout();
+        Session::flush(); 
         return redirect('/sales_user');
     }
 
