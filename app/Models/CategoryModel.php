@@ -70,8 +70,8 @@ class CategoryModel extends Model
     {
       return $this->hasMany('App\Models\AttributeModel','fk_category_id','cat_id');
     }
-     public function business_details()
-    {
-        return $this->belongsTo('App\Models\BusinessListingModel','cat_id','business_cat');
-    }
+
+
+
+
 }

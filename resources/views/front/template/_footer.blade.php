@@ -23,7 +23,10 @@
                         <a href="javascript:void(0);" onclick="FBLogin()">
                            <img src="{{ url('/') }}/assets/front/images/fb_login.png" alt="facebook login"/>
                         </a>
-                        <img src="{{ url('/') }}/assets/front/images/twitter_login.png" alt="facebook login"/>
+                       <br/><br/>
+                        <a href="javascript:void(0);" onclick="login()">
+                           <img src="{{ url('/') }}/assets/front/images/twitter_login.png" alt="facebook login"/>
+                        </a>
                      </div>
                      <div class="clr"></div>
                   </div>
@@ -80,12 +83,12 @@
       <!--registration popup start here-->
       <div id="reg_poup" class="modal fade" role="dialog" style="overflow:auto;">
 
+
                      <form class="form-horizontal" 
                            id="validation-form" 
                            method="POST"
                            action="{{ url('/front_users/store') }}" 
                            enctype="multipart/form-data"
-
                            >
 
       {{ csrf_field() }}
@@ -293,6 +296,97 @@
                  fit: true
              });
          });
+      </script>
+
+      <script type="text/javascript">
+         
+         var url = "{{ url('/') }}";
+
+      (function() {
+         var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+         po.src = 'https://apis.google.com/js/client.js?onload=onLoadCallback';
+         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+      })();
+
+      function onLoadCallback()
+      {
+          gapi.client.setApiKey('AIzaSyA0RjSTag9y7TEXq2mLM__ISj1X0pIonK0'); //set your API KEY
+          gapi.client.load('plus', 'v1',function(){});//Load Google + API
+      }
+
+      function login() 
+      {
+        var myParams = {
+          'clientid' : '279126872962-83k1t2br3lseplje5lipejn1qp1n4khs.apps.googleusercontent.com', // You need to set client id
+          'cookiepolicy' : 'single_host_origin',
+          'callback' : 'loginCallback', //callback function
+          'approvalprompt':'force',
+          'scope' : 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read'
+        };
+        gapi.auth.signIn(myParams);
+      }
+
+      function logout()
+      {
+          gapi.auth.signOut();
+          location.reload();
+      }
+
+      function loginCallback(result)
+      {
+          if(result['status']['signed_in'])
+          { 
+              var request = gapi.client.plus.people.get(
+              {
+                  'userId': 'me'
+              });
+
+          request.execute(function (resp)
+          {
+              var email = '';
+
+              if(resp['emails'])
+              {
+                  for(i = 0; i < resp['emails'].length; i++)
+                  {
+                      if(resp['emails'][i]['type'] == 'account')
+                      {
+                          email = resp['emails'][i]['value'];
+                      }
+                  }
+              }
+
+              var token = $('input[name="_token"]').val();
+
+              var name = resp['displayName'];
+              var image = resp['image']['url'];
+           
+              jQuery.ajax({
+                      url:url+'/google_plus/register',
+                      type:'POST',
+                      data:'email='+email+'&name='+name+'&image='+image+'&_token='+token,
+                      dataType:'json',
+                    
+                      success:function(response)
+                      {
+                          console.log(response);
+                          if(response.status == "SUCCESS")
+                          {
+                            location.href= url+'/login';
+                            // location.href= url+'/myaccount/';
+                          }
+                          else
+                          {
+                            alert("Error While Creating Account");   
+                          }
+                        
+                      },
+                });
+            });
+          }   
+       
+      }
+
       </script>
 
       @if(!Auth::check())

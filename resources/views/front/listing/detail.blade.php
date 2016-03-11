@@ -1,7 +1,7 @@
 @extends('front.template.master')
 
 @section('main_section')
-@include('front.listing._search_top_nav')
+@include('front.template._search_top_nav')
 <div class="gry_container">
       <div class="container">
          <div class="row">

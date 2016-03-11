@@ -12,4 +12,17 @@ class BusinessCategoryModel extends Model
                          'category_id'
                          ];
 
+   public function business_details()
+    {
+        return $this->belongsTo('App\Models\BusinessListingModel','cat_id','business_cat');
+
+    }
+    // Get business by category
+   public function business_by_category()
+    {
+
+        return $this->hasMany('App\Models\BusinessListingModel','id', 'business_id');
+    }
+
+
 }

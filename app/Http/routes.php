@@ -13,10 +13,6 @@
 
 
 
-
-
-
-
 Route::group(['prefix' => '/','middleware'=>['web']], function()
 {
 	Route::get('/','Front\HomeController@index');
@@ -24,6 +20,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	/*--------------------------Front-login-section-------------------------------*/
 
 	Route::any('/facebook/register','Front\AuthController@register_via_facebook');
+	Route::any('/google_plus/register','Front\AuthController@register_via_google_plus');
 
 	/*---------------------------------End----------------------------------------*/
 	
@@ -44,6 +41,13 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	Route::group(array('prefix' => '/front_users'), function()
 	{
 		Route::any('store',								['as' => 'front_users_store'    		    ,'uses' =>'Front\UserController@store']);
+	});
+
+
+	Route::group('prefix'=>'/city'), function ()
+	{
+	  Route::get('all-options/ct-{cat_id}','Front\CategorySearchController@get_business');
+	  Route::get('{cat_slug}/{cat_id}','Front\CategorySearchController@index');
 	});
 
 });
@@ -311,9 +315,6 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::post('sub_categories/multi_action',					['as' => 'admin_sub_categories_block' 			,'uses' => 'Admin\CategoryController@multi_action']);
 
 		});
-
-
-
 
 
 			/* Admin Membership Module */

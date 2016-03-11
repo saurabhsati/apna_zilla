@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\BusinessCategoryModel;
 class BusinessListingModel extends Model
 {
     //
@@ -44,6 +45,11 @@ class BusinessListingModel extends Model
     {
     	return $this->hasMany('App\Models\BusinessCategoryModel','business_id','id');
     }
+    public function get_sub_category()
+    {
+        return $this->hasMany('App\Models\BusinessCategoryModel','business_id','id');
+    }
+
     public function reviews()
     {
         //(forign key ,local key)
@@ -78,5 +84,8 @@ class BusinessListingModel extends Model
     {
         return $this->hasMany('App\Models\BusinessServiceModel','business_id','id');
     }
+
+
+
 
 }
