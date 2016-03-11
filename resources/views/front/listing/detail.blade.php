@@ -20,17 +20,18 @@
 
        <div class="container">
          <div class="row">
-                <div class="col-sm-12 col-md-9 col-lg-9">
-        <div class="p_detail_view">
-            <div class="product_detail_banner" style="background: url('{{ url('/') }}/assets/front/images/banner_detail.jpg') repeat scroll 0px 0px;">
-              <div class="product_title"><a href="#">Britannia Wigan Hotel</a></div>
-                <div class="rating_star"><ul><li><i class="fa fa-star-o ylow"></i></li><li><i class="fa fa-star-o ylow"></i></li><li><i class="fa fa-star-o ylow"></i></li><li><i class="fa fa-star-o"></i></li><li><i class="fa fa-star-o"></i></li></ul>out of 3 <a href="#">reviews</a></div>
-                <div class="p_details"><i class="fa fa-phone"></i><span>  86 10 6538 5537, +86 10 6538 5537</span></div>
-                <div class="p_details"><i class="fa fa-map-marker"></i> <span>Kharadi Road, Kharadi, UK - 411014,
-Near Eon IT Park And Zensar (<a href="#">map</a>)</span></div>
 
-                <div class="p_details lst"><i class="fa fa-clock-o"></i><span>Today  11:30 am - 11:30 pm    <a href="#">View All</a></span>
-                <div class="add_det"><i class="fa fa-globe"></i> www.britanniawigan.com</div>
+         @if(isset($arr_business_details) && sizeof($arr_business_details)>0)
+                <div class="col-sm-12 col-md-9 col-lg-9">
+            <div class="p_detail_view">
+            <div class="product_detail_banner" style="background: url('{{ url('/') }}/assets/front/images/banner_detail.jpg') repeat scroll 0px 0px;">
+              <div class="product_title"><a href="#">{{$arr_business_details['business_name']}}</a></div>
+                <div class="rating_star"><ul><li><i class="fa fa-star-o ylow"></i></li><li><i class="fa fa-star-o ylow"></i></li><li><i class="fa fa-star-o ylow"></i></li><li><i class="fa fa-star-o"></i></li><li><i class="fa fa-star-o"></i></li></ul>out of 3 <a href="#">reviews</a></div>
+                <div class="p_details"><i class="fa fa-phone"></i><span> {{$arr_business_details['landline_number']}} &nbsp; {{$arr_business_details['mobile_number']}}</span></div>
+                <div class="p_details"><i class="fa fa-map-marker"></i> <span>{{$arr_business_details['building']}} &nbsp; {{$arr_business_details['street']}}<br/> {{$arr_business_details['landmark']}} &nbsp; {{$arr_business_details['area']}} (<a href="#">map</a>)</span></div>
+
+                <div class="p_details lst"><i class="fa fa-clock-o"></i><span>Today  11:30 am - 11:30 pm    <a href="javascript:void(0);" onclick="show_opening_times()">View All</a></span>
+                <div class="add_det"><i class="fa fa-globe"></i> {{$arr_business_details['website']}}</div>
                 <div class="enquiry"><i class="fa fa-envelope"></i> Send Enquiry By Email</div>
                 </div>
 
@@ -242,18 +243,18 @@ Near Eon IT Park And Zensar (<a href="#">map</a>)</span></div>
                <div class="clearfix"></div>
                     </div>
 
-                 <div class="categories_sect sidebar-nav">
+                 <div class="categories_sect sidebar-nav" id="business_times_div" style="display:none ;">
 
                  <div class="sidebar-brand"><img src="{{ url('/') }}/assets/front/images/hours-of-operation.png" alt="Hours of Operation"/>Hours of Operation<span class="spe_mobile2"><a href="#"></a></span></div>
                  <div class="bor_head">&nbsp;</div>
                  <ul class="spe_submobile2">
-                    <li class="brdr"><a href="#">Monday : 09:00 - 22:00</a></li>
-                  <li class="brdr"><a href="#">Tuesday : 09:00 - 22:00</a></li>
-                  <li class="brdr"><a href="#">Wednesday : 09:00 - 22:00</a></li>
-                  <li class="brdr"><a href="#">Thursday : 09:00 - 22:00</a></li>
-                  <li class="brdr"><a href="#">Friday : 09:00 - 22:00</a></li>
-                  <li class="brdr"><a href="#">Saturday : 09:00 - 22:00</a></li>
-                  <li class="brdr"><a href="#">Sunday : 09:00 - 21:00</a></li>
+                  <li class="brdr"><a href="#">Monday   : {{$arr_business_details['business_times']['mon_open']}} - {{$arr_business_details['business_times']['mon_close']}}</a></li>
+                  <li class="brdr"><a href="#">Tuesday  : {{$arr_business_details['business_times']['tue_open']}} - {{$arr_business_details['business_times']['tue_close']}}</a></li>
+                  <li class="brdr"><a href="#">Wednesday: {{$arr_business_details['business_times']['wed_open']}} - {{$arr_business_details['business_times']['wed_close']}}</a></li>
+                  <li class="brdr"><a href="#">Thursday : {{$arr_business_details['business_times']['thus_open']}} - {{$arr_business_details['business_times']['thus_close']}}</a></li>
+                  <li class="brdr"><a href="#">Friday   : {{$arr_business_details['business_times']['fri_open']}} - {{$arr_business_details['business_times']['fri_close']}}</a></li>
+                  <li class="brdr"><a href="#">Saturday : {{$arr_business_details['business_times']['sat_open']}} - {{$arr_business_details['business_times']['sat_close']}}</a></li>
+                  <li class="brdr"><a href="#">Sunday   : {{$arr_business_details['business_times']['sun_open']}} - {{$arr_business_details['business_times']['sun_close']}}</a></li>
 
 
                </ul>
@@ -281,10 +282,12 @@ Near Eon IT Park And Zensar (<a href="#">map</a>)</span></div>
                <div class="clearfix"></div>
                     </div>
             </div>
+            @else
+            <span>No Hotel/Restaurant Found</span>
+            @endif
+        </div>
 
-
-
-         </div>
+        
 
         <div class="row">
            <div class="col-sm-12 col-md-12 col-lg-12">
@@ -356,4 +359,12 @@ Near Eon IT Park And Zensar (<a href="#">map</a>)</span></div>
        </div>
 
       </div>
+
+      <script type="text/javascript">
+        function show_opening_times()
+        {
+          $('#business_times_div').show();  
+        }
+        
+      </script>
       @endsection

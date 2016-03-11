@@ -52,11 +52,20 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	  Route::get('{cat_slug}/{cat_id}','Front\CategorySearchController@index');
 	});
 
+
 	Route::group(array('prefix' => '/forgot_password'), function()
 	{
 	Route::post('forgot_password','Front\PasswordController@postEmail');	 
 	Route::get('password_reset/{code}','Front\PasswordController@getReset');	 
 	Route::post('process_reset_password','Front\PasswordController@postReset');	 
+
+	});
+
+
+	Route::group(array('prefix' => '/listing'), function()
+	{
+		Route::get('/',							 	 ['as' => 'listing' 		,'uses' => 'Front\ListingController@index']);
+		Route::get('details/{enc_id}',					 ['as' => 'list_details' 		,'uses' => 'Front\ListingController@list_details']);
 
 	});
 

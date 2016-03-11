@@ -458,6 +458,175 @@
                     <span class='help-block'>{{ $errors->first('hours_of_operation') }}</span>
                 </div>
             </div>
+
+            <hr/>
+
+            <div class="form-group"> 
+                <label class="col-sm-3 col-lg-2 control-label" ></label>
+                <div class="col-sm-3 col-lg-3 controls">
+                    <h4><b>Business Opening Hours</b></h4>
+                </div>
+            </div> 
+
+             <div class="form-group"> 
+                <label class="col-sm-3 col-lg-2 control-label" >Monday<i class="red">*</i></label>   
+               <div class="col-sm-3 col-lg-3 controls">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="mon_in" id="mon_in" type="text" data-rule-required="true" value="{{ isset($business['business_times']['mon_open'])?$business['business_times']['mon_open']:'' }}">
+                    </div>
+                </div>
+
+                <div class="col-sm-5 col-lg-3 controls">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="mon_out" id="mon_out" type="text" data-rule-required="true" value="{{ isset($business['business_times']['mon_close'])?$business['business_times']['mon_close']:'' }}">
+                    </div>
+                </div>
+               
+            </div>
+
+            <div class="form-group"> 
+                <label class="col-sm-3 col-lg-2 control-label" >Tuesday<i class="red">*</i></label>   
+               <div class="col-sm-3 col-lg-3 controls">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="tue_in" id="tue_in" type="text" data-rule-required="true" value="{{ isset($business['business_times']['tue_open'])?$business['business_times']['tue_open']:'' }}">
+                    </div>
+                </div>
+
+                <div class="col-sm-5 col-lg-3 controls">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="tue_out" id="tue_out" type="text" data-rule-required="true" value="{{ isset($business['business_times']['tue_close'])?$business['business_times']['tue_close']:'' }}">
+                    </div>
+                </div>
+                
+            </div> 
+
+            <div class="form-group"> 
+                <label class="col-sm-3 col-lg-2 control-label" >Wednesday<i class="red">*</i></label>   
+               <div class="col-sm-3 col-lg-3 controls">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="wed_in" id="wed_in" type="text" data-rule-required="true" value="{{ isset($business['business_times']['wed_open'])?$business['business_times']['wed_open']:'' }}">
+                    </div>
+                </div>
+
+                <div class="col-sm-5 col-lg-3 controls">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="wed_out" id="wed_out" type="text" data-rule-required="true" value="{{ isset($business['business_times']['wed_close'])?$business['business_times']['wed_close']:'' }}">
+                    </div>
+                </div>
+                
+            </div> 
+
+            <div class="form-group"> 
+                <label class="col-sm-3 col-lg-2 control-label" >Thursday<i class="red">*</i></label>   
+               <div class="col-sm-3 col-lg-3 controls">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="thus_in" id="thus_in" type="text" data-rule-required="true" value="{{ isset($business['business_times']['thus_open'])?$business['business_times']['thus_open']:'' }}">
+                    </div>
+                </div>
+
+                <div class="col-sm-5 col-lg-3 controls">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="thus_out" id="thus_out" type="text" data-rule-required="true" value="{{ isset($business['business_times']['thus_close'])?$business['business_times']['thus_close']:'' }}">
+                    </div>
+                </div>
+
+            </div> 
+
+            <div class="form-group"> 
+                <label class="col-sm-3 col-lg-2 control-label" >Friday<i class="red">*</i></label>   
+               <div class="col-sm-3 col-lg-3 controls">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="fri_in" id="fri_in" type="text" data-rule-required="true" value="{{ isset($business['business_times']['fri_open'])?$business['business_times']['fri_open']:'' }}">
+                    </div>
+                </div>
+
+                <div class="col-sm-5 col-lg-3 controls">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="fri_out" id="fri_out" type="text" data-rule-required="true" value="{{ isset($business['business_times']['fri_close'])?$business['business_times']['fri_close']:'' }}">
+                    </div>
+                </div>
+
+            </div> 
+
+            <div class="form-group"> 
+                <label class="col-sm-3 col-lg-2 control-label" >Saturday<i class="red">*</i></label>   
+               <div class="col-sm-3 col-lg-3 controls">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="sat_in" id="sat_in" type="text" data-rule-required="true" value="{{ isset($business['business_times']['sat_open'])?$business['business_times']['sat_open']:'' }}">
+                    </div>
+                </div>
+
+                <div class="col-sm-5 col-lg-3 controls">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="sat_out" id="sat_out" type="text" data-rule-required="true" value="{{ isset($business['business_times']['sat_close'])?$business['business_times']['sat_close']:'' }}">
+                    </div>
+                </div>
+
+            </div> 
+
+            
+            <div class="form-group">
+               
+            <label class="col-sm-3 col-lg-2 control-label" >Sunday<i class="red">*</i></label> 
+               
+               <div class="col-sm-3 col-lg-3 controls">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#"> 
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="sun_in" id="sun_in" type="text" data-rule-required="true" value="{{ isset($business['business_times']['sun_open'])?$business['business_times']['sun_open']:'' }}">
+                    </div>
+                </div>
+
+                <div class="col-sm-5 col-lg-3 controls">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="sun_out" id="sun_out" type="text" data-rule-required="true" value="{{ isset($business['business_times']['sun_close'])?$business['business_times']['sun_close']:'' }}">
+                    </div>
+                </div>
+     
+            </div>    
+
+            <hr/>
+
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="company_info">Company Info<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
@@ -468,6 +637,20 @@
                            placeholder="Enter Company Info"
                            >{{ isset($business['company_info'])?$business['company_info']:'' }}</textarea>
                     <span class='help-block'>{{ $errors->first('company_info') }}</span>
+                </div>
+            </div>
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="establish_year">Establish Year<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input type="text" class="form-control"
+                           name="establish_year"
+                           id="establish_year"
+                           data-rule-required="true"
+                           data-rule-number="true"
+                           data-rule-minlength="0"
+                           placeholder="Enter Establish Year"
+                          value="{{ isset($business['establish_year'])?$business['establish_year']:'' }}"/>
+                    <span class='help-block'>{{ $errors->first('establish_year') }}</span>
                 </div>
             </div>
             <div class="form-group">
