@@ -17,6 +17,7 @@ Route::get('/','Front\HomeController@index');
 /*--------------------------Front-login-section-------------------------------*/
 
 Route::any('/facebook/register','Front\AuthController@register_via_facebook');
+Route::any('/google_plus/register','Front\AuthController@register_via_google_plus');
 
 /*---------------------------------End----------------------------------------*/
 
