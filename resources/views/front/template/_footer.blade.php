@@ -83,12 +83,16 @@
       <!--registration popup start here-->
       <div id="reg_poup" class="modal fade" role="dialog" style="overflow:auto;">
 
-                     <form id="validation-form"
+
+                     <form class="form-horizontal" 
+                           id="validation-form" 
                            method="POST"
-                           action="{{ url('/web_admin/front_users/store') }}"
+                           action="{{ url('/front_users/store') }}" 
+                           enctype="multipart/form-data"
                            >
 
       {{ csrf_field() }}
+
 
 
          <div class="modal-dialog">
@@ -120,7 +124,7 @@
                      </div>
                      <div class="user_box">
                         <div class="label_form">Confirm Password</div>
-                        <input type="password" name="confirm_password" class="input_box" placeholder="Enter Confirm Password"/>
+                        <input type="password" name="password_confirmation" class="input_box" placeholder="Enter Confirm Password"/>
                      </div>
                      <div class="terms_service"><input type="checkbox" class="chk_bx"/> Yes, I agree with Terms of services</div>
                      <div class="clr"></div>
