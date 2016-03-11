@@ -27,12 +27,14 @@ class CategorySearchController extends Controller
     {
     	$page_title	='Business List';
     	$arr_business = array();
- 		$obj_business_listing = BusinessCategoryModel::with('business_by_category')->where('category_id',$cat_id)->get();
+ 		$obj_business_listing = BusinessCategoryModel::where('category_id',$cat_id)->get();
  		if($obj_business_listing)
  		{
+            $obj_business_listing->load(['business_by_category']);
  			$arr_business = $obj_business_listing->toArray();
 
  		}
+        //dd($arr_business);
 		return view('front.listing.index',compact('page_title','arr_business'));
     }
 }

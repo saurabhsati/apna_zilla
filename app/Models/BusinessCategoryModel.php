@@ -18,10 +18,10 @@ class BusinessCategoryModel extends Model
 
     }
     // Get business by category
-   public function business_by_category()
+    public function business_by_category()
     {
 
-        return $this->hasMany('App\Models\BusinessListingModel','id', 'business_id');
+        return $this->belongsTo('App\Models\BusinessListingModel','business_id','id');
     }
 
 

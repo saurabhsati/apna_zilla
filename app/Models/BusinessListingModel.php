@@ -33,6 +33,7 @@ class BusinessListingModel extends Model
                          'website',
                          'hours_of_operation',
                          'company_info',
+                         'establish_year',
                          'keywords',
                          'youtube_link',
                          ];
@@ -85,7 +86,10 @@ class BusinessListingModel extends Model
         return $this->hasMany('App\Models\BusinessServiceModel','business_id','id');
     }
 
-
+    public function business_times()
+    {
+        return $this->belongsTo('App\Models\BusinessTimeModel','id','business_id');
+    }
 
 
 }

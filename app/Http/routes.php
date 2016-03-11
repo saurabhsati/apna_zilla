@@ -37,7 +37,7 @@ Route::get('contact_us','Front\ContactUsController@index');
 Route::group(array('prefix' => '/listing'), function()
 {
 	Route::get('/',							 	 ['as' => 'listing' 		,'uses' => 'Front\ListingController@index']);
-	Route::get('details',					 ['as' => 'list_details' 		,'uses' => 'Front\ListingController@list_details']);
+	Route::get('details/{enc_id}',					 ['as' => 'list_details' 		,'uses' => 'Front\ListingController@list_details']);
 });
 
 /* Admin Routes */
