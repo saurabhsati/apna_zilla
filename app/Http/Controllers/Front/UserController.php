@@ -77,4 +77,12 @@ class UserController extends Controller
 
         return redirect()->back();
     }
+
+
+
+    public function profile()
+    {
+        return view('front.user.profile');
+    }
+
  }

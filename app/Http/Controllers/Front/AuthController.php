@@ -231,4 +231,33 @@ class AuthController extends Controller
             return $send_mail;
         }  
     }
+
+       public function process_login(Request $request)
+    {
+        $arr_creds =  array();
+        $arr_creds['email'] = $request->input('email');
+        $arr_creds['password'] = $request->input('password');
+
+        $user = Sentinel::authenticate($arr_creds);
+
+        if($user)
+        {
+            /* Check if Users Role is Admin */
+            $role = Sentinel::findRoleBySlug('normal');
+            if(Sentinel::inRole($role))
+            {
+                return redirect('front_users/profile');
+            }
+            else
+            {
+                Session::flash('error','Not Sufficient Privileges');
+                return redirect()->back();
+            }
+        }
+        else
+        {
+            Session::flash('error','Invalid Credentials');
+            return redirect()->back();
+        }
+    }
 }

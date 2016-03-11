@@ -39,15 +39,25 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	});	
 
 	Route::group(array('prefix' => '/front_users'), function()
-	{
+	{	
 		Route::any('store',								['as' => 'front_users_store'    		    ,'uses' =>'Front\UserController@store']);
+		Route::post('process_login',					['as' => 'front_users_process_login'        ,'uses' =>'Front\AuthController@process_login']);
+		Route::get('profile',							['as' => 'front_users_profile'        		,'uses' =>'Front\UserController@profile']);
+
 	});
 
-
-	Route::group('prefix'=>'/city'), function ()
+	Route::group(array('prefix' => '/city'), function ()
 	{
 	  Route::get('all-options/ct-{cat_id}','Front\CategorySearchController@get_business');
 	  Route::get('{cat_slug}/{cat_id}','Front\CategorySearchController@index');
+	});
+
+	Route::group(array('prefix' => '/forgot_password'), function()
+	{
+	Route::post('forgot_password','Front\PasswordController@postEmail');	 
+	Route::get('password_reset/{code}','Front\PasswordController@getReset');	 
+	Route::post('process_reset_password','Front\PasswordController@postReset');	 
+
 	});
 
 });
