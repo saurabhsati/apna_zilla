@@ -11,8 +11,6 @@
 |
 */
 
-
-
 Route::group(['prefix' => '/','middleware'=>['web']], function()
 {
 	Route::get('/','Front\HomeController@index');
@@ -34,15 +32,16 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 	Route::group(array('prefix' => '/listing'), function()
 	{
-		Route::get('/',							 	 ['as' => 'listing' 		,'uses' => 'Front\ListingController@index']);
+		Route::get('/',							 ['as' => 'listing' 		,'uses' => 'Front\ListingController@index']);
 		Route::get('details',					 ['as' => 'list_details' 		,'uses' => 'Front\ListingController@list_details']);
 	});	
 
 	Route::group(array('prefix' => '/front_users'), function()
 	{	
-		Route::any('store',								['as' => 'front_users_store'    		    ,'uses' =>'Front\UserController@store']);
-		Route::post('process_login',					['as' => 'front_users_process_login'        ,'uses' =>'Front\AuthController@process_login']);
-		Route::get('profile',							['as' => 'front_users_profile'        		,'uses' =>'Front\UserController@profile']);
+		Route::any('store',								['as' => 'front_users_store'    		  		    ,'uses' =>'Front\UserController@store']);
+		Route::post('process_login',					['as' => 'front_users_process_login'        		,'uses' =>'Front\AuthController@process_login']);
+		Route::get('profile',							['as' => 'front_users_profile'        				,'uses' =>'Front\UserController@profile']);
+		Route::post('store_personal_details',			['as' => 'front_users_store_personal_details'       ,'uses' =>'Front\UserController@store_personal_details']);
 
 	});
 
@@ -53,13 +52,9 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	});
 
 
-	Route::group(array('prefix' => '/forgot_password'), function()
-	{
 	Route::post('forgot_password','Front\PasswordController@postEmail');	 
 	Route::get('password_reset/{code}','Front\PasswordController@getReset');	 
-	Route::post('process_reset_password','Front\PasswordController@postReset');	 
-
-	});
+	Route::post('process_reset_password','Front\PasswordController@postReset');
 
 
 	Route::group(array('prefix' => '/listing'), function()
@@ -396,15 +391,12 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 	/*-------------End--------------------------*/
 
 
-
-
 	/*-------------Website Setting Module------------*/
 	Route::group(['prefix'=>'site_settings'], function (){
 		Route::get('/',								['as' => 'admin_site_settings_index'  ,'uses' => 'Admin\SiteSettingController@index']);
 		Route::post('update/{enc_id}',				['as' => 'admin_site_settings_update' ,'uses' => 'Admin\SiteSettingController@update']);
 	});
 	/*-------------End--------------------------*/
-
 
 });
 

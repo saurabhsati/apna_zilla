@@ -1,23 +1,28 @@
 <?php
 namespace App\Http\Controllers\Front;
-
+use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\UserModel;
+use App\Models\PasswordResetModel;
 
 use Session;
 use Sentinel;
 use Validator;
 use DB;
 
-class UserController extends Controller
+class PasswordController extends Controller
 {
+
+     use ResetsPasswords;
+
+    protected $redirectTo = '/';
+
+
  	public function __construct()
  	{
 
- 		// $arr_except_auth_methods = array();
- 		// $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
  	}
 	public function getReset($token = null)
     {
@@ -28,7 +33,7 @@ class UserController extends Controller
         $password_reset = PasswordResetModel::where('token',$token)->first();
         if($password_reset != NULL)
         {
-            return view('front.reset_password')->with('token', $token)->with('password_reset',(array)$password_reset);   
+            return view('front.password.reset_password')->with('token', $token)->with('password_reset',(array)$password_reset);   
         }
         else
         {

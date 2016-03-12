@@ -63,7 +63,7 @@
         <form class="form-horizontal" 
                            id="validation-form" 
                            method="POST"
-                           action="{{ url('forgot_password') }}" 
+                           action="{{ url('/forgot_password') }}" 
                            enctype="multipart/form-data"
                            >
 

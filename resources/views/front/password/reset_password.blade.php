@@ -16,7 +16,7 @@
                <!--error sucess info messages end here-->
 
                <form id="frm_reset_password" 
-                     action="{{ url('process_reset_password') }}"  
+                     action="{{ url('/process_reset_password') }}"  
                      method="POST"
                >
 
