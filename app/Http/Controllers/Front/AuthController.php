@@ -20,6 +20,9 @@ class AuthController extends Controller
     public function __construct()
     {
 
+
+
+
     } 
 
     public function register_via_google_plus(Request $request)
