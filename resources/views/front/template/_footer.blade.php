@@ -1,5 +1,15 @@
  <!--login popup start here-->
       <div id="login_poup" class="modal fade" role="dialog">
+
+      <form class="form-horizontal" 
+                           id="validation-form" 
+                           method="POST"
+                           action="{{ url('/front_users/process_login') }}" 
+                           enctype="multipart/form-data"
+                           >
+
+        {{ csrf_field() }}
+
          <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -12,11 +22,11 @@
                      <div class="title_login">Login with your email and password</div>
                      <div class="user_box">
                         <div class="label_form">Email</div>
-                        <input type="text" class="input_box" placeholder="enter email address"/>
+                        <input type="text" name="email" class="input_box" placeholder="enter email address"/>
                      </div>
                      <div class="user_box">
                         <div class="label_form">Password</div>
-                        <input type="password" class="input_box" placeholder="enter password"/>
+                        <input type="password" name="password" class="input_box" placeholder="enter password"/>
                      </div>
                      <div class="login_social">
                         <div class="title_login"> Log in with social accounts</div>
@@ -43,11 +53,23 @@
                <div class="clr"></div>
             </div>
          </div>
+         </form>
       </div>
       <!--login popup end here-->
     <!--forget password popup start here-->
 
         <div id="forget_pwd" class="modal fade" role="dialog" style="overflow:auto;">
+
+        <form class="form-horizontal" 
+                           id="validation-form" 
+                           method="POST"
+                           action="{{ url('/forgot_password') }}" 
+                           enctype="multipart/form-data"
+                           >
+
+        {{ csrf_field() }}
+
+
          <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -76,6 +98,7 @@
                <div class="clr"></div>
             </div>
          </div>
+         </form>
       </div>
     <!--forget password poup end here-->
 

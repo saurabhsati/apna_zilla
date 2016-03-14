@@ -356,6 +356,7 @@ class BusinessListingController extends Controller
  	}
  	public function update(Request $request,$enc_id)
  	{
+        
  		$id	=base64_decode($enc_id);
         $arr_all  = array();
         $arr_all=$request->all();
@@ -377,6 +378,8 @@ class BusinessListingController extends Controller
         $arr_rules['pincode']='required';
         $arr_rules['state']='required';
         $arr_rules['country']='required';
+        $arr_rules['lat']='required';
+        $arr_rules['lng']='required';
         //contact info fields
         $arr_rules['contact_person_name']='required';
         $arr_rules['mobile_number']='required';
@@ -402,7 +405,7 @@ class BusinessListingController extends Controller
         $arr_rules['sun_in']='required';
         $arr_rules['sun_out']='required';
 
-        $arr_rules['hours_of_operation']='required';
+        //$arr_rules['hours_of_operation']='required';
     	$arr_rules['company_info']='required';
         $arr_rules['establish_year']='required';
     	$arr_rules['keywords']='required';
@@ -473,6 +476,8 @@ class BusinessListingController extends Controller
         $business_data['pincode']=$request->input('pincode');
         $business_data['state']=$request->input('state');
         $business_data['country']=$request->input('country');
+        $business_data['lat']=$request->input('lat');
+        $business_data['lng']=$request->input('lng');
 
         //Contact input array
         $business_data['contact_person_name']=$request->input('contact_person_name');
@@ -492,6 +497,8 @@ class BusinessListingController extends Controller
         $business_data['establish_year']=$request->input('establish_year');
     	$business_data['keywords']=$request->input('keywords');
     	$business_data['youtube_link']=$request->input('youtube_link');
+
+
 
         $business_data=BusinessListingModel::where('id',$id)->update($business_data);
 

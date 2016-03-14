@@ -15,6 +15,9 @@ class FAQController extends Controller
     //
     public function __construct()
     {
+        $arr_except_auth_methods = array();
+        $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
+
     	  $this->FaqModel = new FaqModel();
     }
     public function index()

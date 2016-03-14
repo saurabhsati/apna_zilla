@@ -24,7 +24,9 @@ class BusinessListingModel extends Model
                          'pincode',
                          'state',
                          'country',
-                          'contact_person_name',
+                         'lat',
+                         'lng',
+                         'contact_person_name',
                          'mobile_number',
                          'landline_number',
                          'fax_no',
@@ -35,7 +37,8 @@ class BusinessListingModel extends Model
                          'company_info',
                          'establish_year',
                          'keywords',
-                         'youtube_link',
+                         'youtube_link'
+
                          ];
     public function user_details()
     {
@@ -44,8 +47,14 @@ class BusinessListingModel extends Model
 
     public function category()
     {
+        return $this->hasMany('App\Models\BusinessCategoryModel','business_id','id');
+    }
+
+    public function category_details()
+    {
     	return $this->belongsTo('App\Models\BusinessCategoryModel','id','business_id');
     }
+
     public function get_sub_category()
     {
         return $this->hasMany('App\Models\BusinessCategoryModel','business_id','id');

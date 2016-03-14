@@ -24,5 +24,6 @@ class BusinessCategoryModel extends Model
         return $this->belongsTo('App\Models\BusinessListingModel','business_id','id');
     }
 
+    
 
 }

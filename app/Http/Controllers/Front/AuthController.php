@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Model\EmailTemplate;
+use App\Models\EmailTemplate;
+use App\Models\UserModel;
 
 use Sentinel;
 use Validator;
@@ -19,6 +20,9 @@ class AuthController extends Controller
 {
     public function __construct()
     {
+
+
+
 
     } 
 
@@ -230,5 +234,44 @@ class AuthController extends Controller
 
             return $send_mail;
         }  
+    }
+
+       public function process_login(Request $request)
+    {
+        $arr_creds =  array();
+        $arr_creds['email'] = $request->input('email');
+        $arr_creds['password'] = $request->input('password');
+
+        $user = Sentinel::authenticate($arr_creds);
+
+        if($user)
+        {
+            /* Check if Users Role is Admin */
+            $role = Sentinel::findRoleBySlug('normal');
+            if(Sentinel::inRole($role))
+            {   
+                $obj_user_info = UserModel::where('email','=',$arr_creds['email'])->get();
+                {
+                    if($obj_user_info);
+                }
+                $arr_user_info = $obj_user_info->toArray();
+                
+                foreach ($arr_user_info as $user)
+                {
+                    $user_id = base64_encode($user['id']) ;
+                }
+                return redirect('front_users/profile/'.$user_id);
+            }
+            else
+            {
+                Session::flash('error','Not Sufficient Privileges');
+                return redirect()->back();
+            }
+        }
+        else
+        {
+            Session::flash('error','Invalid Credentials');
+            return redirect()->back();
+        }
     }
 }
