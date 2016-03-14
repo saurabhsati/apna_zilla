@@ -8,8 +8,8 @@
                 <div class="col-sm-12 col-md-12 col-lg-12">
      <ol class="breadcrumb">
          <span>You are here :</span>
-  <li><a href="#">Home</a></li>
-  <li><a href="#">Restaurants</a></li>
+  <li><a href="{{url('/')}}">Home</a></li>
+  <li><a href="{{url('/')}}//city/all-options/ct-{{isset($arr_business_details['category']['category_id']) && $arr_business_details['category']['category_id']!=''?$arr_business_details['category']['category_id']:'NA'}}">Restaurants</a></li>
          <li class="active">Britannia Wigan Hotel</li>
 
 </ol>
@@ -28,10 +28,30 @@
               <div class="product_title"><a href="#">{{$arr_business_details['business_name']}}</a></div>
                 <div class="rating_star"><ul><li><i class="fa fa-star-o ylow"></i></li><li><i class="fa fa-star-o ylow"></i></li><li><i class="fa fa-star-o ylow"></i></li><li><i class="fa fa-star-o"></i></li><li><i class="fa fa-star-o"></i></li></ul>out of 3 <a href="#">reviews</a></div>
                 <div class="p_details"><i class="fa fa-phone"></i><span> {{$arr_business_details['landline_number']}} &nbsp; {{$arr_business_details['mobile_number']}}</span></div>
-                <div class="p_details"><i class="fa fa-map-marker"></i> <span>{{$arr_business_details['building']}} &nbsp; {{$arr_business_details['street']}}<br/> {{$arr_business_details['landmark']}} &nbsp; {{$arr_business_details['area']}} (<a href="#">map</a>)</span></div>
+                <div class="p_details"><i class="fa fa-map-marker"></i> <span>{{$arr_business_details['building']}} &nbsp; {{$arr_business_details['street']}},<br/> {{$arr_business_details['landmark']}},&nbsp;{{$arr_business_details['area']}},&nbsp;{{$arr_business_details['state_details']['state_title']}},&nbsp;{{$arr_business_details['country_details']['country_name']}} (<a href="#">map</a>)</span></div>
 
-                <div class="p_details lst"><i class="fa fa-clock-o"></i><span>Today  11:30 am - 11:30 pm    <a href="javascript:void(0);" onclick="show_opening_times()">View All</a></span>
-                <div class="add_det"><i class="fa fa-globe"></i> {{$arr_business_details['website']}}</div>
+                <div class="p_details lst"><i class="fa fa-clock-o"></i><span>
+                @if(isset($arr_business_details['business_times']) && $arr_business_details['business_times']!='')
+                <?php 
+                    $current_day = strtolower(date("D"));
+                    $open_time = $current_day.'_open';
+                    $close_time = $current_day.'_close';
+                ?>    
+                    @if(array_key_exists($open_time, $arr_business_details['business_times']) &&
+                       array_key_exists($close_time, $arr_business_details['business_times']) )
+
+                      {{date('D')}} - {{ $arr_business_details['business_times'][$open_time] }} - 
+                       {{ $arr_business_details['business_times'][$close_time] }}
+                    @endif   
+
+                
+
+                <a href="javascript:void(0);" onclick="show_opening_times()">View All</a></span>
+                @else
+                  <span>Business Time Not Available.</span>
+                @endif
+                
+                <div class="add_det"><i class="fa fa-globe"></i><a href="{{$arr_business_details['website']}}"> {{$arr_business_details['website']}}</a></div>
                 <div class="enquiry"><i class="fa fa-envelope"></i> Send Enquiry By Email</div>
                 </div>
 
@@ -178,40 +198,21 @@
                         <div>
                          <div class="gallery_view">
                         <div class="gallery">
-                                       <div class="prod_img">
-                                          <a href="{{ url('/') }}/assets/front/images/img1.jpg" class="gal img_inner"><img src="{{ url('/') }}/assets/front/images/img1.jpg" alt=""/></a>
-                                       </div>
-                                       <div class="prod_img">
-                                          <a href="{{ url('/') }}/assets/front/images/img2.jpg" class="gal img_inner"><img src="{{ url('/') }}/assets/front/images/img2.jpg" alt=""/></a>
-                                       </div>
-                                       <div class="prod_img">
-                                          <a href="{{ url('/') }}/assets/front/images/img3.jpg" class="gal img_inner"><img src="{{ url('/') }}/assets/front/images/img3.jpg" alt=""/></a>
-                                       </div>
-                                       <div class="prod_img">
-                                          <a href="{{ url('/') }}/assets/front/images/img4.jpg" class="gal img_inner"><img src="{{ url('/') }}/assets/front/images/img4.jpg" alt=""/></a>
-                                       </div>
-                                       <div class="prod_img">
-                                          <a href="{{ url('/') }}/assets/front/images/img1.jpg" class="gal img_inner"><img src="{{ url('/') }}/assets/front/images/img1.jpg" alt=""/></a>
-                                       </div>
-                                             <div class="prod_img">
-                                          <a href="{{ url('/') }}/assets/front/images/img1.jpg" class="gal img_inner"><img src="{{ url('/') }}/assets/front/images/img1.jpg" alt=""/></a>
-                                       </div>
-                                       <div class="prod_img">
-                                          <a href="{{ url('/') }}/assets/front/images/img2.jpg" class="gal img_inner"><img src="{{ url('/') }}/assets/front/images/img2.jpg" alt=""/></a>
-                                       </div>
-                                       <div class="prod_img">
-                                          <a href="{{ url('/') }}/assets/front/images/img3.jpg" class="gal img_inner"><img src="{{ url('/') }}/assets/front/images/img3.jpg" alt=""/></a>
-                                       </div>
-                                       <div class="prod_img">
-                                          <a href="{{ url('/') }}/assets/front/images/img4.jpg" class="gal img_inner"><img src="{{ url('/') }}/assets/front/images/img4.jpg" alt=""/></a>
-                                       </div>
-                                       <div class="prod_img">
-                                          <a href="{{ url('/') }}/assets/front/images/img1.jpg" class="gal img_inner"><img src="{{ url('/') }}/assets/front/images/img1.jpg" alt=""/></a>
-                                       </div>
-                                    </div>
-                                    <div class="clr"></div>
-                                 </div>
-                              </div>
+                          @if(isset($arr_business_details['image_upload_details']) && $arr_business_details['image_upload_details']!='')
+                            @foreach($arr_business_details['image_upload_details'] as $business_images)
+                             <div class="prod_img">
+                                <a href="{{ url('/') }}/uploads/business/business_upload_image/{{$business_images['image_name']}}" class="gal img_inner"><img src="{{ url('/') }}/uploads/business/business_upload_image/{{$business_images['image_name']}}" alt=""/></a>
+                             </div>
+                            @endforeach 
+                          @else
+                            <span>No Image Available.</span>
+                          @endif         
+
+                        </div>
+                                 
+                          <div class="clr"></div>
+                          </div>
+                        </div>
 
                         </div>
 

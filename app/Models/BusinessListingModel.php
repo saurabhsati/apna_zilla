@@ -37,14 +37,14 @@ class BusinessListingModel extends Model
                          'keywords',
                          'youtube_link',
                          ];
-     public function user_details()
+    public function user_details()
     {
     	return $this->belongsTo('App\Models\UserModel','user_id','id');
     }
 
     public function category()
     {
-    	return $this->hasMany('App\Models\BusinessCategoryModel','business_id','id');
+    	return $this->belongsTo('App\Models\BusinessCategoryModel','id','business_id');
     }
     public function get_sub_category()
     {

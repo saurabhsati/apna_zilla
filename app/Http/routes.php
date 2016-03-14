@@ -44,22 +44,22 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	});
 
 
-	Route::group('prefix'=>'/city'), function ()
+	Route::group(array('prefix' => '/city'), function ()
 	{
 	  Route::get('all-options/ct-{cat_id}','Front\CategorySearchController@get_business');
 	  Route::get('{cat_slug}/{cat_id}','Front\CategorySearchController@index');
 	});
 
-<<<<<<< HEAD
-Route::group(array('prefix' => '/listing'), function()
-{
-	Route::get('/',							 	 ['as' => 'listing' 		,'uses' => 'Front\ListingController@index']);
-	Route::get('details/{enc_id}',					 ['as' => 'list_details' 		,'uses' => 'Front\ListingController@list_details']);
-=======
->>>>>>> 4b791af0fea270fe2e5fcf9d100cfca51b8305b1
+
+	
+	Route::group(array('prefix' => '/listing'), function()
+	{
+		Route::get('/',							 	 ['as' => 'listing' 		,'uses' => 'Front\ListingController@index']);
+		Route::get('details/{enc_id}',					 ['as' => 'list_details' 		,'uses' => 'Front\ListingController@list_details']);
+
+	});
+
 });
-
-
 
 
 /* Admin Routes */

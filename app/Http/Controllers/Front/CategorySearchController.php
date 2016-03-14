@@ -20,7 +20,6 @@ class CategorySearchController extends Controller
 	 	{
 	 		$arr_sub_category = $obj_sub_category->toArray();
 	 	}
-
       return view('front.category_search',compact('page_title','arr_sub_category','cat_slug','cat_id'));
     }
     public function get_business($cat_id)
