@@ -19,7 +19,7 @@ class ZipController extends Controller
     }
     public function index()
     {
-    	 $page_title = "Manage Zipcode";
+    	$page_title = "Manage Zipcode";
         $arr_zipcode = array();
 
         $obj_zipcode_res = ZipModel::get();

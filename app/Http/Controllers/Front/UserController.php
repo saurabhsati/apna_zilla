@@ -150,9 +150,18 @@ class UserController extends Controller
     }
 
 
-    public function profile()
+    public function profile($enc_id)
     {
-        return view('front.user.profile');
+        $user_id = base64_decode($enc_id);
+        
+        $obj_user_info = UserModel::where('id','=',$user_id)->get();
+
+        if($obj_user_info)
+        {
+            $arr_user_info = $obj_user_info->toArray();
+        }
+
+        return view('front.user.profile',compact('arr_user_info'));
     }
 
 

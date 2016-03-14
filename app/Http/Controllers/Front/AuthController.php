@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Model\EmailTemplate;
+use App\Models\EmailTemplate;
+use App\Models\UserModel;
 
 use Sentinel;
 use Validator;
@@ -248,8 +249,18 @@ class AuthController extends Controller
             /* Check if Users Role is Admin */
             $role = Sentinel::findRoleBySlug('normal');
             if(Sentinel::inRole($role))
-            {
-                return redirect('front_users/profile');
+            {   
+                $obj_user_info = UserModel::where('email','=',$arr_creds['email'])->get();
+                {
+                    if($obj_user_info);
+                }
+                $arr_user_info = $obj_user_info->toArray();
+                
+                foreach ($arr_user_info as $user)
+                {
+                    $user_id = base64_encode($user['id']) ;
+                }
+                return redirect('front_users/profile/'.$user_id);
             }
             else
             {

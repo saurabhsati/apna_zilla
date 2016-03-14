@@ -65,6 +65,8 @@
 
       {{ csrf_field() }}
 
+      @foreach($arr_user_info as $user)
+
         <div class="col-sm-3 col-md-3 col-lg-3">
           <div class="profile_box">
               <div class="ig_profile" id="dvPreview"> 
@@ -76,8 +78,8 @@
                    <div class="line">&nbsp;</div>
              </div>
        </div>
-       </div>
-        
+       </div>         
+
                       <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">First Name :</div>
@@ -90,7 +92,13 @@
                             
                         </select>  
                             </div>
-                          <div class="col-sm-9 col-md-9 col-lg-9"> <input type="text" name="first_name" class="input_acct" placeholder="Enter name"/></div></div>
+
+                          <div class="col-sm-9 col-md-9 col-lg-9"> 
+                          <input type="text" name="first_name"
+                                 value="{{ isset($user['first_name'])?$user['first_name']:'' }}" 
+                                 class="input_acct" 
+                                 placeholder="Enter name"/>
+                                 </div></div>
                           <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
@@ -100,7 +108,10 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Middle Name :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="middle_name" class="input_acct" placeholder="Enter Middle Name"/>
+                         <input type="text" name="middle_name" 
+                         value="{{ isset($user['middle_name'])?$user['middle_name']:'' }}" 
+                                class="input_acct"
+                                placeholder="Enter Middle Name"/>
                           <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
@@ -109,7 +120,10 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Last Name :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="last_name" class="input_acct" placeholder="Enter Last Name "/>
+                         <input type="text" name="last_name"
+                                class="input_acct"
+                                value="{{ isset($user['last_name'])?$user['last_name']:'' }}"
+                                placeholder="Enter Last Name "/>
                           <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
@@ -122,7 +136,7 @@
                         <div class="row">
                          <div class="col-sm-3 col-md-3 col-lg-2">
                            <select class="input_acct" name="d_o_b">
-                                 <option>DD</option>
+                                 <option value="DD">DD</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -158,8 +172,10 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Marital Status :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <select class="input_acct" name="marital_status">
-                        <option value="">Select...</option>
+                         <select class="input_acct" 
+                                 name="marital_status"
+                                 >
+                        <option value="{{ isset($user['marital_status'])?$user['marital_status']:'' }}">$user['marital_status']</option>
                         <option value="Married">Married</option>
                         <option value="Un Married">Un Married</option>
                         <option value="Divorced">Divorced</option>
@@ -175,7 +191,10 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">City :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="city" class="input_acct" placeholder="Enter City "/>
+                         <input type="text" name="city" 
+                                value="{{ isset($user['city'])?$user['city']:'' }}"
+                                class="input_acct"
+                                placeholder="Enter City "/>
                           <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
@@ -185,7 +204,9 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Area :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="area"  class="input_acct" placeholder="Enter Area "/>
+                         <input type="text" name="area" 
+                                value="{{ isset($user['area'])?$user['area']:'' }}"
+                          class="input_acct" placeholder="Enter Area "/>
                           <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
@@ -195,7 +216,9 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Pincode :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="pincode" class="input_acct" placeholder="Enter Pincode  "/>
+                         <input type="text" name="pincode" 
+                                value="{{ isset($user['pincode'])?$user['pincode']:'' }}" 
+                                class="input_acct" placeholder="Enter Pincode  "/>
                           <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
@@ -206,7 +229,9 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Occupation :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="occupation" class="input_acct" placeholder="Enter Your Occupation  "/>
+                         <input type="text" name="occupation" 
+                                value="{{ isset($user['occupation'])?$user['occupation']:'' }}"
+                                class="input_acct" placeholder="Enter Your Occupation  "/>
                           <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
@@ -216,7 +241,9 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Email ID :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="email" name="email" class="input_acct" placeholder="Enter Email ID  "/>
+                         <input type="email" name="email" 
+                                value="{{ isset($user['email'])?$user['email']:'' }}"
+                               class="input_acct" placeholder="Enter Email ID  "/>
                           <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
@@ -227,7 +254,9 @@
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                         <div class="input-group">
                         <span class="input-group-addon" id="basic-addon1">+91</span>
-                        <input type="text" name="mobile_no" class="form-control" placeholder="Enter Mobile No:" aria-describedby="basic-addon1" required/>
+                        <input type="text" name="mobile_no"
+                               value="{{ isset($user['mobile_no'])?$user['mobile_no']:'' }}"
+                               class="form-control" placeholder="Enter Mobile No:" aria-describedby="basic-addon1" required/>
                             
                         </div>  
                           <div class="error_msg">please enter correct</div>
@@ -240,8 +269,10 @@
                     <div class="col-lg-3  label-text">Home Landline :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                       <input class="std_cont_inpt" type="text" placeholder="STD">
-                        <input type="text" name="home_landline" class="input_acct half_2_input" placeholder="Enter home landline"/>
-                          <div class="error_msg">please enter correct</div>
+                        <input type="text" name="home_landline" 
+                               value="{{ isset($user['home_landline'])?$user['home_landline']:'' }}"
+                               class="input_acct half_2_input" placeholder="Enter home landline"/>
+                         <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
                     </div>
@@ -251,7 +282,9 @@
                     <div class="col-lg-3  label-text">Office Landline :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                           <input class="std_cont_inpt" type="text" placeholder="STD">
-                        <input type="text" name="office_landline" class="input_acct half_2_input" placeholder="Enter office landline"/>
+                        <input type="text" name="office_landline" 
+                               value="{{ isset($user['office_landline'])?$user['office_landline']:'' }}"
+                              class="input_acct half_2_input" placeholder="Enter office landline"/>
                           <input class="std_cont_inpt" type="text" placeholder="EXTN">
                           <div class="error_msg">please enter correct</div>
                         </div>
@@ -259,6 +292,7 @@
                     </div>
                     <button type="submit" class="yellow1 ui button">Save & Continue</button>
 
+                    @endforeach
                     </form>
               </div>
               </div>
