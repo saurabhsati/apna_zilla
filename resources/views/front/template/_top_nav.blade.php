@@ -25,7 +25,17 @@
                                  -->
                            </li>
                            <li class="nav-item"><a href="#">Features</a></li>
-                           <li class="nav-item"><a data-toggle="modal" data-target="#login_poup">Login/Register</a></li>
+
+                         @if ($user = Sentinel::check())
+                           
+                         <li class="nav-item"><a href="#"><?php echo"Hi ".$user['first_name']; ?></a></li>
+
+                        @else
+                           
+                        <li class="nav-item"><a data-toggle="modal" data-target="#login_poup">Login/Register</a></li>
+                           
+                        @endif
+
                         </ul>
                         <a class="btn btn-post" href="#">List your Bussiness</a>
                      </div>
