@@ -42,6 +42,13 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::post('process_login',					['as' => 'front_users_process_login'        		,'uses' =>'Front\AuthController@process_login']);
 		Route::get('profile/{enc_id}',					['as' => 'front_users_profile'        				,'uses' =>'Front\UserController@profile']);
 		Route::post('store_personal_details',			['as' => 'front_users_store_personal_details'       ,'uses' =>'Front\UserController@store_personal_details']);
+		
+		Route::get('address',							['as' => 'front_users_address'        				,'uses' =>'Front\UserController@address']);
+
+
+		Route::get('logout',							['as' => 'front_users_logout'     					,'uses' =>'Front\AuthController@logout']);
+		Route::get('change_password',				  	['as' => 'front_users_change_password'              ,'uses' =>'Front\AuthController@change_password']);
+		Route::post('update_password',				  	['as' => 'front_users_update_password'				,'uses' =>'Front\AuthController@update_password']);
 
 	});
 
@@ -59,7 +66,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 	Route::group(array('prefix' => '/listing'), function()
 	{
-		Route::get('/',							 	 ['as' => 'listing' 		,'uses' => 'Front\ListingController@index']);
+		Route::get('/',							 	 	 ['as' => 'listing' 		,'uses' => 'Front\ListingController@index']);
 		Route::get('details/{enc_id}',					 ['as' => 'list_details' 		,'uses' => 'Front\ListingController@list_details']);
 
 	});

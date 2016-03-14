@@ -14,9 +14,12 @@ class UserController extends Controller
 {
  	public function __construct()
  	{
+ 		$arr_except_auth_methods = array();
+        $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
 
- 		// $arr_except_auth_methods = array();
- 		// $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
+        $this->profile_pic_base_path = base_path().'/public'.config('app.project.img_path.user_profile_pic');
+        $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');      
+
  	}
 
         
@@ -80,6 +83,7 @@ class UserController extends Controller
 
     public function store_personal_details(Request $request)
     {
+        
         $arr_rules = array();
         $arr_rules['first_name'] = "required";
         $arr_rules['middle_name'] = "required";
@@ -93,8 +97,11 @@ class UserController extends Controller
         $arr_rules['email'] = "required";
         $arr_rules['mobile_no'] = "required";
         $arr_rules['home_landline'] = "required";
+        $arr_rules['std_home_landline'] = "required";
         $arr_rules['office_landline'] = "required";
-        
+        $arr_rules['std_office_landline'] = "required";
+        $arr_rules['extn_office_landline'] = "required";
+
         $validator = Validator::make($request->all(),$arr_rules);
 
         if($validator->fails())                                                                 
@@ -114,7 +121,10 @@ class UserController extends Controller
         $email       = $request->input('email');
         $mobile_no       = $request->input('mobile_no');
         $home_landline       = $request->input('home_landline');
+        $std_home_landline  = $request->input('std_home_landline');
         $office_landline       = $request->input('office_landline');
+        $std_office_landline    = $request->input('std_office_landline');
+        $extn_office_landline    = $request->input('extn_office_landline');
 
         $obj_user_info = UserModel::where('email','=',$email)->get();
 
@@ -127,7 +137,35 @@ class UserController extends Controller
                 
         $user = Sentinel::findById($user_id);
 
+        $profile_pic = "default.jpg";
+
+        if ($request->hasFile('profile_pic'))
+        {
+            $profile_pic_valiator = Validator::make(array('profile_pic'=>$request->file('profile_pic')),array(
+                                                'profile_pic' => 'mimes:jpg,jpeg,png'
+                                            ));
+
+            if ($request->file('profile_pic')->isValid() && $profile_pic_valiator->passes())
+            {
+
+                $cv_path = $request->file('profile_pic')->getClientOriginalName();
+                $image_extension = $request->file('profile_pic')->getClientOriginalExtension();
+                $image_name = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
+                $request->file('profile_pic')->move(
+                    $this->profile_pic_base_path, $image_name
+                );
+
+                $profile_pic = $image_name;
+            }
+            else
+            {
+                return redirect()->back();
+            }
+
+        }
+
         $credentials = [
+            'profile' => $profile_pic,
             'first_name' => $first_name,
             'middle_name' => $middle_name,
             'last_name' => $last_name,
@@ -140,8 +178,10 @@ class UserController extends Controller
             'email' => $email,
             'mobile_no' => $mobile_no,
             'home_landline' => $home_landline,
+            'std_home_landline' =>$std_home_landline,
             'office_landline' => $office_landline,
-
+            'std_office_landline' => $std_office_landline,
+            'extn_office_landline' => $extn_office_landline
         ];
 
         $user = Sentinel::update($user, $credentials);
@@ -161,8 +201,23 @@ class UserController extends Controller
             $arr_user_info = $obj_user_info->toArray();
         }
 
+        foreach ($arr_user_info as $users) 
+        {
+             Session::put('user_mail', $users['email']);
+             Session::put('user_first_name', $users['first_name']);
+             Session::put('user_middle_name', $users['middle_name']);
+             Session::put('user_last_name', $users['last_name']);
+        }
+
         return view('front.user.profile',compact('arr_user_info'));
     }
 
+    public function address()
+    {
+        $page_title = "Address";
+        return view('front.user.address',compact('page_title'));
+    }
+
+    
 
  }
