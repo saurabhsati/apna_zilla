@@ -63,7 +63,7 @@
                            enctype="multipart/form-data"
                            >
 
-      {{ csrf_field() }}
+
 
       @foreach($arr_user_info as $user)
 

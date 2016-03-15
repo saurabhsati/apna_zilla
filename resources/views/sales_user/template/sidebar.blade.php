@@ -33,7 +33,6 @@
         </li>
 
 
-
    <!-- BEGIN Sidebar Collapse Button -->
     <div id="sidebar-collapse" class="visible-lg">
         <i class="fa fa-angle-double-left"></i>
