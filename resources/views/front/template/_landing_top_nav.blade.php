@@ -15,20 +15,20 @@
                         <ul class="nav-list">
                            <li class="nav-item"><a href="{{ url('/') }}" class=" {{ Request::segment(1)==''? 'act':'' }}">Home</a></li>
                            <li class="nav-item"><a href="#">Categories</a></li>
-                           <li class="nav-item">
+                           <!-- <li class="nav-item">
                               <a href="{{ url('/') }}/listing" class=" {{ Request::segment(1)=='listing'? 'act':'' }}">Listing</a>
-                              <!--
+
                                  <ul class="nav-submenu">
                                  <li class="nav-submenu-item"><a href="#">Sub menu</a></li>
                                  <li class="nav-submenu-item"><a href="#">Sub menu</a></li>
                                  </ul>
-                                 -->
-                           </li>
+
+                           </li>-->
                            <li class="nav-item"><a href="#">Features</a></li>
 
 
                             @if ($user = Sentinel::check())
-                           
+
                           <li class="nav-item">
                         <div class="dropdown">
                                 <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Hi {{session('user_first_name')}} <span class="caret"></span>
@@ -38,17 +38,17 @@
                                    <li><a href="#">My Favorites</a></li>
                                    <li><a href="#">Friend's Ratings </a></li>
                                    <li><a href="{{ url('/front_users/logout') }}">Logout</a></li>
-                              
+
                                 </ul>
                              </div>
                              </li>
 
                         @else
-                           
+
                         <li class="nav-item"><a data-toggle="modal" data-target="#login_poup">Login/Register</a></li>
-                           
+
                         @endif
-                        
+
                         </ul>
                         <a class="btn btn-post" href="#">List your Bussiness</a>
                      </div>

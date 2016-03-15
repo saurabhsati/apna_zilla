@@ -13,11 +13,11 @@
             //echo '<pre>';
             //print_r($arr_category);
             ?>
-               <ul>
+               <ul class="category_list">
                   @if(isset($arr_category) && sizeof($arr_category)>0)
-                  @foreach($arr_category as $category)
+                  @foreach($arr_category as $key => $category)
                    <?php $count=0; ?>
-                  <li>
+                  <li <?php if($key>3){echo 'style=display:none;';}?> >
                      <a href="{{ url('/') }}/city/{{$category['cat_slug']}}/{{$category['cat_id']}}">
                      <span class="cate-img"><img src="{{ $cat_img_path.'/'.$category['cat_img']}}" alt="" height="30px" width="30px" /></span>
                      <span class="cate-txt">{{ ucfirst($category['title'])}}</span>
@@ -183,7 +183,7 @@
                </ul>
                <div class="clearfix"></div>
             </div>
-            <div class="all-cate-btn">
+            <div class="all-cate-btn browse_all_cat">
                <button> Browse All Categories</button>
             </div>
          </div>
@@ -506,5 +506,9 @@
          </div>
       </div>
       <div class="clearfix"></div>
-
+<script type="text/javascript">
+   $('.browse_all_cat').click(function(){
+   $('ul.category_list *').removeAttr('style');
+   });
+</script>
 @endsection

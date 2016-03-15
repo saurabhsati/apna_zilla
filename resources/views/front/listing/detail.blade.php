@@ -284,13 +284,13 @@
                  <div class="sidebar-brand"><img src="{{ url('/') }}/assets/front/images/services.png" alt="services"/>Services<span class="spe_mobile3"><a href="#"></a></span></div>
                  <div class="bor_head">&nbsp;</div>
                  <ul class="spe_submobile3">
-                    <li class="brdr"><a href="#">Home Delivery</a></li>
-                  <li class="brdr"><a href="#">Birthday Parties</a></li>
-                  <li class="brdr"><a href="#">Banquet Hall</a></li>
-                  <li class="brdr"><a href="#">TV Screens</a></li>
-                  <li class="brdr"><a href="#">Pure Vegetarian</a></li>
-                  <li class="brdr"><a href="#">WiFi</a></li>
-                  <li class="brdr"><a href="#">Security Services</a></li>
+                  @if(isset($arr_business_details['service']) && sizeof($arr_business_details['service'])>0)  
+                    @foreach($arr_business_details['service'] as $services)  
+                      <li class="brdr">{{ $services['name'] }}</li>
+                    @endforeach
+                  @else
+                    <span>No Service Available.</span>
+                  @endif
                </ul>
 
                <!-- /#Categoriesr End-->
