@@ -54,6 +54,7 @@ class EloquentUser extends Model implements RoleableInterface, PermissibleInterf
         'marital_status',
         'city',
         'area',
+        'pincode',
         'occupation',
         'work_experience',
         'street_address',
@@ -61,7 +62,12 @@ class EloquentUser extends Model implements RoleableInterface, PermissibleInterf
         'home_landline',
         'office_landline',
         'is_active',
-        'title'
+        'title',
+        'std_home_landline',
+        'office_landline',
+        'std_office_landline',
+        'extn_office_landline'
+                           
     ];
 
     /**
