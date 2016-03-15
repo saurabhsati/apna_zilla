@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
 use App\Models\UserModel;
 use App\Models\CategoryModel;
 use App\Models\BusinessListingModel;
@@ -116,8 +117,6 @@ class SalesAccountController extends Controller
         return view('sales_user.business.index',compact('page_title','arr_business_info','arr_user_info'));                                     
  	}
 
-
- 	
     public function create_user(Request $request,$enc_id=FALSE)
     {
         $page_title = "Create User ";
@@ -155,7 +154,7 @@ class SalesAccountController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-                                                                
+                 
         $first_name       = $request->input('first_name');
         $middle_name       = $request->input('middle_name');
         $last_name       = $request->input('last_name');
@@ -207,7 +206,6 @@ class SalesAccountController extends Controller
             {
                 return redirect()->back();
             }
-
         }
 
 
@@ -475,7 +473,7 @@ class SalesAccountController extends Controller
                 $image_extension = $request->file('profile_pic')->getClientOriginalExtension();
                 $image_name = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
                 $request->file('profile_pic')->move(
-                    $this->profile_pic_base_path, $image_name
+                $this->profile_pic_base_path, $image_name
                 );
 
                 $profile_pic = $image_name;
@@ -605,9 +603,8 @@ class SalesAccountController extends Controller
 
    public function logout()
     {
-        Sentinel::logout();
+        Session::flush(); 
         return redirect('/sales_user');
     }
-
  	
  }

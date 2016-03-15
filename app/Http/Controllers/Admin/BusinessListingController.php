@@ -18,6 +18,7 @@ use App\Models\CountryModel;
 use App\Models\StateModel;
 use App\Models\ZipModel;
 use App\Models\CityModel;
+use App\Models\BusinessTimeModel;
 use Validator;
 use Session;
 use Sentinel;
@@ -131,9 +132,25 @@ class BusinessListingController extends Controller
         $arr_rules['toll_free_number']='required';
         $arr_rules['email_id']='required';
         $arr_rules['website']='required';
+        //business times
+        $arr_rules['mon_in']='required';
+        $arr_rules['mon_out']='required';
+        $arr_rules['tue_in']='required';
+        $arr_rules['tue_out']='required';
+        $arr_rules['wed_in']='required';
+        $arr_rules['wed_out']='required';
+        $arr_rules['thus_in']='required';
+        $arr_rules['thus_out']='required';
+        $arr_rules['fri_in']='required';
+        $arr_rules['fri_out']='required';
+        $arr_rules['sat_in']='required';
+        $arr_rules['sat_out']='required';
+        $arr_rules['sun_in']='required';
+        $arr_rules['sun_out']='required';
         //other fields
     	$arr_rules['hours_of_operation']='required';
     	$arr_rules['company_info']='required';
+        $arr_rules['establish_year']='required';
     	$arr_rules['keywords']='required';
     	$arr_rules['youtube_link']='required';
     	$validator = Validator::make($request->all(),$arr_rules);
@@ -191,9 +208,11 @@ class BusinessListingController extends Controller
         $arr_data['email_id']=$form_data['email_id'];
         $arr_data['website']=$form_data['website'];
 
+
         //other input array
         $arr_data['hours_of_operation']=$form_data['hours_of_operation'];
     	$arr_data['company_info']=$form_data['company_info'];
+        $arr_data['establish_year']=$form_data['establish_year'];
     	$arr_data['keywords']=$form_data['keywords'];
     	$arr_data['youtube_link']=$form_data['youtube_link'];
 
@@ -244,7 +263,33 @@ class BusinessListingController extends Controller
         }
          if($insert_data)
         {
-        	Session::flash('success','Business Created successfully');
+            $arr_time                = array();
+            $arr_time['business_id'] = $business_id;
+            $arr_time['mon_open']    = $request->input('mon_in');
+            $arr_time['mon_close']   = $request->input('mon_out');
+            $arr_time['tue_open']    = $request->input('tue_in');
+            $arr_time['tue_close']   = $request->input('tue_out');
+            $arr_time['wed_open']    = $request->input('wed_in');
+            $arr_time['wed_close']   = $request->input('wed_out');
+            $arr_time['thus_open']   = $request->input('thus_in');
+            $arr_time['thus_close']  = $request->input('thus_out');
+            $arr_time['fri_open']    = $request->input('fri_in');
+            $arr_time['fri_close']   = $request->input('fri_out');
+            $arr_time['sat_open']    = $request->input('sat_in');
+            $arr_time['sat_close']   = $request->input('sat_out');
+            $arr_time['sun_open']    = $request->input('sun_in');
+            $arr_time['sun_close']   = $request->input('sun_out');
+
+            $business_time_add = BusinessTimeModel::create($arr_time);
+
+            if($business_time_add)
+            {
+                Session::flash('success','Business Created successfully');    
+            }
+        	else
+            {
+                Session::flash('error','Error Occurred While Creating Business List ');       
+            }    
 
         }
         else
@@ -304,13 +349,14 @@ class BusinessListingController extends Controller
             $arr_upload_image = $obj_upload_image_res->toArray();
         }
 
-        $business_data=BusinessListingModel::with(['category','user_details','city_details','zipcode_details','country_details','state_details','image_upload_details','service'])->where('id',$id)->get()->toArray();
+        $business_data=BusinessListingModel::with(['category','user_details','city_details','zipcode_details','country_details','state_details','image_upload_details','service','business_times'])->where('id',$id)->get()->toArray();
  		//dd($business_data);
          return view('web_admin.business_listing.edit',compact('page_title','business_data','arr_user','arr_category','business_public_img_path','business_base_upload_img_path','arr_state','arr_country','arr_zipcode','arr_city','arr_upload_image'));
 
  	}
  	public function update(Request $request,$enc_id)
  	{
+        
  		$id	=base64_decode($enc_id);
         $arr_all  = array();
         $arr_all=$request->all();
@@ -332,6 +378,8 @@ class BusinessListingController extends Controller
         $arr_rules['pincode']='required';
         $arr_rules['state']='required';
         $arr_rules['country']='required';
+        $arr_rules['lat']='required';
+        $arr_rules['lng']='required';
         //contact info fields
         $arr_rules['contact_person_name']='required';
         $arr_rules['mobile_number']='required';
@@ -341,8 +389,25 @@ class BusinessListingController extends Controller
         $arr_rules['email_id']='required';
         $arr_rules['website']='required';
 
-        $arr_rules['hours_of_operation']='required';
+        //business times
+        $arr_rules['mon_in']='required';
+        $arr_rules['mon_out']='required';
+        $arr_rules['tue_in']='required';
+        $arr_rules['tue_out']='required';
+        $arr_rules['wed_in']='required';
+        $arr_rules['wed_out']='required';
+        $arr_rules['thus_in']='required';
+        $arr_rules['thus_out']='required';
+        $arr_rules['fri_in']='required';
+        $arr_rules['fri_out']='required';
+        $arr_rules['sat_in']='required';
+        $arr_rules['sat_out']='required';
+        $arr_rules['sun_in']='required';
+        $arr_rules['sun_out']='required';
+
+        //$arr_rules['hours_of_operation']='required';
     	$arr_rules['company_info']='required';
+        $arr_rules['establish_year']='required';
     	$arr_rules['keywords']='required';
     	$arr_rules['youtube_link']='required';
 
@@ -411,6 +476,8 @@ class BusinessListingController extends Controller
         $business_data['pincode']=$request->input('pincode');
         $business_data['state']=$request->input('state');
         $business_data['country']=$request->input('country');
+        $business_data['lat']=$request->input('lat');
+        $business_data['lng']=$request->input('lng');
 
         //Contact input array
         $business_data['contact_person_name']=$request->input('contact_person_name');
@@ -427,8 +494,11 @@ class BusinessListingController extends Controller
 
         $business_data['hours_of_operation']=$request->input('hours_of_operation');
     	$business_data['company_info']=$request->input('company_info');
+        $business_data['establish_year']=$request->input('establish_year');
     	$business_data['keywords']=$request->input('keywords');
     	$business_data['youtube_link']=$request->input('youtube_link');
+
+
 
         $business_data=BusinessListingModel::where('id',$id)->update($business_data);
 
@@ -461,7 +531,33 @@ class BusinessListingController extends Controller
       }
         if($business_data /*&& $user_data*/)
         {
-        	Session::flash('success','Business Updated successfully');
+            $arr_time['business_id'] = $id;
+            $arr_time['mon_open']    = $request->input('mon_in');
+            $arr_time['mon_close']   = $request->input('mon_out');
+            $arr_time['tue_open']    = $request->input('tue_in');
+            $arr_time['tue_close']   = $request->input('tue_out');
+            $arr_time['wed_open']    = $request->input('wed_in');
+            $arr_time['wed_close']   = $request->input('wed_out');
+            $arr_time['thus_open']   = $request->input('thus_in');
+            $arr_time['thus_close']  = $request->input('thus_out');
+            $arr_time['fri_open']    = $request->input('fri_in');
+            $arr_time['fri_close']   = $request->input('fri_out');
+            $arr_time['sat_open']    = $request->input('sat_in');
+            $arr_time['sat_close']   = $request->input('sat_out');
+            $arr_time['sun_open']    = $request->input('sun_in');
+            $arr_time['sun_close']   = $request->input('sun_out');
+
+            $business_time_update = BusinessTimeModel::where('business_id',$id)->update($arr_time);
+
+            if($business_time_update)
+            {
+                Session::flash('success','Business Updated successfully');
+            }
+            else
+            {   
+                Session::flash('error','Error Occurred While Updating Business List ');
+            }    
+        	
 
         }
         else

@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Model\EmailTemplate;
+use App\Models\EmailTemplate;
+use App\Models\UserModel;
 
 use Sentinel;
 use Validator;
@@ -19,6 +20,8 @@ class AuthController extends Controller
 {
     public function __construct()
     {
+
+
 
     } 
 
@@ -100,6 +103,10 @@ class AuthController extends Controller
             $data['name']                   = $name;
             $data['email']                  = $email;
             $data['plain_text_password']    = $password;
+
+
+             Session::put('user_name', $data['name']);
+             Session::put('user_mail', $data['email']);
            
             $send_mail = $this->via_social_registration_send_mail($arr_data);
 
@@ -186,6 +193,11 @@ class AuthController extends Controller
             $data['name']                   = $fname.' '.$lname;
             $data['email']                  = $email;
             $data['plain_text_password']    = $password;
+
+
+             Session::put('user_name', $data['name']);
+             Session::put('user_mail', $data['email']);
+
            
             $send_mail = $this->via_social_registration_send_mail($arr_data);
 
@@ -231,4 +243,103 @@ class AuthController extends Controller
             return $send_mail;
         }  
     }
+
+       public function process_login(Request $request)
+    {
+        $arr_creds =  array();
+        $arr_creds['email'] = $request->input('email');
+        $arr_creds['password'] = $request->input('password');
+
+        $user = Sentinel::authenticate($arr_creds);
+
+        if($user)
+        {
+            /* Check if Users Role is Admin */
+            $role = Sentinel::findRoleBySlug('normal');
+            if(Sentinel::inRole($role))
+            {   
+                $obj_user_info = UserModel::where('email','=',$arr_creds['email'])->get();
+                {
+                    if($obj_user_info);
+                }
+                $arr_user_info = $obj_user_info->toArray();
+                
+                foreach ($arr_user_info as $user)
+                {
+                    $user_id = base64_encode($user['id']) ;
+                }
+                return redirect('front_users/profile/'.$user_id);
+            }
+            else
+            {
+                Session::flash('error','Not Sufficient Privileges');
+                return redirect()->back();
+            }
+        }
+        else
+        {
+            Session::flash('error','Invalid Credentials');
+            return redirect()->back();
+        }
+    }
+
+    public function logout()
+    {
+        Sentinel::logout();
+        Session::flush();
+        return redirect('/');
+    }
+
+    public function change_password()
+    {
+        /*$obj_admin = Sentinel::getUser();
+        dd($obj_admin->password);*/
+        $page_title = 'Address';
+        return view('front.user.change_password',compact('page_title'));
+    }
+
+    public function update_password(Request $request)
+    {
+        $obj_admin = Sentinel::getUser();////Get Admin all information
+
+        $arr_rules                      = array();
+        $arr_rules['current_password']  = 'required';
+        $arr_rules['new_password']      = 'required';
+        $arr_rules['confirm_password']  = 'required';
+
+        $validator = Validator::make($request->all(),$arr_rules);
+
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $old_password     = $request->input('current_password');
+        $new_password     = $request->input('new_password');
+        $confirm_password = $request->input('confirm_password');
+
+        if(Hash::check($old_password,$obj_admin->password))////check old_password==detabase password
+        {
+
+            $update_password = Sentinel::update($obj_admin,['password'=>$new_password]);
+            if($update_password)
+            {
+                Session::flash('success','Password Changed Successfully');
+
+            }
+            else
+            {
+                Session::flash('error','Error while changing password');
+            }
+
+            return redirect()->back();
+        }
+        else
+        {
+            Session::flash('error','Incorrect Old Password');
+            return redirect()->back();
+        }
+
+    }
+
 }

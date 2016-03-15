@@ -25,7 +25,11 @@ class UserModel extends Model
     					   'work_experience',
     					   'mobile_no',
     					   'home_landline',
-    					   'office_landline',
+                           'std_home_landline',
+                           'office_landline',
+                           'std_office_landline',
+                           'extn_office_landline',
+                           'title',
     					   'is_active',
     					   'profile_pic'];
 

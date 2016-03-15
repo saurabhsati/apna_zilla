@@ -40,6 +40,7 @@ class HomeController extends Controller
  			$arr_business = $obj_business_listing->toArray();
 
  		}
+ 		//dd($arr_business);
  		$category_business=array();
  		foreach ($arr_business as $business)
  		{
@@ -48,6 +49,7 @@ class HomeController extends Controller
  			{
 	 			foreach ($business['category'] as $key => $cat)
 	 			{
+
 	 				if(!array_key_exists($cat['category_id'], $category_business))
 	 				{
 	 				  $category_business[$cat['category_id']]=1;

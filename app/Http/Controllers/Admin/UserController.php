@@ -134,7 +134,6 @@ class UserController extends Controller
 
         }
 
-
          $status = Sentinel::registerAndActivate([
             'first_name' => $first_name,
             'middle_name' => $middle_name,
@@ -144,7 +143,7 @@ class UserController extends Controller
             'email' => $email,
             'password' => $password,
             'marital_status' => $marital_status,
-             'role' => "normal",
+            'role' => "normal",
             'street_address' => $street_address,
             'city' =>$city,
             'area' => $area,

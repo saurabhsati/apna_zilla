@@ -18,7 +18,6 @@ class MembershipController extends Controller
     {
         $arr_except_auth_methods = array();
         $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
-
     }       
     /**
      * Display a listing of the resource.
