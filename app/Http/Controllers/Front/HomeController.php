@@ -63,7 +63,7 @@ class HomeController extends Controller
 	 		}
 	 		else
 	 		{
-	 			$category_business[$value['id']]='0';
+	 			$category_business[$cat['category_id']]='0';
 	 		}
 
 
