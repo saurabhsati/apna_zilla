@@ -463,8 +463,8 @@
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="map_location">Map Location<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input type="hidden" name="lat" value="" id="lat" />
-                    <input type="hidden" name="lng" value="" id="lng"/>
+                    <input type="hidden" name="lat" value="{{ isset($business['lat'])?$business['lat']:'' }}" id="lat" />
+                    <input type="hidden" name="lng" value="{{ isset($business['lng'])?$business['lng']:'' }}" id="lng"/>
 
                     <div id="business_location_map" style="height:400px"></div>
                     <label>Note: Click On the Map to Pick Nearby Custom Location </label> 
@@ -971,9 +971,9 @@ $('#add-service').click(function(){
     }
     function initializeMap() 
     {
-         var latlng = new google.maps.LatLng(1.10, 1.10);
+         var latlng = new google.maps.LatLng($(ref_input_lat).val(), $(ref_input_lng).val());
          var myOptions = {
-             zoom: 5,
+             zoom: 18,
              center: latlng,
              panControl: true,
              scrollwheel: true,
@@ -995,7 +995,7 @@ $('#add-service').click(function(){
 
          map.streetViewControl = false;
          infowindow = new google.maps.InfoWindow({
-             content: "(1.10, 1.10)"
+             content: "("+$(ref_input_lat).val()+", "+$(ref_input_lng).val()+")"
          });
 
          google.maps.event.addListener(map, 'click', function(event) {

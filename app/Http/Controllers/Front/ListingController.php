@@ -36,7 +36,7 @@ class ListingController extends Controller
             $arr_business_details = $obj_business_details->toArray();
         }
         
- //dd($arr_business_details);
+ dd($arr_business_details);
         return view('front.listing.detail',compact('page_title','arr_business_details'));
     }
 }

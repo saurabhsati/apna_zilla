@@ -241,6 +241,7 @@
                            data-rule-required="true"
                            placeholder="Enter Street"
                            value=""
+                            onchange="setAddress()"
                            />
                     <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
@@ -267,6 +268,7 @@
                            data-rule-required="true"
                            placeholder="Enter Area"
                            value=""
+                           onchange="setAddress()" 
                            />
                     <span class='help-block'>{{ $errors->first('area') }}</span>
                 </div>
@@ -274,7 +276,7 @@
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="city">City <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                 <select class="form-control"  name="city" id="city">
+                 <select class="form-control"  name="city" id="city" onchange="setAddress()">
                   <option>Select City</option>
                  @if(isset($arr_city) && sizeof($arr_city)>0)
                  @foreach($arr_city as $city)
@@ -304,7 +306,7 @@
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="street">State <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                 <select class="form-control"  name="state" id="state">
+                 <select class="form-control"  name="state" id="state" onchange="setAddress()">
                  <option>Select State</option>
                   @if(isset($arr_state) && sizeof($arr_state)>0)
                   @foreach($arr_state as $state)
@@ -319,7 +321,7 @@
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="street">Country <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                <select class="form-control" name="country" id="country">
+                <select class="form-control" name="country" id="country" onchange="setAddress()">
                 <option>Select Country</option>
                 @if(isset($arr_country) && sizeof($arr_country)>0)
                 @foreach($arr_country as $country)
@@ -425,7 +427,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+          <!--   <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="hours_of_operation">Hours Of Operation<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <textarea class="form-control"
@@ -436,6 +438,17 @@
                            value=""
                            ></textarea>
                     <span class='help-block'>{{ $errors->first('hours_of_operation') }}</span>
+                </div>
+            </div> -->
+
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="map_location">Map Location<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input type="hidden" name="lat" value="" id="lat" />
+                    <input type="hidden" name="lng" value="" id="lng"/>
+
+                    <div id="business_location_map" style="height:400px"></div>
+                    <label>Note: Click On the Map to Pick Nearby Custom Location </label> 
                 </div>
             </div>
 
@@ -832,5 +845,142 @@ $('#add-service').click(function(){
      var html= $("#append_service").find("input[name='business_service[]']:last");
      html.remove();
             });
+</script>
+
+<script type="text/javascript">
+
+    var  map;
+    var ref_input_lat = $('#lat');
+    var ref_input_lng = $('#lng'); 
+
+    function setMapLocation(address) 
+    {
+
+        geocoder.geocode({'address': address}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) 
+            {   
+
+                map.setCenter(results[0].geometry.location);
+
+                $(ref_input_lat).val(results[0].geometry.location.lat().toFixed(6));
+                $(ref_input_lng).val(results[0].geometry.location.lng().toFixed(6));
+
+                var latlong = "(" + results[0].geometry.location.lat().toFixed(6) + ", " +
+                        +results[0].geometry.location.lng().toFixed(6)+ ")";
+
+
+
+                marker.setPosition(results[0].geometry.location);
+                map.setZoom(16);
+                infowindow.setContent(results[0].formatted_address);
+
+                if (infowindow) {
+                    infowindow.close();
+                }
+
+                google.maps.event.addListener(marker, 'click', function() {
+                    infowindow.open(map, marker);
+                });
+
+                infowindow.open(map, marker);
+
+            } else {
+                alert("Lat and long cannot be found.");
+            }
+        });
+    }
+    function initializeMap() 
+    {
+         var latlng = new google.maps.LatLng(1.10, 1.10);
+         var myOptions = {
+             zoom: 5,
+             center: latlng,
+             panControl: true,
+             scrollwheel: true,
+             scaleControl: true,
+             overviewMapControl: true,
+             disableDoubleClickZoom: false,
+             overviewMapControlOptions: {
+                 opened: true
+             },
+             mapTypeId: google.maps.MapTypeId.HYBRID
+         };
+         map = new google.maps.Map(document.getElementById("business_location_map"),
+             myOptions);
+         geocoder = new google.maps.Geocoder();
+         marker = new google.maps.Marker({
+             position: latlng,
+             map: map
+         });
+
+         map.streetViewControl = false;
+         infowindow = new google.maps.InfoWindow({
+             content: "(1.10, 1.10)"
+         });
+
+         google.maps.event.addListener(map, 'click', function(event) {
+             marker.setPosition(event.latLng);
+
+             var yeri = event.latLng;
+
+             var latlongi = "(" + yeri.lat().toFixed(6) + ", " + yeri.lng().toFixed(6) + ")";
+
+             infowindow.setContent(latlongi);
+
+             $(ref_input_lat).val(yeri.lat().toFixed(6));
+             $(ref_input_lng).val(yeri.lng().toFixed(6));
+
+         });
+
+         google.maps.event.addListener(map, 'mousewheel', function(event, delta) {
+
+             console.log(delta);
+         });
+
+
+     }
+
+    function loadScript() 
+    {
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = 'https://maps.googleapis.com/maps/api/js?sensor=false&' +
+                    'callback=initializeMap';
+            document.body.appendChild(script);
+    }
+
+    window.onload = loadScript;
+
+    /* Autcomplete Code */
+
+    function setMarkerTo(lat,lon,place)
+    {
+        var location = new google.maps.LatLng(lat,lng)
+        map.setCenter(location);
+        $(ref_input_lat).val = lat;
+        $(ref_input_lng).val = lng;
+        marker.setPosition(location);
+        map.setZoom(16);
+    }
+
+    /*function setAddress(ref)
+    {
+        var addr = $(ref).val();
+        setMapLocation(addr);
+    }*/
+
+    function setAddress()
+    { 
+         var street = $('#street').val();
+         var area = $('#area').val();
+         var city = $('#city option:selected').text();
+         var state = $('#state option:selected').text();
+         var country = $('#country option:selected').text();
+        
+        var addr = street+", "+area+", "+city+", "+state+", "+country;
+        
+        setMapLocation(addr);
+    }
+
 </script>
 @stop

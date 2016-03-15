@@ -60,9 +60,11 @@
           <!--   <div class="map" id="business_location_map" style="width: 100%; height: 250;">
 
             </div> -->
-            <div id="map_show" style="display: ;  margin-top: 5px;">
+            <div id="map_show" style="display: none;  margin-top: 5px;">
               <div id="location_map" style="height:250px; width: 100%;"></div>
             </div>
+            <input type="hidden" name="lat" id="lat" value="{{$arr_business_details['lat']}}"/>
+            <input type="hidden" name="lng" id="lng" value="{{$arr_business_details['lng']}}"/>
                     
 
             
@@ -379,10 +381,10 @@
           $('#business_times_div').show();  
         }
         
-        function show_map()
+        /*function show_map()
         {
           $('#map_show').show();
-        }
+        }*/
 
       </script>
     
@@ -431,9 +433,9 @@
     }
     function initializeMap() 
     {
-         var latlng = new google.maps.LatLng(1.10, 1.10);
+         var latlng = new google.maps.LatLng($(ref_input_lat).val(), $(ref_input_lng).val());
          var myOptions = {
-             zoom: 5,
+             zoom: 18,
              center: latlng,
              panControl: true,
              scrollwheel: true,
@@ -455,7 +457,7 @@
 
          map.streetViewControl = false;
          infowindow = new google.maps.InfoWindow({
-             content: "(1.10, 1.10)"
+             content: "("+$(ref_input_lat).val()+", "+$(ref_input_lng).val()+")"
          });
 
          google.maps.event.addListener(map, 'click', function(event) {
@@ -477,9 +479,9 @@
              console.log(delta);
          });
          
-          var addr = "<?php echo $arr_business_details['street'];?>,"+"<?php echo $arr_business_details['area'];?>,"+"<?php echo $arr_business_details['state_details']['state_title'];?>,"+"<?php echo $arr_business_details['country_details']['country_name'];?>";
+          //var addr = "<?php echo $arr_business_details['street'];?>,"+"<?php echo $arr_business_details['area'];?>,"+"<?php echo $arr_business_details['state_details']['state_title'];?>,"+"<?php echo $arr_business_details['country_details']['country_name'];?>";
              
-          setMapLocation(addr);
+         // setMapLocation(addr);
          //onload_address_map();//call function onload 
 
      }
@@ -495,7 +497,12 @@
 
     }
 
-    window.onload = loadScript();
+    function show_map()
+    {
+      $('#map_show').show();
+      loadScript();
+      //window.onload = loadScript();
+    }
 
     /* Autcomplete Code */
 
