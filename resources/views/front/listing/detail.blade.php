@@ -8,8 +8,8 @@
                 <div class="col-sm-12 col-md-12 col-lg-12">
      <ol class="breadcrumb">
          <span>You are here :</span>
-  <li><a href="#">Home</a></li>
-  <li><a href="#">Restaurants</a></li>
+  <li><a href="{{url('/')}}">Home</a></li>
+  <li><a href="{{url('/')}}//city/all-options/ct-{{isset($arr_business_details['category_details']['category_id']) && $arr_business_details['category_details']['category_id']!=''?$arr_business_details['category_details']['category_id']:'NA'}}">Restaurants</a></li>
          <li class="active">Britannia Wigan Hotel</li>
 
 </ol>
@@ -28,16 +28,46 @@
               <div class="product_title"><a href="#">{{$arr_business_details['business_name']}}</a></div>
                 <div class="rating_star"><ul><li><i class="fa fa-star-o ylow"></i></li><li><i class="fa fa-star-o ylow"></i></li><li><i class="fa fa-star-o ylow"></i></li><li><i class="fa fa-star-o"></i></li><li><i class="fa fa-star-o"></i></li></ul>out of 3 <a href="#">reviews</a></div>
                 <div class="p_details"><i class="fa fa-phone"></i><span> {{$arr_business_details['landline_number']}} &nbsp; {{$arr_business_details['mobile_number']}}</span></div>
-                <div class="p_details"><i class="fa fa-map-marker"></i> <span>{{$arr_business_details['building']}} &nbsp; {{$arr_business_details['street']}}<br/> {{$arr_business_details['landmark']}} &nbsp; {{$arr_business_details['area']}} (<a href="#">map</a>)</span></div>
+                <div class="p_details"><i class="fa fa-map-marker"></i> <span>{{$arr_business_details['building']}} &nbsp; {{$arr_business_details['street']}},<br/> {{$arr_business_details['landmark']}},&nbsp;{{$arr_business_details['area']}},&nbsp;{{$arr_business_details['state_details']['state_title']}},&nbsp;{{$arr_business_details['country_details']['country_name']}} (<a href="javascript:void(0);" onclick="show_map()">map</a>)</span></div>
 
-                <div class="p_details lst"><i class="fa fa-clock-o"></i><span>Today  11:30 am - 11:30 pm    <a href="javascript:void(0);" onclick="show_opening_times()">View All</a></span>
-                <div class="add_det"><i class="fa fa-globe"></i> {{$arr_business_details['website']}}</div>
+                <div class="p_details lst"><i class="fa fa-clock-o"></i><span>
+                @if(isset($arr_business_details['business_times']) && $arr_business_details['business_times']!='')
+                <?php 
+                    $current_day = strtolower(date("D"));
+                    $open_time = $current_day.'_open';
+                    $close_time = $current_day.'_close';
+                ?>    
+                    @if(array_key_exists($open_time, $arr_business_details['business_times']) &&
+                       array_key_exists($close_time, $arr_business_details['business_times']) )
+
+                      {{date('D')}} - {{ $arr_business_details['business_times'][$open_time] }} - 
+                       {{ $arr_business_details['business_times'][$close_time] }}
+                    @endif   
+
+                
+
+                <a href="javascript:void(0);" onclick="show_opening_times()">View All</a></span>
+                @else
+                  <span>Business Time Not Available.</span>
+                @endif
+                
+                <div class="add_det"><i class="fa fa-globe"></i><a href="{{$arr_business_details['website']}}"> {{$arr_business_details['website']}}</a></div>
                 <div class="enquiry"><i class="fa fa-envelope"></i> Send Enquiry By Email</div>
                 </div>
 
+            </div>
 
-                    </div>
+          <!--   <div class="map" id="business_location_map" style="width: 100%; height: 250;">
 
+            </div> -->
+            <div id="map_show" style="display: none;  margin-top: 5px;">
+              <div id="location_map" style="height:250px; width: 100%;"></div>
+            </div>
+            <input type="hidden" name="lat" id="lat" value="{{$arr_business_details['lat']}}"/>
+            <input type="hidden" name="lng" id="lng" value="{{$arr_business_details['lng']}}"/>
+                    
+
+            
             <div class="icons">
             <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/shar.png" alt="share"/>Share</div>
                 <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/write_review.png" alt="write_review"/>write review</div>
@@ -49,7 +79,11 @@
             </div>
             </div>
 
-                        <div class="tours-detail-tab">
+            <!-- <div class="map" id="business_location_map" style="width: 100%; height: 250;">
+           
+            </div> -->
+
+                <div class="tours-detail-tab">
                   <div id="dash_tab">
                      <ul class="resp-tabs-list">
                         <li>Add a Review </li>
@@ -178,40 +212,21 @@
                         <div>
                          <div class="gallery_view">
                         <div class="gallery">
-                                       <div class="prod_img">
-                                          <a href="{{ url('/') }}/assets/front/images/img1.jpg" class="gal img_inner"><img src="{{ url('/') }}/assets/front/images/img1.jpg" alt=""/></a>
-                                       </div>
-                                       <div class="prod_img">
-                                          <a href="{{ url('/') }}/assets/front/images/img2.jpg" class="gal img_inner"><img src="{{ url('/') }}/assets/front/images/img2.jpg" alt=""/></a>
-                                       </div>
-                                       <div class="prod_img">
-                                          <a href="{{ url('/') }}/assets/front/images/img3.jpg" class="gal img_inner"><img src="{{ url('/') }}/assets/front/images/img3.jpg" alt=""/></a>
-                                       </div>
-                                       <div class="prod_img">
-                                          <a href="{{ url('/') }}/assets/front/images/img4.jpg" class="gal img_inner"><img src="{{ url('/') }}/assets/front/images/img4.jpg" alt=""/></a>
-                                       </div>
-                                       <div class="prod_img">
-                                          <a href="{{ url('/') }}/assets/front/images/img1.jpg" class="gal img_inner"><img src="{{ url('/') }}/assets/front/images/img1.jpg" alt=""/></a>
-                                       </div>
-                                             <div class="prod_img">
-                                          <a href="{{ url('/') }}/assets/front/images/img1.jpg" class="gal img_inner"><img src="{{ url('/') }}/assets/front/images/img1.jpg" alt=""/></a>
-                                       </div>
-                                       <div class="prod_img">
-                                          <a href="{{ url('/') }}/assets/front/images/img2.jpg" class="gal img_inner"><img src="{{ url('/') }}/assets/front/images/img2.jpg" alt=""/></a>
-                                       </div>
-                                       <div class="prod_img">
-                                          <a href="{{ url('/') }}/assets/front/images/img3.jpg" class="gal img_inner"><img src="{{ url('/') }}/assets/front/images/img3.jpg" alt=""/></a>
-                                       </div>
-                                       <div class="prod_img">
-                                          <a href="{{ url('/') }}/assets/front/images/img4.jpg" class="gal img_inner"><img src="{{ url('/') }}/assets/front/images/img4.jpg" alt=""/></a>
-                                       </div>
-                                       <div class="prod_img">
-                                          <a href="{{ url('/') }}/assets/front/images/img1.jpg" class="gal img_inner"><img src="{{ url('/') }}/assets/front/images/img1.jpg" alt=""/></a>
-                                       </div>
-                                    </div>
-                                    <div class="clr"></div>
-                                 </div>
-                              </div>
+                          @if(isset($arr_business_details['image_upload_details']) && $arr_business_details['image_upload_details']!='')
+                            @foreach($arr_business_details['image_upload_details'] as $business_images)
+                             <div class="prod_img">
+                                <a href="{{ url('/') }}/uploads/business/business_upload_image/{{$business_images['image_name']}}" class="gal img_inner"><img src="{{ url('/') }}/uploads/business/business_upload_image/{{$business_images['image_name']}}" alt=""/></a>
+                             </div>
+                            @endforeach 
+                          @else
+                            <span>No Image Available.</span>
+                          @endif         
+
+                        </div>
+                                 
+                          <div class="clr"></div>
+                          </div>
+                        </div>
 
                         </div>
 
@@ -366,5 +381,146 @@
           $('#business_times_div').show();  
         }
         
+        /*function show_map()
+        {
+          $('#map_show').show();
+        }*/
+
       </script>
+    
+     <script type="text/javascript">
+
+    var  map;
+    var ref_input_lat = $('#lat');
+    var ref_input_lng = $('#lng'); 
+
+
+    function setMapLocation(address) 
+    {
+      console.log(address);
+        geocoder.geocode({'address': address}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) 
+            {   
+
+                map.setCenter(results[0].geometry.location);
+
+                $(ref_input_lat).val(results[0].geometry.location.lat().toFixed(6));
+                $(ref_input_lng).val(results[0].geometry.location.lng().toFixed(6));
+
+                var latlong = "(" + results[0].geometry.location.lat().toFixed(6) + ", " +
+                        +results[0].geometry.location.lng().toFixed(6)+ ")";
+
+
+
+                marker.setPosition(results[0].geometry.location);
+                map.setZoom(16);
+                infowindow.setContent(results[0].formatted_address);
+
+                if (infowindow) {
+                    infowindow.close();
+                }
+
+                google.maps.event.addListener(marker, 'click', function() {
+                    infowindow.open(map, marker);
+                });
+
+                infowindow.open(map, marker);
+
+            } else {
+                alert("Lat and long cannot be found.");
+            }
+        });
+    }
+    function initializeMap() 
+    {
+         var latlng = new google.maps.LatLng($(ref_input_lat).val(), $(ref_input_lng).val());
+         var myOptions = {
+             zoom: 18,
+             center: latlng,
+             panControl: true,
+             scrollwheel: true,
+             scaleControl: true,
+             overviewMapControl: true,
+             disableDoubleClickZoom: false,
+             overviewMapControlOptions: {
+                 opened: true
+             },
+             mapTypeId: google.maps.MapTypeId.ROADMAP
+         };
+         map = new google.maps.Map(document.getElementById("location_map"),
+             myOptions);
+         geocoder = new google.maps.Geocoder();
+         marker = new google.maps.Marker({
+             position: latlng,
+             map: map
+         });
+
+         map.streetViewControl = false;
+         infowindow = new google.maps.InfoWindow({
+             content: "("+$(ref_input_lat).val()+", "+$(ref_input_lng).val()+")"
+         });
+
+         google.maps.event.addListener(map, 'click', function(event) {
+             marker.setPosition(event.latLng);
+
+             var yeri = event.latLng;
+
+             var latlongi = "(" + yeri.lat().toFixed(6) + ", " + yeri.lng().toFixed(6) + ")";
+
+             infowindow.setContent(latlongi);
+
+             $(ref_input_lat).val(yeri.lat().toFixed(6));
+             $(ref_input_lng).val(yeri.lng().toFixed(6));
+
+         });
+
+         google.maps.event.addListener(map, 'mousewheel', function(event, delta) {
+
+             console.log(delta);
+         });
+         
+          //var addr = "<?php echo $arr_business_details['street'];?>,"+"<?php echo $arr_business_details['area'];?>,"+"<?php echo $arr_business_details['state_details']['state_title'];?>,"+"<?php echo $arr_business_details['country_details']['country_name'];?>";
+             
+         // setMapLocation(addr);
+         //onload_address_map();//call function onload 
+
+     }
+
+    function loadScript() 
+    {
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = 'https://maps.googleapis.com/maps/api/js?sensor=false&' +
+                    'callback=initializeMap';
+            document.body.appendChild(script);
+
+
+    }
+
+    function show_map()
+    {
+      $('#map_show').show();
+      loadScript();
+      //window.onload = loadScript();
+    }
+
+    /* Autcomplete Code */
+
+    function setMarkerTo(lat,lon,place)
+    {
+        var location = new google.maps.LatLng(lat,lng)
+        map.setCenter(location);
+        $(ref_input_lat).val = lat;
+        $(ref_input_lng).val = lng;
+        marker.setPosition(location);
+        map.setZoom(16);
+    }
+
+  
+
+</script>
+ 
+    
+
+
       @endsection

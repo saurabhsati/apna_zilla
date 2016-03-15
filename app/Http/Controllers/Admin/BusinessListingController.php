@@ -148,7 +148,7 @@ class BusinessListingController extends Controller
         $arr_rules['sun_in']='required';
         $arr_rules['sun_out']='required';
         //other fields
-    	$arr_rules['hours_of_operation']='required';
+    	//$arr_rules['hours_of_operation']='required';
     	$arr_rules['company_info']='required';
         $arr_rules['establish_year']='required';
     	$arr_rules['keywords']='required';
@@ -198,7 +198,8 @@ class BusinessListingController extends Controller
         $arr_data['pincode']=$form_data['pincode'];
         $arr_data['state']=$form_data['state'];
         $arr_data['country']=$form_data['country'];
-
+        $arr_data['lat']=$request->input('lat');
+        $arr_data['lng']=$request->input('lng');
         //Contact input array
         $arr_data['contact_person_name']=$form_data['contact_person_name'];
         $arr_data['mobile_number']=$form_data['mobile_number'];
@@ -210,7 +211,7 @@ class BusinessListingController extends Controller
 
 
         //other input array
-        $arr_data['hours_of_operation']=$form_data['hours_of_operation'];
+        //$arr_data['hours_of_operation']=$form_data['hours_of_operation'];
     	$arr_data['company_info']=$form_data['company_info'];
         $arr_data['establish_year']=$form_data['establish_year'];
     	$arr_data['keywords']=$form_data['keywords'];
@@ -356,6 +357,7 @@ class BusinessListingController extends Controller
  	}
  	public function update(Request $request,$enc_id)
  	{
+        
  		$id	=base64_decode($enc_id);
         $arr_all  = array();
         $arr_all=$request->all();
@@ -377,6 +379,8 @@ class BusinessListingController extends Controller
         $arr_rules['pincode']='required';
         $arr_rules['state']='required';
         $arr_rules['country']='required';
+        $arr_rules['lat']='required';
+        $arr_rules['lng']='required';
         //contact info fields
         $arr_rules['contact_person_name']='required';
         $arr_rules['mobile_number']='required';
@@ -402,7 +406,7 @@ class BusinessListingController extends Controller
         $arr_rules['sun_in']='required';
         $arr_rules['sun_out']='required';
 
-        $arr_rules['hours_of_operation']='required';
+        //$arr_rules['hours_of_operation']='required';
     	$arr_rules['company_info']='required';
         $arr_rules['establish_year']='required';
     	$arr_rules['keywords']='required';
@@ -473,6 +477,8 @@ class BusinessListingController extends Controller
         $business_data['pincode']=$request->input('pincode');
         $business_data['state']=$request->input('state');
         $business_data['country']=$request->input('country');
+        $business_data['lat']=$request->input('lat');
+        $business_data['lng']=$request->input('lng');
 
         //Contact input array
         $business_data['contact_person_name']=$request->input('contact_person_name');
@@ -492,6 +498,8 @@ class BusinessListingController extends Controller
         $business_data['establish_year']=$request->input('establish_year');
     	$business_data['keywords']=$request->input('keywords');
     	$business_data['youtube_link']=$request->input('youtube_link');
+
+
 
         $business_data=BusinessListingModel::where('id',$id)->update($business_data);
 
@@ -542,16 +550,8 @@ class BusinessListingController extends Controller
 
             $business_time_update = BusinessTimeModel::where('business_id',$id)->update($arr_time);
 
-            if($business_time_update)
-            {
-                Session::flash('success','Business Updated successfully');
-            }
-            else
-            {   
-                Session::flash('error','Error Occurred While Updating Business List ');
-            }    
-        	
-
+            Session::flash('success','Business Updated successfully');
+       
         }
         else
         {

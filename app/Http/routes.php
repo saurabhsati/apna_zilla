@@ -74,8 +74,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 });
 
-
-
+	
 
 /* Admin Routes */
 Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()

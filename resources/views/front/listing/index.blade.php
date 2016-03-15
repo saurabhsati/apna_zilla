@@ -70,7 +70,7 @@
                   <div class="product_list_view">
                    <div class="row">
                        <div class="col-sm-3 col-md-3 col-lg-4">
-                          <div class="product_img"><img src="{{ url('/') }}/assets/front/images/list1.jpg" alt="list product"/></div>
+                          <div class="product_img"><img src="{{ url('/') }}/uploads/business/main_image/{{ $restaurants['business_by_category']['main_image'] }}" alt="list product"/></div>
                        </div>
 
                       <div class="col-sm-9 col-md-9 col-lg-8">
