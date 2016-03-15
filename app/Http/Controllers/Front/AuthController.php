@@ -267,8 +267,10 @@ class AuthController extends Controller
                 foreach ($arr_user_info as $user)
                 {
                     $user_id = base64_encode($user['id']) ;
+                    Session::put('user_id', $user_id);
+
                 }
-                return redirect('front_users/profile/'.$user_id);
+                return redirect('front_users/profile');
             }
             else
             {

@@ -81,6 +81,30 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+     public function profile()
+    {
+        $id = session('user_id');
+        $user_id = base64_decode($id);
+        
+        $obj_user_info = UserModel::where('id','=',$user_id)->get();
+
+        if($obj_user_info)
+        {
+            $arr_user_info = $obj_user_info->toArray();
+        }
+
+        foreach ($arr_user_info as $users) 
+        {
+             Session::put('user_mail', $users['email']);
+             Session::put('user_first_name', $users['first_name']);
+             Session::put('user_middle_name', $users['middle_name']);
+             Session::put('user_last_name', $users['last_name']);
+        }
+
+        return view('front.user.profile',compact('arr_user_info'));
+    }
+
+
     public function store_personal_details(Request $request)
     {
         
@@ -190,34 +214,61 @@ class UserController extends Controller
     }
 
 
-    public function profile($enc_id)
+    public function address()
     {
-        $user_id = base64_decode($enc_id);
-        
-        $obj_user_info = UserModel::where('id','=',$user_id)->get();
+        $page_title = "Address";
 
+        $id = session('user_id');
+        $user_id = base64_decode($id);
+        $obj_user_info = UserModel::where('id','=',$user_id)->get();
         if($obj_user_info)
         {
             $arr_user_info = $obj_user_info->toArray();
         }
 
-        foreach ($arr_user_info as $users) 
+        return view('front.user.address',compact('page_title','arr_user_info'));
+    }
+
+    public function store_address_details(Request $request)
+    {
+        
+        $arr_rules = array();
+        $arr_rules['city']               = "required";
+        $arr_rules['area']               = "required";
+        $arr_rules['pincode']            = "required";
+        $arr_rules['street_address']     = "required";
+
+
+        $validator = Validator::make($request->all(),$arr_rules);
+
+        if($validator->fails())                                                                 
         {
-             Session::put('user_mail', $users['email']);
-             Session::put('user_first_name', $users['first_name']);
-             Session::put('user_middle_name', $users['middle_name']);
-             Session::put('user_last_name', $users['last_name']);
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        return view('front.user.profile',compact('arr_user_info'));
-    }
+        $id = session('user_id');
+        $user_id = base64_decode($id);
+                
+        $user = Sentinel::findById($user_id);
 
-    public function address()
-    {
-        $page_title = "Address";
-        return view('front.user.address',compact('page_title'));
-    }
+        $city                = $request->input('city');
+        $area                = $request->input('area');
+        $pincode             = $request->input('pincode');
+        $street_address      = $request->input('street_address');
 
+    
+        $credentials = [
+            'city' => $city,
+            'area' => $area,
+            'pincode' => $pincode,
+            'street_address' => $street_address
+           
+        ];
+
+        $user = Sentinel::update($user, $credentials);
+
+        return redirect()->back();
+    }
     
 
  }

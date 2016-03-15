@@ -40,10 +40,11 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	{	
 		Route::any('store',								['as' => 'front_users_store'    		  		    ,'uses' =>'Front\UserController@store']);
 		Route::post('process_login',					['as' => 'front_users_process_login'        		,'uses' =>'Front\AuthController@process_login']);
-		Route::get('profile/{enc_id}',					['as' => 'front_users_profile'        				,'uses' =>'Front\UserController@profile']);
+		Route::get('profile',							['as' => 'front_users_profile'        				,'uses' =>'Front\UserController@profile']);
 		Route::post('store_personal_details',			['as' => 'front_users_store_personal_details'       ,'uses' =>'Front\UserController@store_personal_details']);
 		
 		Route::get('address',							['as' => 'front_users_address'        				,'uses' =>'Front\UserController@address']);
+		Route::post('store_address_details',			['as' => 'front_users_store_address_details'        ,'uses' =>'Front\UserController@store_address_details']);
 
 
 		Route::get('logout',							['as' => 'front_users_logout'     					,'uses' =>'Front\AuthController@logout']);
