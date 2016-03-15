@@ -71,7 +71,12 @@
 
 
 
-          <form class="form-horizontal" id="validation-form" method="POST" action="{{ url('/sales_user/deals/store') }}" enctype="multipart/form-data">
+          <form class="form-horizontal" 
+                id="validation-form"
+                method="POST" 
+                action="{{ url('/sales_user/deals/store') }}" 
+                enctype="multipart/form-data"
+                >
 
 
            {{ csrf_field() }}

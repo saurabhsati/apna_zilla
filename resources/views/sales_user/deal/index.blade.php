@@ -23,7 +23,7 @@
             </span>
             <li>
                 <i class="fa fa-money"></i>
-                <a href="{{ url('/sales_user/business_listing') }}">Business Listing</a>
+                <a href="{{ url('/sales_user/business/business_listing') }}">Business Listing</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>

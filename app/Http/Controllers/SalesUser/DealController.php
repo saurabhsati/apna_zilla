@@ -26,13 +26,13 @@ class DealController extends Controller
     	$id=base64_decode($enc_id);
     	$arr_restaurant = array();
         $deal_public_img_path = $this->deal_public_img_path;
-        $obj_business = $this->BusinessListingModel->where('id',$id)->first();
+        $obj_business = BusinessListingModel::where('id',$id)->first();
 
         if($obj_business)
         {
             $arr_business = $obj_business->toArray();
         }
-        $obj_deal=$this->DealModel->with('business_info')->where('business_id',$id)->get();
+        $obj_deal = SalesDealModel::with('business_info')->where('business_id',$id)->get();
         if($obj_deal)
         {
             $arr_deal = $obj_deal->toArray();
@@ -114,6 +114,7 @@ class DealController extends Controller
     	$data_arr['start_time']=$form_data['start_time'];
     	$data_arr['end_time']=$form_data['end_time'];
     	$data_arr['is_active']=$form_data['is_active'];
+        $data_arr['public_id']=session('public_id');
     	$deal_add = $this->DealModel->create($data_arr);
     	if($deal_add)
     	{
