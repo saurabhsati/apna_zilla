@@ -140,6 +140,8 @@
                 <th>Email</th>
                 <th>Mobile No</th>
                <th>Deals</th>
+               <th width="" style="text-align:center">Status</th>
+               <th>Action</th>
 
 
                 </tr>
@@ -172,16 +174,33 @@
                 </td>
 
                     <td>
-                       @if($business['is_active']!="1")
+                      @if($business['is_active']!="1")
                            <a class="btn btn-info" href="#">
                            Add Deal
                             </a>
                        @elseif($business['is_active']=="1")
-                           <a class="btn btn-warning" href="{{ url('/web_admin/deals/'.base64_encode($business['id'])) }}">
+                           <a class="btn btn-warning" href="{{ url('/sales_user/deals/'.base64_encode($business['id'])) }}">
                              Add Deal
                           </a>
                        @endif
 
+                    </td>
+
+                     <td width="" style="text-align:center">
+                         @if($business['is_active']=="0")
+                        <a class="btn btn-danger" href="{{ url('/web_admin/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/activate' }}">
+                            Block
+                        </a>
+
+                        @elseif($business['is_active']=="1")
+                        <a  class="btn btn-success" href="{{ url('/web_admin/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/block' }}">
+                            Active
+                        </a>
+                         @elseif($business['is_active']=="2")
+                        <a  class="btn btn-info" href="{{ url('/web_admin/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/activate' }}">
+                            Pending
+                        </a>
+                        @endif
                     </td>
                   
                 </tr>

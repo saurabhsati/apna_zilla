@@ -64,7 +64,11 @@ class SalesAccountController extends Controller
         $record = UserModel::where('email','=',$arr_creds['email'])
                               ->get()->toArray();
 
-        $public_id = $record[0]['public_id'];        
+        foreach($record as $sales_user) 
+        {
+            $public_id = $sales_user['public_id'];        
+        }
+    
         
 
         $user = Sentinel::authenticate($arr_creds);
@@ -100,22 +104,31 @@ class SalesAccountController extends Controller
 
         $obj_business_info = BusinessListingModel::where('seller_public_id','=',$public_id)->get();
 
-        if( $obj_business_info != FALSE)
+         if(!empty($obj_business_info))
         {
             $arr_business_info = $obj_business_info->toArray();
-        }
-
-       $user_id = $arr_business_info[0]['user_id'];
         
-       $obj_user_info = UserModel::where('id','=',$user_id)->get();
+            foreach ($arr_business_info as $business) 
+            {
+                $user_id = $business['user_id'];
+            }
 
-        if($obj_user_info != FALSE)
+           $obj_user_info = UserModel::where('id','=',$user_id)->get();
+      
+            if($obj_user_info)
+            {
+                $arr_user_info = $obj_user_info->toArray();
+
+            }
+    
+            return view('sales_user.business.index',compact('page_title','arr_business_info','arr_user_info'));                                     
+ 	    }
+
+        else
         {
-            $arr_user_info = $obj_user_info->toArray();
+            return view('sales_user.business.index',compact('page_title','arr_business_info','arr_user_info'));                                     
         }
-
-        return view('sales_user.business.index',compact('page_title','arr_business_info','arr_user_info'));                                     
- 	}
+    }
 
     public function create_user(Request $request,$enc_id=FALSE)
     {
@@ -600,6 +613,62 @@ class SalesAccountController extends Controller
 
         return redirect()->back();
     }
+
+
+    public function toggle_status($enc_id,$action)
+    {
+        if($action=="activate")
+        {
+            $this->_activate($enc_id);
+
+            Session::flash('success','Business(es) Activated Successfully');
+        }
+        elseif($action=="block")
+        {
+            $this->_block($enc_id);
+
+            Session::flash('success','Business(es) Blocked Successfully');
+        }
+        elseif($action=="delete")
+        {
+            $this->_delete($enc_id);
+
+            Session::flash('success','Business(es) Deleted Successfully');
+        }
+
+        return redirect()->back();
+    }
+    
+
+      protected function _activate($enc_id)
+    {
+        $id = base64_decode($enc_id);
+
+        $Business = BusinessListingModel::where('id',$id)->first();
+
+        $Business->is_active = "1";
+
+        return $Business->save();
+    }
+
+    protected function _block($enc_id)
+    {
+        $id = base64_decode($enc_id);
+
+        $Business = BusinessListingModel::where('id',$id)->first();
+
+        $Business->is_active = "0";
+
+        return $Business->save();
+    }
+
+    protected function _delete($enc_id)
+    {
+        $id = base64_decode($enc_id);
+        $Business = BusinessListingModel::where('id',$id);
+        return $Business->delete();
+    }
+
 
    public function logout()
     {

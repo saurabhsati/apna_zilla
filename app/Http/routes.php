@@ -440,6 +440,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		Route::get('create_business/{enc_id}',				['as' => 'sales_user_create_business'           ,'uses' =>'SalesUser\SalesAccountController@create_business']);
 		Route::post('store_business',						['as' => 'sales_user_store_business'            ,'uses' =>'SalesUser\SalesAccountController@store_business']);
 		Route::post('multi_action',						    ['as' => 'sales_user_multiaction'				,'uses' =>'SalesUser\SalesAccountController@multi_action']);
+    	Route::get('toggle_status/{enc_id}/{action}',		['as' => 'sales_user_business_listing_status' 	,'uses' =>'SalesUser\SalesAccountController@toggle_status']);
 
 	  });
 
