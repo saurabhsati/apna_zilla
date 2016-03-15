@@ -10,7 +10,7 @@
      <ol class="breadcrumb">
          <span>You are here:</span>
   <li><a href="{{ url('/') }}">Home</a></li>
-  <li class="active">Restaurants</li>
+  <li class="active"><?php if(isset($parent_category) &&(isset($sub_category))){echo $sub_category[0]['title'].' '.$parent_category[0]['title'];} ?></li>
 
 </ol>
              </div>
@@ -28,22 +28,17 @@
                  <div class="sidebar-brand">Related Categories<span class="spe_mobile"><a href="#"></a></span></div>
                  <div class="bor_head">&nbsp;</div>
                  <ul class="spe_submobile">
-                    <li class="brdr"><a href="#">Pizza Restaurants</a></li>
-                  <li class="brdr"><a href="#">Mexican Restaurants</a></li>
-                  <li class="brdr"><a href="#">Italian Restaurants</a></li>
-                  <li class="brdr"><a href="#">Chinese Restaurants</a></li>
-                  <li class="brdr"><a href="#">Japanese Restaurants</a></li>
-                  <li class="brdr"><a href="#">Indian Restaurants</a></li>
-                  <li class="brdr"><a href="#">Thai Restaurants</a></li>
-                  <li class="brdr"><a href="#">Breakfast Restaurants </a></li>
-                  <li class="brdr"><a href="#">Seafood Restaurants</a></li>
-                  <li class="brdr"><a href="#">Fast Food Restaurants</a></li>
-                  <li class="brdr"><a href="#">Grill Restaurants</a></li>
-                  <li class="brdr"><a href="#">Sushi Restaurants</a></li>
-                  <li class="brdr"><a href="#">Greek Restaurants</a></li>
-                  <li class="brdr"><a href="#">Cafe Restaurants</a></li>
-                  <li class="brdr1"><a href="#">French Restaurants</a></li>
-                   <li class="brdr1"><a href="#">Korean Restaurants</a></li>
+
+                  @if(isset($arr_sub_cat) && sizeof($arr_sub_cat)>0)
+                  @foreach($arr_sub_cat as $category)
+                    <?php  $current_cat=explode('-',Request::segment(3));
+                    if(isset($current_cat)){ if($current_cat[1]!=$category['cat_id']){
+                    ?>
+                    <li class="brdr"><a href="{{ url('/') }}/city/all-options/ct-{{$category['cat_id']}}">{{ $category['title'] }}</a></li>
+                    <?php } }?>
+                  @endforeach
+                  @endif
+
                </ul>
                <!-- /#Categoriesr End-->
                <div class="clearfix"></div>
@@ -51,14 +46,17 @@
             </div>
 
              <div class="col-sm-12 col-md-9 col-lg-9">
-             <div class="title_head">Restaurants</div>
+             <div class="title_head"><?php if(isset($parent_category) && (isset($sub_category))){echo $sub_category[0]['title'].' '.$parent_category[0]['title'];} ?></div>
 
 
                 <div class="sorted_by">Sort By :</div>
               <div class="filter_div">
                  <ul>
-                <li><a href="#">Most Recent </a></li>
-                 <li><a href="#" class="active">Most Popular </a></li>
+                <li><a href="#" class="active">Most Popular </a></li>
+                <li id="location">
+                <a href="javascript:void(0);" onclick="_ct('lctn','lspg');return openDiv('jsbd','');" class="act">Location</a>
+                </li>
+
                  <li><a href="#">Alphabetical</a></li>
                 </ul>
              </div>
@@ -66,7 +64,7 @@
 
            @if(isset($arr_business) && sizeof($arr_business)>0)
             @foreach($arr_business as $restaurants)
-             
+
                   <div class="product_list_view">
                    <div class="row">
                        <div class="col-sm-3 col-md-3 col-lg-4">
@@ -84,7 +82,7 @@
                           <div class="rating_star">
                               <img src="{{ url('/') }}/assets/front/images/rating.jpg" alt="rating"/> 10 Ratings <span class=""> Estd.in {{ $restaurants['business_by_category']['establish_year'] }} </span></div>
                           <div class="p_details"><i class="fa fa-phone"></i><span> {{ $restaurants['business_by_category']['landline_number'] }} &nbsp; {{ $restaurants['business_by_category']['mobile_number'] }}</span></div>
-                          <div class="p_details"><i class="fa fa-map-marker"></i> 
+                          <div class="p_details"><i class="fa fa-map-marker"></i>
                             <span>{{ $restaurants['business_by_category']['building'] }} &nbsp; {{ $restaurants['business_by_category']['street'] }} <br/>
                                   {{ $restaurants['business_by_category']['landmark'] }} &nbsp; {{ $restaurants['business_by_category']['area'] }} &nbsp;{{ '-'.$restaurants['business_by_category']['pincode'] }}<br/>
                                   </span></div>
@@ -101,12 +99,12 @@
                       </div>
                       </div>
                  </div>
-            
+
             @endforeach
            @else
-                <span>No Restaurant Available</span>
+                <span>No Records Available</span>
            @endif
-          
+
           <!--Product Lisiting End  -->
 
              </div>
@@ -114,4 +112,7 @@
        </div>
 
       </div>
+
 @endsection
+
+
