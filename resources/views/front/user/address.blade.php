@@ -13,8 +13,8 @@
                  <div class="sidebar-brand">Fill Profile in Few Steps<span class="spe_mobile">&nbsp;<!--<a href="#"></a>--></span></div>
                  <div class="bor_head">&nbsp;</div>
                  <ul class="spe_submobile">
-                    <li class="brdr"><span class="steps">1</span><a href="#">Personal Details</a></li>
-                  <li class="brdr"><span class="steps">2</span><a href="#">Addresses</a></li>
+                    <li class="brdr"><span class="steps">1</span><a href="{{url('/front_users/profile')}}">Personal Details</a></li>
+                  <li class="brdr"><span class="steps">2</span><a href="{{url('/front_users/address')}}">Addresses</a></li>
                   <li class="brdr"><span class="steps">3</span><a href="#">Family &amp; Friends</a></li>
                   <li class="brdr"><span class="steps">4</span><a href="#">4Credit / Debit Cards</a></li>
                      <li class="brdr has-sub"><span class="steps">5</span><a href="#"><span>Bills &amp; Recharge</span></a>
@@ -59,23 +59,66 @@
                       <form class="form-horizontal" 
                            id="validation-form" 
                            method="POST"
-                           action="{{ url('/front_users/store_personal_details') }}" 
+                           action="{{ url('/front_users/store_address_details') }}" 
                            enctype="multipart/form-data"
                            >
 
       {{ csrf_field() }}
 
+      @foreach($arr_user_info as $user)
+     
+
+                 <div class="col-sm-9 col-md-9 col-lg-9">
+                <div class="box_profile">              
 
 
-
-      <div class="user_box_sub">
+              <div class="user_box_sub">
                            <div class="row">
-                    <div class="col-lg-3  label-text">Name :</div>
+                    <div class="col-lg-3  label-text"> Name :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="middle_name" 
-                         value="{{ isset($user['middle_name'])?$user['middle_name']:'' }}" 
+                         <input type="text" name="name" 
+                         value="{{ $user['first_name']." ".$user['last_name']}}" 
                                 class="input_acct"
-                                placeholder="Enter Middle Name"/>
+                                placeholder="Enter Name" readonly />
+                          <div class="error_msg">please enter correct</div>
+                        </div>
+                         </div>
+                    </div>
+                         
+
+
+                      <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">City :</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                         <input type="text" name="city" 
+                                value="{{ isset($user['city'])?$user['city']:'' }}"
+                                class="input_acct"
+                                placeholder="Enter City "/>
+                          <div class="error_msg">please enter correct</div>
+                        </div>
+                         </div>
+                    </div>
+                    
+                    <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Area :</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                         <input type="text" name="area" 
+                                value="{{ isset($user['area'])?$user['area']:'' }}"
+                          class="input_acct" placeholder="Enter Area "/>
+                          <div class="error_msg">please enter correct</div>
+                        </div>
+                         </div>
+                    </div>
+                   
+                    <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Pincode :</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                         <input type="text" name="pincode" 
+                                value="{{ isset($user['pincode'])?$user['pincode']:'' }}" 
+                                class="input_acct" placeholder="Enter Pincode  "/>
                           <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
@@ -83,22 +126,35 @@
 
                     <div class="user_box_sub">
                            <div class="row">
-                    <div class="col-lg-3  label-text">Last Name :</div>
+                    <div class="col-lg-3  label-text">Street Address :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input name="last_name"
-                                class="input_acct"
-                                rows="4"
-                                value="{{ isset($user['last_name'])?$user['last_name']:'' }}"
-                                placeholder="Enter Last Name "/>
+                         <input type="text" name="street_address" 
+                                value="{{ isset($user['street_address'])?$user['street_address']:'' }}" 
+                                class="input_acct" placeholder="Enter Street address  "/>
                           <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
                     </div>
+                                     
+                   </div>
 
-                      </form>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        
+                    <button type="submit" class="yellow1 ui button">Save & Continue</button>
+
+                    @endforeach
+                    </form>
+              
+              </div>
+                      
+                </div>
+                
+                 </div>
+                          
+             </div>
+         </div>
+       </div>
+       
+      </div>
+
+
+
+@stop

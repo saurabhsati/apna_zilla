@@ -25,7 +25,30 @@
                                  -->
                            </li>
                            <li class="nav-item"><a href="#">Features</a></li>
-                           <li class="nav-item"><a data-toggle="modal" data-target="#login_poup">Login/Register</a></li>
+
+
+                            @if ($user = Sentinel::check())
+                           
+                          <li class="nav-item">
+                        <div class="dropdown">
+                                <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Hi {{session('user_first_name')}} <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                   <li><a href="{{url('/front_users/profile')}}">My Account</a></li>
+                                   <li><a href="#">My Favorites</a></li>
+                                   <li><a href="#">Friend's Ratings </a></li>
+                                   <li><a href="{{ url('/front_users/logout') }}">Logout</a></li>
+                              
+                                </ul>
+                             </div>
+                             </li>
+
+                        @else
+                           
+                        <li class="nav-item"><a data-toggle="modal" data-target="#login_poup">Login/Register</a></li>
+                           
+                        @endif
+                        
                         </ul>
                         <a class="btn btn-post" href="#">List your Bussiness</a>
                      </div>

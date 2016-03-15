@@ -21,6 +21,7 @@ class UserModel extends Model
     					   'street_address',
     					   'city',
     					   'area',
+                 'pincode',
     					   'occupation',
     					   'work_experience',
     					   'mobile_no',

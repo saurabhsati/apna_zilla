@@ -13,7 +13,7 @@
                  <div class="sidebar-brand">Fill Profile in Few Steps<span class="spe_mobile">&nbsp;<!--<a href="#"></a>--></span></div>
                  <div class="bor_head">&nbsp;</div>
                  <ul class="spe_submobile">
-                    <li class="brdr"><span class="steps">1</span><a href="#">Personal Details</a></li>
+                    <li class="brdr"><span class="steps">1</span><a href="{{url('/front_users/profile')}}">Personal Details</a></li>
                   <li class="brdr"><span class="steps">2</span><a href="{{url('/front_users/address')}}">Addresses</a></li>
                   <li class="brdr"><span class="steps">3</span><a href="#">Family &amp; Friends</a></li>
                   <li class="brdr"><span class="steps">4</span><a href="#">4Credit / Debit Cards</a></li>

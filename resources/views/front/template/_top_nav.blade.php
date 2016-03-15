@@ -34,7 +34,7 @@
                                 <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Hi {{session('user_first_name')}} <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                   <li><a href="#">My Account</a></li>
+                                   <li><a href="{{url('/front_users/profile')}}">My Account</a></li>
                                    <li><a href="#">My Favorites</a></li>
                                    <li><a href="#">Friend's Ratings </a></li>
                                    <li><a href="{{ url('/front_users/logout') }}">Logout</a></li>
