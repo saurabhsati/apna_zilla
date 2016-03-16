@@ -9,7 +9,9 @@ use App\Http\Controllers\Controller;
 use App\Models\CategoryModel;
 use App\Models\BusinessListingModel;
 use App\Models\BusinessCategoryModel;
+use App\Models\CityModel;
 use DB,Event;
+use Session;
 class CategorySearchController extends Controller
 {
     public function index($cat_slug,$cat_id)
@@ -60,5 +62,53 @@ class CategorySearchController extends Controller
             $arr_sub_cat = $obj_sub_cat->toArray();
         }
       return view('front.listing.index',compact('page_title','arr_business','arr_sub_cat','parent_category','sub_category'));
+    }
+    public function search_location(Request $request)
+    {
+        $arr=array();
+        $arr=$request->all();
+
+        $city=Session::get('preferred_city');
+        $city_all='';
+
+         if($city!='')
+          {
+              $city_all = '/'.$city;
+          }
+          else
+          {
+            $cityall = '/city';
+          }
+        if($request->has('term'))
+       {
+          $search_location  = $request->input('term');
+          $search_city = $request->input('city_name');
+          $search_category_id = $request->input('category_id');
+          $search_slug  = str_slug($search_location,'-');
+          $search_city !='' ? ($city_all = '/'.$search_city) : ($city = '');
+
+         $obj_business_listing = CityModel::with(['business_details'])->where('city_title', 'like', "%".$search_location."%")->get();
+         $arr_search  = $obj_business_listing->toArray();
+         $link = '';
+         if(sizeof($arr_search)>0){
+          foreach ($arr_search as $key => $value)
+          {
+            foreach ($value['business_details'] as $key => $business)
+              {
+              $link = url('/').$city_all.'/all-options/'.$search_category_id;
+
+               $label[] = $business['area'];
+              $searchresult[$key]['link'] = url('/').$city_all.'/all-options/'.$search_category_id;
+              }
+          }
+          print_r($label);
+         }
+
+
+          $input = array_map("unserialize", array_unique(array_map("serialize", $searchresult)));
+        $input[] = array('label'=>$search_location, 'cat_name'=>'in all categories', 'link'=>url('/').$city_all.'/all-options/'.$search_category_id);
+        return response()->json($input);
+       }
+        //echo"test";
     }
 }
