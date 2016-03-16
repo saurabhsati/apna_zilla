@@ -18,12 +18,7 @@ class ListingController extends Controller
     {
 
     }
-    public function index()
-    {
-        $page_title ='Listing';
 
-    	return view('front.listing.index',compact('page_title'));
-    }
     public function list_details($enc_id)
     {
         $id = base64_decode($enc_id);
@@ -48,7 +43,7 @@ class ListingController extends Controller
             $arr_business = $obj_business_listing->toArray();
 
         }
-      
+
 
  //dd($arr_business_details);
         return view('front.listing.detail',compact('page_title','arr_business_details','arr_business'));
@@ -64,11 +59,11 @@ class ListingController extends Controller
 
          $validator = Validator::make($request->all(),$arr_rules);
 
-        if($validator->fails())                                                                 
+        if($validator->fails())
         {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        
+
         $title       = $request->input('title');
         $review       = $request->input('review');
 
@@ -84,12 +79,12 @@ class ListingController extends Controller
         if($status)
         {
             Session::flash('success','Record Created Successfully');
-        }   
+        }
         else
         {
             Session::flash('error','Problem Occured While Creating Record');
-        }   
+        }
 
-    
+
     }
 }

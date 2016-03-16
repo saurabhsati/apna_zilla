@@ -32,7 +32,6 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 	Route::group(array('prefix' => '/listing'), function()
 	{
-		Route::get('/',							 ['as' => 'listing' 		,'uses' => 'Front\ListingController@index']);
 		Route::get('details',					 ['as' => 'list_details' 		,'uses' => 'Front\ListingController@list_details']);
 	});
 

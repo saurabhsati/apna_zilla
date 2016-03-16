@@ -89,28 +89,28 @@
             </div>
 
            @if(isset($arr_business) && sizeof($arr_business)>0)
-            @foreach($arr_business as $restaurants)
+            @foreach($arr_business as $business)
 
                   <div class="product_list_view">
                    <div class="row">
                        <div class="col-sm-3 col-md-3 col-lg-4">
-                          <div class="product_img"><img src="{{ url('/') }}/uploads/business/main_image/{{ $restaurants['business_by_category']['main_image'] }}" alt="list product"/></div>
+                          <div class="product_img"><img src="{{ url('/') }}/uploads/business/main_image/{{ $business['business_by_category']['main_image'] }}" alt="list product"/></div>
                        </div>
 
                       <div class="col-sm-9 col-md-9 col-lg-8">
                       <div class="product_details">
                           <div class="product_title">
-                            <a href="{{url('/').'/listing/details/'.base64_encode($restaurants['business_by_category']['id'])}}">
-                              {{ $restaurants['business_by_category']['business_name'] }}
+                            <a href="{{url('/').'/listing/details/'.base64_encode($business['business_by_category']['id'])}}">
+                              {{ $business['business_by_category']['business_name'] }}
                             </a>
                           </div>
 
                           <div class="rating_star">
-                              <img src="{{ url('/') }}/assets/front/images/rating.jpg" alt="rating"/> 10 Ratings <span class=""> Estd.in {{ $restaurants['business_by_category']['establish_year'] }} </span></div>
-                          <div class="p_details"><i class="fa fa-phone"></i><span> {{ $restaurants['business_by_category']['landline_number'] }} &nbsp; {{ $restaurants['business_by_category']['mobile_number'] }}</span></div>
+                              <img src="{{ url('/') }}/assets/front/images/rating.jpg" alt="rating"/> 10 Ratings <span class=""> Estd.in {{ $business['business_by_category']['establish_year'] }} </span></div>
+                          <div class="p_details"><i class="fa fa-phone"></i><span> {{ $business['business_by_category']['landline_number'] }} &nbsp; {{ $business['business_by_category']['mobile_number'] }}</span></div>
                           <div class="p_details"><i class="fa fa-map-marker"></i>
-                            <span>{{ $restaurants['business_by_category']['building'] }} &nbsp; {{ $restaurants['business_by_category']['street'] }} <br/>
-                                  {{ $restaurants['business_by_category']['landmark'] }} &nbsp; {{ $restaurants['business_by_category']['area'] }} &nbsp;{{ '-'.$restaurants['business_by_category']['pincode'] }}<br/>
+                            <span>{{ $business['business_by_category']['building'] }} &nbsp; {{ $business['business_by_category']['street'] }} <br/>
+                                  {{ $business['business_by_category']['landmark'] }} &nbsp; {{ $business['business_by_category']['area'] }} &nbsp;{{ '-'.$business['business_by_category']['pincode'] }}<br/>
                                   </span></div>
                           <div class="p_details"><a href="#" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>
                             <ul>
