@@ -51,7 +51,7 @@
                 <li><i class="fa fa-star-o ylow"></i>
                 </li><li><i class="fa fa-star-o ylow"></i>
                 </li><li><i class="fa fa-star-o"></i></li>
-                <li><i class="fa fa-star-o"></i></li></ul>{{$avg_review}}out of 5 <a href="#" onclick="clickReview()">reviews</a></div>
+                <li><i class="fa fa-star-o"></i></li></ul>{{$avg_review}}&nbsp;out of 5 <a href="#" onclick="clickReview()">reviews</a></div>
                 <div class="p_details"><i class="fa fa-phone"></i><span> {{$arr_business_details['landline_number']}} &nbsp; {{$arr_business_details['mobile_number']}}</span></div>
                 <div class="p_details"><i class="fa fa-map-marker"></i> <span>{{$arr_business_details['building']}} &nbsp; {{$arr_business_details['street']}},<br/> {{$arr_business_details['landmark']}},&nbsp;{{$arr_business_details['area']}},&nbsp;{{$arr_business_details['state_details']['state_title']}},&nbsp;{{$arr_business_details['country_details']['country_name']}} (<a href="javascript:void(0);" onclick="show_map()">map</a>)</span></div>
 
@@ -142,7 +142,20 @@
 
                             <div class="review-title">
                                  <div class="your-rating"> Your rating </div>
-                                 
+                                 <div class="yr_rating-over">
+                                   <ul>
+                                     <li><a href="#"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
+                                      <li><a href="#"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
+                                       <li><a href="#"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
+                                        <li><a href="#"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
+                                         <li><a href="#"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
+                                         <li><a href="#"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
+                                      <li><a href="#"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
+                                       <li><a href="#"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
+                                        <li><a href="#"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
+                                         <li><a href="#"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
+                                   </ul>
+                                 </div>
                                  <div class="clearfix"></div>
                               </div>
                                <div class="review-title">
@@ -171,9 +184,9 @@
                                  <div class="title-rev-field">
                                    <div class="input-group">
       <div class="input-group-addon">+91</div>
-                            
+
       <input type="text" class="form-control" id="exampleInputAmount" placeholder="Mobile Number">
-     
+
     </div>
                                  </div>
                                  <div class="clearfix"></div>
@@ -189,7 +202,7 @@
                                  <div class="clearfix"></div>
                               </div>
 
-                             
+
                               <div class="submit-btn">
                                  <button type="submit">SUBMIT REVIEW</button>
                               </div>
