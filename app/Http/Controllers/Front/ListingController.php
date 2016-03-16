@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\BusinessListingModel;
+use App\Models\BusinessCategoryModel;
 use App\Models\ReviewsModel;
 use Session;
 use Validator;
@@ -37,8 +38,20 @@ class ListingController extends Controller
             $arr_business_details = $obj_business_details->toArray();
         }
 
+
+        $arr_business = array();
+        $obj_business_listing = BusinessCategoryModel::where('category_id',$arr_business_details['category_details']['category_id'])->limit(4)->get();
+
+        if($obj_business_listing)
+        {
+            $obj_business_listing->load(['business_by_category']);
+            $arr_business = $obj_business_listing->toArray();
+
+        }
+      
+
  //dd($arr_business_details);
-        return view('front.listing.detail',compact('page_title','arr_business_details'));
+        return view('front.listing.detail',compact('page_title','arr_business_details','arr_business'));
     }
 
     public function store_reviews(Request $request,$enc_id)

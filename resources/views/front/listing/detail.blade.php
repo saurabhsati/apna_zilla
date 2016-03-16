@@ -325,67 +325,33 @@
            <div class="col-sm-12 col-md-12 col-lg-12">
                <div class="title_main">Related Listing</div>
             <div class="row">
-               <div class="col-sm-3 col-md-3">
-                <div class="product_info">
-                   <div class="p_images">
-                       <div class="name_product">Amirah's kitchen</div>
-                       <img src="{{ url('/') }}/assets/front/images/img1.jpg" alt="product img"/>
+              @if(isset($arr_business) && sizeof($arr_business)>0) 
+                @foreach($arr_business as $related_business)
 
-                    </div>
-                   <div class="p_infor_detail">
-                    <span class="pull-left"><img src="{{ url('/') }}/assets/front/images/home_map.png" alt="location"/> London</span>
-                    <span class="pull-right"><i class="fa fa-star-o ylow"></i></span>
+                @if($related_business['business_by_category']['id']!=$arr_business_details['id'])
 
-                    </div>
-                   </div>
-                </div>
-                 <div class="col-sm-3 col-md-3">
-                <div class="product_info">
-                   <div class="p_images">
-                       <div class="name_product">Amirah's kitchen</div>
-                       <img src="{{ url('/') }}/assets/front/images/img2.jpg" alt="product img"/>
+                   <div class="col-sm-3 col-md-3">
+                    <div class="product_info">
+                       <div class="p_images">
+                           <div class="name_product"> <a href="{{url('/').'/listing/details/'.base64_encode($related_business['business_by_category']['id'])}}" style="color: #ffffff;">{{ $related_business['business_by_category']['business_name'] }}</a></div>
+                          
+                            <img src="{{ url('/') }}/uploads/business/main_image/{{ $related_business['business_by_category']['main_image'] }}" alt="product img"/>
+                        
+                        </div>
+                       <div class="p_infor_detail">
+                        <span class="pull-left"><img src="{{ url('/') }}/assets/front/images/home_map.png" alt="location"/>{{$related_business['business_by_category']['area']}}</span>
+                        <span class="pull-right"><i class="fa fa-star-o ylow"></i></span>
 
+                        </div>
+                       </div>
                     </div>
-                   <div class="p_infor_detail">
-                    <span class="pull-left"><img src="{{ url('/') }}/assets/front/images/home_map.png" alt="location"/> London</span>
-                    <span class="pull-right"><i class="fa fa-star-o ylow"></i></span>
-
-                    </div>
-                   </div>
-                </div>
-                 <div class="col-sm-3 col-md-3">
-                <div class="product_info">
-                   <div class="p_images">
-                       <div class="name_product">Amirah's kitchen</div>
-                       <img src="{{ url('/') }}/assets/front/images/img3.jpg" alt="product img"/>
-
-                    </div>
-                   <div class="p_infor_detail">
-                    <span class="pull-left"><img src="{{ url('/') }}/assets/front/images/home_map.png" alt="location"/> London</span>
-                    <span class="pull-right"><i class="fa fa-star-o ylow"></i></span>
-
-                    </div>
-                   </div>
-                </div>
-                 <div class="col-sm-3 col-md-3">
-                <div class="product_info">
-                   <div class="p_images">
-                       <div class="name_product">Amirah's kitchen</div>
-                       <img src="{{ url('/') }}/assets/front/images/img4.jpg" alt="product img"/>
-
-                    </div>
-                   <div class="p_infor_detail">
-                    <span class="pull-left"><img src="{{ url('/') }}/assets/front/images/home_map.png" alt="location"/> London</span>
-                    <span class="pull-right"><i class="fa fa-star-o ylow"></i></span>
-
-                    </div>
-                   </div>
-                </div>
+                  
+                  @endif
+                 @endforeach
+               @endif 
 
                </div>
-
-
-            </div>
+             </div>
 
            </div>
        </div>
