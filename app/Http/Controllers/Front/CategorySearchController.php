@@ -31,11 +31,12 @@ class CategorySearchController extends Controller
  		$obj_business_listing = BusinessCategoryModel::where('category_id',$cat_id)->get();
  		if($obj_business_listing)
  		{
-            $obj_business_listing->load(['business_by_category']);
+            $obj_business_listing->load(['business_by_category','business_rating']);
  			$arr_business = $obj_business_listing->toArray();
+        }
+//dd($arr_business);
+        //BusinessListingModel::where('',)
 
- 		}
-        
         // Getting Related Categories
 
         $obj_sub_category = CategoryModel::where('cat_id',$cat_id)->get();
@@ -54,12 +55,13 @@ class CategorySearchController extends Controller
             }
 
         }
-     
+
         $obj_sub_cat = CategoryModel::where('parent',$main_cat_id)->orderBy('is_popular', 'DESC')->get();
         if($obj_sub_cat)
         {
             $arr_sub_cat = $obj_sub_cat->toArray();
         }
+
       return view('front.listing.index',compact('page_title','arr_business','arr_sub_cat','parent_category','sub_category'));
     }
 }

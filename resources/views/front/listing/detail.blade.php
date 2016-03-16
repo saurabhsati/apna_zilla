@@ -10,7 +10,7 @@
          <span>You are here :</span>
   <li><a href="{{url('/')}}">Home</a></li>
   <li><a href="{{url('/')}}//city/all-options/ct-{{isset($arr_business_details['category_details']['category_id']) && $arr_business_details['category_details']['category_id']!=''?$arr_business_details['category_details']['category_id']:'NA'}}">Restaurants</a></li>
-         <li class="active">Britannia Wigan Hotel</li>
+         <li class="active">{{ isset($arr_business_details['business_name']) && sizeof($arr_business_details['business_name'])>0?$arr_business_details['business_name']:''}}</li>
 
 </ol>
              </div>
@@ -70,7 +70,7 @@
             
             <div class="icons">
             <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/shar.png" alt="share"/>Share</div>
-                <div class="img_icons" id="write"><img src="{{ url('/') }}/assets/front/images/write_review.png" alt="write_review" onclick="clickEvent()" /><a onclick="clickEvent()" style="color:#444;">write review</a></div>
+                <div class="img_icons" id="write"><img src="{{ url('/') }}/assets/front/images/write_review.png" alt="write_review" onclick="clickEvent()" style="cursor: pointer;" /><a onclick="clickEvent()" style="color:#444; cursor: pointer;">write review</a></div>
                 <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/your-vote.png" alt="your-vote"/>Your Vote(0.5)</div>
                   <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/edit-this.png" alt="write_review"/>Edit this</div>
                   <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/sms-emil.png" alt="write_review"/>Sms/Email</div>
@@ -85,7 +85,7 @@
 
                 <div class="tours-detail-tab">
                   <div id="dash_tab">
-                     <ul class="resp-tabs-list">
+                     <ul class="resp-tabs-list ">
 
                         <li id="review">Add a Review </li>
                          <img class="dash_line" alt="line" src="{{ url('/') }}/assets/front/images/dash_menu_line.jpg">
@@ -346,8 +346,11 @@
                        </div>
                     </div>
                   
-                  @endif
+                  
+                   @endif
+
                  @endforeach
+
                @endif 
 
                </div>
@@ -375,14 +378,14 @@
           {
               $(this).removeClass("resp-tab-active");
           }
-          if($("div").hasClass("resp-tab-active"))
+          /*else if($("div").hasClass("resp-tab-active"))
           {
               $(this).removeClass("resp-tab-active");
           }
-          if($("div").hasClass("resp-tab-content-active"))
+          else if($("div").hasClass("resp-tab-content-active"))
           {
               $(this).removeClass("resp-tab-content-active");
-          }
+          }*/
           $("#review").addClass("resp-tab-active");
           $(".resp-accordion").addClass("resp-tab-active");
           $(".resp-tab-content").addClass("resp-tab-content-active");
