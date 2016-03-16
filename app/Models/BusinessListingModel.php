@@ -99,6 +99,9 @@ class BusinessListingModel extends Model
     {
         return $this->belongsTo('App\Models\BusinessTimeModel','id','business_id');
     }
-
+     public function also_list_category()
+    {
+        return $this->hasMany('App\Models\BusinessCategoryModel','business_id','id');
+    }
 
 }

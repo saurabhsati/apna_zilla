@@ -266,6 +266,7 @@
       <script src="{{ url('/') }}/assets/front/js/jquery.js" type="text/javascript"></script>
       <!-- Bootstrap Core JavaScript -->
       <script src="{{ url('/') }}/assets/front/js/bootstrap.min.js" type="text/javascript"></script>
+
       <!-- Home Page Popup for login & signup start -->
       <script type="text/javascript">
          $('.tag.example .ui.dropdown')
@@ -419,5 +420,6 @@
         <!-- Listing details Tabbing End -->
          <script src="{{ url('/') }}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>
             <link href="{{ url('/') }}/assets/front/css/easy-responsive-tabs.css" rel="stylesheet" type="text/css" />
+             <script src="{{ url('/') }}/assets/front/js/jquery-ui.js" type='text/javascript'></script>
    </body>
 </html>

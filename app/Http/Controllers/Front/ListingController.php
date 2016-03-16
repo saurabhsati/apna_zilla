@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\BusinessListingModel;
 use App\Models\BusinessCategoryModel;
+use App\Models\CategoryModel;
 use App\Models\ReviewsModel;
 use Session;
 use Validator;
@@ -29,11 +30,11 @@ class ListingController extends Controller
         $obj_business_details = BusinessListingModel::where('id',$id)->first();
         if($obj_business_details)
         {
-            $obj_business_details->load(['business_times','image_upload_details','country_details','state_details','category_details','service']);
+            $obj_business_details->load(['business_times','also_list_category','reviews','image_upload_details','country_details','state_details','category_details','service']);
             $arr_business_details = $obj_business_details->toArray();
         }
 
-
+        //related listing business start
         $arr_business = array();
         $obj_business_listing = BusinessCategoryModel::where('category_id',$arr_business_details['category_details']['category_id'])->limit(4)->get();
 
@@ -43,10 +44,17 @@ class ListingController extends Controller
             $arr_business = $obj_business_listing->toArray();
 
         }
+        //related listing business end
+
+         $obj_category = CategoryModel::where('parent','!=','0')->get();
+        if($obj_category)
+        {
+            $all_category = $obj_category->toArray();
+        }
 
 
- //dd($arr_business_details);
-        return view('front.listing.detail',compact('page_title','arr_business_details','arr_business'));
+      //dd($arr_business_details);
+        return view('front.listing.detail',compact('page_title','arr_business_details','arr_business','all_category'));
     }
 
     public function store_reviews(Request $request,$enc_id)
