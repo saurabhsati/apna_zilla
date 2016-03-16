@@ -17,4 +17,9 @@ class CityModel extends Model
     {
     	 return $this->belongsTo('App\Models\StateModel','state_id','id');
     }
+     public function business_details()
+    {
+         return $this->hasMany('App\Models\BusinessListingModel','city','id');
+    }
+
 }

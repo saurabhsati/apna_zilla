@@ -54,13 +54,39 @@
                  <ul>
                 <li><a href="#" class="active">Most Popular </a></li>
                 <li id="location">
-                <a href="javascript:void(0);" onclick="_ct('lctn','lspg');return openDiv('jsbd','');" class="act">Location</a>
+                <a href="javascript:void(0);" onclick="" class="act">Location</a>
                 </li>
 
-                 <li><a href="#">Alphabetical</a></li>
+                 <li id="distance" style="cursor:pointer;">
+                    <a onclick="#" href="javascript:void(0);" class="">Distance <i class="down_arrow res_sprite"></i></a>
+
+                   <!--  <span class="drpwn dn">
+                                    <a onclick="#" id="dst1" class="" href="javascript:void(0);">1 km</a>
+                                    <a onclick="#" id="dst2" class="" href="javascript:void(0);">2 km</a>
+                                    <a onclick="#" id="dst3" class="" href="javascript:void(0);">3 km</a>
+                                    <a onclick="#" id="dst4" class="" href="javascript:void(0);">4 km</a>
+                                    <a onclick="#" id="dst5" class="" href="javascript:void(0);">5 km</a>
+                    </span> -->
+                  </li>
+                  <li><a href="#" class="active">Ratings </a></li>
+                  <li><a href="#" class="active">List </a></li>
+
                 </ul>
              </div>
             <!-- Product Lisitng Start -->
+            <div class="messagepop pop">
+             <section class="jpbg">
+                <span class="jcl close">X</span>
+                <h3>Sort By Location</h3>
+                 <span class="jinp">
+                  City :<input class="" type="text" name="city_name" id="city_name" value="" autocomplete="off" /><br/>
+                  Location:<input class="" type="text" name="sortbylocation" id="sortbylocation" value="" autocomplete="" />
+                  <input type="hidden" name="categoryid" id="categoryid" value="{{Request::segment(3)}}"/>
+                  <span id="sbd" class="jauto dn"></span>
+                </span>
+
+              </section></form>
+            </div>
 
            @if(isset($arr_business) && sizeof($arr_business)>0)
             @foreach($arr_business as $restaurants)
@@ -112,7 +138,101 @@
        </div>
 
       </div>
+<style type="text/css">
+  a.selected {
+  background-color:#1F75CC;
+  color:white;
+  z-index:100;
+}
 
+.messagepop {
+  background-color:#FFFFFF;
+  border:1px solid #999999;
+  cursor:default;
+  display:none;
+  margin-top: 15px;
+  position:absolute;
+  text-align:left;
+  width:394px;
+  z-index:50;
+  padding: 25px 25px 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 3px;
+  padding-left: 15px;
+  text-indent: -15px;
+}
+
+.messagepop p, .messagepop.div {
+  border-bottom: 1px solid #EFEFEF;
+  margin: 8px 0;
+  padding-bottom: 8px;
+}
+
+</style>
+<script type="text/javascript">
+ var site_url = "{{ url('/') }}";
+ var csrf_token = "{{ csrf_token() }}";
+  function deselect(e) {
+  $('.pop').slideFadeToggle(function() {
+    e.removeClass('selected');
+  });
+}
+
+$(function() {
+  $('#location').on('click', function() {
+    if($(this).hasClass('selected')) {
+      deselect($(this));
+    } else {
+      $(this).addClass('selected');
+      $('.pop').slideFadeToggle();
+    }
+    return false;
+  });
+
+  $('.close').on('click', function() {
+    deselect($('#location'));
+    return false;
+  });
+});
+
+$.fn.slideFadeToggle = function(easing, callback) {
+  return this.animate({ opacity: 'toggle', height: 'toggle' }, 'fast', easing, callback);
+};
+
+
+  if($("#sortbylocation").length>0)
+         {
+            $( "#sortbylocation" ).autocomplete({
+                    //source: site_url+"/"+city_all+"/searchkey?_token="+csrf_token+'&range='+$('#reangval').val(),
+                    source : function( request, response ) {
+                                  city_name = $('#city_name').val();
+                                  category_id = $('#category_id').val();
+                                  request.city_name = city_name;
+                                  request.category_id = category_id;
+                                  $.getJSON( site_url+"/search?_token="+csrf_token, request, function( data, status, xhr ) {
+                                              response( data );
+                                           });
+                              },
+                    minLength: 2,
+                    select: function( event, ui )
+                    {
+                        //window.location.href = ui.item.ui.item.href;
+                        /* var zipcode = ui.item.zip;
+                        var place = ui.item.place;
+                        setPlace(zipcode,place);
+                        return false; */
+                    }
+             }).data("ui-autocomplete")._renderItem = function (ul, item) {
+             return $("<li></li>")
+                 .data("item.autocomplete", item)
+                 .append('<a href="'+item.link+'">' + item.label +'<span style="color:#7b7b7b"> '+item.cat_name+'</span></a>')
+                 .appendTo(ul);
+            };
+         }
+</script>
 @endsection
 
 
