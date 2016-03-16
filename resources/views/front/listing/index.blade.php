@@ -85,7 +85,7 @@
                       <li><a href="#">Image</a></li>
 
                     </ul>
-                  </div> 
+                  </div>
                   </li>
                 </ul>
              </div>
@@ -107,7 +107,7 @@
 <!-- Modal -->
   <div class="modal fade" id="loc" role="dialog">
     <div class="modal-dialog">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -123,7 +123,7 @@
          <div class="clr"></div>
         </div>
       </div>
-        
+
       </div>
       <div class="clr"></div>
     </div>
@@ -179,8 +179,6 @@
                           <div class="p_details"><a href="#" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>
                             <ul>
                                 <li><a href="#">SMS/Email</a></li>
-                                <li><a href="#" class="active">Edit</a></li>
-                                <li><a href="#">Own This</a></li>
                                 <li><a href="#" class="lst">Rate This</a></li>
                             </ul>
                           </div>
@@ -188,7 +186,157 @@
 
                       </div>
                       </div>
+
+                     </div>
+
+            @endforeach
+           @else
+                <span>No Records Available</span>
+           @endif
+
+          <!--Product Grid Start  -->
+           @if(isset($arr_business) && sizeof($arr_business)>0)
+            @foreach($arr_business as $restaurants)
+
+                  <div class="product_grid_view" style="display:none;">
+
+                   <div class="row">
+
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                         <div class="product_grid_view">
+                  <div class="p_images">
+                     <div class="grid_product">
+                      <div class="name-grid"><a href="#">Amirah's kitchen</a></div>
+                       <div class="rating_star"><img width="73" alt="rating" src="{{ url('/') }}/assets/front/images/rating-4.png"><span> 10 Ratings</span></div>
+                        <a title="" data-toggle="tooltip" style="border-right:0;display:inline-block;" href="#" data-original-title="Add to favorites"><i class="fa fa-heart"></i><span> </span></a>
+                         </div>
+                       <img alt="product img" src="{{ url('/') }}/assets/front/images/img1.jpg">
+
+                    </div>
+
+
+                <div class="p_list_details">
+                   <div class="list-product"><i class="fa fa-phone"></i><span>  86 10 6538 5537, +86 10 6538 5537</span></div>
+                       <div class="list-product"><i class="fa fa-map-marker"></i><span>Kharadi Road, Kharadi, UK - 411014</span><a href="#">More</a>  </div>
+
+                   <!-- <div class="p_details"><i class="fa fa-phone"></i><span>  86 10 6538 5537, +86 10 6538 5537</span></div>-->
+                   <!-- <div class="p_details"><i class="fa fa-map-marker"></i> <span>Kharadi Road, Kharadi, UK - 411014, <br/>
+Near Eon IT Park And Zensar </span></div>-->
+                    <div class="p_details"><!--<a href="#" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>-->
+                    <ul>
+                    <li><a href="#">SMS/Email</a></li>
+                    <li><a class="active" href="#">Edit</a></li>
+                    <li><a href="#">Own This</a></li>
+                    <li><a class="lst" href="#">Rate This</a></li>
+                    </ul>
+                    </div>
+                    </div>
+
+                </div>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                         <div class="product_grid_view">
+                  <div class="p_images">
+                     <div class="grid_product">
+                      <div class="name-grid"><a href="#">Amirah's kitchen</a></div>
+                       <div class="rating_star"><img width="73" alt="rating" src="{{ url('/') }}/assets/front/images/rating-4.png"><span> 10 Ratings</span></div>
+                        <a title="" data-toggle="tooltip" style="border-right:0;display:inline-block;" href="#" data-original-title="Add to favorites"><i class="fa fa-heart"></i><span> </span></a>
+                         </div>
+                       <img alt="product img" src="{{ url('/') }}/assets/front/images/img1.jpg">
+
+                    </div>
+
+
+                <div class="p_list_details">
+                   <div class="list-product"><i class="fa fa-phone"></i><span>  86 10 6538 5537, +86 10 6538 5537</span></div>
+                       <div class="list-product"><i class="fa fa-map-marker"></i><span>Kharadi Road, Kharadi, UK - 411014</span><a href="#">More</a>  </div>
+
+                   <!-- <div class="p_details"><i class="fa fa-phone"></i><span>  86 10 6538 5537, +86 10 6538 5537</span></div>-->
+                   <!-- <div class="p_details"><i class="fa fa-map-marker"></i> <span>Kharadi Road, Kharadi, UK - 411014, <br/>
+Near Eon IT Park And Zensar </span></div>-->
+                    <div class="p_details"><!--<a href="#" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>-->
+                    <ul>
+                    <li><a href="#">SMS/Email</a></li>
+                    <li><a class="active" href="#">Edit</a></li>
+                    <li><a href="#">Own This</a></li>
+                    <li><a class="lst" href="#">Rate This</a></li>
+                    </ul>
+                    </div>
+                    </div>
+
+                </div>
+                </div>
+                  <div class="col-sm-6 col-md-6 col-lg-6">
+                         <div class="product_grid_view">
+                  <div class="p_images">
+                     <div class="grid_product">
+                      <div class="name-grid"><a href="#">Amirah's kitchen</a></div>
+                       <div class="rating_star"><img width="73" alt="rating" src="{{ url('/') }}/assets/front/images/rating-4.png"><span> 10 Ratings</span></div>
+                        <a title="" data-toggle="tooltip" style="border-right:0;display:inline-block;" href="#" data-original-title="Add to favorites"><i class="fa fa-heart"></i><span> </span></a>
+                         </div>
+                       <img alt="product img" src="{{ url('/') }}/assets/front/images/img1.jpg">
+
+                    </div>
+
+
+                <div class="p_list_details">
+                   <div class="list-product"><i class="fa fa-phone"></i><span>  86 10 6538 5537, +86 10 6538 5537</span></div>
+                       <div class="list-product"><i class="fa fa-map-marker"></i><span>Kharadi Road, Kharadi, UK - 411014</span><a href="#">More</a>  </div>
+
+                   <!-- <div class="p_details"><i class="fa fa-phone"></i><span>  86 10 6538 5537, +86 10 6538 5537</span></div>-->
+                   <!-- <div class="p_details"><i class="fa fa-map-marker"></i> <span>Kharadi Road, Kharadi, UK - 411014, <br/>
+Near Eon IT Park And Zensar </span></div>-->
+                    <div class="p_details"><!--<a href="#" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>-->
+                    <ul>
+                    <li><a href="#">SMS/Email</a></li>
+                    <li><a class="active" href="#">Edit</a></li>
+                    <li><a href="#">Own This</a></li>
+                    <li><a class="lst" href="#">Rate This</a></li>
+                    </ul>
+                    </div>
+                    </div>
+
+                </div>
+                </div>
+                  <div class="col-sm-6 col-md-6 col-lg-6">
+                         <div class="product_grid_view">
+                  <div class="p_images">
+                     <div class="grid_product">
+                      <div class="name-grid"><a href="#">Amirah's kitchen</a></div>
+                       <div class="rating_star"><img width="73" alt="rating" src="{{ url('/') }}/assets/front/images/rating-4.png"><span> 10 Ratings</span></div>
+                        <a title="" data-toggle="tooltip" style="border-right:0;display:inline-block;" href="#" data-original-title="Add to favorites"><i class="fa fa-heart"></i><span> </span></a>
+                         </div>
+                       <img alt="product img" src="{{ url('/') }}/assets/front/images/img1.jpg">
+
+                    </div>
+
+
+                <div class="p_list_details">
+                   <div class="list-product"><i class="fa fa-phone"></i><span>  86 10 6538 5537, +86 10 6538 5537</span></div>
+                       <div class="list-product"><i class="fa fa-map-marker"></i><span>Kharadi Road, Kharadi, UK - 411014</span><a href="#">More</a>  </div>
+
+                   <!-- <div class="p_details"><i class="fa fa-phone"></i><span>  86 10 6538 5537, +86 10 6538 5537</span></div>-->
+                   <!-- <div class="p_details"><i class="fa fa-map-marker"></i> <span>Kharadi Road, Kharadi, UK - 411014, <br/>
+Near Eon IT Park And Zensar </span></div>-->
+                    <div class="p_details"><!--<a href="#" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>-->
+                    <ul>
+                    <li><a href="#">SMS/Email</a></li>
+                    <li><a class="active" href="#">Edit</a></li>
+                    <li><a href="#">Own This</a></li>
+                    <li><a class="lst" href="#">Rate This</a></li>
+                    </ul>
+                    </div>
+                    </div>
+
+                </div>
+                </div>
+
+
+
+
+
                  </div>
+                  </div>
 
             @endforeach
            @else
@@ -196,6 +344,7 @@
            @endif
 
           <!--Product Lisiting End  -->
+
 
              </div>
          </div>
