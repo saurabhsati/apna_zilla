@@ -26,7 +26,7 @@
             <div class="p_detail_view">
             <div class="product_detail_banner" style="background: url('{{ url('/') }}/assets/front/images/banner_detail.jpg') repeat scroll 0px 0px;">
               <div class="product_title"><a href="#">{{$arr_business_details['business_name']}}</a></div>
-                <div class="rating_star"><ul><li><i class="fa fa-star-o ylow"></i></li><li><i class="fa fa-star-o ylow"></i></li><li><i class="fa fa-star-o ylow"></i></li><li><i class="fa fa-star-o"></i></li><li><i class="fa fa-star-o"></i></li></ul>out of 3 <a href="#">reviews</a></div>
+                <div class="rating_star"><ul><li><i class="fa fa-star-o ylow"></i></li><li><i class="fa fa-star-o ylow"></i></li><li><i class="fa fa-star-o ylow"></i></li><li><i class="fa fa-star-o"></i></li><li><i class="fa fa-star-o"></i></li></ul>out of 3 <a href="#" onclick="clickReview()">reviews</a></div>
                 <div class="p_details"><i class="fa fa-phone"></i><span> {{$arr_business_details['landline_number']}} &nbsp; {{$arr_business_details['mobile_number']}}</span></div>
                 <div class="p_details"><i class="fa fa-map-marker"></i> <span>{{$arr_business_details['building']}} &nbsp; {{$arr_business_details['street']}},<br/> {{$arr_business_details['landmark']}},&nbsp;{{$arr_business_details['area']}},&nbsp;{{$arr_business_details['state_details']['state_title']}},&nbsp;{{$arr_business_details['country_details']['country_name']}} (<a href="javascript:void(0);" onclick="show_map()">map</a>)</span></div>
 
@@ -70,7 +70,7 @@
             
             <div class="icons">
             <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/shar.png" alt="share"/>Share</div>
-                <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/write_review.png" alt="write_review"/>write review</div>
+                <div class="img_icons" id="write"><img src="{{ url('/') }}/assets/front/images/write_review.png" alt="write_review" onclick="clickEvent()" /><a onclick="clickEvent()" style="color:#444;">write review</a></div>
                 <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/your-vote.png" alt="your-vote"/>Your Vote(0.5)</div>
                   <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/edit-this.png" alt="write_review"/>Edit this</div>
                   <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/sms-emil.png" alt="write_review"/>Sms/Email</div>
@@ -86,25 +86,41 @@
                 <div class="tours-detail-tab">
                   <div id="dash_tab">
                      <ul class="resp-tabs-list">
-                        <li>Add a Review </li>
+
+                        <li id="review">Add a Review </li>
                          <img class="dash_line" alt="line" src="{{ url('/') }}/assets/front/images/dash_menu_line.jpg">
-                        <li>Reviews &amp; Ratings</li>
+                        <li id="rating">Reviews &amp; Ratings</li>
                          <img class="dash_line" alt="line" src="{{ url('/') }}/assets/front/images/dash_menu_line.jpg">
                         <li>Gallery</li>
 
                         <div class="clearfix"></div>
                      </ul>
+                   
                      <div class="resp-tabs-container">
-                        <div> <div class="write-review-main">
+                        <div> <div class="write-review-main" id="review_id">
                               <div class="write-review-head">
                                  Write a Review
                               </div>
+
+                          <?php 
+                          $business_id =  $arr_business_details['id']; 
+                          ?>
+
+                           <form class="form-horizontal" 
+                           id="validation-form" 
+                           method="POST"
+                           action="{{ url('/listing/store_reviews/'.base64_encode($business_id)) }}" 
+                           enctype="multipart/form-data"
+                           >
+
+                           {{ csrf_field() }}
+
                               <div class="review-title">
                                  <div class="title-review">
                                     Title of your review
                                  </div>
                                  <div class="title-rev-field">
-                                    <input type="text" name="Title" placeholder="Enter a review title" />
+                                    <input type="text" name="title" placeholder="Enter a review title" />
                                  </div>
                                  <div class="clearfix"></div>
                               </div>
@@ -113,13 +129,14 @@
                                     Your review
                                  </div>
                                  <div class="title-rev-field">
-                                    <textarea class="message-review" placeholder="Enter your review" rows="" cols=""></textarea>
+                                    <textarea class="message-review" placeholder="Enter your review" rows="" cols="" name="review"></textarea>
                                  </div>
                                  <div class="clearfix"></div>
                               </div>
                               <div class="submit-btn">
-                                 <button>SUBMIT REVIEW</button>
+                                 <button type="submit">SUBMIT REVIEW</button>
                               </div>
+                              </form>
                            </div></div>
                         <div>
                         <div class="rating_views">
@@ -308,67 +325,33 @@
            <div class="col-sm-12 col-md-12 col-lg-12">
                <div class="title_main">Related Listing</div>
             <div class="row">
-               <div class="col-sm-3 col-md-3">
-                <div class="product_info">
-                   <div class="p_images">
-                       <div class="name_product">Amirah's kitchen</div>
-                       <img src="{{ url('/') }}/assets/front/images/img1.jpg" alt="product img"/>
+              @if(isset($arr_business) && sizeof($arr_business)>0) 
+                @foreach($arr_business as $related_business)
 
-                    </div>
-                   <div class="p_infor_detail">
-                    <span class="pull-left"><img src="{{ url('/') }}/assets/front/images/home_map.png" alt="location"/> London</span>
-                    <span class="pull-right"><i class="fa fa-star-o ylow"></i></span>
+                @if($related_business['business_by_category']['id']!=$arr_business_details['id'])
 
-                    </div>
-                   </div>
-                </div>
-                 <div class="col-sm-3 col-md-3">
-                <div class="product_info">
-                   <div class="p_images">
-                       <div class="name_product">Amirah's kitchen</div>
-                       <img src="{{ url('/') }}/assets/front/images/img2.jpg" alt="product img"/>
+                   <div class="col-sm-3 col-md-3">
+                    <div class="product_info">
+                       <div class="p_images">
+                           <div class="name_product"> <a href="{{url('/').'/listing/details/'.base64_encode($related_business['business_by_category']['id'])}}" style="color: #ffffff;">{{ $related_business['business_by_category']['business_name'] }}</a></div>
+                          
+                            <img src="{{ url('/') }}/uploads/business/main_image/{{ $related_business['business_by_category']['main_image'] }}" alt="product img"/>
+                        
+                        </div>
+                       <div class="p_infor_detail">
+                        <span class="pull-left"><img src="{{ url('/') }}/assets/front/images/home_map.png" alt="location"/>{{$related_business['business_by_category']['area']}}</span>
+                        <span class="pull-right"><i class="fa fa-star-o ylow"></i></span>
 
+                        </div>
+                       </div>
                     </div>
-                   <div class="p_infor_detail">
-                    <span class="pull-left"><img src="{{ url('/') }}/assets/front/images/home_map.png" alt="location"/> London</span>
-                    <span class="pull-right"><i class="fa fa-star-o ylow"></i></span>
-
-                    </div>
-                   </div>
-                </div>
-                 <div class="col-sm-3 col-md-3">
-                <div class="product_info">
-                   <div class="p_images">
-                       <div class="name_product">Amirah's kitchen</div>
-                       <img src="{{ url('/') }}/assets/front/images/img3.jpg" alt="product img"/>
-
-                    </div>
-                   <div class="p_infor_detail">
-                    <span class="pull-left"><img src="{{ url('/') }}/assets/front/images/home_map.png" alt="location"/> London</span>
-                    <span class="pull-right"><i class="fa fa-star-o ylow"></i></span>
-
-                    </div>
-                   </div>
-                </div>
-                 <div class="col-sm-3 col-md-3">
-                <div class="product_info">
-                   <div class="p_images">
-                       <div class="name_product">Amirah's kitchen</div>
-                       <img src="{{ url('/') }}/assets/front/images/img4.jpg" alt="product img"/>
-
-                    </div>
-                   <div class="p_infor_detail">
-                    <span class="pull-left"><img src="{{ url('/') }}/assets/front/images/home_map.png" alt="location"/> London</span>
-                    <span class="pull-right"><i class="fa fa-star-o ylow"></i></span>
-
-                    </div>
-                   </div>
-                </div>
+                  
+                  @endif
+                 @endforeach
+               @endif 
 
                </div>
-
-
-            </div>
+             </div>
 
            </div>
        </div>
@@ -376,11 +359,42 @@
       </div>
 
       <script type="text/javascript">
+      function clickReview()
+      {
+           $("li").removeClass("resp-tab-active");
+          $("li#rating").addClass("resp-tab-active");
+          
+          $(".resp-accordion").addClass("resp-tab-active");
+          $(".resp-tab-content").addClass("resp-tab-content-active");
+          
+          //$(".write-review-head").show();
+      }
+      function clickEvent()
+      {
+          if($("li").hasClass("resp-tab-active"))
+          {
+              $(this).removeClass("resp-tab-active");
+          }
+          if($("div").hasClass("resp-tab-active"))
+          {
+              $(this).removeClass("resp-tab-active");
+          }
+          if($("div").hasClass("resp-tab-content-active"))
+          {
+              $(this).removeClass("resp-tab-content-active");
+          }
+          $("#review").addClass("resp-tab-active");
+          $(".resp-accordion").addClass("resp-tab-active");
+          $(".resp-tab-content").addClass("resp-tab-content-active");
+          
+          //$(".write-review-head").show();
+      }
         function show_opening_times()
         {
           $('#business_times_div').show();  
         }
         
+
         /*function show_map()
         {
           $('#map_show').show();

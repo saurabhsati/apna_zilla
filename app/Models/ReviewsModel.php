@@ -10,12 +10,14 @@ class ReviewsModel extends Model
     protected $table = 'reviews';
 
     protected $fillabel = ['business_id',
-    						'name',
+                            'title',
+                            'message',
     						'mobile_number',
     						'email',
     						'ratings',
-    						'message',
-    						'is_active'];
+    				        'name',
+    						'is_active'
+                           ];
 
 	public function business_details()
     {
