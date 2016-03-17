@@ -15,35 +15,9 @@
                  <ul class="spe_submobile">
                     <li class="brdr"><span class="steps">1</span><a href="{{url('/front_users/profile')}}">Personal Details</a></li>
                   <li class="brdr"><span class="steps">2</span><a href="{{url('/front_users/address')}}">Addresses</a></li>
-                  <li class="brdr"><span class="steps">3</span><a href="#">Family &amp; Friends</a></li>
-                  <li class="brdr"><span class="steps">4</span><a href="#">4Credit / Debit Cards</a></li>
-                     <li class="brdr has-sub"><span class="steps">5</span><a href="#"><span>Bills &amp; Recharge</span></a>
-                    <ul class="make_list" style="display:none;">
-                     <li><a href="#">Prepaid Mobile</a> </li>
-                         <li><a href="#">Data Card</a></li> 
-                         <li><a href="#">DTH</a> </li>
-                         <li><a href="#">Electricity</a> </li>
-                         <li><a href="#">Postpaid Mobile</a></li>
-                         <li><a href="#">Gas Bills</a> </li>
-                         <li><a href="#">Insurance Premiums</a> </li>
-                         <li><a href="#">Landline</a></li>
-                      </ul>
-                     </li>
-                  <li class="brdr"><span class="steps">6</span><a href="#">Grocery List</a></li>
-                  <li class="brdr"><span class="steps">7</span><a href="#">Pharmacy List</a></li>
-                     <li class="brdr has-sub"><span class="steps">8</span> <a href="#"><span>Insurance</span></a>
-                       <ul class="make_list" style="display:none;">
-                     <li><a href="#">Insurance Premiums</a></li>
-                       <li><a href="#">Home</a></li>
-                       <li><a href="#">Car</a></li>
-                       <li><a href="#">Two Wheeler</a></li>
-                      </ul>
-                     </li>
-                                                    
-                  <li class="brdr"><span class="steps">9</span><a href="#">Service &amp; Repairs</a></li>
-                  <li class="brdr"><span class="steps">10</span><a href="#">Documents</a></li>
-                  <li class="brdr"><span class="steps">11</span><a href="#">Favorites</a></li>
-                  <li class="brdr"><span class="process_done">12</span><a href="#">Completed</a></li>
+                  <li class="brdr"><span class="steps">3</span><a href="{{url('/front_users/change_password')}}">Change Password</a></li>
+                  <li class="brdr"><span class="steps">4</span><a href="#">Favorites</a></li>
+                  <li class="brdr"><span class="process_done">5</span><a href="#">Completed</a></li>
                  
                </ul>
                <!-- /#Categoriesr End-->
@@ -56,34 +30,69 @@
                  <div class="title_acc">Please provide home and office address</div>
                    <div class="row">
 
-                      <form class="form-horizontal" 
+                      <form class="form-horizontal"
+                            name="profile" 
                            id="validation-form" 
                            method="POST"
                            action="{{ url('/front_users/store_personal_details') }}" 
                            enctype="multipart/form-data"
                            >
 
-
+                           {{ csrf_field() }}
 
       @foreach($arr_user_info as $user)
 
+   
+<!-- 
+     <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="name">Profile Pic</label>
         <div class="col-sm-3 col-md-3 col-lg-3">
-          <div class="profile_box">
-              <div class="ig_profile" id="dvPreview"> 
-              <img src="{{url('/')}}/images/front/avatar.jpg" width="200" height="200" id="preview_profile_pic"  /></div>
-              <div class="button_shpglst">
-                  <div class="remove_b" onclick="clearPreviewImage()"><a href="#"><i class="fa fa-times"></i> Remove</a></div>                               
-                <div class="clr"></div>
-                   <div class="line">&nbsp;</div>
-             </div>
-          <input class="form-control" name="profile_pic" id="profile_pic" type="file" onchange="loadPreviewImage(this)"/>
-       </div>
-       </div>         
+         <div class="profile_box">
+                    @if($user['profile_pic']=="default.jpg")
+                      <img src="{{$profile_pic_public_path.'/'.$user['profile_pic']}}" width="200" height="200" id="preview_profile_pic"  />
+                    @else
+                      <img src="{{$profile_pic_public_path.'/'.$user['profile_pic']}}" width="200" height="200" id="preview_profile_pic"  />
+                    @endif
+
+                    @if($user['profile_pic']!="default.jpg")
+                      <span class="btn btn-danger" id="removal_handle" onclick="clearPreviewImage()">X</span>
+                    @else
+                      <span class="btn btn-danger" id="removal_handle" onclick="clearPreviewImage()" style="display:none;">X</span>
+                    @endif
+
+                    <input class="form-control" name="profile_pic" id="profile_pic" type="file" onchange="loadPreviewImage(this)"/>
+
+                    <span class='help-block'>{{ $errors->first('profile_pic') }}</span>
+                </div>
+            </div>  -->
+
+
+        <div class="col-sm-3 col-md-3 col-lg-3">
+                <div class="profile_box">
+                    <div class="ig_profile" id="dvPreview">  
+
+                    @if($user['profile_pic']=="default.jpg")
+                      <img src="{{$profile_pic_public_path.'/'.$user['profile_pic']}}" width="200" height="200" id="preview_profile_pic"  />
+                    @else
+                      <img src="{{$profile_pic_public_path.'/'.$user['profile_pic']}}" width="200" height="200" id="preview_profile_pic"  />
+                    @endif
+                    </div>
+                        <div class="button_shpglst">
+                        <div class="fileUpload or_btn">
+                        <span>Upload Photo</span>
+                        <input id="fileupload" name="profile_pic" type="file" class="upload change_pic" onchange="loadPreviewImage(this)"></div>
+                       <div class="remove_b" onclick="clearPreviewImage()"><a href="#"><i class="fa fa-times"></i> Remove</a></div>                               
+                     <div class="clr"></div>
+                    <div class="line">&nbsp;</div>
+                    </div>                  
+                       </div>
+              
+                       </div>
+
 
                  <div class="col-sm-9 col-md-9 col-lg-9">
                 <div class="box_profile">              
 
-               
                       <div class="user_box_sub">
                     <div class="row">
                     <div class="col-lg-3  label-text">First Name :</div>
@@ -99,12 +108,15 @@
                             </div>
 
                           <div class="col-sm-9 col-md-9 col-lg-9"> 
-                          <input type="text" name="first_name"
+                          <input type="text" name="first_name" id="fname"  
+                                 onblur="validate()"
                                  value="{{ isset($user['first_name'])?$user['first_name']:'' }}" 
                                  class="input_acct" 
-                                 placeholder="Enter name"/>
+                                 placeholder="Enter name" required/>
                                  </div></div>
-                          <div class="error_msg">please enter correct</div>
+
+                           <div class="error_msg" id="err_fn">  </div>    
+
                         </div>
                          </div>
                     </div>
@@ -117,10 +129,10 @@
                          value="{{ isset($user['middle_name'])?$user['middle_name']:'' }}" 
                                 class="input_acct"
                                 placeholder="Enter Middle Name"/>
-                          <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
                     </div>
+
                     <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">Last Name :</div>
@@ -128,11 +140,15 @@
                          <input type="text" name="last_name"
                                 class="input_acct"
                                 value="{{ isset($user['last_name'])?$user['last_name']:'' }}"
-                                placeholder="Enter Last Name "/>
-                          <div class="error_msg">please enter correct</div>
+                                placeholder="Enter Last Name "
+                                onblur="validate()" 
+                                />
+
+                                <div class="error_msg" id="err_ln">  </div> 
                         </div>
                          </div>
                     </div>
+                 
 
 
                     <?php
@@ -156,6 +172,33 @@
                             <option value="2">2</option>
                             <option value="3">3</option>
                              <option value="4">4</option>
+                             <option value="5">5</option>
+                             <option value="6">6</option>
+                             <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                        <option value="27">27</option>
+                        <option value="28">28</option>
+                        <option value="29">29</option>
+                        <option value="30">30</option>
+                        <option value="31">31</option>
                         </select>  
                             </div>
                              <div class="col-sm-3 col-md-3 col-lg-3">
@@ -166,11 +209,25 @@
                                  <option value="March">March</option>
                                  <option value="April">April</option>
                                  <option value="May">May</option>
+                                 <option value="June">June</option>
+                                 <option value="July">July</option>
+                                 <option value="August">August</option>
+                                 <option value="September">September</option>
+                                 <option value="October">October</option>
+                                 <option value="November">November</option>
+                                 <option value="December">December</option>
+
                         </select>  
                             </div>
                              <div class="col-sm-3 col-md-3 col-lg-3">
                            <select class="input_acct" name="d_o_b">
                              <option value="{{$yy}}">{{$yy}}</option>
+                              <option value="2016">2010</option>
+                               <option value="2016">2011</option>
+                                <option value="2016">2012</option>
+                                 <option value="2016">2013</option>
+                                  <option value="2016">2014</option>
+                                   <option value="2016">2015</option>
                              <option value="2016">2016</option>
                                  <option value="2017">2017</option>
                                  <option value="2018">2018</option>
@@ -178,7 +235,6 @@
                         </select>  
                             </div>
                         </div>
-                          <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
                     </div> 
@@ -196,7 +252,6 @@
                         <option value="Divorced">Divorced</option>
                         <option value="Widowed">Widowed</option>                        
                         </select>
-                          <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
                     </div>
@@ -210,7 +265,6 @@
                                 value="{{ isset($user['city'])?$user['city']:'' }}"
                                 class="input_acct"
                                 placeholder="Enter City "/>
-                          <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
                     </div>
@@ -222,7 +276,6 @@
                          <input type="text" name="area" 
                                 value="{{ isset($user['area'])?$user['area']:'' }}"
                           class="input_acct" placeholder="Enter Area "/>
-                          <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
                     </div>
@@ -234,7 +287,6 @@
                          <input type="text" name="pincode" 
                                 value="{{ isset($user['pincode'])?$user['pincode']:'' }}" 
                                 class="input_acct" placeholder="Enter Pincode  "/>
-                          <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
                     </div>
@@ -247,7 +299,6 @@
                          <input type="text" name="occupation" 
                                 value="{{ isset($user['occupation'])?$user['occupation']:'' }}"
                                 class="input_acct" placeholder="Enter Your Occupation  "/>
-                          <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
                     </div>
@@ -258,8 +309,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="email" name="email" 
                                 value="{{ isset($user['email'])?$user['email']:'' }}"
-                               class="input_acct" placeholder="Enter Email ID  "/>
-                          <div class="error_msg">please enter correct</div>
+                               class="input_acct" placeholder="Enter Email ID" readonly />
                         </div>
                          </div>
                     </div>
@@ -274,7 +324,6 @@
                                class="form-control" placeholder="Enter Mobile No:" aria-describedby="basic-addon1" required/>
                             
                         </div>  
-                          <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
                     </div>
@@ -292,7 +341,6 @@
                         <input type="text" name="home_landline" 
                                value="{{ isset($user['home_landline'])?$user['home_landline']:'' }}"
                                class="input_acct half_2_input" placeholder="Enter home landline"/>
-                         <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
                     </div>
@@ -303,7 +351,7 @@
 
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                           <input type="text" name="std_office_landline" 
-                                 value="{{ isset($user['std_home_landline'])?$user['std_home_landline']:'' }}" 
+                                 value="{{ isset($user['std_office_landline'])?$user['std_office_landline']:'' }}" 
                                  class="std_cont_inpt" 
                                   placeholder="STD">
 
@@ -315,7 +363,6 @@
                                  value="{{ isset($user['extn_office_landline'])?$user['extn_office_landline']:'' }}" 
                                  class="std_cont_inpt"
                                  placeholder="EXTN">
-                            <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
                     </div>
@@ -362,6 +409,26 @@
         $('#preview_profile_pic').attr('src',site_url+'/images/front/avatar.jpg');
         $("#removal_handle").hide();
     }
+
+    function validate()
+      {
+
+        if(profile.first_name.value=="")
+        {
+          document.getElementById('err_fn').innerHTML="This is invalid value";
+        }
+
+       else if(profile.last_name.value=="")
+        {
+          document.getElementById('err_ln').innerHTML="This is invalid value";
+        }
+
+        else
+        {
+          document.getElementById('err_msg').innerHTML="";
+        }
+    }
+
 </script>
 
 

@@ -5,7 +5,7 @@
                <div class="col-lg-12">
                   <div class="intro-message">
                      <h1>
-                        Discovery Your City
+                        Discover Your City
                         <br/>
                         <span></span>
                      </h1>

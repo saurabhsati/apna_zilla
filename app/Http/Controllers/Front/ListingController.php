@@ -57,6 +57,7 @@ class ListingController extends Controller
         return view('front.listing.detail',compact('page_title','arr_business_details','arr_business','all_category'));
     }
 
+
     public function store_reviews(Request $request,$enc_id)
     {
         $id = base64_decode($enc_id);
@@ -74,25 +75,55 @@ class ListingController extends Controller
 
         $title       = $request->input('title');
         $review       = $request->input('review');
+        $mobile_no    = $request->input('mobile_no');
+        $email        = $request->input('email');
 
         $arr_data = array();
         $arr_data['title'] = $title;
         $arr_data['message'] = $review;
-        $arr_data['business_id'] = $enc_id;
+        $arr_data['mobile_no'] = $mobile_no;
+        $arr_data['email'] = $email; 
 
-         $status = ReviewsModel::create(['title'=>$arr_data['title'],
+        $arr_data['business_id'] = $id;
+
+
+        $status = ReviewsModel::create(['title'=>$arr_data['title'],
                                         'message'=>$arr_data['message'],
-                                        'business_id'=>$arr_data['business_id']
+                                        'business_id'=>$arr_data['business_id'],
+                                        'mobile_no'=>$arr_data['mobile_no'],
+                                        'email' =>$arr_data['email']
                                         ]);
-        if($status)
-        {
-            Session::flash('success','Record Created Successfully');
-        }
-        else
-        {
-            Session::flash('error','Problem Occured While Creating Record');
-        }
+       echo $status;
+       exit;
 
+        return redirect()->back();
+               
+    }
+
+    public function edit_business($enc_id)
+    {
+      $id = base64_decode($enc_id);
+      $page_title = "Edit Business";
+
+      $obj_business_details = BusinessListingModel::where('id','=',$id)->get();
+
+      if($obj_business_details)
+      {
+
+        $arr_business_details = $obj_business_details->toArray();
+
+      }
+      return view('front.listing.edit',compact('page_title','arr_business_details'));
+    }
+
+    public function share_business($enc_id)
+    {
+        $id = base64_decode($enc_id);
+        
+        $page_title = "Share Business";
+        return view('front.listing.share_business',compact('page_title'));
 
     }
+
+
 }

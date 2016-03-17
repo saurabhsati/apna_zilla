@@ -14,6 +14,10 @@ use DB,Event;
 use Session;
 class CategorySearchController extends Controller
 {
+   public function __construct()
+    {
+    } 
+
     public function index($cat_slug,$cat_id)
     {
     	$page_title	='List Of Category ';

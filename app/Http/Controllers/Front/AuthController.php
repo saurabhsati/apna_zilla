@@ -20,9 +20,6 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-
-
-
     } 
 
     public function register_via_google_plus(Request $request)
@@ -296,14 +293,13 @@ class AuthController extends Controller
     {
         /*$obj_admin = Sentinel::getUser();
         dd($obj_admin->password);*/
-        $page_title = 'Address';
+        $page_title = 'Change Password';
         return view('front.user.change_password',compact('page_title'));
     }
 
     public function update_password(Request $request)
     {
-        $obj_admin = Sentinel::getUser();////Get Admin all information
-
+        $obj_user = Sentinel::getUser();////Get Admin all information
         $arr_rules                      = array();
         $arr_rules['current_password']  = 'required';
         $arr_rules['new_password']      = 'required';
@@ -320,10 +316,10 @@ class AuthController extends Controller
         $new_password     = $request->input('new_password');
         $confirm_password = $request->input('confirm_password');
 
-        if(Hash::check($old_password,$obj_admin->password))////check old_password==detabase password
+        if(Hash::check($old_password,$obj_user->password))////check old_password==detabase password
         {
 
-            $update_password = Sentinel::update($obj_admin,['password'=>$new_password]);
+            $update_password = Sentinel::update($obj_user,['password'=>$new_password]);
             if($update_password)
             {
                 Session::flash('success','Password Changed Successfully');
