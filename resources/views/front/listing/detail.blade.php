@@ -403,6 +403,7 @@
           
           //$(".write-review-head").show();
       }
+      
       function clickEvent()
       {
           if($("li").hasClass("resp-tab-active"))
