@@ -24,6 +24,10 @@ class BusinessCategoryModel extends Model
         return $this->belongsTo('App\Models\BusinessListingModel','business_id','id');
     }
 
-    
+
+    public function business_rating()
+    {
+        return $this->hasMany('App\Models\ReviewsModel','business_id','business_id');
+    }
 
 }

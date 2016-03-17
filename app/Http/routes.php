@@ -21,7 +21,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	Route::any('/google_plus/register','Front\AuthController@register_via_google_plus');
 
 	/*---------------------------------End----------------------------------------*/
-	
+
 	Route::group(array('prefix' => '/page'), function()
 	{
 		Route::get('aboutus',							 	 ['as' => 'about_us' 		,'uses' => 'Front\CMSController@aboutus']);
@@ -32,17 +32,16 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 	Route::group(array('prefix' => '/listing'), function()
 	{
-		Route::get('/',							 ['as' => 'listing' 		,'uses' => 'Front\ListingController@index']);
 		Route::get('details',					 ['as' => 'list_details' 		,'uses' => 'Front\ListingController@list_details']);
-	});	
+	});
 
 	Route::group(array('prefix' => '/front_users'), function()
-	{	
+	{
 		Route::any('store',								['as' => 'front_users_store'    		  		    ,'uses' =>'Front\UserController@store']);
 		Route::post('process_login',					['as' => 'front_users_process_login'        		,'uses' =>'Front\AuthController@process_login']);
 		Route::get('profile',							['as' => 'front_users_profile'        				,'uses' =>'Front\UserController@profile']);
 		Route::post('store_personal_details',			['as' => 'front_users_store_personal_details'       ,'uses' =>'Front\UserController@store_personal_details']);
-		
+
 		Route::get('address',							['as' => 'front_users_address'        				,'uses' =>'Front\UserController@address']);
 		Route::post('store_address_details',			['as' => 'front_users_store_address_details'        ,'uses' =>'Front\UserController@store_address_details']);
 
@@ -51,7 +50,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::post('update_password',				  	['as' => 'front_users_update_password'				,'uses' =>'Front\AuthController@update_password']);
 
 	});
-
+	Route::get('/search','Front\CategorySearchController@search_location');
 	Route::group(array('prefix' => '/city'), function ()
 	{
 	  Route::get('all-options/ct-{cat_id}','Front\CategorySearchController@get_business');
@@ -59,8 +58,8 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	});
 
 
-	Route::post('forgot_password','Front\PasswordController@postEmail');	 
-	Route::get('password_reset/{code}','Front\PasswordController@getReset');	 
+	Route::post('forgot_password','Front\PasswordController@postEmail');
+	Route::get('password_reset/{code}','Front\PasswordController@getReset');
 	Route::post('process_reset_password','Front\PasswordController@postReset');
 
 
@@ -74,7 +73,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 });
 
-	
+
 
 /* Admin Routes */
 Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
@@ -316,7 +315,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 		});
 
-		
+
 
 
 		/* Categories Module */

@@ -25,7 +25,7 @@
       <!--select autocomplete-->
       <link rel="stylesheet" href="{{ url('/') }}/assets/front/css/jquery-ui.css" type="text/css"/>
       <script src="{{ url('/') }}/assets/front/js/jquery-1.10.2.js" type='text/javascript'></script>
-      <script src="{{ url('/') }}/assets/front/js/jquery-ui.js" type='text/javascript'></script>
+     
       <link rel="stylesheet" href="{{ url('/') }}/assets/front/css/style.css" type="text/css"/>
       <script type="text/javascript">
          $(function() {
