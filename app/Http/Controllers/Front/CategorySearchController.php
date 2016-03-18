@@ -53,11 +53,6 @@ class CategorySearchController extends Controller
         $obj_business_listing->load(['business_by_category','business_rating','match_city_name']);
         $arr_business = $obj_business_listing->toArray();
       }*/
-
-
-
-
-
    		$obj_business_listing = BusinessCategoryModel::where('category_id',$cat_id)->get();
    		if($obj_business_listing)
    		{
@@ -80,7 +75,6 @@ class CategorySearchController extends Controller
             {
                 $parent_category = $obj_parent_category->toArray();
             }
-
         }
 
         $obj_sub_cat = CategoryModel::where('parent',$main_cat_id)->orderBy('is_popular', 'DESC')->get();

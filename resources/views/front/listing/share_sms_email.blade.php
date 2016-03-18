@@ -27,7 +27,7 @@
              
             <div class="col-sm-12 col-md-9 col-lg-9">
             <div class="my_whit_bg">
-                 <div class="title_acc">Share With Friends</div>
+                 <div class="title_acc">Get Information by SMS/Email</div>
                    <div class="row">
 
                       <form class="form-horizontal" 
@@ -42,15 +42,45 @@
                                 
                     <div class="user_box_sub">
                            <div class="row">
-                    <div class="col-lg-3  label-text">Enter Your Friend's Email:</div>
+                    <div class="col-lg-3  label-text">Name:</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="mail" 
+                         <input type="text" name="name" 
                                 class="input_acct"
-                                placeholder="Enter your Friend's Mail:" />
+                                value="{{$arr_user_info['first_name']}}" 
+                                placeholder="Enter your Name:" />
                           <div class="error_msg"> </div>
                         </div>
                          </div>
                     </div>
+
+                    <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Mobile No.:</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                        <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">+91</span>
+                        <input type="text" name="mobile_no"
+                               value="{{$arr_user_info['mobile_no']}}" 
+                               class="form-control" 
+                               placeholder="Enter Mobile No:" aria-describedby="basic-addon1" required/>
+                            
+                        </div>  
+                        </div>
+                         </div>
+                    </div>
+
+                     <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Email:</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                         <input type="email" name="email" 
+                                class="input_acct"
+                                placeholder="Enter your Mail ID:" />
+                          <div class="error_msg"> </div>
+                        </div>
+                         </div>
+                    </div>
+
 
                    </div>   
                     <button type="submit" class="yellow1 ui button">Send</button>               
