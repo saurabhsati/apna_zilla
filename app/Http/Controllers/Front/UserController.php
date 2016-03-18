@@ -14,8 +14,6 @@ class UserController extends Controller
 {
  	public function __construct()
  	{
- 		$arr_except_auth_methods = array();
-        $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
 
         $this->profile_pic_base_path = base_path().'/public'.config('app.project.img_path.user_profile_pic');
         $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');      
@@ -25,6 +23,7 @@ class UserController extends Controller
         
  	public function store(Request $request)
     {    
+          
         $arr_rules = array();
         $arr_rules['first_name'] = "required";
         $arr_rules['last_name'] = "required";
@@ -101,30 +100,21 @@ class UserController extends Controller
              Session::put('user_last_name', $users['last_name']);
         }
 
-        return view('front.user.profile',compact('arr_user_info'));
+         $profile_pic_public_path = $this->profile_pic_public_path;
+
+
+        return view('front.user.profile',compact('arr_user_info','profile_pic_public_path'));
     }
 
 
     public function store_personal_details(Request $request)
     {
-        
+    
         $arr_rules = array();
         $arr_rules['first_name'] = "required";
-        $arr_rules['middle_name'] = "required";
         $arr_rules['last_name'] = "required";
-        $arr_rules['d_o_b'] = "required";
-        $arr_rules['marital_status'] = "required";
-        $arr_rules['city'] = "required";
-        $arr_rules['area'] = "required";
-        $arr_rules['pincode'] = "required";
-        $arr_rules['occupation'] = "required";
         $arr_rules['email'] = "required";
         $arr_rules['mobile_no'] = "required";
-        $arr_rules['home_landline'] = "required";
-        $arr_rules['std_home_landline'] = "required";
-        $arr_rules['office_landline'] = "required";
-        $arr_rules['std_office_landline'] = "required";
-        $arr_rules['extn_office_landline'] = "required";
 
         $validator = Validator::make($request->all(),$arr_rules);
 
@@ -133,6 +123,7 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        $title             = $request->input('title');
         $first_name       = $request->input('first_name');
         $middle_name       = $request->input('middle_name');
         $last_name       = $request->input('last_name');
@@ -189,7 +180,8 @@ class UserController extends Controller
         }
 
         $credentials = [
-            'profile' => $profile_pic,
+            'profile_pic' => $profile_pic,
+            'title' => $title,
             'first_name' => $first_name,
             'middle_name' => $middle_name,
             'last_name' => $last_name,
@@ -208,7 +200,7 @@ class UserController extends Controller
             'extn_office_landline' => $extn_office_landline
         ];
 
-        $user = Sentinel::update($user, $credentials);
+        $status = Sentinel::update($user, $credentials);
 
         return redirect()->back();
     }
@@ -265,7 +257,8 @@ class UserController extends Controller
            
         ];
 
-        $user = Sentinel::update($user, $credentials);
+        $status = Sentinel::update($user, $credentials);
+
 
         return redirect()->back();
     }

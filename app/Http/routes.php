@@ -30,10 +30,6 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 	Route::get('contact_us','Front\ContactUsController@index');
 
-	Route::group(array('prefix' => '/listing'), function()
-	{
-		Route::get('details',					 ['as' => 'list_details' 		,'uses' => 'Front\ListingController@list_details']);
-	});
 
 	Route::group(array('prefix' => '/front_users'), function()
 	{
@@ -50,7 +46,9 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::post('update_password',				  	['as' => 'front_users_update_password'				,'uses' =>'Front\AuthController@update_password']);
 
 	});
+
 	Route::get('/search','Front\CategorySearchController@search_location');
+
 	Route::group(array('prefix' => '/city'), function ()
 	{
 	  Route::get('all-options/ct-{cat_id}','Front\CategorySearchController@get_business');
@@ -68,6 +66,9 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::get('/',							 	 	 ['as' => 'listing' 	        	,'uses' => 'Front\ListingController@index']);
 		Route::get('details/{enc_id}',					 ['as' => 'list_details' 	        ,'uses' => 'Front\ListingController@list_details']);
 		Route::post('store_reviews/{enc_id}',			 ['as' => 'front_store_reviews'     ,'uses' => 'Front\ListingController@store_reviews']);
+	    Route::get('edit/{enc_id}',					     ['as' => 'business_edit' 	        ,'uses' => 'Front\ListingController@edit_business']);
+  	    Route::get('share/{enc_id}',					 ['as' => 'business_share' 	        ,'uses' => 'Front\ListingController@share_business']);
+
 	});
 
 
@@ -457,8 +458,6 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 		});
 		/*-------------End--------------------------*/
-
-
 });
 
 /*--------------------------WEB SERVICES-------------------------*/

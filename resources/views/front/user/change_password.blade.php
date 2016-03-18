@@ -27,81 +27,51 @@
              
             <div class="col-sm-12 col-md-9 col-lg-9">
             <div class="my_whit_bg">
-                 <div class="title_acc">Please provide home and office address</div>
+                 <div class="title_acc">Please provide Password Details</div>
                    <div class="row">
 
                       <form class="form-horizontal" 
                            id="validation-form" 
                            method="POST"
-                           action="{{ url('/front_users/store_address_details') }}" 
+                           action="{{ url('/front_users/update_password') }}" 
                            enctype="multipart/form-data"
                            >
 
       {{ csrf_field() }}
 
-      @foreach($arr_user_info as $user)
      
 
                  <div class="col-sm-9 col-md-9 col-lg-9">
                 <div class="box_profile">              
 
 
-              <div class="user_box_sub">
+               <div class="user_box_sub">
                            <div class="row">
-                    <div class="col-lg-3  label-text"> Name :</div>
+                    <div class="col-lg-3  label-text">Current Password:</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="name" 
-                         value="{{ $user['first_name']." ".$user['last_name']}}" 
-                                class="input_acct"
-                                placeholder="Enter Name" readonly />
+                         <input type="password" name="current_password" 
+                                class="input_acct" placeholder="Enter Current Password  "/>
                           <div class="error_msg"> </div>
                         </div>
                          </div>
                     </div>
-                         
 
-
-                      <div class="user_box_sub">
+                     <div class="user_box_sub">
                            <div class="row">
-                    <div class="col-lg-3  label-text">City :</div>
+                    <div class="col-lg-3  label-text">New Password :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="city" 
-                                value="{{ isset($user['city'])?$user['city']:'' }}"
-                                class="input_acct"
-                                placeholder="Enter City "/>
-                        </div>
-                         </div>
-                    </div>
-                    
-                    <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-3  label-text">Area :</div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="area" 
-                                value="{{ isset($user['area'])?$user['area']:'' }}"
-                          class="input_acct" placeholder="Enter Area "/>
-                        </div>
-                         </div>
-                    </div>
-                   
-                    <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-3  label-text">Pincode :</div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="pincode" 
-                                value="{{ isset($user['pincode'])?$user['pincode']:'' }}" 
-                                class="input_acct" placeholder="Enter Pincode  "/>
+                         <input type="password" name="new_password" 
+                                class="input_acct" placeholder="Enter New Password: "/>
                         </div>
                          </div>
                     </div>
 
                     <div class="user_box_sub">
                            <div class="row">
-                    <div class="col-lg-3  label-text">Street Address :</div>
+                    <div class="col-lg-3  label-text">Confirm Password :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="street_address" 
-                                value="{{ isset($user['street_address'])?$user['street_address']:'' }}" 
-                                class="input_acct" placeholder="Enter Street address  "/>
+                         <input type="password" name="confirm_password" 
+                                class="input_acct" placeholder="Confirm Password"/>
                         </div>
                          </div>
                     </div>
@@ -110,7 +80,7 @@
 
                     <button type="submit" class="yellow1 ui button">Save & Continue</button>
 
-                    @endforeach
+                   
                     </form>
               
               </div>

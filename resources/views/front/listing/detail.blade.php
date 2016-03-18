@@ -85,24 +85,29 @@
           <!--   <div class="map" id="business_location_map" style="width: 100%; height: 250;">
 
             </div> -->
+             <?php
+              $business_id =  $arr_business_details['id'];
+              ?>
+
+
             <div id="map_show" style="display: none;  margin-top: 5px;">
               <div id="location_map" style="height:250px; width: 100%;"></div>
             </div>
             <input type="hidden" name="lat" id="lat" value="{{$arr_business_details['lat']}}"/>
             <input type="hidden" name="lng" id="lng" value="{{$arr_business_details['lng']}}"/>
 
-
-
             <div class="icons">
-            <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/shar.png" alt="share"/>Share</div>
-                <div class="img_icons" id="write"><img src="{{ url('/') }}/assets/front/images/write_review.png" alt="write_review" onclick="clickEvent()" style="cursor: pointer;" /><a onclick="clickEvent()" style="color:#444; cursor: pointer;">write review</a></div>
+               <a href="{{ url('/listing/share/'.base64_encode($business_id)) }} "> <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/shar.png" alt="share"/>Share</div></a>
+                <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/write_review.png" alt="write_review">write review</div>
                 <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/your-vote.png" alt="your-vote"/>Your Vote(0.5)</div>
-                  <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/edit-this.png" alt="write_review"/>Edit this</div>
+                 <a href="{{ url('/listing/edit/'.base64_encode($business_id)) }} "><div class="img_icons"><img src="{{ url('/') }}/assets/front/images/edit-this.png" alt="write_review"/>Edit this</div></a>
                   <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/sms-emil.png" alt="write_review"/>Sms/Email</div>
                 <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>verified</div>
 
             </div>
             </div>
+
+
 
             <!-- <div class="map" id="business_location_map" style="width: 100%; height: 250;">
 
@@ -127,10 +132,7 @@
                                  Write a Review
                               </div>
 
-                          <?php
-                          $business_id =  $arr_business_details['id'];
-                          ?>
-
+                         
                            <form class="form-horizontal"
                            id="validation-form"
                            method="POST"
@@ -158,6 +160,7 @@
                                  </div>
                                  <div class="clearfix"></div>
                               </div>
+
                                <div class="review-title">
                                  <div class="title-review">
                                     Add review
@@ -167,6 +170,7 @@
                                  </div>
                                  <div class="clearfix"></div>
                               </div>
+                              
                               <div class="review-title">
                                  <div class="title-review">
                                     Name
@@ -185,7 +189,7 @@
                                    <div class="input-group">
       <div class="input-group-addon">+91</div>
 
-      <input type="text" class="form-control" id="exampleInputAmount" placeholder="Mobile Number">
+      <input type="text" name="mobile_no" class="form-control" id="exampleInputAmount" placeholder="Mobile Number">
 
     </div>
                                  </div>
@@ -197,7 +201,7 @@
                                     Email Id
                                  </div>
                                  <div class="title-rev-field">
-                                    <input type="text" name="title" placeholder="Email Id" />
+                                    <input type="text" name="email" placeholder="Email Id" />
                                  </div>
                                  <div class="clearfix"></div>
                               </div>
@@ -301,9 +305,6 @@
                            </div>
                            </div> -->
 
-
-
-
                         </div>
 
                         <div>
@@ -326,8 +327,6 @@
                         </div>
 
                         </div>
-
-
                   </div>
                   <br />
                </div>
@@ -426,7 +425,6 @@
                        </div>
                     </div>
 
-
                    @endif
 
                  @endforeach
@@ -442,36 +440,8 @@
       </div>
 
       <script type="text/javascript">
-      function clickReview()
-      {
-           $("li").removeClass("resp-tab-active");
-          $("li#rating").addClass("resp-tab-active");
-
-          $(".resp-accordion").addClass("resp-tab-active");
-          $(".resp-tab-content").addClass("resp-tab-content-active");
-
-          //$(".write-review-head").show();
-      }
-      function clickEvent()
-      {
-          if($("li").hasClass("resp-tab-active"))
-          {
-              $(this).removeClass("resp-tab-active");
-          }
-          /*else if($("div").hasClass("resp-tab-active"))
-          {
-              $(this).removeClass("resp-tab-active");
-          }
-          else if($("div").hasClass("resp-tab-content-active"))
-          {
-              $(this).removeClass("resp-tab-content-active");
-          }*/
-          $("#review").addClass("resp-tab-active");
-          $(".resp-accordion").addClass("resp-tab-active");
-          $(".resp-tab-content").addClass("resp-tab-content-active");
-
-          //$(".write-review-head").show();
-      }
+     
+    
         function show_opening_times()
         {
           $('#business_times_div').show();
