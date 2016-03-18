@@ -41,18 +41,28 @@ class CategorySearchController extends Controller
 
     public function get_business($city,$cat_id)
     {
-    	$page_title	='Business List';
+     $page_title	='Business List';
+
       //echo $city;
       // get business listing by category id
     	$arr_business = array();
 
-   /*   $where_arr = array('category_id'=>$cat_id,'city_title'=>$city);
-      $obj_business_listing = BusinessCategoryModel::where($where_arr)->get();
-      if($obj_business_listing)
+      // $where_arr = array('category_id'=>$cat_id,'city_title'=>$city);
+      // $obj_business_listing = BusinessCategoryModel::where($where_arr)->get();
+      // if($obj_business_listing)
+      // {
+      //   $obj_business_listing->load(['business_by_category','business_rating','match_city_name']);
+      //   $arr_business = $obj_business_listing->toArray();
+      // }
+
+
+
+  /*   foreach($arr_business as $business)
       {
-        $obj_business_listing->load(['business_by_category','business_rating','match_city_name']);
-        $arr_business = $obj_business_listing->toArray();
+        $business_id = $business['business_id'];
+        BusinessListingModel::where('id',$business_id)->with(['city_details'])->get();
       }*/
+
    		$obj_business_listing = BusinessCategoryModel::where('category_id',$cat_id)->get();
    		if($obj_business_listing)
    		{
