@@ -309,7 +309,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="email" name="email" 
                                 value="{{ isset($user['email'])?$user['email']:'' }}"
-                               class="input_acct" placeholder="Enter Email ID" readonly />
+                               class="input_acct" placeholder="Enter Email ID" readonly="true" />
                         </div>
                          </div>
                     </div>

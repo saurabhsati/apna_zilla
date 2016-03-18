@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Front;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
 use App\Models\UserModel;
+use App\Models\BusinessListingModel;
+use App\Models\CategoryModel;
+
 use Session;
 use Sentinel;
 use Validator;
@@ -14,10 +18,8 @@ class UserController extends Controller
 {
  	public function __construct()
  	{
-
         $this->profile_pic_base_path = base_path().'/public'.config('app.project.img_path.user_profile_pic');
         $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');      
-
  	}
 
         
@@ -263,5 +265,92 @@ class UserController extends Controller
         return redirect()->back();
     }
     
+    public function my_business()
+    {
+        $id = session('user_id');
+        $user_id = base64_decode($id);
 
- }
+        $obj_business_info = BusinessListingModel::where('user_id','=',$user_id)->get();
+
+        if($obj_business_info)
+        {
+            $arr_business_info = $obj_business_info->toArray();
+        }
+
+      foreach ($arr_business_info as $business) 
+      {
+          $cat_id = $business['business_cat'];
+      }
+     
+
+     $obj_cat_details = CategoryModel::where('cat_id','=',$cat_id)->get();
+     if($obj_cat_details)
+     {
+        $arr_cat_details = $obj_cat_details->toArray();
+     }
+
+     foreach ($arr_cat_details as $category) 
+     {
+         $cat_title = $category['title'];
+     }
+        
+        return view('front.user.my_business',compact('arr_business_info','cat_title'));
+    }
+
+     public function edit_business($enc_id)
+    {
+      $buss_id = $enc_id;
+
+      $business_id = base64_decode($enc_id);
+      $page_title = "Edit Business";
+
+      $obj_business_details = BusinessListingModel::where('id','=',$business_id)->get();
+
+      if($obj_business_details)
+      {
+        $arr_business_details = $obj_business_details->toArray();
+      }
+
+      foreach ($arr_business_details as $business) 
+      {
+          $cat_id = $business['business_cat'];
+      }
+     
+
+     $obj_cat_details = CategoryModel::where('cat_id','=',$cat_id)->get();
+     if($obj_cat_details)
+     {
+        $arr_cat_details = $obj_cat_details->toArray();
+     }
+
+     foreach ($arr_cat_details as $category) 
+     {
+         $cat_title = $category['title'];
+     }
+
+      return view('front.user.edit_business',compact('page_title','arr_business_details','cat_title','buss_id'));
+    }
+
+    public function update_business_details(Request $request,$enc_id)
+    {
+        $business_id = base64_decode($enc_id);
+
+        $arr_data = array();
+        $arr_data['business_name'] = $request->input('business_name');
+        $arr_data['building'] = $request->input('building');
+        $arr_data['landmark'] = $request->input('landmark');
+        $arr_data['area'] = $request->input('area');
+        $arr_data['city'] = $request->input('city');
+        $arr_data['pincode'] = $request->input('pincode');
+        $arr_data['state'] = $request->input('state');
+        $arr_data['country'] = $request->input('country');
+
+        $business_update = BusinessListingModel::where('id','=',$business_id)->update($arr_data);
+
+        if($business_update)
+        {
+            return redirect()->back();
+        }
+
+    }
+}

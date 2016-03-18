@@ -100,9 +100,8 @@
                <a href="{{ url('/listing/share/'.base64_encode($business_id)) }} "> <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/shar.png" alt="share"/>Share</div></a>
                 <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/write_review.png" alt="write_review">write review</div>
                 <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/your-vote.png" alt="your-vote"/>Your Vote(0.5)</div>
-                 <a href="{{ url('/listing/edit/'.base64_encode($business_id)) }} "><div class="img_icons"><img src="{{ url('/') }}/assets/front/images/edit-this.png" alt="write_review"/>Edit this</div></a>
-                  <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/sms-emil.png" alt="write_review"/>Sms/Email</div>
-                <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>verified</div>
+                <a href="{{ url('/listing/share_sms_email/'.base64_encode($business_id)) }} "> <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/sms-emil.png" alt="write_review"/>Sms/Email</div></a>
+               <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>verified</div>
 
             </div>
             </div>

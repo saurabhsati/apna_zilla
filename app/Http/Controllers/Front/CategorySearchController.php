@@ -56,7 +56,6 @@ class CategorySearchController extends Controller
             {
                 $parent_category = $obj_parent_category->toArray();
             }
-
         }
 
         $obj_sub_cat = CategoryModel::where('parent',$main_cat_id)->orderBy('is_popular', 'DESC')->get();

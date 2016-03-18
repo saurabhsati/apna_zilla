@@ -41,6 +41,10 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::get('address',							['as' => 'front_users_address'        				,'uses' =>'Front\UserController@address']);
 		Route::post('store_address_details',			['as' => 'front_users_store_address_details'        ,'uses' =>'Front\UserController@store_address_details']);
 
+		Route::get('my_business',						['as' => 'front_users_business'        				,'uses' =>'Front\UserController@my_business']);
+	    Route::get('edit_business/{enc_id}',		    ['as' => 'business_edit' 	        				,'uses' =>'Front\UserController@edit_business']);
+		Route::post('update_business_details/{enc_id}',	['as' => 'front_users_store_business_details'       ,'uses' =>'Front\UserController@update_business_details']);
+
 		Route::get('logout',							['as' => 'front_users_logout'     					,'uses' =>'Front\AuthController@logout']);
 		Route::get('change_password',				  	['as' => 'front_users_change_password'              ,'uses' =>'Front\AuthController@change_password']);
 		Route::post('update_password',				  	['as' => 'front_users_update_password'				,'uses' =>'Front\AuthController@update_password']);
@@ -66,8 +70,8 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::get('/',							 	 	 ['as' => 'listing' 	        	,'uses' => 'Front\ListingController@index']);
 		Route::get('details/{enc_id}',					 ['as' => 'list_details' 	        ,'uses' => 'Front\ListingController@list_details']);
 		Route::post('store_reviews/{enc_id}',			 ['as' => 'front_store_reviews'     ,'uses' => 'Front\ListingController@store_reviews']);
-	    Route::get('edit/{enc_id}',					     ['as' => 'business_edit' 	        ,'uses' => 'Front\ListingController@edit_business']);
   	    Route::get('share/{enc_id}',					 ['as' => 'business_share' 	        ,'uses' => 'Front\ListingController@share_business']);
+  	    Route::get('share_sms_email/{enc_id}',			 ['as' => 'business_sms_email' 	    ,'uses' => 'Front\ListingController@share_sms_email']);
 
 	});
 

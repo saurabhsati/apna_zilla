@@ -13,6 +13,7 @@ use Sentinel;
 use Validator;
 use Session;
 use Mail;
+use Hash;
 use Activation;
 use URL;
 

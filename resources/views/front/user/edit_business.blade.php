@@ -17,7 +17,7 @@
                       <form class="form-horizontal" 
                            id="validation-form" 
                            method="POST"
-                           action="{{ url('/listing/store_business_details') }}" 
+                           action="{{ url('/front_users/update_business_details') }}/{{ $buss_id }}" 
                            enctype="multipart/form-data"
                            >
 
@@ -30,14 +30,27 @@
                 <div class="box_profile">              
 
 
+             <div class="user_box_sub">
+                       <div class="row">
+                <div class="col-lg-3  label-text">Category Title :</div>
+                <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                     <input type="text" name="category_title" 
+                     value="{{ $cat_title }}" 
+                            class="input_acct"
+                            placeholder="Enter Business Name" />
+                      <div class="error_msg"> </div>
+                    </div>
+                     </div>
+                </div>
+
               <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">Business Name :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="text" name="business_name" 
-                         value="{{ $business['business_name']." ".$business['business_name']}}" 
+                         value="{{ isset($business['business_name'])?$business['business_name']:'' }} " 
                                 class="input_acct"
-                                placeholder="Enter Business Name" readonly />
+                                placeholder="Enter Business Name" />
                           <div class="error_msg"> </div>
                         </div>
                          </div>
@@ -48,9 +61,9 @@
                     <div class="col-lg-3  label-text">Building:</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="text" name="building" 
-                         value="{{ $business['building']." ".$business['building']}}" 
+                         value="{{ isset($business['building'])?$business['building']:'' }}" 
                                 class="input_acct"
-                                placeholder="Enter Building's Name" readonly />
+                                placeholder="Enter Building's Name" />
                         </div>
                          </div>
                     </div>
@@ -60,9 +73,9 @@
                     <div class="col-lg-3  label-text">Landmark:</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="text" name="landmark" 
-                         value="{{ $business['landmark']." ".$business['landmark']}}" 
+                         value="{{ isset($business['landmark'])?$business['landmark']:'' }}" 
                                 class="input_acct"
-                                placeholder="Enter Landmark's Name" readonly />
+                                placeholder="Enter Landmark's Name" />
                         </div>
                          </div>
                     </div>
@@ -72,9 +85,9 @@
                     <div class="col-lg-3  label-text">Area:</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="text" name="area" 
-                         value="{{ $business['area']." ".$business['area']}}" 
+                         value="{{ isset($business['area'])?$business['area']:'' }}" 
                                 class="input_acct"
-                                placeholder="Enter Area's Name" readonly />
+                                placeholder="Enter Area's Name" />
                         </div>
                          </div>
                     </div>
@@ -84,9 +97,9 @@
                     <div class="col-lg-3  label-text">City:</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="text" name="city" 
-                         value="{{ $business['city']." ".$business['city']}}" 
+                         value="{{ isset($business['city'])?$business['city']:'' }}" 
                                 class="input_acct"
-                                placeholder="Enter City's Name" readonly />
+                                placeholder="Enter City's Name" />
                         </div>
                          </div>
                     </div>
@@ -96,9 +109,9 @@
                     <div class="col-lg-3  label-text">Pincode:</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="text" name="pincode" 
-                         value="{{ $business['pincode']." ".$business['pincode']}}" 
+                         value="{{ isset($business['pincode'])?$business['pincode']:'' }}" 
                                 class="input_acct"
-                                placeholder="Enter Pincode" readonly />
+                                placeholder="Enter Pincode" />
                         </div>
                          </div>
                     </div>
@@ -108,9 +121,9 @@
                     <div class="col-lg-3  label-text">State:</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="text" name="state" 
-                         value="{{ $business['state']." ".$business['state']}}" 
+                         value="{{ isset($business['state'])?$business['state']:'' }}" 
                                 class="input_acct"
-                                placeholder="Enter State" readonly />
+                                placeholder="Enter State" />
                         </div>
                          </div>
                     </div>
@@ -120,9 +133,9 @@
                     <div class="col-lg-3  label-text">Country:</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="text" name="country" 
-                         value="{{ $business['country']." ".$business['country']}}" 
+                         value="{{ isset($business['country'])?$business['country']:'' }}" 
                                 class="input_acct"
-                                placeholder="Enter COuntry" readonly />
+                                placeholder="Enter COuntry" />
                         </div>
                          </div>
                     </div>                                                    
@@ -143,7 +156,5 @@
        </div>
        
       </div>
-
-
 
 @stop

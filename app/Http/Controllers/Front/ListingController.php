@@ -6,10 +6,13 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
 use App\Models\BusinessListingModel;
 use App\Models\BusinessCategoryModel;
 use App\Models\CategoryModel;
 use App\Models\ReviewsModel;
+
+use Sentinel;
 use Session;
 use Validator;
 
@@ -52,7 +55,6 @@ class ListingController extends Controller
             $all_category = $obj_category->toArray();
         }
 
-
       //dd($arr_business_details);
         return view('front.listing.detail',compact('page_title','arr_business_details','arr_business','all_category'));
     }
@@ -66,7 +68,7 @@ class ListingController extends Controller
         $arr_rules['title'] = "required";
         $arr_rules['review'] = "required";
 
-         $validator = Validator::make($request->all(),$arr_rules);
+        $validator = Validator::make($request->all(),$arr_rules);
 
         if($validator->fails())
         {
@@ -100,30 +102,22 @@ class ListingController extends Controller
                
     }
 
-    public function edit_business($enc_id)
-    {
-      $id = base64_decode($enc_id);
-      $page_title = "Edit Business";
-
-      $obj_business_details = BusinessListingModel::where('id','=',$id)->get();
-
-      if($obj_business_details)
-      {
-
-        $arr_business_details = $obj_business_details->toArray();
-
-      }
-      return view('front.listing.edit',compact('page_title','arr_business_details'));
-    }
-
+   
     public function share_business($enc_id)
     {
         $id = base64_decode($enc_id);
-        
         $page_title = "Share Business";
-        return view('front.listing.share_business',compact('page_title'));
 
+        return view('front.listing.share_business',compact('page_title'));
     }
 
+    public function share_sms_email($enc_id)
+    {
+        if ($user = Sentinel::getUser())
+        {
+            $arr_user_info = $user->toArray();
+        }
+        return view('front.listing.share_sms_email',compact('arr_user_info'));
+    }
 
 }
