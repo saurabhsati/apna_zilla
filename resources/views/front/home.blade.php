@@ -40,7 +40,7 @@
                            }
                       ?>
                       @endforeach
-                      <?php echo '('.$count.')';?>
+                      <?php //echo '('.$count.')';?>
                     </span>
                      </a>
                   </li>
