@@ -12,7 +12,13 @@
                      <ul class="list-inline">
                         <li>
                            <div class="form-group form-control">
-                              <!--<button class="form-control-map ui-widget" aria-hidden="true" type="submit"><img src="images/home_map.png" alt="" /></button>-->  <input type="text" class="search-txt city_finder" id="tags" placeholder="Vishakhapatanm" />
+                              <!--<button class="form-control-map ui-widget" aria-hidden="true" type="submit"><img src="images/home_map.png" alt="" /></button>-->
+                               <input type="text" class="search-txt city_finder" id="tags"
+                               placeholder="Vishakhapatanm"
+                               @if(Session::has('city'))
+                               value="{{Session::get('city') }}"
+                                @else value="Mumbai"
+                                @endif />
                               <div class="has-feedback">
                                  <input type="text" class="search-txt" placeholder="Resturant" />
                                  <button class="form-control-feedback" aria-hidden="true" type="submit"><img src="{{ url('/') }}/assets/front/images/home_search.png" alt="" /></button>

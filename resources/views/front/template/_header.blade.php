@@ -25,7 +25,7 @@
       <!--select autocomplete-->
       <link rel="stylesheet" href="{{ url('/') }}/assets/front/css/jquery-ui.css" type="text/css"/>
       <script src="{{ url('/') }}/assets/front/js/jquery-1.10.2.js" type='text/javascript'></script>
-     
+
       <link rel="stylesheet" href="{{ url('/') }}/assets/front/css/style.css" type="text/css"/>
       <script type="text/javascript">
          $(function() {
@@ -130,5 +130,50 @@ $(document).ready(function(){
          });
 
       </script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+         <!-- Share Location  -->
+
+<script>
+   var site_url = "{{url('/')}}";
+
+   window.onload = function() {
+   var city="{{Session::get('city')}}";
+   if(city=='')
+      {
+          getLocation();
+      }
+   };
+
+  function getLocation() {
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(savePosition, positionError, {timeout:20000});
+      } else {
+           window.location.reload();
+      }
+  }
+
+  function positionError(error) {
+      var errorCode = error.code;
+      var message = error.message;
+
+      console.log(message);
+  }
+
+  function savePosition(position) {
+   var _token = $('input[name=_token]').val();
+   console.log(position.coords.latitude);
+    console.log(position.coords.longitude);
+    var dataString = { lat:position.coords.latitude, lng:position.coords.longitude, _token: _token };
+     var url= site_url+'/locate_location';
+     $.post( url, dataString)
+         .done(function( data ) {
+         if(data=='done'){
+           window.location.reload();
+           }
+         });
+
+  }
+  </script>
    </head>
-   <body>
+
+   <body> {{ csrf_field() }}

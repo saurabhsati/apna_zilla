@@ -6,7 +6,16 @@
               <ul class="search_sub">
                         <li>
                            <div class="form-group form-control">
-                              <!--<button class="form-control-map ui-widget" aria-hidden="true" type="submit"><img src="images/home_map.png" alt="" /></button>-->  <input type="text" placeholder="Vishakhapatanm" id="tags" class="search-txt city_finder ui-autocomplete-input" autocomplete="off">
+
+                              <!--<button class="form-control-map ui-widget" aria-hidden="true" type="submit"><img src="images/home_map.png" alt="" /></button>-->
+                               <input type="text"
+                               @if(Session::has('city'))
+                               value="{{Session::get('city') }}"
+                                @else value="Mumbai"
+                                @endif
+                               id="tags"
+                               class="search-txt city_finder ui-autocomplete-input"
+                               autocomplete="off">
                               <div class="has-feedback">
                                  <input type="text" placeholder="Resturant" class="search-txt">
                                  <button type="submit" aria-hidden="true" class="form-control-feedback"><i class="fa fa-search"></i></button>

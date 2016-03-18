@@ -9,7 +9,7 @@
      <ol class="breadcrumb">
          <span>You are here :</span>
   <li><a href="{{url('/')}}">Home</a></li>
-  <li><a href="{{url('/')}}//city/all-options/ct-{{isset($arr_business_details['category_details']['category_id']) && $arr_business_details['category_details']['category_id']!=''?$arr_business_details['category_details']['category_id']:'NA'}}">Restaurants</a></li>
+  <li><a href="{{url('/')}}//{{$city}}/all-options/ct-{{isset($arr_business_details['category_details']['category_id']) && $arr_business_details['category_details']['category_id']!=''?$arr_business_details['category_details']['category_id']:'NA'}}">Restaurants</a></li>
          <li class="active">{{ isset($arr_business_details['business_name']) && sizeof($arr_business_details['business_name'])>0?$arr_business_details['business_name']:''}}</li>
 
 </ol>
@@ -131,7 +131,7 @@
                                  Write a Review
                               </div>
 
-                         
+
                            <form class="form-horizontal"
                            id="validation-form"
                            method="POST"
@@ -169,7 +169,7 @@
                                  </div>
                                  <div class="clearfix"></div>
                               </div>
-                              
+
                               <div class="review-title">
                                  <div class="title-review">
                                     Name
@@ -342,7 +342,7 @@
                   @foreach($all_category as $category)
                   @foreach($arr_business_details['also_list_category'] as $busi_in_cat)
                   @if($category['cat_id']==$busi_in_cat['category_id'])
-                    <li class="brdr"><a href="{{ url('/') }}/city/all-options/ct-{{$busi_in_cat['category_id']}}"><?php echo $category['title']; ?></a></li>
+                    <li class="brdr"><a href="{{ url('/') }}/{{$city}}/all-options/ct-{{$busi_in_cat['category_id']}}"><?php echo $category['title']; ?></a></li>
                     @endif
                     @endforeach
                    @endforeach
@@ -411,7 +411,12 @@
                    <div class="col-sm-3 col-md-3">
                     <div class="product_info">
                        <div class="p_images">
-                           <div class="name_product"> <a href="{{url('/').'/listing/details/'.base64_encode($related_business['business_by_category']['id'])}}" style="color: #ffffff;">{{ $related_business['business_by_category']['business_name'] }}</a></div>
+                         <?php
+                           $slug_business=str_slug($related_business['business_by_category']['business_name']);
+                           $slug_area=str_slug($related_business['business_by_category']['area']);
+                           $business_area=$slug_business.'<near>'.$slug_area;
+                          ?>
+                           <div class="name_product"> <a href="{{url('/')}}/{{$city}}/{{$business_area}}/{{base64_encode($related_business['business_by_category']['id'])}}" style="color: #ffffff;">{{ $related_business['business_by_category']['business_name'] }}</a></div>
 
                             <img src="{{ url('/') }}/uploads/business/main_image/{{ $related_business['business_by_category']['main_image'] }}" alt="product img"/>
 
@@ -439,8 +444,8 @@
       </div>
 
       <script type="text/javascript">
-     
-    
+
+
         function show_opening_times()
         {
           $('#business_times_div').show();

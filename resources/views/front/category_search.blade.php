@@ -45,10 +45,10 @@
                         @foreach($arr_sub_category as $sub_category)
 						<ul class="">
 						    @if($sub_category['is_popular']==1)
-							<li class="brdr has-sub"><a href="{{ url('/') }}/city/all-options/ct-{{$sub_category['cat_id']}}"><img src="{{ url('/') }}/assets/front/images/shape.png" alt=""/><span>{{$sub_category['title']}}</span></a></li>
+						<li class="brdr has-sub"><a href="{{ url('/') }}/{{$c_city}}/all-options/ct-{{$sub_category['cat_id']}}"><img src="{{ url('/') }}/assets/front/images/shape.png" alt=""/><span>{{$sub_category['title']}}</span></a></li>
 							<hr class="nn"/>
 							 @else
-							 <li class="brdr"><a href="{{ url('/') }}/city/all-options/ct-{{$sub_category['cat_id']}}">{{$sub_category['title']}}</a></li>
+							 <li class="brdr"><a href="{{ url('/') }}/{{$c_city}}/all-options/ct-{{$sub_category['cat_id']}}">{{$sub_category['title']}}</a></li>
 							 @endif
 							</ul>
 						@endforeach

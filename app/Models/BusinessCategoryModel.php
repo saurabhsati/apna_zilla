@@ -28,5 +28,9 @@ class BusinessCategoryModel extends Model
     {
         return $this->hasMany('App\Models\ReviewsModel','business_id','business_id');
     }
+    public function match_city_name()
+    {
+        return $this->belongsTo('App\Models\CityModel','city','id');
+    }
 
 }
