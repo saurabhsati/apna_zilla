@@ -14,6 +14,7 @@
 Route::group(['prefix' => '/','middleware'=>['web']], function()
 {
 	Route::get('/','Front\HomeController@index');
+	Route::post('/locate_location','Front\HomeController@locate_location');
 
 	/*--------------------------Front-login-section-------------------------------*/
 
@@ -49,10 +50,13 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 	Route::get('/search','Front\CategorySearchController@search_location');
 
-	Route::group(array('prefix' => '/city'), function ()
+	Route::group(array('prefix' => '/{city}'), function ()
 	{
-	  Route::get('all-options/ct-{cat_id}','Front\CategorySearchController@get_business');
-	  Route::get('{cat_slug}/{cat_id}','Front\CategorySearchController@index');
+		Route::get('category-{cat_slug}/{cat_id}','Front\CategorySearchController@index');
+		 Route::get('all-options/ct-{cat_id}','Front\CategorySearchController@get_business');
+		  Route::get('{business_area}/{cat_id}','Front\ListingController@list_details');
+
+
 	});
 
 

@@ -34,7 +34,7 @@
         <?php  $current_cat=explode('-',Request::segment(3));
         if(isset($current_cat)){ if($current_cat[1]!=$category['cat_id']){
           ?>
-          <li class="brdr"><a href="{{ url('/') }}/city/all-options/ct-{{$category['cat_id']}}">{{ $category['title'] }}</a></li>
+          <li class="brdr"><a href="{{ url('/') }}/{{$city}}/all-options/ct-{{$category['cat_id']}}">{{ $category['title'] }}</a></li>
           <?php } }?>
           @endforeach
           @endif
@@ -68,7 +68,7 @@
          </ul>
 
        </li>
-       <li><a href="#" class="active">Ratings </a></li>
+       <li><a href="#" class="active">Ratings <span><i class="fa fa-long-arrow-up"></i></span></a></li>
        <li>
          <div class="btn-group btn-input clearfix">
           <button type="button" class="btn_drop_nw dropdown-toggle form-control" data-toggle="dropdown">
@@ -122,9 +122,15 @@
         <div class="col-sm-9 col-md-9 col-lg-8">
           <div class="product_details">
             <div class="product_title">
-              <a href="{{url('/').'/listing/details/'.base64_encode($restaurants['business_by_category']['id'])}}">
+            <?php
+             $slug_business=str_slug($restaurants['business_by_category']['business_name']);
+             $slug_area=str_slug($restaurants['business_by_category']['area']);
+             $business_area=$slug_business.'<near>'.$slug_area;
+            ?>
+            <a href="{{url('/')}}/{{$city}}/{{$business_area}}/{{base64_encode($restaurants['business_by_category']['id'])}}">
                 {{ $restaurants['business_by_category']['business_name'] }}
               </a>
+
             </div>
 
             <div class="rating_star">
@@ -213,7 +219,7 @@
                 <div class="p_list_details">
                    <div class="list-product"><i class="fa fa-phone"></i><span> {{ $restaurants['business_by_category']['landline_number'] }} &nbsp; {{ $restaurants['business_by_category']['mobile_number'] }}</span></div>
                        <div class="list-product"><i class="fa fa-map-marker"></i><span>{{ $restaurants['business_by_category']['building'] }} &nbsp; {{ $restaurants['business_by_category']['street'] }} <br/>
-                  {{ $restaurants['business_by_category']['landmark'] }} &nbsp; {{ $restaurants['business_by_category']['area'] }} &nbsp;{{ '-'.$restaurants['business_by_category']['pincode'] }}</span><a href="{{url('/').'/listing/details/'.base64_encode($restaurants['business_by_category']['id'])}}">More</a>  </div>
+                  {{ $restaurants['business_by_category']['landmark'] }} &nbsp; {{ $restaurants['business_by_category']['area'] }} &nbsp;{{ '-'.$restaurants['business_by_category']['pincode'] }}</span>  </div>
 
                   <div class="p_details"><!--<a href="#" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>-->
                     <ul>

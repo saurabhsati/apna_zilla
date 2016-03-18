@@ -4,6 +4,7 @@
 
  <div class="catetory-block">
          <div class="container">
+
             <div class="category-head">
                <h3>Most Popular Category</h3>
                <span></span>
@@ -18,7 +19,7 @@
                   @foreach($arr_category as $key => $category)
                    <?php $count=0; ?>
                   <li <?php if($key>3){echo 'style=display:none;';}?> >
-                     <a href="{{ url('/') }}/city/{{$category['cat_slug']}}/{{$category['cat_id']}}">
+                     <a href="{{ url('/') }}/{{$current_city}}/category-{{$category['cat_slug']}}/{{$category['cat_id']}}">
                      <span class="cate-img"><img src="{{ $cat_img_path.'/'.$category['cat_img']}}" alt="" height="30px" width="30px" /></span>
                      <span class="cate-txt">{{ ucfirst($category['title'])}}</span>
                      <span class="cate-count">
@@ -47,139 +48,7 @@
 
                   @endforeach
                   @endif
-                  <!-- <li>
-                     <a href="#">
-                     <span class="cate-img"><img src="{{ url('/') }}/assets/front/images/cate-img2.png" alt="" /></span>
-                     <span class="cate-txt">Security Services</span>
-                     <span class="cate-count">( 14 )</span>
-                     </a>
-                  </li>
-                  <li>
-                     <a href="#">
-                     <span class="cate-img"><img src="{{ url('/') }}/assets/front/images/cate-img3.png" alt="" /></span>
-                     <span class="cate-txt">Hotels &amp; Restaurants</span>
-                     <span class="cate-count">( 14 )</span>
-                     </a>
-                  </li>
-                  <li class="mar-none">
-                     <a href="#">
-                     <span class="cate-img"><img src="{{ url('/') }}/assets/front/images/cate-img4.png" alt="" /></span>
-                     <span class="cate-txt">Motor Garage</span>
-                     <span class="cate-count">( 14 )</span>
-                     </a>
-                  </li>
-                  <li>
-                     <a href="#">
-                     <span class="cate-img"><img src="{{ url('/') }}/assets/front/images/cate-img5.png" alt="" /></span>
-                     <span class="cate-txt">Security Services</span>
-                     <span class="cate-count">( 14 )</span>
-                     </a>
-                  </li>
-                  <li>
-                     <a href="#">
-                     <span class="cate-img"><img src="{{ url('/') }}/assets/front/images/cate-img6.png" alt="" /></span>
-                     <span class="cate-txt">Real Eastat</span>
-                     <span class="cate-count">( 14 )</span>
-                     </a>
-                  </li>
-                  <li>
-                     <a href="#">
-                     <span class="cate-img"><img src="{{ url('/') }}/assets/front/images/cate-img7.png" alt="" /></span>
-                     <span class="cate-txt">Plumber</span>
-                     <span class="cate-count">( 14 )</span>
-                     </a>
-                  </li>
-                  <li class="mar-none">
-                     <a href="#">
-                     <span class="cate-img"><img src="{{ url('/') }}/assets/front/images/cate-img8.png" alt="" /></span>
-                     <span class="cate-txt">Pest Control</span>
-                     <span class="cate-count">( 14 )</span>
-                     </a>
-                  </li>
-                  <li>
-                     <a href="#">
-                     <span class="cate-img"><img src="{{ url('/') }}/assets/front/images/cate-img9.png" alt="" /></span>
-                     <span class="cate-txt">Printing Services</span>
-                     <span class="cate-count">( 14 )</span>
-                     </a>
-                  </li>
-                  <li>
-                     <a href="#">
-                     <span class="cate-img"><img src="{{ url('/') }}/assets/front/images/cate-img10.png" alt="" /></span>
-                     <span class="cate-txt">Housekeeping</span>
-                     <span class="cate-count">( 14 )</span>
-                     </a>
-                  </li>
-                  <li>
-                     <a href="#">
-                     <span class="cate-img"><img src="{{ url('/') }}/assets/front/images/cate-img11.png" alt="" /></span>
-                     <span class="cate-txt">Packers &amp; Movers</span>
-                     <span class="cate-count">( 14 )</span>
-                     </a>
-                  </li>
-                  <li class="mar-none">
-                     <a href="#">
-                     <span class="cate-img"><img src="{{ url('/') }}/assets/front/images/cate-img12.png" alt="" /></span>
-                     <span class="cate-txt">Mobile Shopee</span>
-                     <span class="cate-count">( 14 )</span>
-                     </a>
-                  </li>
-                  <li>
-                     <a href="#">
-                     <span class="cate-img"><img src="{{ url('/') }}/assets/front/images/cate-img1.png" alt="" /></span>
-                     <span class="cate-txt">Hospital</span>
-                     <span class="cate-count">( 14 )</span>
-                     </a>
-                  </li>
-                  <li>
-                     <a href="#">
-                     <span class="cate-img"><img src="{{ url('/') }}/assets/front/images/cate-img2.png" alt="" /></span>
-                     <span class="cate-txt">Security Services</span>
-                     <span class="cate-count">( 14 )</span>
-                     </a>
-                  </li>
-                  <li>
-                     <a href="#">
-                     <span class="cate-img"><img src="{{ url('/') }}/assets/front/images/cate-img3.png" alt="" /></span>
-                     <span class="cate-txt">Hotels &amp; Restaurants</span>
-                     <span class="cate-count">( 14 )</span>
-                     </a>
-                  </li>
-                  <li class="mar-none">
-                     <a href="#">
-                     <span class="cate-img"><img src="{{ url('/') }}/assets/front/images/cate-img4.png" alt="" /></span>
-                     <span class="cate-txt">Motor Garage</span>
-                     <span class="cate-count">( 14 )</span>
-                     </a>
-                  </li>
-                  <li>
-                     <a href="#">
-                     <span class="cate-img"><img src="{{ url('/') }}/assets/front/images/cate-img5.png" alt="" /></span>
-                     <span class="cate-txt">Security Services</span>
-                     <span class="cate-count">( 14 )</span>
-                     </a>
-                  </li>
-                  <li>
-                     <a href="#">
-                     <span class="cate-img"><img src="{{ url('/') }}/assets/front/images/cate-img6.png" alt="" /></span>
-                     <span class="cate-txt">Real Eastat</span>
-                     <span class="cate-count">( 14 )</span>
-                     </a>
-                  </li>
-                  <li>
-                     <a href="#">
-                     <span class="cate-img"><img src="{{ url('/') }}/assets/front/images/cate-img7.png" alt="" /></span>
-                     <span class="cate-txt">Plumber</span>
-                     <span class="cate-count">( 14 )</span>
-                     </a>
-                  </li>
-                  <li class="mar-none">
-                     <a href="#">
-                     <span class="cate-img"><img src="{{ url('/') }}/assets/front/images/cate-img8.png" alt="" /></span>
-                     <span class="cate-txt">Pest Control</span>
-                     <span class="cate-count">( 14 )</span>
-                     </a>
-                  </li> -->
+
                </ul>
                <div class="clearfix"></div>
             </div>
@@ -511,4 +380,6 @@
    $('ul.category_list *').removeAttr('style');
    });
 </script>
+
+
 @endsection

@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\BusinessListingModel;
 use App\Models\CategoryModel;
+use Session;
 class HomeController extends Controller
 {
     public function __construct()
@@ -18,7 +19,15 @@ class HomeController extends Controller
     {
 
     	$page_title	='Home';
-
+    	$city = Session::get('city');
+        if(!empty($city))
+        {
+        	$current_city=$city;
+        }
+        else
+        {
+        	$current_city='Mumbai';
+        }
     	$arr_category = array();
     	$where_arr=array('is_popular'=>1,'parent'=>0);
     	$obj_main_category = CategoryModel::where($where_arr)->get();
@@ -70,7 +79,27 @@ class HomeController extends Controller
  		}
  		//dd($sub_category);
  		 $cat_img_path = url('/').config('app.project.img_path.category');
- 		return view('front.home',compact('page_title','arr_category','sub_category','category_business','cat_img_path'));
+ 		return view('front.home',compact('page_title','arr_category','sub_category','category_business','cat_img_path','current_city'));
     }
+    public function locate_location(Request $request)
+    {
+    	 $lat=$request->input('lat');
+    	 $lng=$request->input('lng');
+    	 $url = sprintf("https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s", $lat, $lng);
+
+		    $content = file_get_contents($url); // get json content
+
+		    $metadata = json_decode($content, true); //json decoder
+		    if(count($metadata['results']) > 0) {
+			    $city = $metadata['results'][0]['address_components']['2']['long_name'];
+
+			    Session::put('city', $city);
+			    echo 'done';
+			}
+			else
+			{
+		    	echo 'fail';
+	    	}
+ 	}
 
 }

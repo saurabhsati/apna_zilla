@@ -16,24 +16,48 @@ class CategorySearchController extends Controller
 {
    public function __construct()
     {
-    } 
-
-    public function index($cat_slug,$cat_id)
-    {
-    	$page_title	='List Of Category ';
-        $obj_sub_category = CategoryModel::where('parent',$cat_id)->orderBy('is_popular', 'DESC')->get();
-	 	if($obj_sub_category)
-	 	{
-	 		$arr_sub_category = $obj_sub_category->toArray();
-	 	}
-      return view('front.category_search',compact('page_title','arr_sub_category','cat_slug','cat_id'));
     }
-    public function get_business($cat_id)
+
+    public function index($city,$cat_slug,$cat_id)
+    {
+      $current_city='';
+      $current_city = Session::get('city');
+      if(!empty($current_city))
+      {
+        $c_city=$current_city;
+      }
+      else
+      {
+        $c_city='Mumbai';
+      }
+      $page_title	='List Of Category ';
+      $obj_sub_category = CategoryModel::where('parent',$cat_id)->orderBy('is_popular', 'DESC')->get();
+  	 	if($obj_sub_category)
+  	 	{
+  	 		$arr_sub_category = $obj_sub_category->toArray();
+  	 	}
+      return view('front.category_search',compact('page_title','arr_sub_category','cat_slug','cat_id','c_city'));
+    }
+
+    public function get_business($city,$cat_id)
     {
     	$page_title	='Business List';
-
+      //echo $city;
       // get business listing by category id
     	$arr_business = array();
+
+   /*   $where_arr = array('category_id'=>$cat_id,'city_title'=>$city);
+      $obj_business_listing = BusinessCategoryModel::where($where_arr)->get();
+      if($obj_business_listing)
+      {
+        $obj_business_listing->load(['business_by_category','business_rating','match_city_name']);
+        $arr_business = $obj_business_listing->toArray();
+      }*/
+
+
+
+
+
    		$obj_business_listing = BusinessCategoryModel::where('category_id',$cat_id)->get();
    		if($obj_business_listing)
    		{
@@ -65,8 +89,8 @@ class CategorySearchController extends Controller
             $arr_sub_cat = $obj_sub_cat->toArray();
         }
 
-        //dd($arr_business);
-      return view('front.listing.index',compact('page_title','arr_business','arr_sub_cat','parent_category','sub_category'));
+       // dd($arr_business);
+      return view('front.listing.index',compact('page_title','arr_business','arr_sub_cat','parent_category','sub_category','city'));
     }
     public function search_location(Request $request)
     {

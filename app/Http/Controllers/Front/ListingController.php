@@ -20,10 +20,9 @@ class ListingController extends Controller
 
     }
 
-    public function list_details($enc_id)
+    public function list_details($city,$slug_area,$enc_id)
     {
         $id = base64_decode($enc_id);
-
         $page_title ='List Details';
 
         $arr_business_details = array();
@@ -54,7 +53,7 @@ class ListingController extends Controller
 
 
       //dd($arr_business_details);
-        return view('front.listing.detail',compact('page_title','arr_business_details','arr_business','all_category'));
+        return view('front.listing.detail',compact('page_title','arr_business_details','arr_business','all_category','city'));
     }
 
 
@@ -82,7 +81,7 @@ class ListingController extends Controller
         $arr_data['title'] = $title;
         $arr_data['message'] = $review;
         $arr_data['mobile_no'] = $mobile_no;
-        $arr_data['email'] = $email; 
+        $arr_data['email'] = $email;
 
         $arr_data['business_id'] = $id;
 
@@ -97,7 +96,7 @@ class ListingController extends Controller
        exit;
 
         return redirect()->back();
-               
+
     }
 
     public function edit_business($enc_id)
@@ -119,7 +118,7 @@ class ListingController extends Controller
     public function share_business($enc_id)
     {
         $id = base64_decode($enc_id);
-        
+
         $page_title = "Share Business";
         return view('front.listing.share_business',compact('page_title'));
 
