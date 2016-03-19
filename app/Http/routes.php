@@ -57,17 +57,14 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	Route::group(array('prefix' => '/{city}'), function ()
 	{
 		Route::get('category-{cat_slug}/{cat_id}','Front\CategorySearchController@index');
-		 Route::get('all-options/ct-{cat_id}','Front\CategorySearchController@get_business');
-		  Route::get('{business_area}/{cat_id}','Front\ListingController@list_details');
-
+		Route::get('all-options/ct-{cat_id}','Front\CategorySearchController@get_business');
+		Route::get('{business_area}/{cat_id}','Front\ListingController@list_details');
 
 	});
-
 
 	Route::post('forgot_password','Front\PasswordController@postEmail');
 	Route::get('password_reset/{code}','Front\PasswordController@getReset');
 	Route::post('process_reset_password','Front\PasswordController@postReset');
-
 
 	Route::group(array('prefix' => '/listing'), function()
 	{
@@ -78,7 +75,6 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
   	    Route::get('share_sms_email/{enc_id}',			 ['as' => 'business_sms_email' 	    ,'uses' => 'Front\ListingController@share_sms_email']);
 
 	});
-
 
 });
 
