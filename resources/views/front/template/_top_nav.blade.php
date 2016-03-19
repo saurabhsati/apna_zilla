@@ -24,7 +24,7 @@
                                  </ul>
 
                            </li> -->
-                           <li class="nav-item"><a href="#">Features</a></li>
+                           <li class="nav-item"><a href="#">Deals</a></li>
 
 
                          @if ($user = Sentinel::check())
