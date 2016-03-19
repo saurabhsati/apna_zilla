@@ -84,26 +84,35 @@ class ListingController extends Controller
         $arr_data['title'] = $title;
         $arr_data['name'] = $name;
         $arr_data['message'] = $review;
-        $arr_data['mobile_no'] = $mobile_no;
+        $arr_data['mobile_number'] = $mobile_no;
         $arr_data['email'] = $email;
 
         $arr_data['business_id'] = $id;
 
 
-        $review_info          =  array(['title'=> $arr_data['title'],
-                                        'name' => $arr_data['name'],
+
+
+        $review_info = array(['title'=> $arr_data['title'],
+                                        'name'=> $arr_data['name'],
                                         'message'=> $arr_data['message'],
                                         'business_id'=> $arr_data['business_id'],
-                                        'mobile_number'=> $arr_data['mobile_no'],
-                                        'email' => $arr_data['email'],
-
-
-
-
-
-        $status = ReviewsModel::create(['title'=> $arr_data['title'],
+                                        'mobile_number'=> $arr_data['mobile_number'],
+                                        'email'=> $arr_data['email']
 
                                     ]);
+
+        foreach ($review_info as $review)
+        {
+            $arr_rev['title'] = $review['title'];
+            $arr_rev['name'] = $review['name'];
+            $arr_rev['message'] = $review['message'];
+            $arr_rev['business_id'] = $review['business_id'];
+            $arr_rev['mobile_number'] = $review['mobile_number'];
+            $arr_rev['email'] = $review['email'];
+
+        }
+      
+       $status = ReviewsModel::create($arr_rev);
 
         if($status)
         {
