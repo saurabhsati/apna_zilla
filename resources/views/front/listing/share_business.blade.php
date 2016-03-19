@@ -2,6 +2,8 @@
 
 @section('main_section')
 
+
+
 <div class="container">
          <div class="row">
              

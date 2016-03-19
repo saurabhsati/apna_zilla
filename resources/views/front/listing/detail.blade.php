@@ -70,7 +70,6 @@
                     @endif
 
 
-
                 <a href="javascript:void(0);" onclick="show_opening_times()">View All</a></span>
                 @else
                   <span>Business Time Not Available.</span>
@@ -90,6 +89,7 @@
               ?>
 
 
+
             <div id="map_show" style="display: none;  margin-top: 5px;">
               <div id="location_map" style="height:250px; width: 100%;"></div>
             </div>
@@ -105,8 +105,6 @@
 
             </div>
             </div>
-
-
 
             <!-- <div class="map" id="business_location_map" style="width: 100%; height: 250;">
 

@@ -94,24 +94,20 @@ class ListingController extends Controller
                                         'mobile_no'=>$arr_data['mobile_no'],
                                         'email' =>$arr_data['email']
                                         ]);
-       echo $status;
-       exit;
-
-        return redirect()->back();
+       
+     //  return redirect()->back();
 
     }
 
    
     public function share_business($enc_id)
     {
+    
         $id = base64_decode($enc_id);
-<<<<<<< HEAD
 
-=======
->>>>>>> 8e3b2928e73703b4af8b32cf12449ffc6c732a38
         $page_title = "Share Business";
 
-        return view('front.listing.share_business',compact('page_title'));
+        return view('front.listing.share_business');
     }
 
     public function share_sms_email($enc_id)
