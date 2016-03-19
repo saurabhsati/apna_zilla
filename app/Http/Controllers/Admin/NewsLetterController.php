@@ -7,8 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Models\NewsLetterModel;
 use App\Models\SiteSettingModel;
 use App\Models\EmailTemplateModel;
+
 use Validator;
 use Session;
+use Sentinel;
 use Input; 
 use Mail;
  

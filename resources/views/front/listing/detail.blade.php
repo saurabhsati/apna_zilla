@@ -97,7 +97,7 @@
             <input type="hidden" name="lng" id="lng" value="{{$arr_business_details['lng']}}"/>
 
             <div class="icons">
-               <a href="{{ url('/listing/share/'.base64_encode($business_id)) }} "> <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/shar.png" alt="share"/>Share</div></a>
+               <a href="{{ url('/listing/share_business/'.base64_encode($business_id)) }} "> <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/shar.png" alt="share"/>Share</div></a>
                 <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/write_review.png" alt="write_review">write review</div>
                 <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/your-vote.png" alt="your-vote"/>Your Vote(0.5)</div>
                 <a href="{{ url('/listing/share_sms_email/'.base64_encode($business_id)) }} "> <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/sms-emil.png" alt="write_review"/>Sms/Email</div></a>
@@ -158,6 +158,16 @@
                                  <div class="clearfix"></div>
                               </div>
 
+                              <div class="review-title">
+                                 <div class="title-review">
+                                    Title
+                                 </div>
+                                 <div class="title-rev-field">
+                                    <input type="text" name="title" placeholder="Title" />
+                                 </div>
+                                 <div class="clearfix"></div>
+                              </div>
+
                                <div class="review-title">
                                  <div class="title-review">
                                     Add review
@@ -168,12 +178,13 @@
                                  <div class="clearfix"></div>
                               </div>
 
+
                               <div class="review-title">
                                  <div class="title-review">
                                     Name
                                  </div>
                                  <div class="title-rev-field">
-                                    <input type="text" name="title" placeholder="Name" />
+                                    <input type="text" name="name" placeholder="Name" />
                                  </div>
                                  <div class="clearfix"></div>
                               </div>
@@ -184,11 +195,9 @@
                                  </div>
                                  <div class="title-rev-field">
                                    <div class="input-group">
-      <div class="input-group-addon">+91</div>
-
-      <input type="text" name="mobile_no" class="form-control" id="exampleInputAmount" placeholder="Mobile Number">
-
-    </div>
+                              <div class="input-group-addon">+91</div>
+                              <input type="text" name="mobile_no" class="form-control" id="exampleInputAmount" placeholder="Mobile Number">
+                               </div>
                                  </div>
                                  <div class="clearfix"></div>
                               </div>

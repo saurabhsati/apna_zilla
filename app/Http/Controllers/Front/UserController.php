@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Models\UserModel;
 use App\Models\BusinessListingModel;
 use App\Models\CategoryModel;
+use App\Models\CityModel;
+use App\Models\StateModel;
+use App\Models\CountryModel;
 
 use Session;
 use Sentinel;
@@ -20,12 +23,15 @@ class UserController extends Controller
  	{
         $this->profile_pic_base_path = base_path().'/public'.config('app.project.img_path.user_profile_pic');
         $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');      
+
+        $arr_except_auth_methods = array();
+        $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
+
  	}
 
         
  	public function store(Request $request)
     {    
-          
         $arr_rules = array();
         $arr_rules['first_name'] = "required";
         $arr_rules['last_name'] = "required";
@@ -68,12 +74,14 @@ class UserController extends Controller
             $role = Sentinel::findRoleBySlug('normal');
 
             $user = Sentinel::findById($status->id);
-        //$user = Sentinel::getUser();
+            
+            //$user = Sentinel::getUser();
 
             $user->roles()->attach($role);
             
             Session::flash('success','User Created Successfully');
         }
+
         else
         {
             Session::flash('error','Problem Occured While Creating User ');
@@ -111,7 +119,6 @@ class UserController extends Controller
 
     public function store_personal_details(Request $request)
     {
-    
         $arr_rules = array();
         $arr_rules['first_name'] = "required";
         $arr_rules['last_name'] = "required";
@@ -154,7 +161,7 @@ class UserController extends Controller
                 
         $user = Sentinel::findById($user_id);
 
-        $profile_pic = "default.jpg";
+        $profile_pic = $request->input('profile_pic');
 
         if ($request->hasFile('profile_pic'))
         {
@@ -164,7 +171,6 @@ class UserController extends Controller
 
             if ($request->file('profile_pic')->isValid() && $profile_pic_valiator->passes())
             {
-
                 $cv_path = $request->file('profile_pic')->getClientOriginalName();
                 $image_extension = $request->file('profile_pic')->getClientOriginalExtension();
                 $image_name = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
@@ -204,7 +210,16 @@ class UserController extends Controller
 
         $status = Sentinel::update($user, $credentials);
 
-        return redirect()->back();
+        if($status)
+        {
+          Session::flash('success','Updated Successfully');
+        }
+        else
+        {
+            Session::flash('error','Problem Occured While Updating ');
+        }
+
+       return redirect()->back();
     }
 
 
@@ -261,7 +276,6 @@ class UserController extends Controller
 
         $status = Sentinel::update($user, $credentials);
 
-
         return redirect()->back();
     }
     
@@ -282,7 +296,6 @@ class UserController extends Controller
           $cat_id = $business['business_cat'];
       }
      
-
      $obj_cat_details = CategoryModel::where('cat_id','=',$cat_id)->get();
      if($obj_cat_details)
      {
@@ -314,6 +327,10 @@ class UserController extends Controller
       foreach ($arr_business_details as $business) 
       {
           $cat_id = $business['business_cat'];
+          $city_id = $business['city'];
+          $pincode = $business['pincode'];
+          $state_id = $business['state'];
+          $country_id = $business['country'];
       }
      
 
@@ -328,11 +345,51 @@ class UserController extends Controller
          $cat_title = $category['title'];
      }
 
-      return view('front.user.edit_business',compact('page_title','arr_business_details','cat_title','buss_id'));
+    
+
+     $obj_city_details = CityModel::where('id','=',$city_id)->get();
+     if($obj_city_details)
+     {
+        $arr_city_details = $obj_city_details->toArray();
+     }
+
+     foreach ($arr_city_details as $city) 
+     {
+        $city_name = $city['city_title'];         
+     }
+
+
+     $obj_state_details = StateModel::where('id','=',$state_id)->get();
+     if($obj_state_details)
+     {
+        $arr_state_details = $obj_state_details->toArray();
+     }
+
+     foreach ($arr_state_details as $state) 
+     {
+        $state_name = $state['state_title'];         
+     }
+
+
+     $obj_country_details = CountryModel::where('id','=',$country_id)->get();
+     if($obj_country_details)
+     {
+        $arr_country_details = $obj_country_details->toArray();
+     }
+
+     foreach ($arr_country_details as $country) 
+     {
+        $country_name = $country['country_name'];         
+     }
+
+
+
+      return view('front.user.edit_business',compact('page_title','arr_business_details','cat_title','city_name','state_name','country_name','buss_id'));
     }
 
     public function update_business_details(Request $request,$enc_id)
     {
+     
         $business_id = base64_decode($enc_id);
 
         $arr_data = array();
@@ -340,11 +397,12 @@ class UserController extends Controller
         $arr_data['building'] = $request->input('building');
         $arr_data['landmark'] = $request->input('landmark');
         $arr_data['area'] = $request->input('area');
-        $arr_data['city'] = $request->input('city');
+        
+    /* $arr_data['city'] = $request->input('city');
         $arr_data['pincode'] = $request->input('pincode');
         $arr_data['state'] = $request->input('state');
         $arr_data['country'] = $request->input('country');
-
+    */
         $business_update = BusinessListingModel::where('id','=',$business_id)->update($arr_data);
 
         if($business_update)

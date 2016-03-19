@@ -75,12 +75,14 @@ class ListingController extends Controller
         }
 
         $title       = $request->input('title');
+        $name        = $request->input('name');
         $review       = $request->input('review');
         $mobile_no    = $request->input('mobile_no');
         $email        = $request->input('email');
 
         $arr_data = array();
         $arr_data['title'] = $title;
+        $arr_data['name'] = $name;
         $arr_data['message'] = $review;
         $arr_data['mobile_no'] = $mobile_no;
         $arr_data['email'] = $email;
@@ -88,25 +90,40 @@ class ListingController extends Controller
         $arr_data['business_id'] = $id;
 
 
-        $status = ReviewsModel::create(['title'=>$arr_data['title'],
-                                        'message'=>$arr_data['message'],
-                                        'business_id'=>$arr_data['business_id'],
-                                        'mobile_no'=>$arr_data['mobile_no'],
-                                        'email' =>$arr_data['email']
-                                        ]);
+        $review_info          =  array(['title'=> $arr_data['title'],
+                                        'name' => $arr_data['name'],
+                                        'message'=> $arr_data['message'],
+                                        'business_id'=> $arr_data['business_id'],
+                                        'mobile_number'=> $arr_data['mobile_no'],
+                                        'email' => $arr_data['email'],
 
-     //  return redirect()->back();
 
+
+
+
+        $status = ReviewsModel::create(['title'=> $arr_data['title'],
+
+                                    ]);
+
+        if($status)
+        {
+          Session::flash('success','Review Submitted Successfully');
+        }
+        else
+        {
+            Session::flash('error','Problem Occured While Submitting Review ');
+        }
+
+        return redirect()->back();
     }
 
     public function share_business($enc_id)
     {
 
         $id = base64_decode($enc_id);
-
         $page_title = "Share Business";
 
-        return view('front.listing.share_business');
+        return view('front.listing.share_business',compact('id','page_title'));
     }
 
     public function share_sms_email($enc_id)

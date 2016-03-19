@@ -95,7 +95,6 @@ class SalesController extends Controller
             return redirect()->back();
         }
 
-
         $profile_pic = "default.jpg";
 
         if ($request->hasFile('profile_pic'))
@@ -122,7 +121,6 @@ class SalesController extends Controller
             }
 
         }
-
 
          $status = Sentinel::registerAndActivate([
             'first_name' => $first_name,
@@ -152,9 +150,7 @@ class SalesController extends Controller
             $enc_id=$status->id;
             $public_id = (new GeneratorController)->alphaID($enc_id);
 
-
             $insert_public_id = UserModel::where('id', '=', $enc_id)->update(array('public_id' => $public_id));
-
 
             //$user = Sentinel::create('public_id');
             $role = Sentinel::findRoleBySlug('sales');
@@ -174,7 +170,8 @@ class SalesController extends Controller
         return redirect()->back();
 	}
 
-public function edit($enc_id)
+
+    public function edit($enc_id)
  	{
  		$id = base64_decode($enc_id);
  		$page_title = "User: Edit ";

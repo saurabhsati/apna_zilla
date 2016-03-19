@@ -10,6 +10,7 @@
             </a>
         </li>
 
+
         <li class="{{ Request::segment(2)=='users'? 'active':'' }}">
             <a href="javascript:void(0)" class="dropdown-toggle">
                 <i class="fa fa-user"></i>
@@ -20,6 +21,7 @@
                 <li style="display: block;"><a href="{{ url('/sales_user/edit_profile')}}">Manage</a> </li>
             </ul>
         </li>
+
 
          <li class="{{ Request::segment(2)=='users'? 'active':'' }}">
             <a href="javascript:void(0)" class="dropdown-toggle">

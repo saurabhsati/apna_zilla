@@ -15,6 +15,7 @@ use App\Models\CountryModel;
 use App\Models\ZipModel;
 use App\Models\CityModel;
 use App\Models\StateModel;
+
 use Sentinel;
 use Session;
 use Validator;
@@ -27,12 +28,14 @@ class SalesAccountController extends Controller
        $arr_except_auth_methods = array();
        $arr_except_auth_methods[] = 'login';
        $arr_except_auth_methods[] = 'process_login';
-       
-        $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
+      
+       $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
+
         $this->UserModel = new UserModel();
         $this->BusinessListingModel = new BusinessListingModel();
-        $this->RestaurantReviewModel= new RestaurantReviewModel();
-        $this->BusinessImageUploadModel=new BusinessImageUploadModel();
+        $this->RestaurantReviewModel = new RestaurantReviewModel();
+        $this->BusinessImageUploadModel = new BusinessImageUploadModel();
+
         $this->business_public_img_path = url('/')."/uploads/business/main_image/";
         $this->business_base_img_path = base_path()."/public/uploads/business/main_image";
 
@@ -40,7 +43,8 @@ class SalesAccountController extends Controller
         $this->business_base_upload_img_path = base_path()."/public/uploads/business/business_upload_image/";
 
         $this->profile_pic_base_path = base_path().'/public'.config('app.project.img_path.user_profile_pic');
-        $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');      
+        $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');  
+
     }   
 
  	public function index()
@@ -70,7 +74,6 @@ class SalesAccountController extends Controller
         }
     
         
-
         $user = Sentinel::authenticate($arr_creds);
 
 
@@ -118,7 +121,6 @@ class SalesAccountController extends Controller
             if($obj_user_info)
             {
                 $arr_user_info = $obj_user_info->toArray();
-
             }
     
             return view('sales_user.business.index',compact('page_title','arr_business_info','arr_user_info'));                                     
@@ -436,7 +438,6 @@ class SalesAccountController extends Controller
         	Session::flash('error','Error Occurred While Creating Business List ');
         }
         return redirect()->back();
-
     }
 
 
