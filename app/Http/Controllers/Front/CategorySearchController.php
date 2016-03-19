@@ -44,39 +44,62 @@ class CategorySearchController extends Controller
      $page_title	='Business List';
 
       //echo $city;
-      // get business listing by category id
-    	$arr_business = array();
 
-      // $where_arr = array('category_id'=>$cat_id,'city_title'=>$city);
-      // $obj_business_listing = BusinessCategoryModel::where($where_arr)->get();
-      // if($obj_business_listing)
-      // {
-      //   $obj_business_listing->load(['business_by_category','business_rating','match_city_name']);
-      //   $arr_business = $obj_business_listing->toArray();
-      // }
+      // get business listing by city and category id
 
-
-
-  /*   foreach($arr_business as $business)
+      $obj_business_listing_city = CityModel::where('city_title',$city)->get();
+      if($obj_business_listing_city)
       {
-        $business_id = $business['business_id'];
-        BusinessListingModel::where('id',$business_id)->with(['city_details'])->get();
-      }*/
+        $obj_business_listing_city->load(['business_details']);
+        $arr_business_by_city = $obj_business_listing_city->toArray();
+      }
+       $key_business_city=array();
+       if(sizeof($arr_business_by_city)>0)
+        {
+          foreach ($arr_business_by_city[0]['business_details'] as $key => $value) {
+            $key_business_city[$value['id']]=$value['id'];
+          }
+        }
 
-   		$obj_business_listing = BusinessCategoryModel::where('category_id',$cat_id)->get();
-   		if($obj_business_listing)
-   		{
+      $obj_business_listing = BusinessCategoryModel::where('category_id',$cat_id)->get();
+      if($obj_business_listing)
+      {
         $obj_business_listing->load(['business_by_category','business_rating']);
-   			$arr_business = $obj_business_listing->toArray();
+        $arr_business_by_category = $obj_business_listing->toArray();
+      }
+      $key_business_cat=array();
+      if(sizeof($arr_business_by_category)>0)
+      {
+          foreach ($arr_business_by_category as $key => $value) {
+            $key_business_cat[$value['business_id']]=$value['business_id'];
+          }
+      }
+      if(sizeof($key_business_city)>0 && sizeof($key_business_cat))
+      {
+          $result = array_intersect($key_business_city,$key_business_cat);
+
+          $arr_business = array();
+          if(sizeof($result)>0)
+          {
+            $obj_business_listing = BusinessListingModel::whereIn('id', $result)->with(['reviews'])->get();
+            if($obj_business_listing)
+            {
+              $arr_business = $obj_business_listing->toArray();
+
+            }
+          }
       }
 
-
+      // Get Sub category & Main Category data
         $obj_sub_category = CategoryModel::where('cat_id',$cat_id)->get();
         if($obj_sub_category)
         {
             $sub_category = $obj_sub_category->toArray();
         }
-
+        if(count($sub_category) > 0) {
+             Session::put('category_serach', $sub_category[0]['title']);
+             Session::put('category_id', $sub_category[0]['cat_id']);
+        }
         if(sizeof($sub_category)>0)
         {
           $main_cat_id=$sub_category[0]['parent'];
@@ -93,7 +116,7 @@ class CategorySearchController extends Controller
             $arr_sub_cat = $obj_sub_cat->toArray();
         }
 
-       // dd($arr_business);
+        //dd($arr_business);
       return view('front.listing.index',compact('page_title','arr_business','arr_sub_cat','parent_category','sub_category','city'));
     }
     public function search_location(Request $request)

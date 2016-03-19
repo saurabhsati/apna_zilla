@@ -1,8 +1,8 @@
 /* The gallery overlay */
-.prod_img{display:inline-block; max-width:140px; width:100%; margin:10px; border:1px solid #ddd; padding:6px;}
+.prod_img{display:inline-block; max-width:140px; width:100%; margin:10px; border:1px solid #ddd; padding:6px;overflow: hidden;height:94px;}
 #galleryOverlay{width:100%;	height:100%;position:fixed;	top:0;left:0;opacity:0;z-index:100000;background-color:#222;background-color:rgba(0,0,0,0.8);
 	overflow:hidden;	display:none;-moz-transition:opacity 1s ease;-webkit-transition:opacity 1s ease;transition:opacity 1s ease;}
-.gal.img_inner > img { width: 100%;}
+.gal.img_inner > img { width: 100%; height:100%;}
 /* This class will trigger the animation */
 #galleryOverlay.visible{opacity:1;}
 #gallerySlider{	height:100%;left:0;	top:0;width:100%;white-space: nowrap;position:absolute;-moz-transition:left 0.4s ease;-webkit-transition:left 0.4s ease;

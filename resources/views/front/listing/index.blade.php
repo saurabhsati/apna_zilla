@@ -95,7 +95,7 @@
           </div>
           <div class="modal-body">
 
-            <p>Where in Mumbai</p>
+            <p>Where in {{$city}}</p>
             <div class="row">
               <div class="col-lg-10"><input type="text" class="input-searchbx"/></div>
               <div class="col-lg-2"> <button type="submit" class="btn btn-warning">Go</button></div>
@@ -116,34 +116,34 @@
       <div class="product_list_view" >
        <div class="row">
          <div class="col-sm-3 col-md-3 col-lg-4">
-          <div class="product_img"><img src="{{ url('/') }}/uploads/business/main_image/{{ $restaurants['business_by_category']['main_image'] }}" alt="list product"/></div>
+          <div class="product_img"><img src="{{ url('/') }}/uploads/business/main_image/{{ $restaurants['main_image'] }}" alt="list product"/></div>
         </div>
 
         <div class="col-sm-9 col-md-9 col-lg-8">
           <div class="product_details">
             <div class="product_title">
             <?php
-             $slug_business=str_slug($restaurants['business_by_category']['business_name']);
-             $slug_area=str_slug($restaurants['business_by_category']['area']);
+             $slug_business=str_slug($restaurants['business_name']);
+             $slug_area=str_slug($restaurants['area']);
              $business_area=$slug_business.'<near>'.$slug_area;
             ?>
-            <a href="{{url('/')}}/{{$city}}/{{$business_area}}/{{base64_encode($restaurants['business_by_category']['id'])}}">
-                {{ $restaurants['business_by_category']['business_name'] }}
+            <a href="{{url('/')}}/{{$city}}/{{$business_area}}/{{base64_encode($restaurants['id'])}}">
+                {{ $restaurants['business_name'] }}
               </a>
 
             </div>
 
             <div class="rating_star">
               <?php $reviews=0; ?>
-              @if(isset($restaurants['business_rating']) && sizeof($restaurants['business_rating'])>0)
-              @foreach($restaurants['business_rating'] as $review)
+              @if(isset($restaurants['reviews']) && sizeof($restaurants['reviews'])>0)
+              @foreach($restaurants['reviews'] as $review)
               <?php  $reviews=$reviews+$review['ratings'] ?>
               @endforeach
               @endif
               <?php
-              if(sizeof($restaurants['business_rating']))
+              if(sizeof($restaurants['reviews']))
               {
-                $tot_review=sizeof($restaurants['business_rating']);
+                $tot_review=sizeof($restaurants['reviews']);
                 $avg_review=($reviews/$tot_review);
               }
               else
@@ -155,11 +155,11 @@
               <!-- <img src="{{ url('/') }}/assets/front/images/star2.png" alt="rating"/> -->
 
               <img src="{{ url('/') }}/assets/front/images/rating.jpg" alt="rating"/> &nbsp;@if(isset($tot_review)){{$tot_review}} @endif Ratings
-              <span class=""> Estd.in {{ $restaurants['business_by_category']['establish_year'] }} </span></div>
-              <div class="p_details"><i class="fa fa-phone"></i><span> {{ $restaurants['business_by_category']['landline_number'] }} &nbsp; {{ $restaurants['business_by_category']['mobile_number'] }}</span></div>
+              <span class=""> Estd.in {{ $restaurants['establish_year'] }} </span></div>
+              <div class="p_details"><i class="fa fa-phone"></i><span> {{ $restaurants['landline_number'] }} &nbsp; {{ $restaurants['mobile_number'] }}</span></div>
               <div class="p_details"><i class="fa fa-map-marker"></i>
-                <span>{{ $restaurants['business_by_category']['building'] }} &nbsp; {{ $restaurants['business_by_category']['street'] }} <br/>
-                  {{ $restaurants['business_by_category']['landmark'] }} &nbsp; {{ $restaurants['business_by_category']['area'] }} &nbsp;{{ '-'.$restaurants['business_by_category']['pincode'] }}<br/>
+                <span>{{ $restaurants['building'] }} &nbsp; {{ $restaurants['street'] }} <br/>
+                  {{ $restaurants['landmark'] }} &nbsp; {{ $restaurants['area'] }} &nbsp;{{ '-'.$restaurants['pincode'] }}<br/>
                 </span></div>
                 <div class="p_details"><a href="#" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>
                   <ul>
@@ -190,17 +190,17 @@
                          <div class="product_grid_view">
                   <div class="p_images">
                      <div class="grid_product">
-                      <div class="name-grid"><a href="{{url('/').'/listing/details/'.base64_encode($restaurants['business_by_category']['id'])}}">{{ $restaurants['business_by_category']['business_name'] }}</a></div>
+                      <div class="name-grid"><a href="{{url('/').'/listing/details/'.base64_encode($restaurants['id'])}}">{{ $restaurants['business_name'] }}</a></div>
                         <?php $reviews=0; ?>
-                        @if(isset($restaurants['business_rating']) && sizeof($restaurants['business_rating'])>0)
-                        @foreach($restaurants['business_rating'] as $review)
+                        @if(isset($restaurants['reviews']) && sizeof($restaurants['reviews'])>0)
+                        @foreach($restaurants['reviews'] as $review)
                         <?php  $reviews=$reviews+$review['ratings'] ?>
                         @endforeach
                         @endif
                         <?php
-                        if(sizeof($restaurants['business_rating']))
+                        if(sizeof($restaurants['reviews']))
                         {
-                          $tot_review=sizeof($restaurants['business_rating']);
+                          $tot_review=sizeof($restaurants['reviews']);
                           $avg_review=($reviews/$tot_review);
                         }
                         else
@@ -211,15 +211,15 @@
                        <div class="rating_star"><img src="{{ url('/') }}/assets/front/images/rating-4.png" alt="rating" width="73"/><span> &nbsp;@if(isset($tot_review)){{$tot_review}} @endif Ratings</span></div>
                         <a href="#" style="border-right:0;display:inline-block;" data-toggle="tooltip" title="Add to favorites"><i class="fa fa-heart"></i><span> </span></a>
                          </div>
-                       <img src="{{ url('/') }}/uploads/business/main_image/{{ $restaurants['business_by_category']['main_image'] }}" alt="product img" >
+                       <img src="{{ url('/') }}/uploads/business/main_image/{{ $restaurants['main_image'] }}" alt="product img" >
 
                     </div>
 
 
                 <div class="p_list_details">
-                   <div class="list-product"><i class="fa fa-phone"></i><span> {{ $restaurants['business_by_category']['landline_number'] }} &nbsp; {{ $restaurants['business_by_category']['mobile_number'] }}</span></div>
-                       <div class="list-product"><i class="fa fa-map-marker"></i><span>{{ $restaurants['business_by_category']['building'] }} &nbsp; {{ $restaurants['business_by_category']['street'] }} <br/>
-                  {{ $restaurants['business_by_category']['landmark'] }} &nbsp; {{ $restaurants['business_by_category']['area'] }} &nbsp;{{ '-'.$restaurants['business_by_category']['pincode'] }}</span>  </div>
+                   <div class="list-product"><i class="fa fa-phone"></i><span> {{ $restaurants['landline_number'] }} &nbsp; {{ $restaurants['mobile_number'] }}</span></div>
+                       <div class="list-product"><i class="fa fa-map-marker"></i><span>{{ $restaurants['building'] }} &nbsp; {{ $restaurants['street'] }} <br/>
+                  {{ $restaurants['landmark'] }} &nbsp; {{ $restaurants['area'] }} &nbsp;{{ '-'.$restaurants['pincode'] }}</span>  </div>
 
                   <div class="p_details"><!--<a href="#" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>-->
                     <ul>

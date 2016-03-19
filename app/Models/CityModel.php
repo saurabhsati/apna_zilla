@@ -8,7 +8,12 @@ class CityModel extends Model
 {
     //
     protected $table="city";
-    protected $fillable=['public_key', 'city_title','city_image', 'city_slug','countries_id','state_id'];
+    protected $fillable=['public_key',
+                         'city_title',
+                         'city_image',
+                         'city_slug',
+                         'countries_id',
+                         'state_id'];
     public function country_details()
     {
     	return $this->belongsTo('App\Models\CountryModel','countries_id','id');

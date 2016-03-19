@@ -71,7 +71,10 @@ class CategoryModel extends Model
       return $this->hasMany('App\Models\AttributeModel','fk_category_id','cat_id');
     }
 
-
+    public function bussinesses()
+    {
+      return $this->hasMany('App\Models\BusinessCategoryModel','category_id','cat_id');
+    }
 
 
 }

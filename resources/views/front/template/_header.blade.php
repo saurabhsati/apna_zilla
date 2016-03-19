@@ -146,7 +146,7 @@ $(document).ready(function(){
 
   function getLocation() {
       if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(savePosition, positionError, {timeout:20000});
+          navigator.geolocation.getCurrentPosition(savePosition, positionError, {timeout:10000});
       } else {
            window.location.reload();
       }

@@ -101,5 +101,50 @@ class HomeController extends Controller
 		    	echo 'fail';
 	    	}
  	}
+ 	public function get_category_auto(Request $request,$category)
+ 	{
+ 		if($request->has('term'))
+        {
+            $search_term = $request->input('term');
+            $arr_obj_list = CategoryModel::where('title','like',"%".$search_term."%")
+                                                ->orWhere('cat_desc','like',"%".$search_term."%")
+                                                ->orWhere('cat_meta_description','like',"%".$search_term."%")
+                                                ->get();
+
+            $arr_list = array();
+            if($arr_obj_list)
+            {
+                $arr_list = $arr_obj_list->toArray();
+
+                $arr_final_list = array();
+
+                if(sizeof($arr_list)>0)
+                {
+                    foreach ($arr_list as $key => $list)
+                    {
+                    	//$arr_final_list[$key]['value'] = $list['cat_id'];
+                        $arr_final_list[$key]['id'] = $list['cat_id'];
+                        $arr_final_list[$key]['label'] = $list['title'];
+
+
+                    }
+
+                    return response()->json($arr_final_list);
+                }
+                else
+                {
+                   return response()->json(array());
+                }
+            }
+            else
+            {
+              return response()->json(array());
+            }
+        }
+        else
+        {
+           return response()->json(array());
+        }
+ 	}
 
 }

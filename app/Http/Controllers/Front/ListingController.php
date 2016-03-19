@@ -96,7 +96,8 @@ class ListingController extends Controller
                                         'business_id'=> $arr_data['business_id'],
                                         'mobile_number'=> $arr_data['mobile_no'],
                                         'email' => $arr_data['email'],
-                                        ]);
+
+
 
 
 
@@ -118,6 +119,7 @@ class ListingController extends Controller
 
     public function share_business($enc_id)
     {
+
         $id = base64_decode($enc_id);
         $page_title = "Share Business";
 
