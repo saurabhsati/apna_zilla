@@ -52,7 +52,10 @@
 							 @endif
 							</ul>
 						@endforeach
-						@endif
+						 @else
+
+					      <span>No Records Available</span>
+					         @endif
 						<!-- /#Categoriesr End-->
 						<div class="clearfix"></div>
 					</div>
