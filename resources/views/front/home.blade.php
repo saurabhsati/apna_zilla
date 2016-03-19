@@ -6,7 +6,7 @@
          <div class="container">
 
             <div class="category-head">
-               <h3>Most Popular Category</h3>
+               <h3>Most Popular Categories</h3>
                <span></span>
             </div>
             <div class="cate-count-block">
@@ -53,7 +53,7 @@
                <div class="clearfix"></div>
             </div>
             <div class="all-cate-btn browse_all_cat">
-               <button> Browse All Categories</button>
+               <button> Browse All Popular Categories</button>
             </div>
          </div>
       </div>

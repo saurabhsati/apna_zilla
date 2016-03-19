@@ -9,7 +9,7 @@ class ReviewsModel extends Model
     //
     protected $table = 'reviews';
 
-    protected $fillabel = ['business_id',
+    protected $fillable = ['business_id',
                             'title',
                             'message',
     						'mobile_number',
