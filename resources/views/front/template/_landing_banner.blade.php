@@ -54,7 +54,6 @@
           source:site_url+"/get_category_auto/"+category,
           search: function( event, ui )
           {
-            alert(category);
             if(category==false)
             {
                 alert("Select Category First");
@@ -76,7 +75,7 @@
            });
         });
 
-       $( document.body ).on( 'click', '.search_home_buisness', function( event ) {
+$(document.body).on( 'click', '.search_home_buisness', function( event ) {
 
         var category_id=$( "#category_id").val();
         var category_search=$("#category_search").val();
