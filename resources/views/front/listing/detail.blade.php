@@ -111,7 +111,7 @@
             </div> -->
 
                 <div class="tours-detail-tab">
-                  <div id="dash_tab">
+                  <div id="dash_tab" style="background: #ffffff; padding: 10px 13px; border: 1px solid #eaeaea;">
                      <ul class="resp-tabs-list ">
 
                         <li id="review">Add a Review </li>
@@ -408,7 +408,7 @@
 
                    <div class="col-sm-3 col-md-3">
                     <div class="product_info">
-                       <div class="p_images">
+                       <div class="p_images-detail">
                          <?php
                            $slug_business=str_slug($related_business['business_by_category']['business_name']);
                            $slug_area=str_slug($related_business['business_by_category']['area']);
@@ -420,7 +420,7 @@
 
                         </div>
                        <div class="p_infor_detail">
-                        <span class="pull-left"><img src="{{ url('/') }}/assets/front/images/home_map.png" alt="location"/>{{$related_business['business_by_category']['area']}}</span>
+                        <span class="pull-left address-icon-img"><img src="{{ url('/') }}/assets/front/images/home_map.png" alt="location"/>{{$related_business['business_by_category']['area']}}</span>
                         <span class="pull-right"><i class="fa fa-star-o ylow"></i></span>
 
                         </div>

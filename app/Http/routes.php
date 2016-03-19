@@ -15,6 +15,8 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 {
 	Route::get('/','Front\HomeController@index');
 	Route::post('/locate_location','Front\HomeController@locate_location');
+	Route::get('/get_category_auto/{category}','Front\HomeController@get_category_auto');
+
 
 	/*--------------------------Front-login-section-------------------------------*/
 

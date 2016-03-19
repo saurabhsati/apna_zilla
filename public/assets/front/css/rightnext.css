@@ -390,14 +390,18 @@ body:not(.device-touch) .social-icon i {transition: all 0.3s ease 0s;}
 .img_icons > img { display: block;margin: 0 auto 10px;}
 .img_icons{color: #444444; display: inline-block; font-size: 14px; max-width: 135px;text-align: center;text-transform: capitalize; margin-bottom: 10px;width: 100%;}
 .icons { padding: 16px 0 0;}
-.name_product { bottom: 4px;color: #fff;font-family: "noto_sansbold",sans-serif;font-size: 20px;padding-left: 10px;position: absolute; z-index: 9;}
+.name_product { bottom: 0px;color: #fff;font-family: "noto_sansbold",sans-serif;font-size: 20px;padding: 0 0 5px 10px;position: absolute; z-index: 9; background-image: url("../images/pdt-ftr_1.png"); background-position: 0 0; width: 100%;}
+.name_product > a {overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block;}
 .fa.fa-star-o.ylow {color: #e69105;font-size: 19px;}
 .p_images > img { width: 100%;transition: all 0.4s ease 0s;height: 260px;}
 .p_images > img:hover {
     transform: scale(1.2);}
 
 .p_images { display: block; position: relative; overflow: hidden;}
-.p_infor_detail .pull-left { color: #6eab40;}
+.p_images-detail{display: block; position: relative; overflow: hidden;}
+.p_images-detail > img {height: 200px; width: 100%;}
+.p_infor_detail .pull-left { color: #6eab40; width: 90%;/* min-height: 40px;*/}
+.address-icon-img img{margin-right: 10px;}
 
 .p_infor_detail { background: #fff ; display: inline-block;padding: 8px;width: 100%;-webkit-box-shadow: 0px 20px 17px -16px rgba(0,0,0,0.09);
 -moz-box-shadow: 0px 20px 17px -16px rgba(0,0,0,0.09);box-shadow: 0px 20px 17px -16px rgba(0,0,0,0.09);}

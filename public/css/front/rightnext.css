@@ -454,7 +454,7 @@ body:not(.device-touch) .social-icon i {transition: all 0.3s ease 0s;}
 
 .sidebar-nav ul.spe_submobile1 li a , .sidebar-nav ul.spe_submobile3 li a  { max-width: none; font-size: 13.5px;}
 .sidebar-nav ul.spe_submobile1 li , .sidebar-nav ul.spe_submobile3 li{ padding: 6px 14px;}
-
+.dash-tab-class{}
 
 
 /*listing detai page end here*/

@@ -14,7 +14,7 @@ class BusinessCategoryModel extends Model
 
    public function business_details()
     {
-        return $this->belongsTo('App\Models\BusinessListingModel','cat_id','business_cat');
+        return $this->belongsTo('App\Models\BusinessListingModel','business_id','id');
     }
     // Get business by category
     public function business_by_category()
