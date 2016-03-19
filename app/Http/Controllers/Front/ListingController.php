@@ -99,7 +99,6 @@ class ListingController extends Controller
 
     }
 
-   
     public function share_business($enc_id)
     {
     
