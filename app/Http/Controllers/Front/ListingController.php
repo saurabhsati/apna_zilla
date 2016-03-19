@@ -95,16 +95,13 @@ class ListingController extends Controller
                                         'message'=> $arr_data['message'],
                                         'business_id'=> $arr_data['business_id'],
                                         'mobile_number'=> $arr_data['mobile_no'],
-                                        'email' => $arr_data['email'],
+                                        'email' => $arr_data['email']]);
 
 
 
 
 
-        $status = ReviewsModel::create(['title'=> $arr_data['title'],
-
-                                    ]);
-
+        $status = ReviewsModel::create(['title'=> $arr_data['title']]);
         if($status)
         {
           Session::flash('success','Review Submitted Successfully');
