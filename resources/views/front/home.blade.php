@@ -20,7 +20,7 @@
                    <?php $count=0; ?>
                   <li <?php if($key>3){echo 'style=display:none;';}?> >
                      <a href="{{ url('/') }}/{{$current_city}}/category-{{$category['cat_slug']}}/{{$category['cat_id']}}">
-                     <span class="cate-img"><img src="{{ $cat_img_path.'/'.$category['cat_img']}}" alt="" height="30px" width="30px" /></span>
+                     <span class="cate-img"><img src="{{ $cat_img_path.'/'.$category['cat_img']}}" alt="" height="19px" width="30px" /></span>
                      <span class="cate-txt">{{ ucfirst($category['title'])}}</span>
                      <span class="cate-count">
                       @foreach($sub_category as $subcategory)
