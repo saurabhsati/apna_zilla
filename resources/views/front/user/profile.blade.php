@@ -27,7 +27,7 @@
              
             <div class="col-sm-12 col-md-9 col-lg-9">
             <div class="my_whit_bg">
-                 <div class="title_acc">Please provide home and office address</div>
+                 <div class="title_acc">Please provide your personal Information</div>
                    <div class="row">
 
                       <form class="form-horizontal"
@@ -80,14 +80,13 @@
                         <div class="button_shpglst">
                         <div class="fileUpload or_btn">
                         <span>Upload Photo</span>
-                        <input id="fileupload" name="profile_pic" type="file" class="upload change_pic" onchange="loadPreviewImage(this)"></div>
+                        <input id="fileupload" type="file" name="profile_pic" class="upload change_pic" onchange="loadPreviewImage(this)"></div>
                        <div class="remove_b" onclick="clearPreviewImage()"><a href="#"><i class="fa fa-times"></i> Remove</a></div>                               
                      <div class="clr"></div>
                     <div class="line">&nbsp;</div>
                     </div>                  
                        </div>
-              
-                       </div>
+                      </div>
 
 
                  <div class="col-sm-9 col-md-9 col-lg-9">
@@ -150,7 +149,7 @@
                     </div>
                  
 
-
+<!-- 
                     <?php
                     $string = $user['d_o_b'];
                     $timestamp = strtotime($string);
@@ -158,7 +157,7 @@
                     $mm = date("m", $timestamp);
                     $yy = date("Y", $timestamp);
                     ?>
-
+ -->
 
                        <div class="user_box_sub">
                            <div class="row">
@@ -167,14 +166,14 @@
                         <div class="row">
                          <div class="col-sm-3 col-md-3 col-lg-2">
                            <select class="input_acct" name="dd">
-                                 <option value="{{$dd}}">{{$dd}}</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                             <option value="4">4</option>
-                             <option value="5">5</option>
-                             <option value="6">6</option>
-                             <option value="7">7</option>
+                                 <option value="{{ isset($user['dd'])?$user['dd']:'' }}">{{$user['dd']}}</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
                         <option value="8">8</option>
                         <option value="9">9</option>
                         <option value="10">10</option>
@@ -200,10 +199,11 @@
                         <option value="30">30</option>
                         <option value="31">31</option>
                         </select>  
-                            </div>
+                         </div>
+
                              <div class="col-sm-3 col-md-3 col-lg-3">
                            <select class="input_acct" name="mm">
-                             <option value="{{$mm}}">{{$mm}}</option>
+                             <option value="{{ isset($user['mm'])?$user['mm']:'' }}">{{$user['mm']}}</option>
                              <option value="January">January</option>
                                  <option value="February">February</option>
                                  <option value="March">March</option>
@@ -216,12 +216,12 @@
                                  <option value="October">October</option>
                                  <option value="November">November</option>
                                  <option value="December">December</option>
-
                         </select>  
                             </div>
+
                              <div class="col-sm-3 col-md-3 col-lg-3">
                            <select class="input_acct" name="yy">
-                             <option value="{{$yy}}">{{$yy}}</option>
+                             <option value="{{ isset($user['yy'])?$user['yy']:'' }}">{{$user['yy']}}</option>
                               <option value="2016">2010</option>
                                <option value="2016">2011</option>
                                 <option value="2016">2012</option>

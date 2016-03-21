@@ -61,9 +61,13 @@
                  <li><a href="#">Alphabetical</a></li>     
                 </ul>  
              </div>    
+             <?php
+             $no_of_business = count($arr_business_info);
+             ?>
 
-             @foreach($arr_business_info as $business) 
-
+             @for($business=1;$business<=$no_of_business;$business++)
+                        
+                         @foreach($arr_business_info as $business) 
 
                 <div class="product_list_view">
             <div class="row">
@@ -92,6 +96,8 @@
                  </div> 
 
                  @endforeach
+
+                 @endfor
 
              </div>
          </div>
