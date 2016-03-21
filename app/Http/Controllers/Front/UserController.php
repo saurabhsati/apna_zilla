@@ -308,11 +308,13 @@ class UserController extends Controller
           $arr_cat_details = $obj_cat_details->toArray();
        }
 
+
        foreach ($arr_cat_details as $category) 
        {
            $cat_title = $category['title'];
        }
         
+
         return view('front.user.my_business',compact('arr_business_info','cat_title'));
     }
 
@@ -399,12 +401,63 @@ class UserController extends Controller
     {
         $business_id = base64_decode($enc_id);
 
+        $cat_name      =  $request->input('category');
+        $obj_cat_details = CategoryModel::where('title','=',$cat_name)->first();
+
+        if($obj_cat_details)
+        {
+          $arr_cat_details = $obj_cat_details->toArray();
+        }
+
+        $cat_id = $arr_cat_details['cat_id'];
+       
+
+        $city_name      =  $request->input('city');
+        $obj_city_details = CityModel::where('city_title','=',$city_name)->first();
+
+        if($obj_city_details)
+        {
+          $arr_city_details = $obj_city_details->toArray();
+        }
+
+        $city_id = $arr_city_details['id'];
+
+        
+        $state_name      =  $request->input('state');
+        $obj_state_details = StateModel::where('state_title','=',$state_name)->first();
+
+        if($obj_state_details)
+        {
+          $arr_state_details = $obj_state_details->toArray();
+        }
+
+        $state_id = $arr_state_details['id'];
+
+        $country_name      =  $request->input('country');
+        $obj_country_details = CountryModel::where('country_name','=',$country_name)->first();
+
+        if($obj_country_details)
+        {
+          $arr_country_details = $obj_country_details->toArray();
+        }
+
+        $country_id = $arr_country_details['id'];
+
+
+
         $arr_data = array();
         $arr_data['business_name'] =  $request->input('business_name');
         $arr_data['building']      =  $request->input('building');
         $arr_data['landmark']      =  $request->input('landmark');
         $arr_data['area']          =  $request->input('area');
-        $arr_data['business_cat']      =  $request->input('category');
+        $arr_data['business_cat']  =  $cat_id;
+        $arr_data['city']           =  $city_id;
+        $arr_data['state']           =  $state_id;
+       $arr_data['country']           =  $country_id;
+
+
+
+
                                                                               
         /* $arr_data['city'] = $request->input('city');
             $arr_data['pincode'] = $request->input('pincode');
