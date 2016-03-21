@@ -290,7 +290,7 @@
                            data-rule-required="true"
                            placeholder="Enter Area"
                            value="{{ isset($business['area'])?$business['area']:'' }}"
-                          onchange="setAddress()" 
+                          onchange="setAddress()"
                            />
                     <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
@@ -301,7 +301,7 @@
                  <select class="form-control"  name="city" id="city" onchange="setAddress()">
                  @if(isset($arr_city) && sizeof($arr_city)>0)
                    @foreach($arr_city as $city)
-                <option value="{{ isset($city['id'])?$city['id']:'' }}" {{ $business['pincode']==$city['id']?'selected="selected"':'' }}>{{ isset($city['city_title'])?$city['city_title']:'' }}
+                <option value="{{ isset($city['id'])?$city['id']:'' }}" {{ $business['city']==$city['id']?'selected="selected"':'' }}>{{ isset($city['city_title'])?$city['city_title']:'' }}
                 </option>
                 @endforeach
                 @endif
@@ -467,21 +467,21 @@
                     <input type="hidden" name="lng" value="{{ isset($business['lng'])?$business['lng']:'' }}" id="lng"/>
 
                     <div id="business_location_map" style="height:400px"></div>
-                    <label>Note: Click On the Map to Pick Nearby Custom Location </label> 
+                    <label>Note: Click On the Map to Pick Nearby Custom Location </label>
                 </div>
             </div>
 
             <hr/>
 
-            <div class="form-group"> 
+            <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" ></label>
                 <div class="col-sm-3 col-lg-3 controls">
                     <h4><b>Business Opening Hours</b></h4>
                 </div>
-            </div> 
+            </div>
 
-             <div class="form-group"> 
-                <label class="col-sm-3 col-lg-2 control-label" >Monday<i class="red">*</i></label>   
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" >Monday<i class="red">*</i></label>
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
                         <a class="input-group-addon" href="#">
@@ -499,11 +499,11 @@
                         <input class="form-control timepicker-default" name="mon_out" id="mon_out" type="text" data-rule-required="true" value="{{ isset($business['business_times']['mon_close'])?$business['business_times']['mon_close']:'' }}">
                     </div>
                 </div>
-               
+
             </div>
 
-            <div class="form-group"> 
-                <label class="col-sm-3 col-lg-2 control-label" >Tuesday<i class="red">*</i></label>   
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" >Tuesday<i class="red">*</i></label>
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
                         <a class="input-group-addon" href="#">
@@ -521,11 +521,11 @@
                         <input class="form-control timepicker-default" name="tue_out" id="tue_out" type="text" data-rule-required="true" value="{{ isset($business['business_times']['tue_close'])?$business['business_times']['tue_close']:'' }}">
                     </div>
                 </div>
-                
-            </div> 
 
-            <div class="form-group"> 
-                <label class="col-sm-3 col-lg-2 control-label" >Wednesday<i class="red">*</i></label>   
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" >Wednesday<i class="red">*</i></label>
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
                         <a class="input-group-addon" href="#">
@@ -543,11 +543,11 @@
                         <input class="form-control timepicker-default" name="wed_out" id="wed_out" type="text" data-rule-required="true" value="{{ isset($business['business_times']['wed_close'])?$business['business_times']['wed_close']:'' }}">
                     </div>
                 </div>
-                
-            </div> 
 
-            <div class="form-group"> 
-                <label class="col-sm-3 col-lg-2 control-label" >Thursday<i class="red">*</i></label>   
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" >Thursday<i class="red">*</i></label>
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
                         <a class="input-group-addon" href="#">
@@ -566,10 +566,10 @@
                     </div>
                 </div>
 
-            </div> 
+            </div>
 
-            <div class="form-group"> 
-                <label class="col-sm-3 col-lg-2 control-label" >Friday<i class="red">*</i></label>   
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" >Friday<i class="red">*</i></label>
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
                         <a class="input-group-addon" href="#">
@@ -588,10 +588,10 @@
                     </div>
                 </div>
 
-            </div> 
+            </div>
 
-            <div class="form-group"> 
-                <label class="col-sm-3 col-lg-2 control-label" >Saturday<i class="red">*</i></label>   
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" >Saturday<i class="red">*</i></label>
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
                         <a class="input-group-addon" href="#">
@@ -610,16 +610,16 @@
                     </div>
                 </div>
 
-            </div> 
+            </div>
 
-            
+
             <div class="form-group">
-               
-            <label class="col-sm-3 col-lg-2 control-label" >Sunday<i class="red">*</i></label> 
-               
+
+            <label class="col-sm-3 col-lg-2 control-label" >Sunday<i class="red">*</i></label>
+
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
-                        <a class="input-group-addon" href="#"> 
+                        <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
                         <input class="form-control timepicker-default" name="sun_in" id="sun_in" type="text" data-rule-required="true" value="{{ isset($business['business_times']['sun_open'])?$business['business_times']['sun_open']:'' }}">
@@ -634,8 +634,8 @@
                         <input class="form-control timepicker-default" name="sun_out" id="sun_out" type="text" data-rule-required="true" value="{{ isset($business['business_times']['sun_close'])?$business['business_times']['sun_close']:'' }}">
                     </div>
                 </div>
-     
-            </div>    
+
+            </div>
 
             <hr/>
 
@@ -931,14 +931,14 @@ $('#add-service').click(function(){
 
     var  map;
     var ref_input_lat = $('#lat');
-    var ref_input_lng = $('#lng'); 
+    var ref_input_lng = $('#lng');
 
-    function setMapLocation(address) 
+    function setMapLocation(address)
     {
 
         geocoder.geocode({'address': address}, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) 
-            {   
+            if (status == google.maps.GeocoderStatus.OK)
+            {
 
                 map.setCenter(results[0].geometry.location);
 
@@ -969,7 +969,7 @@ $('#add-service').click(function(){
             }
         });
     }
-    function initializeMap() 
+    function initializeMap()
     {
          var latlng = new google.maps.LatLng($(ref_input_lat).val(), $(ref_input_lng).val());
          var myOptions = {
@@ -1020,7 +1020,7 @@ $('#add-service').click(function(){
 
      }
 
-    function loadScript() 
+    function loadScript()
     {
             var script = document.createElement('script');
             script.type = 'text/javascript';
@@ -1044,15 +1044,15 @@ $('#add-service').click(function(){
     }
 
     function setAddress()
-    { 
+    {
         var street = $('#street').val();
          var area = $('#area').val();
          var city = $('#city option:selected').text();
          var state = $('#state option:selected').text();
          var country = $('#country option:selected').text();
-        
+
         var addr = street+", "+area+", "+city+", "+state+", "+country;
-        
+
         setMapLocation(addr);
     }
 

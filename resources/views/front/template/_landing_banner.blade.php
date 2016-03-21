@@ -14,12 +14,13 @@
                            <div class="form-group form-control">
                           {{ csrf_field() }}
                               <!--<button class="form-control-map ui-widget" aria-hidden="true" type="submit"><img src="images/home_map.png" alt="" /></button>-->
-                               <input type="text" class="search-txt city_finder" id="tags"
+                               <input type="text" class="search-txt city_finder" id="city_search"
                                placeholder="Vishakhapatanm"
                                @if(Session::has('city'))
                                value="{{Session::get('city') }}"
-                                @else value="Mumbai"
+                                @else value=""
                                 @endif />
+                                <input type="hidden" id="city_id" name="city_id" value=""/>
                               <div class="has-feedback">
 
                                  <input type="text" class="search-txt" placeholder="Resturant" id="category_search" name="category_search" value=""/>
@@ -54,6 +55,47 @@
 
         $(document).ready(function()
         {
+            //City Auto complete
+           $("#city_search").autocomplete(
+          {
+            minLength:0,
+            source:site_url+"/get_city_auto",
+            search: function( event, ui )
+            {
+             /* if(category==false)
+              {
+                  alert("Select Category First");
+                  event.preventDefault();
+                  return false;
+              }*/
+            },
+            select:function(event,ui)
+            {
+              $("input[name='get_city']").val(ui.item.label);
+              $("input[name='city_id']").val(ui.item.id);
+
+
+
+              /*var type = ui.item.data_type;
+              if(type=='list') {
+                  var get_url=site_url+'/'+city+'/all-options/ct-'+ui.item.cat_id;
+              window.location.href = get_url;
+              }
+              else
+              {
+                var get_url=site_url+'/'+city+'/'+ui.item.slug+'/'+ui.item.business_id;
+                window.location.href = get_url;
+              }*/
+
+
+             },
+            response: function (event, ui)
+            {
+
+            }
+          });
+
+
 
           var category=$("#category_search").val();
           $("#category_search").autocomplete(
@@ -95,10 +137,18 @@
             }
           });
 
+
+
+
+
+
+
         });
 
         $(document.body).on( 'click', '.search_home_buisness', function( event )
         {
+          var city_search=$("#city_search").val();
+          alert(city_search);
           var category_search=$("#category_search").val();
           var category_id=$("#category_id").val();
           if(category_search=='')

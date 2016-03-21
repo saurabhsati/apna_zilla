@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\BusinessListingModel;
 use App\Models\CategoryModel;
+use App\Models\CityModel;
 use Session;
 class HomeController extends Controller
 {
@@ -101,6 +102,51 @@ class HomeController extends Controller
 		    	echo 'fail';
 	    	}
  	}
+    public function get_city_auto(Request $request)
+    {
+        if($request->has('term'))
+        {
+            $search_term='';
+            $search_term = $request->input('term');
+            $arr_obj_city = CityModel::where('is_active','=',1)
+                                            ->where(function ($query) use ($search_term) {
+                                             $query->where("city_title", 'like', "%".$search_term."%")
+                                             ->orwhere("city_slug", 'like', "%".$search_term."%");
+                                             })->get();
+            $arr_list_city = array();
+            if($arr_obj_city)
+            {
+                $arr_list_city = $arr_obj_city->toArray();
+
+                $arr_final_city_list = array();
+
+                if(sizeof($arr_list_city)>0)
+                {
+                    foreach ($arr_list_city as $key => $list)
+                    {
+                        $arr_final_city_list[$key]['id'] = $list['id'];
+                        $arr_final_city_list[$key]['label'] = $list['city_title'];
+                    }
+
+                }
+
+            }
+             if(sizeof($arr_final_city_list)>0)
+            {
+                 return response()->json($arr_final_city_list);
+            }
+            else
+            {
+                return response()->json(array());
+            }
+
+        }
+        else
+        {
+           return response()->json(array());
+        }
+
+    }
  	public function get_category_auto(Request $request)
  	{
  		if($request->has('term'))
