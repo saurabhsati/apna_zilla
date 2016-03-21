@@ -95,7 +95,7 @@ class ListingController extends Controller
                                         'name' => $arr_data['name'],
                                         'message'=> $arr_data['message'],
                                         'business_id'=> $arr_data['business_id'],
-                                        'mobile_number'=> $arr_data['mobile_no'],
+                                        'mobile_number'=> $arr_data['mobile_number'],
                                         'email' => $arr_data['email']]);
 
 
