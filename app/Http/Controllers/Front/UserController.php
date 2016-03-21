@@ -119,6 +119,7 @@ class UserController extends Controller
 
     public function store_personal_details(Request $request)
     {
+     
         $arr_rules = array();
         $arr_rules['first_name'] = "required";
         $arr_rules['last_name'] = "required";
@@ -136,7 +137,10 @@ class UserController extends Controller
         $first_name       = $request->input('first_name');
         $middle_name       = $request->input('middle_name');
         $last_name       = $request->input('last_name');
-        $d_o_b       = $request->input('d_o_b');
+        $dd             = $request->input('dd');
+        $mm             = $request->input('mm');
+        $yy           = $request->input('yy');
+
         $marital_status       = $request->input('marital_status');
         $city       = $request->input('city');
         $area       = $request->input('area');
@@ -193,7 +197,9 @@ class UserController extends Controller
             'first_name' => $first_name,
             'middle_name' => $middle_name,
             'last_name' => $last_name,
-            'd_o_b' => $d_o_b,
+            'dd' => $dd,
+            'mm' => $mm,
+            'yy' => $yy,
             'marital_status' => $marital_status,
             'city' => $city,
             'area' => $area,
