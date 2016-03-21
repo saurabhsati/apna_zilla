@@ -105,10 +105,17 @@ class HomeController extends Controller
  	{
  		if($request->has('term'))
         {
+            $search_term='';
             $search_term = $request->input('term');
-            $arr_obj_list = CategoryModel::where('title','like',"%".$search_term."%")
-                                                ->orWhere('cat_desc','like',"%".$search_term."%")
-                                                ->orWhere('cat_meta_description','like',"%".$search_term."%")
+            $arr_obj_list = CategoryModel::where('parent','!=',0)
+                                            ->where(function ($query) use ($search_term) {
+                                             $query->where("title", 'like', "%".$search_term."%")
+                                             ->orwhere("cat_desc", 'like', "%".$search_term."%")
+                                             ->orwhere("cat_meta_description", 'like', "%".$search_term."%");
+                                             })->get();
+
+            $arr_obj_list_business = BusinessListingModel::where('business_name','like',"%".$search_term."%")
+                                                ->orWhere('keywords','like',"%".$search_term."%")
                                                 ->get();
 
             $arr_list = array();
@@ -122,22 +129,49 @@ class HomeController extends Controller
                 {
                     foreach ($arr_list as $key => $list)
                     {
-                    	//$arr_final_list[$key]['value'] = $list['cat_id'];
-                        $arr_final_list[$key]['id'] = $list['cat_id'];
+                        $arr_final_list[$key]['cat_id'] = $list['cat_id'];
                         $arr_final_list[$key]['label'] = $list['title'];
+                        $arr_final_list[$key]['data_type'] = 'list';
                     }
 
-                    return response()->json($arr_final_list);
                 }
-                else
+
+            }
+
+            $ckey = count($arr_final_list);
+
+            if($arr_obj_list_business)
+            {
+                $arr_business = $arr_obj_list_business->toArray();
+                $arr_final_business = array();
+
+                if(sizeof($arr_business)>0)
                 {
-                   return response()->json(array());
+                    foreach ($arr_business as $key => $business)
+                    {
+
+                        $slug_business=str_slug($business['business_name']);
+                        $slug_area=str_slug($business['area']);
+
+                        $arr_final_list[$ckey]['business_id'] = base64_encode($business['id']);
+                        $arr_final_list[$ckey]['label'] = $business['business_name'];
+                        $arr_final_list[$ckey]['slug']=$slug_business.'<near>'.$slug_area;
+                        $arr_final_list[$ckey]['data_type'] = 'detail';
+                        $ckey++;
+                    }
                 }
+
+
+            }
+            if(sizeof($arr_final_list)>0)
+            {
+                 return response()->json($arr_final_list);
             }
             else
             {
-              return response()->json(array());
+                       return response()->json(array());
             }
+
         }
         else
         {
