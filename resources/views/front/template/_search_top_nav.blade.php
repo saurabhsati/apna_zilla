@@ -46,28 +46,35 @@
         var csrf_token = "{{ csrf_token() }}";
        $(document).ready(function()
         {
-            var category=$("#category_search").val();
+          var category=$("#category_search").val();
           $("#category_search").autocomplete(
           {
             minLength:3,
             source:site_url+"/get_category_auto",
             search: function( event, ui )
             {
-              if(category==false)
+             /* if(category==false)
               {
                   alert("Select Category First");
                   event.preventDefault();
                   return false;
-              }
+              }*/
             },
             select:function(event,ui)
             {
               $("input[name='category_search']").val(ui.item.label);
-              $("input[name='category_id']").val(ui.item.id);
+              $("input[name='category_id']").val(ui.item.cat_id);
 
-              var get_url=site_url+'/'+city+'/all-options/ct-'+ui.item.id;
+              var type = ui.item.data_type;
+              if(type=='list') {
+                  var get_url=site_url+'/'+city+'/all-options/ct-'+ui.item.cat_id;
               window.location.href = get_url;
-
+              }
+              else
+              {
+                var get_url=site_url+'/'+city+'/'+ui.item.slug+'/'+ui.item.business_id;
+                window.location.href = get_url;
+              }
              },
             response: function (event, ui)
             {
@@ -77,9 +84,10 @@
 
         });
 
-        $(document.body).on( 'click', '.search_home_buisness', function( event )
+        $(document.body).on( 'click', '.search_buisness', function( event )
         {
           var category_search=$("#category_search").val();
+          var category_id=$("#category_id").val();
           if(category_search=='')
           {
               alert("Select Category First");

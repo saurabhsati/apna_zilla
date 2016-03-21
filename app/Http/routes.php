@@ -11,79 +11,6 @@
 |
 */
 
-
-Route::group(['prefix' => '/','middleware'=>['web']], function()
-{
-	Route::get('/','Front\HomeController@index');
-	Route::post('/locate_location','Front\HomeController@locate_location');
-	Route::get('/get_category_auto','Front\HomeController@get_category_auto');
-
-
-	/*--------------------------Front-login-section-------------------------------*/
-
-	Route::any('/facebook/register','Front\AuthController@register_via_facebook');
-	Route::any('/google_plus/register','Front\AuthController@register_via_google_plus');
-
-	/*---------------------------------End----------------------------------------*/
-
-	Route::group(array('prefix' => '/page'), function()
-	{
-		Route::get('aboutus',							 	 ['as' => 'about_us' 		,'uses' => 'Front\CMSController@aboutus']);
-		Route::get('{slug}',							 ['as' => 'static_page' 		,'uses' => 'Front\CMSController@page']);
-	});
-
-	Route::get('contact_us','Front\ContactUsController@index');
-
-
-	Route::group(array('prefix' => '/front_users'), function()
-	{
-		Route::any('store',								['as' => 'front_users_store'    		  		    ,'uses' =>'Front\UserController@store']);
-		Route::post('process_login',					['as' => 'front_users_process_login'        		,'uses' =>'Front\AuthController@process_login']);
-		Route::get('profile',							['as' => 'front_users_profile'        				,'uses' =>'Front\UserController@profile']);
-		Route::post('store_personal_details',			['as' => 'front_users_store_personal_details'       ,'uses' =>'Front\UserController@store_personal_details']);
-
-		Route::get('address',							['as' => 'front_users_address'        				,'uses' =>'Front\UserController@address']);
-		Route::post('store_address_details',			['as' => 'front_users_store_address_details'        ,'uses' =>'Front\UserController@store_address_details']);
-
-		Route::get('my_business',						['as' => 'front_users_business'        				,'uses' =>'Front\UserController@my_business']);
-	    Route::get('edit_business/{enc_id}',		    ['as' => 'business_edit' 	        				,'uses' =>'Front\UserController@edit_business']);
-		Route::post('update_business_details/{enc_id}',	['as' => 'front_users_store_business_details'       ,'uses' =>'Front\UserController@update_business_details']);
-
-		Route::get('logout',							['as' => 'front_users_logout'     					,'uses' =>'Front\AuthController@logout']);
-		Route::get('change_password',				  	['as' => 'front_users_change_password'              ,'uses' =>'Front\AuthController@change_password']);
-		Route::post('update_password',				  	['as' => 'front_users_update_password'				,'uses' =>'Front\AuthController@update_password']);
-
-	});
-
-	Route::get('/search','Front\CategorySearchController@search_location');
-
-	Route::group(array('prefix' => '/{city}'), function ()
-	{
-		Route::get('category-{cat_slug}/{cat_id}','Front\CategorySearchController@index');
-		Route::get('all-options/ct-{cat_id}','Front\CategorySearchController@get_business');
-		Route::get('{business_area}/{cat_id}','Front\ListingController@list_details');
-
-	});
-
-	Route::post('forgot_password','Front\PasswordController@postEmail');
-	Route::get('password_reset/{code}','Front\PasswordController@getReset');
-	Route::post('process_reset_password','Front\PasswordController@postReset');
-
-	Route::group(array('prefix' => '/listing'), function()
-	{
-		Route::get('/',							 	 	 ['as' => 'listing' 	        	,'uses' => 'Front\ListingController@index']);
-		Route::get('details/{enc_id}',					 ['as' => 'list_details' 	        ,'uses' => 'Front\ListingController@list_details']);
-		Route::post('store_reviews/{enc_id}',			 ['as' => 'front_store_reviews'     ,'uses' => 'Front\ListingController@store_reviews']);
-  	    Route::get('share/{enc_id}',					 ['as' => 'business_share' 	        ,'uses' => 'Front\ListingController@share_business']);
-  	    Route::get('share_sms_email/{enc_id}',			 ['as' => 'business_sms_email' 	    ,'uses' => 'Front\ListingController@share_sms_email']);
-
-	});
-
-});
-
-
-
-
 /* Admin Routes */
 Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 	{
@@ -472,6 +399,8 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 {
 	Route::get('/','Front\HomeController@index');
 	Route::post('/locate_location','Front\HomeController@locate_location');
+	Route::get('/get_category_auto','Front\HomeController@get_category_auto');
+	Route::get('/get_city_auto','Front\HomeController@get_city_auto');
 
 	/*--------------------------Front-login-section-------------------------------*/
 
@@ -520,6 +449,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::get('{business_area}/{cat_id}','Front\ListingController@list_details');
 
 	});
+
 
 	Route::post('forgot_password','Front\PasswordController@postEmail');
 	Route::get('password_reset/{code}','Front\PasswordController@getReset');

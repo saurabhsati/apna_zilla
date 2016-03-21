@@ -285,12 +285,12 @@ class BusinessListingController extends Controller
 
             if($business_time_add)
             {
-                Session::flash('success','Business Created successfully');    
+                Session::flash('success','Business Created successfully');
             }
         	else
             {
-                Session::flash('error','Error Occurred While Creating Business List ');       
-            }    
+                Session::flash('error','Error Occurred While Creating Business List ');
+            }
 
         }
         else
@@ -357,7 +357,7 @@ class BusinessListingController extends Controller
  	}
  	public function update(Request $request,$enc_id)
  	{
-        
+
  		$id	=base64_decode($enc_id);
         $arr_all  = array();
         $arr_all=$request->all();
@@ -438,14 +438,20 @@ class BusinessListingController extends Controller
                 $insert_data = BusinessCategoryModel::create($arr_cat_data);
             }
         }
-         $ser_count = count($business_service);
+          $ser_count = count($business_service);
+         //exit;
         if($ser_count>0){
-            foreach ($business_service as $key => $value)
-            {
+        foreach($business_service as $key =>$value) {
+         if($value!=null)
+         {
+
                 $arr_serv_data['business_id']=$id;
                 $arr_serv_data['name']=$value;
                 $insert_data = BusinessServiceModel::create($arr_serv_data);
-            }
+        }
+
+        }
+
        }
 
         $filename=$request->input('old_image');
@@ -506,7 +512,7 @@ class BusinessListingController extends Controller
          $files = $request->file('business_image');
 
          $file_count = count($files);
-          if($file_count>0){
+        if($file_count>0){
          $uploadcount = 0;
          foreach($files as $file) {
          if($file!=null)
@@ -551,7 +557,7 @@ class BusinessListingController extends Controller
             $business_time_update = BusinessTimeModel::where('business_id',$id)->update($arr_time);
 
             Session::flash('success','Business Updated successfully');
-       
+
         }
         else
         {
