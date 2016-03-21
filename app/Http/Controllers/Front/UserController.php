@@ -119,7 +119,7 @@ class UserController extends Controller
 
     public function store_personal_details(Request $request)
     {
-     
+
         $arr_rules = array();
         $arr_rules['first_name'] = "required";
         $arr_rules['last_name'] = "required";
@@ -165,7 +165,7 @@ class UserController extends Controller
                 
         $user = Sentinel::findById($user_id);
 
-        $profile_pic = $request->input('profile_pic');
+        $profile_pic = "default.jpg";
 
         if ($request->hasFile('profile_pic'))
         {
@@ -214,11 +214,12 @@ class UserController extends Controller
             'extn_office_landline' => $extn_office_landline
         ];
 
+
         $status = Sentinel::update($user, $credentials);
 
         if($status)
         {
-          Session::flash('success','Updated Successfully');
+           Session::flash('success','Updated Successfully');
         }
         else
         {
@@ -227,7 +228,6 @@ class UserController extends Controller
 
        return redirect()->back();
     }
-
 
     public function address()
     {
@@ -352,7 +352,6 @@ class UserController extends Controller
      }
 
     
-
      $obj_city_details = CityModel::where('id','=',$city_id)->get();
      if($obj_city_details)
      {
@@ -387,8 +386,6 @@ class UserController extends Controller
      {
         $country_name = $country['country_name'];         
      }
-
-
 
       return view('front.user.edit_business',compact('page_title','arr_business_details','cat_title','city_name','state_name','country_name','buss_id'));
     }

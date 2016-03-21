@@ -123,9 +123,9 @@
                          value="{{ isset($state_name)?$state_name:'' }}" 
                                 class="input_acct"
                                 placeholder="Enter State" readonly="true" />
-                        </div>
-                         </div>
-                    </div>
+                        </div>                                                          
+                         </div>                                                                 
+                    </div>                                                                                                               
 
                      <div class="user_box_sub">
                            <div class="row">
@@ -137,7 +137,8 @@
                                 placeholder="Enter COuntry" readonly="true" />
                         </div>
                          </div>
-                    </div>                                                    
+                    </div> 
+
                    </div>                  
                     <button type="submit" class="yellow1 ui button">Save & Continue</button>
 

@@ -74,11 +74,11 @@ class ListingController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $title       = $request->input('title');
-        $name        = $request->input('name');
-        $review       = $request->input('review');
-        $mobile_no    = $request->input('mobile_no');
-        $email        = $request->input('email');
+        $title       =  $request->input('title');
+        $name        =  $request->input('name');
+        $review      =  $request->input('review');
+        $mobile_no   =  $request->input('mobile_no');
+        $email       =  $request->input('email');
 
         $arr_data = array();
         $arr_data['title'] = $title;
@@ -89,15 +89,13 @@ class ListingController extends Controller
 
         $arr_data['business_id'] = $id;
 
-
-
         $review_info          =  array(['title'=> $arr_data['title'],
                                         'name' => $arr_data['name'],
                                         'message'=> $arr_data['message'],
                                         'business_id'=> $arr_data['business_id'],
                                         'mobile_number'=> $arr_data['mobile_number'],
                                         'email' => $arr_data['email']]);
-
+                                                            
 
         $status = ReviewsModel::create(['title'=> $arr_data['title']]);
 
@@ -109,11 +107,9 @@ class ListingController extends Controller
             $arr_rev['business_id'] = $review['business_id'];
             $arr_rev['mobile_number'] = $review['mobile_number'];
             $arr_rev['email'] = $review['email'];
-
         }
 
        $status = ReviewsModel::create($arr_rev);
-
 
         if($status)
         {
@@ -121,7 +117,7 @@ class ListingController extends Controller
         }
         else
         {
-            Session::flash('error','Problem Occured While Submitting Review ');
+          Session::flash('error','Problem Occured While Submitting Review ');
         }
 
         return redirect()->back();
@@ -129,7 +125,6 @@ class ListingController extends Controller
 
     public function share_business($enc_id)
     {
-
         $id = base64_decode($enc_id);
         $page_title = "Share Business";
 
