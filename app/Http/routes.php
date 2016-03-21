@@ -438,8 +438,9 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 	});
 
-
 	Route::get('/search','Front\CategorySearchController@search_location');
+
+	Route::post('/newsletter','Front\NewsLetterController@index');
 
 	Route::group(array('prefix' => '/{city}'), function ()
 	{

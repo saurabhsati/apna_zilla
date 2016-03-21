@@ -325,11 +325,25 @@
                   Be A Part Of Our Family &amp; Get Everything In Your
                   Email Address
                </div>
+
+
+         <form class="form-horizontal" 
+               id="validation-form" 
+               method="POST"
+               action="{{ url('/newsletter') }}" 
+               enctype="multipart/form-data"
+         >
+
+      {{ csrf_field() }}
+
                <div class="email-textbox">
                   <img src="{{ url('/') }}/assets/front/images/email-image.png" alt="" />
-                  <input type="text" name="Email" placeholder="Enter Your Email Address" />
+                  <input type="text" name="email" placeholder="Enter Your Email Address" />
                   <button><i class="fa fa-paper-plane"></i></button>
                </div>
+
+               </form>
+
             </div>
             <div class="how-it-work-block">
                <div class="category-head how-it">

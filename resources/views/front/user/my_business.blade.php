@@ -9,7 +9,7 @@
      <ol class="breadcrumb">
          <span>You are here:</span>
   <li><a href="#">Home</a></li>
-  <li class="active">{{$cat_title}}</li>
+  <li class="active">{{ $cat_title }}</li>
   
 </ol>
              </div>
@@ -51,8 +51,7 @@
              
              <div class="col-sm-12 col-md-9 col-lg-9">
              <div class="title_head">{{ $cat_title }}</div>
-               
-            
+                        
                 <div class="sorted_by">Sort By :</div>
               <div class="filter_div">
                  <ul>
@@ -60,14 +59,15 @@
                  <li><a href="#" class="active">Most Popular </a></li>
                  <li><a href="#">Alphabetical</a></li>     
                 </ul>  
-             </div>    
+             </div>  
+
              <?php
              $no_of_business = count($arr_business_info);
              ?>
 
              @for($business=1;$business<=$no_of_business;$business++)
                         
-                         @foreach($arr_business_info as $business) 
+                @foreach($arr_business_info as $business) 
 
                 <div class="product_list_view">
             <div class="row">
@@ -97,12 +97,11 @@
 
                  @endforeach
 
-                 @endfor
+               @endfor
 
-             </div>
+            </div>
          </div>
        </div>
-       
-      </div>      
+   </div>      
 
 @stop

@@ -30,25 +30,47 @@
                 <div class="box_profile">              
 
 
-             <div class="user_box_sub">
-                       <div class="row">
-                <div class="col-lg-3  label-text">Category Title :</div>
-                <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                     <input type="text" name="category_title" 
-                     value="{{ $cat_title }}" 
-                            class="input_acct"
-                            placeholder="Enter Business Name" />
-                      <div class="error_msg"> </div>
-                    </div>
-                     </div>
+           <div class="user_box_sub">
+                   <div class="row">
+            <div class="col-lg-3  label-text">Category :</div>
+            <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+          
+             @foreach($arr_cat_details as $category)
+
+             <?php
+              $no_of_categories = count($arr_cat_full_details);
+              ?>
+
+
+            <select class="input_acct" 
+                    name="category"
+              >
+
+             <option value="{{ $category['title'] }}">{{ $category['title'] }}</option>
+             
+              @for($cat_name=1;$cat_name<=$no_of_categories;$cat_name++)
+
+                    @foreach($arr_cat_full_details as $cat)
+                      <option value="{{ $cat['title'] }}">{{ $cat['title'] }}</option>
+                    @endforeach
+
+              @endfor
+
+             @endforeach                       
+            
+            </select>
+
                 </div>
+                 </div>
+            </div>
+
 
               <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">Business Name :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="text" name="business_name" 
-                         value="{{ isset($business['business_name'])?$business['business_name']:'' }} " 
+                         value="{{ isset($business['business_name'])?$business['business_name']:'' }}"
                                 class="input_acct"
                                 placeholder="Enter Business Name" />
                           <div class="error_msg"> </div>

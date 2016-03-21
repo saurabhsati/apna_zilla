@@ -249,7 +249,6 @@
                 </div>
             </div>
 
-
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="area">Area<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
