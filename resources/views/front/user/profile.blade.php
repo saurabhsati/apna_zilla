@@ -166,7 +166,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                         <div class="row">
                          <div class="col-sm-3 col-md-3 col-lg-2">
-                           <select class="input_acct" name="d_o_b">
+                           <select class="input_acct" name="dd">
                                  <option value="{{$dd}}">{{$dd}}</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -202,7 +202,7 @@
                         </select>  
                             </div>
                              <div class="col-sm-3 col-md-3 col-lg-3">
-                           <select class="input_acct" name="d_o_b">
+                           <select class="input_acct" name="mm">
                              <option value="{{$mm}}">{{$mm}}</option>
                              <option value="January">January</option>
                                  <option value="February">February</option>
@@ -220,7 +220,7 @@
                         </select>  
                             </div>
                              <div class="col-sm-3 col-md-3 col-lg-3">
-                           <select class="input_acct" name="d_o_b">
+                           <select class="input_acct" name="yy">
                              <option value="{{$yy}}">{{$yy}}</option>
                               <option value="2016">2010</option>
                                <option value="2016">2011</option>
