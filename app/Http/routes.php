@@ -16,7 +16,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 {
 	Route::get('/','Front\HomeController@index');
 	Route::post('/locate_location','Front\HomeController@locate_location');
-	Route::get('/get_category_auto/{category}','Front\HomeController@get_category_auto');
+	Route::get('/get_category_auto','Front\HomeController@get_category_auto');
 
 
 	/*--------------------------Front-login-section-------------------------------*/
@@ -509,7 +509,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 	});
 
-	
+
 	Route::get('/search','Front\CategorySearchController@search_location');
 
 	Route::group(array('prefix' => '/{city}'), function ()
@@ -533,7 +533,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
   	    Route::get('share_sms_email/{enc_id}',			 ['as' => 'business_sms_email' 	    ,'uses' => 'Front\ListingController@share_sms_email']);
 
 	});
-	
+
 
 });
 
