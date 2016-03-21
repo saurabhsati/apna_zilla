@@ -91,15 +91,15 @@ class ListingController extends Controller
 
 
 
-
-        $review_info = array(['title'=> $arr_data['title'],
-                                        'name'=> $arr_data['name'],
+        $review_info          =  array(['title'=> $arr_data['title'],
+                                        'name' => $arr_data['name'],
                                         'message'=> $arr_data['message'],
                                         'business_id'=> $arr_data['business_id'],
-                                        'mobile_number'=> $arr_data['mobile_number'],
-                                        'email'=> $arr_data['email']
+                                        'mobile_number'=> $arr_data['mobile_no'],
+                                        'email' => $arr_data['email']]);
 
-                                    ]);
+
+        $status = ReviewsModel::create(['title'=> $arr_data['title']]);
 
         foreach ($review_info as $review)
         {
@@ -111,8 +111,9 @@ class ListingController extends Controller
             $arr_rev['email'] = $review['email'];
 
         }
-      
+
        $status = ReviewsModel::create($arr_rev);
+
 
         if($status)
         {
