@@ -33,10 +33,10 @@ class UserController extends Controller
  	public function store(Request $request)
     {    
         $arr_rules = array();
-        $arr_rules['first_name'] = "required";
-        $arr_rules['last_name'] = "required";
-        $arr_rules['email'] = "required|email";
-        $arr_rules['password'] = "required|min:6|confirmed";
+        $arr_rules['first_name']   =   "required";
+        $arr_rules['last_name']    =   "required";
+        $arr_rules['email']        =   "required|email";
+        $arr_rules['password']     =   "required|min:6|confirmed";
         
         $validator = Validator::make($request->all(),$arr_rules);
 
@@ -45,10 +45,10 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
         
-        $first_name       = $request->input('first_name');
-        $last_name       = $request->input('last_name');
-        $email          = $request->input('email');
-        $password      = $request->input('password');
+        $first_name     =  $request->input('first_name');
+        $last_name      =  $request->input('last_name');
+        $email          =  $request->input('email');
+        $password       =  $request->input('password');
 
         /* Duplication Check*/
         $user = Sentinel::createModel();
@@ -61,9 +61,9 @@ class UserController extends Controller
 
          $status = Sentinel::registerAndActivate([
             'first_name' => $first_name,
-            'last_name' => $last_name,
-            'email' => $email,
-            'password' => $password,
+            'last_name'  => $last_name,
+            'email'      => $email,
+            'password'   => $password,
             
            ]);
 
@@ -102,7 +102,7 @@ class UserController extends Controller
             $arr_user_info = $obj_user_info->toArray();
         }
 
-        foreach ($arr_user_info as $users) 
+        foreach ($arr_user_info as $users)
         {
              Session::put('user_mail', $users['email']);
              Session::put('user_first_name', $users['first_name']);
@@ -111,7 +111,6 @@ class UserController extends Controller
         }
 
          $profile_pic_public_path = $this->profile_pic_public_path;
-
 
         return view('front.user.profile',compact('arr_user_info','profile_pic_public_path'));
     }
@@ -133,26 +132,26 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $title             = $request->input('title');
-        $first_name       = $request->input('first_name');
-        $middle_name       = $request->input('middle_name');
-        $last_name       = $request->input('last_name');
-        $dd             = $request->input('dd');
-        $mm             = $request->input('mm');
-        $yy           = $request->input('yy');
+        $title             =    $request->input('title');
+        $first_name        =    $request->input('first_name');
+        $middle_name       =    $request->input('middle_name');
+        $last_name         =    $request->input('last_name');
+        $dd                =    $request->input('dd');
+        $mm                =    $request->input('mm');
+        $yy                =    $request->input('yy');
 
-        $marital_status       = $request->input('marital_status');
-        $city       = $request->input('city');
-        $area       = $request->input('area');
-        $pincode       = $request->input('pincode');
-        $occupation       = $request->input('occupation');
-        $email       = $request->input('email');
-        $mobile_no       = $request->input('mobile_no');
-        $home_landline       = $request->input('home_landline');
-        $std_home_landline  = $request->input('std_home_landline');
-        $office_landline       = $request->input('office_landline');
-        $std_office_landline    = $request->input('std_office_landline');
-        $extn_office_landline    = $request->input('extn_office_landline');
+        $marital_status           =   $request->input('marital_status');
+        $city                     =   $request->input('city');
+        $area                     =   $request->input('area');
+        $pincode                  =   $request->input('pincode');
+        $occupation               =   $request->input('occupation');
+        $email                    =   $request->input('email');
+        $mobile_no                =   $request->input('mobile_no');
+        $home_landline            =   $request->input('home_landline');
+        $std_home_landline        =   $request->input('std_home_landline');
+        $office_landline          =   $request->input('office_landline');
+        $std_office_landline      =   $request->input('std_office_landline');
+        $extn_office_landline     =   $request->input('extn_office_landline');
 
         $obj_user_info = UserModel::where('email','=',$email)->get();
 
@@ -192,26 +191,26 @@ class UserController extends Controller
         }
 
         $credentials = [
-            'profile_pic' => $profile_pic,
-            'title' => $title,
-            'first_name' => $first_name,
-            'middle_name' => $middle_name,
-            'last_name' => $last_name,
-            'dd' => $dd,
-            'mm' => $mm,
-            'yy' => $yy,
-            'marital_status' => $marital_status,
-            'city' => $city,
-            'area' => $area,
-            'pincode' => $pincode,
-            'occupation' => $occupation,
-            'email' => $email,
-            'mobile_no' => $mobile_no,
-            'home_landline' => $home_landline,
-            'std_home_landline' =>$std_home_landline,
-            'office_landline' => $office_landline,
-            'std_office_landline' => $std_office_landline,
-            'extn_office_landline' => $extn_office_landline
+            'profile_pic'       =>    $profile_pic,
+            'title'             =>    $title,
+            'first_name'        =>    $first_name,
+            'middle_name'       =>    $middle_name,
+            'last_name'         =>    $last_name,
+            'dd'                =>    $dd,
+            'mm'                =>    $mm,
+            'yy'                =>    $yy,
+            'marital_status'    =>    $marital_status,
+            'city'              =>    $city,
+            'area'              =>    $area,
+            'pincode'           =>    $pincode,
+            'occupation'        =>    $occupation,
+            'email'             =>    $email,
+            'mobile_no'         =>    $mobile_no,
+            'home_landline'     =>    $home_landline,
+            'std_home_landline' =>    $std_home_landline,
+            'office_landline'       => $office_landline,
+            'std_office_landline'   => $std_office_landline,
+            'extn_office_landline'  => $extn_office_landline
         ];
 
 
@@ -297,21 +296,22 @@ class UserController extends Controller
             $arr_business_info = $obj_business_info->toArray();
         }
 
-      foreach ($arr_business_info as $business) 
-      {
-          $cat_id = $business['business_cat'];
-      }
+        foreach ($arr_business_info as $business) 
+        {
+            $cat_id = $business['business_cat'];
+        }
      
-     $obj_cat_details = CategoryModel::where('cat_id','=',$cat_id)->get();
-     if($obj_cat_details)
-     {
-        $arr_cat_details = $obj_cat_details->toArray();
-     }
+       $obj_cat_details = CategoryModel::where('cat_id','=',$cat_id)->get();
 
-     foreach ($arr_cat_details as $category) 
-     {
-         $cat_title = $category['title'];
-     }
+       if($obj_cat_details)
+       {
+          $arr_cat_details = $obj_cat_details->toArray();
+       }
+
+       foreach ($arr_cat_details as $category) 
+       {
+           $cat_title = $category['title'];
+       }
         
         return view('front.user.my_business',compact('arr_business_info','cat_title'));
     }
@@ -351,6 +351,10 @@ class UserController extends Controller
          $cat_title = $category['title'];
      }
 
+     $obj_cat_full_details = CategoryModel::get();
+
+     $arr_cat_full_details = $obj_cat_full_details->toArray();
+
     
      $obj_city_details = CityModel::where('id','=',$city_id)->get();
      if($obj_city_details)
@@ -382,30 +386,31 @@ class UserController extends Controller
         $arr_country_details = $obj_country_details->toArray();
      }
 
-     foreach ($arr_country_details as $country) 
-     {
-        $country_name = $country['country_name'];         
-     }
+     foreach ($arr_country_details as $country)                                                                                                                                                                                                                                        
+     {                                                                                                                                                                                     
+        $country_name = $country['country_name'];                                                                                                                                                              
+     }                                                                                                                                                                                                                                            
 
-      return view('front.user.edit_business',compact('page_title','arr_business_details','cat_title','city_name','state_name','country_name','buss_id'));
-    }
+     
+      return view('front.user.edit_business',compact('page_title','arr_business_details','arr_cat_details','arr_cat_full_details','cat_title','city_name','state_name','country_name','buss_id'));
+    }                                                                                                                             
 
     public function update_business_details(Request $request,$enc_id)
     {
-     
         $business_id = base64_decode($enc_id);
 
         $arr_data = array();
-        $arr_data['business_name'] = $request->input('business_name');
-        $arr_data['building'] = $request->input('building');
-        $arr_data['landmark'] = $request->input('landmark');
-        $arr_data['area'] = $request->input('area');
-        
-    /* $arr_data['city'] = $request->input('city');
-        $arr_data['pincode'] = $request->input('pincode');
-        $arr_data['state'] = $request->input('state');
-        $arr_data['country'] = $request->input('country');
-    */
+        $arr_data['business_name'] =  $request->input('business_name');
+        $arr_data['building']      =  $request->input('building');
+        $arr_data['landmark']      =  $request->input('landmark');
+        $arr_data['area']          =  $request->input('area');
+        $arr_data['business_cat']      =  $request->input('category');
+                                                                              
+        /* $arr_data['city'] = $request->input('city');
+            $arr_data['pincode'] = $request->input('pincode');
+            $arr_data['state'] = $request->input('state');
+            $arr_data['country'] = $request->input('country');
+        */
         $business_update = BusinessListingModel::where('id','=',$business_id)->update($arr_data);
 
         if($business_update)

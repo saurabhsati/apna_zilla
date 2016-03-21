@@ -307,7 +307,7 @@ class NewsLetterController extends Controller
         if(NewsLetterModel::where('email_address',$arr_data['email_address'])->get()->count()>0)
         {
             Session::flash('error','Record with this Email Already Exists');
-            return redirect('web_admin/cuisines/create');
+            return redirect()->back();
         }
        
         $status = NewsLetterModel::create(['name'=>$arr_data['name'],
