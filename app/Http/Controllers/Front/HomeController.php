@@ -101,7 +101,7 @@ class HomeController extends Controller
 		    	echo 'fail';
 	    	}
  	}
- 	public function get_category_auto(Request $request,$category)
+ 	public function get_category_auto(Request $request)
  	{
  		if($request->has('term'))
         {
@@ -125,8 +125,6 @@ class HomeController extends Controller
                     	//$arr_final_list[$key]['value'] = $list['cat_id'];
                         $arr_final_list[$key]['id'] = $list['cat_id'];
                         $arr_final_list[$key]['label'] = $list['title'];
-
-
                     }
 
                     return response()->json($arr_final_list);

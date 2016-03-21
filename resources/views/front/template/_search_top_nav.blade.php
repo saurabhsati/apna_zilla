@@ -44,39 +44,53 @@
         var site_url="{{url('/')}}";
         var city="{{Session::get('city') }}";
         var csrf_token = "{{ csrf_token() }}";
-        $(function(){
-          var category=$( "#category_search").val();
-          $( "#category_search").autocomplete({
-          minLength:3,
-          source:site_url+"/get_category_auto/"+category,
-          search: function( event, ui )
+       $(document).ready(function()
+        {
+            var category=$("#category_search").val();
+          $("#category_search").autocomplete(
           {
-            if(category==false)
+            minLength:3,
+            source:site_url+"/get_category_auto",
+            search: function( event, ui )
             {
-                alert("Select Category First");
-                event.preventDefault();
-                return false;
+              if(category==false)
+              {
+                  alert("Select Category First");
+                  event.preventDefault();
+                  return false;
+              }
+            },
+            select:function(event,ui)
+            {
+              $("input[name='category_search']").val(ui.item.label);
+              $("input[name='category_id']").val(ui.item.id);
+
+              var get_url=site_url+'/'+city+'/all-options/ct-'+ui.item.id;
+              window.location.href = get_url;
+
+             },
+            response: function (event, ui)
+            {
+
             }
-          },
-          select:function(event,ui)
-          {
-            $("input[name='category_search']").val(ui.item.label);
-            $("input[name='category_id']").val(ui.item.id);
-            //$("input[name='category_search']").val(ui.item.value);
+          });
 
-           },
-          response: function (event, ui)
-          {
-
-          }
-           });
         });
 
-       $( document.body ).on( 'click', '.search_buisness', function( event ) {
-        var category_id=$( "#category_id").val();
-        var get_url=site_url+'/'+city+'/all-options/ct-'+category_id;
-        window.location.href = get_url;
-
+        $(document.body).on( 'click', '.search_home_buisness', function( event )
+        {
+          var category_search=$("#category_search").val();
+          if(category_search=='')
+          {
+              alert("Select Category First");
+              event.preventDefault();
+              return false;
+          }
+          else
+          {
+             var get_url=site_url+'/'+city+'/all-options/ct-'+category_id;
+              window.location.href = get_url;
+          }
         });
       </script>
 <!--search area end here-->
