@@ -53,9 +53,18 @@ class ListingController extends Controller
         {
             $all_category = $obj_category->toArray();
         }
+         if($slug_area!='')
+         {
+             $search_by=ucfirst( preg_replace("/[^a-zA-Z0-9\s<near>]/", "&nbsp;", $slug_area));
+             if($search_by!='')
+              {
+                 Session::put('search_by', $search_by);
+                 Session::put('business_id', $enc_id);
+              }
+         }
 
       //dd($arr_business_details);
-        return view('front.listing.detail',compact('page_title','arr_business_details','arr_business','all_category','city'));
+        return view('front.listing.detail',compact('page_title','arr_business_details','arr_business','all_category','city','search_by'));
     }
 
 
@@ -95,7 +104,7 @@ class ListingController extends Controller
                                         'business_id'=> $arr_data['business_id'],
                                         'mobile_number'=> $arr_data['mobile_number'],
                                         'email' => $arr_data['email']]);
-                                                            
+
 
         $status = ReviewsModel::create(['title'=> $arr_data['title']]);
 

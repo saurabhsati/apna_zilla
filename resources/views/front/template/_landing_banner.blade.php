@@ -73,22 +73,7 @@
             {
               $("input[name='get_city']").val(ui.item.label);
               $("input[name='city_id']").val(ui.item.id);
-
-
-
-              /*var type = ui.item.data_type;
-              if(type=='list') {
-                  var get_url=site_url+'/'+city+'/all-options/ct-'+ui.item.cat_id;
-              window.location.href = get_url;
-              }
-              else
-              {
-                var get_url=site_url+'/'+city+'/'+ui.item.slug+'/'+ui.item.business_id;
-                window.location.href = get_url;
-              }*/
-
-
-             },
+            },
             response: function (event, ui)
             {
 
@@ -115,7 +100,11 @@
             {
               $("input[name='category_search']").val(ui.item.label);
               $("input[name='category_id']").val(ui.item.cat_id);
-
+              var city_search=$("#city_search").val();
+              if(city_search!='')
+              {
+                city=city_search;
+              }
 
 
               var type = ui.item.data_type;
@@ -136,19 +125,15 @@
 
             }
           });
-
-
-
-
-
-
-
-        });
+    });
 
         $(document.body).on( 'click', '.search_home_buisness', function( event )
         {
           var city_search=$("#city_search").val();
-          alert(city_search);
+          if(city_search!='')
+          {
+            city=city_search;
+          }
           var category_search=$("#category_search").val();
           var category_id=$("#category_id").val();
           if(category_search=='')
