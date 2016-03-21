@@ -124,12 +124,14 @@ $(document).ready(function(){
       <script src="{{ url('/') }}/assets/front/js/jquery.touchSwipe.min.js" type="text/javascript"></script>
       <script src="{{ url('/') }}/assets/front/js/touchTouch.jquery.js" type="text/javascript"></script>
       <script type="text/javascript">
-         $(function(){
+      jQuery(document).ready(function($) {
+      //   $(function(){
          // Initialize the gallery
          $('.gallery a.gal').touchTouch();
          });
 
       </script>
+       <script src="{{ url('/') }}/assets/front/js/jquery.validate.min.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
          <!-- Share Location  -->
 
