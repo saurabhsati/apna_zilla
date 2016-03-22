@@ -353,11 +353,38 @@ class UserController extends Controller
          $cat_title = $category['title'];
      }
 
+     //Getting all the details of the Category Table
      $obj_cat_full_details = CategoryModel::get();
+     
+     if($obj_cat_full_details)
+       {
+         $arr_cat_full_details = $obj_cat_full_details->toArray();
+       }
+     //Getting all the details of the City Table
 
-     $arr_cat_full_details = $obj_cat_full_details->toArray();
+     $obj_city_full_details = CityModel::get();
 
-    
+     if($obj_city_full_details)
+      {
+         $arr_city_full_details = $obj_city_full_details->toArray();
+      }
+
+      //Getting all the details of the State Table
+
+     $obj_state_full_details = StateModel::get();
+
+     if($obj_state_full_details)
+     {
+        $arr_state_full_details = $obj_state_full_details->toArray();
+     }
+      //Getting all the details of the Country Table
+     $obj_country_full_details = CountryModel::get();
+
+     if($obj_country_full_details)
+    {
+      $arr_country_full_details = $obj_country_full_details->toArray();
+    }
+      
      $obj_city_details = CityModel::where('id','=',$city_id)->get();
      if($obj_city_details)
      {
@@ -394,7 +421,10 @@ class UserController extends Controller
      }                                                                                                                                                                                                                                            
 
      
-      return view('front.user.edit_business',compact('page_title','arr_business_details','arr_cat_details','arr_cat_full_details','cat_title','city_name','state_name','country_name','buss_id'));
+      return view('front.user.edit_business',
+          compact('page_title','arr_business_details','arr_cat_details',
+                  'arr_cat_full_details','arr_city_full_details','arr_state_full_details','arr_country_full_details',
+                  'cat_title','city_name','state_name','country_name','buss_id'));
     }                                                                                                                             
 
     public function update_business_details(Request $request,$enc_id)
@@ -411,6 +441,7 @@ class UserController extends Controller
 
         $cat_id = $arr_cat_details['cat_id'];
        
+                    //Getting the city id
 
         $city_name      =  $request->input('city');
         $obj_city_details = CityModel::where('city_title','=',$city_name)->first();
@@ -422,8 +453,10 @@ class UserController extends Controller
 
         $city_id = $arr_city_details['id'];
 
-        
+                    //Getting the State id
+
         $state_name      =  $request->input('state');
+
         $obj_state_details = StateModel::where('state_title','=',$state_name)->first();
 
         if($obj_state_details)
@@ -433,6 +466,8 @@ class UserController extends Controller
 
         $state_id = $arr_state_details['id'];
 
+                 //Getting the Country id
+ 
         $country_name      =  $request->input('country');
         $obj_country_details = CountryModel::where('country_name','=',$country_name)->first();
 
@@ -444,7 +479,6 @@ class UserController extends Controller
         $country_id = $arr_country_details['id'];
 
 
-
         $arr_data = array();
         $arr_data['business_name'] =  $request->input('business_name');
         $arr_data['building']      =  $request->input('building');
@@ -453,10 +487,7 @@ class UserController extends Controller
         $arr_data['business_cat']  =  $cat_id;
         $arr_data['city']           =  $city_id;
         $arr_data['state']           =  $state_id;
-       $arr_data['country']           =  $country_id;
-
-
-
+        $arr_data['country']           =  $country_id;
 
                                                                               
         /* $arr_data['city'] = $request->input('city');

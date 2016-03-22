@@ -26,9 +26,8 @@
       @foreach($arr_business_details as $business)
      
 
-                 <div class="col-sm-9 col-md-9 col-lg-9">
-                <div class="box_profile">              
-
+           <div class="col-sm-9 col-md-9 col-lg-9">
+          <div class="box_profile">              
 
            <div class="user_box_sub">
                    <div class="row">
@@ -39,21 +38,26 @@
 
              <?php
               $no_of_categories = count($arr_cat_full_details);
-              ?>
 
+              ?>
 
             <select class="input_acct" 
                     name="category"
               >
-
              <option value="{{ $category['title'] }}">{{ $category['title'] }}</option>
              
               @for($cat_name=1;$cat_name<=$no_of_categories;$cat_name++)
 
                     @foreach($arr_cat_full_details as $cat)
                       <option value="{{ $cat['title'] }}">{{ $cat['title'] }}</option>
-                    @endforeach
 
+                      <?php
+                        $no_of_categories--;
+                        if($no_of_categories<1)
+                        
+                       ?>
+                      @endforeach  
+                        
               @endfor
 
              @endforeach                       
@@ -114,57 +118,121 @@
                          </div>
                     </div>
 
-                     <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-3  label-text">City:</div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="city" 
-                         value="{{ isset($city_name)?$city_name:'' }}" 
-                                class="input_acct"
-                                placeholder="Enter City's Name" readonly="true" />
-                        </div>
-                         </div>
-                    </div>
+           <div class="user_box_sub">
+                   <div class="row">
+            <div class="col-lg-3  label-text">City :</div>
+            <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+          
+           <!--   @foreach($arr_cat_details as $category) -->
 
-                    <!--  <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-3  label-text">Pincode:</div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="pincode" 
-                                class="input_acct"
-                                placeholder="Enter Pincode" />
-                        </div>
-                         </div>
-                    </div> -->
+             <?php
+              $no_of_cities = count($arr_city_full_details);
+              ?>
 
-                     <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-3  label-text">State:</div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="state" 
-                         value="{{ isset($state_name)?$state_name:'' }}" 
-                                class="input_acct"
-                                placeholder="Enter State" readonly="true" />
-                        </div>                                                          
-                         </div>                                                                 
-                    </div>                                                                                                               
+            <select class="input_acct" 
+                    name="city"
+              >
+            <option value="{{ $city_name }}">{{ $city_name }}</option>
+             
+              @for($city_name=1;$city_name<=$no_of_cities;$city_name++)
 
-                     <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-3  label-text">Country:</div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="country" 
-                         value="{{ isset($country_name)?$country_name:'' }}" 
-                                class="input_acct"
-                                placeholder="Enter COuntry" readonly="true" />
-                        </div>
-                         </div>
-                    </div> 
+                    @foreach($arr_city_full_details as $city)
+                      <option value="{{ $city['city_title'] }}">{{ $city['city_title'] }}</option>
+
+                      <?php
+                        $no_of_cities--;
+                        if($no_of_cities<1)
+                        
+                       ?>
+                      @endforeach  
+              @endfor
+
+            <!--  @endforeach  -->                      
+            </select>
+
+                </div>
+                 </div>
+            </div>
+
+
+
+            <div class="user_box_sub">
+           <div class="row">
+            <div class="col-lg-3  label-text">State :</div>
+            <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+          
+           <!--   @foreach($arr_cat_details as $category) -->
+
+             <?php
+              $no_of_states = count($arr_state_full_details);
+              ?>
+
+            <select class="input_acct" 
+                    name="state"
+              >
+            <option value="{{ $state_name }}">{{ $state_name }}</option>
+             
+              @for($state_name=1;$state_name<=$no_of_states;$state_name++)
+
+                    @foreach($arr_state_full_details as $state)
+                      <option value="{{ $state['state_title'] }}">{{ $state['state_title'] }}</option>
+
+                      <?php
+                        $no_of_states--;
+                        if($no_of_states<1)
+                        
+                       ?>
+                      @endforeach  
+              @endfor
+
+            <!--  @endforeach  -->                      
+            </select>
+
+                </div>
+                 </div>
+            </div>                                                                                                    
+
+
+            <div class="user_box_sub">
+           <div class="row">
+            <div class="col-lg-3  label-text">Country :</div>
+            <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+          
+           <!--   @foreach($arr_cat_details as $category) -->
+
+             <?php
+              $no_of_countries = count($arr_country_full_details);
+              ?>
+
+            <select class="input_acct" 
+                    name="country"
+              >
+            <option value="{{ $country_name }}">{{ $country_name }}</option>
+             
+              @for($country_name=1;$country_name<=$no_of_countries;$country_name++)
+
+                    @foreach($arr_country_full_details as $country)
+                      <option value="{{ $country['country_name'] }}">{{ $country['country_name'] }}</option>
+
+                      <?php
+                        $no_of_countries--;
+                        if($no_of_countries<1)
+                        
+                       ?>
+                      @endforeach  
+              @endfor
+
+            <!--  @endforeach  -->                      
+            </select>
+
+                </div>
+                 </div>
+            </div>         
 
                    </div>                  
                     <button type="submit" class="yellow1 ui button">Save & Continue</button>
 
-                    @endforeach
+           @endforeach
                     </form>
               
               </div>

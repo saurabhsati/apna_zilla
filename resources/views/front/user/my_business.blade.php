@@ -65,6 +65,7 @@
              $no_of_business = count($arr_business_info);
              ?>
 
+             
              @for($business=1;$business<=$no_of_business;$business++)
                         
                 @foreach($arr_business_info as $business) 
