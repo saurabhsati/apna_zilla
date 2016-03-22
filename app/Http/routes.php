@@ -442,6 +442,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 	Route::group(array('prefix' => '/{city}'), function ()
 	{
+		Route::get('all-categories','Front\AllCategoryController@index');
 		Route::get('category-{cat_slug}/{cat_id}','Front\CategorySearchController@index');
 		Route::get('all-options/ct-{cat_id}','Front\CategorySearchController@get_business');
 		Route::get('{business_area}/{cat_id}','Front\ListingController@list_details');

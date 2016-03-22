@@ -13,8 +13,8 @@
                   <div class="main-menu">
                      <div class="nav">
                         <ul class="nav-list">
-                           <li class="nav-item"><a href="{{ url('/') }}" class=" {{ Request::segment(1)==''? 'act':'' }}">Home</a></li>
-                           <li class="nav-item"><a href="#">Categories</a></li>
+                          <!--  <li class="nav-item"><a href="{{ url('/') }}" class=" {{ Request::segment(1)==''? 'act':'' }}">Home</a></li> -->
+                           <li class="nav-item"><a href="{{ url('/') }}/@if(Session::has('city')){{Session::get('city')}}@endif/all-categories">Categories</a></li>
                            <!-- <li class="nav-item">
                               <a href="{{ url('/') }}/listing" class=" {{ Request::segment(1)=='listing'? 'act':'' }}">Listing</a>
 
