@@ -9,4 +9,10 @@ class ContactEnquiryModel extends Model
 {
 	use SoftDeletes;
     protected $table = 'contact_us';
+
+    protected $fillable = ['full_name',
+    					   'email_address',
+    					   'mobile_no',
+    					   'message'
+    					  ];
 }

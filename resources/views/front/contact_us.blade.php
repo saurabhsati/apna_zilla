@@ -19,7 +19,7 @@
     <div class="col-sm-12 col-md-12 col-lg-12">
      <ol class="breadcrumb">
        <span>You are here :</span>
-       <li><a href="#">Home</a></li>
+       <li><a href="{{url('/')}}">Home</a></li>
        <li class="active">Contact us</li>
      </ol>
    </div>
@@ -29,16 +29,26 @@
 
 <div class="container">
  <div class="row">
+
+  <form class="form-horizontal" 
+                           id="validation-form" 
+                           method="POST"
+                           action="{{ url('contact_us/store') }}" 
+                           enctype="multipart/form-data"
+                           >
+
+      {{ csrf_field() }}
+
    <div class="col-sm-12 col-md-12 col-lg-12">
      <div class="row">
        <div class="col-sm-6 col-md-6 col-lg-6">
          <div class="box_contact">
            <div class="gren_bor_title">GET IN TOUCH</div>
            <div class="bor_grn">&nbsp;</div>
-           <div class="user_box"><input class="input_acct" type="text" placeholder="Name"><div class="error_msg">please enter correct</div></div>
-           <div class="user_box"><input class="input_acct" type="text" placeholder="Mobile No"><div class="error_msg">please enter correct</div></div>
-           <div class="user_box"><input class="input_acct" type="text" placeholder="Email"><div class="error_msg">please enter correct</div></div>
-           <div class="user_box">  <textarea class="textarea_box" placeholder="Message" type=""></textarea><div class="error_msg">please enter correct</div></div>
+           <div class="user_box"><input class="input_acct" type="text" name="name" placeholder="Name"><div class="error_msg"></div></div>
+           <div class="user_box"><input class="input_acct" type="text" name="mobile_no" placeholder="Mobile No"><div class="error_msg"></div></div>
+           <div class="user_box"><input class="input_acct" type="text" name="email" placeholder="Email"><div class="error_msg"></div></div>
+           <div class="user_box">  <textarea class="textarea_box" name="message" placeholder="Message" type=""></textarea><div class="error_msg"></div></div>
            <br/>
            <button class="pull-left btn btn-post">Submit now</button>
            <div class="clr"></div>
@@ -93,6 +103,9 @@
    <div class="map"> <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3749.453253030988!2d73.80146181487628!3d19.989482927817193!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bddeae4e0245423%3A0xeb6a128eb0f552ae!2sWebwing+Technologies!5e0!3m2!1sen!2sin!4v1455886533191" width="100%" height="403" frameborder="0" style="border:0" allowfullscreen></iframe>
    </div>
  </div>
+
+ </form>
+
 </div>
 </div>
 </div>

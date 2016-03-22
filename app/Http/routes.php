@@ -411,12 +411,16 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 	Route::group(array('prefix' => '/page'), function()
 	{
-		Route::get('aboutus',							 	 ['as' => 'about_us' 		,'uses' => 'Front\CMSController@aboutus']);
+		Route::get('aboutus',							 ['as' => 'about_us' 		    ,'uses' => 'Front\CMSController@aboutus']);
 		Route::get('{slug}',							 ['as' => 'static_page' 		,'uses' => 'Front\CMSController@page']);
 	});
 
-	Route::get('contact_us','Front\ContactUsController@index');
-
+	Route::group(array('prefix' => '/contact_us' ), function()
+	{
+		Route::get('/',									 ['as' => 'contact_us_form'      ,'uses' => 'Front\ContactUsController@index']);
+		Route::post('store',							 ['as' => 'contact_us_store'     ,'uses' => 'Front\ContactUsController@store']);
+	
+	});
 
 	Route::group(array('prefix' => '/front_users'), function()
 	{
