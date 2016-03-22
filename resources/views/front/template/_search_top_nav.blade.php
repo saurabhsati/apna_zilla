@@ -31,6 +31,11 @@
                                     <?php
                                     }
                                    }
+                                  if($segment2=='all-categories'){
+                                    ?>
+                                     value=""
+                                    <?php
+                                     }
                                   if(!empty($segment[0]) || !empty($segment[1]))
                                   {
                                       if($segment[0]=='category'){  ?>
