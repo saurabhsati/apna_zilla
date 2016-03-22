@@ -20,10 +20,9 @@ class HomeController extends Controller
     {
 
     	$page_title	='Home';
-    	$city = Session::get('city');
-        if(!empty($city))
+        if(Session::has('city'))
         {
-        	$current_city=$city;
+        	$current_city=Session::get('city');
         }
         else
         {
@@ -93,8 +92,14 @@ class HomeController extends Controller
 		    $metadata = json_decode($content, true); //json decoder
 		    if(count($metadata['results']) > 0) {
 			    $city = $metadata['results'][0]['address_components']['2']['long_name'];
-
-			    Session::put('city', $city);
+                if(!empty($city))
+                {
+			       Session::put('city', $city);
+                }
+                else
+                {
+                     Session::put('city', 'Mumbai');
+                }
 			    echo 'done';
 			}
 			else

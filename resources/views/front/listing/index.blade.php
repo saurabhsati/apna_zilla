@@ -28,7 +28,6 @@
        <div class="sidebar-brand">Related Categories<span class="spe_mobile"><a href="#"></a></span></div>
        <div class="bor_head">&nbsp;</div>
        <ul class="spe_submobile">
-
         @if(isset($arr_sub_cat) && sizeof($arr_sub_cat)>0)
         @foreach($arr_sub_cat as $category)
         <?php  $current_cat=explode('-',Request::segment(3));
@@ -37,6 +36,8 @@
           <li class="brdr"><a href="{{ url('/') }}/{{$city}}/all-options/ct-{{$category['cat_id']}}">{{ $category['title'] }}</a></li>
           <?php } }?>
           @endforeach
+          @else
+            <li class="brdr"><?php echo "No Records Available"; ?></li>
           @endif
 
         </ul>
