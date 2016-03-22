@@ -8,7 +8,7 @@
                 <div class="col-sm-12 col-md-12 col-lg-12">
      <ol class="breadcrumb">
          <span>You are here:</span>
-  <li><a href="#">Home</a></li>
+  <li><a href="{{ url('/') }}">Home</a></li>
   <li class="active">{{ $cat_title }}</li>
   
 </ol>
@@ -65,7 +65,6 @@
              $no_of_business = count($arr_business_info);
              ?>
 
-             
              @for($business=1;$business<=$no_of_business;$business++)
                         
                 @foreach($arr_business_info as $business) 
@@ -84,10 +83,10 @@
                     {{$business['landmark']}}, {{$business['area']}} <br/> </span></div>
                     <div class="p_details"><a href="#" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>
                     <ul>
-                    <li><a href="#">SMS/Email</a></li> 
+                    <!-- <li><a href="#">SMS/Email</a></li>  -->
                     <li><a href="{{ url('/front_users/edit_business/'.base64_encode($business['id'])) }}" class="active">Edit</a></li>    
-                    <li><a href="#">Own This</a></li>    
-                    <li><a href="#" class="lst">Rate This</a></li>        
+                    <!-- <li><a href="#">Own This</a></li>     -->
+                    <!-- <li><a href="#" class="lst">Rate This</a></li>         -->
                     </ul>
                     </div>
                     </div>

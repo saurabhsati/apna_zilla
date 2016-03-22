@@ -151,12 +151,6 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 		});
 
-		/*-------------Business Reviews Module Start------------*/
-		Route::group(['prefix'=>'reviews'], function(){
-
-
-		});
-
 		/*-------------Business Reviews Module------------*/
 		Route::group(['prefix'=>'reviews'], function (){
 

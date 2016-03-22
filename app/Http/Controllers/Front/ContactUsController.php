@@ -11,6 +11,7 @@ use App\Models\ContactEnquiryModel;
 
 use Validator;
 use Session;
+use Sentinel;
 
 
 class ContactUsController extends Controller
@@ -18,7 +19,15 @@ class ContactUsController extends Controller
     public function index()
     {
     	$page_title='Contact Us';
-    	return view('front.contact_us',compact('page_title'));
+
+        $obj_user_info = Sentinel::check();
+        
+        if($obj_user_info)
+        {
+            $arr_user_info = $obj_user_info->toArray();
+        }
+
+    	return view('front.contact_us',compact('page_title','arr_user_info'));
     }
 
     public function store(Request $request)
