@@ -18,16 +18,35 @@
                                autocomplete="off">
                                <input type="hidden" id="city_id" name="city_id" value=""/>
                               <div class="has-feedback">
+                              <?php
+                              $segment2=Request::segment(2);
+                              $segment=explode('-', $segment2);
+                             ?>
                                <input type="text"  class="search-txt" placeholder="Resturant" id="category_search" name="category_search"
-                                 @if(Request::segment(2)!='all-options')
-                                    @if(Session::has('search_by'))
-                                      value= <?php echo str_ireplace('<near>',' ',Session::get('search_by'));?>
-                                     @endif
-                                  @else
-                                  @if(Session::has('category_serach'))
+                                 <?php
+                                 if($segment2=='all-options'){
+                                  if(Session::has('category_serach')){
+                                    ?>
                                      value="{{Session::get('category_serach')}}"
-                                  @endif
-                                  @endif
+                                    <?php
+                                    }
+                                   }
+                                  if(!empty($segment[0]) || !empty($segment[1]))
+                                  {
+                                      if($segment[0]=='category'){  ?>
+                                      value= {{ucfirst($segment[1])}}
+                                      <?php
+                                       }
+                                      else
+                                      {
+                                        if(Session::has('search_by')){
+                                        ?>
+                                        value="{{str_ireplace('<near>',' ',Session::get('search_by'))}}"
+                                        <?php
+                                         }
+
+                                       }
+                                   } ?>
                                    >
                                   <input type="hidden" id="category_id" name="category_id"
                                   @if(Session::has('category_id'))
@@ -120,9 +139,8 @@
 
         $(document.body).on( 'click', '.search_buisness', function( event )
         {
-           var city_search=$("#city_search").val();
-           alert();
-          var category_search=$("#category_search").val();
+         var city_search=$("#city_search").val();
+         var category_search=$("#category_search").val();
            if(city_search!='')
           {
             city=city_search;
