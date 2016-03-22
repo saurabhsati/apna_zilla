@@ -150,6 +150,8 @@
 
                @if(isset($arr_business_info) && sizeof($arr_business_info)>0)
                   @foreach($arr_business_info as $business)
+
+                
                   <tr>
 
                     <td>
@@ -158,9 +160,7 @@
                              value="{{ base64_encode($business['id']) }}" />
                     </td>
 
-                    <td> {{ $business['business_name'] }} 
-               
-                </td>
+                    <td> {{ $business['business_name'] }}  </td>
 
                   @foreach($arr_user_info as $user)
                 
@@ -168,8 +168,8 @@
 
                 <td> {{$user['email']}} </td>
 
-                <td> 
-                {{$user['mobile_no']}} 
+                <td>
+                {{ $user['mobile_no'] }} 
                 @endforeach
                 </td>
 

@@ -29,6 +29,27 @@
            <div class="col-sm-9 col-md-9 col-lg-9">
           <div class="box_profile">              
 
+                  <div class="col-sm-3 col-md-3 col-lg-3">
+                <div class="profile_box">
+                    <div class="ig_profile" id="dvPreview">  
+
+                    @if($business['main_image']=="default.jpg")
+                      <img src="{{ url('/') }}/uploads/business/main_image/{{ $business['main_image'] }}" width="200" height="200" id="preview_profile_pic"  />
+                    @else
+                      <img src="{{ url('/') }}/uploads/business/main_image/{{ $business['main_image'] }}" width="200" height="200" id="preview_profile_pic"  />
+                    @endif
+                    </div>
+                        <div class="button_shpglst">
+                        <div class="fileUpload or_btn">
+                        <span>Upload Photo</span>
+                        <input id="fileupload" type="file" name="profile_pic" class="upload change_pic" onchange="loadPreviewImage(this)"></div>
+                       <div class="remove_b" onclick="clearPreviewImage()"><a href="#"><i class="fa fa-times"></i> Remove</a></div>                               
+                     <div class="clr"></div>
+                    <div class="line">&nbsp;</div>
+                    </div>                  
+                       </div>
+                      </div>
+
            <div class="user_box_sub">
                    <div class="row">
             <div class="col-lg-3  label-text">Category :</div>
@@ -90,6 +111,18 @@
                          value="{{ isset($business['building'])?$business['building']:'' }}" 
                                 class="input_acct"
                                 placeholder="Enter Building's Name" />
+                        </div>
+                         </div>
+                    </div>
+
+                    <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Street:</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                         <input type="text" name="street" 
+                         value="{{ isset($business['street'])?$business['street']:'' }}" 
+                                class="input_acct"
+                                placeholder="Enter Street's Name" />
                         </div>
                          </div>
                     </div>
@@ -229,6 +262,31 @@
                  </div>
             </div>         
 
+            <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Mobile No:</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                         <input type="text" name="mobile_number" 
+                         value="{{ isset($business['mobile_number'])?$business['mobile_number']:'' }}" 
+                                class="input_acct"
+                                placeholder="Enter Mobile Number" />
+                        </div>
+                         </div>
+                    </div>
+
+                         <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Landline No:</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                         <input type="text" name="landline_number" 
+                         value="{{ isset($business['landline_number'])?$business['landline_number']:'' }}" 
+                                class="input_acct"
+                                placeholder="Enter Landline Number" />
+                        </div>
+                         </div>
+                    </div>
+
+
                    </div>                  
                     <button type="submit" class="yellow1 ui button">Save & Continue</button>
 
@@ -246,5 +304,33 @@
        </div>
        
       </div>
+
+    <script type="text/javascript">
+
+    var site_url = "{{url('/')}}";
+    
+    function loadPreviewImage(ref)
+    {
+        var file = $(ref)[0].files[0];
+
+        var img = document.createElement("img");
+        reader = new FileReader();
+        reader.onload = (function (theImg) {
+            return function (evt) {
+                theImg.src = evt.target.result;
+                $('#preview_profile_pic').attr('src', evt.target.result);
+            };
+        }(img));
+        reader.readAsDataURL(file);
+        $("#removal_handle").show();
+    }
+
+    function clearPreviewImage()
+    {
+        $('#preview_profile_pic').attr('src',site_url+'/images/front/avatar.jpg');
+        $("#removal_handle").hide();
+    }
+    
+</script>
 
 @stop
