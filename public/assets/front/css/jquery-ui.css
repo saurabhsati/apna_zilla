@@ -115,7 +115,10 @@
 .ui-autocomplete {
 	position: absolute;
 	top: 0;
-	left: 0;
+    height: 325px;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
 	cursor: default;
 }
 .ui-button {
@@ -847,6 +850,7 @@ body .ui-tooltip {
 	border: 1px solid #aaaaaa;
 	background: #ffffff url("images/ui-bg_flat_75_ffffff_40x100.png") 50% 50% repeat-x;
 	color: #222222;
+	z-index: 9999;
 }
 .ui-widget-content a {
 	color: #222222;
@@ -1223,3 +1227,6 @@ body .ui-tooltip {
 	filter: Alpha(Opacity=30); /* support: IE8 */
 	border-radius: 8px;
 }
+/*new css for scroll and poup view*/
+
+
