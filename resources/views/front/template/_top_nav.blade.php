@@ -24,7 +24,7 @@
                                  </ul>
 
                            </li> -->
-                           <li class="nav-item"><a href="#">Deals</a></li>
+                           <li class="nav-item"><a href="{{ url('/deals') }}">Deals</a></li>
 
 
                          @if ($user = Sentinel::check())
@@ -40,7 +40,6 @@
                                    <li><a href="#">Friend's Ratings </a></li>
                                    <li><a href="{{ url('/front_users/my_business') }}">My Business </a></li>
                                    <li><a href="{{ url('/front_users/logout') }}">Logout</a></li>
-
                                 </ul>
                              </div>
                              </li>
