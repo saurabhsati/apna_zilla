@@ -386,11 +386,20 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 });
 
 
-
-								/* Front User Routes */
+						/* Front User Routes */
 
 Route::group(['prefix' => '/','middleware'=>['web']], function()
 {
+	Route::group(array('prefix' => '/listing'), function()
+	{
+		Route::get('/',							 	 	 ['as' => 'listing' 	        	,'uses' => 'Front\ListingController@index']);
+		Route::get('details/{enc_id}',					 ['as' => 'list_details' 	        ,'uses' => 'Front\ListingController@list_details']);
+		Route::post('store_reviews/{enc_id}',			 ['as' => 'front_store_reviews'     ,'uses' => 'Front\ListingController@store_reviews']);
+  	    Route::get('share_business/{enc_id}',			 ['as' => 'business_share' 	        ,'uses' => 'Front\ListingController@share_business']);
+  	    Route::get('sms_email/{enc_id}',			     ['as' => 'business_sms_email' 	    ,'uses' => 'Front\ListingController@sms_email']);
+
+	});
+
 	Route::get('/','Front\HomeController@index');
 	Route::post('/locate_location','Front\HomeController@locate_location');
 	Route::get('/get_category_auto','Front\HomeController@get_category_auto');
@@ -438,6 +447,8 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::get('change_password',				  	['as' => 'front_users_change_password'              ,'uses' =>'Front\AuthController@change_password']);
 		Route::post('update_password',				  	['as' => 'front_users_update_password'				,'uses' =>'Front\AuthController@update_password']);
 
+		Route::post('process_login_for_share/{enc_id}', ['as' => 'front_users_process_login_for_share'      ,'uses' =>'Front\AuthController@process_login_for_share']);
+
 	});
 
 
@@ -459,16 +470,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	Route::get('password_reset/{code}','Front\PasswordController@getReset');
 	Route::post('process_reset_password','Front\PasswordController@postReset');
 
-	Route::group(array('prefix' => '/listing'), function()
-	{
-		Route::get('/',							 	 	 ['as' => 'listing' 	        	,'uses' => 'Front\ListingController@index']);
-		Route::get('details/{enc_id}',					 ['as' => 'list_details' 	        ,'uses' => 'Front\ListingController@list_details']);
-		Route::post('store_reviews/{enc_id}',			 ['as' => 'front_store_reviews'     ,'uses' => 'Front\ListingController@store_reviews']);
-  	    Route::get('share_business/{enc_id}',			 ['as' => 'business_share' 	        ,'uses' => 'Front\ListingController@share_business']);
-  	    Route::get('share_sms_email/{enc_id}',			 ['as' => 'business_sms_email' 	    ,'uses' => 'Front\ListingController@share_sms_email']);
-
-	});
-
+	
 
 });
 

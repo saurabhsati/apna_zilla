@@ -36,6 +36,7 @@
 
                          @if ($user = Sentinel::check())
 
+
                           <li class="nav-item">
                         <div class="dropdown">
                                 <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Hi {{session('user_first_name')}} <span class="caret"></span>

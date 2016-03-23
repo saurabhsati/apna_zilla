@@ -7,6 +7,8 @@
 <div class="container">
          <div class="row">
              
+           @if ($user = Sentinel::check())
+
             <div class="col-sm-12 col-md-3 col-lg-3">
                <!-- Categories Start -->
                    
@@ -24,8 +26,11 @@
                </ul>
                <!-- /#Categoriesr End-->
                <div class="clearfix"></div>
-                    </div>
+                </div>
+
             </div>
+
+
              
             <div class="col-sm-12 col-md-9 col-lg-9">
             <div class="my_whit_bg">
@@ -37,7 +42,7 @@
                            method="POST"
                            enctype="multipart/form-data"
                            >
-      {{ csrf_field() }}
+                {{ csrf_field() }}
 
                  <div class="col-sm-9 col-md-9 col-lg-9">
                 <div class="box_profile">              
@@ -61,7 +66,12 @@
               </div>
                </div>
                 </div>
-                          
+
+               @else
+
+      
+      @endif
+     
              </div>
          </div>
        </div>

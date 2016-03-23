@@ -2,6 +2,9 @@
 
 @section('main_section')
 @include('front.template._search_top_nav')
+
+
+
 <div class="gry_container">
       <div class="container">
          <div class="row">
@@ -20,6 +23,7 @@
 
        <div class="container">
          <div class="row">
+
 
          @if(isset($arr_business_details) && sizeof($arr_business_details)>0)
                 <div class="col-sm-12 col-md-9 col-lg-9">
@@ -89,7 +93,6 @@
               ?>
 
 
-
             <div id="map_show" style="display: none;  margin-top: 5px;">
               <div id="location_map" style="height:250px; width: 100%;"></div>
             </div>
@@ -97,10 +100,78 @@
             <input type="hidden" name="lng" id="lng" value="{{$arr_business_details['lng']}}"/>
 
             <div class="icons">
-               <a href="{{ url('/listing/share_business/'.base64_encode($business_id)) }} "> <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/shar.png" alt="share"/>Share</div></a>
+
+            @if($user = Sentinel::check())
+
+               <a href="{{ url('/listing/share_business/'.base64_encode($business_id)) }} ">
+                <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/shar.png" alt="share"/>Share</div></a>
+            @else
+
+      <div id="login_poup" class="modal fade" role="dialog">
+
+      <form class="form-horizontal" 
+                           id="validation-form" 
+                           method="POST"
+                           action="{{ url('/front_users/process_login_for_share/'.base64_encode($business_id)) }}" 
+                           enctype="multipart/form-data"
+                           >
+
+        {{ csrf_field() }}
+
+         <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="login_close close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_poup.png" alt="login logo"/></h4>
+               </div>
+               <div class="modal-body">
+                  <div class="login_box">
+                     <div class="title_login">Login with your email and password</div>
+                     <div class="user_box">
+                        <div class="label_form">Email</div>
+                        <input type="text" name="email" class="input_box" placeholder="enter email address"/>
+                     </div>
+                     <div class="user_box">
+                        <div class="label_form">Password</div>
+                        <input type="password" name="password" class="input_box" placeholder="enter password"/>
+                     </div>
+                     <div class="login_social">
+                        <div class="title_login"> Log in with social accounts</div>
+                        <a href="javascript:void(0);" onclick="FBLogin()">
+                           <img src="{{ url('/') }}/assets/front/images/fb_login.png" alt="facebook login"/>
+                        </a>
+                       <br/><br/>
+                        <a href="javascript:void(0);" onclick="login()">
+                           <img src="{{ url('/') }}/assets/front/images/twitter_login.png" alt="facebook login"/>
+                        </a>
+                     </div>
+                     <div class="clr"></div>
+                  </div>
+               </div>
+               <div class="clr"></div>
+               <div class="modal-footer">
+                  <div class="login_box">
+                     <div class="left_bar">
+                        <a class="forgt" data-toggle="modal" data-target="#forget_pwd">Forget your password?</a><a data-toggle="modal" data-target="#reg_poup" class="sign_up">Sign Up Now</a>
+                     </div>
+                     <button type="submit" class="yellow ui button">Login</button>
+                  </div>
+               </div>
+               <div class="clr"></div>
+            </div>
+         </div>
+         </form>
+      </div>
+      <!--login popup end here-->
+
+            <a data-toggle="modal" data-target="#login_poup"><div class="img_icons"><img src="{{ url('/') }}/assets/front/images/shar.png" alt="share"/>Share</div></a>
+
+            @endif
+
                 <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/write_review.png" alt="write_review">write review</div>
                 <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/your-vote.png" alt="your-vote"/>Your Vote(0.5)</div>
-                <a href="{{ url('/listing/share_sms_email/'.base64_encode($business_id)) }} "> <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/sms-emil.png" alt="write_review"/>Sms/Email</div></a>
+                <a href="{{ url('/listing/sms_email/'.base64_encode($business_id)) }} "> <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/sms-emil.png" alt="write_review"/>Sms/Email</div></a>
                <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>verified</div>
 
             </div>
@@ -599,6 +670,4 @@
 </script>
 
 
-
-
-      @endsection
+  @endsection
