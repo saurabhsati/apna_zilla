@@ -33,6 +33,7 @@
                               <?php
                               $segment2=Request::segment(2);
                               $segment=explode('-', $segment2);
+                              //echo '>>'.$segment[0];
                              ?>
                                <input type="text"  class="search-txt" placeholder="Resturant" id="category_search" name="category_search"
                                  <?php
@@ -48,9 +49,10 @@
                                      value=""
                                     <?php
                                      }
+
                                   if(!empty($segment[0]) || !empty($segment[1]))
                                   {
-                                      if($segment[0]=='category'){  ?>
+                                      if($segment[1]=='category'){  ?>
                                       value= {{ucfirst($segment[1])}}
                                       <?php
                                        }
@@ -58,12 +60,18 @@
                                       {
                                         if(Session::has('search_by')){
                                         ?>
-                                        value="{{str_ireplace('<near>',' ',Session::get('search_by'))}}"
+                                        value="<?php echo str_ireplace('<near>',' ',Session::get('search_by')); ?>"
                                         <?php
                                          }
 
                                        }
                                    } ?>
+                                     @if(!empty($loc))
+                                      value= {{$loc}}
+                                     @endif
+
+
+
                                    >
                                   <input type="hidden" id="category_id" name="category_id"
                                   @if(Session::has('category_id'))
@@ -181,7 +189,8 @@
 
         function setSerchCity(city_id,city_title)
         {
-           var fromData = {city_id:city_id, city_title:city_title,_token:csrf_token};
+          var category_id=$("#category_id").val();
+          var fromData = {city_id:city_id, city_title:city_title,_token:csrf_token};
            $.ajax({
                url: site_url+"/set_city",
                type: 'POST',
@@ -191,7 +200,12 @@
 
                success: function(response)
                {
-
+                 if (response.status == "1") {
+                   var get_url=site_url+'/'+city_title+'/all-options/ct-'+category_id;
+                   window.location.href = get_url;
+                  //window.location.href = location.href;
+                 }
+                 return false;
                }
            });
     }

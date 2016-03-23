@@ -102,11 +102,24 @@
             <h4 class="modal-title">Sort By Location</h4>
           </div>
           <div class="modal-body">
-            <p>Where in {{$city}}</p>
+            <p>Where in  <?php
+             if(Session::has('search_city_title')){
+               echo Session::get('search_city_title');
+               }?>
+
+            </p>
             <div class="row">
               <div class="col-lg-10">
               <input type="text" class="input-searchbx " id="location_search" />
               <input type="hidden" class="input-searchbx " id="business_search_by_location" value="" />
+               <input type="hidden" class="input-searchbx " id="business_search_by_city"
+               @if(Session::has('search_city_title'))
+               value="{{Session::get('search_city_title')}}"
+               @else
+                value="{{Session::get('city')}}"
+               @endif
+                />
+
               @if(isset($sub_category))
                <input type="hidden" class="input-searchbx " id="search_under_category" value="{{str_slug($sub_category[0]['title'])}}" />
                @endif
@@ -290,7 +303,7 @@
                    select:function(event,ui)
                   {
                     $("input[name='location_search']").val(ui.item.label);
-                    $("#business_search_by_location").attr('value',ui.item.label);
+                    $("#business_search_by_location").attr('value',ui.item.loc_slug);
 
                   },
                   response: function (event, ui)
@@ -335,6 +348,15 @@
         {
          var business_search_by_location=$("#business_search_by_location").val();
          var search_under_category=$("#search_under_category").val();
+         var search_under_city=$("#business_search_by_city").val();
+         if(search_under_city!='')
+         {
+          var city=search_under_city;
+         }
+         else
+         {
+           var city="{{Session::get('city')}}";
+         }
          var category_id=$("#category_id").val();
          if(business_search_by_location=='')
           {

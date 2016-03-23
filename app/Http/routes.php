@@ -470,7 +470,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	Route::get('password_reset/{code}','Front\PasswordController@getReset');
 	Route::post('process_reset_password','Front\PasswordController@postReset');
 
-	
+
 
 });
 

@@ -83,6 +83,7 @@ class HomeController extends Controller
  		 $cat_img_path = url('/').config('app.project.img_path.category');
  		return view('front.home',compact('page_title','arr_category','sub_category','category_business','cat_img_path','current_city'));
     }
+    //share location
     public function locate_location(Request $request)
     {
     	 $lat=$request->input('lat');
@@ -284,6 +285,7 @@ class HomeController extends Controller
                     {
                         $arr_final_location_list[$key]['id'] = $list['id'];
                         $arr_final_location_list[$key]['label'] = $list['place_name'];
+                        $arr_final_location_list[$key]['loc_slug'] = str_slug($list['place_name']);
                     }
 
                 }
@@ -309,7 +311,10 @@ class HomeController extends Controller
     public function set_city(Request $request)
     {
             $city_id = $request->input('city_id');
+            $city_title = $request->input('city_title');
+
             Session::put('search_city_id',$city_id);
+            Session::put('search_city_title',$city_title);
             $result['status'] ="1";
             return response()->json($result);
     }
