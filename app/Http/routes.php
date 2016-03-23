@@ -404,6 +404,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	Route::post('/locate_location','Front\HomeController@locate_location');
 	Route::get('/get_category_auto','Front\HomeController@get_category_auto');
 	Route::get('/get_city_auto','Front\HomeController@get_city_auto');
+	Route::get('/get_location_auto','Front\HomeController@get_location_auto');
 
 	/*--------------------------Front-login-section-------------------------------*/
 
@@ -422,7 +423,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	{
 		Route::get('/',									 ['as' => 'contact_us_form'      ,'uses' => 'Front\ContactUsController@index']);
 		Route::post('store',							 ['as' => 'contact_us_store'     ,'uses' => 'Front\ContactUsController@store']);
-	
+
 	});
 
 	Route::group(array('prefix' => '/front_users'), function()
@@ -447,7 +448,6 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 	});
 
-	Route::get('/search','Front\CategorySearchController@search_location');
 
 	Route::post('/newsletter','Front\NewsLetterController@index');
 
@@ -456,7 +456,9 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::get('all-categories','Front\AllCategoryController@index');
 		Route::get('category-{cat_slug}/{cat_id}','Front\CategorySearchController@index');
 		Route::get('all-options/ct-{cat_id}','Front\CategorySearchController@get_business');
+		Route::get('{cat_location}/ct-{cat_id}','Front\CategorySearchController@search_business_by_location');
 		Route::get('{business_area}/{cat_id}','Front\ListingController@list_details');
+
 
 	});
 

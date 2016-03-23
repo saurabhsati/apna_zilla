@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BusinessListingModel;
 use App\Models\CategoryModel;
 use App\Models\CityModel;
+use App\Models\LocationModel;
 use Session;
 class HomeController extends Controller
 {
@@ -229,5 +230,51 @@ class HomeController extends Controller
            return response()->json(array());
         }
  	}
+    public function get_location_auto(Request $request)
+    {
+         if($request->has('term'))
+        {
+            $search_term='';
+            $search_term = $request->input('term');
+             $arr_obj_location = LocationModel::where(function ($query) use ($search_term) {
+                                             $query->where("place_name", 'like', "%".$search_term."%")
+                                             ->orwhere("admin_name1", 'like', "%".$search_term."%")
+                                             ->orwhere("admin_name2", 'like', "%".$search_term."%")
+                                             ->orwhere("admin_name3", 'like', "%".$search_term."%");
+                                             })->get();
+             $arr_list_location = array();
+            if($arr_obj_location)
+            {
+                $arr_list_location = $arr_obj_location->toArray();
+
+                $arr_final_location_list = array();
+
+                if(sizeof($arr_list_location)>0)
+                {
+                    foreach ($arr_list_location as $key => $list)
+                    {
+                        $arr_final_location_list[$key]['id'] = $list['id'];
+                        $arr_final_location_list[$key]['label'] = $list['place_name'];
+                    }
+
+                }
+
+            }
+             if(sizeof($arr_final_location_list)>0)
+            {
+                 return response()->json($arr_final_location_list);
+            }
+            else
+            {
+                return response()->json(array());
+            }
+
+        }
+         else
+        {
+           return response()->json(array());
+        }
+
+    }
 
 }

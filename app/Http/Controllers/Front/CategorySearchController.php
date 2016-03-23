@@ -39,10 +39,11 @@ class CategorySearchController extends Controller
       return view('front.category_search',compact('page_title','arr_sub_category','cat_slug','cat_id','c_city'));
     }
 
-    public function get_business($city,$cat_id)
+    public function get_business($city,$cat_id,Request $request)
     {
      $page_title	='Business List';
 
+     //dd($request->all());
       //echo $city;
 
       // get business listing by city and category id
@@ -119,52 +120,86 @@ class CategorySearchController extends Controller
         //dd($arr_business);
       return view('front.listing.index',compact('page_title','arr_business','arr_sub_cat','parent_category','sub_category','city'));
     }
-    public function search_location(Request $request)
+    public function search_business_by_location($city,$cat_loc,$cat_id,Request $request)
     {
-        $arr=array();
-        $arr=$request->all();
+      $cat_location=explode('-<near>-',$cat_loc);
+      if(!empty($cat_location))
+      {
+        $loc=$cat_location[1];
+      }
+      $page_title ='Search by Location ';
 
-        $city=Session::get('preferred_city');
-        $city_all='';
-
-         if($city!='')
-          {
-              $city_all = '/'.$city;
+      //by city
+      $obj_business_listing_city = CityModel::where('city_title',$city)->get();
+      if($obj_business_listing_city)
+      {
+        $obj_business_listing_city->load(['business_details']);
+        $arr_business_by_city = $obj_business_listing_city->toArray();
+      }
+       $key_business_city=array();
+       if(sizeof($arr_business_by_city)>0)
+        {
+          foreach ($arr_business_by_city[0]['business_details'] as $key => $value) {
+            $key_business_city[$value['id']]=$value['id'];
           }
-          else
-          {
-            $cityall = '/city';
+        }
+
+        //by category
+      $obj_business_listing = BusinessCategoryModel::where('category_id',$cat_id)->get();
+      if($obj_business_listing)
+      {
+        $obj_business_listing->load(['business_by_category','business_rating']);
+        $arr_business_by_category = $obj_business_listing->toArray();
+      }
+      $key_business_cat=array();
+      if(sizeof($arr_business_by_category)>0)
+      {
+          foreach ($arr_business_by_category as $key => $value) {
+            $key_business_cat[$value['business_id']]=$value['business_id'];
           }
-        if($request->has('term'))
-       {
-          $search_location  = $request->input('term');
-          $search_city = $request->input('city_name');
-          $search_category_id = $request->input('category_id');
-          $search_slug  = str_slug($search_location,'-');
-          $search_city !='' ? ($city_all = '/'.$search_city) : ($city = '');
+      }
 
-         $obj_business_listing = CityModel::with(['business_details'])->where('city_title', 'like', "%".$search_location."%")->get();
-         $arr_search  = $obj_business_listing->toArray();
-         $link = '';
-         if(sizeof($arr_search)>0){
-          foreach ($arr_search as $key => $value)
+       if(sizeof($key_business_city)>0 && sizeof($key_business_cat))
+      {
+          $result = array_intersect($key_business_city,$key_business_cat);
+
+          $arr_business = array();
+          if(sizeof($result)>0)
           {
-            foreach ($value['business_details'] as $key => $business)
-              {
-              $link = url('/').$city_all.'/all-options/'.$search_category_id;
+            $obj_business_listing = BusinessListingModel::whereIn('id',$result)
+                                            ->where(function ($query) use ($loc)
+                                              {
+                                               $query->orwhere("area", 'like', "%".$loc."%")
+                                               ->orwhere("street", 'like', "%".$loc."%")
+                                               ->orwhere("landmark", 'like', "%".$loc."%")
+                                               ->orwhere("building", 'like', "%".$loc."%");
+                                             })->with(['reviews'])
+                                            ->get();
+            if($obj_business_listing)
+            {
+              $arr_business = $obj_business_listing->toArray();
 
-               $label[] = $business['area'];
-              $searchresult[$key]['link'] = url('/').$city_all.'/all-options/'.$search_category_id;
-              }
+            }
           }
-          print_r($label);
-         }
+      }
+
+      $obj_sub_category = CategoryModel::where('cat_id',$cat_id)->get();
+        if($obj_sub_category)
+        {
+            $sub_category = $obj_sub_category->toArray();
+        }
+      if(sizeof($sub_category)>0)
+        {
+          $main_cat_id=$sub_category[0]['parent'];
+           $obj_parent_category = CategoryModel::where('cat_id',$main_cat_id)->get();
+            if($obj_parent_category)
+            {
+                $parent_category = $obj_parent_category->toArray();
+            }
+        }
 
 
-          $input = array_map("unserialize", array_unique(array_map("serialize", $searchresult)));
-        $input[] = array('label'=>$search_location, 'cat_name'=>'in all categories', 'link'=>url('/').$city_all.'/all-options/'.$search_category_id);
-        return response()->json($input);
-       }
-        //echo"test";
+
+     return view('front.listing.index',compact('page_title','arr_business','city','parent_category','sub_category','loc'));
     }
 }

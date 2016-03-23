@@ -2,7 +2,14 @@
 
   @section('main_section')
   @include('front.template._search_top_nav')
-
+<style>
+    .fixed-height {
+      padding: 1px;
+      max-height: 200px;
+      overflow: auto;
+      position:fixed;
+    }
+  </style>
   <div class="gry_container">
     <div class="container">
      <div class="row">
@@ -95,19 +102,25 @@
             <h4 class="modal-title">Sort By Location</h4>
           </div>
           <div class="modal-body">
-
             <p>Where in {{$city}}</p>
             <div class="row">
-              <div class="col-lg-10"><input type="text" class="input-searchbx"/></div>
-              <div class="col-lg-2"> <button type="submit" class="btn btn-warning">Go</button></div>
-              <div class="clr"></div>
+              <div class="col-lg-10">
+              <input type="text" class="input-searchbx " id="location_search" />
+              <input type="hidden" class="input-searchbx " id="business_search_by_location" value="" />
+              @if(isset($sub_category))
+               <input type="hidden" class="input-searchbx " id="search_under_category" value="{{str_slug($sub_category[0]['title'])}}" />
+               @endif
+               </div>
+
+              <div class="col-lg-2"> <button type="submit" class="btn btn-warning" id="go_to_search">Go</button></div>
+              <div class="clr"></div></div>
             </div>
           </div>
 
         </div>
         <div class="clr"></div>
       </div>
-    </div>
+
     <!-- location popup end -->
 
     <div id="list_view">
@@ -254,39 +267,42 @@
 </div>
 
 <script type="text/javascript">
+
   var site_url = "{{ url('/') }}";
   var csrf_token = "{{ csrf_token() }}";
 
-
-  if($("#sortbylocation").length>0)
+ $(document).ready(function()
   {
-    $( "#sortbylocation" ).autocomplete({
-                    //source: site_url+"/"+city_all+"/searchkey?_token="+csrf_token+'&range='+$('#reangval').val(),
-                    source : function( request, response ) {
-                      city_name = $('#city_name').val();
-                      category_id = $('#category_id').val();
-                      request.city_name = city_name;
-                      request.category_id = category_id;
-                      $.getJSON( site_url+"/search?_token="+csrf_token, request, function( data, status, xhr ) {
-                        response( data );
-                      });
-                    },
-                    minLength: 2,
-                    select: function( event, ui )
+    //search by location
+        $("#location_search").autocomplete(
+                {
+                  minLength:3,
+                  source:site_url+"/get_location_auto",
+                  search: function( event, ui )
+                  {
+                   /* if(category==false)
                     {
-                        //window.location.href = ui.item.ui.item.href;
-                        /* var zipcode = ui.item.zip;
-                        var place = ui.item.place;
-                        setPlace(zipcode,place);
-                        return false; */
-                      }
-                    }).data("ui-autocomplete")._renderItem = function (ul, item) {
-    return $("<li></li>")
-    .data("item.autocomplete", item)
-    .append('<a href="'+item.link+'">' + item.label +'<span style="color:#7b7b7b"> '+item.cat_name+'</span></a>')
-    .appendTo(ul);
-  };
-}
+                        alert("Select Category First");
+                        event.preventDefault();
+                        return false;
+                    }*/
+                  },
+                   select:function(event,ui)
+                  {
+                    $("input[name='location_search']").val(ui.item.label);
+                    $("#business_search_by_location").attr('value',ui.item.label);
+
+                  },
+                  response: function (event, ui)
+                  {
+
+                  }
+                });
+
+
+
+
+      });
 
          //droupdown//
 
@@ -315,7 +331,35 @@
 
 
         })
+         $(document.body).on( 'click', '#go_to_search', function( event )
+        {
+         var business_search_by_location=$("#business_search_by_location").val();
+         var search_under_category=$("#search_under_category").val();
+         var category_id=$("#category_id").val();
+         if(business_search_by_location=='')
+          {
+              alert("Select Location");
+              event.preventDefault();
+              return false;
+          }
+          else
+          {
+            /*ww.justdial.com/Nashik/Indian-Restaurants-<near>-Nashik-Pune-Road-Dwarka/ct-10263652
+            */ var get_url=site_url+'/'+city+'/'+search_under_category+'-<near>-'+business_search_by_location+'/'+'ct-'+category_id;
+              window.location.href = get_url;
+          }
+        });
        </script>
+     <!-- <style type="text/css">
+ .ui-autocomplete
+ {
+    height: 125px;
+    left: 478px;
+    overflow-x: auto;
+    position: fixed !important;
+ }
+
+</style>-->
 
 
        @endsection
