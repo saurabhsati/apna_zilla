@@ -120,13 +120,15 @@ class CategorySearchController extends Controller
         //dd($arr_business);
       return view('front.listing.index',compact('page_title','arr_business','arr_sub_cat','parent_category','sub_category','city'));
     }
-    public function search_business_by_location($city,$cat_loc,$cat_id,Request $request)
+    public function search_business_by_location($city,$cat_loc,$cat_id)
     {
       $cat_location=explode('-<near>-',$cat_loc);
       if(!empty($cat_location))
       {
-        $loc=$cat_location[1];
+         $loc=str_replace('-',' ',$cat_location[1]);
+
       }
+
       $page_title ='Search by Location ';
 
       //by city
@@ -169,7 +171,7 @@ class CategorySearchController extends Controller
             $obj_business_listing = BusinessListingModel::whereIn('id',$result)
                                             ->where(function ($query) use ($loc)
                                               {
-                                               $query->orwhere("area", 'like', "%".$loc."%")
+                                               $query->orwhere("area", 'like', "%".strtolower($loc)."%")
                                                ->orwhere("street", 'like', "%".$loc."%")
                                                ->orwhere("landmark", 'like', "%".$loc."%")
                                                ->orwhere("building", 'like', "%".$loc."%");
@@ -182,7 +184,7 @@ class CategorySearchController extends Controller
             }
           }
       }
-
+        //dd($arr_business);
       $obj_sub_category = CategoryModel::where('cat_id',$cat_id)->get();
         if($obj_sub_category)
         {

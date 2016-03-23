@@ -403,7 +403,10 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	Route::post('/locate_location','Front\HomeController@locate_location');
 	Route::get('/get_category_auto','Front\HomeController@get_category_auto');
 	Route::get('/get_city_auto','Front\HomeController@get_city_auto');
+	Route::post('/set_city','Front\HomeController@set_city');
 	Route::get('/get_location_auto','Front\HomeController@get_location_auto');
+
+
 
 	/*--------------------------Front-login-section-------------------------------*/
 
@@ -469,7 +472,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	Route::get('password_reset/{code}','Front\PasswordController@getReset');
 	Route::post('process_reset_password','Front\PasswordController@postReset');
 
-	
+
 
 });
 

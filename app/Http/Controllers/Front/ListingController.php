@@ -57,7 +57,7 @@ class ListingController extends Controller
         }
          if($slug_area!='')
          {
-             $search_by=ucfirst( preg_replace("/[^a-zA-Z0-9\s<near>]/", "&nbsp;", $slug_area));
+              $search_by=ucfirst( preg_replace("/[^a-zA-Z0-9\s<near>]/", "&nbsp;", $slug_area));
              if($search_by!='')
               {
                  Session::put('search_by', $search_by);
@@ -138,7 +138,7 @@ class ListingController extends Controller
     {
        $id = session('user_id');
         $user_id = base64_decode($id);
-        
+
         $obj_user_info = UserModel::where('id','=',$user_id)->get();
 
         if($obj_user_info)
