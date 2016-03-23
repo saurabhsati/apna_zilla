@@ -11,6 +11,8 @@ use App\Models\BusinessListingModel;
 use App\Models\BusinessCategoryModel;
 use App\Models\CategoryModel;
 use App\Models\ReviewsModel;
+use App\Models\UserModel;
+
 
 use Sentinel;
 use Session;
@@ -134,19 +136,37 @@ class ListingController extends Controller
 
     public function share_business($enc_id)
     {
-        $id = base64_decode($enc_id);
+       $id = session('user_id');
+        $user_id = base64_decode($id);
+        
+        $obj_user_info = UserModel::where('id','=',$user_id)->get();
+
+        if($obj_user_info)
+        {
+            $arr_user_info = $obj_user_info->toArray();
+        }
+
+        foreach ($arr_user_info as $users)
+        {
+             Session::put('user_mail', $users['email']);
+             Session::put('user_first_name', $users['first_name']);
+             Session::put('user_middle_name', $users['middle_name']);
+             Session::put('user_last_name', $users['last_name']);
+        }
+
+        $business_id = base64_decode($enc_id);
         $page_title = "Share Business";
 
-        return view('front.listing.share_business',compact('id','page_title'));
+        return view('front.listing.share_business',compact('business_id','page_title'));
     }
 
-    public function share_sms_email($enc_id)
+    public function sms_email($enc_id)
     {
         if ($user = Sentinel::getUser())
         {
             $arr_user_info = $user->toArray();
         }
-        return view('front.listing.share_sms_email',compact('arr_user_info'));
+        return view('front.listing.sms_email',compact('arr_user_info'));
     }
 
 }

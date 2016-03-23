@@ -147,8 +147,6 @@
                          </div>
                     </div>
                  
-
-
                        <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">DOB :</div>
@@ -288,7 +286,6 @@
                          </div>
                     </div>
                                      
-
                       <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">City :</div>
@@ -345,6 +342,7 @@
                         </div>
                          </div>
                     </div>
+                    
                       <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">Mobile No.:</div>
@@ -398,7 +396,7 @@
                         </div>
                          </div>
                     </div>
-
+                    
                     </div>
 
                     <button type="submit" class="yellow1 ui button">Save & Continue</button>
@@ -416,7 +414,7 @@
          </div>
        </div>
        
-      </div>
+  </div>
 
   <script type="text/javascript">
     var site_url = "{{url('/')}}";
