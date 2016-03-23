@@ -18,9 +18,21 @@
                                placeholder="Vishakhapatanm"
                                @if(Session::has('city'))
                                value="{{Session::get('city') }}"
-                                @else value=""
+                                @else value="Mumbai"
                                 @endif />
-                                <input type="hidden" id="city_id" name="city_id" value=""/>
+                                <input type="hidden"
+                                 id="city_id"
+                                  name="city_id"
+                                  value=
+                                     <?php
+                                     if(Session::has('search_city_id'))
+                                     {
+                                       echo Session::get('search_city_id');
+                                     }else{
+                                       echo Session::get('city_id');
+                                     }
+                                   ?>
+                                   />
                               <div class="has-feedback">
 
                                  <input type="text" class="search-txt" placeholder="Resturant" id="category_search" name="category_search" value=""/>
@@ -73,6 +85,7 @@
             {
               $("input[name='get_city']").val(ui.item.label);
               $("input[name='city_id']").val(ui.item.id);
+              setSerchCity(ui.item.id,ui.item.label);
             },
             response: function (event, ui)
             {
@@ -105,8 +118,6 @@
               {
                 city=city_search;
               }
-
-
               var type = ui.item.data_type;
               if(type=='list') {
                   var get_url=site_url+'/'+city+'/all-options/ct-'+ui.item.cat_id;
@@ -148,5 +159,22 @@
               window.location.href = get_url;
           }
         });
+
+         function setSerchCity(city_id,city_title)
+        {
+           var fromData = {city_id:city_id, city_title:city_title,_token:csrf_token};
+           $.ajax({
+               url: site_url+"/set_city",
+               type: 'POST',
+               data: fromData,
+               dataType: 'json',
+               async: false,
+
+               success: function(response)
+               {
+
+               }
+           });
+         }
       </script>
        <!--slider start here-->

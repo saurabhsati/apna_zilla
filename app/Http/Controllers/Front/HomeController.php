@@ -27,6 +27,7 @@ class HomeController extends Controller
         }
         else
         {
+            //Session::put('city', 'Mumbai');
         	$current_city='Mumbai';
         }
     	$arr_category = array();
@@ -96,10 +97,30 @@ class HomeController extends Controller
                 if(!empty($city))
                 {
 			       Session::put('city', $city);
+                   $obj_city = CityModel::where('city_title',$city)->first();
+                    if($obj_city)
+                    {
+                        $arr_city = $obj_city->toArray();
+                        if(!empty($arr_city))
+                        {
+                            Session::put('city_id', $arr_city['id']);
+                        }
+
+                    }
                 }
                 else
                 {
                      Session::put('city', 'Mumbai');
+                     $obj_city = CityModel::where('city_title',"Mumbai")->first();
+                    if($obj_city)
+                    {
+                        $arr_city = $obj_city->toArray();
+                        if(!empty($arr_city))
+                        {
+                            Session::put('city_id', $arr_city['id']);
+                        }
+
+                    }
                 }
 			    echo 'done';
 			}
@@ -159,6 +180,7 @@ class HomeController extends Controller
         {
             $search_term='';
             $search_term = $request->input('term');
+            /*List category by keyword*/
             $arr_obj_list = CategoryModel::where('parent','!=',0)
                                             ->where(function ($query) use ($search_term) {
                                              $query->where("title", 'like', "%".$search_term."%")
@@ -166,17 +188,11 @@ class HomeController extends Controller
                                              ->orwhere("cat_meta_description", 'like', "%".$search_term."%");
                                              })->get();
 
-            $arr_obj_list_business = BusinessListingModel::where('business_name','like',"%".$search_term."%")
-                                                ->orWhere('keywords','like',"%".$search_term."%")
-                                                ->get();
-
             $arr_list = array();
             if($arr_obj_list)
             {
                 $arr_list = $arr_obj_list->toArray();
-
                 $arr_final_list = array();
-
                 if(sizeof($arr_list)>0)
                 {
                     foreach ($arr_list as $key => $list)
@@ -190,13 +206,25 @@ class HomeController extends Controller
 
             }
 
-            $ckey = count($arr_final_list);
-
-            if($arr_obj_list_business)
+            if(Session::has('search_city_id'))
             {
-                $arr_business = $arr_obj_list_business->toArray();
+                $city=Session::get('search_city_id');
+            }
+            else
+            {
+                $city=Session::get('city_id');
+            }
+            $ckey=sizeof($arr_final_list);
+            $obj_business_listing = BusinessListingModel::where('city',$city)
+                                    ->where(function ($query) use ($search_term) {
+                                    $query->where('business_name','like',"%".$search_term."%")
+                                    ->orWhere('keywords','like',"%".$search_term."%");
+                                    })->get();
+                                  //  return response()->json($obj_business_listing);
+            if($obj_business_listing)
+            {
+                $arr_business = $obj_business_listing->toArray();
                 $arr_final_business = array();
-
                 if(sizeof($arr_business)>0)
                 {
                     foreach ($arr_business as $key => $business)
@@ -207,6 +235,7 @@ class HomeController extends Controller
 
                         $arr_final_list[$ckey]['business_id'] = base64_encode($business['id']);
                         $arr_final_list[$ckey]['label'] = $business['business_name'];
+                        $arr_final_list[$ckey]['city'] = $business['city'];
                         $arr_final_list[$ckey]['slug']=$slug_business.'<near>'.$slug_area;
                         $arr_final_list[$ckey]['data_type'] = 'detail';
                         $ckey++;
@@ -215,13 +244,13 @@ class HomeController extends Controller
 
 
             }
-            if(sizeof($arr_final_list)>0)
+           if(sizeof($arr_final_list)>0)
             {
                  return response()->json($arr_final_list);
             }
             else
             {
-                       return response()->json(array());
+                 return response()->json(array());
             }
 
         }
@@ -232,7 +261,7 @@ class HomeController extends Controller
  	}
     public function get_location_auto(Request $request)
     {
-         if($request->has('term'))
+        if($request->has('term'))
         {
             $search_term='';
             $search_term = $request->input('term');
@@ -275,6 +304,14 @@ class HomeController extends Controller
            return response()->json(array());
         }
 
+    }
+
+    public function set_city(Request $request)
+    {
+            $city_id = $request->input('city_id');
+            Session::put('search_city_id',$city_id);
+            $result['status'] ="1";
+            return response()->json($result);
     }
 
 }

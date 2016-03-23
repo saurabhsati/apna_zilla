@@ -13,8 +13,15 @@
                   <div class="main-menu">
                      <div class="nav">
                         <ul class="nav-list">
+                         <?php
+                          $city='';
+                          if(Session::has('city')){
+                          $city=Session::get('city');
+                          }else{
+                          $city='Mumbai';
+                          }?>
                           <!--  <li class="nav-item"><a href="{{ url('/') }}" class=" {{ Request::segment(1)==''? 'act':'' }}">Home</a></li> -->
-                           <li class="nav-item"><a href="{{ url('/') }}/@if(Session::has('city')){{Session::get('city')}}@endif/all-categories">Categories</a></li>
+                           <li class="nav-item"><a href="{{ url('/') }}/{{$city}}/all-categories">Categories</a></li>
                            <!-- <li class="nav-item">
                               <a href="{{ url('/') }}/listing" class=" {{ Request::segment(1)=='listing'? 'act':'' }}">Listing</a>
 
