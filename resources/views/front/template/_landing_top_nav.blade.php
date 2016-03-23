@@ -31,7 +31,7 @@
                                  </ul>
 
                            </li>-->
-                           <li class="nav-item"><a href="#">Deals</a></li>
+                           <li class="nav-item"><a href="{{ url('/deals') }}">Deals</a></li>
 
 
                             @if ($user = Sentinel::check())

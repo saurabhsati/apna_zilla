@@ -288,8 +288,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
     /*************************************End*****************************************************/
 
-
-/*************************News Letter Module***********************************/
+	/*************************News Letter Module***********************************/
 
 	Route::group(array('prefix' => 'newsletter'), function()
 	{
@@ -450,7 +449,11 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::post('process_login_for_share/{enc_id}', ['as' => 'front_users_process_login_for_share'      ,'uses' =>'Front\AuthController@process_login_for_share']);
 
 	});
-
+	
+	Route::group(array('prefix' => '/deals'), function()
+	{
+		Route::get('/',									['as' =>'deals_page'								,'uses' =>'Front\DealController@index']);
+	});
 
 	Route::post('/newsletter','Front\NewsLetterController@index');
 
@@ -461,7 +464,6 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::get('all-options/ct-{cat_id}','Front\CategorySearchController@get_business');
 		Route::get('{cat_location}/ct-{cat_id}','Front\CategorySearchController@search_business_by_location');
 		Route::get('{business_area}/{cat_id}','Front\ListingController@list_details');
-
 
 	});
 
