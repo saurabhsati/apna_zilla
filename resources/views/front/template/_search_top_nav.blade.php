@@ -69,9 +69,6 @@
                                      @if(!empty($loc))
                                       value= {{$loc}}
                                      @endif
-
-
-
                                    >
                                   <input type="hidden" id="category_id" name="category_id"
                                   @if(Session::has('category_id'))

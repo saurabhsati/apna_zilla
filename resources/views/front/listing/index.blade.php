@@ -76,7 +76,10 @@
          </ul>
 
        </li>
-       <li><a href="#" class="active">Ratings <span><i class="fa fa-long-arrow-up"></i></span></a></li>
+       <!-- <form action="{{ url('/') }}/{{$city}}/all-options/ct-{{$category['cat_id']}}" id="submit_form_list"> -->
+       <input type="hidden" name="current_url" value="{{ url('/') }}/{{$city}}/all-options/ct-{{$category['cat_id']}}">
+       <li><a href="#" class="active" onclick="submit_business();" >Ratings <span><i class="fa fa-long-arrow-up"></i></span></a></li>
+       <!-- </form> -->
        <li>
          <div class="btn-group btn-input clearfix">
           <button type="button" class="btn_drop_nw dropdown-toggle form-control" data-toggle="dropdown">
@@ -371,6 +374,24 @@
               window.location.href = get_url;
           }
         });
+    function submit_business()
+    {
+      /*alert();
+      var current_url=$("#current_url").val();
+          var fromData = {rating:'DEASC',_token:csrf_token};
+           $.get({
+               url: current_url,
+               type: 'get',
+               data: fromData,
+               dataType: 'json',
+               async: false,
+
+               success: function(response)
+               {
+
+               }
+           });*/
+    }
        </script>
      <!-- <style type="text/css">
  .ui-autocomplete
