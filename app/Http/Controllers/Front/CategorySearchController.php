@@ -125,7 +125,7 @@ class CategorySearchController extends Controller
     /* Search by location */
     public function search_business_by_location($city,$cat_loc,$cat_id)
     {
-      $cat_location=explode('@',$cat_loc);
+       $cat_location=explode('@',$cat_loc);
      // dd($cat_location);
       if(!empty($cat_location))
       {
@@ -182,9 +182,38 @@ class CategorySearchController extends Controller
                                                ->orwhere("street", 'like', "%".$loc."%")
                                                ->orwhere("landmark", 'like', "%".$loc."%")
                                                ->orwhere("building", 'like', "%".$loc."%");
-                                             })->with(['reviews'])
-                                            ->get();
+                                             })->with(['reviews']);
+                                           // ->get();
                                       // dd($obj_business_listing);
+            if(Session::has('preferred_latitude') && Session::has('preferred_longitude'))
+            {
+                $latitude=Session::has('preferred_latitude') ? Session::get('preferred_latitude'):'51.033320760';
+                $longitude=Session::has('preferred_latitude') ? Session::get('preferred_longitude'):'13.757242110';
+                 $qutt='*,ROUND( 6371 * acos (
+                    cos ( radians('.$latitude.') )
+                    * cos( radians( `lat` ) )
+                    * cos( radians( `lng` ) - radians('.$longitude.') )
+                    + sin ( radians('.$latitude.') )
+                    * sin( radians( `lat` ) )
+                  ),2) as distance';
+
+
+            $obj_business_listing = $obj_business_listing->selectRaw($qutt);
+            $distance=Session::has('distance') ? Session::get('distance'):'1';
+            $search_range=$distance;
+            if($search_range==TRUE)
+            {
+                $obj_business_listing = $obj_business_listing->having('distance', '< ', $search_range)->get();
+            }
+           // dd($obj_business_listing->toArray());
+          }
+          else
+          {
+            $obj_business_listing->get();
+          }
+
+
+
             if($obj_business_listing)
             {
               $arr_business = $obj_business_listing->toArray();
@@ -226,6 +255,7 @@ class CategorySearchController extends Controller
             $lng = $request->input('lng');
             Session::put('preferred_latitude',$lat) ;
             Session::put('preferred_longitude',$lng);
+            Session::put('distance',$distance);
             // echo '=>'.Session::get('preferred_latitude') ;
             $result['status'] ="1";
             return response()->json($result);

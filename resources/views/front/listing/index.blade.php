@@ -88,15 +88,11 @@
            //$category_id=Session::get('category_id');
          }
           /*else {$category_id="";}*/
-
-          if(Session::has('business_search_by_location'))
-          {
-            $location=Session::get('business_search_by_location');
-          }
-           else
-           {
-            $location="";
-           }
+          if(!empty($loc)){
+               $location=str_replace(' ','-',strtolower($loc));
+             }
+          else
+               { $location="";}
 
              ?>
          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -151,8 +147,8 @@
                 value=""
                @endif/>
               <input type="hidden" class="input-searchbx " id="business_search_by_location"
-                @if(Session::has('business_search_by_location'))
-               value="{{Session::get('business_search_by_location')}}"
+                @if(!empty($loc))
+               value="{{ucwords($loc)}}"
                @else
                 value=""
                @endif
