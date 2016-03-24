@@ -509,21 +509,32 @@
 
         function orderByRating()
         {
-          alert();
-        }
+          var city_search=$("#city_search").val();
+         var category_search=$("#category_search").val();
+           if(city_search!='')
+          {
+            city=city_search;
+          }
+          var category_id=$("#category_id").val();
+          if(category_search=='')
+          {
+              alert("Select Category First");
+              event.preventDefault();
+              return false;
+          }
+          else
+          {
+             var dataString = { review_rating:'higher', _token: csrf_token };
+              var url_run= site_url+'/'+city+'/all-options/ct-'+category_id;
+              $.get( url_run, dataString)
+                  .done(function( data ) {
+                    /*if(data=='done'){
+
+                    }*/
+                  });
+          }
+       }
        </script>
-     <!-- <style type="text/css">
- .ui-autocomplete
- {
-    height: 125px;
-    left: 478px;
-    overflow-x: auto;
-    position: fixed !important;
- }
-
-</style>-->
-
-
-       @endsection
+      @endsection
 
 
