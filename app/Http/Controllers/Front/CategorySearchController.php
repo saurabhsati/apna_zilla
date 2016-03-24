@@ -183,8 +183,11 @@ class CategorySearchController extends Controller
                                                ->orwhere("landmark", 'like', "%".$loc."%")
                                                ->orwhere("building", 'like', "%".$loc."%");
                                              })->with(['reviews']);
-                                           // ->get();
-                                      // dd($obj_business_listing);
+                                            //->get();
+
+                                             /*$obj_business_listing->toSql();
+                                              dd($obj_business_listing);
+                                             exit;*/
             if(Session::has('preferred_latitude') && Session::has('preferred_longitude'))
             {
                 $latitude=Session::has('preferred_latitude') ? Session::get('preferred_latitude'):'51.033320760';
@@ -197,27 +200,23 @@ class CategorySearchController extends Controller
                     * sin( radians( `lat` ) )
                   ),2) as distance';
 
+                  $obj_business_listing = $obj_business_listing->selectRaw($qutt);
+                  $distance=Session::has('distance') ? Session::get('distance'):'1';
+                  $search_range=$distance;
+                  if($search_range==TRUE)
+                  {
+                      $obj_business_listing = $obj_business_listing->having('distance', '< ', $search_range);
+                  }
 
-            $obj_business_listing = $obj_business_listing->selectRaw($qutt);
-            $distance=Session::has('distance') ? Session::get('distance'):'1';
-            $search_range=$distance;
-            if($search_range==TRUE)
-            {
-                $obj_business_listing = $obj_business_listing->having('distance', '< ', $search_range)->get();
             }
-           // dd($obj_business_listing->toArray());
-          }
-          else
-          {
-            $obj_business_listing->get();
-          }
 
+            $obj_business_listing= $obj_business_listing->get();
 
 
             if($obj_business_listing)
             {
               $arr_business = $obj_business_listing->toArray();
-
+               //dd($arr_business);
             }
           }
       }

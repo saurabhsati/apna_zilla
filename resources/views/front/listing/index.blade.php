@@ -105,7 +105,7 @@
 
        </li>
       <input type="hidden" name="current_url" value="{{ url('/') }}/{{$city}}/all-options/ct-{{$category['cat_id']}}">
-       <li><a href="#" class="active" onclick="#" >Ratings <span><i class="fa fa-long-arrow-up"></i></span></a></li>
+       <li><a href="#" class="active" onclick="orderByRating();" >Ratings <span><i class="fa fa-long-arrow-up"></i></span></a></li>
 
        <li>
          <div class="btn-group btn-input clearfix">
@@ -505,8 +505,12 @@
 
            }
 
-    }
+        }
 
+        function orderByRating()
+        {
+          alert();
+        }
        </script>
      <!-- <style type="text/css">
  .ui-autocomplete
