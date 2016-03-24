@@ -37,7 +37,7 @@
                                {
                                  if(Session::has('category_serach'))
                                   {
-                                    $set_txt_name= ucfirst(Session::get('category_serach'));
+                                    $set_txt_name= ucwords(Session::get('category_serach'));
                                    }
                                 }
                                 else
@@ -48,7 +48,7 @@
                                   }
                                   if(Session::has('search_by'))
                                   {
-                                    $set_txt_name= ucfirst(Session::get('search_by'));
+                                    $set_txt_name= ucwords(Session::get('search_by'));
                                   }
                                 }
                                 ?>

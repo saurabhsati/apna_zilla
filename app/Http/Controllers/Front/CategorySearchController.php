@@ -120,6 +120,9 @@ class CategorySearchController extends Controller
         //dd($arr_business);
       return view('front.listing.index',compact('page_title','arr_business','arr_sub_cat','parent_category','sub_category','city'));
     }
+
+
+    /* Search by location */
     public function search_business_by_location($city,$cat_loc,$cat_id)
     {
       $cat_location=explode('@',$cat_loc);
@@ -129,7 +132,7 @@ class CategorySearchController extends Controller
          $loc=str_replace('-',' ',$cat_location[1]);
          $category_set=str_replace('-',' ',$cat_location[0]);
       }
-//dd($loc_arr);
+     //dd($loc_arr);
       $page_title ='Search by Location ';
 
       //by city
@@ -170,6 +173,8 @@ class CategorySearchController extends Controller
           if(sizeof($result)>0)
           {
            // echo $loc;
+
+
             $obj_business_listing = BusinessListingModel::whereIn('id',$result)
                                             ->where(function ($query) use ($loc)
                                               {
@@ -203,12 +208,28 @@ class CategorySearchController extends Controller
             }
         }
 
-  $obj_sub_cat = CategoryModel::where('parent',$main_cat_id)->orderBy('is_popular', 'DESC')->get();
+      $obj_sub_cat = CategoryModel::where('parent',$main_cat_id)->orderBy('is_popular', 'DESC')->get();
         if($obj_sub_cat)
         {
             $arr_sub_cat = $obj_sub_cat->toArray();
         }
         //dd($loc);
-return view('front.listing.index',compact('page_title','arr_business','city','arr_sub_cat','parent_category','sub_category','loc','category_set'));
+    return view('front.listing.index',compact('page_title','arr_business','city','arr_sub_cat','parent_category','sub_category','loc','category_set'));
+    }
+    public function set_distance_range(Request $request)
+    {
+            $business_search_by_location = $request->input('business_search_by_location');
+            $search_under_category = $request->input('search_under_category');
+            $search_under_city = $request->input('search_under_city');
+            $distance = $request->input('distance');
+            $lat = $request->input('lat');
+            $lng = $request->input('lng');
+            Session::put('preferred_latitude',$lat) ;
+            Session::put('preferred_longitude',$lng);
+            // echo '=>'.Session::get('preferred_latitude') ;
+            $result['status'] ="1";
+            return response()->json($result);
+
+
     }
 }

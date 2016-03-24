@@ -48,7 +48,7 @@
           @endif
 
         </ul>
-        <!-- /#Categoriesr End-->
+        <!-- Categories End-->
         <div class="clearfix"></div>
       </div>
     </div>
@@ -67,19 +67,50 @@
 
         <li id="distance" style="cursor:pointer;" class="new_new_act1">
          <a onclick="#" href="javascript:void(0);" class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Distance <span class="caret"></span></a>
+
+        <?php
+        if(Session::has('search_city_title'))
+        {
+           $city=Session::get('search_city_title');
+        }
+        else if(Session::has('city'))
+        {
+           $city=Session::get('city');
+        }
+        else
+        {
+           $city="Mumbai";
+        }
+        if($sub_category[0]['title']!='')
+        {
+          $category_search=str_slug($sub_category[0]['title']);
+
+           //$category_id=Session::get('category_id');
+         }
+          /*else {$category_id="";}*/
+
+          if(Session::has('business_search_by_location'))
+          {
+            $location=Session::get('business_search_by_location');
+          }
+           else
+           {
+            $location="";
+           }
+
+             ?>
          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-           <li><a href="#">1 km</a></li>
-           <li><a href="#">2 km</a></li>
-           <li><a href="#">3 km</a></li>
-           <li><a href="#">4 km</a></li>
+           <li><a href="#" onclick="return setdistance('<?php echo $city;?>','1','<?php echo $category_search;?>','<?php echo $location;?>');">1 km</a></li>
+           <li><a href="#" onclick="return setdistance('<?php echo $city;?>','2','<?php echo $category_search;?>','<?php echo $location;?>');">2 km</a></li>
+           <li><a href="#" onclick="return setdistance('<?php echo $city;?>','3','<?php echo $category_search;?>','<?php echo $location;?>');">3 km</a></li>
+           <li><a href="#" onclick="return setdistance('<?php echo $city;?>','4','<?php echo $category_search;?>','<?php echo $location;?>');">4 km</a></li>
 
          </ul>
 
        </li>
-       <!-- <form action="{{ url('/') }}/{{$city}}/all-options/ct-{{$category['cat_id']}}" id="submit_form_list"> -->
-       <input type="hidden" name="current_url" value="{{ url('/') }}/{{$city}}/all-options/ct-{{$category['cat_id']}}">
-       <li><a href="#" class="active" onclick="submit_business();" >Ratings <span><i class="fa fa-long-arrow-up"></i></span></a></li>
-       <!-- </form> -->
+      <input type="hidden" name="current_url" value="{{ url('/') }}/{{$city}}/all-options/ct-{{$category['cat_id']}}">
+       <li><a href="#" class="active" onclick="#" >Ratings <span><i class="fa fa-long-arrow-up"></i></span></a></li>
+
        <li>
          <div class="btn-group btn-input clearfix">
           <button type="button" class="btn_drop_nw dropdown-toggle form-control" data-toggle="dropdown">
@@ -113,8 +144,19 @@
             </p>
             <div class="row">
               <div class="col-lg-10">
-              <input type="text" class="input-searchbx " id="location_search" />
-              <input type="hidden" class="input-searchbx " id="business_search_by_location" value="" />
+              <input type="text" class="input-searchbx " id="location_search"
+              @if(!empty($loc))
+               value="{{ucwords($loc)}}"
+               @else
+                value=""
+               @endif/>
+              <input type="hidden" class="input-searchbx " id="business_search_by_location"
+                @if(Session::has('business_search_by_location'))
+               value="{{Session::get('business_search_by_location')}}"
+               @else
+                value=""
+               @endif
+               />
                <input type="hidden" class="input-searchbx " id="business_search_by_city"
                @if(Session::has('search_city_title'))
                value="{{Session::get('search_city_title')}}"
@@ -281,6 +323,8 @@
 </div>
 
 </div>
+<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>-->
+ <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 
 <script type="text/javascript">
 
@@ -307,7 +351,7 @@
                   {
                     $("input[name='location_search']").val(ui.item.label);
                     $("#business_search_by_location").attr('value',ui.item.loc_slug);
-
+                    $("#location_search").attr('value',ui.item.loc);
                   },
                   response: function (event, ui)
                   {
@@ -323,24 +367,28 @@
          //droupdown//
 
          $( document.body ).on( 'click', '.dropdown-menu li', function( event ) {
+
            var select_location=$('#business_search_by_location').val();
            if(select_location=='')
            {
-           // open location model popup
-          // $('.modal-open').open();
-           $('#loc').modal('toggle');
+             // open location model popup
+            // $('.modal-open').open();
+             $('#loc').modal('toggle');
 
            }
            else
            {
-           var $target = $( event.currentTarget );
-           $target.closest( '.btn-group' )
-           .find( '[data-bind="label"]' ).text( $target.text() )
-           .end()
-           .children( '.dropdown-toggle' ).dropdown( 'toggle' );
-           return false;
+             var $target = $( event.currentTarget );
+             $target.closest( '.btn-group' )
+             .find( '[data-bind="label"]' ).text( $target.text() )
+             .end()
+             .children( '.dropdown-toggle' ).dropdown( 'toggle' );
+             return false;
           }
+
          });
+
+
          $(function() {
           $('#list_click').click(function() {
             $('#grid_view').hide();
@@ -386,24 +434,83 @@
               window.location.href = get_url;
           }
         });
-    function submit_business()
+
+    function setdistance(city,distance,category,location)
     {
-      /*alert();
-      var current_url=$("#current_url").val();
-          var fromData = {rating:'DEASC',_token:csrf_token};
-           $.get({
-               url: current_url,
-               type: 'get',
+         var business_search_by_location=location;
+         var search_under_category=category;
+         var search_under_city=city;
+         var distance=distance;
+         var session_city="{{Session::get('city')}}";
+         if(search_under_city!='')
+         {
+          var city=search_under_city;
+         }
+          else if(session_city!='')
+         {
+          var city=session_city;
+         }
+         else
+         {
+            var city="Mumbai";
+         }
+         var category_id=$("#category_id").val();
+         if(business_search_by_location=='')
+          {
+              alert("Select Location");
+              event.preventDefault();
+              return false;
+          }
+          else
+          {
+
+             var geocoder =  new google.maps.Geocoder();
+             geocoder.geocode( { 'address': business_search_by_location }, function(results, status) {
+              if (status == google.maps.GeocoderStatus.OK) {
+                var lat=results[0].geometry.location.lat();
+                var lng=results[0].geometry.location.lng();
+                var fromData = {
+                            business_search_by_location:business_search_by_location,
+                            search_under_category:search_under_category,
+                            search_under_city:search_under_city,
+                            distance:distance,
+                            lat:lat,
+                            lng:lng,
+                             _token:csrf_token
+                              };
+            $.ajax({
+               url: site_url+"/set_distance_range",
+               type: 'POST',
                data: fromData,
                dataType: 'json',
                async: false,
 
                success: function(response)
                {
+                 if (response.status == "1") {
 
+                   var get_url=site_url+'/'+city+'/'+search_under_category+'@'+business_search_by_location+'/'+'ct-'+category_id;
+                   window.location.href = get_url;
+                  //window.location.href = location.href;
+                 }
+                 return false;
                }
-           });*/
+           });
+
+
+
+
+              }
+              else {
+              console.log("fail");
+
+              }
+            });
+
+           }
+
     }
+
        </script>
      <!-- <style type="text/css">
  .ui-autocomplete

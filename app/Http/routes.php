@@ -405,6 +405,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	Route::get('/get_city_auto','Front\HomeController@get_city_auto');
 	Route::post('/set_city','Front\HomeController@set_city');
 	Route::get('/get_location_auto','Front\HomeController@get_location_auto');
+	Route::post('/set_distance_range','Front\CategorySearchController@set_distance_range');
 
 
 
@@ -449,7 +450,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::post('process_login_for_share/{enc_id}', ['as' => 'front_users_process_login_for_share'      ,'uses' =>'Front\AuthController@process_login_for_share']);
 
 	});
-	
+
 	Route::group(array('prefix' => '/deals'), function()
 	{
 		Route::get('/',									['as' =>'deals_page'								,'uses' =>'Front\DealController@index']);
