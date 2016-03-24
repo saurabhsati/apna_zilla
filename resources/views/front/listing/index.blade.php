@@ -155,7 +155,7 @@
             <?php
              $slug_business=str_slug($restaurants['business_name']);
              $slug_area=str_slug($restaurants['area']);
-             $business_area=$slug_business.'<near>'.$slug_area;
+             $business_area=$slug_business.'@'.$slug_area;
             ?>
             <a href="{{url('/')}}/{{$city}}/{{$business_area}}/{{base64_encode($restaurants['id'])}}">
                 {{ $restaurants['business_name'] }}
@@ -370,7 +370,7 @@
           else
           {
             /*ww.justdial.com/Nashik/Indian-Restaurants-<near>-Nashik-Pune-Road-Dwarka/ct-10263652
-            */ var get_url=site_url+'/'+city+'/'+search_under_category+'-<near>-'+business_search_by_location+'/'+'ct-'+category_id;
+            */ var get_url=site_url+'/'+city+'/'+search_under_category+'@'+business_search_by_location+'/'+'ct-'+category_id;
               window.location.href = get_url;
           }
         });

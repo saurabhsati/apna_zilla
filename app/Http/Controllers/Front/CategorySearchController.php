@@ -122,13 +122,17 @@ class CategorySearchController extends Controller
     }
     public function search_business_by_location($city,$cat_loc,$cat_id)
     {
-      $cat_location=explode('-<near>-',$cat_loc);
+      $cat_location=explode('@',$cat_loc);
+     // dd($cat_location);
       if(!empty($cat_location))
       {
-         $loc=str_replace('-',' ',$cat_location[1]);
+         //$loc_arr=explode('-',$cat_location[1]);
+         echo $loc=str_replace('-',' ',$cat_location[1]);
+         //$cat_explode=explode('-',$cat_location[0]);
+         echo $category_set=str_replace('-',' ',$cat_location[0]);
 
       }
-
+//dd($loc_arr);
       $page_title ='Search by Location ';
 
       //by city
@@ -168,15 +172,17 @@ class CategorySearchController extends Controller
           $arr_business = array();
           if(sizeof($result)>0)
           {
+           // echo $loc;
             $obj_business_listing = BusinessListingModel::whereIn('id',$result)
                                             ->where(function ($query) use ($loc)
                                               {
-                                               $query->orwhere("area", 'like', "%".strtolower($loc)."%")
+                                               $query->orwhere("area", 'like', "%".$loc."%")
                                                ->orwhere("street", 'like', "%".$loc."%")
                                                ->orwhere("landmark", 'like', "%".$loc."%")
                                                ->orwhere("building", 'like', "%".$loc."%");
                                              })->with(['reviews'])
                                             ->get();
+                                      // dd($obj_business_listing);
             if($obj_business_listing)
             {
               $arr_business = $obj_business_listing->toArray();
@@ -200,8 +206,11 @@ class CategorySearchController extends Controller
             }
         }
 
-
-
-     return view('front.listing.index',compact('page_title','arr_business','city','parent_category','sub_category','loc'));
+  $obj_sub_cat = CategoryModel::where('parent',$main_cat_id)->orderBy('is_popular', 'DESC')->get();
+        if($obj_sub_cat)
+        {
+            $arr_sub_cat = $obj_sub_cat->toArray();
+        }
+return view('front.listing.index',compact('page_title','arr_business','city','arr_sub_cat','parent_category','sub_category','loc'));
     }
 }

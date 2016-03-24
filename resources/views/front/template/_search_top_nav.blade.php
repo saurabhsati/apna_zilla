@@ -31,45 +31,29 @@
                                 />
                               <div class="has-feedback">
                               <?php
-                              $segment2=Request::segment(2);
-                              $segment=explode('-', $segment2);
-                              //echo '>>'.$segment[0];
-                             ?>
-                               <input type="text"  class="search-txt" placeholder="Resturant" id="category_search" name="category_search"
-                                 <?php
-                                 if($segment2=='all-options'){
-                                  if(Session::has('category_serach')){
-                                    ?>
-                                     value="{{Session::get('category_serach')}}"
-                                    <?php
-                                    }
-                                   }
-                                  if($segment2=='all-categories'){
-                                    ?>
-                                     value=""
-                                    <?php
-                                     }
-
-                                  if(!empty($segment[0]) || !empty($segment[1]))
+                               $segment2=Request::segment(2);
+                               $set_txt_name='';
+                               if($segment2=='all-options')
+                               {
+                                 if(Session::has('category_serach'))
                                   {
-                                      if($segment[1]=='category'){  ?>
-                                      value= {{ucfirst($segment[1])}}
-                                      <?php
-                                       }
-                                      else
-                                      {
-                                        if(Session::has('search_by')){
-                                        ?>
-                                        value="<?php echo str_ireplace('<near>',' ',Session::get('search_by')); ?>"
-                                        <?php
-                                         }
-
-                                       }
-                                   } ?>
-                                     @if(!empty($loc))
-                                      value= {{$loc}}
-                                     @endif
-                                   >
+                                    $set_txt_name= ucfirst(Session::get('category_serach'));
+                                   }
+                                }
+                                else
+                                {
+                                  if(isset($loc))
+                                  {
+                                    $set_txt_name=$loc;
+                                  }
+                                  if(Session::has('search_by'))
+                                  {
+                                    $set_txt_name= ucfirst(Session::get('search_by'));
+                                  }
+                                }
+                                ?>
+                               <input type="text"  class="search-txt" placeholder="Resturant" id="category_search" name="category_search"
+                                value="{{$set_txt_name}}" >
                                   <input type="hidden" id="category_id" name="category_id"
                                   @if(Session::has('category_id'))
                                   value="{{Session::get('category_id') }}"
