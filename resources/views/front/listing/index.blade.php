@@ -76,7 +76,10 @@
          </ul>
 
        </li>
-       <li><a href="#" class="active">Ratings <span><i class="fa fa-long-arrow-up"></i></span></a></li>
+       <!-- <form action="{{ url('/') }}/{{$city}}/all-options/ct-{{$category['cat_id']}}" id="submit_form_list"> -->
+       <input type="hidden" name="current_url" value="{{ url('/') }}/{{$city}}/all-options/ct-{{$category['cat_id']}}">
+       <li><a href="#" class="active" onclick="submit_business();" >Ratings <span><i class="fa fa-long-arrow-up"></i></span></a></li>
+       <!-- </form> -->
        <li>
          <div class="btn-group btn-input clearfix">
           <button type="button" class="btn_drop_nw dropdown-toggle form-control" data-toggle="dropdown">
@@ -152,7 +155,7 @@
             <?php
              $slug_business=str_slug($restaurants['business_name']);
              $slug_area=str_slug($restaurants['area']);
-             $business_area=$slug_business.'<near>'.$slug_area;
+             $business_area=$slug_business.'@'.$slug_area;
             ?>
             <a href="{{url('/')}}/{{$city}}/{{$business_area}}/{{base64_encode($restaurants['id'])}}">
                 {{ $restaurants['business_name'] }}
@@ -367,10 +370,28 @@
           else
           {
             /*ww.justdial.com/Nashik/Indian-Restaurants-<near>-Nashik-Pune-Road-Dwarka/ct-10263652
-            */ var get_url=site_url+'/'+city+'/'+search_under_category+'-<near>-'+business_search_by_location+'/'+'ct-'+category_id;
+            */ var get_url=site_url+'/'+city+'/'+search_under_category+'@'+business_search_by_location+'/'+'ct-'+category_id;
               window.location.href = get_url;
           }
         });
+    function submit_business()
+    {
+      /*alert();
+      var current_url=$("#current_url").val();
+          var fromData = {rating:'DEASC',_token:csrf_token};
+           $.get({
+               url: current_url,
+               type: 'get',
+               data: fromData,
+               dataType: 'json',
+               async: false,
+
+               success: function(response)
+               {
+
+               }
+           });*/
+    }
        </script>
      <!-- <style type="text/css">
  .ui-autocomplete

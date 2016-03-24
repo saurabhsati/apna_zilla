@@ -237,7 +237,7 @@ class HomeController extends Controller
                         $arr_final_list[$ckey]['business_id'] = base64_encode($business['id']);
                         $arr_final_list[$ckey]['label'] = $business['business_name'];
                         $arr_final_list[$ckey]['city'] = $business['city'];
-                        $arr_final_list[$ckey]['slug']=$slug_business.'<near>'.$slug_area;
+                        $arr_final_list[$ckey]['slug']=$slug_business.'@'.$slug_area;
                         $arr_final_list[$ckey]['data_type'] = 'detail';
                         $ckey++;
                     }

@@ -149,7 +149,7 @@
                   <th>Deal Image</th>
                   <th>Deal Name</th>
                   <th>Deal Type</th>
-                  <th>Discount Price</th>
+                  <th>Discount</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
@@ -181,7 +181,7 @@
                       @endif
                     </td>
                      <td>
-                          {{ $deal['discount_price'] }}
+                          {{ $deal['discount_price'] }}%
                     </td>
                     <td width="250">
                          @if($deal['is_active']=="0")
