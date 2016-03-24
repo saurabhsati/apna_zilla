@@ -42,7 +42,7 @@
 
       @foreach($arr_user_info as $user)
 
-   
+    {{-- dd($user) --}}
 <!-- 
      <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="name">Profile Pic</label>
@@ -99,9 +99,9 @@
                       <div class="row">
                          <div class="col-sm-3 col-md-3 col-lg-3">
                            <select name="title" class="input_acct">
-                           <option value="{{ isset($user['title'])?$user['title']:'' }}">
-                                 <option value="Mr">Mr.</option>
-                             <option value="Miss">Miss.</option>
+                           <option value="{{-- isset($user['title'])?$user['title']:'' --}}">
+                                <option value="Mr" @if(isset($user['gender'])  &&  $user['gender'] =="male" ) {{ 'selected=selected' }} @endif >Mr.</option>
+                                <option value="Miss" @if(isset($user['gender'])  &&  $user['gender'] =="female" ) {{ 'selected=selected' }} @endif>Miss.</option>
                            </select>  
                             </div>
 
@@ -276,11 +276,13 @@
                          <select class="input_acct" 
                                  name="marital_status"
                                  >
-                        <option value="{{ isset($user['marital_status'])?$user['marital_status']:'' }}">$user['marital_status']</option>
-                        <option value="Married">Married</option>
-                        <option value="Un Married">Un Married</option>
-                        <option value="Divorced">Divorced</option>
-                        <option value="Widowed">Widowed</option>                        
+                        <!-- <option value="{{-- isset($user['marital_status']) ? $user['marital_status']:'' --}}">{{-- $user['marital_status'] --}} </option> -->
+                        
+
+                        <option value="Married" @if(isset($user['marital_status'])  &&  $user['marital_status'] =="Married" ) {{ 'selected=selected' }} @endif >Married</option>
+                        <option value="Un Married" @if(isset($user['marital_status'])  &&  $user['marital_status'] =="Un Married" ) {{ 'selected=selected' }} @endif>Un Married</option>
+                        <option value="Divorced" @if(isset($user['marital_status'])  &&  $user['marital_status'] =="Divorced" ) {{ 'selected=selected' }} @endif>Divorced</option>
+                        <option value="Widowed" @if(isset($user['marital_status'])  &&  $user['marital_status'] =="Widowed" ) {{ 'selected=selected' }} @endif>Widowed</option>                        
                         </select>
                         </div>
                          </div>
