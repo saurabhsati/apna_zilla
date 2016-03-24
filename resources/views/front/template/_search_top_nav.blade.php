@@ -42,9 +42,9 @@
                                 }
                                 else
                                 {
-                                  if(isset($loc))
+                                  if(isset($category_set))
                                   {
-                                    $set_txt_name=$loc;
+                                    $set_txt_name=$category_set;
                                   }
                                   if(Session::has('search_by'))
                                   {

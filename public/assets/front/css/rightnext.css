@@ -867,6 +867,11 @@ select.input_acct {
 }
 
 /*neww css starrt here*/
+.col-lg-3 .deals-nm {
+    height: 45px;
+    overflow: hidden;
+
+}
 .black-strip {margin-bottom: 15px;
     background: #3e3e3e none repeat scroll 0 0;
     padding: 10px;
@@ -964,7 +969,7 @@ select.input_acct {
 .dels{ cursor: pointer;margin-top: 20px;
     -webkit-box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);
 -moz-box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);
-box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);transition: all 1s ease-in-out 0s; 
+box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);transition: all 1s ease-in-out 0s;
     margin-bottom: 30px;}
 .deals-img {
     position: relative;overflow: hidden;

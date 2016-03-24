@@ -28,7 +28,8 @@
          @if(isset($arr_business_details) && sizeof($arr_business_details)>0)
                 <div class="col-sm-12 col-md-9 col-lg-9">
             <div class="p_detail_view">
-            <div class="product_detail_banner" style="background: url('{{ url('/') }}/assets/front/images/banner_detail.jpg') repeat scroll 0px 0px;">
+           <!--  <div class="product_detail_banner" style="background: url('{{ url('/') }}/assets/front/images/banner_detail.jpg') repeat scroll 0px 0px;"> -->
+            <div class="product_detail_banner" style="background: url('{{ url('/') }}/uploads/business/main_image/{{ $arr_business_details['main_image'] }}'); background-repeat: no-repeat;  background-size: 100% auto;">
               <div class="product_title"><a href="#">{{$arr_business_details['business_name']}}</a></div>
                  <?php $reviewtotal=$avg_review=0; ?>
                           @if(isset($arr_business_details['reviews']) && sizeof($arr_business_details['reviews'])>0)
@@ -109,10 +110,10 @@
 
       <div id="login_poup" class="modal fade" role="dialog">
 
-      <form class="form-horizontal" 
-                           id="validation-form" 
+      <form class="form-horizontal"
+                           id="validation-form"
                            method="POST"
-                           action="{{ url('/front_users/process_login_for_share/'.base64_encode($business_id)) }}" 
+                           action="{{ url('/front_users/process_login_for_share/'.base64_encode($business_id)) }}"
                            enctype="multipart/form-data"
                            >
 

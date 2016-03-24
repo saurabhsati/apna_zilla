@@ -323,16 +323,23 @@
          //droupdown//
 
          $( document.body ).on( 'click', '.dropdown-menu li', function( event ) {
+           var select_location=$('#business_search_by_location').val();
+           if(select_location=='')
+           {
+           // open location model popup
+          // $('.modal-open').open();
+           $('#loc').modal('toggle');
 
+           }
+           else
+           {
            var $target = $( event.currentTarget );
-
            $target.closest( '.btn-group' )
            .find( '[data-bind="label"]' ).text( $target.text() )
            .end()
            .children( '.dropdown-toggle' ).dropdown( 'toggle' );
-
            return false;
-
+          }
          });
          $(function() {
           $('#list_click').click(function() {
@@ -352,13 +359,18 @@
          var business_search_by_location=$("#business_search_by_location").val();
          var search_under_category=$("#search_under_category").val();
          var search_under_city=$("#business_search_by_city").val();
+         var session_city="{{Session::get('city')}}";
          if(search_under_city!='')
          {
           var city=search_under_city;
          }
+          else if(session_city!='')
+         {
+          var city=session_city;
+         }
          else
          {
-           var city="{{Session::get('city')}}";
+            var city="Mumbai";
          }
          var category_id=$("#category_id").val();
          if(business_search_by_location=='')

@@ -126,11 +126,8 @@ class CategorySearchController extends Controller
      // dd($cat_location);
       if(!empty($cat_location))
       {
-         //$loc_arr=explode('-',$cat_location[1]);
-         echo $loc=str_replace('-',' ',$cat_location[1]);
-         //$cat_explode=explode('-',$cat_location[0]);
-         echo $category_set=str_replace('-',' ',$cat_location[0]);
-
+         $loc=str_replace('-',' ',$cat_location[1]);
+         $category_set=str_replace('-',' ',$cat_location[0]);
       }
 //dd($loc_arr);
       $page_title ='Search by Location ';
@@ -211,6 +208,7 @@ class CategorySearchController extends Controller
         {
             $arr_sub_cat = $obj_sub_cat->toArray();
         }
-return view('front.listing.index',compact('page_title','arr_business','city','arr_sub_cat','parent_category','sub_category','loc'));
+        //dd($loc);
+return view('front.listing.index',compact('page_title','arr_business','city','arr_sub_cat','parent_category','sub_category','loc','category_set'));
     }
 }
