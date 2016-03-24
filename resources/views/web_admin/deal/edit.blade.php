@@ -105,7 +105,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="discount_price">Discounted Price<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="discount_price">Discount<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" name="discount_price" id="discount_price" value="{{ $deal_arr['discount_price'] }}" data-rule-required="true"  data-rule-price="true"/>
                     <span class='help-block'>{{ $errors->first('discount_price') }}</span>

@@ -77,16 +77,21 @@
                      <!-- All Deals -->
                         <div>
                        <div class="row">
+                       <?php //echo( 1 - ( 75 / 100 ))*100;
+                      // echo round($deals['price']-(($deals['price'])*($deals['discount_price']/100)));
+                       //echo round(30-((30)*(50/100)));
+                       ?>
+
                      @if(sizeof($arr_deals_info)>0)
                           @foreach($arr_deals_info as $deals)
                              <div class="col-sm-6 col-md-3 col-lg-3">
                               <div class="dels">
-                              <div class="deals-img"><span class="discount ribbon">{{(($deals['price']-$deals['discount_price'])/100)}}%</span><img src="{{ url('/')}}/uploads/deal/{{$deals['deal_image']}}" alt="img" width="250" height="200" /></div>
+                              <div class="deals-img"><span class="discount ribbon">{{$deals['discount_price'] }}%</span><img src="{{ url('/')}}/uploads/deal/{{$deals['deal_image']}}" alt="img" width="250" height="200" /></div>
                               <div class="deals-product">
                               <div class="deals-nm"><a href="#">{{ $deals['name'] }}</a></div>
                               <div class="online-spend">£30 to spend online</div>
                                       <div class="price-box">
-                                      <div class="price-new">£{{ $deals['discount_price'] }}</div>
+                                      <div class="price-new">£<?php echo round($deals['price']-(($deals['price'])*($deals['discount_price']/100)));?></div>
                                           <div class="price-old">£{{ $deals['price'] }} <!--| <span>offers 50% OFF</span>--></div>
                                           <div class="view"><a href="#" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
                                       </div>
@@ -106,12 +111,12 @@
 
                           <div class="col-sm-6 col-md-3 col-lg-3">
                           <div class="dels">
-                          <div class="deals-img"><span class="discount ribbon">{{(($max_dis_deals['price']-$max_dis_deals['discount_price'])/100)*100}}% </span><img src="{{ url('/')}}/uploads/deal/{{$max_dis_deals['deal_image']}}" alt="img" width="250" height="200" /></div>
+                          <div class="deals-img"><span class="discount ribbon">{{$max_dis_deals['discount_price'] }}%</span><img src="{{ url('/')}}/uploads/deal/{{$max_dis_deals['deal_image']}}" alt="img" width="250" height="200" /></div>
                           <div class="deals-product">
                           <div class="deals-nm"><a href="#">{{ $max_dis_deals['name'] }}</a></div>
                           <div class="online-spend">£30 to spend online</div>
                                   <div class="price-box">
-                                  <div class="price-new">£{{ $max_dis_deals['discount_price'] }}</div>
+                                  <div class="price-new">£<?php echo round($max_dis_deals['price']-(($max_dis_deals['price'])*($max_dis_deals['discount_price']/100)));?></div>
                                       <div class="price-old">£{{ $max_dis_deals['price'] }} <!--| <span>offers 50% OFF</span>--></div>
                                       <div class="view"><a href="#" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
                                   </div>
