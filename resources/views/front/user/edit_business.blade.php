@@ -24,26 +24,26 @@
       {{ csrf_field() }}
 
       @foreach($arr_business_details as $business)
-     
 
            <div class="col-sm-9 col-md-9 col-lg-9">
           <div class="box_profile">              
 
                   <div class="col-sm-3 col-md-3 col-lg-3">
-                <div class="profile_box">
-                    <div class="ig_profile" id="dvPreview">  
-
-                    @if($business['main_image']=="default.jpg")
-                      <img src="{{ url('/') }}/uploads/business/main_image/{{ $business['main_image'] }}" width="200" height="200" id="preview_profile_pic"  />
-                    @else
-                      <img src="{{ url('/') }}/uploads/business/main_image/{{ $business['main_image'] }}" width="200" height="200" id="preview_profile_pic"  />
-                    @endif
-                    </div>
+                  <div class="profile_box">
+                    <!-- <div class="ig_profile" id="dvPreview"  > -->
+                          <div class="" id="dvPreview"  >
+                          @if($business['main_image']=="default.jpg")
+                            <img src="{{ url('/') }}/uploads/business/main_image/{{ $business['main_image'] }}" style="height: 200px; width:200px; margin-bottom: 10px; " id="preview_profile_pic"  />
+                          @else
+                            <img src="{{ url('/') }}/uploads/business/main_image/{{ $business['main_image'] }}" style="height: 200px; width:200px;margin-bottom: 10px;"  id="preview_profile_pic"  />
+                          @endif
+                          </div>
                         <div class="button_shpglst">
-                        <div class="fileUpload or_btn">
-                        <span>Upload Photo</span>
-                        <input id="fileupload" type="file" name="profile_pic" class="upload change_pic" onchange="loadPreviewImage(this)"></div>
-                       <div class="remove_b" onclick="clearPreviewImage()"><a href="#"><i class="fa fa-times"></i> Remove</a></div>                               
+                        <div style="margin-left: 40px;" class="fileUpload or_btn">
+                          <span>Upload Photo</span>
+                          <input id="fileupload" type="file" name="profile_pic" class="upload change_pic" onchange="loadPreviewImage(this)">
+                        </div>
+                       <div class="remove_b" onclick="clearPreviewImage()"><a href="#" style="margin-left: 40px;"><i class="fa fa-times"></i> Remove</a></div>                               
                      <div class="clr"></div>
                     <div class="line">&nbsp;</div>
                     </div>                  
@@ -72,7 +72,7 @@
                     @foreach($arr_cat_full_details as $cat)
                       <option value="{{ $cat['title'] }}">{{ $cat['title'] }}</option>
 
-                      <?php
+                        <?php
                         $no_of_categories--;
                         if($no_of_categories<1)
                         

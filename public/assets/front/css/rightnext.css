@@ -517,7 +517,7 @@ select.input_acct {
 
 .ig_profile { padding-bottom: 25px; padding-top: 2px;}
 .remove_b  a{ color: #767676;display: inline-block;margin-bottom: 10px;margin-top: 10px;max-width: 150px;text-align: center;width: 100%;}
-#dvPreview.ig_profile > img { height: 150px;max-width: 150px;width: 100%;}
+#dvPreview.ig_profile > img {height: 150px;max-width: 150px;width: 100%;}
 .fileUpload span { border-width: 0; cursor: pointer; opacity: 1; outline: medium none;text-indent: -999em;}
 .or_btn { background: #e6ab2a;color: #fff;display: inline-block;max-width: 150px;padding: 6px;text-align: center;text-transform: capitalize;width: 100%;}
 .fileUpload {overflow: hidden;position: relative;}

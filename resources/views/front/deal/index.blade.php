@@ -150,8 +150,8 @@
          $('.tag.example .ui.dropdown')
          .dropdown({
          allowAdditions: true
-         })
-         ;
+         });
+         
       </script>
       <script type="text/javascript">
          $(document).ready(function () {
@@ -261,12 +261,13 @@ if ($("html").hasClass("no-touch")) {
 
  } //END IF no-touch for hover script & removeAttr for the links to work
 </script>
-       <script>
+
+<script>
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
 });
 </script>
-         <script src="{{ url('/')}}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>
-            <link href="{{ url('/')}}/assets/front/css/easy-responsive-tabs.css" rel="stylesheet" type="text/css" />
+        <script src="{{ url('/')}}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>
+        <link href="{{ url('/')}}/assets/front/css/easy-responsive-tabs.css" rel="stylesheet" type="text/css" />
 
 @endsection

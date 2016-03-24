@@ -156,37 +156,54 @@ class UserController extends Controller
 
         $obj_user_info = UserModel::where('email','=',$email)->get();
 
+
         if($obj_user_info!=FALSE)
         {
             $arr_user_info = $obj_user_info->toArray();
         }
+        echo "<pre>";
+        print_r($arr_user_info);
+       
 
         $user_id = $arr_user_info[0]['id'];
-                
+
         $user = Sentinel::findById($user_id);
 
         $profile_pic = "default.jpg";
 
         if ($request->hasFile('profile_pic'))
         {
-            $profile_pic_valiator = Validator::make(array('profile_pic'=>$request->file('profile_pic')),array(
-                                                'profile_pic' => 'mimes:jpg,jpeg,png'
-                                            ));
+            $profile_pic_valiator = Validator::make(array('profile_pic'=>$request->file('profile_pic')),array( 'profile_pic' => 'mimes:jpg,jpeg,png' ));
 
             if ($request->file('profile_pic')->isValid() && $profile_pic_valiator->passes())
             {
-                $cv_path = $request->file('profile_pic')->getClientOriginalName();
-                $image_extension = $request->file('profile_pic')->getClientOriginalExtension();
-                $image_name = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
-                $request->file('profile_pic')->move(
-                    $this->profile_pic_base_path, $image_name
-                );
+                $cv_path            = $request->file('profile_pic')->getClientOriginalName();
+                $image_extension    = $request->file('profile_pic')->getClientOriginalExtension();
+                $image_name         = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
 
+                if(isset($arr_user_info[0]['profile_pic']))
+                {
+                  @unlink($this->profile_pic_base_path.'/'.$arr_user_info[0]['profile_pic']);
+                }
+
+                $request->file('profile_pic')->move( $this->profile_pic_base_path, $image_name);
                 $profile_pic = $image_name;
             }
             else
             {
                 return redirect()->back();
+            }
+
+        }
+        else
+        {
+           if(isset($arr_user_info[0]['profile_pic'])) 
+            {
+               $profile_pic = $arr_user_info[0]['profile_pic'];
+            } 
+            else 
+            { 
+               $profile_pic = "default.jpg"; 
             }
 
         }
@@ -504,6 +521,7 @@ class UserController extends Controller
 
         if($business_update)
         {
+            Session::flash('success','Business Updated Successfully');
             return redirect()->back();
         }
 
