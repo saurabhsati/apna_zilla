@@ -35,6 +35,10 @@
        <div class="sidebar-brand">Related Categories<span class="spe_mobile"><a href="#"></a></span></div>
        <div class="bor_head">&nbsp;</div>
        <ul class="spe_submobile">
+        <?php
+
+           //die;
+        ?>
         @if(isset($arr_sub_cat) && sizeof($arr_sub_cat)>0)
         @foreach($arr_sub_cat as $category)
         <?php  $current_cat=explode('-',Request::segment(3));
@@ -60,7 +64,8 @@
      <div class="sorted_by">Sort By :</div>
      <div class="filter_div">
        <ul>
-        <li><a href="#" class="active">Most Popular </a></li>
+
+        <li><a href="javascript:void(0);" class="<?php if(!Session::has('review_rating')){echo"active";} ?>" onclick="clearRating();">Most Popular </a></li>
         <li>
           <a class="act" data-toggle="modal" data-target="#loc">Location</a>
         </li>
@@ -95,7 +100,7 @@
                { $location="";}
 
              ?>
-         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+         <ul class="dropdown-menu distance_dropdown" aria-labelledby="dropdownMenu1">
            <li><a href="#" onclick="return setdistance('<?php echo $city;?>','1','<?php echo $category_search;?>','<?php echo $location;?>');">1 km</a></li>
            <li><a href="#" onclick="return setdistance('<?php echo $city;?>','2','<?php echo $category_search;?>','<?php echo $location;?>');">2 km</a></li>
            <li><a href="#" onclick="return setdistance('<?php echo $city;?>','3','<?php echo $category_search;?>','<?php echo $location;?>');">3 km</a></li>
@@ -105,7 +110,7 @@
 
        </li>
       <input type="hidden" name="current_url" value="{{ url('/') }}/{{$city}}/all-options/ct-{{$category['cat_id']}}">
-       <li><a href="#" class="active" onclick="orderByRating();" >Ratings <span><i class="fa fa-long-arrow-up"></i></span></a></li>
+       <li><a href="javascript:void(0);" class="<?php if( Session::has('review_rating')){echo"active";} ?>" <?php if(Session::has('review_rating')){ ?>onclick="javascript:void(0);" <?php }else{ ?>onclick="orderByRating();" <?php } ?>>Ratings <span><i class="fa fa-long-arrow-up"></i></span></a></li>
 
        <li>
          <div class="btn-group btn-input clearfix">
@@ -158,6 +163,16 @@
                value="{{Session::get('search_city_title')}}"
                @else
                 value="{{Session::get('city')}}"
+               @endif
+                />
+                 <input type="hidden" class="input-searchbx " id="location_latitude"
+               @if(Session::has('location_latitude'))
+               value="{{Session::get('location_latitude')}}"
+               @endif
+               />
+                 <input type="hidden" class="input-searchbx " id="location_longitude"
+               @if(Session::has('location_longitude'))
+               value="{{Session::get('location_longitude')}}"
                @endif
                 />
 
@@ -319,8 +334,8 @@
 </div>
 
 </div>
-<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>-->
- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+ <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
 
 <script type="text/javascript">
 
@@ -348,6 +363,9 @@
                     $("input[name='location_search']").val(ui.item.label);
                     $("#business_search_by_location").attr('value',ui.item.loc_slug);
                     $("#location_search").attr('value',ui.item.loc);
+                    $('#location_latitude').attr('value',ui.item.loc_lat);
+                    $('#location_longitude').attr('value',ui.item.loc_lng);
+
                   },
                   response: function (event, ui)
                   {
@@ -362,7 +380,7 @@
 
          //droupdown//
 
-         $( document.body ).on( 'click', '.dropdown-menu li', function( event ) {
+         $( document.body ).on( 'click', '.distance_dropdown li', function( event ) {
 
            var select_location=$('#business_search_by_location').val();
            if(select_location=='')
@@ -404,6 +422,9 @@
          var search_under_category=$("#search_under_category").val();
          var search_under_city=$("#business_search_by_city").val();
          var session_city="{{Session::get('city')}}";
+         var loc_lat=$("#location_latitude").val();
+         var loc_lng=$("#location_longitude").val();
+
          if(search_under_city!='')
          {
           var city=search_under_city;
@@ -416,6 +437,7 @@
          {
             var city="Mumbai";
          }
+
          var category_id=$("#category_id").val();
          if(business_search_by_location=='')
           {
@@ -425,115 +447,135 @@
           }
           else
           {
-            /*ww.justdial.com/Nashik/Indian-Restaurants-<near>-Nashik-Pune-Road-Dwarka/ct-10263652
-            */ var get_url=site_url+'/'+city+'/'+search_under_category+'@'+business_search_by_location+'/'+'ct-'+category_id;
-              window.location.href = get_url;
+            if(loc_lat!='' && loc_lng!='')
+           {
+
+
+            var fromData = {
+                            lat:loc_lat,
+                            lng:loc_lng,
+                            _token:csrf_token
+                              };
+                          $.ajax({
+                             url: site_url+"/set_location_lat_lng",
+                             type: 'POST',
+                             data: fromData,
+                             dataType: 'json',
+                             async: false,
+
+                             success: function(response)
+                             {
+                               if (response.status == "1") {
+                                  var get_url=site_url+'/'+city+'/'+search_under_category+'@'+business_search_by_location+'/'+'ct-'+category_id;
+                                  //alert(get_url);
+                                  window.location.href = get_url;
+                               }
+                               return false;
+                             }
+                         });
+
+             }
           }
         });
 
-    function setdistance(city,distance,category,location)
-    {
-         var business_search_by_location=location;
-         var search_under_category=category;
-         var search_under_city=city;
-         var distance=distance;
-         var session_city="{{Session::get('city')}}";
-         if(search_under_city!='')
-         {
-          var city=search_under_city;
-         }
-          else if(session_city!='')
-         {
-          var city=session_city;
-         }
-         else
-         {
-            var city="Mumbai";
-         }
-         var category_id=$("#category_id").val();
-         if(business_search_by_location=='')
-          {
-              alert("Select Location");
-              event.preventDefault();
-              return false;
-          }
-          else
-          {
-
-             var geocoder =  new google.maps.Geocoder();
-             geocoder.geocode( { 'address': business_search_by_location }, function(results, status) {
-              if (status == google.maps.GeocoderStatus.OK) {
-                var lat=results[0].geometry.location.lat();
-                var lng=results[0].geometry.location.lng();
+        function setdistance(city,distance,category,location)
+        {
+             var business_search_by_location=location;
+             var search_under_category=category;
+             var search_under_city=city;
+             var distance=distance;
+             var session_city="{{Session::get('city')}}";
+             if(search_under_city!='')
+             {
+              var city=search_under_city;
+             }
+              else if(session_city!='')
+             {
+              var city=session_city;
+             }
+             else
+             {
+                var city="Mumbai";
+             }
+             var category_id=$("#category_id").val();
+             if(business_search_by_location=='')
+              {
+                  alert("Select Location");
+                  event.preventDefault();
+                  return false;
+              }
+              else
+              {
                 var fromData = {
-                            business_search_by_location:business_search_by_location,
-                            search_under_category:search_under_category,
-                            search_under_city:search_under_city,
-                            distance:distance,
-                            lat:lat,
-                            lng:lng,
-                             _token:csrf_token
-                              };
-            $.ajax({
-               url: site_url+"/set_distance_range",
-               type: 'POST',
-               data: fromData,
-               dataType: 'json',
-               async: false,
+                                business_search_by_location:business_search_by_location,
+                                search_under_category:search_under_category,
+                                search_under_city:search_under_city,
+                                distance:distance,
+                                _token:csrf_token
+                                  };
+                              $.ajax({
+                                 url: site_url+"/set_distance_range",
+                                 type: 'POST',
+                                 data: fromData,
+                                 dataType: 'json',
+                                 async: false,
 
-               success: function(response)
-               {
-                 if (response.status == "1") {
+                                 success: function(response)
+                                 {
+                                   if (response.status == "1") {
 
-                   var get_url=site_url+'/'+city+'/'+search_under_category+'@'+business_search_by_location+'/'+'ct-'+category_id;
-                   window.location.href = get_url;
-                  //window.location.href = location.href;
-                 }
-                 return false;
+                                     var get_url=site_url+'/'+city+'/'+search_under_category+'@'+business_search_by_location+'/'+'ct-'+category_id;
+                                     window.location.href = get_url;
+                                    //window.location.href = location.href;
+                                   }
+                                   return false;
+                                 }
+                             });
                }
-           });
-
-
-
-
-              }
-              else {
-              console.log("fail");
-
-              }
-            });
-
-           }
 
         }
 
         function orderByRating()
         {
-          var city_search=$("#city_search").val();
-         var category_search=$("#category_search").val();
-           if(city_search!='')
-          {
-            city=city_search;
-          }
-          var category_id=$("#category_id").val();
-          if(category_search=='')
-          {
-              alert("Select Category First");
-              event.preventDefault();
-              return false;
-          }
-          else
-          {
-             var dataString = { review_rating:'higher', _token: csrf_token };
-              var url_run= site_url+'/'+city+'/all-options/ct-'+category_id;
-              $.get( url_run, dataString)
-                  .done(function( data ) {
-                    /*if(data=='done'){
+                    var fromData = { _token:csrf_token
+                              };
+                    $.ajax({
+                             url: site_url+"/set_rating",
+                             type: 'POST',
+                             dataType: 'json',
+                             data: fromData,
+                             async: false,
+                             success: function(response)
+                             {
+                               if (response.status == "1") {
+                                  var current_url = $(location).attr('href');
+                                  window.location.href=current_url;
+                              }
+                             }
 
-                    }*/
-                  });
-          }
-       }
+                         });
+        }
+        function clearRating()
+        {
+                    var fromData = { _token:csrf_token
+                              };
+                    $.ajax({
+                             url: site_url+"/clear_rating",
+                             type: 'POST',
+                             dataType: 'json',
+                             data: fromData,
+                             async: false,
+                             success: function(response)
+                             {
+                               if (response.status == "1") {
+                                  var current_url = $(location).attr('href');
+                                  window.location.href=current_url;
+                              }
+                             }
+
+                         });
+        }
+
        </script>
       @endsection
 

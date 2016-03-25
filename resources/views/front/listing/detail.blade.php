@@ -482,36 +482,34 @@
            <div class="col-sm-12 col-md-12 col-lg-12">
                <div class="title_main">Related Listing</div>
             <div class="row">
-              @if(isset($arr_business) && sizeof($arr_business)>0)
-                @foreach($arr_business as $related_business)
+              @if(isset($all_related_business) && sizeof($all_related_business)>0)
+                @foreach($all_related_business as $related_business)
 
-                @if($related_business['business_by_category']['id']!=$arr_business_details['id'])
+
 
                    <div class="col-sm-3 col-md-3">
                     <div class="product_info">
                        <div class="p_images-detail">
                          <?php
-                           $slug_business=str_slug($related_business['business_by_category']['business_name']);
-                           $slug_area=str_slug($related_business['business_by_category']['area']);
+                           $slug_business=str_slug($related_business['business_name']);
+                           $slug_area=str_slug($related_business['area']);
                            $business_area=$slug_business.'<near>'.$slug_area;
                           ?>
-                           <div class="name_product"> <a href="{{url('/')}}/{{$city}}/{{$business_area}}/{{base64_encode($related_business['business_by_category']['id'])}}" style="color: #ffffff;">{{ $related_business['business_by_category']['business_name'] }}</a></div>
+                           <div class="name_product"> <a href="{{url('/')}}/{{$city}}/{{$business_area}}/{{base64_encode($related_business['id'])}}" style="color: #ffffff;">{{ $related_business['business_name'] }}</a></div>
 
-                            <img src="{{ url('/') }}/uploads/business/main_image/{{ $related_business['business_by_category']['main_image'] }}" alt="product img"/>
+                            <img src="{{ url('/') }}/uploads/business/main_image/{{ $related_business['main_image'] }}" alt="product img"/>
 
                         </div>
                        <div class="p_infor_detail">
-                        <span class="pull-left address-icon-img"><img src="{{ url('/') }}/assets/front/images/home_map.png" alt="location"/>{{$related_business['business_by_category']['area']}}</span>
+                        <span class="pull-left address-icon-img"><img src="{{ url('/') }}/assets/front/images/home_map.png" alt="location"/>{{$related_business['area']}}</span>
                         <span class="pull-right"><i class="fa fa-star-o ylow"></i></span>
 
                         </div>
                        </div>
                     </div>
-
-                   @endif
-
-                 @endforeach
-
+                  @endforeach
+                   @else
+                    <span class="col-sm-3 col-md-3 col-lg-3">No related records found !</span>
                @endif
 
                </div>

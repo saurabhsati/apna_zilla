@@ -12,8 +12,12 @@ use App\Models\BusinessCategoryModel;
 use App\Models\CityModel;
 use DB,Event;
 use Session;
+use URL;
+//use Request;
+
 class CategorySearchController extends Controller
 {
+
    public function __construct()
     {
     }
@@ -22,6 +26,7 @@ class CategorySearchController extends Controller
     {
       $current_city='';
       $current_city = Session::get('city');
+
       if(!empty($current_city))
       {
         $c_city=$current_city;
@@ -62,11 +67,11 @@ class CategorySearchController extends Controller
           }
         }
 
-      $obj_business_listing = BusinessCategoryModel::where('category_id',$cat_id)->get();
-      if($obj_business_listing)
+      $obj_business_listing_cat = BusinessCategoryModel::where('category_id',$cat_id)->get();
+      if($obj_business_listing_cat)
       {
-        $obj_business_listing->load(['business_by_category','business_rating']);
-        $arr_business_by_category = $obj_business_listing->toArray();
+        $obj_business_listing_cat->load(['business_by_category','business_rating']);
+        $arr_business_by_category = $obj_business_listing_cat->toArray();
       }
       $key_business_cat=array();
       if(sizeof($arr_business_by_category)>0)
@@ -83,7 +88,17 @@ class CategorySearchController extends Controller
           if(sizeof($result)>0)
           {
 
-            $obj_business_listing = BusinessListingModel::whereIn('id', $result)->with(['reviews'])->get();
+            $obj_business_listing = BusinessListingModel::whereIn('id', $result)->with(['reviews']);
+            if( Session::has('review_rating'))
+            {
+               $obj_business_listing->orderBy('avg_rating','DESC');
+            }
+            else
+            {
+             $obj_business_listing->orderBy('visited_count','DESC');
+            }
+            $obj_business_listing=$obj_business_listing->get();
+            //dd($obj_business_listing->toSql());
             if($obj_business_listing)
             {
               $arr_business = $obj_business_listing->toArray();
@@ -184,15 +199,23 @@ class CategorySearchController extends Controller
                                                    ->orwhere("landmark", 'like', "%".$loc."%")
                                                    ->orwhere("building", 'like', "%".$loc."%");
                                                  })->with(['reviews']);
+
                                                 //->get();
 
                                                  /*$obj_business_listing->toSql();
                                                   dd($obj_business_listing);
                                                  exit;*/
-                if(Session::has('preferred_latitude') && Session::has('preferred_longitude'))
+                                                 //echo Session::get('location_latitude');
+                if(Session::has('location_latitude') && Session::has('location_longitude'))
+                {
+                    $latitude=Session::has('location_latitude') ? Session::get('location_latitude'):'51.033320760';
+                    $longitude=Session::has('location_longitude') ? Session::get('location_longitude'):'13.757242110';
+
+
+               /* if(Session::has('preferred_latitude') && Session::has('preferred_longitude'))
                 {
                     $latitude=Session::has('preferred_latitude') ? Session::get('preferred_latitude'):'51.033320760';
-                    $longitude=Session::has('preferred_latitude') ? Session::get('preferred_longitude'):'13.757242110';
+                    $longitude=Session::has('preferred_latitude') ? Session::get('preferred_longitude'):'13.757242110';*/
                      $qutt='*,ROUND( 6371 * acos (
                         cos ( radians('.$latitude.') )
                         * cos( radians( `lat` ) )
@@ -210,9 +233,17 @@ class CategorySearchController extends Controller
                       }
 
                 }
+                 if( Session::has('review_rating'))
+                {
+                   $obj_business_listing->orderBy('avg_rating','DESC');
+                }else
+                {
+                  $obj_business_listing->orderBy('visited_count','DESC');
+                }
+
 
                 $obj_business_listing= $obj_business_listing->get();
-
+                //dd($obj_business_listing->toSql());
 
                 if($obj_business_listing)
                 {
@@ -245,7 +276,16 @@ class CategorySearchController extends Controller
         //dd($loc);
          return view('front.listing.index',compact('page_title','arr_business','city','arr_sub_cat','parent_category','sub_category','loc','category_set'));
     }
+    public function set_location_lat_lng(Request $request)
+    {
+            $lat = $request->input('lat');
+            $lng = $request->input('lng');
+            Session::put('location_latitude',$lat);
+            Session::put('location_longitude',$lng);
+            $result['status'] ="1";
+            return response()->json($result);
 
+    }
 
     public function set_distance_range(Request $request)
     {
@@ -253,12 +293,21 @@ class CategorySearchController extends Controller
             $search_under_category = $request->input('search_under_category');
             $search_under_city = $request->input('search_under_city');
             $distance = $request->input('distance');
-            $lat = $request->input('lat');
-            $lng = $request->input('lng');
-            Session::put('preferred_latitude',$lat) ;
-            Session::put('preferred_longitude',$lng);
-            Session::put('distance',$distance);
-           $result['status'] ="1";
+
+            $result['status'] ="1";
+            return response()->json($result);
+    }
+
+    public function set_rating()
+    {
+            Session::put('review_rating','higher');
+            $result['status'] ="1";
+            return response()->json($result);
+    }
+    public function clear_rating()
+    {
+            Session::forget('review_rating');
+            $result['status'] ="1";
             return response()->json($result);
     }
 }
