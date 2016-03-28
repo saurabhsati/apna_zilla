@@ -663,6 +663,7 @@ select.input_acct {
  .abot_img_l > img , .abot_img_r > img { width: 100%;}
 
     .phone-number , .addrsss{ min-height: inherit;}
+    .button_save1 .btn.btn-post{  margin: 0 auto 3px;}
 }
 
 
