@@ -463,13 +463,13 @@ class UserController extends Controller
 
         $business_add = BusinessListingModel::create($arr_data);
 
-        if($business_add)
+        /*if($business_add)
         {
             $request->session()->put('category_id', $request->input('category'));
             return redirect(url('/')."front_users/contacts");   
-        }
-
-        //return redirect()->back();
+        }*/
+         Session::flash('success','Business Added Successfully');
+        return redirect()->back();
     }
 
 
@@ -670,7 +670,7 @@ class UserController extends Controller
         $business_update = BusinessListingModel::where('id','=',$business_id)->update($arr_data);
 
         if($business_update)
-        {
+         {
             Session::flash('success','Business Updated Successfully');
             return redirect()->back();
         }
