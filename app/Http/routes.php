@@ -405,6 +405,10 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	Route::get('/get_city_auto','Front\HomeController@get_city_auto');
 	Route::post('/set_city','Front\HomeController@set_city');
 	Route::get('/get_location_auto','Front\HomeController@get_location_auto');
+	Route::post('/set_location_lat_lng','Front\CategorySearchController@set_location_lat_lng');
+	Route::post('/set_distance_range','Front\CategorySearchController@set_distance_range');
+	Route::post('/set_rating','Front\CategorySearchController@set_rating');
+	Route::post('/clear_rating','Front\CategorySearchController@clear_rating');
 
 
 
@@ -462,7 +466,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		
 
 	});
-	
+
 	Route::group(array('prefix' => '/deals'), function()
 	{
 		Route::get('/',									['as' =>'deals_page'								,'uses' =>'Front\DealController@index']);

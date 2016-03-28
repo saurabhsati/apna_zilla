@@ -12,7 +12,7 @@ use App\Models\BusinessCategoryModel;
 use App\Models\CategoryModel;
 use App\Models\ReviewsModel;
 use App\Models\UserModel;
-
+use App\Models\CityModel;
 
 use Sentinel;
 use Session;
@@ -27,7 +27,20 @@ class ListingController extends Controller
 
     public function list_details($city,$slug_area,$enc_id)
     {
-        $id = base64_decode($enc_id);
+
+         $id = base64_decode($enc_id);
+         $obj_business = BusinessListingModel::where('id',$id)->first();
+        if( $obj_business != FALSE)
+        {
+            $_business = $obj_business->toArray();
+        }
+        if(sizeof($_business)>0)
+        {
+          $visited_count=$_business['visited_count'];
+          $update_visited_count= $visited_count+1;
+          $update_data['visited_count']=$update_visited_count;
+          BusinessListingModel::where('id',$id)->update($update_data);
+        }
         $page_title ='List Details';
 
         $arr_business_details = array();
@@ -39,15 +52,56 @@ class ListingController extends Controller
         }
 
         //related listing business start
-        $arr_business = array();
+        $obj_business_listing_city = CityModel::where('city_title',$city)->get();
+       if($obj_business_listing_city)
+       {
+         $obj_business_listing_city->load(['business_details']);
+         $arr_business_by_city = $obj_business_listing_city->toArray();
+       }
+       $key_business_city=array();
+       if(sizeof($arr_business_by_city)>0)
+        {
+          foreach ($arr_business_by_city[0]['business_details'] as $key => $value) {
+            $key_business_city[$value['id']]=$value['id'];
+          }
+        }
+
+        $arr_business_by_category = array();
         $obj_business_listing = BusinessCategoryModel::where('category_id',$arr_business_details['category_details']['category_id'])->limit(4)->get();
 
         if($obj_business_listing)
         {
-            $obj_business_listing->load(['business_by_category']);
-            $arr_business = $obj_business_listing->toArray();
+            $obj_business_listing->load(['business_by_category','business_rating']);
+            $arr_business_by_category = $obj_business_listing->toArray();
 
         }
+         $key_business_cat=array();
+
+      if(sizeof($arr_business_by_category)>0)
+      {
+          foreach ($arr_business_by_category as $key => $value) {
+            $key_business_cat[$value['business_id']]=$value['business_id'];
+          }
+      }
+       if(sizeof($key_business_city)>0 && sizeof($key_business_cat))
+      {
+          $result = array_intersect($key_business_city,$key_business_cat);
+          if(($key = array_search($id, $result)) !== false){
+             unset($result[$key]);
+             }
+          $all_related_business = array();
+          if(sizeof($result)>0)
+          {
+
+            $obj_business_listing = BusinessListingModel::whereIn('id', $result)->with(['reviews'])->get();
+            if($obj_business_listing)
+            {
+              $all_related_business = $obj_business_listing->toArray();
+
+            }
+          }
+      }
+       // dd($result);
         //related listing business end
 
          $obj_category = CategoryModel::where('parent','!=','0')->get();
@@ -67,7 +121,7 @@ class ListingController extends Controller
          }
 
       //dd($arr_business_details);
-        return view('front.listing.detail',compact('page_title','arr_business_details','arr_business','all_category','city','search_by'));
+        return view('front.listing.detail',compact('page_title','arr_business_details','all_related_business','all_category','city','search_by'));
     }
 
 

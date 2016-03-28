@@ -286,6 +286,12 @@ class HomeController extends Controller
                         $arr_final_location_list[$key]['id'] = $list['id'];
                         $arr_final_location_list[$key]['label'] = $list['place_name'];
                         $arr_final_location_list[$key]['loc_slug'] = str_slug($list['place_name']);
+                        $arr_final_location_list[$key]['loc_lat'] = $list['latitude'];
+                        $arr_final_location_list[$key]['loc_lng'] = $list['longitude'];
+                        $arr_final_location_list[$key]['loc'] = str_replace('-',' ',($list['place_name']));
+                         Session::put('business_search_by_location',$list['place_name']);
+                         //Session::put('location_latitude', $list['latitude']) ;
+                         //::put('location_longitude',$list['longitude']);
                     }
 
                 }

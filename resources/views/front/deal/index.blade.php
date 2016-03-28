@@ -1,6 +1,7 @@
 @extends('front.template.master')
 
 @section('main_section')
+
 <!--search area end here-->
  <div class="gry_container" style="padding: 7px 0 16px;">
       <div class="black-strip">
