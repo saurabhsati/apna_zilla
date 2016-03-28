@@ -80,7 +80,8 @@
                     <div class="p_details"><i class="fa fa-phone"></i><span>  {{$business['mobile_number']}}, {{$business['landline_number']}}</span></div>
                     <div class="p_details"><i class="fa fa-map-marker"></i> <span>{{$business['building']}}, {{$business['street']}} <br/>  
                     {{$business['landmark']}}, {{$business['area']}} <br/> </span></div>
-                    <div class="p_details"><a href="#" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>
+                    <div class="p_details">
+                    <!-- <a href="#" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a> -->
                     <ul>
                     <!-- <li><a href="#">SMS/Email</a></li>  -->
                     <li><a href="{{ url('/front_users/edit_business/'.base64_encode($business['id'])) }}" class="active">Edit</a></li>    
