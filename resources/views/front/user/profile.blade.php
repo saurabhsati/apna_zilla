@@ -26,6 +26,27 @@
             </div>
              
             <div class="col-sm-12 col-md-9 col-lg-9">
+
+             @if(Session::has('success'))
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ Session::get('success') }}
+                </div>
+              @endif 
+
+              @if(Session::has('error'))
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ Session::get('error') }}
+                </div>
+              @endif 
+
+
+
             <div class="my_whit_bg">
                  <div class="title_acc">Please provide your personal Information</div>
                    <div class="row">
@@ -73,9 +94,9 @@
                     <div class="ig_profile" id="dvPreview">  
 
                     @if($user['profile_pic']=="default.jpg")
-                      <img src="{{$profile_pic_public_path.'/'.$user['profile_pic']}}" width="200" height="200" id="preview_profile_pic"  />
+                      <img src="{{$profile_pic_public_path.'/'.$user['profile_pic'] }}" width="200" height="200" id="preview_profile_pic"  />
                     @else
-                      <img src="{{$profile_pic_public_path.'/'.$user['profile_pic']}}" width="200" height="200" id="preview_profile_pic"  />
+                      <img src="{{$profile_pic_public_path.'/'.$user['profile_pic'] }}" width="200" height="200" id="preview_profile_pic"  />
                     @endif
                     
                     </div>

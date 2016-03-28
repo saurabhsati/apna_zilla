@@ -19,7 +19,7 @@ class SentinelCheck
      */
     public function handle($request, Closure $next)
     {
-        if(!Sentinel::check())
+        /*if(!Sentinel::check())
         {
             return redirect('/');
         }
@@ -29,12 +29,9 @@ class SentinelCheck
         if($user)
         {   
             $role = Sentinel::findRoleBySlug('restaurant_admin');
-
-            /* To Check The Role  restaurant admin*/
-
+           
             if(Sentinel::inRole($role))
             {  
-                /* To check if user has purchased a membsership */
                
                 $arr_condition           = array('user_id'=>$user->id,'is_active'=>'1');
 
@@ -54,7 +51,7 @@ class SentinelCheck
             }
            
         }
-
+*/
         return $next($request);
     }
 }

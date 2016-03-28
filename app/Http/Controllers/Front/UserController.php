@@ -36,9 +36,7 @@ class UserController extends Controller
         
  	public function store(Request $request)
     {    
-        echo "asdfasdkljfasdkfjklasd";
-
-        exit;
+        
         $arr_rules = array();
         $arr_rules['first_name']   =   "required";
         $arr_rules['last_name']    =   "required";
@@ -56,7 +54,7 @@ class UserController extends Controller
         $last_name      =  $request->input('last_name');
         $email          =  $request->input('email');
         $password       =  $request->input('password');
-    exit;
+    
         /* Duplication Check*/
         $user = Sentinel::createModel();
 
@@ -86,7 +84,7 @@ class UserController extends Controller
 
             $user->roles()->attach($role);
             
-            Session::flash('success','User Created Successfully');
+            Session::flash('success','User Registered Successfully.');
         }
 
         else
