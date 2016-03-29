@@ -45,9 +45,13 @@
         </div>
          <div class="box_contact">
          <div class="alert alert-success fade in " id = "contact_succ" style="display:none;">
-                              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                              <strong>Success!</strong> Thank You ,We will be responding shortly..
-                              </div>
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Success!</strong> Thank You ,We will be responding shortly..
+          </div>
+           <div class="alert alert-danger" style="display:none;" id = "contact_err">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Error!</strong>While Sending Enquiry .
+          </div>
          <form class="form-horizontal"
                            id="contact_form"
                            method="POST"
@@ -195,7 +199,7 @@ $("#contact_submit").click(function(e){
             var tmp="";
             if(res=="success")
             {
-
+              alert("In success");
               $("#contact_succ").fadeIn(3000).fadeOut(3000);
               $("#contact_form").trigger('reset');
             }
