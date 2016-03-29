@@ -86,13 +86,19 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="contact_number">Contact Number<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="contact_number">Mobile Number<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" name="contact_number" id="contact_number" data-rule-required="true" value="{{ $arr_site_setting['site_contact_number'] }}" />
                     <span class='help-block'>{{ $errors->first('contact_number') }}</span>
                 </div>
             </div>
-
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="phone_number">Phone Number<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input class="form-control" name="phone_number" id="phone_number" data-rule-required="true" value="{{ $arr_site_setting['phone_number'] }}" />
+                    <span class='help-block'>{{ $errors->first('phone_number') }}</span>
+                </div>
+            </div>
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="email">Email Id<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
@@ -100,7 +106,13 @@
                     <span class='help-block'>{{ $errors->first('email') }}</span>
                 </div>
             </div>
-
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="map_iframe">Map Iframe<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <textarea class="form-control" name="map_iframe" id="map_iframe" data-rule-required="true" >{{ $arr_site_setting['map_iframe'] }}</textarea>
+                    <span class='help-block'>{{ $errors->first('map_iframe') }}</span>
+                </div>
+            </div>
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="meta_keyword">Meta KeyWords<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">

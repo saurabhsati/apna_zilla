@@ -29,29 +29,39 @@
 
 <div class="container">
  <div class="row">
-
-  <form class="form-horizontal" 
-                           id="validation-form" 
-                           method="POST"
-                           action="{{ url('contact_us/store') }}" 
-                           enctype="multipart/form-data"
-                           >
-
-      {{ csrf_field() }}
-
-   <div class="col-sm-12 col-md-12 col-lg-12">
+ <div class="col-sm-12 col-md-12 col-lg-12">
      <div class="row">
        <div class="col-sm-6 col-md-6 col-lg-6">
-  
+        <div style="position:fixed;
+                top: 0;
+                bottom: 0;
+                left:0;
+                right:0;
+                background-color:#ccc;
+                opacity:0.5;
+                display:none;"
+          id="subscribr_loader">
+                <img src="{{url('/')}}/assets/front/images/ajax-loader.gif" style="height:100px; width:100px; position:absolute; top:35%;left:45%" />
+        </div>
          <div class="box_contact">
+         <div class="alert alert-success fade in " id = "contact_succ" style="display:none;">
+                              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                              <strong>Success!</strong> Thank You ,We will be responding shortly..
+                              </div>
+         <form class="form-horizontal"
+                           id="contact_form"
+                           method="POST"
+                           >
+           {{ csrf_field() }}
            <div class="gren_bor_title">GET IN TOUCH</div>
            <div class="bor_grn">&nbsp;</div>
-           <div class="user_box"><input class="input_acct" type="text" name="name" value="{{ $arr_user_info['first_name'] }}" placeholder="Name"><div class="error_msg"></div></div>
-           <div class="user_box"><input class="input_acct" type="text" name="mobile_no" value="{{ $arr_user_info['mobile_no'] }}" placeholder="Mobile No"><div class="error_msg"></div></div>
-           <div class="user_box"><input class="input_acct" type="text" name="email" value="{{ $arr_user_info['email'] }}" placeholder="Email"><div class="error_msg"></div></div>
-           <div class="user_box">  <textarea class="textarea_box" name="message" placeholder="Message" type=""></textarea><div class="error_msg"></div></div>
+           <div class="user_box"><input class="input_acct" type="text" name="name" id="name" value="" placeholder="Name"><div class="error_msg"></div></div>
+           <div class="user_box"><input class="input_acct" type="text" name="mobile_no" id="mobile_no" value="" placeholder="Mobile No"><div class="error_msg"></div></div>
+           <div class="user_box"><input class="input_acct" type="text" name="email" id="email" value="" placeholder="Email"><div class="error_msg"></div></div>
+           <div class="user_box">  <textarea class="textarea_box" name="message" id="message" placeholder="Message" type=""></textarea><div class="error_msg"></div></div>
            <br/>
-           <button class="pull-left btn btn-post">Submit now</button>
+           <button class="pull-left btn btn-post" id="contact_submit" type="submit" name="contact_submit">Submit now</button>
+           </form>
            <div class="clr"></div>
          </div>
 
@@ -64,11 +74,11 @@
               <div class="bor_grn">&nbsp;</div>
               <div class="user_box">
                <span><img src="{{ url('/') }}/assets/front/images/map.png" alt="contcat us map"/></span>
-               <div class="addrsss">Rightnext Mall 39, M.G. Road Boulevard Ground Floor London</div>
-             </div>
+               <div class="addrsss">@if($arr_site_setting['site_address']!=''){{$arr_site_setting['site_address']}}@endif</div>
+             <input type="hidden" id="site_address" value="@if($arr_site_setting['site_address']!=''){{$arr_site_setting['site_address']}}@endif">             </div>
              <div class="user_box">
                <span><img src="{{ url('/') }}/assets/front/images/msg.png" alt="message"/></span>
-               <div class="addrsss">info@rightnext.com</div>
+               <div class="addrsss">@if($arr_site_setting['site_email_address']!=''){{$arr_site_setting['site_email_address']}}@endif</div>
              </div>
 
            </div>
@@ -77,12 +87,12 @@
              <div class="bor_grn">&nbsp;</div>
              <div class="user_box">
                <span><img src="{{ url('/') }}/assets/front/images/phone.png" alt="contcat us map"/></span>
-               <div class="phone-number">+01-234-5789</div>
+               <div class="phone-number">@if($arr_site_setting['site_contact_number']!=''){{$arr_site_setting['site_contact_number']}}@endif</div>
              </div>
 
              <div class="user_box">
                <span><img src="{{ url('/') }}/assets/front/images/ph.png" alt="contcat us map"/></span>
-               <div class="phone-number">0333 011 1901</div>
+               <div class="phone-number">@if($arr_site_setting['phone_number']!=''){{$arr_site_setting['phone_number']}}@endif</div>
              </div>
            </div>
          </div>
@@ -98,12 +108,113 @@
    </div>
    <div class="gren_bor_title">Map and Location</div>
    <div class="bor_grn">&nbsp;</div>
-   <div class="map"> <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3749.453253030988!2d73.80146181487628!3d19.989482927817193!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bddeae4e0245423%3A0xeb6a128eb0f552ae!2sWebwing+Technologies!5e0!3m2!1sen!2sin!4v1455886533191" width="100%" height="403" frameborder="0" style="border:0" allowfullscreen></iframe>
+   <div class="map"><!-- @if($arr_site_setting['map_iframe']!=''){{$arr_site_setting['map_iframe']}}@endif -->
+   <?php if($arr_site_setting['map_iframe']!=''){ echo $arr_site_setting['map_iframe']; }?>
+   <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3749.453253030988!2d73.80146181487628!3d19.989482927817193!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bddeae4e0245423%3A0xeb6a128eb0f552ae!2sWebwing+Technologies!5e0!3m2!1sen!2sin!4v1455886533191" width="100%" height="403" frameborder="0" style="border:0" allowfullscreen></iframe> -->
    </div>
 
  </div>
- </form>
+
 </div>
 </div>
 </div>
+<script type="text/javascript">
+var site_url="{{url('/')}}";
+$("#contact_submit").click(function(e){
+  e.preventDefault();
+      var name=$('#name').val();
+      var email=$('#email').val();
+      var mobile_no=$('#mobile_no').val();
+      var message=$("#message").val();
+      var filter = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
+      var filter_contact=/^(?:(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d?)\)?)?[\-\.\ \\\/]?)?((?:\(?\d{1,}\)?[\-\.\ \\\/]?){0,})(?:[\-\.\ \\\/]?(?:#|ext\.?|extension|x)[\-\.\ \\\/]?(\d+))?$/i;
+
+      if(name.trim()=='')
+      {
+        $('#name').show();
+        $('#name').fadeIn(3000);
+        $('#name').attr('placeholder','Please enter name');
+        $('#name').focus();
+        return false;
+      }
+        else if(mobile_no.trim()=='')
+      {
+        $('#mobile_no').show();
+        $('#mobile_no').fadeIn(3000);
+        $('#mobile_no').attr('placeholder','Please enter  phone number');
+        $('#mobile_no').focus();
+        return false;
+      }
+      else if(!filter_contact.test(mobile_no))
+      {
+        $('#mobile_no').show();
+        $('#mobile_no').fadeIn(3000);
+        $('#mobile_no').attr('placeholder','Please enter valid phone number');
+        $('#mobile_no').focus();
+        return false;
+      }
+      else if(email.trim()=='')
+      {
+        $('#email').show();
+        $('#email').fadeIn(3000);
+        $('#email').attr('placeholder','Please enter Email Address');
+        $('#email').focus();
+        return false;
+
+      }
+      else if(!filter.test(email))
+     {
+        $('#email').show();
+        $('#email').fadeIn(3000);
+        $('#email').attr('placeholder','Please enter valid Email Address');
+        $('#email').focus();
+        return false;
+       }
+
+      else if(message.trim()=='')
+      {
+        $('#message').show();
+        $('#message').fadeIn(3000);
+        $('#message').attr('placeholder','Please enter message');
+        $('#message').focus();
+        return false;
+      }
+
+      else
+      {
+        $.ajax({
+          type:"POST",
+          url:site_url+'/contact_us/store',
+          data:$("#contact_form").serialize(),
+          beforeSend: function()
+          {
+            $("#subscribr_loader").show();
+          },
+          success:function(res)
+          {
+            var tmp="";
+            if(res=="success")
+            {
+
+              $("#contact_succ").fadeIn(3000).fadeOut(3000);
+              $("#contact_form").trigger('reset');
+            }
+            else
+            {
+
+              $("#contact_err").fadeIn(3000).fadeOut(3000);
+            }
+          },
+          complete: function() {
+
+          $("#subscribr_loader").hide();
+
+          }
+        });
+
+
+      }
+
+});
+</script>
 @endsection

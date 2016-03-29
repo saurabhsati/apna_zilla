@@ -27,8 +27,13 @@ class ListingController extends Controller
 
     public function list_details($city,$slug_area,$enc_id)
     {
+           $enc_id;
+          $id = base64_decode($enc_id);
+         if($id=='')
+         {
 
-         $id = base64_decode($enc_id);
+          return redirect()->back();
+         }
          $obj_business = BusinessListingModel::where('id',$id)->first();
         if( $obj_business != FALSE)
         {
@@ -119,9 +124,24 @@ class ListingController extends Controller
               }
               //echo Session::get('search_by');
          }
-
+        $sub_category='';
+        $obj_sub_category = CategoryModel::where('cat_id',$arr_business_by_category[0]['category_id'])->get();
+        if($obj_sub_category)
+        {
+            $sub_category = $obj_sub_category->toArray();
+        }
+         $parent_category='';
+         if(sizeof($sub_category)>0)
+        {
+          $main_cat_id=$sub_category[0]['parent'];
+           $obj_parent_category = CategoryModel::where('cat_id',$main_cat_id)->get();
+            if($obj_parent_category)
+            {
+                $parent_category = $obj_parent_category->toArray();
+            }
+        }
       //dd($arr_business_details);
-        return view('front.listing.detail',compact('page_title','arr_business_details','all_related_business','all_category','city','search_by'));
+        return view('front.listing.detail',compact('page_title','arr_business_details','parent_category','all_related_business','all_category','city','search_by'));
     }
 
 
@@ -130,6 +150,7 @@ class ListingController extends Controller
         $id = base64_decode($enc_id);
 
         $arr_rules = array();
+        $arr_rules['rating'] = "required";
         $arr_rules['title'] = "required";
         $arr_rules['review'] = "required";
 
@@ -141,6 +162,7 @@ class ListingController extends Controller
         }
 
         $title       =  $request->input('title');
+        $rating       =  $request->input('rating');
         $name        =  $request->input('name');
         $review      =  $request->input('review');
         $mobile_no   =  $request->input('mobile_no');
@@ -148,37 +170,38 @@ class ListingController extends Controller
 
         $arr_data = array();
         $arr_data['title'] = $title;
+        $arr_data['ratings'] = $rating;
         $arr_data['name'] = $name;
         $arr_data['message'] = $review;
         $arr_data['mobile_number'] = $mobile_no;
         $arr_data['email'] = $email;
-
         $arr_data['business_id'] = $id;
 
-        $review_info          =  array(['title'=> $arr_data['title'],
-                                        'name' => $arr_data['name'],
-                                        'message'=> $arr_data['message'],
-                                        'business_id'=> $arr_data['business_id'],
-                                        'mobile_number'=> $arr_data['mobile_number'],
-                                        'email' => $arr_data['email']]);
-
-
-        $status = ReviewsModel::create(['title'=> $arr_data['title']]);
-
-        foreach ($review_info as $review)
-        {
-            $arr_rev['title'] = $review['title'];
-            $arr_rev['name'] = $review['name'];
-            $arr_rev['message'] = $review['message'];
-            $arr_rev['business_id'] = $review['business_id'];
-            $arr_rev['mobile_number'] = $review['mobile_number'];
-            $arr_rev['email'] = $review['email'];
-        }
-
-       $status = ReviewsModel::create($arr_rev);
+       $status = 1;//ReviewsModel::create($arr_data);
 
         if($status)
         {
+         $business_rating = BusinessListingModel::where('id',$arr_data['business_id'])->with(['reviews'])->get()->toArray();
+         $reviews=0;
+              if(isset($business_rating[0]['reviews']) && sizeof($business_rating[0]['reviews'])>0){
+              foreach($business_rating[0]['reviews'] as $business_review){
+                 $reviews=$reviews+$business_review['ratings'];
+              }
+
+             }
+         if(sizeof($business_rating[0]['reviews']))
+              {
+                $tot_review=sizeof($business_rating[0]['reviews']);
+                $avg_review=($reviews/$tot_review);
+              }
+              else
+              {
+                $avg_review= $tot_review=0;
+              }
+
+        $business_data['avg_rating']=round($avg_review);
+        $business_data=BusinessListingModel::where('id',$id)->update($business_data);
+
           Session::flash('success','Review Submitted Successfully');
         }
         else

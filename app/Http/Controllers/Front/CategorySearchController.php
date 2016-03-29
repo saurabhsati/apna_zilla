@@ -49,10 +49,13 @@ class CategorySearchController extends Controller
      $page_title	='Business List';
 
      //dd($request->all());
-      //echo $city;
+      //echo $cat_id;
 
       // get business listing by city and category id
-
+     if($cat_id==0)
+         {
+          return redirect()->back();
+         }
       $obj_business_listing_city = CityModel::where('city_title',$city)->get();
       if($obj_business_listing_city)
       {
@@ -141,6 +144,7 @@ class CategorySearchController extends Controller
      /* Search by location */
     public function search_business_by_location($city,$cat_loc,$cat_id)
     {
+
           $cat_location=explode('@',$cat_loc);
           // dd($cat_location);
           if(!empty($cat_location))
@@ -273,8 +277,7 @@ class CategorySearchController extends Controller
             {
                 $arr_sub_cat = $obj_sub_cat->toArray();
             }
-        //dd($loc);
-         return view('front.listing.index',compact('page_title','arr_business','city','arr_sub_cat','parent_category','sub_category','loc','category_set'));
+        return view('front.listing.index',compact('page_title','arr_business','city','arr_sub_cat','parent_category','sub_category','loc','category_set'));
     }
     public function set_location_lat_lng(Request $request)
     {
