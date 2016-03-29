@@ -8,8 +8,8 @@
                 <div class="col-sm-12 col-md-12 col-lg-12">
      <ol class="breadcrumb">
          <span>You are here :</span>
-  <li><a href="#">Home</a></li>
-  <li class="active">Contact Information</li>
+          <li><a href="#">Home</a></li>
+          <li class="active">Contact Information</li>
   
 </ol>
              </div>
@@ -65,24 +65,42 @@
              
              <div class="col-sm-12 col-md-9 col-lg-9">
             <div class="my_whit_bg">
-                 <div class="title_acc">Please provide home and office address</div>
-                   <div class="row">
-             
-        
+              <div class="title_acc">Please provide home and office address</div>
+                <div class="row">
+               
+              
+
                        
               <div class="col-sm-12 col-md-12 col-lg-12">
                 <div class="box_profile">
-                    
+                  
                   <div class="user_box_sub">
                     <div class="row">
-                      <div class="col-lg-2 label-text">Contact Person's Name<span>:</span></div>
+                      <div class="col-lg-2 label-text">Contact Person <span>:</span></div>
                         <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                          <input type="text"  class="input_acct" id="contact_name" name="contact_name" placeholder="Enter Name" required/>
-                        <!--<div class="error_msg">please enter correct</div> -->
+                          <div class="row">
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                              <select class="input_acct">
+                                 <option value="1" >Mr.</option>
+                                 <option value="0" >Miss.</option>
+                              </select>  
+                            </div>
+                          <div class="col-sm-5 col-md-5 col-lg-6"> <input type="text"  id="contact_name" name="contact_name" class="input_acct" placeholder="Enter name"></div>
+                          <div class="col-sm-5 col-md-5 col-lg-4"> <input type="text"  id="designation" name="designation" class="input_acct" placeholder="Designation"></div></div>
+                          <!-- <div class="error_msg">please enter correct</div> -->
                         </div>
                     </div>
                   </div>
 
+                <!-- <div class="user_box_sub">
+                  <div class="row">
+                    <div class="col-lg-2 label-text">Contact Person's Name<span>:</span></div>
+                      <div class="col-sm-12 col-md-12 col-lg-10 m_l">
+                        <input type="text"  class="input_acct" id="contact_name" name="contact_name" placeholder="Enter Name" required/>
+                      <div class="error_msg">please enter correct</div> 
+                      </div>
+                  </div>
+                </div> -->
 
                   <div class="user_box_sub">
                     <div class="row">

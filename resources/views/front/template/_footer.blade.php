@@ -397,7 +397,7 @@
                           console.log(response);
                           if(response.status == "SUCCESS")
                           {
-                            location.href= url+'/login';
+                            location.href= url+'/front_users/profile';
                             // location.href= url+'/myaccount/';
                           }
                           else

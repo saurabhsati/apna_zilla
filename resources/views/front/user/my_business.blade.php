@@ -61,11 +61,7 @@
                  </ul>  
                </div> -->  
 
-
-
-             
              @if(isset($arr_business_info) && (count($arr_business_info)>0 ))
-
                 @foreach($arr_business_info as $business) 
 
                 <div class="product_list_view">

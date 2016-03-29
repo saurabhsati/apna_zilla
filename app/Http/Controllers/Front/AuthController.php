@@ -68,7 +68,7 @@ class AuthController extends Controller
 
             $login_status = Sentinel::login($existing_user); // process login a user
 
-            Session::flash('success','You are Successfully Login .');
+            Session::flash('success','Login Successfull');
             
             $data['status'] = "SUCCESS";
             $data['msg']    = "Redirect to my account page";
