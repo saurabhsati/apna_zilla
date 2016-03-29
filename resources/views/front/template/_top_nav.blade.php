@@ -34,12 +34,12 @@
                            <li class="nav-item"><a href="{{ url('/deals') }}">Deals</a></li>
 
 
-                         @if ($user = Sentinel::check())
-
+                         {{--@if ($user = Sentinel::check())--}}
+                         @if(Session::has('user_name'))
 
                           <li class="nav-item">
                         <div class="dropdown">
-                                <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Hi {{session('user_first_name')}} <span class="caret"></span>
+                                <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Hi {{--{{ session('user_first_name') }}--}} {{Session::get('user_name')}} <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                    <li><a href="{{url('/front_users/profile')}}">My Account</a></li>

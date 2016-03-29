@@ -63,9 +63,16 @@ class AuthController extends Controller
             $credentials = [ 'email' => $email ];
             $existing_user = Sentinel::findUserByCredentials($credentials);
 
+         
+            $user_first_name = $existing_user->first_name;
+            $user_email = $existing_user->first_name;
+
+            Session::set('user_name', $user_first_name);
+            Session::set('user_mail', $user_email);
+
             $login_status = Sentinel::login($existing_user); // process login a user
 
-            Session::flash('success','You are Successfully Login .');
+            Session::flash('success','Login Successfull');
             
             $data['status'] = "SUCCESS";
             $data['msg']    = "Redirect to my account page";
@@ -83,7 +90,7 @@ class AuthController extends Controller
                     'ask_for_old_password'  => '0'
         ];
         $status = Sentinel::registerAndActivate($arr_data);
-
+//dd($status);
         if($status)
         {   
             $user = Sentinel::findById($status->id);
@@ -94,7 +101,7 @@ class AuthController extends Controller
 
             $user->roles()->attach($role); /* Assign Normal Users Role */
 
-            $preferences = $this->create_preferences($status->id);  /* Create Preference for user */
+            // /$preferences = $this->create_preferences($status->id);  /* Create Preference for user */
 
             $email_id = $email;
 
@@ -102,11 +109,10 @@ class AuthController extends Controller
             $data['email']                  = $email;
             $data['plain_text_password']    = $password;
 
-
-             Session::put('user_name', $data['name']);
-             Session::put('user_mail', $data['email']);
+             Session::set('user_name', $status->first_name);
+             Session::set('user_mail', $status->email);
            
-            $send_mail = $this->via_social_registration_send_mail($arr_data);
+            Session::flash('success','Login Successfull');
 
             $data['status'] = "SUCCESS";
             $data['msg'] = "You Have Registered Successfully";
@@ -155,7 +161,10 @@ class AuthController extends Controller
 
             $login_status  = Sentinel::login($existing_user); // process login a user
 
-            Session::flash('success','You are Successfully Login .');
+            Session::set('user_name', $fname);
+            Session::set('user_mail', $email);
+
+           Session::flash('success','Login Successfull');
             
             $data['status'] = "SUCCESS";
             $data['msg'] 	= "Redirect to my account page";
@@ -184,7 +193,7 @@ class AuthController extends Controller
 
             $user->roles()->attach($role); /* Assign Normal Users Role */
 
-            $preferences = $this->create_preferences($status->id);  /* Create Preference for user */
+            //$preferences = $this->create_preferences($status->id);  /* Create Preference for user */
 
             $email_id = $email;
 
@@ -192,12 +201,10 @@ class AuthController extends Controller
             $data['email']                  = $email;
             $data['plain_text_password']    = $password;
 
+            Session::set('user_name', $fname);
+            Session::set('user_mail', $data['email']);
 
-             Session::put('user_name', $data['name']);
-             Session::put('user_mail', $data['email']);
-
-           
-            $send_mail = $this->via_social_registration_send_mail($arr_data);
+            Session::flash('success','Login Successfull');
 
             $data['status'] = "SUCCESS";
             $data['msg']    = "You Have Registered Successfully";
@@ -266,6 +273,7 @@ class AuthController extends Controller
                 {
                     $user_id = base64_encode($user['id']) ;
                     Session::put('user_id', $user_id);
+                    Session::set('user_name', $user['first_name']);
 
                 }
                 Session::flash('success','Login Successfull.');

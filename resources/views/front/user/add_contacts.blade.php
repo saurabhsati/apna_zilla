@@ -2,14 +2,14 @@
 
 @section('main_section')
 
- <div class="gry_container">
+  <div class="gry_container">
       <div class="container">
          <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12">
      <ol class="breadcrumb">
          <span>You are here :</span>
-  <li><a href="#">Home</a></li>
-  <li class="active">Contact Information</li>
+          <li><a href="#">Home</a></li>
+          <li class="active">Contact Information</li>
   
 </ol>
              </div>
@@ -65,161 +65,95 @@
              
              <div class="col-sm-12 col-md-9 col-lg-9">
             <div class="my_whit_bg">
-                 <div class="title_acc">Please provide home and office address</div>
-                   <div class="row">
-             
-        
+              <div class="title_acc">Please provide home and office address</div>
+                <div class="row">
+               
+              
+
                        
-                   <!--      <div class="col-sm-12 col-md-12 col-lg-12">
+              <div class="col-sm-12 col-md-12 col-lg-12">
                 <div class="box_profile">
-                     <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-2 label-text">Contact Person <span>:</span></div>
-                   <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                      <div class="row">
-                         <div class="col-sm-2 col-md-2 col-lg-2">
-                           <select class="input_acct">
-                                 <option>Mr.</option>
-                             <option>Miss.</option>
-                            
-                        </select>  
+                  
+                  <div class="user_box_sub">
+                    <div class="row">
+                      <div class="col-lg-2 label-text">Contact Person <span>:</span></div>
+                        <div class="col-sm-12 col-md-12 col-lg-10 m_l">
+                          <div class="row">
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                              <select class="input_acct">
+                                 <option value="1" >Mr.</option>
+                                 <option value="0" >Miss.</option>
+                              </select>  
                             </div>
-                          <div class="col-sm-5 col-md-5 col-lg-6"> <input type="text" class="input_acct" placeholder="Enter name"></div>
-                          <div class="col-sm-5 col-md-5 col-lg-4"> <input type="text" class="input_acct" placeholder="Designation"></div></div>
-                          <div class="error_msg">please enter correct</div>
+                          <div class="col-sm-5 col-md-5 col-lg-6"> <input type="text"  id="contact_name" name="contact_name" class="input_acct" placeholder="Enter name"></div>
+                          <div class="col-sm-5 col-md-5 col-lg-4"> <input type="text"  id="designation" name="designation" class="input_acct" placeholder="Designation"></div></div>
+                          <!-- <div class="error_msg">please enter correct</div> -->
                         </div>
-                         </div>
-                    </div> -->
-                    
-                    <!--  <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-2 label-text">Contact Person <span>:</span></div>
-                   <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                      <div class="row">
-                         <div class="col-sm-2 col-md-2 col-lg-2">
-                           <select class="input_acct">
-                                 <option>Mr.</option>
-                             <option>Miss.</option>
-                            
-                        </select>  
-                            </div>
-                          <div class="col-sm-5 col-md-5 col-lg-6"> <input type="text" class="input_acct" placeholder="Enter name"></div>
-                            <div class="col-sm-5 col-md-5 col-lg-4"> <input type="text" class="input_acct" placeholder="Designation"></div></div>
-                          <div class="error_msg">please enter correct</div>
-                        </div>
-                         </div>
                     </div>
-                     -->
+                  </div>
 
-
-                <div class="user_box_sub">
+                <!-- <div class="user_box_sub">
                   <div class="row">
-                    <div class="col-lg-3  label-text">Mobile No:</div>
-                      <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                        <input type="text" name="mobile_number" class="input_acct" placeholder="Enter Mobile Number" />
+                    <div class="col-lg-2 label-text">Contact Person's Name<span>:</span></div>
+                      <div class="col-sm-12 col-md-12 col-lg-10 m_l">
+                        <input type="text"  class="input_acct" id="contact_name" name="contact_name" placeholder="Enter Name" required/>
+                      <div class="error_msg">please enter correct</div> 
                       </div>
-                    </div>
-                </div>
+                  </div>
+                </div> -->
 
-                 <div class="user_box_sub">
-                   <div class="row">
-                      <div class="col-lg-3  label-text">Landline No:</div>
-                      <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                           <input type="text" name="landline_number"  class="input_acct" placeholder="Enter Landline Number" />
-                      </div>
+                  <div class="user_box_sub">
+                    <div class="row">
+                      <div class="col-lg-2 label-text">Mobile No.<span>:</span></div>
+                        <div class="col-sm-12 col-md-12 col-lg-10 m_l">
+                          <div class="input-group">
+                          <span class="input-group-addon" id="basic-addon1">+91</span>
+                          <input type="text" class="form-control"  id="mobile_no" name="mobile_no" placeholder="Enter Mobile Number"  aria-describedby="basic-addon1" required/>
+                          </div>  
+                          <!-- <div class="hyper_link_more"><a href="#">Add more mobile number</a></div>
+                          <div class="error_msg">please enter correct</div> -->
+                        </div>
+                    </div>
+                  </div>
+
+                   <div class="user_box_sub">
+                    <div class="row">
+                      <div class="col-lg-2 label-text">Landline No. <span>:</span></div>
+                        <div class="col-sm-12 col-md-12 col-lg-10 m_l">
+                          <input type="text"  class="input_acct"  id="landline_no" name="landline_no" placeholder="Enter Landline Number"/>
+                          <!--<div class="error_msg">please enter correct</div> -->
+                        </div>
                     </div>
                   </div>
 
 
-
-
-                     <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-2 label-text">Landline No <span>:</span></div>
-                    <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                      <input class="std_cont_inpt" type="text" placeholder="STD">
-                        <input type="text"  class="input_acct half_2_input" placeholder="Enter landline"/>
-                        <div class="hyper_link_more"><a href="#">Add more landline number</a></div>
-                          <div class="error_msg">please enter correct</div>
-                        </div>
-                         </div>
-                    </div>
-                    
-                    
-                     
-                      <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-2 label-text">Mobile No. 1<span>:</span></div>
-                    <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                        <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1">+91</span>
-                        <input type="text" class="form-control" placeholder="Mobile No" aria-describedby="basic-addon1" required/>
-                              
-                        </div>  
-                         <div class="hyper_link_more"><a href="#">Add more mobile number</a></div>
-                          <div class="error_msg">please enter correct</div>
-                        </div>
-                         </div>
-                    </div>
-                      <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-2 label-text">fax No. <span>:</span></div>
-                    <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                         <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1">+91-22</span>
-                        <input type="text" class="form-control" placeholder="fax No" aria-describedby="basic-addon1" required/>
-                            
-                        </div>  
-                          <div class="error_msg">please enter correct</div>
-                        </div>
-                         </div>
-                    </div>
-                    
-                     <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-2 label-text">fax No.2 <span>:</span></div>
-                    <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                         <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1">+91-22</span>
-                        <input type="text" class="form-control" placeholder="fax No" aria-describedby="basic-addon1" required/>
-                            
-                        </div>  
-                          <div class="error_msg">please enter correct</div>
-                        </div>
-                         </div>
-                    </div>
-                   
-                    
-                  
-                     
-                   
-                      <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-2 label-text">Toll free no. <span>:</span></div>
-                    <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                         <input type="text"  class="input_acct" placeholder="Enter Toll free no "/>
-                          <div class="error_msg">please enter correct</div>
-                        </div>
-                         </div>
-                    </div>
-                    
-                      <div class="user_box_sub">
-                        <div class="row">
-                    <div class="col-lg-2 label-text">Toll free no2. <span>:</span></div>
-                    <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                         <input type="text"  class="input_acct" placeholder="Enter Toll free no "/>
-                          <div class="error_msg">please enter correct</div>
-                        </div>
-                         </div>
-                    </div>
-                    
                     <div class="user_box_sub">
+                         <div class="row">
+                  <div class="col-lg-2 label-text">Fax No. <span>:</span></div>
+                  <div class="col-sm-12 col-md-12 col-lg-10 m_l">
+                       <input type="text"  class="input_acct" id="fax_no" name="fax_no" placeholder="Enter Fax Number"/>
+                        <!-- <div class="error_msg">please enter correct</div> -->
+                      </div>
+                       </div>
+                  </div>
+                  
+                    <div class="user_box_sub">
+                         <div class="row">
+                  <div class="col-lg-2 label-text">Toll free No. <span>:</span></div>
+                  <div class="col-sm-12 col-md-12 col-lg-10 m_l">
+                       <input type="text"  class="input_acct" id="toll_free_no" name="toll_free_no" placeholder="Enter Toll free number "/>
+                        <!-- <div class="error_msg">please enter correct</div> -->
+                      </div>
+                       </div>
+                  </div>
+
+
+                 <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-2 label-text">Email Id <span>:</span></div>
                     <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                         <input type="text"  class="input_acct" placeholder="Enter Email Id "/>
-                         <div class="hyper_link_more"><a href="#">Add more Email Id</a></div>
-                          <div class="error_msg">please enter correct</div>
+                         <input type="text"  class="input_acct"  id="email" name="email" placeholder="Enter Email Id "/>
+                         <!--  <div class="error_msg">please enter correct</div> -->
                         </div>
                          </div>
                     </div>
@@ -228,20 +162,17 @@
                            <div class="row">
                     <div class="col-lg-2 label-text">website <span>:</span></div>
                     <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                         <input type="text"  class="input_acct" placeholder="Enter Website"/>
-                          <div class="error_msg">please enter correct</div>
+                         <input type="text"  class="input_acct" id="website" name="website" placeholder="Enter Website"/>
+                          <!-- <div class="error_msg">please enter correct</div> -->
                         </div>
                          </div>
-                    </div>
-                   
-                  
-                    
-                                   </div>
-           <div class="button_save1">
-                    <button type="submit" class="btn btn-post pull-left" style="float: left; margin-left:125px; margin-top: 15px" name="add_business" >Save &amp; continue</button>
-                <!--<a class="btn btn-post pull-left" href="#">previous</a>
-                    <a class="btn btn-post" href="#">Save &amp; exit</a>
+                    </div>   
 
+                </div>
+           <div class="button_save1">
+                    <button type="submit" class="btn btn-post" name="add_contacts" style="float: left; margin-left:125px; ">Save &amp; continue</button>
+                    <!-- <a class="btn btn-post pull-left" href="#">previous</a>
+                    <a class="btn btn-post" href="#">Save &amp; exit</a>
                     <a class="btn btn-post pull-right" href="#">Next</a> -->
                  </div>
                        </div>
@@ -256,7 +187,7 @@
          </div>
        </div>
        
-      </div>  
+      </div>      
 
 
 

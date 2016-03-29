@@ -54,7 +54,6 @@
 
             {{-- view('front.user.business_sidebar') --}}
              
-             
              <div class="col-sm-12 col-md-9 col-lg-9">
               @if(Session::has('success'))
                 <div class="alert alert-success alert-dismissible">

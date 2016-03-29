@@ -138,6 +138,13 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        $dd                       =   $request->input('dd');
+        $mm                       =   $request->input('mm');
+        $yy                       =   $request->input('yy');
+
+        $dob                      =   $yy.'-'.$mm.'-'.$dd;
+       /* echo date("Y-m-d",strtotime($dob));
+        exit;*/
         $title                    =   $request->input('title');
         $first_name               =   $request->input('first_name');
         $middle_name              =   $request->input('middle_name');
@@ -160,14 +167,13 @@ class UserController extends Controller
 
         $obj_user_info = UserModel::where('email','=',$email)->get();
 
-
         if($obj_user_info!=FALSE)
         {
             $arr_user_info = $obj_user_info->toArray();
         }
-        echo "<pre>";
+       /* echo "<pre>";
         print_r($arr_user_info);
-       
+       */
 
         $user_id = $arr_user_info[0]['id'];
 
@@ -212,6 +218,9 @@ class UserController extends Controller
 
         }
 
+        echo $dob;
+        //exit;
+
         $credentials = [
             'profile_pic'       =>    $profile_pic,
             'title'             =>    $title,
@@ -221,6 +230,7 @@ class UserController extends Controller
             'dd'                =>    $dd,
             'mm'                =>    $mm,
             'yy'                =>    $yy,
+            'd_o_b'             =>    date("Y-m-d",strtotime($dob)),
             'marital_status'    =>    $marital_status,
             'city'              =>    $city,
             'area'              =>    $area,
@@ -312,28 +322,36 @@ class UserController extends Controller
 
         $obj_business_info = BusinessListingModel::where('user_id','=',$user_id)->get();
 
+        $arr_business_info =  array();
+        $cat_title =  "";
         if($obj_business_info)
         {
             $arr_business_info = $obj_business_info->toArray();
+            if(count($arr_business_info)>0)
+            {
+                foreach ($arr_business_info as $business) 
+                {
+                   $cat_id = $business['business_cat'];
+                }
+
+               $obj_cat_details = CategoryModel::where('cat_id','=',$cat_id)->get();
+
+               if($obj_cat_details)
+               {
+                  $arr_cat_details = $obj_cat_details->toArray();
+               }
+
+                if(count($arr_cat_details)>0)
+                {
+                   foreach ($arr_cat_details as $category) 
+                   {
+                       $cat_title = $category['title'];
+                   }
+                }
+
+            }
         }
 
-        foreach ($arr_business_info as $business) 
-        {
-            $cat_id = $business['business_cat'];
-        }
-     
-       $obj_cat_details = CategoryModel::where('cat_id','=',$cat_id)->get();
-
-       if($obj_cat_details)
-       {
-          $arr_cat_details = $obj_cat_details->toArray();
-       }
-
-       foreach ($arr_cat_details as $category) 
-       {
-           $cat_title = $category['title'];
-       }
-        
         return view('front.user.my_business',compact('arr_business_info','cat_title'));
     }
 
@@ -600,6 +618,51 @@ class UserController extends Controller
     public function update_business_details(Request $request,$enc_id)
     {
         $business_id = base64_decode($enc_id);
+
+        
+        /*$obj_business_record = BusinessListingModel::where('id',$business_id)->first();
+        dd($obj_business_record->toArray());
+        exit;
+
+         $business_pic = "default.jpg";
+
+        if ($request->hasFile('business_pic'))
+        {
+            $profile_pic_valiator = Validator::make(array('business_pic'=>$request->file('business_pic')),array( 'business_pic' => 'mimes:jpg,jpeg,png' ));
+
+            if ($request->file('business_pic')->isValid() && $profile_pic_valiator->passes())
+            {
+                $cv_path            = $request->file('business_pic')->getClientOriginalName();
+                $image_extension    = $request->file('business_pic')->getClientOriginalExtension();
+                $image_name         = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
+
+                if(isset($arr_user_info[0]['business_pic']))
+                {
+                  @unlink($this->profile_pic_base_path.'/'.$arr_user_info[0]['business_pic']);
+                }
+
+                $request->file('business_pic')->move( $this->profile_pic_base_path, $image_name);
+                $business_pic = $image_name;
+            }
+            else
+            {
+                return redirect()->back();
+            }
+
+        }
+        else
+        {
+           if(isset($arr_user_info[0]['business_pic'])) 
+            {
+               $business_pic = $arr_user_info[0]['business_pic'];
+            } 
+            else 
+            { 
+               $business_pic = "default.jpg"; 
+            }
+
+        }*/
+
 
         $cat_name      =  $request->input('category');
         $obj_cat_details = CategoryModel::where('title','=',$cat_name)->first();

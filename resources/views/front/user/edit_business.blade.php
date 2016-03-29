@@ -32,16 +32,17 @@
                   <div class="profile_box">
                     <!-- <div class="ig_profile" id="dvPreview"  > -->
                           <div class="" id="dvPreview"  >
-                          @if($business['main_image']=="default.jpg")
-                            <img src="{{ url('/') }}/uploads/business/main_image/{{ $business['main_image'] }}" style="height: 200px; width:200px; margin-bottom: 10px; " id="preview_profile_pic"  />
+                          @if($business['main_image']=="default.jpg" || $business['main_image']=="" )
+                            <img src="{{ url('/')."/images/front/no-profile.png" }}" style="height: 200px; width:200px; margin-bottom: 10px; " id="preview_profile_pic"  />
                           @else
                             <img src="{{ url('/') }}/uploads/business/main_image/{{ $business['main_image'] }}" style="height: 200px; width:200px;margin-bottom: 10px;"  id="preview_profile_pic"  />
                           @endif
+
                           </div>
                         <div class="button_shpglst">
                         <div style="margin-left: 40px;" class="fileUpload or_btn">
                           <span>Upload Photo</span>
-                          <input id="fileupload" type="file" name="profile_pic" class="upload change_pic" onchange="loadPreviewImage(this)">
+                          <input id="fileupload" type="file" name="business_pic" class="upload change_pic" onchange="loadPreviewImage(this)">
                         </div>
                        <div class="remove_b" onclick="clearPreviewImage()"><a href="#" style="margin-left: 40px;"><i class="fa fa-times"></i> Remove</a></div>                               
                      <div class="clr"></div>
@@ -332,5 +333,36 @@
     }
     
 </script>
+
+
+<script type="text/javascript"> 
+/*jQuery(document).ready(function () {
+ token   = jQuery("input[name=_token]").val();
+  jQuery('#city').on('change', function() {
+    var city_id = jQuery(this).val();
+    jQuery.ajax({
+       url      : site_url+"/front_users/get_state_country?_token="+token,
+       method   : 'POST',
+       dataType : 'json',
+       data     : { city_id:city_id },
+       success: function(responce){
+          if(responce.length == 0)
+          {
+            var  state   = "<option value='' >State</option>";
+            var  country = "<option value='' >Country</option>";  
+          }else
+          {
+            var  state   = "<option value='"+responce.state_id+"' >"+responce.state_name+"</option>";
+            var  country = "<option value='"+responce.country_id+"' >"+responce.country_name+"</option>";
+          }
+          $('#state').html(state);
+          $('#country').html(country);
+       }  
+    });
+  });  
+});*/
+</script>
+
+
 
 @stop
