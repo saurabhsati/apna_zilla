@@ -124,10 +124,10 @@
        <li>
          <div class="btn-group btn-input clearfix">
           <button type="button" class="btn_drop_nw dropdown-toggle form-control" data-toggle="dropdown">
-            <span data-bind="label">List</span><span class="caret"></span></button>
+            <span data-bind="label">View</span><span class="caret"></span></button>
             <ul class="dropdown-menu main" role="menu">
               <li><a href="#" id="list_click">List</a></li>
-              <li><a href="#" id="grid_click">Image</a></li>
+              <li><a href="#" id="grid_click">Grid</a></li>
 
             </ul>
           </div>
@@ -138,7 +138,7 @@
     <!-- Modal -->
     <div class="modal fade" id="loc" role="dialog">
       <div class="modal-dialog">
-
+{{ csrf_token() }}
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
@@ -252,7 +252,12 @@
               <div class="p_details"><i class="fa fa-phone"></i><span> {{ $restaurants['landline_number'] }} &nbsp; {{ $restaurants['mobile_number'] }}</span></div>
               <div class="p_details"><i class="fa fa-map-marker"></i>
                 <span>{{ $restaurants['building'] }} &nbsp; {{ $restaurants['street'] }} <br/>
-                  {{ $restaurants['landmark'] }} &nbsp; {{ $restaurants['area'] }} &nbsp;{{ '-'.$restaurants['pincode'] }}<br/>
+                {{ $restaurants['landmark'] }} &nbsp; {{ $restaurants['area'] }} &nbsp;{{ '-'.$restaurants['pincode'] }}<br/>
+             Away From
+             @if(Session::has('distance'))
+               {{Session::get('distance')}} km distance
+                @endif
+
                 </span></div>
                 <div class="p_details"><a href="#" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>
                   <ul>

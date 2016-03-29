@@ -49,6 +49,7 @@ class EloquentUser extends Model implements RoleableInterface, PermissibleInterf
         'password',
         'permissions',
         'gender',
+        'd_o_b',
         'dd',
         'mm',
         'yy',
@@ -68,8 +69,9 @@ class EloquentUser extends Model implements RoleableInterface, PermissibleInterf
         'std_home_landline',
         'office_landline',
         'std_office_landline',
-        'extn_office_landline'
-                           
+        'extn_office_landline',
+        'sales_user_public_id'
+
     ];
 
     /**

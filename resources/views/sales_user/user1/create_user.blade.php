@@ -1,4 +1,4 @@
-    @extends('web_admin.template.admin')
+    @extends('sales_user.template.sales')
 
 
     @section('main_content')
@@ -15,14 +15,14 @@
         <ul class="breadcrumb">
             <li>
                 <i class="fa fa-home"></i>
-                <a href="{{ url('/').'/web_admin/dashboard' }}">Dashboard</a>
+                <a href="{{ url('sales_user/dashboard') }}">Dashboard</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span>
             <li>
                 <i class="fa fa-user"></i>
-                <a href="{{ url('/').'/web_admin/sales_user' }}">Users</a>
+                <a href="{{ url('/').'/sales_user/users' }}">Users</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
@@ -70,7 +70,7 @@
           <form class="form-horizontal"
                 id="validation-form"
                 method="POST"
-                action="{{ url('/web_admin/sales_user/store') }}"
+                action="{{ url('/sales_user/users/store_user') }}"
                 enctype="multipart/form-data"
                 >
 
@@ -80,7 +80,7 @@
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="name">Profile Pic</label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <img src="{{url('/')}}/images/admin/avatar/avatar.jpg" width="100px" height="100px" id="preview_profile_pic"  />
+                    <img src="{{url('/')}}/images/admin/avatar/avatar.jpg" width="200" height="200" id="preview_profile_pic"  />
                     <span class="btn btn-danger" id="removal_handle" style="display:none;" onclick="clearPreviewImage()">X</span>
                     <input class="form-control" name="profile_pic" id="profile_pic" type="file" onchange="loadPreviewImage(this)"/>
 
@@ -232,11 +232,12 @@
 
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
-                <input type="submit" class="btn btn-primary" value="Create">
+                <input type="submit" class="btn btn-primary" value="Save and Continue">
             </div>
         </div>
 
     </form>
+
 </div>
 </div>
 </div>

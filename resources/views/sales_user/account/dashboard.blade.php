@@ -1,4 +1,4 @@
-@extends('sales_user.template.sales')                
+@extends('sales_user.template.sales')
 
 
 @section('main_content')
@@ -176,7 +176,7 @@
 
                             <div class="box-content">
                                 <ul class="weekly-stats">
-                                    {{-- 
+                                    {{--
                                     <li>
                                         <span class="inline-sparkline">134,178,264,196,307,259,287</span>
                                         Total Registered Users: <span class="value">
@@ -202,7 +202,7 @@
                                     <li>
                                         <span class="inline-sparkline">70.34,67.41,59.45,65.43,78.42,75.92,74.29</span>
                                         Total Number Of Completed Projects: <span class="value">{{ isset($dashboard_satistics['completed_projects'])?$dashboard_satistics['completed_projects']:''}}</span>
-                                    </li> 
+                                    </li>
 
                                      <li>
                                         <span class="inline-sparkline">70.34,67.41,59.45,65.43,78.42,75.92,74.29</span>
@@ -212,7 +212,7 @@
                                         <span class="inline-sparkline">78.12,74.52,81.25,89.23,86.15,91.82,85.18</span>
                                         % New Visits: <span class="value">82.65%</span>
                                     </li>
-                                    --}}        
+                                    --}}
                                 </ul>
                             </div>
                         </div>
@@ -220,5 +220,5 @@
                 </div>
 
 
-               
-@stop                    
+
+@stop

@@ -11,28 +11,39 @@
         </li>
 
 
+        <li class="{{ Request::segment(2)=='edit_profile'? 'active':'' }}">
+            <a href="{{ url('/sales_user/edit_profile')}}" class="dropdown-toggle">
+                <i class="fa fa-user"></i>
+                <span>My Profile</span>
+               <!--  <b class="arrow fa fa-angle-right"></b> -->
+            </a>
+
+        </li>
         <li class="{{ Request::segment(2)=='users'? 'active':'' }}">
             <a href="javascript:void(0)" class="dropdown-toggle">
                 <i class="fa fa-user"></i>
-                <span>My Profile</span>
+                <span>Users</span>
                 <b class="arrow fa fa-angle-right"></b>
             </a>
             <ul class="submenu">
-                <li style="display: block;"><a href="{{ url('/sales_user/edit_profile')}}">Manage</a> </li>
+                <li style="display: block;"><a href="{{ url('/sales_user/users')}}">Manage</a> </li>
             </ul>
         </li>
 
-
-         <li class="{{ Request::segment(2)=='users'? 'active':'' }}">
+        <li class="{{ Request::segment(2)=='business_listing'? 'active':'' }}
+                    {{ Request::segment(2)=='reviews'? 'active':'' }}
+                     {{ Request::segment(2)=='deals'? 'active':'' }}
+        ">
             <a href="javascript:void(0)" class="dropdown-toggle">
                 <i class="fa fa-list"></i>
-                <span>My Business List</span>
+                <span>Business Listing</span>
                 <b class="arrow fa fa-angle-right"></b>
             </a>
             <ul class="submenu">
-                <li style="display: block;"><a href="{{ url('/sales_user/business/business_listing')}}">Manage</a> </li>
+                <li style="display: block;"><a href="{{ url('/sales_user/business_listing')}}">Manage</a> </li>
             </ul>
         </li>
+
 
 
    <!-- BEGIN Sidebar Collapse Button -->

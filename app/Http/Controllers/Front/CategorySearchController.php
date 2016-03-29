@@ -56,6 +56,9 @@ class CategorySearchController extends Controller
          {
            Session::forget('category_serach');
            Session::forget('category_id');
+           Session::forget('distance');
+
+
            $arr_business =$arr_sub_cat=$parent_category=$sub_category= array();
           return view('front.listing.index',compact('page_title','arr_business','arr_sub_cat','parent_category','sub_category','city'));
           //return redirect()->back();
@@ -233,7 +236,8 @@ class CategorySearchController extends Controller
                       ),2) as distance';
 
                       $obj_business_listing = $obj_business_listing->selectRaw($qutt);
-                      $distance=Session::has('distance') ? Session::get('distance'):'1';
+                       $distance=Session::has('distance') ? Session::get('distance'):'1';
+                      //exit;
                       $search_range=$distance;
                       if($search_range==TRUE)
                       {
@@ -300,7 +304,7 @@ class CategorySearchController extends Controller
             $search_under_category = $request->input('search_under_category');
             $search_under_city = $request->input('search_under_city');
             $distance = $request->input('distance');
-
+            Session::put('distance',$distance);
             $result['status'] ="1";
             return response()->json($result);
     }

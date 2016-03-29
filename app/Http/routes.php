@@ -350,23 +350,34 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 		Route::group(array('prefix' => '/users'), function()
 		{
+		Route::get('/',       								['as' => 'sales_user_users_index'     				,'uses' =>'SalesUser\UserController@index']);
+		Route::get('create',       							['as' => 'sales_user_users_create'    			    ,'uses' =>'SalesUser\UserController@create']);
+		Route::any('store',       							['as' => 'sales_user_users_store'     				,'uses' =>'SalesUser\UserController@store']);
+		Route::get('show/{enc_id}',       					['as' => 'sales_user_users_show'    				,'uses' =>'SalesUser\UserController@show']);
+		Route::get('edit/{enc_id}',       					['as' => 'sales_user_users_edit'     				,'uses' =>'SalesUser\UserController@edit']);
+		Route::post('update/{enc_id}',       				['as' => 'sales_user_users_update'    			    ,'uses' =>'SalesUser\UserController@update']);
+		Route::get('toggle_status/{enc_id}/{action}',       ['as' => 'sales_user_users_toggle_status'     		,'uses' =>'SalesUser\UserController@toggle_status']);
+		Route::post('multi_action',       					['as' => 'sales_user_users_,multi_action'     		,'uses' =>'SalesUser\UserController@multi_action']);
 
-		Route::get('create_user',							['as' => 'sales_user_create_user'          	    ,'uses' =>'SalesUser\SalesAccountController@create_user']);
-		Route::post('store_user',							['as' => 'sales_user_store_user'          	    ,'uses' =>'SalesUser\SalesAccountController@store_user']);
+
+		});
+		Route::group(['prefix'=>'business_listing'], function()
+		{
+			Route::get('/',							 	 ['as' => 'sales_user_business_listing_index' 	  ,'uses' 	=>'SalesUser\BusinessListingController@index']);
+			Route::get('show/{enc_id}',					 ['as' => 'sales_user_business_listing_show' 	  ,'uses' 	=>'SalesUser\BusinessListingController@show']);
+			Route::get('edit/{enc_id}',					 ['as' => 'sales_user_business_listing_edit' 	  ,'uses' 	=>'SalesUser\BusinessListingController@edit']);
+			Route::post('update/{enc_id}',				 ['as' => 'sales_user_business_listing_update' 	  ,'uses' 	=>'SalesUser\BusinessListingController@update']);
+			Route::get('create',						 ['as' => 'sales_user_business_listing_create' 	  ,'uses' 	=>'SalesUser\BusinessListingController@create']);
+			Route::get('toggle_status/{enc_id}/{action}',['as' => 'sales_user_business_listing_status' 	  ,'uses' 	=>'SalesUser\BusinessListingController@toggle_status']);
+			Route::post('multi_action',					 ['as' => 'sales_user_business_listing_multiaction','uses' 	=>'SalesUser\BusinessListingController@multi_action']);
+			Route::any('store',							 ['as' => 'sales_user_business_listing_store' 	  ,'uses' 	=>'SalesUser\BusinessListingController@store']);
+			Route::post('delete_gallery',				 ['as' => 'sales_user_business_listing_gallery_delete' 	  ,'uses' 	=>'SalesUser\BusinessListingController@delete_gallery']);
+			Route::post('delete_service',				 ['as' => 'sales_user_business_listing_service_delete' 	  ,'uses' 	=>'SalesUser\BusinessListingController@delete_service']);
+
 
 		});
 
 
-		Route::group(array('prefix' => '/business'), function()
-		{
-
-		Route::get('business_listing',						['as' => 'sales_user_business_list'             ,'uses' =>'SalesUser\SalesAccountController@business_listing']);
-		Route::get('create_business/{enc_id}',				['as' => 'sales_user_create_business'           ,'uses' =>'SalesUser\SalesAccountController@create_business']);
-		Route::post('store_business',						['as' => 'sales_user_store_business'            ,'uses' =>'SalesUser\SalesAccountController@store_business']);
-		Route::post('multi_action',						    ['as' => 'sales_user_multiaction'				,'uses' =>'SalesUser\SalesAccountController@multi_action']);
-    	Route::get('toggle_status/{enc_id}/{action}',		['as' => 'sales_user_business_listing_status' 	,'uses' =>'SalesUser\SalesAccountController@toggle_status']);
-
-	  });
 
 
 		/*------------- Sales User added Deals Module under business list ------------*/
@@ -463,7 +474,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 		Route::post('process_login_for_share/{enc_id}', ['as' => 'front_users_process_login_for_share'      ,'uses' =>'Front\AuthController@process_login_for_share']);
 
-		
+
 
 	});
 
