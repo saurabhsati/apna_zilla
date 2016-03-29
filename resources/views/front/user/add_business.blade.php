@@ -247,7 +247,6 @@
                </div>
              <div class="button_save1">
                     <button type="submit" class="btn btn-post" name="add_business" style="float: left; margin-left:200px; ">Save &amp; continue</button>
-                     
                     <!-- <a href="#" class="btn btn-post pull-left">previous</a>
                     <a href="#" class="btn btn-post">Save &amp; exit</a>
                     <a href="#" class="btn btn-post pull-right">Next</a> -->
