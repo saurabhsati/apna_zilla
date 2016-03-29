@@ -21,7 +21,7 @@
             </ul>
         </li>
 
-         <li class="{{ Request::segment(2)=='users'? 'active':'' }}">
+         <li class="{{ Request::segment(2)=='sales_user'? 'active':'' }}">
             <a href="javascript:void(0)" class="dropdown-toggle">
                 <i class="fa fa-user"></i>
                 <span>Sales Person</span>

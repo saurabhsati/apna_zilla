@@ -60,10 +60,21 @@
            <div class="gren_bor_title">GET IN TOUCH</div>
 
            <div class="bor_grn">&nbsp;</div>
-           <div class="user_box"><input class="input_acct" type="text" name="name" id="name" value="" placeholder="Name"><div class="error_msg"></div></div>
-           <div class="user_box"><input class="input_acct" type="text" name="mobile_no" id="mobile_no" value="" placeholder="Mobile No"><div class="error_msg"></div></div>
-           <div class="user_box"><input class="input_acct" type="text" name="email" id="email" value="" placeholder="Email"><div class="error_msg"></div></div>
-           <div class="user_box">  <textarea class="textarea_box" name="message" id="message" placeholder="Message" type=""></textarea><div class="error_msg"></div></div>
+           <div class="user_box">
+           <input class="input_acct" type="text" name="name" id="name" value="" placeholder="Name">
+           <div class="error_msg" id="err_name"></div>
+           </div>
+           <div class="user_box">
+           <input class="input_acct" type="text" name="mobile_no" id="mobile_no" value="" placeholder="Mobile No">
+           <div class="error_msg" id="err_mobile_no"></div>
+           </div>
+           <div class="user_box">
+           <input class="input_acct" type="text" name="email" id="email" value="" placeholder="Email">
+           <div class="error_msg" id="err_email"></div>
+           </div>
+           <div class="user_box">
+            <textarea class="textarea_box" name="message" id="message" placeholder="Message" type=""></textarea>
+            <div class="error_msg" id="err_message"></div></div>
            <br/>
            <button class="pull-left btn btn-post" id="contact_submit" type="submit" name="contact_submit">Submit now</button>
            </form>
@@ -136,53 +147,60 @@ $("#contact_submit").click(function(e){
 
       if(name.trim()=='')
       {
-        $('#name').show();
-        $('#name').fadeIn(3000);
-        $('#name').attr('placeholder','Please enter name');
+        $('#err_name').html('Enter Your Name.');
+        $('#err_name').show();
         $('#name').focus();
-        return false;
+        $('#name').on('keyup', function(){
+        $('#err_name').hide();
+          });
+
       }
         else if(mobile_no.trim()=='')
       {
-        $('#mobile_no').show();
-        $('#mobile_no').fadeIn(3000);
-        $('#mobile_no').attr('placeholder','Please enter  phone number');
+        $('#err_mobile_no').html('Enter Your Mobile Number.');
+        $('#err_mobile_no').show();
         $('#mobile_no').focus();
-        return false;
+        $('#mobile_no').on('keyup', function(){
+        $('#err_mobile_no').hide();
+          });
       }
       else if(!filter_contact.test(mobile_no))
       {
-        $('#mobile_no').show();
-        $('#mobile_no').fadeIn(3000);
-        $('#mobile_no').attr('placeholder','Please enter valid phone number');
+        $('#err_mobile_no').html('Enter Valid Mobile Number.');
+        $('#err_mobile_no').show();
         $('#mobile_no').focus();
-        return false;
+        $('#mobile_no').on('keyup', function(){
+        $('#err_mobile_no').hide();
+          });
       }
       else if(email.trim()=='')
       {
-        $('#email').show();
-        $('#email').fadeIn(3000);
-        $('#email').attr('placeholder','Please enter Email Address');
+        $('#err_email').html('Enter Your Email ID.');
+        $('#err_email').show();
         $('#email').focus();
-        return false;
+        $('#email').on('keyup', function(){
+        $('#err_email').hide();
+          });
 
       }
       else if(!filter.test(email))
      {
-        $('#email').show();
-        $('#email').fadeIn(3000);
-        $('#email').attr('placeholder','Please enter valid Email Address');
+        $('#err_email').html('Enter Valid Email ID.');
+        $('#err_email').show();
         $('#email').focus();
-        return false;
+        $('#email').on('keyup', function(){
+        $('#err_email').hide();
+          });
        }
 
       else if(message.trim()=='')
       {
-        $('#message').show();
-        $('#message').fadeIn(3000);
-        $('#message').attr('placeholder','Please enter message');
+         $('#err_message').html('Enter Your Message.');
+        $('#err_message').show();
         $('#message').focus();
-        return false;
+        $('#message').on('keyup', function(){
+        $('#err_message').hide();
+          });
       }
 
       else

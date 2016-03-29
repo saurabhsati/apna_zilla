@@ -80,7 +80,7 @@
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="name">Profile Pic</label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <img src="{{url('/')}}/images/front/avatar.jpg" width="200" height="200" id="preview_profile_pic"  />
+                    <img src="{{url('/')}}/images/admin/avatar/avatar.jpg" width="100px" height="100px" id="preview_profile_pic"  />
                     <span class="btn btn-danger" id="removal_handle" style="display:none;" onclick="clearPreviewImage()">X</span>
                     <input class="form-control" name="profile_pic" id="profile_pic" type="file" onchange="loadPreviewImage(this)"/>
 
@@ -111,7 +111,7 @@
                     <span class='help-block'>{{ $errors->first('last_name') }}</span>
                 </div>
             </div>
-            
+
               <div class="form-group">
                   <label class="col-sm-3 col-lg-2 control-label">Gender</label>
                   <div class="col-sm-9 col-lg-10 controls">
@@ -123,7 +123,7 @@
                      </label>
                   <span class='help-block'>{{ $errors->first('gender') }}</span>
                  </div>
-               </div>  
+               </div>
 
              <div class="box-content">
                <div class="form-group">
@@ -133,7 +133,7 @@
                   </div>
                  <span class='help-block'>{{ $errors->first('d_o_b') }}</span>
                </div>
-               </div> 
+               </div>
 
                 <div class="form-group">
                   <label class="col-sm-3 col-lg-2 control-label">Marital Status</label>
@@ -148,7 +148,7 @@
                     <span class='help-block'>{{ $errors->first('marital_status') }}</span>
                   </div>
                </div>
-            
+
 
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="email">Email<i class="red">*</i></label>
