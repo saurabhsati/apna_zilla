@@ -38,7 +38,7 @@ function FBLogin(redirect_url)
               console.log(response);
               if(response.status=="SUCCESS")
               {
-                location.href= url+'/login';
+                location.href= url+'/front_users/profile';
                 /*if(redirect_url != false)
                 {
                   window.location.href =site_url+redirect_url;

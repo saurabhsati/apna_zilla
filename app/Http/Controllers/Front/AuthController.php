@@ -161,10 +161,10 @@ class AuthController extends Controller
 
             $login_status  = Sentinel::login($existing_user); // process login a user
 
-            Session::put('user_name', $fname);
-            Session::put('user_mail', $email);
+            Session::set('user_name', $fname);
+            Session::set('user_mail', $email);
 
-            Session::flash('success','You are Successfully Login .');
+           Session::flash('success','Login Successfull');
             
             $data['status'] = "SUCCESS";
             $data['msg'] 	= "Redirect to my account page";
@@ -203,6 +203,8 @@ class AuthController extends Controller
 
             Session::set('user_name', $fname);
             Session::set('user_mail', $data['email']);
+
+            Session::flash('success','Login Successfull');
 
             $data['status'] = "SUCCESS";
             $data['msg']    = "You Have Registered Successfully";

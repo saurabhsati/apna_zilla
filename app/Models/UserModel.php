@@ -18,6 +18,7 @@ class UserModel extends Model
     					   'dd',
                  'mm',
                  'yy',
+                 'd_o_b',
     					   'email',
     					   'password',
     					   'street_address',
