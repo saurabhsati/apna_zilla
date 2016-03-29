@@ -215,11 +215,11 @@
                     
                                    </div>
            <div class="button_save1">
-                   <a class="btn btn-post pull-left" href="#">previous</a>
-           
                     <a class="btn btn-post" href="#">Save &amp; continue</a>
-                  <a class="btn btn-post" href="#">Save &amp; exit</a>
-                        <a class="btn btn-post pull-right" href="#">Next</a>
+                <!--<a class="btn btn-post pull-left" href="#">previous</a>
+                    <a class="btn btn-post" href="#">Save &amp; exit</a>
+                    071ed6128d4fa03ac4c40cd8aac43140a73096d0
+                    <a class="btn btn-post pull-right" href="#">Next</a> -->
                  </div>
                        </div>
                       

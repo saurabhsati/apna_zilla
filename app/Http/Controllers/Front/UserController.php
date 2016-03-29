@@ -347,7 +347,7 @@ class UserController extends Controller
      //Getting all the details of the City Table
      $obj_city_full_details = CityModel::get();
 
-     if($obj_city_full_details){
+     if($obj_city_full_details){    
          $arr_city = $obj_city_full_details->toArray();
       }
      //Getting all the details of the State Table

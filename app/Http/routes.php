@@ -450,7 +450,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		// for saving business data.
 		Route::post('add_business_details',		    	['as' => 'business_add' 	        				,'uses' =>'Front\UserController@add_business_details']);
 		// for showing contact information page for business
-		Route::post('add_contacts',		    			['as' => 'business_contacts' 	        			,'uses' =>'Front\UserController@show_business_contacts_details']);
+		Route::get('add_contacts',		    			['as' => 'business_contacts' 	        			,'uses' =>'Front\UserController@show_business_contacts_details']);
 
 
 

@@ -22,13 +22,13 @@
          <div class="row">
              
              <div class="col-sm-12 col-md-3 col-lg-3">
-              <!--  <div class="categories_sect sidebar-nav slide_m">
+               <div class="categories_sect sidebar-nav slide_m">
               
                 <div class="sidebar-brand">Business information</div>
                 <div class="bor_head">&nbsp;</div>
                 <ul class="">
-                    <li class="brdr"><a href="#">Location Information</a></li>
-                  <li class="brdr"><a href="#">contact information </a></li>
+                    <li class="brdr"><a href="{{ url('/').'/front_users/add_business' }}">Location Information</a></li>
+                  <li class="brdr"><a href="{{-- url('/').'/front_users/contact_business' --}}#">contact information </a></li>
                   <li class="brdr"><a href="#">other information</a></li>
                     <li class="brdr has-sub"><a href="#"><span>business keywords</span></a>
                     <ul class="make_list" style="display:none;">
@@ -49,7 +49,7 @@
                   <li class="brdr"><a href="#">Submit An online Request/Complaint</a></li>
                   </ul>
                 <div class="clearfix"></div>
-                </div> -->
+                </div>
             </div> 
 
             {{-- view('front.user.business_sidebar') --}}
