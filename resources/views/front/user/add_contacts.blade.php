@@ -70,7 +70,7 @@
              
         
                        
-                        <div class="col-sm-12 col-md-12 col-lg-12">
+                   <!--      <div class="col-sm-12 col-md-12 col-lg-12">
                 <div class="box_profile">
                      <div class="user_box_sub">
                            <div class="row">
@@ -85,13 +85,13 @@
                         </select>  
                             </div>
                           <div class="col-sm-5 col-md-5 col-lg-6"> <input type="text" class="input_acct" placeholder="Enter name"></div>
-<div class="col-sm-5 col-md-5 col-lg-4"> <input type="text" class="input_acct" placeholder="Designation"></div></div>
+                          <div class="col-sm-5 col-md-5 col-lg-4"> <input type="text" class="input_acct" placeholder="Designation"></div></div>
                           <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
-                    </div>
+                    </div> -->
                     
-                     <div class="user_box_sub">
+                    <!--  <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-2 label-text">Contact Person <span>:</span></div>
                    <div class="col-sm-12 col-md-12 col-lg-10 m_l">
@@ -104,12 +104,35 @@
                         </select>  
                             </div>
                           <div class="col-sm-5 col-md-5 col-lg-6"> <input type="text" class="input_acct" placeholder="Enter name"></div>
-<div class="col-sm-5 col-md-5 col-lg-4"> <input type="text" class="input_acct" placeholder="Designation"></div></div>
+                            <div class="col-sm-5 col-md-5 col-lg-4"> <input type="text" class="input_acct" placeholder="Designation"></div></div>
                           <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
                     </div>
-                    
+                     -->
+
+
+                <div class="user_box_sub">
+                  <div class="row">
+                    <div class="col-lg-3  label-text">Mobile No:</div>
+                      <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                        <input type="text" name="mobile_number" class="input_acct" placeholder="Enter Mobile Number" />
+                      </div>
+                    </div>
+                </div>
+
+                 <div class="user_box_sub">
+                   <div class="row">
+                      <div class="col-lg-3  label-text">Landline No:</div>
+                      <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                           <input type="text" name="landline_number"  class="input_acct" placeholder="Enter Landline Number" />
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
                      <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-2 label-text">Landline No <span>:</span></div>
@@ -181,7 +204,7 @@
                     </div>
                     
                       <div class="user_box_sub">
-                           <div class="row">
+                        <div class="row">
                     <div class="col-lg-2 label-text">Toll free no2. <span>:</span></div>
                     <div class="col-sm-12 col-md-12 col-lg-10 m_l">
                          <input type="text"  class="input_acct" placeholder="Enter Toll free no "/>
