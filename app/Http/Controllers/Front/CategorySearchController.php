@@ -54,6 +54,9 @@ class CategorySearchController extends Controller
       // get business listing by city and category id
      if($cat_id==0)
          {
+           Session::forget('category_serach');
+           Session::forget('category_id');
+           $arr_business =$arr_sub_cat=$parent_category=$sub_category= array();
           return view('front.listing.index',compact('page_title','arr_business','arr_sub_cat','parent_category','sub_category','city'));
           //return redirect()->back();
          }

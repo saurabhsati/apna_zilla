@@ -57,7 +57,7 @@
                                   <input type="hidden" id="category_id" name="category_id"
                                   @if(Session::has('category_id'))
                                   value="{{Session::get('category_id') }}"
-                                  @else value=""
+                                  @else value="0"
                                   @endif/>
                                  <button type="submit" aria-hidden="true" class="form-control-feedback search_buisness" id="search_buisness"><i class="fa fa-search"></i></button>
                               </div>

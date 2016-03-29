@@ -17,8 +17,7 @@
        <ol class="breadcrumb">
          <span>You are here:</span>
          <li><a href="{{ url('/') }}">Home</a></li>
-         <li class="active"><?php if(isset($parent_category) &&(isset($sub_category))){echo $sub_category[0]['title'].' '.$parent_category[0]['title'];} ?></li>
-
+         <li class="active"><?php if(sizeof($parent_category)>0 && (sizeof($sub_category)>0)){echo $sub_category[0]['title'].' '.$parent_category[0]['title'];} ?></li>
        </ol>
      </div>
    </div>
@@ -42,10 +41,12 @@
         @if(isset($arr_sub_cat) && sizeof($arr_sub_cat)>0)
         @foreach($arr_sub_cat as $category)
         <?php  $current_cat=explode('-',Request::segment(3));
-        if(isset($current_cat)){ if($current_cat[1]!=$category['cat_id']){
+        if(isset($current_cat)){
+         if($current_cat[1]!=$category['cat_id']){
           ?>
           <li class="brdr"><a href="{{ url('/') }}/{{$city}}/all-options/ct-{{$category['cat_id']}}">{{ $category['title'] }}</a></li>
-          <?php } }?>
+          <?php }
+           }?>
           @endforeach
           @else
             <li class="brdr"><?php echo "No Records Available"; ?></li>
@@ -58,7 +59,7 @@
     </div>
 
     <div class="col-sm-12 col-md-9 col-lg-9">
-     <div class="title_head"><?php if(isset($parent_category) && (isset($sub_category))){echo $sub_category[0]['title'].' '.$parent_category[0]['title'];} ?></div>
+     <div class="title_head"><?php if(sizeof($parent_category)>0 && (sizeof($sub_category)>0)){echo $sub_category[0]['title'].' '.$parent_category[0]['title'];} ?></div>
 
 
      <div class="sorted_by">Sort By :</div>
@@ -86,12 +87,20 @@
         {
            $city="Mumbai";
         }
+        $category_search='';
+        if(sizeof($sub_category)>0){
         if($sub_category[0]['title']!='')
         {
           $category_search=str_slug($sub_category[0]['title']);
 
            //$category_id=Session::get('category_id');
          }
+
+       }
+       else
+       {
+        $category_search='';
+       }
           /*else {$category_id="";}*/
           if(!empty($loc)){
                $location=str_replace(' ','-',strtolower($loc));
@@ -109,7 +118,7 @@
          </ul>
 
        </li>
-      <input type="hidden" name="current_url" value="{{ url('/') }}/{{$city}}/all-options/ct-{{$category['cat_id']}}">
+      <input type="hidden" name="current_url" value="{{ url('/') }}/{{$city}}/all-options/ct-@if(isset($category['cat_id'])){{$category['cat_id']}}@else{{0}}@endif">
        <li><a href="javascript:void(0);" class="<?php if( Session::has('review_rating')){echo"active";} ?>" <?php if(Session::has('review_rating')){ ?>onclick="javascript:void(0);" <?php }else{ ?>onclick="orderByRating();" <?php } ?>>Ratings <span><i class="fa fa-long-arrow-up"></i></span></a></li>
 
        <li>
@@ -177,7 +186,7 @@
                 />
 
               @if(isset($sub_category))
-               <input type="hidden" class="input-searchbx " id="search_under_category" value="{{str_slug($sub_category[0]['title'])}}" />
+               <input type="hidden" class="input-searchbx " id="search_under_category" value="@if(isset($sub_category[0]['title'])){{str_slug($sub_category[0]['title'])}}@endif" />
                @endif
                </div>
 
