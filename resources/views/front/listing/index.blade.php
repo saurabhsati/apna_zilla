@@ -255,7 +255,7 @@
                 {{ $restaurants['landmark'] }} &nbsp; {{ $restaurants['area'] }} &nbsp;{{ '-'.$restaurants['pincode'] }}<br/>
              Away From
              @if(Session::has('distance'))
-               {{Session::get('distance')}} distance
+               {{Session::get('distance')}} km distance
                 @endif
 
                 </span></div>
