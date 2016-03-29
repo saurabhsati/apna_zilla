@@ -312,28 +312,36 @@ class UserController extends Controller
 
         $obj_business_info = BusinessListingModel::where('user_id','=',$user_id)->get();
 
+        $arr_business_info =  array();
+        $cat_title =  "";
         if($obj_business_info)
         {
             $arr_business_info = $obj_business_info->toArray();
+            if(count($arr_business_info)>0)
+            {
+                foreach ($arr_business_info as $business) 
+                {
+                   $cat_id = $business['business_cat'];
+                }
+
+               $obj_cat_details = CategoryModel::where('cat_id','=',$cat_id)->get();
+
+               if($obj_cat_details)
+               {
+                  $arr_cat_details = $obj_cat_details->toArray();
+               }
+
+                if(count($arr_cat_details)>0)
+                {
+                   foreach ($arr_cat_details as $category) 
+                   {
+                       $cat_title = $category['title'];
+                   }
+                }
+
+            }
         }
 
-        foreach ($arr_business_info as $business) 
-        {
-            $cat_id = $business['business_cat'];
-        }
-     
-       $obj_cat_details = CategoryModel::where('cat_id','=',$cat_id)->get();
-
-       if($obj_cat_details)
-       {
-          $arr_cat_details = $obj_cat_details->toArray();
-       }
-
-       foreach ($arr_cat_details as $category) 
-       {
-           $cat_title = $category['title'];
-       }
-        
         return view('front.user.my_business',compact('arr_business_info','cat_title'));
     }
 
