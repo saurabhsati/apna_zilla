@@ -58,6 +58,7 @@
                            >
            {{ csrf_field() }}
            <div class="gren_bor_title">GET IN TOUCH</div>
+
            <div class="bor_grn">&nbsp;</div>
            <div class="user_box"><input class="input_acct" type="text" name="name" id="name" value="" placeholder="Name"><div class="error_msg"></div></div>
            <div class="user_box"><input class="input_acct" type="text" name="mobile_no" id="mobile_no" value="" placeholder="Mobile No"><div class="error_msg"></div></div>
