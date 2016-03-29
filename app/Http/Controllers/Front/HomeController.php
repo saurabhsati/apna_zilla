@@ -21,6 +21,7 @@ class HomeController extends Controller
     {
 
     	$page_title	='Home';
+      //  echo Session::get('city');//die();
         if(Session::has('city'))
         {
         	$current_city=Session::get('city');

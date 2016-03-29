@@ -12,7 +12,7 @@
      <ol class="breadcrumb">
          <span>You are here :</span>
   <li><a href="{{url('/')}}">Home</a></li>
-  <li><a href="{{url('/')}}/{{$city}}/all-options/ct-{{isset($arr_business_details['category_details']['category_id']) && $arr_business_details['category_details']['category_id']!=''?$arr_business_details['category_details']['category_id']:'NA'}}">Restaurants</a></li>
+  <li><a href="{{url('/')}}/{{$city}}/all-options/ct-{{isset($arr_business_details['category_details']['category_id']) && $arr_business_details['category_details']['category_id']!=''?$arr_business_details['category_details']['category_id']:'NA'}}"><?php if($parent_category[0]['title']!=''){echo $parent_category[0]['title'];} ?></a></li>
          <li class="active">{{ isset($arr_business_details['business_name']) && sizeof($arr_business_details['business_name'])>0?$arr_business_details['business_name']:''}}</li>
 
 </ol>
@@ -31,32 +31,16 @@
            <!--  <div class="product_detail_banner" style="background: url('{{ url('/') }}/assets/front/images/banner_detail.jpg') repeat scroll 0px 0px;"> -->
             <div class="product_detail_banner" style="background: url('{{ url('/') }}/uploads/business/main_image/{{ $arr_business_details['main_image'] }}'); background-repeat: no-repeat;  background-size: 100% auto;">
               <div class="product_title"><a href="#">{{$arr_business_details['business_name']}}</a></div>
-                 <?php $reviewtotal=$avg_review=0; ?>
-                          @if(isset($arr_business_details['reviews']) && sizeof($arr_business_details['reviews'])>0)
-                           @foreach($arr_business_details['reviews'] as $review)
-                           <?php  $reviewtotal=$reviewtotal+$review['ratings'] ?>
-                           @endforeach
-                           @endif
-                           <?php
-                             if(sizeof($arr_business_details['reviews']))
-                             {
-                                $count_review=sizeof($arr_business_details['reviews']);
-                                $avg_review=($reviewtotal/$count_review);
-                             }
-                             else
-                             {
-                              $avg_review= $tot_review=0;
-                             }
-                           ?>
+
                 <div class="rating_star">
                 <ul>
-                <li>
-                <i class="fa fa-star-o ylow"></i>
-                </li>
-                <li><i class="fa fa-star-o ylow"></i>
-                </li><li><i class="fa fa-star-o ylow"></i>
-                </li><li><i class="fa fa-star-o"></i></li>
-                <li><i class="fa fa-star-o"></i></li></ul>{{$avg_review}}&nbsp;out of 5 <a href="#" onclick="clickReview()">reviews</a></div>
+                  <?php for($i=0;$i<round($arr_business_details['avg_rating']);$i++){ ?>
+                <li><i class="fa fa-star-o ylow"></i></li>
+                <?php }?>
+               <?php for($i=0;$i<(5-round($arr_business_details['avg_rating']));$i++){ ?>
+                <li><i class="fa fa-star-o"></i></li>
+                <?php }?>
+                </ul>{{round($arr_business_details['avg_rating'])}}&nbsp;out of 5 <a href="#" onclick="clickReview()">reviews</a></div>
                 <div class="p_details"><i class="fa fa-phone"></i><span> {{$arr_business_details['landline_number']}} &nbsp; {{$arr_business_details['mobile_number']}}</span></div>
                 <div class="p_details"><i class="fa fa-map-marker"></i> <span>{{$arr_business_details['building']}} &nbsp; {{$arr_business_details['street']}},<br/> {{$arr_business_details['landmark']}},&nbsp;{{$arr_business_details['area']}},&nbsp;{{$arr_business_details['state_details']['state_title']}},&nbsp;{{$arr_business_details['country_details']['country_name']}} (<a href="javascript:void(0);" onclick="show_map()">map</a>)</span></div>
 
@@ -196,6 +180,23 @@
                      </ul>
 
                      <div class="resp-tabs-container">
+                       @if(Session::has('success'))
+                        <div class="alert alert-success alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            {{ Session::get('success') }}
+                        </div>
+                      @endif
+
+                      @if(Session::has('error'))
+                        <div class="alert alert-danger alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            {{ Session::get('error') }}
+                        </div>
+                      @endif
                         <div> <div class="write-review-main" id="review_id">
                               <div class="write-review-head">
                                  Write a Review
@@ -213,18 +214,20 @@
 
                             <div class="review-title">
                                  <div class="your-rating"> Your rating </div>
+                                 <input type="hidden" value="" name="rating" id="rating">
+                                 <span class="wrtrvtxt hidden-xs" id="mratdet">( <span id="dprtng">-</span> )</span>
                                  <div class="yr_rating-over">
                                    <ul>
-                                     <li><a href="#"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                      <li><a href="#"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                       <li><a href="#"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                        <li><a href="#"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                         <li><a href="#"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                         <li><a href="#"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                      <li><a href="#"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                       <li><a href="#"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                        <li><a href="#"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                         <li><a href="#"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
+                                    <li><a class="ratingStar" href="javascript:void(0);" rel="0.5"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
+                                    <li><a class="ratingStar" href="javascript:void(0);" rel="1.0"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
+                                    <li><a class="ratingStar" href="javascript:void(0);" rel="1.5"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
+                                    <li><a class="ratingStar" href="javascript:void(0);" rel="2.0"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
+                                    <li><a class="ratingStar" href="javascript:void(0);" rel="2.5"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
+                                    <li><a class="ratingStar" href="javascript:void(0);" rel="3.0"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
+                                    <li><a class="ratingStar" href="javascript:void(0);" rel="3.5"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
+                                    <li><a class="ratingStar" href="javascript:void(0);" rel="4.0"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
+                                    <li><a class="ratingStar" href="javascript:void(0);" rel="4.5"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
+                                    <li><a class="ratingStar" href="javascript:void(0);" rel="5.0"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
                                    </ul>
                                  </div>
                                  <div class="clearfix"></div>
@@ -663,7 +666,15 @@
         marker.setPosition(location);
         map.setZoom(16);
     }
+$(".ratingStar").hover(function(){
+  var rate=$(this).attr('rel');
+  $("#dprtng").html(rate);
+  $("input[name='rating']").val(rate);
 
+
+
+
+});
 
 
 </script>

@@ -19,34 +19,34 @@ class ContactEnquiryController extends Controller
 
       /*
     | Index : Display listing of Contacted Users/Visitors
-    | auther : Danish 
+    | auther : Danish
     | Date : 26/02/2016
     | @return \Illuminate\Http\Response
-    */ 
- 
+    */
+
     public function index()
     {
-       $page_title = "Contacted Users/Visitors List";   
-       $arr_contact = ContactEnquiryModel::get()->toArray(); 
-     	 
+       $page_title = "Contacted Users";
+       $arr_contact = ContactEnquiryModel::get()->toArray();
+
      	 return view('web_admin.contact_enquiry.index',compact('page_title','arr_contact'));
-    }  
-          
+    }
+
     /*
     | Show() : Display detail information regarding specific record
-    | auther : Danish 
+    | auther : Danish
     | Date : 26/02/2016
     | @param  int  $enc_id
     | @return \Illuminate\Http\Response
-    */ 
+    */
 
     public function show($enc_id)
     {
-       $page_title = "Show Contacted User/Visitor";  
+       $page_title = "Show Contacted Users";
        $id = base64_decode($enc_id);
 
-       $arr_contact = ContactEnquiryModel::where('contact_us_id',$id)->first()->toArray(); 
-        
+       $arr_contact = ContactEnquiryModel::where('contact_us_id',$id)->first()->toArray();
+
        return view('web_admin.contact_enquiry.show',compact('page_title','arr_contact'));
     }
 

@@ -217,27 +217,28 @@
             </div>
 
             <div class="rating_star">
-              <?php $reviews=0; ?>
-              @if(isset($restaurants['reviews']) && sizeof($restaurants['reviews'])>0)
-              @foreach($restaurants['reviews'] as $review)
-              <?php  $reviews=$reviews+$review['ratings'] ?>
-              @endforeach
-              @endif
+
               <?php
               if(sizeof($restaurants['reviews']))
               {
                 $tot_review=sizeof($restaurants['reviews']);
-                $avg_review=($reviews/$tot_review);
+
               }
               else
               {
-                $avg_review= $tot_review=0;
+                 $tot_review=0;
               }
               ?>
 
               <!-- <img src="{{ url('/') }}/assets/front/images/star2.png" alt="rating"/> -->
-
-              <img src="{{ url('/') }}/assets/front/images/rating.jpg" alt="rating"/> &nbsp;@if(isset($tot_review)){{$tot_review}} @endif Ratings
+              <ul>
+              <?php for($i=0;$i<round($restaurants['avg_rating']);$i++){ ?>
+              <li><i class="fa fa-star-o ylow"></i></li>
+              <?php }?>
+              <?php for($i=0;$i<(5-round($restaurants['avg_rating']));$i++){ ?>
+              <li><i class="fa fa-star-o"></i></li>
+                <?php }?></ul>
+               &nbsp;@if(isset($tot_review)){{$tot_review}} @endif Ratings
               <span class=""> Estd.in {{ $restaurants['establish_year'] }} </span></div>
               <div class="p_details"><i class="fa fa-phone"></i><span> {{ $restaurants['landline_number'] }} &nbsp; {{ $restaurants['mobile_number'] }}</span></div>
               <div class="p_details"><i class="fa fa-map-marker"></i>

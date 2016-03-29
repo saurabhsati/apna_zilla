@@ -41,8 +41,10 @@ class SiteSettingController extends Controller
   		$arr_rules 					= array();
   		$arr_rules['website_name'] 	  = "required";
   		$arr_rules['address'] 	 	=    "required";
-  		$arr_rules['contact_number']  = "required";
-  		$arr_rules['email'] 		= "required";
+      $arr_rules['contact_number']  = "required";
+      $arr_rules['phone_number']  = "required";
+  		$arr_rules['map_iframe']  = "required";
+      $arr_rules['email'] 		= "required";
   		$arr_rules['meta_keyword']    	= "required";
   		$arr_rules['meta_desc'] 	   = "required";
   		$arr_rules['facebook_url'] 	= "required";
@@ -59,6 +61,8 @@ class SiteSettingController extends Controller
   		$arr_data['site_name'] 			 = $request->input('website_name');
   		$arr_data['site_address'] 		 = $request->input('address');
   		$arr_data['site_contact_number'] = $request->input('contact_number');
+      $arr_data['phone_number'] = $request->input('phone_number');
+      $arr_data['map_iframe'] = $request->input('map_iframe');
   		$arr_data['meta_keyword'] 		 = $request->input('meta_keyword');
   		$arr_data['meta_desc'] 			 = $request->input('meta_desc');
   		$arr_data['site_email_address'] 		 = $request->input('email');
