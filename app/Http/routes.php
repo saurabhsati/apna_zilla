@@ -443,6 +443,17 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::post('store_address_details',			['as' => 'front_users_store_address_details'        ,'uses' =>'Front\UserController@store_address_details']);
 
 		Route::get('my_business',						['as' => 'front_users_business'        				,'uses' =>'Front\UserController@my_business']);
+		// for adding business.
+		Route::get('add_business',		    			['as' => 'business_add' 	        				,'uses' =>'Front\UserController@add_business']);
+		// for getting country state from city_id ajax called function.
+		Route::post('get_state_country',		    	['as' => 'get_state_country' 	        		    ,'uses' =>'Front\UserController@get_state_country']);
+		// for saving business data.
+		Route::post('add_business_details',		    	['as' => 'business_add' 	        				,'uses' =>'Front\UserController@add_business_details']);
+		// for showing contact information page for business
+		Route::post('add_contacts',		    			['as' => 'business_contacts' 	        			,'uses' =>'Front\UserController@show_business_contacts_details']);
+
+
+
 	    Route::get('edit_business/{enc_id}',		    ['as' => 'business_edit' 	        				,'uses' =>'Front\UserController@edit_business']);
 		Route::post('update_business_details/{enc_id}',	['as' => 'front_users_store_business_details'       ,'uses' =>'Front\UserController@update_business_details']);
 
@@ -451,6 +462,8 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::post('update_password',				  	['as' => 'front_users_update_password'				,'uses' =>'Front\AuthController@update_password']);
 
 		Route::post('process_login_for_share/{enc_id}', ['as' => 'front_users_process_login_for_share'      ,'uses' =>'Front\AuthController@process_login_for_share']);
+
+		
 
 	});
 

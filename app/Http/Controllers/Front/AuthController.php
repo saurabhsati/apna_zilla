@@ -268,6 +268,7 @@ class AuthController extends Controller
                     Session::put('user_id', $user_id);
 
                 }
+                Session::flash('success','Login Successfull.');
                 return redirect('front_users/profile');
             }
             else

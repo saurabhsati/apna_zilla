@@ -46,6 +46,7 @@
                                    <li><a href="#">My Favorites</a></li>
                                    <li><a href="#">Friend's Ratings </a></li>
                                    <li><a href="{{ url('/front_users/my_business') }}">My Business </a></li>
+                                   <li><a href="{{ url('/front_users/add_business') }}">Add Business </a></li>
                                    <li><a href="{{ url('/front_users/logout') }}">Logout</a></li>
                                 </ul>
                              </div>

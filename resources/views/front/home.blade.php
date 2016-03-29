@@ -1,7 +1,7 @@
 @extends('front.template.landing')
 
 @section('main_section')
-
+ 
  <div class="catetory-block">
          <div class="container">
 

@@ -13,11 +13,11 @@
                  <div class="sidebar-brand">Fill Profile in Few Steps<span class="spe_mobile">&nbsp;<!--<a href="#"></a>--></span></div>
                  <div class="bor_head">&nbsp;</div>
                  <ul class="spe_submobile">
-                    <li class="brdr"><span class="steps">1</span><a href="{{url('/front_users/profile')}}">Personal Details</a></li>
-                  <li class="brdr"><span class="steps">2</span><a href="{{url('/front_users/address')}}">Addresses</a></li>
-                  <li class="brdr"><span class="steps">3</span><a href="{{url('/front_users/change_password')}}">Change Password</a></li>
-                  <li class="brdr"><span class="steps">4</span><a href="#">Favorites</a></li>
-                  <li class="brdr"><span class="process_done">5</span><a href="#">Completed</a></li>
+                    <li class="brdr"><!-- <span class="steps">1</span> --><a href="{{url('/front_users/profile')}}">Personal Details</a></li>
+                  <li class="brdr"><!-- <span class="steps">2</span> --><a href="{{url('/front_users/address')}}">Addresses</a></li>
+                  <li class="brdr"><!-- <span class="steps">3</span> --><a href="{{url('/front_users/change_password')}}">Change Password</a></li>
+                  <li class="brdr"><!-- <span class="steps">4</span> --><a href="#">Favorites</a></li>
+                  <li class="brdr"><!-- <span class="process_done">5</span> --><a href="#">Completed</a></li>
                  
                </ul>
                <!-- /#Categoriesr End-->
@@ -26,6 +26,27 @@
             </div>
              
             <div class="col-sm-12 col-md-9 col-lg-9">
+
+             @if(Session::has('success'))
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ Session::get('success') }}
+                </div>
+              @endif 
+
+              @if(Session::has('error'))
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ Session::get('error') }}
+                </div>
+              @endif 
+
+
+
             <div class="my_whit_bg">
                  <div class="title_acc">Please provide your personal Information</div>
                    <div class="row">
@@ -48,6 +69,7 @@
                 <label class="col-sm-3 col-lg-2 control-label" for="name">Profile Pic</label>
         <div class="col-sm-3 col-md-3 col-lg-3">
          <div class="profile_box">
+                    {{--
                     @if($user['profile_pic']=="default.jpg")
                       <img src="{{$profile_pic_public_path.'/'.$user['profile_pic']}}" width="200" height="200" id="preview_profile_pic"  />
                     @else
@@ -59,10 +81,10 @@
                     @else
                       <span class="btn btn-danger" id="removal_handle" onclick="clearPreviewImage()" style="display:none;">X</span>
                     @endif
-
+--}}
                     <input class="form-control" name="profile_pic" id="profile_pic" type="file" onchange="loadPreviewImage(this)"/>
 
-                    <span class='help-block'>{{ $errors->first('profile_pic') }}</span>
+                    <span class='help-block'>{{-- $errors->first('profile_pic') --}}</span>
                 </div>
             </div>  -->
 
@@ -72,10 +94,11 @@
                     <div class="ig_profile" id="dvPreview">  
 
                     @if($user['profile_pic']=="default.jpg")
-                      <img src="{{$profile_pic_public_path.'/'.$user['profile_pic']}}" width="200" height="200" id="preview_profile_pic"  />
+                      <img src="{{$profile_pic_public_path.'/'.$user['profile_pic'] }}" width="200" height="200" id="preview_profile_pic"  />
                     @else
-                      <img src="{{$profile_pic_public_path.'/'.$user['profile_pic']}}" width="200" height="200" id="preview_profile_pic"  />
+                      <img src="{{$profile_pic_public_path.'/'.$user['profile_pic'] }}" width="200" height="200" id="preview_profile_pic"  />
                     @endif
+                    
                     </div>
                         <div class="button_shpglst">
                         <div class="fileUpload or_btn">

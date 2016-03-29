@@ -10,6 +10,7 @@
     </div>
     <!-- END Page Title -->
 
+{{-- dd($arr_category) --}}
     <!-- BEGIN Breadcrumb -->
     <div id="breadcrumbs">
         <ul class="breadcrumb">
@@ -119,40 +120,42 @@
                     <span class='help-block'>{{ $errors->first('business_name') }}</span>
                 </div>
             </div>
+
              <div class="form-group">
-            <label class="col-sm-3 col-lg-2 control-label" for="business_cat">Business Category <i class="red">*</i></label>
-            <div class="col-sm-6 col-lg-4 controls">
-            <select class="form-control" name="business_cat[]" id="business_cat" onchange="updateCategoryOptGroup(this)" multiple="">
-            <option> Select Business Category</option>
-             @if(isset($arr_category) && sizeof($arr_category)>0)
-             @foreach($arr_category as $category)
-             @if($category['parent'] =='0')
-                      <optgroup label="{{ $category['title'] }}" >
-                          @foreach($arr_category as $subcategory)
-                            @if( $subcategory['parent']==$category['cat_id'])
+                <label class="col-sm-3 col-lg-2 control-label" for="business_cat">Business Category <i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                  <select class="form-control" name="business_cat[]" id="business_cat" onchange="updateCategoryOptGroup(this)" multiple="">
+                     <option> Select Business Category</option>
+                      @if(isset($arr_category) && sizeof($arr_category)>0)
+                        @foreach($arr_category as $category)
+                          @if($category['parent'] =='0')
+                            <optgroup label="{{ $category['title'] }}" >
+                                  
+                                  @foreach($arr_category as $subcategory)
+                                    @if( $subcategory['parent']==$category['cat_id'])
+                                  <?php
+                                    $arr_selected=array();
+                                    foreach($business['category'] as $sel_category)
+                                    {
+                                       array_push($arr_selected,$sel_category['category_id']);
+                                    }
+                                  ?>
+                                  <option  name="sub_cat" id="sub_cat" value="{{ $subcategory['cat_id'] }}"  
+                                    <?php if(in_array($subcategory['cat_id'],$arr_selected)){ echo 'selected="selected"'; }?> >
+                                    <!--  <input type="checkbox" name="main_cat" id="main_cat" value="{{-- $subcategory['cat_id'] --}}"> -->
+                                    {{ $subcategory['title'] }}
+                                    </option>
+                                  <!-- </option  name="sub_cat" id="sub_cat"> -->
+                                    @endif
+                                 @endforeach
 
-                           <?php
-                            $arr_selected=array();
-                          foreach($business['category'] as $sel_category){
-                           array_push($arr_selected,$sel_category['category_id']);
-                         }
-                           ?>
-
-
-                              <option  name="sub_cat" id="sub_cat" value="{{ $subcategory['cat_id'] }}"  <?php if(in_array($subcategory['cat_id'],$arr_selected)){ echo 'selected'; }?> >
-                             <!--  <input type="checkbox" name="main_cat" id="main_cat" value="{{ $subcategory['cat_id'] }}"> -->
-                                 {{ $subcategory['title'] }}
-                              </option  name="sub_cat" id="sub_cat">
-                             @endif
-                             @endforeach
-
-                    </optgroup>
-              @endif
-              @endforeach
-              @endif
-            </select><a href="javascript:void(0);" onclick="clearCategoryOptGroup(this)">Clear Selected Option</a>
-            <span class='help-block'>{{ $errors->first('business_cat') }}</span>
-            </div>
+                            </optgroup>
+                          @endif
+                        @endforeach
+                      @endif
+                  </select><a href="javascript:void(0);" onclick="clearCategoryOptGroup(this)">Clear Selected Option</a>
+                <span class='help-block'>{{ $errors->first('business_cat') }}</span>
+                </div>
             </div>
            <div class="form-group">
                             <label class="col-sm-3 col-lg-2 control-label"> Image <i class="red">*</i> </label>
