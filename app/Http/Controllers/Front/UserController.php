@@ -85,6 +85,7 @@ class UserController extends Controller
             $user->roles()->attach($role);
             
             Session::flash('success','User Registered Successfully.');
+            return redirect(url('/'));
         }
 
         else
