@@ -249,11 +249,11 @@ class AuthController extends Controller
         }  
     }
 
-       public function process_login(Request $request)
+    public function process_login1(Request $request)
     {
         $arr_creds =  array();
-        $arr_creds['email'] = $request->input('email');
-        $arr_creds['password'] = $request->input('password');
+        $arr_creds['email']     = $request->input('email');
+        $arr_creds['password']  = $request->input('password');
 
         $user = Sentinel::authenticate($arr_creds);
 
@@ -290,6 +290,51 @@ class AuthController extends Controller
             Session::flash('error','Invalid Credentials');
             return redirect()->back();
         }
+
+    }
+
+    public function process_login(Request $request)
+    {
+        $arr_creds =  array();
+        $arr_creds['email']     = $request->input('email');
+        $arr_creds['password']  = $request->input('password');
+
+        $user = Sentinel::authenticate($arr_creds);
+
+        if($user)
+        {
+            /* Check if Users Role is Admin */
+            $role = Sentinel::findRoleBySlug('normal');
+            if(Sentinel::inRole($role))
+            {   
+                $obj_user_info = UserModel::where('email','=',$arr_creds['email'])->get();
+                {
+                    if($obj_user_info);
+                }
+                $arr_user_info = $obj_user_info->toArray();
+                
+                foreach ($arr_user_info as $user)
+                {
+                    $user_id = base64_encode($user['id']) ;
+                    Session::put('user_id', $user_id);
+                    Session::set('user_name', $user['first_name']);
+
+                }
+                Session::flash('success','Login Successfull.');
+                return redirect('front_users/profile');
+            }
+            else
+            {
+                Session::flash('error','Not Sufficient Privileges');
+                return redirect()->back();
+            }
+        }
+        else
+        {
+            Session::flash('error','Invalid Credentials');
+            return redirect()->back();
+        }
+
     }
 
 

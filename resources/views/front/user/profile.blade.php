@@ -45,8 +45,6 @@
                 </div>
               @endif 
 
-
-
             <div class="my_whit_bg">
                  <div class="title_acc">Please provide your personal Information</div>
                    <div class="row">
@@ -64,7 +62,7 @@
       @foreach($arr_user_info as $user)
 
     {{-- dd($user) --}}
-<!-- 
+        <!-- 
      <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="name">Profile Pic</label>
         <div class="col-sm-3 col-md-3 col-lg-3">
@@ -81,7 +79,7 @@
                     @else
                       <span class="btn btn-danger" id="removal_handle" onclick="clearPreviewImage()" style="display:none;">X</span>
                     @endif
---}}
+        --}}
                     <input class="form-control" name="profile_pic" id="profile_pic" type="file" onchange="loadPreviewImage(this)"/>
 
                     <span class='help-block'>{{-- $errors->first('profile_pic') --}}</span>
@@ -426,18 +424,15 @@
 
                     <button type="submit" class="yellow1 ui button">Save & Continue</button>
 
-                    @endforeach
+                        @endforeach
+                    
                     </form>
-              
-              </div>
-                      
+                    </div>
                 </div>
-                
-                 </div>
-                          
-             </div>
+            </div>
          </div>
-       </div>
+    </div>
+</div>
        
   </div>
 

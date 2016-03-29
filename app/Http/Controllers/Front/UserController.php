@@ -619,12 +619,18 @@ class UserController extends Controller
     {
         $business_id = base64_decode($enc_id);
 
-        
-        /*$obj_business_record = BusinessListingModel::where('id',$business_id)->first();
-        dd($obj_business_record->toArray());
-        exit;
+        ######################
+      
+        $obj_business_record   = BusinessListingModel::where('id',$business_id)->first();
+        if($obj_business_record)
+        {
+            $arr_business_data     = $obj_business_record->toArray();
+        }
 
-         $business_pic = "default.jpg";
+        /*echo $arr_business_data['main_image'];
+        exit;*/
+
+        $business_pic = "default.jpg";
 
         if ($request->hasFile('business_pic'))
         {
@@ -636,13 +642,13 @@ class UserController extends Controller
                 $image_extension    = $request->file('business_pic')->getClientOriginalExtension();
                 $image_name         = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
 
-                if(isset($arr_user_info[0]['business_pic']))
+                if(isset($arr_business_data['main_image']))
                 {
-                  @unlink($this->profile_pic_base_path.'/'.$arr_user_info[0]['business_pic']);
+                  @unlink($this->business_base_img_path.'/'.$arr_business_data['main_image']);
                 }
-
-                $request->file('business_pic')->move( $this->profile_pic_base_path, $image_name);
+                $request->file('business_pic')->move( $this->business_base_img_path, $image_name);
                 $business_pic = $image_name;
+               /* exit;*/
             }
             else
             {
@@ -652,16 +658,22 @@ class UserController extends Controller
         }
         else
         {
-           if(isset($arr_user_info[0]['business_pic'])) 
+           if(isset($arr_business_data['main_image'])) 
             {
-               $business_pic = $arr_user_info[0]['business_pic'];
+               $business_pic = $arr_business_data['main_image'];
+              // exit;
             } 
             else 
             { 
                $business_pic = "default.jpg"; 
             }
 
-        }*/
+        }
+
+
+        /*echo $business_pic ;
+        exit;*/
+        #######################
 
 
         $cat_name      =  $request->input('category');
@@ -724,8 +736,9 @@ class UserController extends Controller
         $arr_data['country']           =        $country_id;
         $arr_data['mobile_number']     =        $request->input('mobile_number');
         $arr_data['landline_number']   =        $request->input('landline_number');
+        $arr_data['main_image']        =         $business_pic ;
 
-                                                                              
+                                                               
         /* $arr_data['city'] = $request->input('city');
             $arr_data['pincode'] = $request->input('pincode');
             $arr_data['state'] = $request->input('state');

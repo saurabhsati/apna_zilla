@@ -18,6 +18,23 @@
                   <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_poup.png" alt="login logo"/></h4>
                </div>
                <div class="modal-body">
+                  @if(Session::has('success'))
+                  <div class="alert alert-success alert-dismissible">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                      {{ Session::get('success') }}
+                  </div>
+                @endif 
+
+                @if(Session::has('error'))
+                  <div class="alert alert-danger alert-dismissible">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                      {{ Session::get('error') }}
+                  </div>
+                @endif
                   <div class="login_box">
                      <div class="title_login">Login with your email and password</div>
                      <div class="user_box">
@@ -47,7 +64,7 @@
                      <div class="left_bar">
                         <a class="forgt" data-toggle="modal" data-target="#forget_pwd">Forget your password?</a><a data-toggle="modal" data-target="#reg_poup" class="sign_up">Sign Up Now</a>
                      </div>
-                     <button type="submit" class="yellow ui button">Login</button>
+                     <button type="submit"  id="login_submit" class="yellow ui button">Login</button>
                   </div>
                </div>
                <div class="clr"></div>
@@ -417,6 +434,13 @@
       @if(!Auth::check())
       <script type="text/javascript" language="javascript" src="{{ url('/') }}/js/front/fb_auth.js"></script>
       @endif
+
+<!-- BY nayan For login -->
+<script type="text/javascript">
+//jQuery( document ).ready()
+
+</script>
+
 
         <!-- Listing details Tabbing End -->
          <script src="{{ url('/') }}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>
