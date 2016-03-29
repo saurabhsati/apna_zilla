@@ -54,7 +54,8 @@ class CategorySearchController extends Controller
       // get business listing by city and category id
      if($cat_id==0)
          {
-          return redirect()->back();
+          return view('front.listing.index',compact('page_title','arr_business','arr_sub_cat','parent_category','sub_category','city'));
+          //return redirect()->back();
          }
       $obj_business_listing_city = CityModel::where('city_title',$city)->get();
       if($obj_business_listing_city)

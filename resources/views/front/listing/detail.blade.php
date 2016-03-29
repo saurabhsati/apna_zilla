@@ -2,9 +2,6 @@
 
 @section('main_section')
 @include('front.template._search_top_nav')
-
-
-
 <div class="gry_container">
       <div class="container">
          <div class="row">
@@ -14,7 +11,6 @@
   <li><a href="{{url('/')}}">Home</a></li>
   <li><a href="{{url('/')}}/{{$city}}/all-options/ct-{{isset($arr_business_details['category_details']['category_id']) && $arr_business_details['category_details']['category_id']!=''?$arr_business_details['category_details']['category_id']:'NA'}}"><?php if($parent_category[0]['title']!=''){echo $parent_category[0]['title'];} ?></a></li>
          <li class="active">{{ isset($arr_business_details['business_name']) && sizeof($arr_business_details['business_name'])>0?$arr_business_details['business_name']:''}}</li>
-
 </ol>
              </div>
           </div>
@@ -23,8 +19,6 @@
 
        <div class="container">
          <div class="row">
-
-
          @if(isset($arr_business_details) && sizeof($arr_business_details)>0)
                 <div class="col-sm-12 col-md-9 col-lg-9">
             <div class="p_detail_view">

@@ -35,7 +35,7 @@
                         </a>
                        <br/><br/>
                         <a href="javascript:void(0);" onclick="login()">
-                           <img src="{{ url('/') }}/assets/front/images/twitter_login.png" alt="facebook login"/>
+                           <img src="{{ url('/') }}/assets/front/images/google-plus.jpg" alt="facebook login"/>
                         </a>
                      </div>
                      <div class="clr"></div>
