@@ -24,11 +24,11 @@ use Validator;
 class SalesAccountController extends Controller
 {
  	public function __construct()
-    {   
+    {
        $arr_except_auth_methods = array();
        $arr_except_auth_methods[] = 'login';
        $arr_except_auth_methods[] = 'process_login';
-      
+
        $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
 
         $this->UserModel = new UserModel();
@@ -43,9 +43,9 @@ class SalesAccountController extends Controller
         $this->business_base_upload_img_path = base_path()."/public/uploads/business/business_upload_image/";
 
         $this->profile_pic_base_path = base_path().'/public'.config('app.project.img_path.user_profile_pic');
-        $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');  
+        $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');
 
-    }   
+    }
 
  	public function index()
  	{
@@ -55,7 +55,7 @@ class SalesAccountController extends Controller
  	}
 
     public function login()
-    {   
+    {
          return view('sales_user.account.login');
     }
 
@@ -68,12 +68,12 @@ class SalesAccountController extends Controller
         $record = UserModel::where('email','=',$arr_creds['email'])
                               ->get()->toArray();
 
-        foreach($record as $sales_user) 
+        foreach($record as $sales_user)
         {
-            $public_id = $sales_user['public_id'];        
+            $public_id = $sales_user['public_id'];
         }
-    
-        
+
+
         $user = Sentinel::authenticate($arr_creds);
 
 
@@ -106,29 +106,29 @@ class SalesAccountController extends Controller
         $public_id = session('public_id');
 
         $obj_business_info = BusinessListingModel::where('seller_public_id','=',$public_id)->get();
-
+        $user_id='';
          if(!empty($obj_business_info))
         {
             $arr_business_info = $obj_business_info->toArray();
-        
-            foreach ($arr_business_info as $business) 
+
+            foreach ($arr_business_info as $business)
             {
                 $user_id = $business['user_id'];
             }
 
            $obj_user_info = UserModel::where('id','=',$user_id)->get();
-      
+
             if($obj_user_info)
             {
                 $arr_user_info = $obj_user_info->toArray();
             }
-    
-            return view('sales_user.business.index',compact('page_title','arr_business_info','arr_user_info'));                                     
+
+            return view('sales_user.business.index',compact('page_title','arr_business_info','arr_user_info'));
  	    }
 
         else
         {
-            return view('sales_user.business.index',compact('page_title','arr_business_info','arr_user_info'));                                     
+            return view('sales_user.business.index',compact('page_title','arr_business_info','arr_user_info'));
         }
     }
 
@@ -164,12 +164,12 @@ class SalesAccountController extends Controller
 
         $validator = Validator::make($request->all(),$arr_rules);
 
-        if($validator->fails())                                                                 
+        if($validator->fails())
         {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-                 
+
         $first_name       = $request->input('first_name');
         $middle_name       = $request->input('middle_name');
         $last_name       = $request->input('last_name');
@@ -259,7 +259,7 @@ class SalesAccountController extends Controller
             Session::flash('error','Problem Occured While Creating User ');
         }
 
-        return Redirect::to('sales_user/business/create_business/'.$enc_id);    
+        return Redirect::to('sales_user/business/create_business/'.$enc_id);
     }
 
     public function create_business(Request $request,$enc_id=FALSE)
@@ -307,7 +307,7 @@ class SalesAccountController extends Controller
  	public function store_business(Request $request)
     {
         //dd($request->all());
-       
+
     	$arr_rules	=	array();
         //business fields
         $arr_rules['business_name']='required';
@@ -348,7 +348,7 @@ class SalesAccountController extends Controller
         $arr_data['is_active']='2';
         $arr_data['business_added_by']=$form_data['business_added_by'];
         $arr_data['business_name']=$form_data['business_name'];
-        
+
         $business_cat=$form_data['business_cat'];
         if(sizeof($business_cat)>0){
         $business_categories=implode(',',$business_cat);
@@ -379,7 +379,7 @@ class SalesAccountController extends Controller
         $arr_data['seller_public_id'] = $public_id;
         $arr_data['user_id'] =base64_decode($enc_id);
 
-    
+
         //location input array
         $arr_data['building']=$form_data['building'];
         $arr_data['street']=$form_data['street'];
@@ -446,7 +446,7 @@ class SalesAccountController extends Controller
         if ($user = Sentinel::getUser())
         {
             $page_title ="Edit Profile";
-        
+
             $sales_user_arr=$user->toArray();
             return view('sales_user.account.profile',compact('page_title','sales_user_arr'));
         }
@@ -455,7 +455,7 @@ class SalesAccountController extends Controller
      public function update_profile(Request $request)
     {
         $obj_sales_user = Sentinel::getUser();////Get Sales User's all information
-        
+
         if($obj_sales_user)
         {
             $arr_sales_user = $obj_sales_user->toArray();
@@ -639,7 +639,7 @@ class SalesAccountController extends Controller
 
         return redirect()->back();
     }
-    
+
 
       protected function _activate($enc_id)
     {
@@ -673,8 +673,8 @@ class SalesAccountController extends Controller
 
    public function logout()
     {
-        Session::flush(); 
+        Session::flush();
         return redirect('/sales_user');
     }
- 	
+
  }

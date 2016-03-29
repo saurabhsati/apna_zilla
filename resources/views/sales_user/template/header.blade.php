@@ -330,7 +330,7 @@
                     <a data-toggle="dropdown" href="#" class="user-menu dropdown-toggle">
 
                         <span class="hhh" id="user_info">
-                            Admin
+                            Sales User
                         </span>
                         <i class="fa fa-caret-down"></i>
                     </a>
@@ -368,7 +368,7 @@
                             </a>
                         </li>
 
-                      
+
 
                         <li class="divider visible-xs"></li>
 

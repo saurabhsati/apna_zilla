@@ -256,20 +256,20 @@ class DealController extends Controller
     protected function _activate($enc_id)////$enc_id = Deal id
     {
         $id = base64_decode($enc_id);
-        return DealModel::where('id',$id)->update(array('is_active'=>1));
+        return SalesDealModel::where('id',$id)->update(array('is_active'=>1));
     }
 
     protected function _block($enc_id)////$enc_id = Deal id
     {
         $id = base64_decode($enc_id);
-        return DealModel::where('id',$id)->update(array('is_active'=>0));
+        return SalesDealModel::where('id',$id)->update(array('is_active'=>0));
     }
 
     protected function _delete($enc_id)////$enc_id = Deal id
     {
         $id = base64_decode($enc_id);
 
-        $arr_deal = DealModel::select('id','deal_image')->where('id',$id)->first()->toArray();
+        $arr_deal = SalesDealModel::select('id','deal_image')->where('id',$id)->first()->toArray();
 
         $get_path = $this->deal_image_path.$arr_deal['deal_image'];
 
@@ -280,7 +280,7 @@ class DealController extends Controller
 
             if($unlink_deal_image==TRUE)
             {
-                return DealModel::where('id',$id)->delete();//////////Soft Delete Deal
+                return SalesDealModel::where('id',$id)->delete();//////////Soft Delete Deal
             }
         }
 

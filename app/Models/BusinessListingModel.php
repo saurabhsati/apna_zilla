@@ -37,7 +37,8 @@ class BusinessListingModel extends Model
                          'company_info',
                          'establish_year',
                          'keywords',
-                         'youtube_link'
+                         'youtube_link',
+                         'sales_user_public_id',
 
                          ];
     public function user_details()

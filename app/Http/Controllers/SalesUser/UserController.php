@@ -1,16 +1,17 @@
 <?php
-namespace App\Http\Controllers\Admin;
+
+namespace App\Http\Controllers\SalesUser;
+
 use Illuminate\Http\Request;
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\UserModel;
 use Sentinel;
 use Session;
 use Validator;
-
 class UserController extends Controller
 {
- 	public function __construct()
+	public function __construct()
     {
         $arr_except_auth_methods = array();
         $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
@@ -19,21 +20,28 @@ class UserController extends Controller
         $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');
     }
 
- 	public function index()
+
+	public function index()
  	{
  		$page_title = "Manage User";
+ 		$arr_user = array();
+ 		$sales_user_public_id='';
+        if(Session::has('public_id')){
+    	  $sales_user_public_id=Session::get('public_id');
+         }else
+         {
+ 			return view('sales_user.account.login');
+         }
+        $obj_user = Sentinel::createModel()->where('sales_user_public_id','=',$sales_user_public_id)->get();
 
-        $arr_user = array();
-        $obj_user = Sentinel::createModel()->where('role','=','normal')->get();
-
-        return view('web_admin.user.index',compact('page_title','obj_user'));
+        return view('sales_user.user.index',compact('page_title','obj_user'));
  	}
 
  	public function create()
  	{
  		$page_title = "User: Create ";
 
- 		return view('web_admin.user.create',compact('page_title'));
+ 		return view('sales_user.user.create',compact('page_title'));
  	}
 
     public function register_admin(Request $request)
@@ -51,7 +59,13 @@ class UserController extends Controller
     }
 
  	public function store(Request $request)
-    {
+    {   $sales_user_public_id='';
+        if(Session::has('public_id')){
+    	  $sales_user_public_id=Session::get('public_id');
+         }else
+         {
+ 			return view('sales_user.account.login');
+         }
         $arr_rules = array();
         $arr_rules['first_name'] = "required";
         $arr_rules['middle_name'] = "required";
@@ -96,6 +110,7 @@ class UserController extends Controller
         $mobile_no     = $request->input('mobile_no');
         $home_landline     = $request->input('home_landline');
         $office_landline     = $request->input('office_landline');
+
 
         /* Duplication Check*/
         $user = Sentinel::createModel();
@@ -153,9 +168,10 @@ class UserController extends Controller
             'home_landline' => $home_landline,
             'office_landline' => $office_landline,
             'is_active' => '1',
-            'profile_pic'=>$profile_pic
+            'profile_pic'=>$profile_pic,
+            'sales_user_public_id'     => $sales_user_public_id
         ]);
-
+        // dd($status);
         if($status)
         {
 			/* Assign Normal Users Role */
@@ -192,7 +208,7 @@ class UserController extends Controller
 
  		$profile_pic_public_path = $this->profile_pic_public_path;
 
-        return view('web_admin.user.edit',compact('page_title','arr_user_data','profile_pic_public_path'));
+        return view('sales_user.user.edit',compact('page_title','arr_user_data','profile_pic_public_path'));
 
  	}
 
@@ -423,5 +439,4 @@ class UserController extends Controller
         $user = Sentinel::findById($id);
 		return $user->delete();
     }
-
 }
