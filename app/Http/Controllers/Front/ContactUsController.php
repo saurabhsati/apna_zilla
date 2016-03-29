@@ -89,12 +89,14 @@ class ContactUsController extends Controller
                 return $send_mail;
             }
             echo 'success';
+            exit;
         	//Session::flash('success','Contact Enquiry Sent successfully');
         }
 
         else
         {
             echo 'error';
+             exit;
         	//Session::flash('error','Problem occured while sending contact enquiry');
         }
         return redirect()->back();

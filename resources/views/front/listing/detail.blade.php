@@ -180,7 +180,9 @@
                      </ul>
 
                      <div class="resp-tabs-container">
-                       @if(Session::has('success'))
+
+                        <div>
+                         @if(Session::has('success'))
                         <div class="alert alert-success alert-dismissible">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -197,7 +199,7 @@
                             {{ Session::get('error') }}
                         </div>
                       @endif
-                        <div> <div class="write-review-main" id="review_id">
+                         <div class="write-review-main" id="review_id">
                               <div class="write-review-head">
                                  Write a Review
                               </div>
