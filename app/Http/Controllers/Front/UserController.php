@@ -143,8 +143,9 @@ class UserController extends Controller
         $yy                       =   $request->input('yy');
 
         $dob                      =   $yy.'-'.$mm.'-'.$dd;
-       /* echo date("Y-m-d",strtotime($dob));
-        exit;*/
+        
+        dd($dob);
+       
         $title                    =   $request->input('title');
         $first_name               =   $request->input('first_name');
         $middle_name              =   $request->input('middle_name');

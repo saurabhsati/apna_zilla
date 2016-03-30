@@ -10,9 +10,11 @@ use App\Http\Controllers\Common\GeneratorController;
 use App\Models\CountryModel;
 use App\Models\StateModel;
 use App\Models\CityModel;
+
 use Validator;
 use Session;
 use DB;
+
 class CityController extends Controller
 {
     //
@@ -314,6 +316,52 @@ class CityController extends Controller
     {
         $id = base64_decode($enc_id);
         return CityModel::where('id',$id)->delete();
+    }
+
+    public function export_excel($format="csv")//export excel file
+    {
+
+        if($format=="csv")
+        {
+            $arr_city = array();
+            $obj_city = CityModel::with(['state_details','country_details'])->get();
+         
+
+            if($obj_city)
+            {
+                $arr_city = $obj_city->toArray();
+
+                \Excel::create('CITY-'.date('Ymd').uniqid(), function($excel) use($arr_city) 
+                {
+                    $excel->sheet('City', function($sheet) use($arr_city) 
+                    {
+                        $sheet->cell('A1', function($cell) {
+                            $cell->setValue('Generated on :'.date("d-m-Y H:i:s"));
+                        });
+
+                        $sheet->row(2, array(
+                            'Sr. No.', 'City','State/Region :: Country'
+                        ));
+
+                        if(sizeof($arr_city)>0)
+                        {
+                            $arr_tmp = array();
+                            foreach ($arr_city as $key => $cites) 
+                            {
+                                $arr_tmp[$key][] = $key+1;
+                                $arr_tmp[$key][] = $cites['city_title'];
+                                $arr_tmp[$key][] = $cites['state_details']['state_title'].' :: '.$cites['country_details']['country_name'];
+                            }    
+
+                            $sheet->rows($arr_tmp);
+                        }
+
+                    });
+                    
+
+                })->export('csv');
+            }
+        }
     }
 
 }

@@ -93,7 +93,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::any('nearby_destinations/{enc_id}',		['as' => 'admin_nearby_destinations'  ,'uses' => 'Admin\CityController@nearby_destinations']);
 			Route::any('add_destinations',					['as' => 'admin_add_destinations'	  ,'uses' => 'Admin\CityController@add_destinations']);
 			Route::get('delete/{enc_id}',					['as' => 'admin_cities_delete' 		  ,'uses' => 'Admin\CityController@delete']);
-
+			Route::get('export/{format}',					['as' => 'admin_cities_excel' 		  ,'uses' => 'Admin\CityController@export_excel']);
 		});
 
 		Route::group(array('prefix' => '/zipcode'), function()
@@ -192,6 +192,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::any('store',							 ['as' => 'admin_business_listing_store' 	  ,'uses' 	=>'Admin\BusinessListingController@store']);
 			Route::post('delete_gallery',				 ['as' => 'admin_business_listing_gallery_delete' 	  ,'uses' 	=>'Admin\BusinessListingController@delete_gallery']);
 			Route::post('delete_service',				 ['as' => 'admin_business_listing_service_delete' 	  ,'uses' 	=>'Admin\BusinessListingController@delete_service']);
+
 
 
 		});
