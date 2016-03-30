@@ -89,7 +89,7 @@
                <select data-placeholder="Enter Recipient(s) email address "  name="to_address" class="form-control chosen" multiple="multiple" style="height: 25px;" data-rule-required="true">
                   <option value=""> </option>
 
-                   @if(sizeof($arr_newsletter)>0)
+                    @if(sizeof($arr_newsletter)>0)
                         @foreach($arr_newsletter as $news_letter)
                             <option value="{{ $news_letter['news_letter_id'] }}"> {{ $news_letter['email_address'] }}</option>
                         @endforeach

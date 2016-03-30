@@ -23,7 +23,6 @@ class BusinessCategoryModel extends Model
         return $this->belongsTo('App\Models\BusinessListingModel','business_id','id');
     }
 
-
     public function business_rating()
     {
         return $this->hasMany('App\Models\ReviewsModel','business_id','business_id');
@@ -33,4 +32,13 @@ class BusinessCategoryModel extends Model
         return $this->belongsTo('App\Models\CityModel','city','id');
     }
 
+    public function category_list()
+    {
+        return $this->belongsTo('App\Models\CategoryModel','category_id','cat_id');
+    }
+
+    public function category_business()
+    {
+        return $this->belongsTo('App\Models\CategoryModel','id','cat_id');
+    }
 }

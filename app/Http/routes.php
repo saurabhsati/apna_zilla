@@ -194,7 +194,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::post('delete_service',				 ['as' => 'admin_business_listing_service_delete' 	  ,'uses' 	=>'Admin\BusinessListingController@delete_service']);
 			Route::post('delete_payment_mode',		     ['as' => 'admin_business_listing_payment_mode_delete' 	  ,'uses' 	=>'Admin\BusinessListingController@delete_payment_mode']);
 
-
+			Route::get('export/{format}',					['as' => 'admin_cities_excel' 		  ,'uses' => 'Admin\BusinessListingController@export_excel']);
 
 		});
 
