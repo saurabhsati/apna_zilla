@@ -1005,3 +1005,30 @@ box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);transition: all 1s ease-in-out 0s;
     padding: 10px !important;
     width: 100%;
 }
+
+
+/*details page popup start here*/
+
+.close { color: #636363;opacity: 1; position: absolute; right: 9px;top: 5px;z-index: 999;}
+.soc-menu-top li { display: inline-block;font-size: 11.3px;margin-right: 9px;text-align: center;}
+.socail_name { display: block;}
+.soc-menu-top > ul { text-align: center;}
+.soc-menu-top {margin-top: 9px;}
+.soc-menu-top .col-lg-11 {float: none !important;margin: 0 auto;}
+b.head-t {font-family: "open sans semibold";font-weight: normal;}
+.in-li {color: #666;font-family: "open sans";font-size: 11px;}
+#enquiry .label-text {padding: 10px 0;}
+#enquiry .modal-dialog.modal-sm { max-width: 415px;}
+.mandt { color: #999999;font-size: 12px;}
+.label-text1 { clear: both;color: #717171;font-size: 14px;text-transform: capitalize;}
+.img-verify { display: inline-block;}
+
+.img_icons.popup-v img { display: block;margin: 0 auto; text-align: center;}
+.img_icons.popup-v > a{color: #444444; display: inline-block; font-size: 14px;margin-bottom: 10px;max-width: 135px;text-align: center;
+    text-transform: capitalize; cursor: pointer;width: 100%;}
+.head-t-center {font-family: "open sans semibold";font-size: 16px;font-weight: normal;}
+.center-section {display: inline-block;text-align: center;width: 93%;}
+.just-v {font-size: 13px;padding-left: 28px;text-align: left;}
+.sub-c {font-size: 13px;margin-top: 15px;   text-align: left;}
+.sub-c > a { color: #666;}
+/*details page popup end here*/

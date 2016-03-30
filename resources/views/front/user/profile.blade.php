@@ -180,6 +180,7 @@
 
                              <div class="col-sm-3 col-md-3 col-lg-3">
                            <select class="input_acct" name="mm">
+<<<<<<< HEAD
                                  <option value="01" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '1' ) { echo "selected=selected";}?>>January</option>
                                  <option value="02" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '2' ) { echo "selected=selected";}?>>February</option>
                                  <option value="03" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '5' ) { echo "selected=selected";}?>>March</option>
@@ -192,6 +193,21 @@
                                  <option value="10" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '10' ) { echo "selected=selected";}?>>October</option>
                                  <option value="11" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '11' ) { echo "selected=selected";}?>>November</option>
                                  <option value="12" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '12' ) { echo "selected=selected";}?>>December</option>
+=======
+                             <option value="{{ isset($user['mm'])?$user['mm']:'' }}">{{$user['mm']}}</option>
+                                 <option value="January">January</option>
+                                 <option value="February">February</option>
+                                 <option value="March">March</option>
+                                 <option value="April">April</option>
+                                 <option value="May">May</option>
+                                 <option value="June">June</option>
+                                 <option value="July">July</option>
+                                 <option value="August">August</option>
+                                 <option value="September">September</option>
+                                 <option value="October">October</option>
+                                 <option value="November">November</option>
+                                 <option value="December">December</option>
+>>>>>>> bd39827011035e00995f98f8ffcf6e39576eb5bd
                            </select>  
                             </div>
 

@@ -253,9 +253,9 @@
               <div class="p_details"><i class="fa fa-map-marker"></i>
                 <span>{{ $restaurants['building'] }} &nbsp; {{ $restaurants['street'] }} <br/>
                 {{ $restaurants['landmark'] }} &nbsp; {{ $restaurants['area'] }} &nbsp;{{ '-'.$restaurants['pincode'] }}<br/>
-             Away From
+
              @if(Session::has('distance'))
-               {{Session::get('distance')}} km distance
+               Away From {{Session::get('distance')}} km distance
                 @endif
 
                 </span></div>

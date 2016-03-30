@@ -10,7 +10,8 @@
         "cartalyst/sentinel": "2.0.*",
         "barryvdh/laravel-debugbar": "2.1",
         "intervention/image": "^2.3",
-        "paypal/rest-api-sdk-php": "*"
+        "paypal/rest-api-sdk-php": "*",
+        "maatwebsite/excel": "^2.1"
         
     },
     "require-dev": {
