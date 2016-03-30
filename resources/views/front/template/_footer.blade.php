@@ -4,7 +4,7 @@
       <form class="form-horizontal" 
                            id="validation-form" 
                            method="POST"
-                           action="{{ url('/front_users/process_login') }}" 
+                           action="{{-- url('/front_users/process_login') --}}" 
                            enctype="multipart/form-data"
                            >
 
@@ -18,32 +18,23 @@
                   <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_poup.png" alt="login logo"/></h4>
                </div>
                <div class="modal-body">
-                  @if(Session::has('success'))
-                  <div class="alert alert-success alert-dismissible">
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  
+                  <div class="alert alert-danger alert-dismissible" id="login_error" style="display: none;">
+                      <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">  
                           <span aria-hidden="true">&times;</span>
-                      </button>
-                      {{ Session::get('success') }}
+                      </button> -->
+                      <span id="display_msg"> </span>
                   </div>
-                @endif 
-
-                @if(Session::has('error'))
-                  <div class="alert alert-danger alert-dismissible">
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                      </button>
-                      {{ Session::get('error') }}
-                  </div>
-                @endif
+                
                   <div class="login_box">
                      <div class="title_login">Login with your email and password</div>
                      <div class="user_box">
                         <div class="label_form">Email</div>
-                        <input type="text" name="email" class="input_box" placeholder="enter email address"/>
+                        <input type="text" name="email" id="email_login" class="input_box" placeholder="enter email address"/>
                      </div>
                      <div class="user_box">
                         <div class="label_form">Password</div>
-                        <input type="password" name="password" class="input_box" placeholder="enter password"/>
+                        <input type="password" name="password"  id="password_login" class="input_box" placeholder="enter password"/>
                      </div>
                      <div class="login_social">
                         <div class="title_login"> Log in with social accounts</div>
@@ -64,7 +55,7 @@
                      <div class="left_bar">
                         <a class="forgt" data-toggle="modal" data-target="#forget_pwd">Forget your password?</a><a data-toggle="modal" data-target="#reg_poup" class="sign_up">Sign Up Now</a>
                      </div>
-                     <button type="submit"  id="login_submit" class="yellow ui button">Login</button>
+                     <button type="button"  id="login_submit" class="yellow ui button">Login</button>
                   </div>
                </div>
                <div class="clr"></div>
@@ -368,10 +359,19 @@
         gapi.auth.signIn(myParams);
       }
 
-      function logout()
+     /* function logout()
       {
           gapi.auth.signOut();
           location.reload();
+      }*/
+
+      function logout()
+      { 
+        document.location.href = "https://accounts.google.com/Logout";
+
+        
+
+         window.location.reload();
       }
 
       function loginCallback(result)
@@ -431,14 +431,41 @@
 
       </script>
 
-      @if(!Auth::check())
-      <script type="text/javascript" language="javascript" src="{{ url('/') }}/js/front/fb_auth.js"></script>
-      @endif
+  @if(!Auth::check())
+  <script type="text/javascript" language="javascript" src="{{ url('/') }}/js/front/fb_auth.js"></script>
+  @endif
 
 <!-- BY nayan For login -->
 <script type="text/javascript">
-//jQuery( document ).ready()
+  jQuery(document).ready(function () {
+  
+  var site_url = "{{ url('/') }}";
+   jQuery( "#login_submit").bind( "click", function() {
 
+    var token     = jQuery("input[name=_token]").val();
+    var email     = jQuery("#email_login").val();
+    var password  = jQuery("#password_login").val(); 
+
+      jQuery.ajax({
+         url      : site_url+"/front_users/process_login_ajax?_token="+token,
+         method   : 'POST',
+         dataType : 'json',
+         data     : { email:email,password:password },
+         success: function(response){
+            if(response == "SUCCESS" )
+            {
+               location.href= site_url+"/front_users/profile";
+            }else
+            {
+                $("#login_error").css("display", "block");
+                $('#display_msg').html(response);
+            }
+         }  
+      });
+  
+    });
+      
+  });
 </script>
 
 

@@ -47,7 +47,7 @@
                                    <li><a href="#">Friend's Ratings </a></li>
                                    <li><a href="{{ url('/front_users/my_business') }}">My Business </a></li>
                                    <li><a href="{{ url('/front_users/add_business') }}">Add Business </a></li>
-                                   <li><a href="{{ url('/front_users/logout') }}">Logout</a></li>
+                                   <li><a href="{{ url('/front_users/logout') }}" onclick="social_logout(this)" >Logout</a></li>
                                 </ul>
                              </div>
                              </li>
@@ -73,3 +73,7 @@
          <div class="clearfix"></div>
       </div>
       <!--headar end-->
+
+@if(!Auth::check())
+<script type="text/javascript" language="javascript" src="{{ url('/') }}/js/front/fb_auth.js"></script>
+@endif

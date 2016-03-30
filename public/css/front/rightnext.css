@@ -368,13 +368,14 @@ body:not(.device-touch) .social-icon i {transition: all 0.3s ease 0s;}
 /*listing page end here*/
 
 /*listing detail page start here*/
+.product_detail_banner{background-color: rgba(0,0,0,0.4); z-index: 10;}
 .product_detail_banner .product_title a { color: #fff;cursor: pointer;display: block;font-family: "noto_sansbold",sans-serif;font-size: 26px;margin-bottom: 15px;}
 .product_detail_banner .p_details > span { color: #fff;display: inline-block;max-width: none;vertical-align: top; width: auto;}
 .product_detail_banner .p_details i {color: #fff;font-size: 18px;padding-right: 10px;vertical-align: bottom;}
 .product_detail_banner .rating_star { color: #fff;font-size: 16px; margin-bottom: 12px;}
 .p_details .fa.fa-map-marker { font-size: 22px;vertical-align: sub;}
 .product_detail_banner .rating_star > span {border-left: 2px solid #d8d8d8;color: #fff;margin-left: 9px;padding-left: 10px;}
-.product_detail_banner {padding: 15px;    min-height: 304px;}
+.product_detail_banner {padding: 15px; min-height: 304px;}
 .p_detail_view {background: #fff ;margin-bottom: 20px;padding: 5px;    border: 1px solid #eaeaea;}
 .rating_star ul li .fa.fa-star-o {color: #c2c2c2;font-size: 21px;}
 .rating_star li {display: inline-block;padding-right: 6px;}

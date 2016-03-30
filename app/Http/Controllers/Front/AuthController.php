@@ -28,8 +28,7 @@ class AuthController extends Controller
         $arr_rules = array();
         $arr_rules['name'] = "required";
         $arr_rules['email'] = "required|email";
-        
-  
+     
         $validator = Validator::make($request->all(),$arr_rules);
 
         if($validator->fails())
@@ -63,9 +62,10 @@ class AuthController extends Controller
             $credentials = [ 'email' => $email ];
             $existing_user = Sentinel::findUserByCredentials($credentials);
 
-         
             $user_first_name = $existing_user->first_name;
-            $user_email = $existing_user->first_name;
+            $user_email = $existing_user->email;
+
+            //dd($existing_user->toArray());
 
             Session::set('user_name', $user_first_name);
             Session::set('user_mail', $user_email);
@@ -249,8 +249,10 @@ class AuthController extends Controller
         }  
     }
 
-    public function process_login1(Request $request)
-    {
+    public function process_login_ajax(Request $request)
+    {   
+        $json = array();
+
         $arr_creds =  array();
         $arr_creds['email']     = $request->input('email');
         $arr_creds['password']  = $request->input('password');
@@ -277,19 +279,22 @@ class AuthController extends Controller
 
                 }
                 Session::flash('success','Login Successfull.');
-                return redirect('front_users/profile');
+                $json = "SUCCESS";
+                //return redirect('front_users/profile');
             }
             else
             {
-                Session::flash('error','Not Sufficient Privileges');
-                return redirect()->back();
+                //Session::flash('error','Not Sufficient Privileges');
+                $json =  'No Sufficient Privileges';
             }
         }
         else
         {
-            Session::flash('error','Invalid Credentials');
-            return redirect()->back();
+            //Session::flash('error','Invalid Credentials');
+            $json =  'Invalid Credentials';
         }
+
+        return response()->json($json);
 
     }
 
