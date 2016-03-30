@@ -9,6 +9,8 @@
 
         </div>
     </div>
+
+
     <!-- END Page Title -->
 
     <!-- BEGIN Breadcrumb -->
@@ -84,7 +86,7 @@
           <div class="form-group">
             <label class="col-sm-3 col-lg-2 control-label">To:<i class="red">*</i></label>
             <div class="col-sm-6 col-lg-8 controls">
-               <select data-placeholder="Enter Recipient(s) email address "  name="to_address" class="form-control chosen" multiple="multiple" data-rule-required="true">
+               <select data-placeholder="Enter Recipient(s) email address "  name="to_address" class="form-control chosen" multiple="multiple" style="height: 25px;" data-rule-required="true">
                   <option value=""> </option>
 
                    @if(sizeof($arr_newsletter)>0)
@@ -101,7 +103,7 @@
              <div class="form-group">
               <label class="col-sm-3 col-lg-2 control-label">Compose Email Description<i class="red">*</i></label>
               <div class="col-sm-9 col-lg-10 controls">
-              <textarea class="form-control wysihtml5" name="message" rows="6"></textarea> 
+              <textarea class="form-control" name="message" rows="6"></textarea> 
                  <span class='help-block'>{{ $errors->first('message') }}</span>
               </div>
            </div>
@@ -125,6 +127,12 @@
 <!-- END Main Content --> 
 <!--page specific plugin scripts-->
 <script type="text/javascript" src="{{ url('/') }}/assets/chosen-bootstrap/chosen.jquery.js"></script>
+
+<script type="text/javascript">
+    tinymce.init({ selector:'textarea' });
+    //tinymce.init('#page_desc');
+</script>
+
    
 <script type="text/javascript">
     function confirm_send()

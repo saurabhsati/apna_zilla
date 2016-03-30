@@ -20,9 +20,12 @@ use App\Models\StateModel;
 use App\Models\ZipModel;
 use App\Models\CityModel;
 use App\Models\BusinessTimeModel;
+
+
 use Validator;
 use Session;
 use Sentinel;
+
 class BusinessListingController extends Controller
 {
     //
@@ -750,6 +753,8 @@ class BusinessListingController extends Controller
         $Business = BusinessListingModel::where('id',$id);
 		return $Business->delete();
     }
+
+    
       /* Business Listing End */
 
    }

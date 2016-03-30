@@ -46,5 +46,7 @@
         <script src="{{ url('/') }}/js/admin/flaty.js"></script>
         <script src="{{ url('/') }}/js/admin/flaty-demo-codes.js"></script>
 
+        <!-- Textarea Editor Js -->
+        <!-- <script src="{{ url('/') }}/js/admin/tinymce.min.js"></script> -->
     </body>
 </html>
