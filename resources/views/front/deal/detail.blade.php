@@ -159,11 +159,6 @@
     <!-- side bar start -->
     <div class="col-sm-12 col-md-3 col-lg-3">
      <!-- Categories Start -->
-
-
-
-
-
      <div class="categories_sect sidebar-nav">
 
       <div class="buy_text">
