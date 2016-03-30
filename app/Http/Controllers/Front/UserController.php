@@ -139,17 +139,11 @@ class UserController extends Controller
 
         $id = $request->input('user_id');
 
-
         $dd                       =   $request->input('dd');
         $mm                       =   $request->input('mm');
         $yy                       =   $request->input('yy');
         $dob                      =   $yy.'-'.$mm.'-'.$dd;
-<<<<<<< HEAD
-=======
-        
-        dd($dob);
-       
->>>>>>> bd39827011035e00995f98f8ffcf6e39576eb5bd
+
         $title                    =   $request->input('title');
         $first_name               =   $request->input('first_name');
         $middle_name              =   $request->input('middle_name');
