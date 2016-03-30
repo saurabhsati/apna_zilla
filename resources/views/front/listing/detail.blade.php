@@ -62,6 +62,40 @@
                      </div>
                   </div>
                </div>
+
+               <div class="modal fade" id="share" role="dialog">
+                <div class="modal-dialog">
+                 <!-- Modal content-->
+                  <div class="modal-content">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                   <div class="modal-body">
+                      <p>Share With Friends</p>
+                        <div class="soc-menu-top">
+                        <ul>
+                        <li>
+                       <!--  <a href="https://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.mynide.com%2Fdeals%2Fdetails%2FMQ%3D%3D&amp;t=1+Cocktail" target="_blank" style="cursor:pointer;">
+                        </a> -->
+                        <a href="https://www.facebook.com/sharer.php?<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;"><img src="{{ url('/') }}/assets/front/images/facebook-so.png" alt="facebook"/>
+                        <span class="socail_name">Facebook</span>
+                        </a>
+                        </li>
+                          <li><a href="http://twitter.com/share?url=<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;"><img src="{{ url('/') }}/assets/front/images/twitter-so.png" alt="twitter"/><span class="socail_name">Twitter</span></a></li>
+                          <li><a href="https://plus.google.com/share?url=<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;"><img src="{{ url('/') }}/assets/front/images/googlepls-soc.png" alt="googlepls"/><span class="socail_name">Google +</span></a></li>
+                          <li><a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;"><img src="{{ url('/') }}/assets/front/images/linkind-soc.png" alt="linkind"/><span class="socail_name">Linkedin</span></a></li>
+                          <!-- <li><a href="#"><img src="{{ url('/') }}/assets/front/images/pins-soc.png" alt="pins"/><span class="socail_name">Pinterest</span></a></li>
+                          <li><a href="#"><img src="{{ url('/') }}/assets/front/images/VKontakte-so.png" alt="VKontakte"/><span class="socail_name">VKontakte</span></a></li>
+                          <li><a href="#"><img src="{{ url('/') }}/assets/front/images/msg-so.png" alt="msg"/><span class="socail_name">SMS</span></a></li>
+                          <li><a href="#"><img src="{{ url('/') }}/assets/front/images/email-soc.png" alt="email"/><span class="socail_name">Email</span></a></li>
+                        --> </ul>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
                <!--   <div class="map" id="business_location_map" style="width: 100%; height: 250;">
                   </div> -->
                <?php
@@ -386,14 +420,14 @@
                   <li class="brdr">{{ $services['name'] }}</li>
                   @endforeach
                   @else
-                  <span>No Service Available.</span>
+                  <span class="col-sm-3 col-md-3 col-lg-12">No Service Available.</span>
                   @endif
                </ul>
                <!-- /#Categoriesr End-->
                <div class="clearfix"></div>
             </div>
              <div class="categories_sect sidebar-nav">
-               <div class="sidebar-brand"><img src="{{ url('/') }}/assets/front/images/services.png" alt="services"/>Modes Of Payment<span class="spe_mobile3"><a href="#"></a></span></div>
+               <div class="sidebar-brand"><img src="{{ url('/') }}/assets/front/images/money.png" alt="services"/>Modes Of Payment<span class="spe_mobile3"><a href="#"></a></span></div>
                <div class="bor_head">&nbsp;</div>
                <ul class="spe_submobile3">
                   @if(isset($arr_business_details['payment_mode']) && sizeof($arr_business_details['payment_mode'])>0)
@@ -401,7 +435,7 @@
                   <li class="brdr">{{ $payment_mode['title'] }}</li>
                   @endforeach
                   @else
-                  <span>No Payment Mode Available.</span>
+                  <span class="col-sm-3 col-md-3 col-lg-12">No Payment Mode Available.</span>
                   @endif
                </ul>
                <!-- /#Categoriesr End-->

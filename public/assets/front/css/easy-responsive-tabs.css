@@ -1,5 +1,5 @@
 /* dash page tebing*/
-#shop_tab ul.resp-tabs-list, p {
+#shop_tab ul.resp-tabs-list{
     margin: 0px;
     padding: 0px;
 }
@@ -53,7 +53,7 @@
 /* dash page tebing*/
 
 /* dash page tebing*/
-#dash_tab ul.resp-tabs-list, p {
+#dash_tab ul.resp-tabs-list {
     margin: 0px;
     padding: 0px; border-bottom: 1px solid #dcdcdc;
 }
@@ -101,7 +101,7 @@
 /* dash page tebing*/
 
 
-ul.resp-tabs-list, p {
+ul.resp-tabs-list {
     margin: 0px;
     padding: 0px;
 }

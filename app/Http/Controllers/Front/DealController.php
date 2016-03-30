@@ -44,6 +44,7 @@ class DealController extends Controller
  		{
  			$deals_info = $obj_deals_info->toArray();
 		}
+		//dd($deals_info);
  		return view('front.deal.detail',compact('page_title','deals_info'));
  	}
 }
