@@ -178,12 +178,12 @@
        SHARE THIS DEAL
        <ul>
 
-        <li><a href="#" class="fb">&nbsp;</a> </li>
-        <li><a href="#" class="twitter">&nbsp; </a> </li>
-        <li><a href="#" class="instagram">&nbsp;</a> </li>
-        <li><a href="#" class="google">&nbsp;</a> </li>
-        <li><a href="#" class="pioneer">&nbsp;</a> </li>
-        <li><a href="#" class="in">&nbsp;</a> </li>
+        <li><a href="https://www.facebook.com/sharer.php?<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;" class="fb">&nbsp;</a> </li>
+        <li><a href="http://twitter.com/share?url=<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;" class="twitter">&nbsp; </a> </li>
+       <!--  <li><a href="#" class="instagram">&nbsp;</a> </li> -->
+        <li><a href="https://plus.google.com/share?url=<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;" class="google">&nbsp;</a> </li>
+       <!--  <li><a href="#" class="pioneer">&nbsp;</a> </li> -->
+        <li><a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;" class="in">&nbsp;</a> </li>
       </ul>
     </div>
 
