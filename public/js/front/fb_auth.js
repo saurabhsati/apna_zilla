@@ -1,4 +1,6 @@
 
+
+
 window.fbAsyncInit = function() {
     FB.init({
       appId      : '863909263715659',
@@ -72,6 +74,24 @@ function FBLogin(redirect_url)
   {scope: 'public_profile,email'});
 }
 
+function social_logout(ref)
+{
+
+    FB.getLoginStatus(function(response) {
+      if (response && response.status === 'connected') {
+          FB.logout(function(response) {
+              window.location.href = ref.href;
+          });
+      }
+   });   
+  
+  //logout();//call google + logout
+  
+}
+
+
+
+
 (function(d, s, id){
      var js, fjs = d.getElementsByTagName(s)[0];
      if (d.getElementById(id)) {return;}
@@ -79,3 +99,4 @@ function FBLogin(redirect_url)
      js.src = "//connect.facebook.net/en_US/sdk.js";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
+

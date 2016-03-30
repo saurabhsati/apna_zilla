@@ -27,28 +27,29 @@
              
             <div class="col-sm-12 col-md-9 col-lg-9">
 
-             @if(Session::has('success'))
-                <div class="alert alert-success alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    {{ Session::get('success') }}
-                </div>
-              @endif 
-
-              @if(Session::has('error'))
-                <div class="alert alert-danger alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    {{ Session::get('error') }}
-                </div>
-              @endif 
+             
 
             <div class="my_whit_bg">
                  <div class="title_acc">Please provide your personal Information</div>
-                   <div class="row">
+                     @if(Session::has('success'))
+                        <div class="alert alert-success alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            {{ Session::get('success') }}
+                        </div>
+                      @endif 
 
+                      @if(Session::has('error'))
+                        <div class="alert alert-danger alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            {{ Session::get('error') }}
+                        </div>
+                      @endif
+
+                   <div class="row">
                       <form class="form-horizontal"
                             name="profile" 
                            id="validation-form" 
@@ -59,33 +60,28 @@
 
                            {{ csrf_field() }}
 
+
+    <?php 
+        use App\Models\UserModel;
+        if( (count($arr_user_info)==0) && (session('user_mail') !="") )  
+        {
+            $user_mail = session('user_mail');
+            $obj_user_info = UserModel::where('email',$user_mail)->get();
+            if($obj_user_info)
+            {
+                $arr_user_info = $obj_user_info->toArray();
+            }
+          
+        }   
+    ?>
+
+    {{-- dd($arr_user_info) --}}
+
+    @if(count($arr_user_info)>0)
+
       @foreach($arr_user_info as $user)
-
-    {{-- dd($user) --}}
-        <!-- 
-     <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="name">Profile Pic</label>
-        <div class="col-sm-3 col-md-3 col-lg-3">
-         <div class="profile_box">
-                    {{--
-                    @if($user['profile_pic']=="default.jpg")
-                      <img src="{{$profile_pic_public_path.'/'.$user['profile_pic']}}" width="200" height="200" id="preview_profile_pic"  />
-                    @else
-                      <img src="{{$profile_pic_public_path.'/'.$user['profile_pic']}}" width="200" height="200" id="preview_profile_pic"  />
-                    @endif
-
-                    @if($user['profile_pic']!="default.jpg")
-                      <span class="btn btn-danger" id="removal_handle" onclick="clearPreviewImage()">X</span>
-                    @else
-                      <span class="btn btn-danger" id="removal_handle" onclick="clearPreviewImage()" style="display:none;">X</span>
-                    @endif
-        --}}
-                    <input class="form-control" name="profile_pic" id="profile_pic" type="file" onchange="loadPreviewImage(this)"/>
-
-                    <span class='help-block'>{{-- $errors->first('profile_pic') --}}</span>
-                </div>
-            </div>  -->
-
+        
+        <input type="hidden" name="user_id" value="{{ $user['id'] }}"></input>
 
              <div class="col-sm-3 col-md-3 col-lg-3">
                 <div class="profile_box">
@@ -113,16 +109,16 @@
                  <div class="col-sm-9 col-md-9 col-lg-9">
                 <div class="box_profile">              
 
-                      <div class="user_box_sub">
+                    <div class="user_box_sub">
                     <div class="row">
                     <div class="col-lg-3  label-text">First Name :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                       <div class="row">
                          <div class="col-sm-3 col-md-3 col-lg-3">
-                           <select name="title" class="input_acct">
-                           <option value="{{-- isset($user['title'])?$user['title']:'' --}}">
-                                <option value="Mr" @if(isset($user['gender'])  &&  $user['gender'] =="male" ) {{ 'selected=selected' }} @endif >Mr.</option>
-                                <option value="Miss" @if(isset($user['gender'])  &&  $user['gender'] =="female" ) {{ 'selected=selected' }} @endif>Miss.</option>
+                           <select name="title"  class="input_acct">
+                                <option value="0" @if(isset($user['prefix_name'])  &&  $user['prefix_name'] == "0" ) {{ 'selected=selected' }} @endif> Mr.</option>
+                                <option value="1" @if(isset($user['prefix_name'])  &&  $user['prefix_name'] == "1" ) {{ 'selected=selected' }} @endif> Ms.</option>
+                                <option value="2" @if(isset($user['prefix_name'])  &&  $user['prefix_name'] == "2" ) {{ 'selected=selected' }} @endif> Mrs.</option>
                            </select>  
                             </div>
 
@@ -176,119 +172,56 @@
 
                      <div class="col-sm-3 col-md-3 col-lg-2">
                        <select class="input_acct" name="dd">
-                        <option value="{{ isset($user['dd'])?$user['dd']:'' }}">{{$user['dd']}}</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="13">13</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                        <option value="17">17</option>
-                        <option value="18">18</option>
-                        <option value="19">19</option>
-                        <option value="20">20</option>
-                        <option value="21">21</option>
-                        <option value="22">22</option>
-                        <option value="23">23</option>
-                        <option value="24">24</option>
-                        <option value="25">25</option>
-                        <option value="26">26</option>
-                        <option value="27">27</option>
-                        <option value="28">28</option>
-                        <option value="29">29</option>
-                        <option value="30">30</option>
-                        <option value="31">31</option>
+                            @for($i=1;$i<=31;$i++)
+                              <option value="<?php echo $i;?>" <?php  if(isset($user['dd'])  &&  $user['dd'] ==  $i ) { echo "selected=selected";}?>>{{ $i }}</option>
+                            @endfor
                         </select>  
                          </div>
 
                              <div class="col-sm-3 col-md-3 col-lg-3">
                            <select class="input_acct" name="mm">
-                             <option value="{{ isset($user['mm'])?$user['mm']:'' }}">{{$user['mm']}}</option>
-                                 <option value="January">January</option>
-                                 <option value="February">February</option>
-                                 <option value="March">March</option>
-                                 <option value="April">April</option>
-                                 <option value="May">May</option>
-                                 <option value="June">June</option>
-                                 <option value="July">July</option>
-                                 <option value="August">August</option>
-                                 <option value="September">September</option>
-                                 <option value="October">October</option>
-                                 <option value="November">November</option>
-                                 <option value="December">December</option>
+                                 <option value="01" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '1' ) { echo "selected=selected";}?>>January</option>
+                                 <option value="02" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '2' ) { echo "selected=selected";}?>>February</option>
+                                 <option value="03" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '5' ) { echo "selected=selected";}?>>March</option>
+                                 <option value="04" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '4' ) { echo "selected=selected";}?>>April</option>
+                                 <option value="05" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '5' ) { echo "selected=selected";}?>>May</option>
+                                 <option value="06" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '6' ) { echo "selected=selected";}?>>June</option>
+                                 <option value="07" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '7' ) { echo "selected=selected";}?>>July</option>
+                                 <option value="08" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '8' ) { echo "selected=selected";}?>>August</option>
+                                 <option value="09" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '9' ) { echo "selected=selected";}?>>September</option>
+                                 <option value="10" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '10' ) { echo "selected=selected";}?>>October</option>
+                                 <option value="11" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '11' ) { echo "selected=selected";}?>>November</option>
+                                 <option value="12" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '12' ) { echo "selected=selected";}?>>December</option>
                            </select>  
                             </div>
 
-                             <div class="col-sm-3 col-md-3 col-lg-3">
-                           <select class="input_acct" name="yy">
-                             <option value="{{ isset($user['yy'])?$user['yy']:'' }}">{{$user['yy']}}</option>
-                           
-                             <option value="1969">1969</option>
-                             <option value="1970">1970</option>
-                             <option value="1971">1971</option>
-                             <option value="1972">1972</option>
-                             <option value="1973">1973</option>
-                             <option value="1974">1974</option>
-                             <option value="1975">1975</option>
-                             <option value="1976">1976</option>
-                             <option value="1977">1977</option>
-                             <option value="1978">1978</option>
-                             <option value="1979">1979</option>
-                             <option value="1980">1980</option>
-                             <option value="1981">1981</option>
-                             <option value="1982">1982</option>
-                             <option value="1983">1983</option>
-                             <option value="1984">1984</option>
-                             <option value="1985">1985</option>
-                             <option value="1986">1986</option>
-                             <option value="1987">1987</option>
-                             <option value="1988">1988</option>
-                             <option value="1989">1989</option>
-                             <option value="1990">1990</option>
-                             <option value="1991">1991</option>
-                             <option value="1992">1992</option>
-                             <option value="1993">1993</option>
-                             <option value="1994">1994</option>
-                             <option value="1995">1995</option>
-                             <option value="1996">1996</option>
-                             <option value="1997">1997</option>
-                             <option value="1998">1998</option>
-                             <option value="1999">1999</option>
-                             <option value="2000">2000</option>
-                             <option value="2001">2001</option>
-                             <option value="2002">2002</option>
-                             <option value="2003">2003</option>
-                             <option value="2004">2004</option>
-                             <option value="2005">2005</option>
-                             <option value="2006">2006</option>
-                             <option value="2007">2007</option>
-                             <option value="2008">2008</option>
-                             <option value="2009">2009</option>
-                              <option value="2010">2010</option>
-                               <option value="2011">2011</option>
-                                <option value="2012">2012</option>
-                                 <option value="2013">2013</option>
-                                  <option value="2014">2014</option>
-                                   <option value="2015">2015</option>
-                                    <option value="2016">2016</option>
-                               
-                        </select>  
+                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                <select class="input_acct" name="yy">
+                                @for($j=date('Y');$j>= 1950 ;$j--)
+                                  <option value="<?php echo $j;?>" <?php  if(isset($user['yy'])  &&  $user['yy'] ==  $j ) { echo "selected=selected";}?> >{{ $j }}</option>
+                                @endfor 
+                               </select>  
                             </div>
 
                         </div>
                         </div>
                          </div>
                     </div> 
+
+
+                     <div class="user_box_sub">
+                        <div class="row">
+                            <div class="col-lg-3  label-text">Gender :</div>
+                                <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                                <input type="radio" name="gender" value="male" <?php  if(isset($user['gender'])  &&  $user['gender'] ==  "male" ) { echo "checked=checked";}?> >&nbsp;&nbsp;Male&nbsp;&nbsp;</input>
+                                <input type="radio" name="gender" value="female" <?php  if(isset($user['gender'])  &&  $user['gender'] ==  "female" ) { echo "checked=checked";}?> >&nbsp;&nbsp;Female</input>
+                                <!-- <input type="text" name="occupation" 
+                                value="{{-- isset($user['occupation'])?$user['occupation']:'' --}}"
+                                class="input_acct" placeholder="Enter Your Occupation  "/> -->
+                                </div>
+                        </div>
+                    </div>
+
 
                      <div class="user_box_sub">
                            <div class="row">
@@ -299,7 +232,7 @@
                                  >
                         <!-- <option value="{{-- isset($user['marital_status']) ? $user['marital_status']:'' --}}">{{-- $user['marital_status'] --}} </option> -->
                         
-
+                        <option value="">--Select--</option>
                         <option value="Married" @if(isset($user['marital_status'])  &&  $user['marital_status'] =="Married" ) {{ 'selected=selected' }} @endif >Married</option>
                         <option value="Un Married" @if(isset($user['marital_status'])  &&  $user['marital_status'] =="Un Married" ) {{ 'selected=selected' }} @endif>Un Married</option>
                         <option value="Divorced" @if(isset($user['marital_status'])  &&  $user['marital_status'] =="Divorced" ) {{ 'selected=selected' }} @endif>Divorced</option>
@@ -309,12 +242,12 @@
                          </div>
                     </div>
                                      
-                      <div class="user_box_sub">
+                      <!-- <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">City :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="text" name="city" 
-                                value="{{ isset($user['city'])?$user['city']:'' }}"
+                                value="{{-- isset($user['city'])?$user['city']:'' --}}"
                                 class="input_acct"
                                 placeholder="Enter City "/>
                         </div>
@@ -326,23 +259,33 @@
                     <div class="col-lg-3  label-text">Area :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="text" name="area" 
-                                value="{{ isset($user['area'])?$user['area']:'' }}"
+                                value="{{-- isset($user['area'])?$user['area']:'' --}}"
                           class="input_acct" placeholder="Enter Area "/>
                         </div>
                          </div>
-                    </div>
+                    </div> -->
                    
-                    <div class="user_box_sub">
+                  <!--   <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">Pincode :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="text" name="pincode" 
-                                value="{{ isset($user['pincode'])?$user['pincode']:'' }}" 
+                                value="{{-- isset($user['pincode'])?$user['pincode']:'' --}}" 
                                 class="input_acct" placeholder="Enter Pincode  "/>
                         </div>
                          </div>
+                    </div> -->
+                    
+                    <div class="user_box_sub">
+                        <div class="row">
+                                <div class="col-lg-3  label-text">Work Experience</div>
+                                <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                                <input type="text" name="work_experience" 
+                                value="{{ isset($user['work_experience'])?$user['work_experience']:'' }}"
+                                class="input_acct" placeholder="Enter Work Experience "/>
+                                </div>
+                        </div>
                     </div>
-                  
                     
                     <div class="user_box_sub">
                            <div class="row">
@@ -425,12 +368,14 @@
                     <button type="submit" class="yellow1 ui button">Save & Continue</button>
 
                         @endforeach
-                    
+                    @endif
                     </form>
                     </div>
                 </div>
             </div>
          </div>
+<!-- }
+} -->
     </div>
 </div>
        

@@ -24,7 +24,6 @@ class UserController extends Controller
         $this->profile_pic_base_path = base_path().'/public'.config('app.project.img_path.user_profile_pic');
         $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');      
 
-
         $this->business_base_img_path = base_path().'/public'.config('app.project.img_path.business_base_img_path');
         $this->business_public_img_path = url('/').config('app.project.img_path.business_base_img_path');
 
@@ -36,7 +35,6 @@ class UserController extends Controller
         
  	public function store(Request $request)
     {    
-        
         $arr_rules = array();
         $arr_rules['first_name']   =   "required";
         $arr_rules['last_name']    =   "required";
@@ -138,21 +136,18 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+
+        $id = $request->input('user_id');
+
         $dd                       =   $request->input('dd');
         $mm                       =   $request->input('mm');
         $yy                       =   $request->input('yy');
-
         $dob                      =   $yy.'-'.$mm.'-'.$dd;
-        
-        dd($dob);
-       
+
         $title                    =   $request->input('title');
         $first_name               =   $request->input('first_name');
         $middle_name              =   $request->input('middle_name');
         $last_name                =   $request->input('last_name');
-        $dd                       =   $request->input('dd');
-        $mm                       =   $request->input('mm');
-        $yy                       =   $request->input('yy');
         $marital_status           =   $request->input('marital_status');
         $city                     =   $request->input('city');
         $area                     =   $request->input('area');
@@ -165,6 +160,9 @@ class UserController extends Controller
         $office_landline          =   $request->input('office_landline');
         $std_office_landline      =   $request->input('std_office_landline');
         $extn_office_landline     =   $request->input('extn_office_landline');
+
+        $gender                    =   $request->input('gender');
+        $work_experience                    =   $request->input('work_experience');
 
         $obj_user_info = UserModel::where('email','=',$email)->get();
 
@@ -219,25 +217,27 @@ class UserController extends Controller
 
         }
 
-        echo $dob;
-        //exit;
-
+        // echo $title;
+        // echo "<br>";
+        // //echo date("Y-m-d", strtotime($dob));
+        // exit;
         $credentials = [
             'profile_pic'       =>    $profile_pic,
-            'title'             =>    $title,
+            //'title'             =>    $title,
             'first_name'        =>    $first_name,
             'middle_name'       =>    $middle_name,
             'last_name'         =>    $last_name,
             'dd'                =>    $dd,
             'mm'                =>    $mm,
             'yy'                =>    $yy,
-            'd_o_b'             =>    date("Y-m-d",strtotime($dob)),
+            'd_o_b'             =>     date("Y-m-d", strtotime($dob)),
             'marital_status'    =>    $marital_status,
-            'city'              =>    $city,
-            'area'              =>    $area,
-            'pincode'           =>    $pincode,
+            //'city'              =>    $city,
+            'gender'            =>    $gender,
+            'work_experience'   =>    $work_experience,
             'occupation'        =>    $occupation,
             'email'             =>    $email,
+            'prefix_name'       =>    $title,
             'mobile_no'         =>    $mobile_no,
             'home_landline'     =>    $home_landline,
             'std_home_landline' =>    $std_home_landline,
@@ -246,8 +246,11 @@ class UserController extends Controller
             'extn_office_landline'  => $extn_office_landline
         ];
 
+        //dd($credentials);
 
-        $status = Sentinel::update($user, $credentials);
+        $status = UserModel::where('id',$id)->update($credentials);
+
+        //$status = Sentinel::update($user, $credentials);
 
         if($status)
         {
@@ -291,10 +294,27 @@ class UserController extends Controller
         {
             return redirect()->back()->withErrors($validator)->withInput();
         }
+       
+        $id     =  $request->input('user_id');
+        $arr_data['city']     = $request->input('city');
+        $arr_data['area']     = $request->input('area');
+        $arr_data['pincode']     = $request->input('pincode');
+        $arr_data['street_address']     = $request->input('street_address');      
 
-        $id = session('user_id');
+        $status = UserModel::where('id',$id)->update($arr_data);
+
+        if($status)
+        {
+           Session::flash('success','Address Updated Successfully');
+        }
+        else
+        {
+            Session::flash('error','Problem Occured While Updating Address');
+        }
+
+/*        $id = session('user_id');
         $user_id = base64_decode($id);
-                
+
         $user = Sentinel::findById($user_id);
 
         $city                = $request->input('city');
@@ -302,17 +322,14 @@ class UserController extends Controller
         $pincode             = $request->input('pincode');
         $street_address      = $request->input('street_address');
 
-    
         $credentials = [
             'city' => $city,
             'area' => $area,
             'pincode' => $pincode,
             'street_address' => $street_address
-           
         ];
-
         $status = Sentinel::update($user, $credentials);
-
+*/      
         return redirect()->back();
     }
     

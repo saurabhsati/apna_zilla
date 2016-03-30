@@ -450,6 +450,9 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	{
 		Route::any('store',								['as' => 'front_users_store'    		  		    ,'uses' =>'Front\UserController@store']);
 		Route::post('process_login',					['as' => 'front_users_process_login'        		,'uses' =>'Front\AuthController@process_login']);
+		// for testing  using ajax.
+		Route::post('process_login_ajax',				['as' => 'front_users_process_login'        		,'uses' =>'Front\AuthController@process_login_ajax']);
+
 		Route::get('profile',							['as' => 'front_users_profile'        				,'uses' =>'Front\UserController@profile']);
 		Route::post('store_personal_details',			['as' => 'front_users_store_personal_details'       ,'uses' =>'Front\UserController@store_personal_details']);
 
