@@ -487,12 +487,13 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	Route::group(array('prefix' => '/deals'), function()
 	{
 		Route::get('/',									['as' =>'deals_page'								,'uses' =>'Front\DealController@index']);
+		Route::get('details/{enc_id}',					['as' =>'deals_detail'								,'uses' =>'Front\DealController@details']);
 	});
 
 	Route::post('/newsletter','Front\NewsLetterController@index');
-
 	Route::group(array('prefix' => '/{city}'), function ()
 	{
+		Route::get('popular-city','Front\AllCategoryController@popular_city');
 		Route::get('all-categories','Front\AllCategoryController@index');
 		Route::get('category-{cat_slug}/{cat_id}','Front\CategorySearchController@index');
 		Route::get('all-options/ct-{cat_id}','Front\CategorySearchController@get_business');

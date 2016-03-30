@@ -13,6 +13,7 @@ class CityModel extends Model
                          'city_image',
                          'city_slug',
                          'countries_id',
+                         'is_popular',
                          'state_id'];
     public function country_details()
     {

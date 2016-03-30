@@ -1031,4 +1031,5 @@ b.head-t {font-family: "open sans semibold";font-weight: normal;}
 .just-v {font-size: 13px;padding-left: 28px;text-align: left;}
 .sub-c {font-size: 13px;margin-top: 15px;   text-align: left;}
 .sub-c > a { color: #666;}
+.enquiry > a { color: #fff !important;cursor: pointer;}
 /*details page popup end here*/

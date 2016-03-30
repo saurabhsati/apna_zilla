@@ -64,7 +64,8 @@ class CityController extends Controller
     	$arr_rules	=	array();
     	$arr_rules['country_name']='required';
     	$arr_rules['state']='required';
-    	$arr_rules['city_title']='required';
+        $arr_rules['city_title']='required';
+    	$arr_rules['is_popular']='required';
 
     	$validator = Validator::make($request->all(),$arr_rules);
 
@@ -76,6 +77,7 @@ class CityController extends Controller
     	$form_data	=$request->all();
         $arr_data['countries_id'] = $form_data['country_name'];
         $arr_data['city_title'] = $form_data['city_title'];
+        $arr_data['is_popular'] = $form_data['is_popular'];
         $arr_data['city_slug'] = str_slug($form_data['city_title'], "-");
 
         if(isset($form_data['state']))
@@ -164,7 +166,15 @@ class CityController extends Controller
         $id = base64_decode($enc_id);
         $arr_rules = array();
         $arr_rules['city_title'] = "required";
+       // $arr_rules['is_popular'] = "required";
 
+         echo $check_popular = $request->input('is_popular');
+
+        if($check_popular=="on")
+        $is_popular = 1;
+
+        else
+        $is_popular = 0;
 
         $validator = Validator::make($request->all(),$arr_rules);
         if($validator->fails())
@@ -177,8 +187,8 @@ class CityController extends Controller
 
 
         $arr_data['city_title'] = $form_data['city_title'];
-
-
+        $arr_data['is_popular'] = $is_popular;
+        //dd($arr_data);
        /*---------- File uploading code starts here ------------*/
 
 

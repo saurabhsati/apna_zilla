@@ -214,7 +214,6 @@ class CategoryController extends Controller
             'is_active' => $is_active,
             'is_popular' => $is_popular,
         ];
-
         if($password!=FALSE)
         {
             $arr_data['password'] = $password;

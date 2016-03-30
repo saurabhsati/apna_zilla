@@ -1,10 +1,10 @@
  <!--login popup start here-->
       <div id="login_poup" class="modal fade" role="dialog">
 
-      <form class="form-horizontal" 
-                           id="validation-form" 
+      <form class="form-horizontal"
+                           id="validation-form"
                            method="POST"
-                           action="{{-- url('/front_users/process_login') --}}" 
+                           action="{{ url('/front_users/process_login') }}"
                            enctype="multipart/form-data"
                            >
 
@@ -18,14 +18,21 @@
                   <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_poup.png" alt="login logo"/></h4>
                </div>
                <div class="modal-body">
-                  
-                  <div class="alert alert-danger alert-dismissible" id="login_error" style="display: none;">
-                      <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">  
+
+                  @if(Session::has('success'))
+                  <div class="alert alert-success alert-dismissible">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
-                      </button> -->
+                      </button>
+                      {{ Session::get('success') }}
+                  </div>
+                @endif
+
+                @if(Session::has('error'))
+                  <div class="alert alert-danger alert-dismissible">
                       <span id="display_msg"> </span>
                   </div>
-                
+                @endif
                   <div class="login_box">
                      <div class="title_login">Login with your email and password</div>
                      <div class="user_box">
@@ -68,10 +75,10 @@
 
         <div id="forget_pwd" class="modal fade" role="dialog" style="overflow:auto;">
 
-        <form class="form-horizontal" 
-                           id="validation-form" 
+        <form class="form-horizontal"
+                           id="validation-form"
                            method="POST"
-                           action="{{ url('/forgot_password') }}" 
+                           action="{{ url('/forgot_password') }}"
                            enctype="multipart/form-data"
                            >
 
@@ -115,10 +122,10 @@
       <div id="reg_poup" class="modal fade" role="dialog" style="overflow:auto;">
 
 
-                     <form class="form-horizontal" 
-                           id="validation-form" 
+                     <form class="form-horizontal"
+                           id="validation-form"
                            method="POST"
-                           action="{{ url('/front_users/store') }}" 
+                           action="{{ url('/front_users/store') }}"
                            enctype="multipart/form-data"
                            >
 
@@ -135,7 +142,7 @@
                </div>
                <div class="modal-body">
                   <div class="login_box">
-                  
+
                      <div class="title_login">New account sign up</div>
 
                      <div class="user_box">
@@ -188,14 +195,14 @@
           <p>Share With Friends</p>
             <div class="soc-menu-top">
             <ul>
-            <li><a href="#"><img src="images/facebook-so.png" alt="facebook"/><span class="socail_name">Facebook</span></a></li>
-              <li><a href="#"><img src="images/twitter-so.png" alt="twitter"/><span class="socail_name">Twitter</span></a></li>
-              <li><a href="#"><img src="images/googlepls-soc.png" alt="googlepls"/><span class="socail_name">Google +</span></a></li>
-              <li><a href="#"><img src="images/linkind-soc.png" alt="linkind"/><span class="socail_name">Linkedin</span></a></li>
-              <li><a href="#"><img src="images/pins-soc.png" alt="pins"/><span class="socail_name">Pinterest</span></a></li>
-              <li><a href="#"><img src="images/VKontakte-so.png" alt="VKontakte"/><span class="socail_name">VKontakte</span></a></li>    
-              <li><a href="#"><img src="images/msg-so.png" alt="msg"/><span class="socail_name">SMS</span></a></li>
-              <li><a href="#"><img src="images/email-soc.png" alt="email"/><span class="socail_name">Email</span></a></li>      
+            <li><a href="#"><img src="{{ url('/') }}/assets/front/images/facebook-so.png" alt="facebook"/><span class="socail_name">Facebook</span></a></li>
+              <li><a href="#"><img src="{{ url('/') }}/assets/front/images/twitter-so.png" alt="twitter"/><span class="socail_name">Twitter</span></a></li>
+              <li><a href="#"><img src="{{ url('/') }}/assets/front/images/googlepls-soc.png" alt="googlepls"/><span class="socail_name">Google +</span></a></li>
+              <li><a href="#"><img src="{{ url('/') }}/assets/front/images/linkind-soc.png" alt="linkind"/><span class="socail_name">Linkedin</span></a></li>
+              <li><a href="#"><img src="{{ url('/') }}/assets/front/images/pins-soc.png" alt="pins"/><span class="socail_name">Pinterest</span></a></li>
+              <li><a href="#"><img src="{{ url('/') }}/assets/front/images/VKontakte-so.png" alt="VKontakte"/><span class="socail_name">VKontakte</span></a></li>
+              <li><a href="#"><img src="{{ url('/') }}/assets/front/images/msg-so.png" alt="msg"/><span class="socail_name">SMS</span></a></li>
+              <li><a href="#"><img src="{{ url('/') }}/assets/front/images/email-soc.png" alt="email"/><span class="socail_name">Email</span></a></li>
             </ul>
             </div>
         </div>
@@ -221,9 +228,9 @@
                         </div>
                          </div>
                     </div>
-                
-                
-                
+
+
+
             <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">Mobile</div>
@@ -231,14 +238,14 @@
                         <div class="input-group">
                         <span id="basic-addon1" class="input-group-addon">+91</span>
                         <input type="text" required="" aria-describedby="basic-addon1" placeholder="Mobile" class="form-control">
-                            
-                        </div>  
+
+                        </div>
                           <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
                     </div>
-               
-                
+
+
                 <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">Email</div>
@@ -265,7 +272,7 @@
         </div>
       </div>
     </div>
-  </div>  
+  </div>
 <div class="modal fade" id="enquiry" role="dialog">
     <div class="modal-dialog modal-sm">
      <!-- Modal content-->
@@ -273,14 +280,14 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
        <div class="modal-body">
           <b class="head-t">Send Enquiry By Email</b>
-           
+
             <div class="soc-menu-top" style="margin-top:20px;">
                 <div class="col-lg-11">
                      <div class="user_box1">
                            <div class="row">
                     <div class="col-lg-3  label-text1">To</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                       
+
                           <div class="label-text1">Classic Fine Dine</div>
                         </div>
                          </div>
@@ -294,9 +301,9 @@
                         </div>
                          </div>
                     </div>
-                
-                
-                
+
+
+
             <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">Mobile</div>
@@ -304,14 +311,14 @@
                         <div class="input-group">
                         <span id="basic-addon1" class="input-group-addon">+91</span>
                         <input type="text" required="" aria-describedby="basic-addon1" placeholder="Mobile" class="form-control">
-                            
-                        </div>  
+
+                        </div>
                           <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
                     </div>
-               
-                
+
+
                 <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">Email<span style="color:red">*</span></div>
@@ -330,7 +337,7 @@
                         </div>
                          </div>
                     </div>
-                    
+
                      <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">Body<span style="color:red">*</span></div>
@@ -346,31 +353,31 @@
                     <div class="col-lg-3  label-text">&nbsp;</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                     <div class="submit-btn"><button>Ok</button></div>
-                      
+
                     </div>
                            </div>
                     </div>
-                    
-                     <span class="mandt"><span style="color:red">*</span>Denotes mandatory fields. </span> 
+
+                     <span class="mandt"><span style="color:red">*</span>Denotes mandatory fields. </span>
                 </div>
             </div>
            <div class="clr"></div>
         </div>
       </div>
     </div>
-  </div>      
+  </div>
 <div class="modal fade" id="verifed" role="dialog">
     <div class="modal-dialog">
      <!-- Modal content-->
       <div class="modal-content">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
        <div class="modal-body">
-          <div class="img-verify"><img src="images/process_done.png" alt=""/></div>
+          <div class="img-verify"><img src="{{ url('/') }}/assets/front/images/process_done.png" alt=""/></div>
           <div class="center-section">
            <b class="head-t-center">What is Just Dial Verified?</b>
            <p class="just-v">Just Dial Verified(JD Verified) is an added service offering.</p>
           </div>
-           
+
            <p class="sub-c"> Justdial verified means that the information of business establishments, professionals or service providers has been verified as existing and correct at the time of the advertiser's application to register with Justdial.  				</p>
             <div class="soc-menu-top" style="margin-top:20px; text-align:center;">
               <b class="head-t-center">What is Just Dial Verified?</b>
@@ -384,8 +391,8 @@ If you need any more details on Justdial Verified, please refer to
         </div>
       </div>
     </div>
-  </div>      
-<!--popup in detail page end here--> 
+  </div>
+<!--popup in detail page end here-->
 
 
 
@@ -422,10 +429,10 @@ If you need any more details on Justdial Verified, please refer to
                            <div class="heading_bor"></div>
                            <div class="menu_name">
                               <ul>
-                                 <li><a href="#"><i class="fa fa-square"></i>Mumbai</a></li>
-                                 <li><a href="#"><i class="fa fa-square"></i>Delhi</a></li>
-                                 <li><a href="#"><i class="fa fa-square"></i>kolkata</a></li>
-                                 <li><a href="#"><i class="fa fa-square"></i>Bangalore</a></li>
+                                 <li><a href="{{ url('/') }}/Mumbai/popular-city"><i class="fa fa-square"></i>Mumbai</a></li>
+                                 <li><a href="{{ url('/') }}/Delhi/popular-city"><i class="fa fa-square"></i>Delhi</a></li>
+                                 <li><a href="{{ url('/') }}/kolkata/popular-city"><i class="fa fa-square"></i>kolkata</a></li>
+                                 <li><a href="{{ url('/') }}/Bangalore/popular-city"><i class="fa fa-square"></i>Bangalore</a></li>
                               </ul>
                            </div>
                         </div>
@@ -546,7 +553,7 @@ If you need any more details on Justdial Verified, please refer to
       </script>
 
       <script type="text/javascript">
-         
+
          var url = "{{ url('/') }}";
 
       (function() {
@@ -561,7 +568,7 @@ If you need any more details on Justdial Verified, please refer to
           gapi.client.load('plus', 'v1',function(){});//Load Google + API
       }
 
-      function login() 
+      function login()
       {
         var myParams = {
           'clientid' : '279126872962-83k1t2br3lseplje5lipejn1qp1n4khs.apps.googleusercontent.com', // You need to set client id
@@ -580,10 +587,10 @@ If you need any more details on Justdial Verified, please refer to
       }*/
 
       function logout()
-      { 
+      {
         document.location.href = "https://accounts.google.com/Logout";
 
-        
+
 
          window.location.reload();
       }
@@ -591,7 +598,7 @@ If you need any more details on Justdial Verified, please refer to
       function loginCallback(result)
       {
           if(result['status']['signed_in'])
-          { 
+          {
               var request = gapi.client.plus.people.get(
               {
                   'userId': 'me'
@@ -616,13 +623,13 @@ If you need any more details on Justdial Verified, please refer to
 
               var name = resp['displayName'];
               var image = resp['image']['url'];
-           
+
               jQuery.ajax({
                       url:url+'/google_plus/register',
                       type:'POST',
                       data:'email='+email+'&name='+name+'&image='+image+'&_token='+token,
                       dataType:'json',
-                    
+
                       success:function(response)
                       {
                           console.log(response);
@@ -633,14 +640,14 @@ If you need any more details on Justdial Verified, please refer to
                           }
                           else
                           {
-                            alert("Error While Creating Account");   
+                            alert("Error While Creating Account");
                           }
-                        
+
                       },
                 });
             });
-          }   
-       
+          }
+
       }
 
       </script>
@@ -652,13 +659,13 @@ If you need any more details on Justdial Verified, please refer to
 <!-- BY nayan For login -->
 <script type="text/javascript">
   jQuery(document).ready(function () {
-  
+
   var site_url = "{{ url('/') }}";
    jQuery( "#login_submit").bind( "click", function() {
 
     var token     = jQuery("input[name=_token]").val();
     var email     = jQuery("#email_login").val();
-    var password  = jQuery("#password_login").val(); 
+    var password  = jQuery("#password_login").val();
 
       jQuery.ajax({
          url      : site_url+"/front_users/process_login_ajax?_token="+token,
@@ -674,11 +681,11 @@ If you need any more details on Justdial Verified, please refer to
                 $("#login_error").css("display", "block");
                 $('#display_msg').html(response);
             }
-         }  
+         }
       });
-  
+
     });
-      
+
   });
 </script>
 
