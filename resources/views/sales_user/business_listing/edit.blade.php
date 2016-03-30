@@ -641,6 +641,66 @@
             </div>
 
             <hr/>
+            <div class="form-group">
+                            <label class="col-sm-3 col-lg-2 control-label"> Payment Mode  <i class="red">*</i> </label>
+                            <div class="col-sm-9 col-lg-10 controls">
+                               <div class="fileupload fileupload-new business_upload_image_" data-provides="fileupload">
+                                 @foreach($business['payment_mode'] as $payment_mode)
+
+                                  <div class="fileupload-new img-thumbnail main" style="width: 300px; height: 62px;" data-payment-mode="{{ $payment_mode['title'] }}">
+                                     <input class="form-control" type="text" name="payment_mode" id="payment_mode" class="pimg"  value="{{ $payment_mode['title']}}" />
+                                     <div class="caption">
+                                     <p class="pull-left">
+                                        <a href="javascript:void(0);"class="delete_payment_mode" data-payment-mode="{{ $payment_mode['title'] }}" onclick="javascript: return delete_payment_mode('<?php echo $payment_mode['id'] ;?>')">
+                                         <span class="glyphicon glyphicon-minus-sign " style="font-size: 20px;"></span></a>
+                                     </p>
+                                    </div>
+                                  </div>
+                              <!--     <a href="javascript:void(0);" onclick="javascript: return delete_gallery($image['business_id'],$image['image_name'],$business['id'])">
+                                     <span class="glyphicon glyphicon-minus-sign" style="font-size: 20px;"></span></a> -->
+                                  <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+
+                                  @endforeach
+                    <div class="error" id="err_delete_payment_mode"></div>
+
+                               </div>
+                                <span class='help-block'>{{ $errors->first('main_image') }}</span>
+                            </div>
+
+                         </div>
+                         <div class="form-group">
+                          <label class="col-sm-3 col-lg-2 control-label" for="building">
+                           <a href="" class="add_payment_mode">Add More Payment Mode</a></label>
+                         </div>
+                         <div class="form-group add_more_payment_mode" style="display: none;">
+                          <div class="col-sm-5 col-md-7" style="float:right;">
+                             <a href="javascript:void(0);" id='add-payment'>
+                                 <span class="glyphicon glyphicon-plus-sign" style="font-size: 20px;"></span>
+                             </a>
+                            <span style="margin-left:05px;">
+                            <a href="javascript:void(0);" id='remove-payment'>
+                                <span class="glyphicon glyphicon-minus-sign" style="font-size: 20px;"></span>
+                            </a>
+                            </span>
+                           </div>
+                              <label class="col-sm-3 col-lg-2 control-label"> Payment Mode <i class="red">*</i> </label>
+                              <div class="col-sm-6 col-lg-4 controls">
+
+                              <input type="text" name="payment_mode[]" id="payment_mode" class="form-control"  />
+                              <div class="error" id="error_payment_mode">{{ $errors->first('payment_mode') }}</div>
+
+                              <div class="clr"></div><br/>
+                                <div class="error" id="error_set_default"></div>
+                                <div class="clr"></div>
+
+                             <div id="append_payment" class="class-add"></div>
+                              <div class="error_msg" id="error_payment_mode" ></div>
+                              <div class="error_msg" id="error_payment_mode1" ></div>
+                             <label class="col-sm-3 col-lg-2 control-label"></label>
+
+                              </div>
+                              </div>
+           <hr/>
 
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="company_info">Company Info<i class="red">*</i></label>
@@ -802,9 +862,23 @@ function delete_service(id,image_name)
         }
       });
 }
+function delete_payment_mode(id)
+{
+  var _token = $('input[name=_token]').val();
+  var dataString = { id:id, _token: _token };
+  var url_delete= site_url+'/web_admin/business_listing/delete_payment_mode';
+  $.post( url_delete, dataString)
+      .done(function( data ) {
+        if(data=='done'){
+             $('#err_delete_payment_mode').html('<div style="color:green">Payment Mode deleted successfully.</div>');
+             var request_id=$('.delete_payment_mode').parents('.main').attr('data-payment-mode');
+             $('div[data-payment-mode="'+request_id+'"]').remove();
+        }
+      });
+}
 
-
-$('#add-image').click(function(){
+$('#add-image').click(function()
+{
    flag=1;
 
             var img_val = jQuery("input[name='business_image[]']:last").val();
@@ -851,14 +925,16 @@ $('#add-image').click(function(){
                   jQuery("#append").append(html);
 
 });
-    $('#remove-image').click(function(){
+$('#remove-image').click(function()
+{
      var html= $("#append").find("input[name='business_image[]']:last");
      html.remove();
-            });
-    $('.add_more').click(function(){
+});
+$('.add_more').click(function()
+{
       $(".add_more_image").removeAttr("style");
-return false;
-    });
+      return false;
+});
 
 function updateCategoryOptGroup(ref)
 {
@@ -889,11 +965,13 @@ function clearCategoryOptGroup()
 
   });
 }
-$('.add_serc').click(function(){
+$('.add_serc').click(function()
+{
       $(".add_more_service").removeAttr("style");
-return false;
-    });
-$('#add-service').click(function(){
+      return false;
+});
+$('#add-service').click(function()
+{
   flag=1;
 
             var img_val = jQuery("input[name='business_service[]']:last").val();
@@ -924,10 +1002,54 @@ $('#add-service').click(function(){
                   jQuery("#append_service").append(service_html);
 
 });
-    $('#remove-service').click(function(){
+$('#remove-service').click(function()
+{
      var html= $("#append_service").find("input[name='business_service[]']:last");
      html.remove();
-            });
+});
+    //Payment Modes
+$('.add_payment_mode').click(function()
+{
+      $(".add_more_payment_mode").removeAttr("style");
+      return false;
+});
+$('#add-payment').click(function()
+{
+  flag=1;
+
+            var img_val = jQuery("input[name='payment_mode[]']:last").val();
+
+            var img_length = jQuery("input[name='payment_mode[]']").length;
+
+            if(img_val == "")
+            {
+                  $('#error_payment_mode').css('margin-left','120px');
+                  $('#error_payment_mode').show();
+                  $('#error_payment_mode').fadeIn(3000);
+                  document.getElementById('error_payment_mode').innerHTML="The Payment Mode is required.";
+                  setTimeout(function(){
+                  $('#error_payment_mode').fadeOut(4000);
+                  },3000);
+
+                 flag=0;
+                 return false;
+            }
+
+              var payment_html='<div>'+
+                       '<input type="text" class="form-control" name="payment_mode[]" id="payment_mode" class="" data-rule-required="true"  />'+
+                       '<div class="error" id="error_payment_mode">{{ $errors->first("payment_mode") }}</div>'+
+                       '</div>'+
+                       '<div class="clr"></div><br/>'+
+                       '<div class="error" id="error_set_default"></div>'+
+                       '<div class="clr"></div>';
+                  jQuery("#append_payment").append(payment_html);
+
+});
+$('#remove-payment').click(function()
+{
+    var html= $("#append_payment").find("input[name='payment_mode[]']:last");
+     html.remove();
+});
 </script>
 
 <script type="text/javascript">

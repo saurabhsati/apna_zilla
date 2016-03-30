@@ -268,7 +268,7 @@
                            data-rule-required="true"
                            placeholder="Enter Area"
                            value=""
-                           onchange="setAddress()" 
+                           onchange="setAddress()"
                            />
                     <span class='help-block'>{{ $errors->first('area') }}</span>
                 </div>
@@ -448,21 +448,21 @@
                     <input type="hidden" name="lng" value="" id="lng"/>
 
                     <div id="business_location_map" style="height:400px"></div>
-                    <label>Note: Click On the Map to Pick Nearby Custom Location </label> 
+                    <label>Note: Click On the Map to Pick Nearby Custom Location </label>
                 </div>
             </div>
 
             <hr/>
 
-            <div class="form-group"> 
+            <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" ></label>
                 <div class="col-sm-3 col-lg-3 controls">
-                    <h4><b>Restaurant Opening Hours</b></h4>
+                    <h4><b>Opening Hours</b></h4>
                 </div>
-            </div> 
+            </div>
 
-             <div class="form-group"> 
-                <label class="col-sm-3 col-lg-2 control-label" >Monday<i class="red">*</i></label>   
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" >Monday<i class="red">*</i></label>
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
                         <a class="input-group-addon" href="#">
@@ -480,11 +480,11 @@
                         <input class="form-control timepicker-default" name="mon_out" id="mon_out" type="text" data-rule-required="true">
                     </div>
                 </div>
-               
+
             </div>
 
-            <div class="form-group"> 
-                <label class="col-sm-3 col-lg-2 control-label" >Tuesday<i class="red">*</i></label>   
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" >Tuesday<i class="red">*</i></label>
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
                         <a class="input-group-addon" href="#">
@@ -502,11 +502,11 @@
                         <input class="form-control timepicker-default" name="tue_out" id="tue_out" type="text" data-rule-required="true">
                     </div>
                 </div>
-                
-            </div> 
 
-            <div class="form-group"> 
-                <label class="col-sm-3 col-lg-2 control-label" >Wednesday<i class="red">*</i></label>   
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" >Wednesday<i class="red">*</i></label>
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
                         <a class="input-group-addon" href="#">
@@ -524,11 +524,11 @@
                         <input class="form-control timepicker-default" name="wed_out" id="wed_out" type="text" data-rule-required="true">
                     </div>
                 </div>
-                
-            </div> 
 
-            <div class="form-group"> 
-                <label class="col-sm-3 col-lg-2 control-label" >Thursday<i class="red">*</i></label>   
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" >Thursday<i class="red">*</i></label>
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
                         <a class="input-group-addon" href="#">
@@ -547,10 +547,10 @@
                     </div>
                 </div>
 
-            </div> 
+            </div>
 
-            <div class="form-group"> 
-                <label class="col-sm-3 col-lg-2 control-label" >Friday<i class="red">*</i></label>   
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" >Friday<i class="red">*</i></label>
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
                         <a class="input-group-addon" href="#">
@@ -569,10 +569,10 @@
                     </div>
                 </div>
 
-            </div> 
+            </div>
 
-            <div class="form-group"> 
-                <label class="col-sm-3 col-lg-2 control-label" >Saturday<i class="red">*</i></label>   
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" >Saturday<i class="red">*</i></label>
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
                         <a class="input-group-addon" href="#">
@@ -591,16 +591,16 @@
                     </div>
                 </div>
 
-            </div> 
+            </div>
 
-            
+
             <div class="form-group">
-               
-            <label class="col-sm-3 col-lg-2 control-label" >Sunday<i class="red">*</i></label> 
-               
+
+            <label class="col-sm-3 col-lg-2 control-label" >Sunday<i class="red">*</i></label>
+
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
-                        <a class="input-group-addon" href="#"> 
+                        <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
                         <input class="form-control timepicker-default" name="sun_in" id="sun_in" type="text" data-rule-required="true">
@@ -615,11 +615,45 @@
                         <input class="form-control timepicker-default" name="sun_out" id="sun_out" type="text" data-rule-required="true">
                     </div>
                 </div>
-     
-            </div>    
+
+            </div>
 
             <hr/>
-            
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" ></label>
+                <div class="col-sm-3 col-lg-3 controls">
+                    <h4><b>Payment Modes</b></h4>
+                </div>
+            </div>
+            <div class="form-group">
+            <div class="col-sm-5 col-md-7" style="float:right;">
+               <a href="javascript:void(0);" id='add-payment'>
+                   <span class="glyphicon glyphicon-plus-sign" style="font-size: 20px;"></span>
+               </a>
+              <span style="margin-left:05px;">
+              <a href="javascript:void(0);" id='remove-payment'>
+                  <span class="glyphicon glyphicon-minus-sign" style="font-size: 20px;"></span>
+              </a>
+              </span>
+             </div>
+                <label class="col-sm-3 col-lg-2 control-label"> Payment Mode <i class="red">*</i> </label>
+                <div class="col-sm-6 col-lg-4 controls">
+
+                <input type="text" name="payment_mode[]" id="payment_mode" class="form-control" data-rule-required="true"  />
+                <div class="error" id="error_payment_mode">{{ $errors->first('payment_mode') }}</div>
+
+                <div class="clr"></div><br/>
+                  <div class="error" id="error_set_default"></div>
+                  <div class="clr"></div>
+
+               <div id="append_payment" class="class-add"></div>
+                <div class="error_msg" id="error_payment_mode" ></div>
+                <div class="error_msg" id="error_payment_mode1" ></div>
+               <label class="col-sm-3 col-lg-2 control-label"></label>
+
+                </div>
+                </div>
+                <hr/>
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="company_info">Company Info<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
@@ -725,7 +759,8 @@
 <!-- END Main Content -->
 
 <script type="text/javascript">
- $('#add-image').click(function(){
+ $('#add-image').click(function()
+ {
    flag=1;
 
             var img_val = jQuery("input[name='business_image[]']:last").val();
@@ -772,10 +807,11 @@
                   jQuery("#append").append(html);
 
 });
-    $('#remove-image').click(function(){
+$('#remove-image').click(function()
+{
      var html= $("#append").find("input[name='business_image[]']:last");
      html.remove();
-            });
+});
 
 function updateCategoryOptGroup(ref)
 {
@@ -806,11 +842,13 @@ function clearCategoryOptGroup()
 
   });
 }
- $('.add_serc').click(function(){
-      $(".add_more_service").removeAttr("style");
-return false;
-    });
-$('#add-service').click(function(){
+$('.add_serc').click(function()
+{
+    $(".add_more_service").removeAttr("style");
+    return false;
+});
+$('#add-service').click(function()
+{
   flag=1;
 
             var img_val = jQuery("input[name='business_service[]']:last").val();
@@ -841,24 +879,64 @@ $('#add-service').click(function(){
                   jQuery("#append_service").append(service_html);
 
 });
-    $('#remove-service').click(function(){
+$('#remove-service').click(function()
+{
      var html= $("#append_service").find("input[name='business_service[]']:last");
      html.remove();
-            });
+});
+
+    //Payment
+$('#add-payment').click(function()
+{
+  flag=1;
+
+            var img_val = jQuery("input[name='payment_mode[]']:last").val();
+
+            var img_length = jQuery("input[name='payment_mode[]']").length;
+
+            if(img_val == "")
+            {
+                  $('#error_payment_mode').css('margin-left','120px');
+                  $('#error_payment_mode').show();
+                  $('#error_payment_mode').fadeIn(3000);
+                  document.getElementById('error_payment_mode').innerHTML="The Payment Mode is required.";
+                  setTimeout(function(){
+                  $('#error_payment_mode').fadeOut(4000);
+                  },3000);
+
+                 flag=0;
+                 return false;
+            }
+
+              var payment_html='<div>'+
+                       '<input type="text" class="form-control" name="payment_mode[]" id="payment_mode" class="" data-rule-required="true"  />'+
+                       '<div class="error" id="error_payment_mode">{{ $errors->first("payment_mode") }}</div>'+
+                       '</div>'+
+                       '<div class="clr"></div><br/>'+
+                       '<div class="error" id="error_set_default"></div>'+
+                       '<div class="clr"></div>';
+                  jQuery("#append_payment").append(payment_html);
+
+});
+$('#remove-payment').click(function()
+{
+     var html= $("#append_payment").find("input[name='payment_mode[]']:last");
+     html.remove();
+});
 </script>
 
 <script type="text/javascript">
 
     var  map;
     var ref_input_lat = $('#lat');
-    var ref_input_lng = $('#lng'); 
+    var ref_input_lng = $('#lng');
 
-    function setMapLocation(address) 
+    function setMapLocation(address)
     {
 
         geocoder.geocode({'address': address}, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) 
-            {   
+            if (status == google.maps.GeocoderStatus.OK)
+            {
 
                 map.setCenter(results[0].geometry.location);
 
@@ -889,7 +967,7 @@ $('#add-service').click(function(){
             }
         });
     }
-    function initializeMap() 
+    function initializeMap()
     {
          var latlng = new google.maps.LatLng(1.10, 1.10);
          var myOptions = {
@@ -940,7 +1018,7 @@ $('#add-service').click(function(){
 
      }
 
-    function loadScript() 
+    function loadScript()
     {
             var script = document.createElement('script');
             script.type = 'text/javascript';
@@ -970,15 +1048,15 @@ $('#add-service').click(function(){
     }*/
 
     function setAddress()
-    { 
+    {
          var street = $('#street').val();
          var area = $('#area').val();
          var city = $('#city option:selected').text();
          var state = $('#state option:selected').text();
          var country = $('#country option:selected').text();
-        
+
         var addr = street+", "+area+", "+city+", "+state+", "+country;
-        
+
         setMapLocation(addr);
     }
 
