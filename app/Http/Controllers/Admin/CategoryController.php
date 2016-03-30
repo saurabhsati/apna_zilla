@@ -391,4 +391,48 @@ class CategoryController extends Controller
         return CategoryModel::where('cat_id',$id)->update(array('public_id'=>alpha_id($id)));
     }
 
+    public function export_excel($format="csv")//export excel file
+    {
+        if($format=="csv")
+        {
+            $arr_category_list = array();
+            $obj_category_list = CategoryModel::where('parent','!=','0')->with(['parent_category'])->get();
+            //dd($obj_category_list);
+
+            if($obj_category_list)
+            {
+                $arr_category_list = $obj_category_list->toArray();
+
+                \Excel::create('BUSINESS_LIST-'.date('Ymd').uniqid(), function($excel) use($arr_category_list) 
+                {
+                    $excel->sheet('Business_list', function($sheet) use($arr_category_list) 
+                    {
+                        // $sheet->cell('A1', function($cell) {
+                        //     $cell->setValue('Generated on :'.date("d-m-Y H:i:s"));
+                        // });
+
+                        $sheet->row(3, array(
+                            'Sr.No.','Category Name','Sub-Category Name'
+                        ));
+
+                        if(sizeof($arr_category_list)>0)
+                        {
+                            $arr_tmp = array();
+                            foreach ($arr_category_list as $key => $category) 
+                            {
+                                $arr_tmp[$key][] = $key+1;
+                                $arr_tmp[$key][] = $category['parent_category']['title'];
+                                $arr_tmp[$key][] = $category['title'];
+                            }    
+
+                            $sheet->rows($arr_tmp);
+                        }
+
+                    });
+                    
+                })->export('csv');
+            }
+        }
+    }
+
 }

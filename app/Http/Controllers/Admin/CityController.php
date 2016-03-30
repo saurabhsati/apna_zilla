@@ -344,9 +344,9 @@ class CityController extends Controller
                 {
                     $excel->sheet('City', function($sheet) use($arr_city) 
                     {
-                        $sheet->cell('A1', function($cell) {
-                            $cell->setValue('Generated on :'.date("d-m-Y H:i:s"));
-                        });
+                        // $sheet->cell('A1', function($cell) {
+                        //     $cell->setValue('Generated on :'.date("d-m-Y H:i:s"));
+                        // });
 
                         $sheet->row(3, array(
                             'Sr.No.','City','State/Region :: Country'

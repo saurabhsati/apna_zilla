@@ -17,6 +17,7 @@ use App\Models\CityModel;
 use Sentinel;
 use Session;
 use Validator;
+use Meta;
 
 class ListingController extends Controller
 {
@@ -140,6 +141,10 @@ class ListingController extends Controller
                 $parent_category = $obj_parent_category->toArray();
             }
         }
+
+     
+        Meta::setDescription($arr_business_details['company_info']);
+        Meta::addKeyword($arr_business_details['keywords']);
       //dd($arr_business_details);
         return view('front.listing.detail',compact('page_title','arr_business_details','parent_category','all_related_business','all_category','city','search_by'));
     }
