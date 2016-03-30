@@ -148,7 +148,13 @@
                      <button class="btn btn-warning" onclick="return show_more_images()" id="show_more_images_button">Do you want to add slider images ? </button>  -->
                 </div>
              </div>
-
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="is_popular">Is Popular City <i class="red">*</i></label>
+                <div class="col-sm-1 col-lg-1 controls">
+                    <input class="form-control" id="is_popular"  type="checkbox" name="is_popular" value="1" />
+                    <span class='help-block'>{{ $errors->first('is_popular') }}</span>
+                </div>
+            </div>
 
 
 

@@ -11,7 +11,7 @@
                <span>You are here :</span>
                <li><a href="{{url('/')}}">Home</a></li>
                <!-- <li><a href="{{url('/')}}/{{$city}}/all-options/ct-{{isset($arr_business_details['category_details']['category_id']) && $arr_business_details['category_details']['category_id']!=''?$arr_business_details['category_details']['category_id']:'NA'}}"><?php if(isset($parent_category[0]['title']) && $parent_category[0]['title']!=''){echo $parent_category[0]['title'];} ?></a></li>
-                  -->      
+                  -->
                <li class="active"> {{ isset($arr_business_details['business_name']) && sizeof($arr_business_details['business_name'])>0?$arr_business_details['business_name']:''}}</li>
             </ol>
          </div>
@@ -23,7 +23,7 @@
          @if(isset($arr_business_details) && sizeof($arr_business_details)>0)
          <div class="col-sm-12 col-md-9 col-lg-9">
             <div class="p_detail_view">
-               <!--  <div class="product_detail_banner" style="background: url('{{ url('/') }}/assets/front/images/banner_detail.jpg') repeat scroll 0px 0px;"> -->   
+               <!--  <div class="product_detail_banner" style="background: url('{{ url('/') }}/assets/front/images/banner_detail.jpg') repeat scroll 0px 0px;"> -->
                <div style="background: url('{{ url('/') }}/uploads/business/main_image/{{ $arr_business_details['main_image'] }}'); background-repeat: repeat;  background-size: 100% auto;">
                   <div class="product_detail_banner" style="background-color:rgba(0,0,0,0.7);">
                      <div class="product_title"><a href="#">{{$arr_business_details['business_name']}}</a></div>
@@ -58,7 +58,7 @@
                         <span>Business Time Not Available.</span>
                         @endif
                         <div class="add_det"><i class="fa fa-globe"></i><a href="{{$arr_business_details['website']}}"> {{$arr_business_details['website']}}</a></div>
-                        <div class="enquiry"><i class="fa fa-envelope"></i> Send Enquiry By Email</div>
+                         <div class="enquiry"><a data-toggle="modal" data-target="#enquiry"><i class="fa fa-envelope"></i> Send Enquiry By Email</a></div>
                      </div>
                   </div>
                </div>
@@ -83,30 +83,30 @@
                     <a data-toggle="modal" data-target="#verifed"><img src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>verified</a>
                   </div>
                </div>
-                
-                
-                
-                
-                
-                
-                
-                
-                
+
+
+
+
+
+
+
+
+
                  <!--<div class="img_icons popup-v"><a data-toggle="modal" data-target="#share"><img src="images/shar.png" alt="share"/>Share</a></div>
                 <div class="img_icons"><img src="images/write_review.png" alt="write_review"/>write review</div>
                 <div class="img_icons"><img src="images/your-vote.png" alt="your-vote"/>Your Vote(0.5)</div>
                   <div class="img_icons"><img src="images/edit-this.png" alt="write_review"/>Edit this</div>
                 <div class="img_icons popup-v"><a data-toggle="modal" data-target="#sms"><img src="images/sms-emil.png" alt="write_review"/>Sms/Email</a></div>
                       <div class="img_icons popup-v"><a data-toggle="modal" data-target="#verifed"><img src="images/verified.png" alt="write_review"/>verified</a></div>-->
-                
-                
-                
-                
-                
-                
-                
-                
-                
+
+
+
+
+
+
+
+
+
             </div>
             <!-- <div class="map" id="business_location_map" style="width: 100%; height: 250;">
                </div> -->
@@ -300,7 +300,7 @@
                               </div>
                            </div>
                            <div class="clearfix"></div>
-                           
+
                            <div class="testimo-one replay">
                            <div class="img-div-testi">
                               <img src="images/testi-user.png" alt="" />
@@ -392,6 +392,21 @@
                <!-- /#Categoriesr End-->
                <div class="clearfix"></div>
             </div>
+             <div class="categories_sect sidebar-nav">
+               <div class="sidebar-brand"><img src="{{ url('/') }}/assets/front/images/services.png" alt="services"/>Modes Of Payment<span class="spe_mobile3"><a href="#"></a></span></div>
+               <div class="bor_head">&nbsp;</div>
+               <ul class="spe_submobile3">
+                  @if(isset($arr_business_details['payment_mode']) && sizeof($arr_business_details['payment_mode'])>0)
+                  @foreach($arr_business_details['payment_mode'] as $payment_mode)
+                  <li class="brdr">{{ $payment_mode['title'] }}</li>
+                  @endforeach
+                  @else
+                  <span>No Payment Mode Available.</span>
+                  @endif
+               </ul>
+               <!-- /#Categoriesr End-->
+               <div class="clearfix"></div>
+            </div>
          </div>
          @else
          <span>No Hotel/Restaurant Found</span>
@@ -434,51 +449,51 @@
    {
      $('#business_times_div').show();
    }
-   
-   
+
+
    /*function show_map()
    {
      $('#map_show').show();
    }*/
-   
+
 </script>
 <script type="text/javascript">
    var  map;
    var ref_input_lat = $('#lat');
    var ref_input_lng = $('#lng');
-   
-   
+
+
    function setMapLocation(address)
    {
      console.log(address);
        geocoder.geocode({'address': address}, function(results, status) {
            if (status == google.maps.GeocoderStatus.OK)
            {
-   
+
                map.setCenter(results[0].geometry.location);
-   
+
                $(ref_input_lat).val(results[0].geometry.location.lat().toFixed(6));
                $(ref_input_lng).val(results[0].geometry.location.lng().toFixed(6));
-   
+
                var latlong = "(" + results[0].geometry.location.lat().toFixed(6) + ", " +
                        +results[0].geometry.location.lng().toFixed(6)+ ")";
-   
-   
-   
+
+
+
                marker.setPosition(results[0].geometry.location);
                map.setZoom(16);
                infowindow.setContent(results[0].formatted_address);
-   
+
                if (infowindow) {
                    infowindow.close();
                }
-   
+
                google.maps.event.addListener(marker, 'click', function() {
                    infowindow.open(map, marker);
                });
-   
+
                infowindow.open(map, marker);
-   
+
            } else {
                alert("Lat and long cannot be found.");
            }
@@ -507,38 +522,38 @@
             position: latlng,
             map: map
         });
-   
+
         map.streetViewControl = false;
         infowindow = new google.maps.InfoWindow({
             content: "("+$(ref_input_lat).val()+", "+$(ref_input_lng).val()+")"
         });
-   
+
         google.maps.event.addListener(map, 'click', function(event) {
             marker.setPosition(event.latLng);
-   
+
             var yeri = event.latLng;
-   
+
             var latlongi = "(" + yeri.lat().toFixed(6) + ", " + yeri.lng().toFixed(6) + ")";
-   
+
             infowindow.setContent(latlongi);
-   
+
             $(ref_input_lat).val(yeri.lat().toFixed(6));
             $(ref_input_lng).val(yeri.lng().toFixed(6));
-   
+
         });
-   
+
         google.maps.event.addListener(map, 'mousewheel', function(event, delta) {
-   
+
             console.log(delta);
         });
-   
+
          //var addr = "<?php echo $arr_business_details['street'];?>,"+"<?php echo $arr_business_details['area'];?>,"+"<?php echo $arr_business_details['state_details']['state_title'];?>,"+"<?php echo $arr_business_details['country_details']['country_name'];?>";
-   
+
         // setMapLocation(addr);
         //onload_address_map();//call function onload
-   
+
     }
-   
+
    function loadScript()
    {
            var script = document.createElement('script');
@@ -546,19 +561,19 @@
            script.src = 'https://maps.googleapis.com/maps/api/js?sensor=false&' +
                    'callback=initializeMap';
            document.body.appendChild(script);
-   
-   
+
+
    }
-   
+
    function show_map()
    {
      $('#map_show').show();
      loadScript();
      //window.onload = loadScript();
    }
-   
+
    /* Autcomplete Code */
-   
+
    function setMarkerTo(lat,lon,place)
    {
        var location = new google.maps.LatLng(lat,lng)
@@ -572,13 +587,13 @@
    var rate=$(this).attr('rel');
    $("#dprtng").html(rate);
    $("input[name='rating']").val(rate);
-   
-   
-   
-   
+
+
+
+
    });
-   
-   
+
+
 </script>
 @endsection
 

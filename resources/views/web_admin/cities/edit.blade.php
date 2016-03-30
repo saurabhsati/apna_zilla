@@ -1,4 +1,4 @@
-    @extends('web_admin.template.admin')                
+    @extends('web_admin.template.admin')
 
 
     @section('main_content')
@@ -23,7 +23,7 @@
             <li>
                 <i class="fa fa-desktop"></i>
                 <a href="{{ url('/').'/web_admin/cities' }}">City</a>
-            </li>   
+            </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span>
@@ -60,7 +60,7 @@
                 </button>
                 {{ Session::get('success') }}
             </div>
-          @endif  
+          @endif
 
           @if(Session::has('error'))
             <div class="alert alert-danger alert-dismissible">
@@ -71,9 +71,9 @@
             </div>
           @endif
 
-          <form class="form-horizontal" 
-                id="validation-form" 
-                method="POST" 
+          <form class="form-horizontal"
+                id="validation-form"
+                method="POST"
                 action="{{ url('/web_admin/cities/update/'.base64_encode($arr_city[0]['id'])) }}"
                 enctype="multipart/form-data"
                 files="true"
@@ -85,8 +85,8 @@
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="country_code">Country Name <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control" name="country_code" data-rule-required="true" 
-                        value="{{ isset($arr_city[0]['country_details']['country_name'])? strtoupper($arr_city[0]['country_details']['country_name']):'' }}" readonly 
+                    <input class="form-control" name="country_code" data-rule-required="true"
+                        value="{{ isset($arr_city[0]['country_details']['country_name'])? strtoupper($arr_city[0]['country_details']['country_name']):'' }}" readonly
                     />
                     <span class='help-block'>{{ $errors->first('country_code') }}</span>
                 </div>
@@ -96,7 +96,7 @@
                 <label class="col-sm-3 col-lg-2 control-label" for="state">State name<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" name="state_title" data-rule-required="true"
-                        value="{{ isset($arr_city[0]['state_details']['state_title'])?$arr_city[0]['state_details']['state_title']:'' }}"  readonly 
+                        value="{{ isset($arr_city[0]['state_details']['state_title'])?$arr_city[0]['state_details']['state_title']:'' }}"  readonly
                      />
                     <span class='help-block'>{{ $errors->first('state_title') }}</span>
                 </div>
@@ -113,7 +113,7 @@
                 </div>
             </div>
 
-          
+
            <div class="form-group">
                             <label class="col-sm-3 col-lg-2 control-label"> Image <i class="red">*</i> </label>
                             <div class="col-sm-9 col-lg-10 controls">
@@ -123,25 +123,45 @@
                                   </div>
                                   <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                                   <div>
-                                     <span class="btn btn-default btn-file"><span class="fileupload-new" >Select image</span> 
+                                     <span class="btn btn-default btn-file"><span class="fileupload-new" >Select image</span>
                                      <span class="fileupload-exists">Change</span>
-                                     <input type="file" class="file-input" name="image" id="image"/></span> 
+                                     <input type="file" class="file-input" name="image" id="image"/></span>
                                      <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
 
                                      <span  >
-                                      
-                                     </span> 
+
+                                     </span>
 
                                   </div>
                                </div>
-                                <span class='help-block'>{{ $errors->first('image') }}</span>  
-                                 <!--<br/>       
+                                <span class='help-block'>{{ $errors->first('image') }}</span>
+                                 <!--<br/>
                                  <button class="btn btn-warning" onclick="return show_more_images()" id="show_more_images_button">Do you want to add slider images ? </button>  -->
                             </div>
                          </div>
+            @if($arr_city[0]['is_popular']==1)
 
-             
-            
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="is_popular">Is Popular City<i class="red">*</i></label>
+                <div class="col-sm-1 col-lg-1 controls">
+                    <input class="form-control" id="is_popular"  type="checkbox" name="is_popular" checked="true"  />
+                    <span class='help-block'>{{ $errors->first('is_popular') }}</span>
+                </div>
+            </div>
+
+            @elseif($arr_city[0]['is_popular']==0)
+
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="is_popular">Popular<i class="red">*</i></label>
+                <div class="col-sm-1 col-lg-1 controls">
+                    <input class="form-control" id="is_popular"  type="checkbox" name="is_popular" />
+                    <span class='help-block'>{{ $errors->first('is_popular') }}</span>
+                </div>
+            </div>
+
+            @endif
+
+
 
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
@@ -159,4 +179,4 @@
 <!-- END Main Content -->
 
 
-@stop                    
+@stop

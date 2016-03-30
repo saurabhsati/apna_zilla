@@ -94,7 +94,7 @@
                                       <div class="price-box">
                                       <div class="price-new">£<?php echo round($deals['price']-(($deals['price'])*($deals['discount_price']/100)));?></div>
                                           <div class="price-old">£{{ $deals['price'] }} <!--| <span>offers 50% OFF</span>--></div>
-                                          <div class="view"><a href="#" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
+                                          <div class="view"><a href="{{url('/').'/deals/details/'.base64_encode($deals['id'])}}" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
                                       </div>
                               </div>
                               </div>
@@ -119,7 +119,7 @@
                                   <div class="price-box">
                                   <div class="price-new">£<?php echo round($max_dis_deals['price']-(($max_dis_deals['price'])*($max_dis_deals['discount_price']/100)));?></div>
                                       <div class="price-old">£{{ $max_dis_deals['price'] }} <!--| <span>offers 50% OFF</span>--></div>
-                                      <div class="view"><a href="#" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
+                                      <div class="view"><a href="{{url('/').'/deals/details/'.base64_encode($max_dis_deals['id'])}}" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
                                   </div>
                           </div>
                           </div>
@@ -152,7 +152,7 @@
          .dropdown({
          allowAdditions: true
          });
-         
+
       </script>
       <script type="text/javascript">
          $(document).ready(function () {

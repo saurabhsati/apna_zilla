@@ -42,4 +42,9 @@ class AllCategoryController extends Controller
  		$cat_img_path = url('/').config('app.project.img_path.category');
     	return view('front.allcategory.index',compact('page_title','current_city','arr_category','sub_category','cat_img_path'));
     }
+    public function popular_city($city_title)
+    {
+        Session::put('city', $city_title);
+        return redirect($city_title.'/all-categories');
+    }
 }
