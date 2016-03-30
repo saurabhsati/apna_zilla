@@ -617,8 +617,43 @@
                 </div>
 
             </div>
+             <hr/>
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" ></label>
+                <div class="col-sm-3 col-lg-3 controls">
+                    <h4><b>Payment Modes</b></h4>
+                </div>
+            </div>
+            <div class="form-group">
+            <div class="col-sm-5 col-md-7" style="float:right;">
+               <a href="javascript:void(0);" id='add-payment'>
+                   <span class="glyphicon glyphicon-plus-sign" style="font-size: 20px;"></span>
+               </a>
+              <span style="margin-left:05px;">
+              <a href="javascript:void(0);" id='remove-payment'>
+                  <span class="glyphicon glyphicon-minus-sign" style="font-size: 20px;"></span>
+              </a>
+              </span>
+             </div>
+                <label class="col-sm-3 col-lg-2 control-label"> Payment Mode <i class="red">*</i> </label>
+                <div class="col-sm-6 col-lg-4 controls">
 
-            <hr/>
+                <input type="text" name="payment_mode[]" id="payment_mode" class="form-control" data-rule-required="true"  />
+                <div class="error" id="error_payment_mode">{{ $errors->first('payment_mode') }}</div>
+
+                <div class="clr"></div><br/>
+                  <div class="error" id="error_set_default"></div>
+                  <div class="clr"></div>
+
+               <div id="append_payment" class="class-add"></div>
+                <div class="error_msg" id="error_payment_mode" ></div>
+                <div class="error_msg" id="error_payment_mode1" ></div>
+               <label class="col-sm-3 col-lg-2 control-label"></label>
+
+                </div>
+                </div>
+                <hr/>
+
 
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="company_info">Company Info<i class="red">*</i></label>
@@ -725,7 +760,8 @@
 <!-- END Main Content -->
 
 <script type="text/javascript">
- $('#add-image').click(function(){
+ $('#add-image').click(function()
+ {
    flag=1;
 
             var img_val = jQuery("input[name='business_image[]']:last").val();
@@ -772,10 +808,11 @@
                   jQuery("#append").append(html);
 
 });
-    $('#remove-image').click(function(){
+$('#remove-image').click(function()
+    {
      var html= $("#append").find("input[name='business_image[]']:last");
      html.remove();
-            });
+});
 
 function updateCategoryOptGroup(ref)
 {
@@ -806,11 +843,13 @@ function clearCategoryOptGroup()
 
   });
 }
- $('.add_serc').click(function(){
+ $('.add_serc').click(function()
+ {
       $(".add_more_service").removeAttr("style");
-return false;
-    });
-$('#add-service').click(function(){
+      return false;
+});
+$('#add-service').click(function()
+{
   flag=1;
 
             var img_val = jQuery("input[name='business_service[]']:last").val();
@@ -841,10 +880,49 @@ $('#add-service').click(function(){
                   jQuery("#append_service").append(service_html);
 
 });
-    $('#remove-service').click(function(){
+$('#remove-service').click(function()
+{
      var html= $("#append_service").find("input[name='business_service[]']:last");
      html.remove();
-            });
+});
+        //Payment
+$('#add-payment').click(function()
+{
+  flag=1;
+
+            var img_val = jQuery("input[name='payment_mode[]']:last").val();
+
+            var img_length = jQuery("input[name='payment_mode[]']").length;
+
+            if(img_val == "")
+            {
+                  $('#error_payment_mode').css('margin-left','120px');
+                  $('#error_payment_mode').show();
+                  $('#error_payment_mode').fadeIn(3000);
+                  document.getElementById('error_payment_mode').innerHTML="The Payment Mode is required.";
+                  setTimeout(function(){
+                  $('#error_payment_mode').fadeOut(4000);
+                  },3000);
+
+                 flag=0;
+                 return false;
+            }
+
+              var payment_html='<div>'+
+                       '<input type="text" class="form-control" name="payment_mode[]" id="payment_mode" class="" data-rule-required="true"  />'+
+                       '<div class="error" id="error_payment_mode">{{ $errors->first("payment_mode") }}</div>'+
+                       '</div>'+
+                       '<div class="clr"></div><br/>'+
+                       '<div class="error" id="error_set_default"></div>'+
+                       '<div class="clr"></div>';
+                  jQuery("#append_payment").append(payment_html);
+
+});
+$('#remove-payment').click(function()
+{
+     var html= $("#append_payment").find("input[name='payment_mode[]']:last");
+     html.remove();
+});
 </script>
 
 <script type="text/javascript">

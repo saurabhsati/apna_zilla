@@ -104,5 +104,9 @@ class BusinessListingModel extends Model
     {
         return $this->hasMany('App\Models\BusinessCategoryModel','business_id','id');
     }
+     public function payment_mode()
+    {
+        return $this->hasMany('App\Models\BusinessPaymentModeModel','business_id','id');
+    }
 
 }

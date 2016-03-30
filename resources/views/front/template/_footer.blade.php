@@ -185,6 +185,220 @@
       </div>
       <!--registration popup end here-->
 
+
+<!--popup in detail page start here-->
+<!-- Modal -->
+<div class="modal fade" id="share" role="dialog">
+    <div class="modal-dialog">
+     <!-- Modal content-->
+      <div class="modal-content">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+       <div class="modal-body">
+          <p>Share With Friends</p>
+            <div class="soc-menu-top">
+            <ul>
+            <li><a href="#"><img src="images/facebook-so.png" alt="facebook"/><span class="socail_name">Facebook</span></a></li>
+              <li><a href="#"><img src="images/twitter-so.png" alt="twitter"/><span class="socail_name">Twitter</span></a></li>
+              <li><a href="#"><img src="images/googlepls-soc.png" alt="googlepls"/><span class="socail_name">Google +</span></a></li>
+              <li><a href="#"><img src="images/linkind-soc.png" alt="linkind"/><span class="socail_name">Linkedin</span></a></li>
+              <li><a href="#"><img src="images/pins-soc.png" alt="pins"/><span class="socail_name">Pinterest</span></a></li>
+              <li><a href="#"><img src="images/VKontakte-so.png" alt="VKontakte"/><span class="socail_name">VKontakte</span></a></li>    
+              <li><a href="#"><img src="images/msg-so.png" alt="msg"/><span class="socail_name">SMS</span></a></li>
+              <li><a href="#"><img src="images/email-soc.png" alt="email"/><span class="socail_name">Email</span></a></li>      
+            </ul>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="modal fade" id="sms" role="dialog">
+    <div class="modal-dialog">
+     <!-- Modal content-->
+      <div class="modal-content">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+       <div class="modal-body">
+          <b class="head-t">Get information by SMS/Email</b>
+           <p class="in-li">Enter the details below and click on SEND</p>
+            <div class="soc-menu-top">
+                <div class="col-lg-11">
+            <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Name</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                         <input type="text" placeholder="Enter Name" class="input_acct">
+                          <div class="error_msg">please enter correct</div>
+                        </div>
+                         </div>
+                    </div>
+                
+                
+                
+            <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Mobile</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                        <div class="input-group">
+                        <span id="basic-addon1" class="input-group-addon">+91</span>
+                        <input type="text" required="" aria-describedby="basic-addon1" placeholder="Mobile" class="form-control">
+                            
+                        </div>  
+                          <div class="error_msg">please enter correct</div>
+                        </div>
+                         </div>
+                    </div>
+               
+                
+                <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Email</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                         <input type="text" placeholder="Enter Email" class="input_acct">
+                          <div class="error_msg">please enter correct</div>
+                        </div>
+                         </div>
+                    </div>
+                    <div class="clr"></div>
+                       <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">&nbsp;</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                    <div class="submit-btn">
+<button>Send</button>
+</div>
+                    </div>
+                           </div>
+                    </div>
+                </div>
+            </div>
+           <div class="clr"></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+<div class="modal fade" id="enquiry" role="dialog">
+    <div class="modal-dialog modal-sm">
+     <!-- Modal content-->
+      <div class="modal-content">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+       <div class="modal-body">
+          <b class="head-t">Send Enquiry By Email</b>
+           
+            <div class="soc-menu-top" style="margin-top:20px;">
+                <div class="col-lg-11">
+                     <div class="user_box1">
+                           <div class="row">
+                    <div class="col-lg-3  label-text1">To</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                       
+                          <div class="label-text1">Classic Fine Dine</div>
+                        </div>
+                         </div>
+                    </div>
+            <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Name<span style="color:red">*</span></div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                         <input type="text" placeholder="Enter Name" class="input_acct">
+                          <div class="error_msg">please enter correct</div>
+                        </div>
+                         </div>
+                    </div>
+                
+                
+                
+            <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Mobile</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                        <div class="input-group">
+                        <span id="basic-addon1" class="input-group-addon">+91</span>
+                        <input type="text" required="" aria-describedby="basic-addon1" placeholder="Mobile" class="form-control">
+                            
+                        </div>  
+                          <div class="error_msg">please enter correct</div>
+                        </div>
+                         </div>
+                    </div>
+               
+                
+                <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Email<span style="color:red">*</span></div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                         <input type="text" placeholder="Enter Email" class="input_acct">
+                          <div class="error_msg">please enter correct</div>
+                        </div>
+                         </div>
+                    </div>
+                     <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Subject<span style="color:red">*</span></div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                         <input type="text" placeholder="Enter Subject" class="input_acct">
+                          <div class="error_msg">please enter correct</div>
+                        </div>
+                         </div>
+                    </div>
+                    
+                     <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Body<span style="color:red">*</span></div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                         <input type="text" placeholder="Enter Body" class="input_acct">
+                          <div class="error_msg">please enter correct</div>
+                        </div>
+                         </div>
+                    </div>
+                    <div class="clr"></div>
+                       <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">&nbsp;</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                    <div class="submit-btn"><button>Ok</button></div>
+                      
+                    </div>
+                           </div>
+                    </div>
+                    
+                     <span class="mandt"><span style="color:red">*</span>Denotes mandatory fields. </span> 
+                </div>
+            </div>
+           <div class="clr"></div>
+        </div>
+      </div>
+    </div>
+  </div>      
+<div class="modal fade" id="verifed" role="dialog">
+    <div class="modal-dialog">
+     <!-- Modal content-->
+      <div class="modal-content">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+       <div class="modal-body">
+          <div class="img-verify"><img src="images/process_done.png" alt=""/></div>
+          <div class="center-section">
+           <b class="head-t-center">What is Just Dial Verified?</b>
+           <p class="just-v">Just Dial Verified(JD Verified) is an added service offering.</p>
+          </div>
+           
+           <p class="sub-c"> Justdial verified means that the information of business establishments, professionals or service providers has been verified as existing and correct at the time of the advertiser's application to register with Justdial.  				</p>
+            <div class="soc-menu-top" style="margin-top:20px; text-align:center;">
+              <b class="head-t-center">What is Just Dial Verified?</b>
+                <p class="sub-c">Makes short-listing of business establishments, professionals or service providers fast & easy. Information verification time is saved. </p>
+                 <p class="sub-c">(PS: There is no documentary evidence gathered for verification)
+<br>
+If you need any more details on Justdial Verified, please refer to
+                <a href="#">terms &amp; conditions</a></p>
+            </div>
+           <div class="clr"></div>
+        </div>
+      </div>
+    </div>
+  </div>      
+<!--popup in detail page end here--> 
+
+
+
+
  <!--Footer-->
       <footer>
          <div class="footer_links">
