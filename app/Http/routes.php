@@ -265,6 +265,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::post('sub_categories/update',						['as' => 'admin_sub_categories_update' 			,'uses' => 'Admin\CategoryController@update']);
 			Route::get('sub_categories/toggle_status/{enc_id}/{action}',['as' => 'admin_sub_categories_toggle_status' 	,'uses' => 'Admin\CategoryController@toggle_status']);
 			Route::post('sub_categories/multi_action',					['as' => 'admin_sub_categories_block' 			,'uses' => 'Admin\CategoryController@multi_action']);
+			Route::get('export/{format}',					['as' => 'admin_sub_categories_block' 			,'uses' => 'Admin\CategoryController@export_excel']);
 
 		});
 

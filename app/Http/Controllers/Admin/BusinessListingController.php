@@ -770,9 +770,9 @@ class BusinessListingController extends Controller
                 {
                     $excel->sheet('Business_list', function($sheet) use($arr_business_list) 
                     {
-                        $sheet->cell('A1', function($cell) {
-                            $cell->setValue('Generated on :'.date("d-m-Y H:i:s"));
-                        });
+                        // $sheet->cell('A1', function($cell) {
+                        //     $cell->setValue('Generated on :'.date("d-m-Y H:i:s"));
+                        // });
 
                         $sheet->row(3, array(
                             'Sr.No.','Business Name','Business Category :: Sub-Category', 'Full Name', 'Email', 'mobile No.'

@@ -86,6 +86,11 @@
                 <div class="btn-group">
                 <a href="{{ url('/web_admin/categories/create')}}" class="btn btn-primary btn-add-new-records">Add Category/Sub Category</a>
                 </div>
+
+                 <div class="btn-group">
+                <a href="{{ url('/web_admin/categories/export/csv')}}" class="btn btn-warning btn-add-new-records" title="Click to Excel Export"><i class="fa fa-file-excel-o"></i>
+</a>
+                </div>
             <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -->
             <div class="btn-group">
                 <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"

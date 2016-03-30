@@ -3779,5 +3779,54 @@
             "import",
             "laravel"
         ]
+    },
+    {
+        "name": "orzcc/autometa",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/orzcc/autometa.git",
+            "reference": "1e3bd93f364e2619c9c20820399735c9fe805c9c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/orzcc/autometa/zipball/1e3bd93f364e2619c9c20820399735c9fe805c9c",
+            "reference": "1e3bd93f364e2619c9c20820399735c9fe805c9c",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/config": "~5.0|~5.1|~5.2",
+            "illuminate/support": "~5.0|~5.1|~5.2",
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "phpspec/phpspec": "2.1.x",
+            "phpunit/phpunit": "4.*"
+        },
+        "time": "2015-12-28 06:57:51",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Orzcc\\AutoMeta\\": "src/AutoMeta/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "orzcc",
+                "email": "orzcczh@gmail.com"
+            }
+        ],
+        "description": "A Meta Tool for Laravel",
+        "keywords": [
+            "laravel5",
+            "meta",
+            "seo"
+        ]
     }
 ]

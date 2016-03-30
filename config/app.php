@@ -149,6 +149,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
 
+
         /*
          * Application Service Providers...
          */
@@ -159,6 +160,7 @@ return [
         Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Orzcc\AutoMeta\Providers\AutoMetaServiceProvider::class,
 
     ],
 
@@ -211,6 +213,7 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Excel'     => Maatwebsite\Excel\Facades\Excel::class,
+        'Meta'   => Orzcc\AutoMeta\Facades\AutoMeta::class,
 
     ],
 
