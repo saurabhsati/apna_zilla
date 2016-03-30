@@ -42,6 +42,8 @@
 
         <script src="{{ url('/') }}/js/admin/select2.min.js"></script>
 
+        <script src="{{ url('/') }}/js/admin/tinymce/js/tinymce/tinymce.min.js"></script>
+
         <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/jquery-tags-input/jquery.tagsinput.css" />
 
         <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/bootstrap-duallistbox/duallistbox/bootstrap-duallistbox.css" />

@@ -6,6 +6,12 @@
 
         </div>
     </div>
+
+
+   
+
+    
+
     <!-- END Page Title -->
 
     <!-- BEGIN Breadcrumb -->
@@ -125,5 +131,11 @@
 </div>
 </div>
 </div>
+
+<script type="text/javascript">
+    tinymce.init({ selector:'textarea' });
+    //tinymce.init('#page_desc');
+</script>
+
 <!-- END Main Content -->
 @stop

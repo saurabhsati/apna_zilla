@@ -320,7 +320,6 @@ class CityController extends Controller
 
     public function export_excel($format="csv")//export excel file
     {
-
         if($format=="csv")
         {
             $arr_city = array();
@@ -339,8 +338,8 @@ class CityController extends Controller
                             $cell->setValue('Generated on :'.date("d-m-Y H:i:s"));
                         });
 
-                        $sheet->row(2, array(
-                            'Sr. No.', 'City','State/Region :: Country'
+                        $sheet->row(3, array(
+                            'Sr.No.','City','State/Region :: Country'
                         ));
 
                         if(sizeof($arr_city)>0)
@@ -358,7 +357,6 @@ class CityController extends Controller
 
                     });
                     
-
                 })->export('csv');
             }
         }
