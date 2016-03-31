@@ -7,16 +7,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CityModel extends Model
 {
     //
-    protected $table="city";
-    protected $fillable=['public_key',
+    protected $table="cities";
+    protected $fillable=[
                          'city_title',
-                         'city_image',
-                         'city_slug',
-                         'countries_id',
+                         'country_id',
+                         'is_popular',
                          'state_id'];
     public function country_details()
     {
-    	return $this->belongsTo('App\Models\CountryModel','countries_id','id');
+    	return $this->belongsTo('App\Models\CountryModel','country_id','id');
     }
     public function state_details()
     {

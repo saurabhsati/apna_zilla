@@ -13,6 +13,7 @@ use App\Models\CityModel;
 use DB,Event;
 use Session;
 use URL;
+use Meta;
 //use Request;
 
 class CategorySearchController extends Controller
@@ -143,7 +144,29 @@ class CategorySearchController extends Controller
             $arr_sub_cat = $obj_sub_cat->toArray();
         }
 
-        //dd($arr_business);
+        $mete_title = "";
+        if(isset($parent_category[0]['title']) && sizeof($parent_category[0]['title']))
+        {
+          $mete_title = $parent_category[0]['title'];
+        }
+
+        $meta_desp = "";
+        if(isset($parent_category[0]['cat_meta_description']) && sizeof($parent_category[0]['cat_meta_description']))
+        {
+          $meta_desp = $parent_category[0]['cat_meta_description'];
+        }
+
+        $meta_keyword = array();
+        if(isset($parent_category[0]['cat_meta_keyword']) && sizeof($parent_category[0]['cat_meta_keyword']))
+        {
+          $meta_keyword = explode(',',$parent_category[0]['cat_meta_keyword']);
+        }
+      
+
+        Meta::setDescription($meta_desp);
+        Meta::addKeyword($meta_keyword);
+
+    
       return view('front.listing.index',compact('page_title','arr_business','arr_sub_cat','parent_category','sub_category','city'));
     }
 

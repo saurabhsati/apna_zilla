@@ -17,6 +17,7 @@ use App\Models\CityModel;
 use Sentinel;
 use Session;
 use Validator;
+use Meta;
 
 class ListingController extends Controller
 {
@@ -52,7 +53,7 @@ class ListingController extends Controller
         $obj_business_details = BusinessListingModel::where('id',$id)->first();
         if($obj_business_details)
         {
-            $obj_business_details->load(['business_times','also_list_category','reviews','image_upload_details','country_details','state_details','category_details','service']);
+            $obj_business_details->load(['business_times','also_list_category','reviews','image_upload_details','payment_mode','country_details','state_details','category_details','service']);
             $arr_business_details = $obj_business_details->toArray();
         }
 
@@ -140,33 +141,37 @@ class ListingController extends Controller
                 $parent_category = $obj_parent_category->toArray();
             }
         }
+
+     
+        Meta::setDescription($arr_business_details['company_info']);
+        Meta::addKeyword($arr_business_details['keywords']);
       //dd($arr_business_details);
         return view('front.listing.detail',compact('page_title','arr_business_details','parent_category','all_related_business','all_category','city','search_by'));
     }
 
 
-    public function store_reviews(Request $request,$enc_id)
+    public function store_reviews(Request $request)
     {
-        $id = base64_decode($enc_id);
-
+        
         $arr_rules = array();
         $arr_rules['rating'] = "required";
         $arr_rules['title'] = "required";
         $arr_rules['review'] = "required";
 
-        $validator = Validator::make($request->all(),$arr_rules);
+       /* $validator = Validator::make($request->all(),$arr_rules);
 
         if($validator->fails())
         {
             return redirect()->back()->withErrors($validator)->withInput();
-        }
+        }*/
 
         $title       =  $request->input('title');
-        $rating       =  $request->input('rating');
+        $rating      =  $request->input('rating');
         $name        =  $request->input('name');
         $review      =  $request->input('review');
         $mobile_no   =  $request->input('mobile_no');
         $email       =  $request->input('email');
+        $id          =  $request->input('business_id'); 
 
         $arr_data = array();
         $arr_data['title'] = $title;
@@ -176,7 +181,7 @@ class ListingController extends Controller
         $arr_data['mobile_number'] = $mobile_no;
         $arr_data['email'] = $email;
         $arr_data['business_id'] = $id;
-
+     
        $status = 1;//ReviewsModel::create($arr_data);
 
         if($status)

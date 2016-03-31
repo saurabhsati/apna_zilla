@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "405a4d5e6aad96d33f1e30d2edd0529d",
-    "content-hash": "beccffd51582f549ad7d5ab705aaf69d",
+    "hash": "cb8ce07f5230ee7efb6cee7fcdd70cf1",
+    "content-hash": "dccece22372a48d8031ea9e5eb90e721",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -1197,6 +1197,53 @@
                 "php"
             ],
             "time": "2015-12-04 15:28:43"
+        },
+        {
+            "name": "orzcc/autometa",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/orzcc/autometa.git",
+                "reference": "1e3bd93f364e2619c9c20820399735c9fe805c9c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/orzcc/autometa/zipball/1e3bd93f364e2619c9c20820399735c9fe805c9c",
+                "reference": "1e3bd93f364e2619c9c20820399735c9fe805c9c",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "~5.0|~5.1|~5.2",
+                "illuminate/support": "~5.0|~5.1|~5.2",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "2.1.x",
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Orzcc\\AutoMeta\\": "src/AutoMeta/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "orzcc",
+                    "email": "orzcczh@gmail.com"
+                }
+            ],
+            "description": "A Meta Tool for Laravel",
+            "keywords": [
+                "laravel5",
+                "meta",
+                "seo"
+            ],
+            "time": "2015-12-28 06:57:51"
         },
         {
             "name": "paragonie/random_compat",
@@ -3664,8 +3711,10 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "orzcc/autometa": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

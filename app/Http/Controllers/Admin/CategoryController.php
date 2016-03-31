@@ -79,8 +79,7 @@ class CategoryController extends Controller
         $cat_slug = str_slug($title);
 
          /* update public key in Category table*/
-        $cat_id=CategoryModel::first()->cat_id;
-        $public_id = (new GeneratorController)->alphaID($cat_id);
+
         //echo $public_id;exit;
         $cat_img = "default_category.png";
         if((int)$category==0)
@@ -112,7 +111,7 @@ class CategoryController extends Controller
         }
 
         $arr_cat = array();
-        $arr_cat['public_id']=$public_id;
+        //$arr_cat['public_id']=$public_id;
         $arr_cat['cat_desc'] = "NA";
         $arr_cat['cat_slug'] = $cat_slug;
         $arr_cat['parent'] = $category;
@@ -124,11 +123,17 @@ class CategoryController extends Controller
         $arr_cat['cat_meta_keyword'] =$cat_meta_keyword;
         $arr_cat['cat_meta_description'] =$cat_meta_description;
         $status=CategoryModel::create($arr_cat);
+        $cat_id = $status->id;
         $status->save();
         /* Insert in Category Lang */
 
         if($status)
         {
+            // $cat_id=CategoryModel::first()->cat_id;
+             $public_id = (new GeneratorController)->alphaID($cat_id);
+             $arr_update_cat['public_id']=$public_id;
+             CategoryModel::where('cat_id',$cat_id)->update($arr_update_cat);
+
             Session::flash('success','Category Added Successfully');
         }
         else
@@ -214,7 +219,6 @@ class CategoryController extends Controller
             'is_active' => $is_active,
             'is_popular' => $is_popular,
         ];
-
         if($password!=FALSE)
         {
             $arr_data['password'] = $password;
@@ -390,6 +394,50 @@ class CategoryController extends Controller
     {
         if(!$id) return FALSE;
         return CategoryModel::where('cat_id',$id)->update(array('public_id'=>alpha_id($id)));
+    }
+
+    public function export_excel($format="csv")//export excel file
+    {
+        if($format=="csv")
+        {
+            $arr_category_list = array();
+            $obj_category_list = CategoryModel::where('parent','!=','0')->with(['parent_category'])->get();
+            //dd($obj_category_list);
+
+            if($obj_category_list)
+            {
+                $arr_category_list = $obj_category_list->toArray();
+
+                \Excel::create('BUSINESS_LIST-'.date('Ymd').uniqid(), function($excel) use($arr_category_list)
+                {
+                    $excel->sheet('Business_list', function($sheet) use($arr_category_list)
+                    {
+                        // $sheet->cell('A1', function($cell) {
+                        //     $cell->setValue('Generated on :'.date("d-m-Y H:i:s"));
+                        // });
+
+                        $sheet->row(3, array(
+                            'Sr.No.','Category Name','Sub-Category Name'
+                        ));
+
+                        if(sizeof($arr_category_list)>0)
+                        {
+                            $arr_tmp = array();
+                            foreach ($arr_category_list as $key => $category)
+                            {
+                                $arr_tmp[$key][] = $key+1;
+                                $arr_tmp[$key][] = $category['parent_category']['title'];
+                                $arr_tmp[$key][] = $category['title'];
+                            }
+
+                            $sheet->rows($arr_tmp);
+                        }
+
+                    });
+
+                })->export('csv');
+            }
+        }
     }
 
 }

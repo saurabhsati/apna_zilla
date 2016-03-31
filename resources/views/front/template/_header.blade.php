@@ -7,8 +7,12 @@
       <meta name="description" content="Right Next" />
       <meta name="keywords" content="Right Next" />
       <meta name="author" content="Right Next" />
+
       <!-- ======================================================================== -->
       <title> Right Next :: {{ isset($page_title)?$page_title:"" }}</title>
+
+       {!!Meta::generate() !!}
+
       <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
       <!-- Bootstrap Core CSS -->
       <link href="{{ url('/') }}/assets/front/css/bootstrap.css" rel="stylesheet" type="text/css" />
@@ -27,6 +31,11 @@
       <script src="{{ url('/') }}/assets/front/js/jquery-1.10.2.js" type='text/javascript'></script>
 
       <link rel="stylesheet" href="{{ url('/') }}/assets/front/css/style.css" type="text/css"/>
+
+      <script type="text/javascript" src="{{url('/')}}/js/front/jquery.rating.js"></script>
+      <link rel="stylesheet" href="{{ url('/') }}/css/front/jquery.rating.css" type="text/css"/>
+
+
       <script type="text/javascript">
          $(function() {
            var availableTags = [

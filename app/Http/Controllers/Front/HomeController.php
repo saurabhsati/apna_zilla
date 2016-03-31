@@ -267,11 +267,10 @@ class HomeController extends Controller
         {
             $search_term='';
             $search_term = $request->input('term');
-             $arr_obj_location = LocationModel::where(function ($query) use ($search_term) {
-                                             $query->where("place_name", 'like', "%".$search_term."%")
-                                             ->orwhere("admin_name1", 'like', "%".$search_term."%")
-                                             ->orwhere("admin_name2", 'like', "%".$search_term."%")
-                                             ->orwhere("admin_name3", 'like', "%".$search_term."%");
+             $arr_obj_location = PlaceModel::where(function ($query) use ($search_term) {
+                                             $query->where("place_name", 'like', "%".$search_term."%");
+                                            /* ->orwhere("admin_name1", 'like', "%".$search_term."%")
+                                             ->orwhere("admin_name2", 'like', "%".$search_term."%");*/
                                              })->get();
              $arr_list_location = array();
             if($arr_obj_location)

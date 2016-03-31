@@ -20,8 +20,7 @@ class CityController extends Controller
     //
     public function __construct()
     {
-    	$this->city_public_img_path = url('/')."/uploads/cities/";
-        $this->city_base_img_path = base_path()."/public/uploads/cities/";
+
     }
     public function index()
     {
@@ -34,8 +33,8 @@ class CityController extends Controller
         {
             $arr_cities = $obj_cities_res->toArray();
         }
-        $city_public_img_path = $this->city_public_img_path;
-    	return view('web_admin.cities.index',compact('page_title','arr_cities','city_public_img_path'));
+
+    	return view('web_admin.cities.index',compact('page_title','arr_cities'));
     }
     public function create()
     {
@@ -64,7 +63,8 @@ class CityController extends Controller
     	$arr_rules	=	array();
     	$arr_rules['country_name']='required';
     	$arr_rules['state']='required';
-    	$arr_rules['city_title']='required';
+        $arr_rules['city_title']='required';
+    	$arr_rules['is_popular']='required';
 
     	$validator = Validator::make($request->all(),$arr_rules);
 
@@ -74,42 +74,18 @@ class CityController extends Controller
         }
     	$form_data	=array();
     	$form_data	=$request->all();
-        $arr_data['countries_id'] = $form_data['country_name'];
+        $arr_data['country_id'] = $form_data['country_name'];
         $arr_data['city_title'] = $form_data['city_title'];
-        $arr_data['city_slug'] = str_slug($form_data['city_title'], "-");
+        $arr_data['is_popular'] = $form_data['is_popular'];
+
 
         if(isset($form_data['state']))
              $arr_data['state_id'] = $form_data['state'];
 
-        if($request->hasFile('image'))
-        {
-            $fileName       = $form_data['image'];
-            $fileExtension  = strtolower($request->file('image')->getClientOriginalExtension());
-            if(in_array($fileExtension,['png','jpg','jpeg']))
-            {
-                  $filename =sha1(uniqid().$fileName.uniqid()).'.'.$fileExtension;
-                  $request->file('image')->move($this->city_base_img_path,$filename);
-            }
-            else
-            {
-                 Session::flash('error','Invalid file extension');
-            }
 
-            $file_url = $fileName;
-        }
-
-        $arr_data['city_image'] = $filename;
 
         if(CityModel::create($arr_data))
         {
-
-            $last_inserted_id = DB::getPdo()->lastInsertId();
-
-            /* Update Countries public key */
-            $public_key = (new GeneratorController)->alphaID($last_inserted_id);
-
-            CityModel::where('id',$last_inserted_id)
-                                ->update(['public_key'=>$public_key]);
 
             Session::flash('success','City Inserted Successfully');
 
@@ -137,9 +113,7 @@ class CityController extends Controller
             $arr_cities = $obj_city_res->toArray();
         }
 
-
-        $city_public_img_path = $this->city_public_img_path;
-        return view('web_admin.cities.show',compact('page_title','arr_cities','city_public_img_path'));
+      return view('web_admin.cities.show',compact('page_title','arr_cities'));
     }
     public function edit($enc_id)
     {
@@ -155,16 +129,22 @@ class CityController extends Controller
             $arr_city = $obj_cities_res->toArray();
         }
 
-        $city_public_img_path = $this->city_public_img_path;
-
-        return view('web_admin.cities.edit',compact('page_title','arr_city','city_public_img_path'));
+        return view('web_admin.cities.edit',compact('page_title','arr_city'));
     }
     public function update($enc_id,Request $request)
     {
         $id = base64_decode($enc_id);
         $arr_rules = array();
         $arr_rules['city_title'] = "required";
+       // $arr_rules['is_popular'] = "required";
 
+         echo $check_popular = $request->input('is_popular');
+
+        if($check_popular=="on")
+        $is_popular = 1;
+
+        else
+        $is_popular = 0;
 
         $validator = Validator::make($request->all(),$arr_rules);
         if($validator->fails())
@@ -177,39 +157,9 @@ class CityController extends Controller
 
 
         $arr_data['city_title'] = $form_data['city_title'];
+        $arr_data['is_popular'] = $is_popular;
+        //dd($arr_data);
 
-
-       /*---------- File uploading code starts here ------------*/
-
-
-         $fileName = "";
-         $file_url = "";
-
-         if ($request->hasFile('image'))
-         {
-            $excel_file_name = $form_data['image'];
-            $fileExtension = strtolower($request->file('image')->getClientOriginalExtension());
-
-            if(in_array($fileExtension,['png','jpg','jpeg']))
-            {
-
-                $fileName = sha1(uniqid().$excel_file_name.uniqid()).'.'.$fileExtension;
-                $request->file('image')->move($this->city_base_img_path, $fileName);
-
-            }
-            else
-            {
-                 Session::flash('error','Invalid file extension');
-            }
-
-            $file_url = $fileName;
-
-            $arr_data['city_image'] = $fileName;
-        }
-
-
-
-        /*---------- File uploading code ends ------------*/
 
 
         if(CityModel::where('id',$id)->update($arr_data))
@@ -218,7 +168,7 @@ class CityController extends Controller
         }
         else
         {
-            Session::flash('error','Problem Occured, While Updating State');
+            Session::flash('error','Problem Occurred, While Updating State');
         }
 
         return redirect('/web_admin/cities/edit/'.$enc_id);
@@ -320,44 +270,42 @@ class CityController extends Controller
 
     public function export_excel($format="csv")//export excel file
     {
-
         if($format=="csv")
         {
             $arr_city = array();
             $obj_city = CityModel::with(['state_details','country_details'])->get();
-         
+
 
             if($obj_city)
             {
                 $arr_city = $obj_city->toArray();
 
-                \Excel::create('CITY-'.date('Ymd').uniqid(), function($excel) use($arr_city) 
+                \Excel::create('CITY-'.date('Ymd').uniqid(), function($excel) use($arr_city)
                 {
-                    $excel->sheet('City', function($sheet) use($arr_city) 
+                    $excel->sheet('City', function($sheet) use($arr_city)
                     {
-                        $sheet->cell('A1', function($cell) {
-                            $cell->setValue('Generated on :'.date("d-m-Y H:i:s"));
-                        });
+                        // $sheet->cell('A1', function($cell) {
+                        //     $cell->setValue('Generated on :'.date("d-m-Y H:i:s"));
+                        // });
 
-                        $sheet->row(2, array(
-                            'Sr. No.', 'City','State/Region :: Country'
+                        $sheet->row(3, array(
+                            'Sr.No.','City','State/Region :: Country'
                         ));
 
                         if(sizeof($arr_city)>0)
                         {
                             $arr_tmp = array();
-                            foreach ($arr_city as $key => $cites) 
+                            foreach ($arr_city as $key => $cites)
                             {
                                 $arr_tmp[$key][] = $key+1;
                                 $arr_tmp[$key][] = $cites['city_title'];
                                 $arr_tmp[$key][] = $cites['state_details']['state_title'].' :: '.$cites['country_details']['country_name'];
-                            }    
+                            }
 
                             $sheet->rows($arr_tmp);
                         }
 
                     });
-                    
 
                 })->export('csv');
             }

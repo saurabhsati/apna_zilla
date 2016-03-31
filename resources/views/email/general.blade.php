@@ -20,7 +20,7 @@
                      <td>
                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                            <tr>
-                              <td><a href="#"><img src="{{url('/')}}/images/front/logo.png"  alt="logo" width="50%" height="" /></a></td>
+                              <td><a href="#"><img src="{{url('/')}}/images/front/logo_header.png"  alt="logo" width="50%" height="" /></a></td>
                               <td align="right" style="font-size:13px; font-weight:bold;">{{ date('d-m-Y') }}</td>
                            </tr>
                         </table>

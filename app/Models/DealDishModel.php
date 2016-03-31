@@ -14,12 +14,13 @@ class DealDishModel extends Model
     protected $fillable = ['category_id',
     					   'deal_id',
     					   'dish_id',
-    					   'quantity'];
+    					   'quantity',
+                 parent_category_id];
 
 
     public function category()
     {
        return $this->belongsTo('App\Models\CategoryModel','category_id','id');
-    }           
-   	
+    }
+
 }

@@ -11,7 +11,7 @@
                <span>You are here :</span>
                <li><a href="{{url('/')}}">Home</a></li>
                <!-- <li><a href="{{url('/')}}/{{$city}}/all-options/ct-{{isset($arr_business_details['category_details']['category_id']) && $arr_business_details['category_details']['category_id']!=''?$arr_business_details['category_details']['category_id']:'NA'}}"><?php if(isset($parent_category[0]['title']) && $parent_category[0]['title']!=''){echo $parent_category[0]['title'];} ?></a></li>
-                  -->      
+                  -->
                <li class="active"> {{ isset($arr_business_details['business_name']) && sizeof($arr_business_details['business_name'])>0?$arr_business_details['business_name']:''}}</li>
             </ol>
          </div>
@@ -23,7 +23,7 @@
          @if(isset($arr_business_details) && sizeof($arr_business_details)>0)
          <div class="col-sm-12 col-md-9 col-lg-9">
             <div class="p_detail_view">
-               <!--  <div class="product_detail_banner" style="background: url('{{ url('/') }}/assets/front/images/banner_detail.jpg') repeat scroll 0px 0px;"> -->   
+               <!--  <div class="product_detail_banner" style="background: url('{{ url('/') }}/assets/front/images/banner_detail.jpg') repeat scroll 0px 0px;"> -->
                <div style="background: url('{{ url('/') }}/uploads/business/main_image/{{ $arr_business_details['main_image'] }}'); background-repeat: repeat;  background-size: 100% auto;">
                   <div class="product_detail_banner" style="background-color:rgba(0,0,0,0.7);">
                      <div class="product_title"><a href="#">{{$arr_business_details['business_name']}}</a></div>
@@ -58,10 +58,44 @@
                         <span>Business Time Not Available.</span>
                         @endif
                         <div class="add_det"><i class="fa fa-globe"></i><a href="{{$arr_business_details['website']}}"> {{$arr_business_details['website']}}</a></div>
-                        <div class="enquiry"><i class="fa fa-envelope"></i> Send Enquiry By Email</div>
+                         <div class="enquiry"><a data-toggle="modal" data-target="#enquiry"><i class="fa fa-envelope"></i> Send Enquiry By Email</a></div>
                      </div>
                   </div>
                </div>
+
+               <div class="modal fade" id="share" role="dialog">
+                <div class="modal-dialog">
+                 <!-- Modal content-->
+                  <div class="modal-content">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                   <div class="modal-body">
+                      <p>Share With Friends</p>
+                        <div class="soc-menu-top">
+                        <ul>
+                        <li>
+                       <!--  <a href="https://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.mynide.com%2Fdeals%2Fdetails%2FMQ%3D%3D&amp;t=1+Cocktail" target="_blank" style="cursor:pointer;">
+                        </a> -->
+                        <a href="https://www.facebook.com/sharer.php?<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;"><img src="{{ url('/') }}/assets/front/images/facebook-so.png" alt="facebook"/>
+                        <span class="socail_name">Facebook</span>
+                        </a>
+                        </li>
+                          <li><a href="http://twitter.com/share?url=<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;"><img src="{{ url('/') }}/assets/front/images/twitter-so.png" alt="twitter"/><span class="socail_name">Twitter</span></a></li>
+                          <li><a href="https://plus.google.com/share?url=<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;"><img src="{{ url('/') }}/assets/front/images/googlepls-soc.png" alt="googlepls"/><span class="socail_name">Google +</span></a></li>
+                          <li><a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;"><img src="{{ url('/') }}/assets/front/images/linkind-soc.png" alt="linkind"/><span class="socail_name">Linkedin</span></a></li>
+                          <!-- <li><a href="#"><img src="{{ url('/') }}/assets/front/images/pins-soc.png" alt="pins"/><span class="socail_name">Pinterest</span></a></li>
+                          <li><a href="#"><img src="{{ url('/') }}/assets/front/images/VKontakte-so.png" alt="VKontakte"/><span class="socail_name">VKontakte</span></a></li>
+                          <li><a href="#"><img src="{{ url('/') }}/assets/front/images/msg-so.png" alt="msg"/><span class="socail_name">SMS</span></a></li>
+                          <li><a href="#"><img src="{{ url('/') }}/assets/front/images/email-soc.png" alt="email"/><span class="socail_name">Email</span></a></li>
+                        --> </ul>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
                <!--   <div class="map" id="business_location_map" style="width: 100%; height: 250;">
                   </div> -->
                <?php
@@ -83,30 +117,30 @@
                     <a data-toggle="modal" data-target="#verifed"><img src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>verified</a>
                   </div>
                </div>
-                
-                
-                
-                
-                
-                
-                
-                
-                
+
+
+
+
+
+
+
+
+
                  <!--<div class="img_icons popup-v"><a data-toggle="modal" data-target="#share"><img src="images/shar.png" alt="share"/>Share</a></div>
                 <div class="img_icons"><img src="images/write_review.png" alt="write_review"/>write review</div>
                 <div class="img_icons"><img src="images/your-vote.png" alt="your-vote"/>Your Vote(0.5)</div>
                   <div class="img_icons"><img src="images/edit-this.png" alt="write_review"/>Edit this</div>
                 <div class="img_icons popup-v"><a data-toggle="modal" data-target="#sms"><img src="images/sms-emil.png" alt="write_review"/>Sms/Email</a></div>
                       <div class="img_icons popup-v"><a data-toggle="modal" data-target="#verifed"><img src="images/verified.png" alt="write_review"/>verified</a></div>-->
-                
-                
-                
-                
-                
-                
-                
-                
-                
+
+
+
+
+
+
+
+
+
             </div>
             <!-- <div class="map" id="business_location_map" style="width: 100%; height: 250;">
                </div> -->
@@ -142,48 +176,58 @@
                            <div class="write-review-head">
                               Write a Review
                            </div>
+                           
                            <form class="form-horizontal"
                               id="validation-form"
                               method="POST"
-                              action="{{ url('/listing/store_reviews/'.base64_encode($business_id)) }}"
+                              action="{{ url('/listing/store_reviews/') }}"
                               enctype="multipart/form-data"
                               >
                               {{ csrf_field() }}
                               <div class="review-title">
                                  <div class="your-rating"> Your rating </div>
-                                 <input type="hidden" value="" name="rating" id="rating">
-                                 <span class="wrtrvtxt hidden-xs" id="mratdet">( <span id="dprtng">-</span> )</span>
+                                 <input type="hidden" name="business_id" value="{{$business_id}}">
+                                <!--  <input type="hidden" value="" name="rating" id="rating"> -->
+                               <!--   <span class="wrtrvtxt hidden-xs" id="mratdet">( <span id="dprtng">-</span> )</span> -->
                                  <div class="yr_rating-over">
-                                    <ul>
-                                       <li><a class="ratingStar" href="javascript:void(0);" rel="0.5"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                       <li><a class="ratingStar" href="javascript:void(0);" rel="1.0"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                       <li><a class="ratingStar" href="javascript:void(0);" rel="1.5"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                       <li><a class="ratingStar" href="javascript:void(0);" rel="2.0"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                       <li><a class="ratingStar" href="javascript:void(0);" rel="2.5"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                       <li><a class="ratingStar" href="javascript:void(0);" rel="3.0"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                       <li><a class="ratingStar" href="javascript:void(0);" rel="3.5"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                       <li><a class="ratingStar" href="javascript:void(0);" rel="4.0"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                       <li><a class="ratingStar" href="javascript:void(0);" rel="4.5"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                       <li><a class="ratingStar" href="javascript:void(0);" rel="5.0"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                    </ul>
+                                    <!-- <ul>
+                                   
+                                       <li>
+                                          <a class="ratingStar{{$i}}" href="javascript:void(0);" rel="0.5">
+                                             <img src="{{ url('/') }}/assets/front/images/comman-over.png" id="common{{$i}}" alt="hover imag"/>
+                                             <img src="{{ url('/') }}/assets/front/images/over1.png" id="over{{$i}}" style="display: none;" alt="hover imag"/>
+                                          </a>
+                                       </li>
+                                      
+                                      
+                                    </ul> -->
+
+                                    <input class="star required" type="radio" name="rating" value="1" id="rating" title="1 Star" />
+                                    <input class="star" type="radio" name="rating" id="rating" value="2" title="2 Star"/>
+                                    <input class="star" type="radio" name="rating" id="rating" value="3" title="3 Star"/>
+                                    <input class="star" type="radio" name="rating" id="rating" value="4" title="4 Star"/>
+                                    <input class="star" type="radio" name="rating" id="rating" value="5" title="5 Star"/>
+
                                  </div>
                                  <div class="clearfix"></div>
                               </div>
-                              <div class="review-title">
+                           <!--    <div class="review-title">
                                  <div class="title-review">
                                     Title
                                  </div>
                                  <div class="title-rev-field">
-                                    <input type="text" name="title" placeholder="Title" />
+                                    <input type="text" name="title" id="title" data-rule-required="true" placeholder="Title" />
+                                    <div id="msgRating_title"></div>  
                                  </div>
                                  <div class="clearfix"></div>
-                              </div>
+                              </div> -->
                               <div class="review-title">
                                  <div class="title-review">
                                     Add review
                                  </div>
                                  <div class="title-rev-field">
-                                    <textarea class="message-review" placeholder="Add review" rows="" cols="" name="review"></textarea>
+                                    <textarea class="message-review" data-rule-required="true" placeholder="Add review" rows="" cols="" name="review" id="review"></textarea>
+                                    <div id="msgRating_message"></div> 
                                  </div>
                                  <div class="clearfix"></div>
                               </div>
@@ -192,7 +236,8 @@
                                     Name
                                  </div>
                                  <div class="title-rev-field">
-                                    <input type="text" name="name" placeholder="Name" />
+                                    <input type="text" name="name" id="name" data-rule-required="true" placeholder="Name" />
+                                    <div id="msgRating_name"></div>
                                  </div>
                                  <div class="clearfix"></div>
                               </div>
@@ -203,7 +248,8 @@
                                  <div class="title-rev-field">
                                     <div class="input-group">
                                        <div class="input-group-addon">+91</div>
-                                       <input type="text" name="mobile_no" class="form-control" id="exampleInputAmount" placeholder="Mobile Number">
+                                       <input type="text" name="mobile_no" id="mobile_no" data-rule-required="true" class="form-control" id="exampleInputAmount" placeholder="Mobile Number">
+                                       <div id="msgRating_mobile"></div> 
                                     </div>
                                  </div>
                                  <div class="clearfix"></div>
@@ -213,14 +259,17 @@
                                     Email Id
                                  </div>
                                  <div class="title-rev-field">
-                                    <input type="text" name="email" placeholder="Email Id" />
+                                    <input type="text" name="email" id="email" data-rule-required="true" placeholder="Email Id" />
+                                    <div id="msgRating_email"></div>
                                  </div>
                                  <div class="clearfix"></div>
                               </div>
                               <div class="submit-btn">
-                                 <button type="submit">SUBMIT REVIEW</button>
+                                
+                                 <button type="submit" name="submit_review" id="submit_review">SUBMIT REVIEW</button>
                               </div>
                            </form>
+                        
                         </div>
                      </div>
                      <div>
@@ -300,7 +349,7 @@
                               </div>
                            </div>
                            <div class="clearfix"></div>
-                           
+
                            <div class="testimo-one replay">
                            <div class="img-div-testi">
                               <img src="images/testi-user.png" alt="" />
@@ -386,7 +435,22 @@
                   <li class="brdr">{{ $services['name'] }}</li>
                   @endforeach
                   @else
-                  <span>No Service Available.</span>
+                  <span class="col-sm-3 col-md-3 col-lg-12">No Service Available.</span>
+                  @endif
+               </ul>
+               <!-- /#Categoriesr End-->
+               <div class="clearfix"></div>
+            </div>
+             <div class="categories_sect sidebar-nav">
+               <div class="sidebar-brand"><img src="{{ url('/') }}/assets/front/images/money.png" alt="services"/>Modes Of Payment<span class="spe_mobile3"><a href="#"></a></span></div>
+               <div class="bor_head">&nbsp;</div>
+               <ul class="spe_submobile3">
+                  @if(isset($arr_business_details['payment_mode']) && sizeof($arr_business_details['payment_mode'])>0)
+                  @foreach($arr_business_details['payment_mode'] as $payment_mode)
+                  <li class="brdr">{{ $payment_mode['title'] }}</li>
+                  @endforeach
+                  @else
+                  <span class="col-sm-3 col-md-3 col-lg-12">No Payment Mode Available.</span>
                   @endif
                </ul>
                <!-- /#Categoriesr End-->
@@ -430,55 +494,118 @@
    </div>
 </div>
 <script type="text/javascript">
+
+    $('#submit_review').click(function(){
+        var title   = $('#title').val();
+        var review  = $('#review').val();
+        var name    = $('#name').val();
+        var mobile  = $('#mobile_no').val();
+        var email   = $('#email').val();
+        var filter = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
+        var mobile_fliter = [0-9];
+        if(title=="")
+        {
+           jQuery("#msgRating_title").empty();
+           jQuery("#msgRating_title").fadeIn();
+           jQuery("#msgRating_title").html("<div style='color:red;'>Please Enter Title.</div>");
+           return false;
+        }
+        else if($review=="")
+        {
+           jQuery("#msgRating_message").empty();
+           jQuery("#msgRating_message").fadeIn();
+           jQuery("#msgRating_message").html("<div style='color:red;'>Please Enter Review Message.</div>");
+           return false;
+        }
+        if($name=="")
+        {
+           jQuery("#msgRating_name").empty();
+           jQuery("#msgRating_name").fadeIn();
+           jQuery("#msgRating_name").html("<div style='color:red;'>Please Enter Full Name.</div>");
+           return false;
+        }
+        if($mobile=="")
+        {
+           jQuery("#msgRating_mobile").empty();
+           jQuery("#msgRating_mobile").fadeIn();
+           jQuery("#msgRating_mobile").html("<div style='color:red;'>Please Enter Mobile No.</div>");
+           return false;
+        }
+        if(!mobile_fliter($mobile))
+        {
+           jQuery("#msgRating_title").empty();
+           jQuery("#msgRating_title").fadeIn();
+           jQuery("#msgRating_title").html("<div style='color:red;'>Please Enter Correct Mobile.</div>");
+           return false;
+        }
+        if($email=="")
+        {
+           jQuery("#msgRating_email").empty();
+           jQuery("#msgRating_email").fadeIn();
+           jQuery("#msgRating_email").html("<div style='color:red;'>Please Enter Email.</div>");
+           return false;
+        }
+        if(!filter.test(email))
+        {
+           jQuery("#msgRating_email").empty();
+           jQuery("#msgRating_email").fadeIn();
+           jQuery("#msgRating_email").html("<div style='color:red;'>Please Enter Correct Email.</div>");
+           return false;
+        }
+       
+    });
+
+
+
    function show_opening_times()
    {
      $('#business_times_div').show();
    }
-   
-   
+
+
    /*function show_map()
    {
      $('#map_show').show();
    }*/
-   
+
 </script>
 <script type="text/javascript">
    var  map;
    var ref_input_lat = $('#lat');
    var ref_input_lng = $('#lng');
-   
-   
+
+
    function setMapLocation(address)
    {
      console.log(address);
        geocoder.geocode({'address': address}, function(results, status) {
            if (status == google.maps.GeocoderStatus.OK)
            {
-   
+
                map.setCenter(results[0].geometry.location);
-   
+
                $(ref_input_lat).val(results[0].geometry.location.lat().toFixed(6));
                $(ref_input_lng).val(results[0].geometry.location.lng().toFixed(6));
-   
+
                var latlong = "(" + results[0].geometry.location.lat().toFixed(6) + ", " +
                        +results[0].geometry.location.lng().toFixed(6)+ ")";
-   
-   
-   
+
+
+
                marker.setPosition(results[0].geometry.location);
                map.setZoom(16);
                infowindow.setContent(results[0].formatted_address);
-   
+
                if (infowindow) {
                    infowindow.close();
                }
-   
+
                google.maps.event.addListener(marker, 'click', function() {
                    infowindow.open(map, marker);
                });
-   
+
                infowindow.open(map, marker);
-   
+
            } else {
                alert("Lat and long cannot be found.");
            }
@@ -507,38 +634,38 @@
             position: latlng,
             map: map
         });
-   
+
         map.streetViewControl = false;
         infowindow = new google.maps.InfoWindow({
             content: "("+$(ref_input_lat).val()+", "+$(ref_input_lng).val()+")"
         });
-   
+
         google.maps.event.addListener(map, 'click', function(event) {
             marker.setPosition(event.latLng);
-   
+
             var yeri = event.latLng;
-   
+
             var latlongi = "(" + yeri.lat().toFixed(6) + ", " + yeri.lng().toFixed(6) + ")";
-   
+
             infowindow.setContent(latlongi);
-   
+
             $(ref_input_lat).val(yeri.lat().toFixed(6));
             $(ref_input_lng).val(yeri.lng().toFixed(6));
-   
+
         });
-   
+
         google.maps.event.addListener(map, 'mousewheel', function(event, delta) {
-   
+
             console.log(delta);
         });
-   
+
          //var addr = "<?php echo $arr_business_details['street'];?>,"+"<?php echo $arr_business_details['area'];?>,"+"<?php echo $arr_business_details['state_details']['state_title'];?>,"+"<?php echo $arr_business_details['country_details']['country_name'];?>";
-   
+
         // setMapLocation(addr);
         //onload_address_map();//call function onload
-   
+
     }
-   
+
    function loadScript()
    {
            var script = document.createElement('script');
@@ -546,19 +673,19 @@
            script.src = 'https://maps.googleapis.com/maps/api/js?sensor=false&' +
                    'callback=initializeMap';
            document.body.appendChild(script);
-   
-   
+
+
    }
-   
+
    function show_map()
    {
      $('#map_show').show();
      loadScript();
      //window.onload = loadScript();
    }
-   
+
    /* Autcomplete Code */
-   
+
    function setMarkerTo(lat,lon,place)
    {
        var location = new google.maps.LatLng(lat,lng)
@@ -568,17 +695,17 @@
        marker.setPosition(location);
        map.setZoom(16);
    }
-   $(".ratingStar").hover(function(){
-   var rate=$(this).attr('rel');
-   $("#dprtng").html(rate);
-   $("input[name='rating']").val(rate);
    
-   
-   
-   
-   });
-   
-   
+   // $(".ratingStar").hover(function(){
+   //    var rate=$(this).attr('rel');
+   //    $("#dprtng").html(rate);
+   //    $("input[name='rating']").val(rate);
+   // });
+
+     
+
+
+
 </script>
 @endsection
 

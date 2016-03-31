@@ -1,10 +1,10 @@
  <!--login popup start here-->
       <div id="login_poup" class="modal fade" role="dialog">
 
-      <form class="form-horizontal" 
-                           id="validation-form" 
+      <form class="form-horizontal"
+                           id="validation-form"
                            method="POST"
-                           action="{{-- url('/front_users/process_login') --}}" 
+                           action="{{ url('/front_users/process_login') }}"
                            enctype="multipart/form-data"
                            >
 
@@ -18,14 +18,21 @@
                   <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_poup.png" alt="login logo"/></h4>
                </div>
                <div class="modal-body">
-                  
-                  <div class="alert alert-danger alert-dismissible" id="login_error" style="display: none;">
-                      <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">  
+
+                  @if(Session::has('success'))
+                  <div class="alert alert-success alert-dismissible">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
-                      </button> -->
+                      </button>
+                      {{ Session::get('success') }}
+                  </div>
+                @endif
+
+                @if(Session::has('error'))
+                  <div class="alert alert-danger alert-dismissible">
                       <span id="display_msg"> </span>
                   </div>
-                
+                @endif
                   <div class="login_box">
                      <div class="title_login">Login with your email and password</div>
                      <div class="user_box">
@@ -68,10 +75,10 @@
 
         <div id="forget_pwd" class="modal fade" role="dialog" style="overflow:auto;">
 
-        <form class="form-horizontal" 
-                           id="validation-form" 
+        <form class="form-horizontal"
+                           id="validation-form"
                            method="POST"
-                           action="{{ url('/forgot_password') }}" 
+                           action="{{ url('/forgot_password') }}"
                            enctype="multipart/form-data"
                            >
 
@@ -115,10 +122,10 @@
       <div id="reg_poup" class="modal fade" role="dialog" style="overflow:auto;">
 
 
-                     <form class="form-horizontal" 
-                           id="validation-form" 
+                     <form class="form-horizontal"
+                           id="validation-form"
                            method="POST"
-                           action="{{ url('/front_users/store') }}" 
+                           action="{{ url('/front_users/store') }}"
                            enctype="multipart/form-data"
                            >
 
@@ -135,7 +142,7 @@
                </div>
                <div class="modal-body">
                   <div class="login_box">
-                  
+
                      <div class="title_login">New account sign up</div>
 
                      <div class="user_box">
@@ -179,29 +186,7 @@
 
 <!--popup in detail page start here-->
 <!-- Modal -->
-<div class="modal fade" id="share" role="dialog">
-    <div class="modal-dialog">
-     <!-- Modal content-->
-      <div class="modal-content">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-       <div class="modal-body">
-          <p>Share With Friends</p>
-            <div class="soc-menu-top">
-            <ul>
-            <li><a href="#"><img src="images/facebook-so.png" alt="facebook"/><span class="socail_name">Facebook</span></a></li>
-              <li><a href="#"><img src="images/twitter-so.png" alt="twitter"/><span class="socail_name">Twitter</span></a></li>
-              <li><a href="#"><img src="images/googlepls-soc.png" alt="googlepls"/><span class="socail_name">Google +</span></a></li>
-              <li><a href="#"><img src="images/linkind-soc.png" alt="linkind"/><span class="socail_name">Linkedin</span></a></li>
-              <li><a href="#"><img src="images/pins-soc.png" alt="pins"/><span class="socail_name">Pinterest</span></a></li>
-              <li><a href="#"><img src="images/VKontakte-so.png" alt="VKontakte"/><span class="socail_name">VKontakte</span></a></li>    
-              <li><a href="#"><img src="images/msg-so.png" alt="msg"/><span class="socail_name">SMS</span></a></li>
-              <li><a href="#"><img src="images/email-soc.png" alt="email"/><span class="socail_name">Email</span></a></li>      
-            </ul>
-            </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
 <div class="modal fade" id="sms" role="dialog">
     <div class="modal-dialog">
      <!-- Modal content-->
@@ -221,9 +206,9 @@
                         </div>
                          </div>
                     </div>
-                
-                
-                
+
+
+
             <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">Mobile</div>
@@ -231,14 +216,14 @@
                         <div class="input-group">
                         <span id="basic-addon1" class="input-group-addon">+91</span>
                         <input type="text" required="" aria-describedby="basic-addon1" placeholder="Mobile" class="form-control">
-                            
-                        </div>  
+
+                        </div>
                           <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
                     </div>
-               
-                
+
+
                 <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">Email</div>
@@ -265,7 +250,7 @@
         </div>
       </div>
     </div>
-  </div>  
+  </div>
 <div class="modal fade" id="enquiry" role="dialog">
     <div class="modal-dialog modal-sm">
      <!-- Modal content-->
@@ -273,14 +258,14 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
        <div class="modal-body">
           <b class="head-t">Send Enquiry By Email</b>
-           
+
             <div class="soc-menu-top" style="margin-top:20px;">
                 <div class="col-lg-11">
                      <div class="user_box1">
                            <div class="row">
                     <div class="col-lg-3  label-text1">To</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                       
+
                           <div class="label-text1">Classic Fine Dine</div>
                         </div>
                          </div>
@@ -294,9 +279,9 @@
                         </div>
                          </div>
                     </div>
-                
-                
-                
+
+
+
             <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">Mobile</div>
@@ -304,14 +289,14 @@
                         <div class="input-group">
                         <span id="basic-addon1" class="input-group-addon">+91</span>
                         <input type="text" required="" aria-describedby="basic-addon1" placeholder="Mobile" class="form-control">
-                            
-                        </div>  
+
+                        </div>
                           <div class="error_msg">please enter correct</div>
                         </div>
                          </div>
                     </div>
-               
-                
+
+
                 <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">Email<span style="color:red">*</span></div>
@@ -330,7 +315,7 @@
                         </div>
                          </div>
                     </div>
-                    
+
                      <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">Body<span style="color:red">*</span></div>
@@ -346,31 +331,31 @@
                     <div class="col-lg-3  label-text">&nbsp;</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                     <div class="submit-btn"><button>Ok</button></div>
-                      
+
                     </div>
                            </div>
                     </div>
-                    
-                     <span class="mandt"><span style="color:red">*</span>Denotes mandatory fields. </span> 
+
+                     <span class="mandt"><span style="color:red">*</span>Denotes mandatory fields. </span>
                 </div>
             </div>
            <div class="clr"></div>
         </div>
       </div>
     </div>
-  </div>      
+  </div>
 <div class="modal fade" id="verifed" role="dialog">
     <div class="modal-dialog">
      <!-- Modal content-->
       <div class="modal-content">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
        <div class="modal-body">
-          <div class="img-verify"><img src="images/process_done.png" alt=""/></div>
+          <div class="img-verify"><img src="{{ url('/') }}/assets/front/images/process_done.png" alt=""/></div>
           <div class="center-section">
            <b class="head-t-center">What is Just Dial Verified?</b>
            <p class="just-v">Just Dial Verified(JD Verified) is an added service offering.</p>
           </div>
-           
+
            <p class="sub-c"> Justdial verified means that the information of business establishments, professionals or service providers has been verified as existing and correct at the time of the advertiser's application to register with Justdial.  				</p>
             <div class="soc-menu-top" style="margin-top:20px; text-align:center;">
               <b class="head-t-center">What is Just Dial Verified?</b>
@@ -384,8 +369,8 @@ If you need any more details on Justdial Verified, please refer to
         </div>
       </div>
     </div>
-  </div>      
-<!--popup in detail page end here--> 
+  </div>
+<!--popup in detail page end here-->
 
 
 
@@ -397,13 +382,17 @@ If you need any more details on Justdial Verified, please refer to
                <div class="row">
                   <div class="col-sm-12 col-md-12 col-lg-12">
                      <div class="row">
+                     @if(sizeof($about_us)>0)
                         <div class="col-sm-3 col-md-3 col-lg-3">
-                           <div class="footer_heading">About US</div>
+                         <div class="footer_heading">{{$about_us['page_title']}}</div>
                            <div class="heading_bor"></div>
                            <div class="menu_name">
-                              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of
+                            <?php echo substr($about_us['page_desc'],0,250).'..';?>
+                            <a href="{{ url('/') }}/page/aboutus" class="{{ Request::segment(2)=='aboutus'? 'act':'' }}">View More</a>
                            </div>
                         </div>
+
+                       @endif
                         <div class="col-sm-3 col-md-3 col-lg-3">
                            <div class="footer_heading">Quick link</div>
                            <div class="heading_bor"></div>
@@ -422,10 +411,14 @@ If you need any more details on Justdial Verified, please refer to
                            <div class="heading_bor"></div>
                            <div class="menu_name">
                               <ul>
-                                 <li><a href="#"><i class="fa fa-square"></i>Mumbai</a></li>
-                                 <li><a href="#"><i class="fa fa-square"></i>Delhi</a></li>
-                                 <li><a href="#"><i class="fa fa-square"></i>kolkata</a></li>
-                                 <li><a href="#"><i class="fa fa-square"></i>Bangalore</a></li>
+                               @if(sizeof($popular_cities)>0)
+                                @foreach($popular_cities as $city)
+                                 <li><a href="{{ url('/') }}/{{$city['city_title']}}/popular-city"><i class="fa fa-square"></i>{{$city['city_title']}}</a></li>
+                                 @endforeach
+                                 @endif
+                                <!--  <li><a href="{{ url('/') }}/Delhi/popular-city"><i class="fa fa-square"></i>Delhi</a></li>
+                                 <li><a href="{{ url('/') }}/kolkata/popular-city"><i class="fa fa-square"></i>kolkata</a></li>
+                                 <li><a href="{{ url('/') }}/Bangalore/popular-city"><i class="fa fa-square"></i>Bangalore</a></li> -->
                               </ul>
                            </div>
                         </div>
@@ -433,12 +426,10 @@ If you need any more details on Justdial Verified, please refer to
                            <div class="footer_heading">Contact Info</div>
                            <div class="heading_bor"></div>
                            <div class="menu_name contect-i">
-                              <ul>
-                                 <li><a href="#"><i class="fa fa-envelope"></i>Email : info@rightnext.com</a></li>
-                                 <li><a href="#"><i class="fa fa-phone phone-i"></i>Phone : +01-234-5789 </a></li>
-                                 <li><a href="#"><i class="fa fa-map-marker phone-i"></i>Address : Rightnext Mall 39,
-                                    M.G. Road Boulevard Ground Floor
-                                    London</a>
+                            <ul>
+                                 <li><a href="#"><i class="fa fa-envelope"></i>Email :  @if(isset($site_settings['site_email_address'])){{$site_settings['site_email_address']}}@endif</a></li>
+                                 <li><a href="#"><i class="fa fa-phone phone-i"></i>Phone :  @if(isset($site_settings['phone_number'])){{$site_settings['phone_number']}}@endif </a></li>
+                                 <li><a href="#"><i class="fa fa-map-marker phone-i"></i>Address :  @if(isset($site_settings['site_address'])){{$site_settings['site_address']}}@endif</a>
                                  </li>
                               </ul>
                            </div>
@@ -546,7 +537,7 @@ If you need any more details on Justdial Verified, please refer to
       </script>
 
       <script type="text/javascript">
-         
+
          var url = "{{ url('/') }}";
 
       (function() {
@@ -561,7 +552,7 @@ If you need any more details on Justdial Verified, please refer to
           gapi.client.load('plus', 'v1',function(){});//Load Google + API
       }
 
-      function login() 
+      function login()
       {
         var myParams = {
           'clientid' : '279126872962-83k1t2br3lseplje5lipejn1qp1n4khs.apps.googleusercontent.com', // You need to set client id
@@ -580,10 +571,10 @@ If you need any more details on Justdial Verified, please refer to
       }*/
 
       function logout()
-      { 
+      {
         document.location.href = "https://accounts.google.com/Logout";
 
-        
+
 
          window.location.reload();
       }
@@ -591,7 +582,7 @@ If you need any more details on Justdial Verified, please refer to
       function loginCallback(result)
       {
           if(result['status']['signed_in'])
-          { 
+          {
               var request = gapi.client.plus.people.get(
               {
                   'userId': 'me'
@@ -616,13 +607,13 @@ If you need any more details on Justdial Verified, please refer to
 
               var name = resp['displayName'];
               var image = resp['image']['url'];
-           
+
               jQuery.ajax({
                       url:url+'/google_plus/register',
                       type:'POST',
                       data:'email='+email+'&name='+name+'&image='+image+'&_token='+token,
                       dataType:'json',
-                    
+
                       success:function(response)
                       {
                           console.log(response);
@@ -633,14 +624,14 @@ If you need any more details on Justdial Verified, please refer to
                           }
                           else
                           {
-                            alert("Error While Creating Account");   
+                            alert("Error While Creating Account");
                           }
-                        
+
                       },
                 });
             });
-          }   
-       
+          }
+
       }
 
       </script>
@@ -652,13 +643,13 @@ If you need any more details on Justdial Verified, please refer to
 <!-- BY nayan For login -->
 <script type="text/javascript">
   jQuery(document).ready(function () {
-  
+
   var site_url = "{{ url('/') }}";
    jQuery( "#login_submit").bind( "click", function() {
 
     var token     = jQuery("input[name=_token]").val();
     var email     = jQuery("#email_login").val();
-    var password  = jQuery("#password_login").val(); 
+    var password  = jQuery("#password_login").val();
 
       jQuery.ajax({
          url      : site_url+"/front_users/process_login_ajax?_token="+token,
@@ -674,18 +665,104 @@ If you need any more details on Justdial Verified, please refer to
                 $("#login_error").css("display", "block");
                 $('#display_msg').html(response);
             }
-         }  
+         }
       });
-  
+
     });
-      
+
   });
 </script>
+<<<<<<< HEAD
+        <!-- jquery validation -->
+        <script type="text/javascript" src="{{url('/')}}/assets/jquery-validation/dist/jquery.validate.min.js"></script>  
+=======
+ <script type="text/javascript">
+var supports = (function () {
+    var a = document.documentElement,
+        b = "ontouchstart" in window || navigator.msMaxTouchPoints;
+    if (b) {
+        a.className += " touch";
+        return {
+            touch: true
+        }
+    } else {
+        a.className += " no-touch";
+        return {
+            touch: false
+        }
+    }
+})();
 
+
+if ($("html").hasClass("no-touch")) {
+
+
+  $('.dropdown > a').removeAttr("data-toggle");
+
+
+    (function (e, t, n) {
+        if ("ontouchstart" in document) return;
+        var r = e();
+        e.fn.dropdownHover = function (n) {
+            r = r.add(this.parent());
+            return this.each(function () {
+                var i = e(this),
+                    s = i.parent(),
+                    o = {
+                        delay: 0,
+                        instantlyCloseOthers: !0
+                    }, u = {
+                        delay: e(this).data("delay"),
+                        instantlyCloseOthers: e(this).data("close-others")
+                    }, a = e.extend(!0, {}, o, n, u),
+                    f;
+                s.hover(function (n) {
+                    if (!s.hasClass("open") && !i.is(n.target)) return !0;
+                    a.instantlyCloseOthers === !0 && r.removeClass("open");
+                    t.clearTimeout(f);
+                    s.addClass("open");
+                    s.trigger(e.Event("show.bs.dropdown"))
+                }, function () {
+                    f = t.setTimeout(function () {
+                        s.removeClass("open");
+                        s.trigger("hide.bs.dropdown")
+                    }, 1)
+                });
+                i.hover(function () {
+                    a.instantlyCloseOthers === !0 && r.removeClass("open");
+                    t.clearTimeout(f);
+                    s.addClass("open");
+                    s.trigger(e.Event("show.bs.dropdown"))
+                });
+                s.find(".dropdown-submenu").each(function () {
+                    var n = e(this),
+                        r;
+                    n.hover(function () {
+                        t.clearTimeout(r);
+                        n.children(".dropdown-menu").show();
+                        n.siblings().children(".dropdown-menu").hide()
+                    }, function () {
+                        var e = n.children(".dropdown-menu");
+                        r = t.setTimeout(function () {
+                            e.hide()
+                        }, a.delay)
+                    })
+                })
+            })
+        };
+        e(document).ready(function () {
+
+            e('[data-hover="dropdown"]').dropdownHover()
+        })
+    })(jQuery, this);
+
+ } //END IF no-touch for hover script & removeAttr for the links to work
+</script>
+>>>>>>> 4a347079d46f02ec58fa07a221f87fb8e5d23bce
 
         <!-- Listing details Tabbing End -->
-         <script src="{{ url('/') }}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>
-            <link href="{{ url('/') }}/assets/front/css/easy-responsive-tabs.css" rel="stylesheet" type="text/css" />
-             <script src="{{ url('/') }}/assets/front/js/jquery-ui.js" type='text/javascript'></script>
+        <script src="{{ url('/') }}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>
+        <link href="{{ url('/') }}/assets/front/css/easy-responsive-tabs.css" rel="stylesheet" type="text/css" />
+        <script src="{{ url('/') }}/assets/front/js/jquery-ui.js" type='text/javascript'></script>
    </body>
 </html>

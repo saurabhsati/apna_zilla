@@ -85,6 +85,7 @@
                     </select>
 
                     <input type="hidden" name="business_hide_id" id="business_hide_id" value="{{ $arr_business['id'] }}" />
+                     <input type="hidden" name="parent_category_id" id="parent_category_id" value="{{ $parent_category_id }}" />
                      @endif
                     <span class='help-block'>{{ $errors->first('restaurant_id') }}</span>
                 </div>
@@ -126,7 +127,7 @@
                   <div class="col-sm-6 col-lg-5 controls">
                      <div class="fileupload fileupload-new" data-provides="fileupload">
                         <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
-                           <img src="{{ url('/') }}/images/front/no_image.png" alt=""  height="150px" width="180px" />
+                           <img src="{{ url('/') }}/images/front/default_category.png" alt=""  height="150px" width="180px" />
                         </div>
                         <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                         <div>

@@ -71,10 +71,10 @@
 
 
 
-          <form class="form-horizontal" 
+          <form class="form-horizontal"
                 id="validation-form"
-                method="POST" 
-                action="{{ url('/sales_user/deals/store') }}" 
+                method="POST"
+                action="{{ url('/sales_user/deals/store') }}"
                 enctype="multipart/form-data"
                 >
 
@@ -90,6 +90,7 @@
                     </select>
 
                     <input type="hidden" name="business_hide_id" id="business_hide_id" value="{{ $arr_business['id'] }}" />
+                      <input type="hidden" name="parent_category_id" id="parent_category_id" value="{{ $parent_category_id }}" />
                      @endif
                     <span class='help-block'>{{ $errors->first('restaurant_id') }}</span>
                 </div>
@@ -111,7 +112,7 @@
                 </div>
             </div>
              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="discount_price">Discounted Price<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="discount_price">Discount<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" name="discount_price" id="discount_price" data-rule-required="true" data-rule-price="true"/>
                     <span class='help-block'>{{ $errors->first('discount_price') }}</span>
@@ -131,7 +132,7 @@
                   <div class="col-sm-6 col-lg-5 controls">
                      <div class="fileupload fileupload-new" data-provides="fileupload">
                         <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
-                           <img src="{{ url('/') }}/images/front/no_image.png" alt=""  height="150px" width="180px" />
+                           <img src="{{ url('/') }}/images/front/default_category.png" alt=""  height="150px" width="180px" />
                         </div>
                         <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                         <div>

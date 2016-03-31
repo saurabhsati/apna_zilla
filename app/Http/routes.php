@@ -95,7 +95,26 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::get('delete/{enc_id}',					['as' => 'admin_cities_delete' 		  ,'uses' => 'Admin\CityController@delete']);
 			Route::get('export/{format}',					['as' => 'admin_cities_excel' 		  ,'uses' => 'Admin\CityController@export_excel']);
 		});
+		/*------------------------- web_admin Places Related ------------------------------*/
 
+		Route::group(array('prefix' => '/places'), function()
+		{
+
+			Route::get('/',['as' => 'admin_places_manage' ,'uses' => 'Admin\PlaceController@index']);
+			Route::get('show/{enc_id}',['as' => 'admin_places_show' ,'uses' => 'Admin\PlaceController@show']);
+			Route::get('edit/{enc_id}',['as' => 'admin_places_edit' ,'uses' => 'Admin\PlaceController@edit']);
+			Route::post('update/{enc_id}',['as' => 'admin_places_update' ,'uses' => 'Admin\PlaceController@update']);
+			Route::get('create',['as' => 'admin_places_create' ,'uses' => 'Admin\PlaceController@create']);
+			Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_places_toggle_status' ,'uses' => 'Admin\PlaceController@toggle_status']);
+			Route::post('multi_action',['as' => 'admin_places_multiaction' ,'uses' => 'Admin\PlaceController@multi_action']);
+			Route::any('store',['as' => 'admin_places_store' ,'uses' => 'Admin\PlaceController@store']);
+			//Route::any('nearby_destinations/{enc_id}',['as' => 'admin_nearby_destinations' ,'uses' => 'Admin\PlaceController@nearby_destinations']);
+			//Route::any('add_destinations',['as' => 'admin_add_destinations' ,'uses' => 'Admin\PlaceController@add_destinations']);
+			Route::get('delete/{enc_id}',['as' => 'admin_places_delete' ,'uses' => 'Admin\PlaceController@delete']);
+
+		});
+
+		/*-----------------------------------------------------------------------------------*/
 		Route::group(array('prefix' => '/zipcode'), function()
 		{
 
@@ -194,7 +213,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::post('delete_service',				 ['as' => 'admin_business_listing_service_delete' 	  ,'uses' 	=>'Admin\BusinessListingController@delete_service']);
 			Route::post('delete_payment_mode',		     ['as' => 'admin_business_listing_payment_mode_delete' 	  ,'uses' 	=>'Admin\BusinessListingController@delete_payment_mode']);
 
-
+			Route::get('export/{format}',					['as' => 'admin_cities_excel' 		  ,'uses' => 'Admin\BusinessListingController@export_excel']);
 
 		});
 
@@ -265,6 +284,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::post('sub_categories/update',						['as' => 'admin_sub_categories_update' 			,'uses' => 'Admin\CategoryController@update']);
 			Route::get('sub_categories/toggle_status/{enc_id}/{action}',['as' => 'admin_sub_categories_toggle_status' 	,'uses' => 'Admin\CategoryController@toggle_status']);
 			Route::post('sub_categories/multi_action',					['as' => 'admin_sub_categories_block' 			,'uses' => 'Admin\CategoryController@multi_action']);
+			Route::get('export/{format}',					['as' => 'admin_sub_categories_block' 			,'uses' => 'Admin\CategoryController@export_excel']);
 
 		});
 
@@ -407,7 +427,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	{
 		Route::get('/',							 	 	 ['as' => 'listing' 	        	,'uses' => 'Front\ListingController@index']);
 		Route::get('details/{enc_id}',					 ['as' => 'list_details' 	        ,'uses' => 'Front\ListingController@list_details']);
-		Route::post('store_reviews/{enc_id}',			 ['as' => 'front_store_reviews'     ,'uses' => 'Front\ListingController@store_reviews']);
+		Route::post('store_reviews',			 ['as' => 'front_store_reviews'     ,'uses' => 'Front\ListingController@store_reviews']);
   	    Route::get('share_business/{enc_id}',			 ['as' => 'business_share' 	        ,'uses' => 'Front\ListingController@share_business']);
   	    Route::get('sms_email/{enc_id}',			     ['as' => 'business_sms_email' 	    ,'uses' => 'Front\ListingController@sms_email']);
 
@@ -494,12 +514,13 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	Route::group(array('prefix' => '/deals'), function()
 	{
 		Route::get('/',									['as' =>'deals_page'								,'uses' =>'Front\DealController@index']);
+		Route::get('details/{enc_id}',					['as' =>'deals_detail'								,'uses' =>'Front\DealController@details']);
 	});
 
 	Route::post('/newsletter','Front\NewsLetterController@index');
-
 	Route::group(array('prefix' => '/{city}'), function ()
 	{
+		Route::get('popular-city','Front\AllCategoryController@popular_city');
 		Route::get('all-categories','Front\AllCategoryController@index');
 		Route::get('category-{cat_slug}/{cat_id}','Front\CategorySearchController@index');
 		Route::get('all-options/ct-{cat_id}','Front\CategorySearchController@get_business');

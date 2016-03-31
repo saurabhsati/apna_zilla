@@ -4,67 +4,14 @@
 
 <!--search area end here-->
  <div class="gry_container" style="padding: 7px 0 16px;">
-      <div class="black-strip">
-     <div class="container">
-          <div class="row">
-         <div class="col-lg-12">
-              <div class="categ">
-             <ul class="hidden-sm hidden-xs">
-                  <li><a href="#">All Deals</a></li>
-                  <li><a href="#">Services</a></li>
-                  <li><a href="#">Restaurant</a></li>
-                  <li><a href="#">Beauty</a></li>
-                 <li><a href="#">Tickets</a></li>
-                 <li><a href="#">Beauty</a></li>
-                <li class="dropdown w3_megamenu-fw"><a href="#" class="dropdown-toggle ser" data-hover="dropdown">More <b style="margin-left:5px;vertical-align:super;" class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                          <li class="w3_megamenu-content withdesc">
-                             <ul>
-                                 <li><a href="#"> Eyelash Extensions</a></li>
-                                  <li><a href="#"> Facial</a></li>
-                                  <li><a href="#"> Makeup Application</a></li>
-                                  <li><a href="#"> Tinting</a></li>
-                                </ul>
-                          </li>
-                        </ul>
-                        </li>
-                  </ul>
-
-                <ul class="hidden-md hidden-lg">
-
-                <li class="dropdown w3_megamenu-fw"><a href="#" class="dropdown-toggle ser" data-hover="dropdown">All Deals <b style="margin-left:5px;vertical-align:super;" class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                          <li class="w3_megamenu-content withdesc">
-                             <ul>
-                                  <li><a href="#">All Deals</a></li>
-                  <li><a href="#">Services</a></li>
-                  <li><a href="#">Restaurant</a></li>
-                  <li><a href="#">Beauty</a></li>
-                 <li><a href="#">Tickets</a></li>
-                 <li><a href="#">Beauty</a></li>
-                                 <li><a href="#"> Eyelash Extensions</a></li>
-                                  <li><a href="#"> Facial</a></li>
-                                  <li><a href="#"> Makeup Application</a></li>
-                                  <li><a href="#"> Tinting</a></li>
-                                </ul>
-                          </li>
-                        </ul>
-                        </li>
-                  </ul>
-             </div>
-              </div>
-
-         </div>
-
-          </div>
-     </div>
+     @include('front.deal.deal_top_bar')
 
        <div class="container">
          <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12">
 
                   <div class="delas">
-                  <div id="dash_tab">
+                  <div id="dash_tab" style="background:#fff;padding:10px;">
                      <ul class="resp-tabs-list">
                         <li>Latest Deals</li>
                          <img class="dash_line" alt="line" src="{{ url('/')}}/assets/front/images/dash_menu_line.jpg">
@@ -94,7 +41,7 @@
                                       <div class="price-box">
                                       <div class="price-new">£<?php echo round($deals['price']-(($deals['price'])*($deals['discount_price']/100)));?></div>
                                           <div class="price-old">£{{ $deals['price'] }} <!--| <span>offers 50% OFF</span>--></div>
-                                          <div class="view"><a href="#" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
+                                          <div class="view"><a href="{{url('/').'/deals/details/'.base64_encode($deals['id'])}}" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
                                       </div>
                               </div>
                               </div>
@@ -119,7 +66,7 @@
                                   <div class="price-box">
                                   <div class="price-new">£<?php echo round($max_dis_deals['price']-(($max_dis_deals['price'])*($max_dis_deals['discount_price']/100)));?></div>
                                       <div class="price-old">£{{ $max_dis_deals['price'] }} <!--| <span>offers 50% OFF</span>--></div>
-                                      <div class="view"><a href="#" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
+                                      <div class="view"><a href="{{url('/').'/deals/details/'.base64_encode($max_dis_deals['id'])}}" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
                                   </div>
                           </div>
                           </div>
@@ -152,7 +99,7 @@
          .dropdown({
          allowAdditions: true
          });
-         
+
       </script>
       <script type="text/javascript">
          $(document).ready(function () {
