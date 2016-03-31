@@ -192,4 +192,49 @@ class PlaceController extends Controller
         return PlaceModel::where('id',$id)->delete();
     }
 
+    public function export_excel($format="csv")//export excel file
+    {
+        ini_set('max_execution_time', 9000000);
+
+        if($format=="csv")
+        {
+            $arr_place = array();
+            $obj_place = PlaceModel::with(['country_details','state_details','city_details'])->get();
+            //dd($obj_place->toArray());
+            if($obj_place)
+            {
+                $arr_place = $obj_place->toArray();
+
+                \Excel::create('PLACE-'.date('Ymd').uniqid(), function($excel) use($arr_place)
+                {
+                    $excel->sheet('Place', function($sheet) use($arr_place)
+                    {
+                        // $sheet->cell('A1', function($cell) {
+                        //     $cell->setValue('Generated on :'.date("d-m-Y H:i:s"));
+                        // });
+
+                        $sheet->row(3, array(
+                            'Sr.No.','Place','City::State/Region :: Country','Postal Code'
+                        ));
+
+                        if(sizeof($arr_place)>0)
+                        {
+                            $arr_tmp = array();
+                            foreach ($arr_place as $key => $place)
+                            {
+                                $arr_tmp[$key][] = $key+1;
+                                $arr_tmp[$key][] = $place['place_name'];
+                                $arr_tmp[$key][] = $place['city_details']['city_title'].'::'.$place['state_details']['state_title'].'::'.$place['country_details']['country_name'];
+                                $arr_tmp[$key][] = $place['postal_code'];
+                            }
+
+                            $sheet->rows($arr_tmp);
+                        }
+
+                    });
+
+                })->export('csv');
+            }
+        }
+    }
 }
