@@ -176,98 +176,58 @@
                            <div class="write-review-head">
                               Write a Review
                            </div>
+                           
                            <form class="form-horizontal"
                               id="validation-form"
                               method="POST"
-                              action="{{ url('/listing/store_reviews/'.base64_encode($business_id)) }}"
+                              action="{{ url('/listing/store_reviews/') }}"
                               enctype="multipart/form-data"
                               >
                               {{ csrf_field() }}
                               <div class="review-title">
                                  <div class="your-rating"> Your rating </div>
-                                 <input type="hidden" value="" name="rating" id="rating">
-                                 <span class="wrtrvtxt hidden-xs" id="mratdet">( <span id="dprtng">-</span> )</span>
+                                 <input type="hidden" name="business_id" value="{{$business_id}}">
+                                <!--  <input type="hidden" value="" name="rating" id="rating"> -->
+                               <!--   <span class="wrtrvtxt hidden-xs" id="mratdet">( <span id="dprtng">-</span> )</span> -->
                                  <div class="yr_rating-over">
-                                    <ul>
+                                    <!-- <ul>
+                                   
                                        <li>
-                                          <a class="ratingStar1" href="javascript:void(0);" rel="0.5">
-                                             <img src="{{ url('/') }}/assets/front/images/comman-over.png" id="common1" alt="hover imag"/>
-                                             <img src="{{ url('/') }}/assets/front/images/over1.png" id="over1" style="display: none;" alt="hover imag"/>
+                                          <a class="ratingStar{{$i}}" href="javascript:void(0);" rel="0.5">
+                                             <img src="{{ url('/') }}/assets/front/images/comman-over.png" id="common{{$i}}" alt="hover imag"/>
+                                             <img src="{{ url('/') }}/assets/front/images/over1.png" id="over{{$i}}" style="display: none;" alt="hover imag"/>
                                           </a>
                                        </li>
-                                       <li>
-                                          <a class="ratingStar2" href="javascript:void(0);" rel="1.0">
-                                             <img src="{{ url('/') }}/assets/front/images/comman-over.png" id="common2" alt="hover imag"/>
-                                             <img src="{{ url('/') }}/assets/front/images/over1.png" id="over2" style="display: none;" alt="hover imag"/>
-                                          </a>
-                                       </li>
-                                       <li>
-                                          <a class="ratingStar3" href="javascript:void(0);" rel="1.5">
-                                             <img src="{{ url('/') }}/assets/front/images/comman-over.png" id="common3" alt="hover imag"/>
-                                             <img src="{{ url('/') }}/assets/front/images/over2.png" id="over3" style="display: none;" alt="hover imag"/>
-                                          </a>
-                                       </li>
-                                       <li>
-                                          <a class="ratingStar4" href="javascript:void(0);" rel="2.0">
-                                             <img src="{{ url('/') }}/assets/front/images/comman-over.png" id="common4" alt="hover imag"/>
-                                             <img src="{{ url('/') }}/assets/front/images/over2.png" id="over4" style="display: none;" alt="hover imag"/>
-                                          </a>
-                                       </li>
-                                       <li>
-                                          <a class="ratingStar5" href="javascript:void(0);" rel="2.5">
-                                             <img src="{{ url('/') }}/assets/front/images/comman-over.png" id="common5" alt="hover imag"/>
-                                             <img src="{{ url('/') }}/assets/front/images/over3.png" id="over5" style="display: none;" alt="hover imag"/>
-                                          </a>
-                                       </li>
-                                       <li>
-                                          <a class="ratingStar6" href="javascript:void(0);" rel="3.0">
-                                             <img src="{{ url('/') }}/assets/front/images/comman-over.png" id="common6"  alt="hover imag"/>
-                                             <img src="{{ url('/') }}/assets/front/images/over3.png" id="over6" style="display: none;" alt="hover imag"/>
-                                          </a>
-                                       </li>
-                                       <li>
-                                          <a class="ratingStar7" href="javascript:void(0);" rel="3.5">
-                                             <img src="{{ url('/') }}/assets/front/images/comman-over.png" id="common7" alt="hover imag"/>
-                                             <img src="{{ url('/') }}/assets/front/images/over4.png" id="over7" style="display: none;" alt="hover imag"/>
-                                          </a>
-                                       </li>
-                                       <li>
-                                          <a class="ratingStar8" href="javascript:void(0);" rel="4.0">
-                                             <img src="{{ url('/') }}/assets/front/images/comman-over.png" id="common8" alt="hover imag"/>
-                                             <img src="{{ url('/') }}/assets/front/images/over4.png" id="over8" style="display: none;" alt="hover imag"/>
-                                          </a>
-                                       </li>
-                                       <li>
-                                          <a class="ratingStar9" href="javascript:void(0);" rel="4.5">
-                                             <img src="{{ url('/') }}/assets/front/images/comman-over.png" id="common9" alt="hover imag"/>
-                                             <img src="{{ url('/') }}/assets/front/images/over5.png" id="over9" style="display: none;" alt="hover imag"/>
-                                          </a>
-                                       </li>
-                                       <li>
-                                          <a class="ratingStar10" href="javascript:void(0);" rel="5.0">
-                                             <img src="{{ url('/') }}/assets/front/images/comman-over.png" id="common10" alt="hover imag"/>
-                                             <img src="{{ url('/') }}/assets/front/images/over5.png" id="over10" style="display: none;" alt="hover imag"/>
-                                          </a>
-                                       </li>
-                                    </ul>
+                                      
+                                      
+                                    </ul> -->
+
+                                    <input class="star required" type="radio" name="rating" value="1" id="rating" title="1 Star" />
+                                    <input class="star" type="radio" name="rating" id="rating" value="2" title="2 Star"/>
+                                    <input class="star" type="radio" name="rating" id="rating" value="3" title="3 Star"/>
+                                    <input class="star" type="radio" name="rating" id="rating" value="4" title="4 Star"/>
+                                    <input class="star" type="radio" name="rating" id="rating" value="5" title="5 Star"/>
+
                                  </div>
                                  <div class="clearfix"></div>
                               </div>
-                              <div class="review-title">
+                           <!--    <div class="review-title">
                                  <div class="title-review">
                                     Title
                                  </div>
                                  <div class="title-rev-field">
-                                    <input type="text" name="title" placeholder="Title" />
+                                    <input type="text" name="title" id="title" data-rule-required="true" placeholder="Title" />
+                                    <div id="msgRating_title"></div>  
                                  </div>
                                  <div class="clearfix"></div>
-                              </div>
+                              </div> -->
                               <div class="review-title">
                                  <div class="title-review">
                                     Add review
                                  </div>
                                  <div class="title-rev-field">
-                                    <textarea class="message-review" placeholder="Add review" rows="" cols="" name="review"></textarea>
+                                    <textarea class="message-review" data-rule-required="true" placeholder="Add review" rows="" cols="" name="review" id="review"></textarea>
+                                    <div id="msgRating_message"></div> 
                                  </div>
                                  <div class="clearfix"></div>
                               </div>
@@ -276,7 +236,8 @@
                                     Name
                                  </div>
                                  <div class="title-rev-field">
-                                    <input type="text" name="name" placeholder="Name" />
+                                    <input type="text" name="name" id="name" data-rule-required="true" placeholder="Name" />
+                                    <div id="msgRating_name"></div>
                                  </div>
                                  <div class="clearfix"></div>
                               </div>
@@ -287,7 +248,8 @@
                                  <div class="title-rev-field">
                                     <div class="input-group">
                                        <div class="input-group-addon">+91</div>
-                                       <input type="text" name="mobile_no" class="form-control" id="exampleInputAmount" placeholder="Mobile Number">
+                                       <input type="text" name="mobile_no" id="mobile_no" data-rule-required="true" class="form-control" id="exampleInputAmount" placeholder="Mobile Number">
+                                       <div id="msgRating_mobile"></div> 
                                     </div>
                                  </div>
                                  <div class="clearfix"></div>
@@ -297,14 +259,17 @@
                                     Email Id
                                  </div>
                                  <div class="title-rev-field">
-                                    <input type="text" name="email" placeholder="Email Id" />
+                                    <input type="text" name="email" id="email" data-rule-required="true" placeholder="Email Id" />
+                                    <div id="msgRating_email"></div>
                                  </div>
                                  <div class="clearfix"></div>
                               </div>
                               <div class="submit-btn">
-                                 <button type="submit">SUBMIT REVIEW</button>
+                                
+                                 <button type="submit" name="submit_review" id="submit_review">SUBMIT REVIEW</button>
                               </div>
                            </form>
+                        
                         </div>
                      </div>
                      <div>
@@ -529,6 +494,69 @@
    </div>
 </div>
 <script type="text/javascript">
+
+    $('#submit_review').click(function(){
+        var title   = $('#title').val();
+        var review  = $('#review').val();
+        var name    = $('#name').val();
+        var mobile  = $('#mobile_no').val();
+        var email   = $('#email').val();
+        var filter = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
+        var mobile_fliter = [0-9];
+        if(title=="")
+        {
+           jQuery("#msgRating_title").empty();
+           jQuery("#msgRating_title").fadeIn();
+           jQuery("#msgRating_title").html("<div style='color:red;'>Please Enter Title.</div>");
+           return false;
+        }
+        else if($review=="")
+        {
+           jQuery("#msgRating_message").empty();
+           jQuery("#msgRating_message").fadeIn();
+           jQuery("#msgRating_message").html("<div style='color:red;'>Please Enter Review Message.</div>");
+           return false;
+        }
+        if($name=="")
+        {
+           jQuery("#msgRating_name").empty();
+           jQuery("#msgRating_name").fadeIn();
+           jQuery("#msgRating_name").html("<div style='color:red;'>Please Enter Full Name.</div>");
+           return false;
+        }
+        if($mobile=="")
+        {
+           jQuery("#msgRating_mobile").empty();
+           jQuery("#msgRating_mobile").fadeIn();
+           jQuery("#msgRating_mobile").html("<div style='color:red;'>Please Enter Mobile No.</div>");
+           return false;
+        }
+        if(!mobile_fliter($mobile))
+        {
+           jQuery("#msgRating_title").empty();
+           jQuery("#msgRating_title").fadeIn();
+           jQuery("#msgRating_title").html("<div style='color:red;'>Please Enter Correct Mobile.</div>");
+           return false;
+        }
+        if($email=="")
+        {
+           jQuery("#msgRating_email").empty();
+           jQuery("#msgRating_email").fadeIn();
+           jQuery("#msgRating_email").html("<div style='color:red;'>Please Enter Email.</div>");
+           return false;
+        }
+        if(!filter.test(email))
+        {
+           jQuery("#msgRating_email").empty();
+           jQuery("#msgRating_email").fadeIn();
+           jQuery("#msgRating_email").html("<div style='color:red;'>Please Enter Correct Email.</div>");
+           return false;
+        }
+       
+    });
+
+
+
    function show_opening_times()
    {
      $('#business_times_div').show();
@@ -674,47 +702,9 @@
    //    $("input[name='rating']").val(rate);
    // });
 
-      $(".ratingStar1").hover(
-         function()
-         {
-            $('#over1').show();
-            $('#common1').hide();
-         },
-         function()
-         {
-            $('#common1').show();
-            $('#over1').hide();
-         }
-      );
+     
 
-      $(".ratingStar2").hover(
-         function()
-         {
-            $('#over1').show();
-            $('#over2').show();
-            $('#common1').hide();
-            $('#common2').hide();
 
-            var rate=$(this).attr('rel');
-            $("#dprtng").html(rate);
-            $("input[name='rating']").val(rate);
-         },
-         function()
-         {
-            $('#common1').show();
-            $('#common2').show();
-            $('#over1').hide();  
-            $('#over2').hide();
-         }
-      );
-
-      /*$(".ratingStar2").click(function(){
-         console.log('in');
-         $('#over1').show();
-         $('#over2').show();
-         $('#common1').hide();
-         $('#common2').hide();
-      });*/
 
 </script>
 @endsection

@@ -150,28 +150,28 @@ class ListingController extends Controller
     }
 
 
-    public function store_reviews(Request $request,$enc_id)
+    public function store_reviews(Request $request)
     {
-        $id = base64_decode($enc_id);
-
+        
         $arr_rules = array();
         $arr_rules['rating'] = "required";
         $arr_rules['title'] = "required";
         $arr_rules['review'] = "required";
 
-        $validator = Validator::make($request->all(),$arr_rules);
+       /* $validator = Validator::make($request->all(),$arr_rules);
 
         if($validator->fails())
         {
             return redirect()->back()->withErrors($validator)->withInput();
-        }
+        }*/
 
         $title       =  $request->input('title');
-        $rating       =  $request->input('rating');
+        $rating      =  $request->input('rating');
         $name        =  $request->input('name');
         $review      =  $request->input('review');
         $mobile_no   =  $request->input('mobile_no');
         $email       =  $request->input('email');
+        $id          =  $request->input('business_id'); 
 
         $arr_data = array();
         $arr_data['title'] = $title;
@@ -181,7 +181,7 @@ class ListingController extends Controller
         $arr_data['mobile_number'] = $mobile_no;
         $arr_data['email'] = $email;
         $arr_data['business_id'] = $id;
-
+     
        $status = 1;//ReviewsModel::create($arr_data);
 
         if($status)

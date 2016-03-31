@@ -671,7 +671,8 @@ If you need any more details on Justdial Verified, please refer to
 
   });
 </script>
-
+        <!-- jquery validation -->
+        <script type="text/javascript" src="{{url('/')}}/assets/jquery-validation/dist/jquery.validate.min.js"></script>  
 
         <!-- Listing details Tabbing End -->
         <script src="{{ url('/') }}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>

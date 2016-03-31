@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class StateModel extends Model
 {
-    protected $table = 'state';
+    protected $table = 'states';
     protected $fillable = ['public_key', 'state_title','state_image', 'state_slug','countries_id'];
 
     public function country_details()
