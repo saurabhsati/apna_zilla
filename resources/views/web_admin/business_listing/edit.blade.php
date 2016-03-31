@@ -284,24 +284,41 @@
                     <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
             </div>
+
+
+
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="area">Area <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="street">Country <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="area"
-                           id="area"
-                           data-rule-required="true"
-                           placeholder="Enter Area"
-                           value="{{ isset($business['area'])?$business['area']:'' }}"
-                          onchange="setAddress()"
-                           />
-                    <span class='help-block'>{{ $errors->first('street') }}</span>
+                <select class="form-control" name="country" id="country" onchange="loadStates(this)" >
+                 @if(isset($arr_country) && sizeof($arr_country)>0)
+                   @foreach($arr_country as $country)
+                <option value="{{ isset($country['id'])?$country['id']:'' }}" {{ $business['country']==$country['id']?'selected="selected"':'' }}>{{ isset($country['country_name'])?$country['country_name']:'' }}
+                </option>
+                @endforeach
+                 @endif
+                </select>
+                   <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
             </div>
-            <div class="form-group">
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="street">State <i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                 <select class="form-control"  name="state" id="state" tabindex="1" onchange="loadCity(this)">
+                 @if(isset($arr_state) && sizeof($arr_state)>0)
+                   @foreach($arr_state as $state)
+                <option value="{{ isset($state['id'])?$state['id']:'' }}" {{ $business['state']==$state['id']?'selected="selected"':'' }}>{{ isset($state['state_title'])?$state['state_title']:'' }}
+                </option>
+                @endforeach
+                @endif
+                </select>
+                 <span class='help-block'>{{ $errors->first('street') }}</span>
+                </div>
+            </div>
+             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="city">City <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                 <select class="form-control"  name="city" id="city" onchange="setAddress()">
+                 <select class="form-control"  name="city" id="city" onchange="loadpostalcode(this)">
                  @if(isset($arr_city) && sizeof($arr_city)>0)
                    @foreach($arr_city as $city)
                 <option value="{{ isset($city['id'])?$city['id']:'' }}" {{ $business['city']==$city['id']?'selected="selected"':'' }}>{{ isset($city['city_title'])?$city['city_title']:'' }}
@@ -316,42 +333,24 @@
                 <label class="col-sm-3 col-lg-2 control-label" for="pincode">Zipcode <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                 <select class="form-control"  name="pincode" id="pincode">
-                 @if(isset($arr_zipcode) && sizeof($arr_zipcode)>0)
-                   @foreach($arr_zipcode as $zipcode)
-                <option value="{{ isset($zipcode['id'])?$zipcode['id']:'' }}" {{ $business['pincode']==$zipcode['id']?'selected="selected"':'' }}>{{ isset($zipcode['zipcode'])?$zipcode['zipcode']:'' }}
+                 <option value="{{ isset($arr_place[0]['id'])?$arr_place[0]['id']:'' }}" >{{ isset($arr_place[0]['postal_code'])?$arr_place[0]['postal_code']:'' }}
                 </option>
-                @endforeach
-                @endif
                 </select>
                     <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="street">State <i class="red">*</i></label>
+              <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="area">Area <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                 <select class="form-control"  name="state" id="state" onchange="setAddress()">
-                 @if(isset($arr_state) && sizeof($arr_state)>0)
-                   @foreach($arr_state as $state)
-                <option value="{{ isset($state['id'])?$state['id']:'' }}" {{ $business['state']==$state['id']?'selected="selected"':'' }}>{{ isset($state['state_title'])?$state['state_title']:'' }}
-                </option>
-                @endforeach
-                @endif
-                </select>
-                 <span class='help-block'>{{ $errors->first('street') }}</span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="street">Country <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                <select class="form-control" name="country" id="country" onchange="setAddress()">
-                 @if(isset($arr_country) && sizeof($arr_country)>0)
-                   @foreach($arr_country as $country)
-                <option value="{{ isset($country['id'])?$country['id']:'' }}" {{ $business['country']==$country['id']?'selected="selected"':'' }}>{{ isset($country['country_name'])?$country['country_name']:'' }}
-                </option>
-                @endforeach
-                 @endif
-                </select>
-                   <span class='help-block'>{{ $errors->first('street') }}</span>
+                    <input class="form-control"
+                           name="area"
+                           id="area"
+                           data-rule-required="true"
+                           placeholder="Enter Area"
+                           value="{{ isset($business['area'])?$business['area']:'' }}"
+                          onchange="setAddress()"
+                           />
+                    <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
             </div>
              <div class="form-group">
@@ -1184,5 +1183,113 @@ $('#remove-payment').click(function()
       setAddress()
     });*/
 
+</script>
+<script type="text/javascript">
+ var url = "{{ url('/') }}";
+    function loadStates(ref)
+     {
+        var selected_country = jQuery(ref).val();
+
+        jQuery.ajax({
+                        url:url+'/web_admin/common/get_states/'+selected_country,
+                        type:'GET',
+                        data:'flag=true',
+                        dataType:'json',
+                        beforeSend:function()
+                        {
+                            jQuery('select[name="state"]').attr('disabled','disabled');
+                        },
+                        success:function(response)
+                        {
+
+                            if(response.status=="SUCCESS")
+                            {
+                                jQuery('select[name="state"]').removeAttr('disabled');
+                                if(typeof(response.arr_state) == "object")
+                                {
+                                   var option = '<option value="">Select</option>';
+                                   jQuery(response.arr_state).each(function(index,states)
+                                   {
+
+                                        option+='<option value="'+states.id+'">'+states.state_title+'</option>';
+                                   });
+
+                                   jQuery('select[name="state"]').html(option);
+                                }
+                            }
+                            return false;
+                        }
+        });
+     }
+     function loadCity(ref)
+     {
+        var selected_state = jQuery(ref).val();
+
+        jQuery.ajax({
+                        url:url+'/web_admin/common/get_cities/'+selected_state,
+                        type:'GET',
+                        data:'flag=true',
+                        dataType:'json',
+                        beforeSend:function()
+                        {
+                            jQuery('select[name="city"]').attr('disabled','disabled');
+                        },
+                        success:function(response)
+                        {
+
+                            if(response.status=="SUCCESS")
+                            {
+                                jQuery('select[name="city"]').removeAttr('disabled');
+                                if(typeof(response.arr_city) == "object")
+                                {
+                                   var option = '<option value="">Select</option>';
+                                   jQuery(response.arr_city).each(function(index,city)
+                                   {
+
+                                        option+='<option value="'+city.id+'">'+city.city_title+'</option>';
+                                   });
+
+                                   jQuery('select[name="city"]').html(option);
+                                }
+                            }
+                            return false;
+                        }
+        });
+     }
+      function loadpostalcode(ref)
+     {
+        var selected_city = jQuery(ref).val();
+
+        jQuery.ajax({
+                        url:url+'/web_admin/common/get_postalcode/'+selected_city,
+                        type:'GET',
+                        data:'flag=true',
+                        dataType:'json',
+                        beforeSend:function()
+                        {
+                            jQuery('select[name="pincode"]').attr('disabled','disabled');
+                        },
+                        success:function(response)
+                        {
+
+                            if(response.status=="SUCCESS")
+                            {
+                                jQuery('select[name="pincode"]').removeAttr('disabled');
+                                if(typeof(response.arr_postalcode) == "object")
+                                {
+                                   var option = '<option value="">Select</option>';
+                                   jQuery(response.arr_postalcode).each(function(index,postalcode)
+                                   {
+
+                                        option+='<option value="'+postalcode.id+'">'+postalcode.postal_code+'</option>';
+                                   });
+
+                                   jQuery('select[name="pincode"]').html(option);
+                                }
+                            }
+                            return false;
+                        }
+        });
+     }
 </script>
 @stop

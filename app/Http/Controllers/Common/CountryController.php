@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\StateModel;
 use App\Models\CityModel;
+use App\Models\PlaceModel;
 use Validator;
 use Session;
 use Input;
@@ -74,7 +75,32 @@ class CountryController extends Controller
         }
         return response()->json($arr_response);
     }
+    public function get_postalcode($city_id)
+    {
+        $arr_state = array();
+        $arr_response = array();
 
+        $obj_postalcode = PlaceModel::select('id','postal_code','city_id')
+                                       ->where('city_id',$city_id)
+                                       ->orderBy('place_name','ASC')->get();
+
+        if($obj_postalcode != FALSE)
+        {
+            $arr_postalcode =  $obj_postalcode->toArray();
+        }
+
+        if(sizeof($arr_postalcode)>0)
+        {
+            $arr_response['status'] ="SUCCESS";
+            $arr_response['arr_postalcode'] = $arr_postalcode;
+        }
+        else
+        {
+            $arr_response['status'] ="ERROR";
+            $arr_response['arr_postalcode'] = array();
+        }
+        return response()->json($arr_response);
+    }
     public function get_nearby_state($state_id,$country_id)
     {
         $arr_state = array();
