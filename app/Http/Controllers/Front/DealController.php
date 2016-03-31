@@ -6,7 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Models\DealModel;
-
+use Meta;
 
 class DealController extends Controller
 {
@@ -34,6 +34,10 @@ class DealController extends Controller
 		//dd($arr_deals_max_dis_info);
  		return view('front.deal.index',compact('page_title','arr_deals_info','arr_deals_max_dis_info'));
  	}
+ 	public function deals_by_category()
+ 	{
+ 		return view('front.deal.index',compact('page_title','arr_deals_info','arr_deals_max_dis_info'));
+ 	}
  	public function details($enc_id)
  	{
  		$page_title = "Details";
@@ -44,6 +48,24 @@ class DealController extends Controller
  		{
  			$deals_info = $obj_deals_info->toArray();
 		}
+
+        $mete_title = "";
+        if(isset($deals_info[0]['name']) && sizeof($deals_info[0]['name']))
+        {
+           $mete_title = $deals_info[0]['name'];
+        }
+
+        $meta_desp = "";
+        if(isset($deals_info[0]['description']) && sizeof($deals_info[0]['description']))
+        {
+           $meta_desp = $deals_info[0]['description'];
+        }
+
+
+        //exit;
+        Meta::setTitle($mete_title);
+        // Meta::setDescription($meta_desp);
+        Meta::addKeyword($mete_title);
 		//dd($deals_info);
  		return view('front.deal.detail',compact('page_title','deals_info'));
  	}

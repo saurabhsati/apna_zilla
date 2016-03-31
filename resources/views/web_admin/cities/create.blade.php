@@ -104,11 +104,11 @@
                  <select class="form-control" data-placeholder="Select State/Region" tabindex="1"
                  name="state" >
                     <option value="">Select</option>
-                    <!-- @if(isset($arr_state) && sizeof($arr_state)>0)
+                    @if(isset($arr_state) && sizeof($arr_state)>0)
                        @foreach($arr_state as $state)
                     <option value="{{$state['id']}}">{{$state['state_title']}}</option>
                       @endforeach
-                      @endif -->
+                      @endif
                  </select>
                    <span class='help-block'>{{ $errors->first('state') }}</span>
               </div>
@@ -123,31 +123,6 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label"> Image <i class="red">*</i> </label>
-                <div class="col-sm-9 col-lg-10 controls">
-                   <div class="fileupload fileupload-new" data-provides="fileupload">
-                      <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
-
-                      </div>
-                      <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-                      <div>
-                         <span class="btn btn-default btn-file"><span class="fileupload-new" >Select image</span>
-                         <span class="fileupload-exists">Change</span>
-                         <input type="file" class="file-input" name="image" id="ad_image"/></span>
-                         <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
-
-                         <span  >
-
-                         </span>
-
-                      </div>
-                   </div>
-                    <span class='help-block'>{{ $errors->first('image') }}</span>
-                     <!--<br/>
-                     <button class="btn btn-warning" onclick="return show_more_images()" id="show_more_images_button">Do you want to add slider images ? </button>  -->
-                </div>
-             </div>
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="is_popular">Is Popular City <i class="red">*</i></label>
                 <div class="col-sm-1 col-lg-1 controls">

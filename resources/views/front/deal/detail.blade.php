@@ -2,7 +2,8 @@
 
 @section('main_section')
 <div class="gry_container" style="padding: 7px 0 16px;">
- <div class="black-strip">
+ @include('front.deal.deal_top_bar')
+<!--  <div class="black-strip">
    <div class="container">
     <div class="row">
 
@@ -61,7 +62,7 @@
 </div>
 
 </div>
-</div>
+</div> -->
 <div class="container">
  <div class="row">
   <div class="col-sm-12 col-md-12 col-lg-12">

@@ -22,7 +22,8 @@ class SalesDealModel extends Model
     					   'start_day',
     					   'end_day',
                            'start_time',
-                           'end_time'];
+                           'end_time',
+                           'parent_category_id'];
 
     public function business_info()
     {

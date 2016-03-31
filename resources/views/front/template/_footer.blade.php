@@ -388,6 +388,7 @@ If you need any more details on Justdial Verified, please refer to
                            <div class="heading_bor"></div>
                            <div class="menu_name">
                             <?php echo substr($about_us['page_desc'],0,250).'..';?>
+                            <a href="{{ url('/') }}/page/aboutus" class="{{ Request::segment(2)=='aboutus'? 'act':'' }}">View More</a>
                            </div>
                         </div>
 
@@ -671,7 +672,88 @@ If you need any more details on Justdial Verified, please refer to
 
   });
 </script>
+ <script type="text/javascript">
+var supports = (function () {
+    var a = document.documentElement,
+        b = "ontouchstart" in window || navigator.msMaxTouchPoints;
+    if (b) {
+        a.className += " touch";
+        return {
+            touch: true
+        }
+    } else {
+        a.className += " no-touch";
+        return {
+            touch: false
+        }
+    }
+})();
 
+
+if ($("html").hasClass("no-touch")) {
+
+
+  $('.dropdown > a').removeAttr("data-toggle");
+
+
+    (function (e, t, n) {
+        if ("ontouchstart" in document) return;
+        var r = e();
+        e.fn.dropdownHover = function (n) {
+            r = r.add(this.parent());
+            return this.each(function () {
+                var i = e(this),
+                    s = i.parent(),
+                    o = {
+                        delay: 0,
+                        instantlyCloseOthers: !0
+                    }, u = {
+                        delay: e(this).data("delay"),
+                        instantlyCloseOthers: e(this).data("close-others")
+                    }, a = e.extend(!0, {}, o, n, u),
+                    f;
+                s.hover(function (n) {
+                    if (!s.hasClass("open") && !i.is(n.target)) return !0;
+                    a.instantlyCloseOthers === !0 && r.removeClass("open");
+                    t.clearTimeout(f);
+                    s.addClass("open");
+                    s.trigger(e.Event("show.bs.dropdown"))
+                }, function () {
+                    f = t.setTimeout(function () {
+                        s.removeClass("open");
+                        s.trigger("hide.bs.dropdown")
+                    }, 1)
+                });
+                i.hover(function () {
+                    a.instantlyCloseOthers === !0 && r.removeClass("open");
+                    t.clearTimeout(f);
+                    s.addClass("open");
+                    s.trigger(e.Event("show.bs.dropdown"))
+                });
+                s.find(".dropdown-submenu").each(function () {
+                    var n = e(this),
+                        r;
+                    n.hover(function () {
+                        t.clearTimeout(r);
+                        n.children(".dropdown-menu").show();
+                        n.siblings().children(".dropdown-menu").hide()
+                    }, function () {
+                        var e = n.children(".dropdown-menu");
+                        r = t.setTimeout(function () {
+                            e.hide()
+                        }, a.delay)
+                    })
+                })
+            })
+        };
+        e(document).ready(function () {
+
+            e('[data-hover="dropdown"]').dropdownHover()
+        })
+    })(jQuery, this);
+
+ } //END IF no-touch for hover script & removeAttr for the links to work
+</script>
 
         <!-- Listing details Tabbing End -->
         <script src="{{ url('/') }}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>

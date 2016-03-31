@@ -16,9 +16,7 @@ class CountryController extends Controller
     //
     public function __construct()
     {
-    	$this->country_base_img_path = base_path().'/public/uploads/countries/images/';
-        $this->country_base_data_path = base_path().'/public/uploads/countries/data/';
-        $this->country_public_img_path = url('/').'/uploads/countries/images/';
+
     }
 
     public function index()
@@ -33,9 +31,8 @@ class CountryController extends Controller
             $arr_countries = $obj_countries_res->toArray();
         }
 
-        $country_public_img_path = $this->country_public_img_path;
 
-        return view('web_admin.country.index',compact('page_title','arr_countries','country_public_img_path'));
+        return view('web_admin.country.index',compact('page_title','arr_countries'));
     }
 
 
@@ -50,10 +47,7 @@ class CountryController extends Controller
        {
           $arr_country = $obj_country->toArray();
        }
-
-       $country_public_img_path = $this->country_public_img_path;
-
-       return view('web_admin.country.show',compact('page_title','arr_country','country_public_img_path'));
+       return view('web_admin.country.show',compact('page_title','arr_country'));
     }
 
     public function edit($enc_id)
@@ -67,12 +61,11 @@ class CountryController extends Controller
            $arr_country = $obj_country->toArray();
         }
 
-        $country_public_img_path = $this->country_public_img_path;
 
 
-        return view('web_admin.country.edit',compact('page_title','arr_country','country_public_img_path'));
+        return view('web_admin.country.edit',compact('page_title','arr_country'));
     }
-    
+
     public function update(Request $request, $enc_id)
     {
         $id = base64_decode($enc_id);
@@ -94,38 +87,6 @@ class CountryController extends Controller
 
         $arr_data['country_name'] = $form_data['country_name'];
         $arr_data['country_code'] = strtoupper($form_data['country_code']);
-
-
-       /*---------- File uploading code starts here ------------*/
-
-
-         $fileName = "";
-         $file_url = "";
-
-         if ($request->hasFile('image'))
-         {
-            $excel_file_name = $form_data['image'];
-            $fileExtension = strtolower($request->file('image')->getClientOriginalExtension());
-
-            if(in_array($fileExtension,['png','jpg','jpeg']))
-            {
-                $fileName = sha1(uniqid().$excel_file_name.uniqid()).'.'.$fileExtension;
-                $request->file('image')->move($this->country_base_img_path, $fileName);
-
-            }
-            else
-            {
-                 Session::flash('error','Invalid file extension');
-            }
-
-            $file_url = $fileName;
-            $arr_data['country_image'] = $fileName;
-        }
-
-
-
-        /*---------- File uploading code ends ------------*/
-
 
         if(CountryModel::where('id',$id)->update($arr_data))
         {

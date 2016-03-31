@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\BusinessListingModel;
+use App\Models\BusinessCategoryModel;
+use App\Models\CategoryModel;
 use App\Models\SalesDealModel;
 use Validator;
 use Session;
@@ -49,8 +51,23 @@ class DealController extends Controller
         {
             $arr_business = $obj_business->toArray();
         }
+         $obj_business_category = BusinessCategoryModel::where('business_id',$arr_business['id'])->get();
+        if(sizeof($obj_business_category)>0)
+        {
+            $business_sub_category = $obj_business_category->toArray();
+            if($business_sub_category)
+            {
+                $obj_sub_category = CategoryModel::where('cat_id',$business_sub_category[0]['category_id'])->get();
+                if($obj_sub_category)
+                {
+                    $parent_category_id='';
+                     $category = $obj_sub_category->toArray();
+                     $parent_category_id=$category[0]['parent'];
+                }
+            }
+        }
        // dd($arr_business);
-    	return view('sales_user.deal.create',compact('page_title','arr_business'));
+    	return view('sales_user.deal.create',compact('page_title','arr_business','parent_category_id'));
     }
     public function store(Request $request)
     {
@@ -102,7 +119,7 @@ class DealController extends Controller
 	    	}
     	$form_data	= $request->all();
     	$data_arr['business_id']=$form_data['business_hide_id'];
-    	$data_arr['public_id']='1234567890';
+        $data_arr['parent_category_id']=$form_data['parent_category_id'];
     	$data_arr['name']=$form_data['name'];
     	$data_arr['price']=$form_data['price'];
     	$data_arr['deal_image']=$image_name ;

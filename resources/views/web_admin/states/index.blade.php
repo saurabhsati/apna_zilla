@@ -135,8 +135,7 @@
               <thead>
                 <tr>
                   <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" /></th>
-                  <th>Image</th>
-                  <th>State/Region</th>
+                  <th>State</th>
                   <th>Country</th>
                  <th>Action</th>
                 </tr>
@@ -153,8 +152,7 @@
                              name="checked_record[]"
                              value="{{ base64_encode($state['id']) }}" />
                     </td>
-                     <td  onclick="show_details('{{ url('/').$show_url }}')" >
-                     <img src="{{ $state_public_img_path.$state['state_image']}}" alt=""  style="width:75px; height:50px;" />   </td>
+
                     <td  onclick="show_details('{{ url('/').$show_url }}')" > {{ $state['state_title'] }} </td>
                     <td  onclick="show_details('{{ url('/').$show_url }}')" > {{ $state['country_details']['country_name'] }} </td>
 
