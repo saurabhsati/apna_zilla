@@ -189,16 +189,66 @@
                                  <span class="wrtrvtxt hidden-xs" id="mratdet">( <span id="dprtng">-</span> )</span>
                                  <div class="yr_rating-over">
                                     <ul>
-                                       <li><a class="ratingStar" href="javascript:void(0);" rel="0.5"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                       <li><a class="ratingStar" href="javascript:void(0);" rel="1.0"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                       <li><a class="ratingStar" href="javascript:void(0);" rel="1.5"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                       <li><a class="ratingStar" href="javascript:void(0);" rel="2.0"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                       <li><a class="ratingStar" href="javascript:void(0);" rel="2.5"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                       <li><a class="ratingStar" href="javascript:void(0);" rel="3.0"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                       <li><a class="ratingStar" href="javascript:void(0);" rel="3.5"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                       <li><a class="ratingStar" href="javascript:void(0);" rel="4.0"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                       <li><a class="ratingStar" href="javascript:void(0);" rel="4.5"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
-                                       <li><a class="ratingStar" href="javascript:void(0);" rel="5.0"><img src="{{ url('/') }}/assets/front/images/comman-over.png" alt="hover imag"/></a></li>
+                                       <li>
+                                          <a class="ratingStar1" href="javascript:void(0);" rel="0.5">
+                                             <img src="{{ url('/') }}/assets/front/images/comman-over.png" id="common1" alt="hover imag"/>
+                                             <img src="{{ url('/') }}/assets/front/images/over1.png" id="over1" style="display: none;" alt="hover imag"/>
+                                          </a>
+                                       </li>
+                                       <li>
+                                          <a class="ratingStar2" href="javascript:void(0);" rel="1.0">
+                                             <img src="{{ url('/') }}/assets/front/images/comman-over.png" id="common2" alt="hover imag"/>
+                                             <img src="{{ url('/') }}/assets/front/images/over1.png" id="over2" style="display: none;" alt="hover imag"/>
+                                          </a>
+                                       </li>
+                                       <li>
+                                          <a class="ratingStar3" href="javascript:void(0);" rel="1.5">
+                                             <img src="{{ url('/') }}/assets/front/images/comman-over.png" id="common3" alt="hover imag"/>
+                                             <img src="{{ url('/') }}/assets/front/images/over2.png" id="over3" style="display: none;" alt="hover imag"/>
+                                          </a>
+                                       </li>
+                                       <li>
+                                          <a class="ratingStar4" href="javascript:void(0);" rel="2.0">
+                                             <img src="{{ url('/') }}/assets/front/images/comman-over.png" id="common4" alt="hover imag"/>
+                                             <img src="{{ url('/') }}/assets/front/images/over2.png" id="over4" style="display: none;" alt="hover imag"/>
+                                          </a>
+                                       </li>
+                                       <li>
+                                          <a class="ratingStar5" href="javascript:void(0);" rel="2.5">
+                                             <img src="{{ url('/') }}/assets/front/images/comman-over.png" id="common5" alt="hover imag"/>
+                                             <img src="{{ url('/') }}/assets/front/images/over3.png" id="over5" style="display: none;" alt="hover imag"/>
+                                          </a>
+                                       </li>
+                                       <li>
+                                          <a class="ratingStar6" href="javascript:void(0);" rel="3.0">
+                                             <img src="{{ url('/') }}/assets/front/images/comman-over.png" id="common6"  alt="hover imag"/>
+                                             <img src="{{ url('/') }}/assets/front/images/over3.png" id="over6" style="display: none;" alt="hover imag"/>
+                                          </a>
+                                       </li>
+                                       <li>
+                                          <a class="ratingStar7" href="javascript:void(0);" rel="3.5">
+                                             <img src="{{ url('/') }}/assets/front/images/comman-over.png" id="common7" alt="hover imag"/>
+                                             <img src="{{ url('/') }}/assets/front/images/over4.png" id="over7" style="display: none;" alt="hover imag"/>
+                                          </a>
+                                       </li>
+                                       <li>
+                                          <a class="ratingStar8" href="javascript:void(0);" rel="4.0">
+                                             <img src="{{ url('/') }}/assets/front/images/comman-over.png" id="common8" alt="hover imag"/>
+                                             <img src="{{ url('/') }}/assets/front/images/over4.png" id="over8" style="display: none;" alt="hover imag"/>
+                                          </a>
+                                       </li>
+                                       <li>
+                                          <a class="ratingStar9" href="javascript:void(0);" rel="4.5">
+                                             <img src="{{ url('/') }}/assets/front/images/comman-over.png" id="common9" alt="hover imag"/>
+                                             <img src="{{ url('/') }}/assets/front/images/over5.png" id="over9" style="display: none;" alt="hover imag"/>
+                                          </a>
+                                       </li>
+                                       <li>
+                                          <a class="ratingStar10" href="javascript:void(0);" rel="5.0">
+                                             <img src="{{ url('/') }}/assets/front/images/comman-over.png" id="common10" alt="hover imag"/>
+                                             <img src="{{ url('/') }}/assets/front/images/over5.png" id="over10" style="display: none;" alt="hover imag"/>
+                                          </a>
+                                       </li>
                                     </ul>
                                  </div>
                                  <div class="clearfix"></div>
@@ -617,16 +667,54 @@
        marker.setPosition(location);
        map.setZoom(16);
    }
-   $(".ratingStar").hover(function(){
-   var rate=$(this).attr('rel');
-   $("#dprtng").html(rate);
-   $("input[name='rating']").val(rate);
+   
+   // $(".ratingStar").hover(function(){
+   //    var rate=$(this).attr('rel');
+   //    $("#dprtng").html(rate);
+   //    $("input[name='rating']").val(rate);
+   // });
 
+      $(".ratingStar1").hover(
+         function()
+         {
+            $('#over1').show();
+            $('#common1').hide();
+         },
+         function()
+         {
+            $('#common1').show();
+            $('#over1').hide();
+         }
+      );
 
+      $(".ratingStar2").hover(
+         function()
+         {
+            $('#over1').show();
+            $('#over2').show();
+            $('#common1').hide();
+            $('#common2').hide();
 
+            var rate=$(this).attr('rel');
+            $("#dprtng").html(rate);
+            $("input[name='rating']").val(rate);
+         },
+         function()
+         {
+            $('#common1').show();
+            $('#common2').show();
+            $('#over1').hide();  
+            $('#over2').hide();
+         }
+      );
 
-   });
-
+      /*$(".ratingStar2").click(function(){
+         console.log('in');
+         $('#over1').show();
+         $('#over2').show();
+         $('#common1').hide();
+         $('#common2').hide();
+      });*/
 
 </script>
 @endsection

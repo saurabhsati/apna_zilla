@@ -370,6 +370,17 @@ class NewsLetterController extends Controller
 
         $email_str = trim($form_data['email_str']); 
 
+        if($email_str=='')//check emails availables or not
+        {
+            Session::flash('error','Please Select Atleast one Email Id');  
+            return redirect()->back(); 
+        }
+        
+        if($message=='')//check compose email not null
+        {
+            Session::flash('error','Please enter your email');  
+            return redirect()->back(); 
+        }
 
         if($email_str) 
         {
@@ -382,7 +393,7 @@ class NewsLetterController extends Controller
             if(trim($to_email_address))
             {
                 $array_data['to_address'] = $to_email_address;
-                $array_data['msg_contents'] = $message;
+                $array_data['content'] = $message;
                 $this->_mail($array_data);
             }
         }  
@@ -392,14 +403,13 @@ class NewsLetterController extends Controller
     }
 
 
-       public function _mail($array_data)
+    public function _mail($array_data)
     {
-        
-        $mail_response = Mail::send('email.test', $array_data, function($message) use($array_data)
+        $mail_response = Mail::send('email.general', $array_data, function($message) use($array_data)
         {   
             $message->from($array_data['site_email_address'], $array_data['site_name']);
             $message->to($array_data['to_address'])
-                    ->subject('JustDial :: Newsletter');
+                    ->subject('RightNext :: Newsletter');
         });
 
           /* Mail Sent Successfully */

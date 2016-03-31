@@ -85,19 +85,21 @@
 
           <div class="form-group">
             <label class="col-sm-3 col-lg-2 control-label">To:<i class="red">*</i></label>
-            <div class="col-sm-6 col-lg-8 controls">
-               <select data-placeholder="Enter Recipient(s) email address "  name="to_address" class="form-control chosen" multiple="multiple" style="height: 25px;" data-rule-required="true">
-                  <option value=""> </option>
+            <div class="col-sm-9 col-lg-10 controls">
+               <select data-placeholder="Enter Recipient(s) email address "  name="to_address" class="form-control chosen" multiple="multiple" tabindex="1" data-rule-required="true">
+                   <option value=""> </option>
 
                     @if(sizeof($arr_newsletter)>0)
                         @foreach($arr_newsletter as $news_letter)
-                            <option value="{{ $news_letter['news_letter_id'] }}"> {{ $news_letter['email_address'] }}</option>
+                            <option value="{{ $news_letter['news_letter_id'] }}" selected> {{ $news_letter['email_address'] }}</option>
                         @endforeach
                     @endif
 
                </select>
+               
             </div>
           </div>
+
 
 
              <div class="form-group">
