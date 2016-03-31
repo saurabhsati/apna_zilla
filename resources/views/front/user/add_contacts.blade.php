@@ -24,40 +24,35 @@
                <!-- Categories Start -->
                    
                 <div class="categories_sect sidebar-nav slide_m">
-              
-                 <div class="sidebar-brand">Business information</div>
+                <div class="sidebar-brand">Business Information</div>
                  <div class="bor_head">&nbsp;</div>
                  <ul class="">
-                    <li class="brdr"><a href="#">Location Information</a></li>
-                  <li class="brdr"><a href="#">contact information </a></li>
-                  <li class="brdr"><a href="#">other information</a></li>
-                     <li class="brdr has-sub"><a href="#"><span>business keywords</span></a>
+                  <li class="brdr"><a href="{{ url('/').'/front_users/add_business' }}">Business Information</a></li>
+                  <li class="brdr"><a href="{{ url('/').'/front_users/add_location' }}">Location Information</a></li>
+                  <li class="brdr"><a href="{{ url('/').'/front_users/add_contacts' }}">Contact Information</a></li>
+                  <li class="brdr"><a href="{{ url('/').'/front_users/other_details' }}">Other Information</a></li>
+                  <li class="brdr"><a href="{{ url('/').'/front_users/add_services' }}">Video/Pictures/Services</a></li>
+                     <!-- <li class="brdr has-sub"><a href="#"><span>business keywords</span></a>
                     <ul class="make_list" style="display:none;">
                      <li><a href="#">view/remove keywords</a> </li>
                          <li><a href="#">add keywords</a></li> 
                        </ul>
                      </li>
-                  <li class="brdr"><a href="#">upload video/logo/pictures</a></li>
-    
-                 
-               </ul>
-               <!-- /#Categoriesr End-->
-               <div class="clearfix"></div>
-                    </div>
+                  <li class="brdr"><a href="#">upload video/logo/pictures</a></li> -->
+                </ul>
+               
+                <div class="clearfix"></div>
+              </div>
                 
-                
-                <div class="categories_sect sidebar-nav slide_m">
-              
+               <!--  <div class="categories_sect sidebar-nav slide_m">
                  <div class="sidebar-brand">Service Request</div>
                  <div class="bor_head">&nbsp;</div>
                  <ul class="">
                     <li class="brdr"><a href="#">ECS/CCSI Active/Pause</a></li>
                   <li class="brdr"><a href="#">Submit An online Request/Complaint</a></li>
-              
-               </ul>
-               <!-- /#Categoriesr End-->
-               <div class="clearfix"></div>
-                    </div>
+                   </ul>
+                   <div class="clearfix"></div>
+                </div> -->
             </div>
              
          
@@ -65,10 +60,8 @@
              
              <div class="col-sm-12 col-md-9 col-lg-9">
             <div class="my_whit_bg">
-              <div class="title_acc">Please provide home and office address</div>
+              <div class="title_acc">Please Provide Contact Person's Information</div>
                 <div class="row">
-               
-              
 
                        
               <div class="col-sm-12 col-md-12 col-lg-12">
@@ -81,13 +74,14 @@
                           <div class="row">
                             <div class="col-sm-2 col-md-2 col-lg-2">
                               <select class="input_acct">
-                                 <option value="1" >Mr.</option>
-                                 <option value="0" >Miss.</option>
+                                 <option value="0" >Mr.</option>
+                                 <option value="1" >Ms.</option>
+                                 <option value="2" >Mrs.</option>
                               </select>  
                             </div>
                           <div class="col-sm-5 col-md-5 col-lg-6"> <input type="text"  id="contact_name" name="contact_name" class="input_acct" placeholder="Enter name"></div>
                           <div class="col-sm-5 col-md-5 col-lg-4"> <input type="text"  id="designation" name="designation" class="input_acct" placeholder="Designation"></div></div>
-                          <!-- <div class="error_msg">please enter correct</div> -->
+                          <div class="error_msg">{{ $errors->first('contact_name') }} </div>
                         </div>
                     </div>
                   </div>
@@ -110,8 +104,8 @@
                           <span class="input-group-addon" id="basic-addon1">+91</span>
                           <input type="text" class="form-control"  id="mobile_no" name="mobile_no" placeholder="Enter Mobile Number"  aria-describedby="basic-addon1" required/>
                           </div>  
-                          <!-- <div class="hyper_link_more"><a href="#">Add more mobile number</a></div>
-                          <div class="error_msg">please enter correct</div> -->
+                          <!-- <div class="hyper_link_more"><a href="#">Add more mobile number</a></div> -->
+                          <div class="error_msg">{{ $errors->first('mobile_no') }} </div>
                         </div>
                     </div>
                   </div>
@@ -121,28 +115,42 @@
                       <div class="col-lg-2 label-text">Landline No. <span>:</span></div>
                         <div class="col-sm-12 col-md-12 col-lg-10 m_l">
                           <input type="text"  class="input_acct"  id="landline_no" name="landline_no" placeholder="Enter Landline Number"/>
-                          <!--<div class="error_msg">please enter correct</div> -->
+                           <div class="error_msg">{{ $errors->first('landline_no') }} </div>
                         </div>
                     </div>
                   </div>
 
-
                     <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-2 label-text">fax No. <span>:</span></div>
+                    <div class="col-sm-12 col-md-12 col-lg-10 m_l">
+                         <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">+91-22</span>
+                        <input type="text" class="form-control" id="fax_no" name="fax_no" placeholder="Enter Fax Number"  aria-describedby="basic-addon1" required/>
+                        </div>  
+                          <div class="error_msg">{{ $errors->first('fax_no') }} </div>
+                        </div>
+                         </div>
+                    </div>
+
+
+
+                  <!--   <div class="user_box_sub">
                          <div class="row">
                   <div class="col-lg-2 label-text">Fax No. <span>:</span></div>
                   <div class="col-sm-12 col-md-12 col-lg-10 m_l">
                        <input type="text"  class="input_acct" id="fax_no" name="fax_no" placeholder="Enter Fax Number"/>
-                        <!-- <div class="error_msg">please enter correct</div> -->
+                         <div class="error_msg">please enter correct</div> 
                       </div>
                        </div>
-                  </div>
+                  </div> -->
                   
                     <div class="user_box_sub">
                          <div class="row">
                   <div class="col-lg-2 label-text">Toll free No. <span>:</span></div>
                   <div class="col-sm-12 col-md-12 col-lg-10 m_l">
                        <input type="text"  class="input_acct" id="toll_free_no" name="toll_free_no" placeholder="Enter Toll free number "/>
-                        <!-- <div class="error_msg">please enter correct</div> -->
+                         <div class="error_msg">{{ $errors->first('toll_free_no') }} </div>
                       </div>
                        </div>
                   </div>
@@ -153,7 +161,7 @@
                     <div class="col-lg-2 label-text">Email Id <span>:</span></div>
                     <div class="col-sm-12 col-md-12 col-lg-10 m_l">
                          <input type="text"  class="input_acct"  id="email" name="email" placeholder="Enter Email Id "/>
-                         <!--  <div class="error_msg">please enter correct</div> -->
+                          <div class="error_msg">{{ $errors->first('email') }} </div>
                         </div>
                          </div>
                     </div>
@@ -163,7 +171,7 @@
                     <div class="col-lg-2 label-text">website <span>:</span></div>
                     <div class="col-sm-12 col-md-12 col-lg-10 m_l">
                          <input type="text"  class="input_acct" id="website" name="website" placeholder="Enter Website"/>
-                          <!-- <div class="error_msg">please enter correct</div> -->
+                          <div class="error_msg">{{ $errors->first('website') }} </div>
                         </div>
                          </div>
                     </div>   

@@ -9,7 +9,7 @@
                <ol class="breadcrumb">
                    <span>You are here :</span>
                   <li><a href="#">Home</a></li>
-                  <li class="active">location information</li>
+                  <li class="active">Business Information</li>
                 </ol>
              </div>
           </div>
@@ -24,24 +24,26 @@
              <div class="col-sm-12 col-md-3 col-lg-3">
                <div class="categories_sect sidebar-nav slide_m">
               
-                <div class="sidebar-brand">Business information</div>
+                <div class="sidebar-brand">Business Information</div>
                 <div class="bor_head">&nbsp;</div>
                 <ul class="">
-                    <li class="brdr"><a href="{{ url('/').'/front_users/add_business' }}">Location Information</a></li>
-                  <li class="brdr"><a href="{{-- url('/').'/front_users/contact_business' --}}#">contact information </a></li>
-                  <li class="brdr"><a href="#">other information</a></li>
-                    <li class="brdr has-sub"><a href="#"><span>business keywords</span></a>
+                  <li class="brdr"><a href="{{ url('/').'/front_users/add_business' }}">Business Information</a></li>
+                  <li class="brdr"><a href="{{ url('/').'/front_users/add_location' }}">Location Information</a></li>
+                  <li class="brdr"><a href="{{ url('/').'/front_users/add_contacts' }}">Contact Information</a></li>
+                  <li class="brdr"><a href="{{ url('/').'/front_users/other_details' }}">Other Information</a></li>
+                  <li class="brdr"><a href="{{ url('/').'/front_users/add_services' }}">Video/Pictures/Services</a></li>
+                   <!--  <li class="brdr has-sub"><a href="#"><span>business keywords</span></a>
                     <ul class="make_list" style="display:none;">
                      <li><a href="#">view/remove keywords</a> </li>
                          <li><a href="#">add keywords</a></li> 
                        </ul>
                      </li>
-                  <li class="brdr"><a href="#">upload video/logo/pictures</a></li>
+                  <li class="brdr"><a href="#">upload video/logo/pictures</a></li> -->
                 </ul>
                 <div class="clearfix"></div>
                </div>
                 
-                <div class="categories_sect sidebar-nav slide_m">
+               <!--  <div class="categories_sect sidebar-nav slide_m">
                  <div class="sidebar-brand">Service Request</div>
                  <div class="bor_head">&nbsp;</div>
                  <ul class="">
@@ -49,7 +51,7 @@
                   <li class="brdr"><a href="#">Submit An online Request/Complaint</a></li>
                   </ul>
                 <div class="clearfix"></div>
-                </div>
+                </div> -->
             </div> 
 
             {{-- view('front.user.business_sidebar') --}}
@@ -74,7 +76,7 @@
               @endif 
              
               <div class="my_whit_bg">
-                 <div class="title_acc">Please provide home and office address</div>
+                 <div class="title_acc">Please Provide Business Information</div>
                  <div class="row">
 
                   <form class="form-horizontal" 
@@ -90,7 +92,7 @@
                     <div class="profile_box">
                     
                     <div class="ig_profile" id="dvPreview"  >
-                      <img src="{{ url('/') }}/images/front/no-profile.png" style=" " id="preview_profile_pic"  />
+                      <img src="{{ url('/') }}/images/front/no-profile.png" id="preview_profile_pic"/>
                     </div>
                   <div class="button_shpglst">
                     <div style="" class="fileUpload or_btn">
@@ -100,6 +102,7 @@
                      <div class="remove_b" onclick="clearPreviewImage()"><a href="#" style=""><i class="fa fa-times"></i> Remove</a></div>
                      <div class="clr"></div>
                      <div class="line">&nbsp;</div>
+                      <div class="error_msg">{{ $errors->first('business_image') }} </div>
                   </div>                  
               </div>
                    </div>
@@ -109,143 +112,38 @@
                 <div class="box_profile">
                     <div class="user_box_sub">
                     <div class="row">
-                    <div class="col-lg-3  label-text">Category :</div>
-                    <div class="col-sm-9 col-md-9 col-lg-9 m_l">
-
-                    <select class="input_acct"  name="category" >
-                      <option value="">Select Category</option>
-                          @if (isset($arr_category)&& (count($arr_category) > 0))
-                            @foreach($arr_category as $cat)
-                              <option value="{{ $cat['cat_id'] }}">{{ $cat['title'] }}</option>
-                            @endforeach  
-                          @endif                       
-                    </select>
-                </div>
-              </div>
-            </div>
-
-
-                    <div class="user_box_sub">
-                      <div class="row">
-                       <div class="col-lg-3  label-text">Business Name :</div>
-                        <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="business_name" 
-                                class="input_acct"
-                                placeholder="Enter Business Name" />
-                          <div class="error_msg"> </div>
-                        </div>
-                    </div>
-                    </div>
-
-                     <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-3  label-text">Building:</div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="building" 
-                                class="input_acct"
-                                placeholder="Enter Building's Name" />
-                        </div>
-                         </div>
-                    </div>
-
-                    <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-3  label-text">Street:</div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="street" 
-                                class="input_acct"
-                                placeholder="Enter Street's Name" />
-                        </div>
-                         </div>
-                    </div>
-
-                     <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-3  label-text">Landmark:</div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="landmark" 
-                                class="input_acct"
-                                placeholder="Enter Landmark's Name" />
-                        </div>
-                         </div>
-                    </div>
-
-                     <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-3  label-text">Area:</div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="area" 
-                                class="input_acct"
-                                placeholder="Enter Area's Name" />
-                        </div>
-                         </div>
-                    </div>
-
-          <div class="user_box_sub">
-            <div class="row">
-             <div class="col-lg-3  label-text">City :</div>
-              <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                <select class="input_acct"  id="city" name="city">
-                  <option value="">Select City</option>
-                  @if (isset($arr_city)&& (count($arr_city) > 0))
-                    @foreach($arr_city as $city)
-                        <option value="{{ $city['id'] }}">{{ $city['city_title'] }}</option>
-                    @endforeach  
-                  @endif 
-                  </select>
-                </div>
-              </div>
-            </div>
-
-          <div class="user_box_sub">
-           <div class="row">
-            <div class="col-lg-3  label-text">State :</div>
-              <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                <select class="input_acct" name="state" id="state" >
-                  <option id="show_state" value="" >State</option>
-                </select>
-              </div>
-            </div>
-          </div>                                                                                                    
-
-
-          <div class="user_box_sub">
-            <div class="row">
-             <div class="col-lg-3  label-text">Country :</div>
-              <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-               <select class="input_acct"  name="country" id="country">
-                  <option value="" id="show_country" >Country</option>
-                 </select>
-                </div>
-              </div>
-            </div>         
-
-
-              <div class="user_box_sub">
-                <div class="row">
-                  <div class="col-lg-3  label-text">Mobile No:</div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                      <input type="text" name="mobile_number" class="input_acct" placeholder="Enter Mobile Number" />
+                      <div class="col-lg-3  label-text">Category :</div>
+                        <div class="col-sm-9 col-md-9 col-lg-9 m_l">
+                          <select class="input_acct"  name="category" >
+                            <option value="">Select Category</option>
+                                @if (isset($arr_category)&& (count($arr_category) > 0))
+                                  @foreach($arr_category as $cat)
+                                    <option value="{{ $cat['cat_id'] }}">{{ $cat['title'] }}</option>
+                                  @endforeach  
+                                @endif                       
+                          </select>
+                          <div class="error_msg">{{ $errors->first('category') }} </div>
+                      </div>
                     </div>
                   </div>
-              </div>
 
-               <div class="user_box_sub">
-                 <div class="row">
-                    <div class="col-lg-3  label-text">Landline No:</div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="landline_number"  class="input_acct" placeholder="Enter Landline Number" />
-                    </div>
+
+                  <div class="user_box_sub">
+                    <div class="row">
+                     <div class="col-lg-3  label-text">Business Name :</div>
+                      <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                       <input type="text" name="business_name" 
+                              class="input_acct"
+                              placeholder="Enter Business Name" />
+                        <div class="error_msg">{{ $errors->first('business_name') }} </div>
+                      </div>
                   </div>
-                </div>
-                  
-                  
-                    
+                  </div>
                     </div>
                   </div>
                </div>
              <div class="button_save1">
-                    <button type="submit" class="btn btn-post" name="add_business" style="float: left; margin-left:200px; ">Save &amp; continue</button>
+                    <button type="submit" class="btn btn-post" name="add_business" style="float: left; margin-left:350px; ">Save &amp; continue</button>
                     <!-- <a href="#" class="btn btn-post pull-left">previous</a>
                     <a href="#" class="btn btn-post">Save &amp; exit</a>
                     <a href="#" class="btn btn-post pull-right">Next</a> -->

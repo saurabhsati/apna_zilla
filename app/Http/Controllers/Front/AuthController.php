@@ -158,11 +158,12 @@ class AuthController extends Controller
         {
             $credentials   = [ 'email' => $email ];
             $existing_user = Sentinel::findUserByCredentials($credentials);
-
             $login_status  = Sentinel::login($existing_user); // process login a user
+            //dd($login_status);
 
             Session::set('user_name', $fname);
             Session::set('user_mail', $email);
+            //Session::set('user_id', $email);
 
            Session::flash('success','Login Successfull');
             
@@ -274,9 +275,9 @@ class AuthController extends Controller
                 foreach ($arr_user_info as $user)
                 {
                     $user_id = base64_encode($user['id']) ;
-                    Session::put('user_id', $user_id);
+                    Session::set('user_id', $user_id);
                     Session::set('user_name', $user['first_name']);
-
+                    Session::set('user_mail', $user['email']);
                 }
                 Session::flash('success','Login Successfull.');
                 $json = "SUCCESS";

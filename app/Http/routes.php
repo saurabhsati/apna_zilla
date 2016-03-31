@@ -468,8 +468,15 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::post('add_business_details',		    	['as' => 'business_add' 	        				,'uses' =>'Front\UserController@add_business_details']);
 		// for showing contact information page for business
 		Route::get('add_contacts',		    			['as' => 'business_contacts' 	        			,'uses' =>'Front\UserController@show_business_contacts_details']);
-
-
+		// for saving business data.
+		Route::post('add_location_details',		    	['as' => 'add_location' 	        				,'uses' =>'Front\UserController@add_location_details']);	
+		// For adding other inforamation  for business
+		Route::get('other_details',		    			['as' => 'other_information' 	        			,'uses' =>'Front\UserController@show_other_info_details']);
+		// For getting location info
+		Route::get('add_location',		    			['as' => 'show_location_details' 	        		,'uses' =>'Front\UserController@show_location_details']);
+		// For getting Services Page.
+		Route::get('add_services',		    			['as' => 'show_services_details' 	        	    ,'uses' =>'Front\UserController@show_services_details']);
+		
 
 	    Route::get('edit_business/{enc_id}',		    ['as' => 'business_edit' 	        				,'uses' =>'Front\UserController@edit_business']);
 		Route::post('update_business_details/{enc_id}',	['as' => 'front_users_store_business_details'       ,'uses' =>'Front\UserController@update_business_details']);

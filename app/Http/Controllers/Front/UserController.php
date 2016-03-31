@@ -11,6 +11,7 @@ use App\Models\CategoryModel;
 use App\Models\CityModel;
 use App\Models\StateModel;
 use App\Models\CountryModel;
+use App\Models\ZipModel;
 
 use Session;
 use Sentinel;
@@ -372,8 +373,9 @@ class UserController extends Controller
 
         return view('front.user.my_business',compact('arr_business_info','cat_title'));
     }
-
 #######
+ 
+
     public function add_business()
     {
         //Getting all the details of the Category Table
@@ -398,6 +400,8 @@ class UserController extends Controller
      if($obj_country_full_details) {
         $arr_country = $obj_country_full_details->toArray();
      }
+
+
         return view('front.user.add_business',compact('arr_category','arr_city','arr_state','arr_country'));
     }
 
@@ -437,9 +441,93 @@ class UserController extends Controller
        return response()->json($arr_data);
     }
 
-
     public function add_business_details(Request $request)
     {
+        $arr_rules = array();
+        $arr_rules['business_name'] = "required";
+        $arr_rules['category']      = "required";
+       
+        $validator = Validator::make($request->all(),$arr_rules);
+
+        if($validator->fails())                                                                 
+        {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+      
+        $business_image  = "default.jpg";
+
+        if ($request->hasFile('business_image'))
+        {
+            $profile_pic_valiator = Validator::make(array('business_image'=>$request->file('business_image')),array( 'business_image' => 'mimes:jpg,jpeg,png' ));
+
+            if ($request->file('business_image')->isValid() && $profile_pic_valiator->passes())
+            {
+                $cv_path            = $request->file('business_image')->getClientOriginalName();
+                $image_extension    = $request->file('business_image')->getClientOriginalExtension();
+                $image_name         = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
+                $request->file('business_image')->move($this->business_base_img_path, $image_name);
+                $business_image     = $image_name;
+            }
+            else
+            {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+        }
+
+        $obj_user = UserModel::where('email',Session::get('user_mail'))->first(['id']);
+        //Session::get('user_mail');
+        if($obj_user)
+        {
+            $user_id = $obj_user->id;
+        }
+        else
+        {   
+            Session::flash('error','Error While Adding Business');
+            return redirect()->back();
+        }
+        
+        $arr_data = array();
+        $arr_data['user_id']           =        $user_id;
+        $arr_data['business_name']     =        $request->input('business_name');
+        $arr_data['business_cat']      =        $request->input('category');
+        $arr_data['main_image']        =        $business_image;
+        
+        //dd($arr_data);
+
+        $business_add = BusinessListingModel::create($arr_data);
+        if($business_add)
+        {
+            Session::flash('success','Business Added Successfully');
+            return redirect(url('/').'/front_users/add_location/'.base64_encode($arr_data['business_cat']));
+        }else {
+            Session::flash('error','Error While Adding Business');
+        }   
+
+        /*if($business_add)
+        {
+            $request->session()->put('category_id', $request->input('category'));
+            return redirect(url('/')."front_users/contacts");   
+        }*/
+        //Session::flash('success','Business Added Successfully');
+        return redirect()->back();
+    }
+
+
+    public function add_location_details(Request $request)
+    {
+        
+Building:
+Street:
+Landmark:
+Area:
+City :
+State :
+Country :
+Zipcode :
+Map :
+            
+
         $arr_rules = array();
         $arr_rules['business_name'] = "required";
         $arr_rules['category']      = "required";
@@ -447,9 +535,9 @@ class UserController extends Controller
         $arr_rules['landmark']      = "required";
         $arr_rules['area']          = "required";
         $arr_rules['city']          = "required";
-        $arr_rules['building']      = "required";
-        $arr_rules['mobile_number']  = "required";
-        $arr_rules['landline_number'] = "required";
+        
+        /*$arr_rules['mobile_number']  = "required";
+        $arr_rules['landline_number'] = "required";*/
 
         $validator = Validator::make($request->all(),$arr_rules);
 
@@ -457,7 +545,6 @@ class UserController extends Controller
         {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        
 
         $business_image  = "default.jpg";
 
@@ -475,12 +562,13 @@ class UserController extends Controller
             }
             else
             {
-                return redirect()->back();
+                return redirect()->back()->withErrors($validator)->withInput();
             }
 
         }
-
-
+        
+        /*echo Session::get('user_mail');
+        exit;*/
         $arr_data = array();
         $arr_data['user_id']           =        Sentinel::getUser()->id;
         $arr_data['business_name']     =        $request->input('business_name');
@@ -492,20 +580,25 @@ class UserController extends Controller
         $arr_data['city']              =        $request->input('city');
         $arr_data['state']             =        $request->input('state');
         $arr_data['country']           =        $request->input('country');
-        $arr_data['mobile_number']     =        $request->input('mobile_number');
-        $arr_data['landline_number']   =        $request->input('landline_number');
         $arr_data['main_image']        =        $business_image;
         
-        // dd($arr_data);
+         dd($arr_data);
+
 
         $business_add = BusinessListingModel::create($arr_data);
+        if($business_add)
+        {
+            Session::flash('success','Business Added Successfully');
+        }else {
+            Session::flash('success','Error While Adding Business');
+        }   
 
         /*if($business_add)
         {
             $request->session()->put('category_id', $request->input('category'));
             return redirect(url('/')."front_users/contacts");   
         }*/
-         Session::flash('success','Business Added Successfully');
+        //Session::flash('success','Business Added Successfully');
         return redirect()->back();
     }
 
@@ -515,6 +608,30 @@ class UserController extends Controller
         return view('front.user.add_contacts');
     }
 
+    public function show_other_info_details()
+    {
+        return view('front.user.add_other_information');
+    }   
+
+    public function show_location_details()
+    {
+        $obj_city_full_details = CityModel::get();
+
+        if($obj_city_full_details){    
+            $arr_city = $obj_city_full_details->toArray();
+        }
+        $obj_zipcode_res = ZipModel::get();
+        if( $obj_zipcode_res != FALSE)
+        {
+            $arr_zipcode = $obj_zipcode_res->toArray();
+        }
+        return view('front.user.add_location',compact('arr_city','arr_zipcode'));
+    }
+
+    public function show_services_details()
+    {
+        return view('front.user.add_services');
+    }
 
 #######
 
