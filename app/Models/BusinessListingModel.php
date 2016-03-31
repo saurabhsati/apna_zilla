@@ -81,7 +81,7 @@ class BusinessListingModel extends Model
 
     public function zipcode_details()
     {
-        return $this->belongsTo('App\Models\ZipModel','pincode','id');
+        return $this->belongsTo('App\Models\PlaceModel','pincode','id');
     }
     public function image_upload_details()
     {
