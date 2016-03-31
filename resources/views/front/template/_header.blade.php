@@ -32,6 +32,8 @@
 
       <link rel="stylesheet" href="{{ url('/') }}/assets/front/css/style.css" type="text/css"/>
 
+      <script type="text/javascript" src="{{url('/')}}/js/front/jquery.rating.js"></script>
+      <link rel="stylesheet" href="{{ url('/') }}/css/front/jquery.rating.css" type="text/css"/>
 
 
       <script type="text/javascript">

@@ -672,6 +672,10 @@ If you need any more details on Justdial Verified, please refer to
 
   });
 </script>
+<<<<<<< HEAD
+        <!-- jquery validation -->
+        <script type="text/javascript" src="{{url('/')}}/assets/jquery-validation/dist/jquery.validate.min.js"></script>  
+=======
  <script type="text/javascript">
 var supports = (function () {
     var a = document.documentElement,
@@ -754,6 +758,7 @@ if ($("html").hasClass("no-touch")) {
 
  } //END IF no-touch for hover script & removeAttr for the links to work
 </script>
+>>>>>>> 4a347079d46f02ec58fa07a221f87fb8e5d23bce
 
         <!-- Listing details Tabbing End -->
         <script src="{{ url('/') }}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>

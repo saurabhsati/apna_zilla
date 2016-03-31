@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class StateModel extends Model
 {
     protected $table = 'states';
+
     protected $fillable = [
 						    'state_title',
 						    'country_id'
 						      ];
+
 
     public function country_details()
     {
