@@ -33,11 +33,16 @@
                       <span id="display_msg"> </span>
                   </div>
                 @endif
+
+                <div class="alert alert-danger alert-dismissible" id="error_div" style="display: none;">
+                    <strong>Error!</strong>
+                    Incorrect Login Credentials
+                </div>
                   <div class="login_box">
                      <div class="title_login">Login with your email and password</div>
                      <div class="user_box">
-                        <div class="label_form">Email</div>
-                        <input type="text" name="email" id="email_login" class="input_box" placeholder="enter email address"/>
+                        <div class="label_form">Email/Mobile No.</div>
+                        <input type="text" name="email" id="email_login" class="input_box" placeholder="Enter Email Address/ Mobile No."/>
                      </div>
                      <div class="user_box">
                         <div class="label_form">Password</div>
@@ -158,6 +163,11 @@
                         <input type="text" name="email" class="input_box" placeholder="Enter Email Address"/>
                      </div>
                      
+                     <div class="user_box">
+                        <div class="label_form">Mobile</div>
+                        <input type="text" name="mobile" class="input_box" placeholder="Enter mobile No."/>
+                     </div>
+
                      <div class="user_box">
                         <div class="label_form">Password</div>
                         <input type="password" name="password" class="input_box" placeholder="Enter Password"/>
@@ -661,10 +671,10 @@ If you need any more details on Justdial Verified, please refer to
             if(response == "SUCCESS" )
             {
                location.href= site_url+"/front_users/profile";
-            }else
+            }
+            else if(response == "Invalid Credentials")
             {
-                $("#login_error").css("display", "block");
-                $('#display_msg').html(response);
+                $('#error_div').show();
             }
          }
       });

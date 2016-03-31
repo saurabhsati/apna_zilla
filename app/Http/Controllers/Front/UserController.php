@@ -38,6 +38,7 @@ class UserController extends Controller
         $arr_rules = array();
         $arr_rules['first_name']   =   "required";
         $arr_rules['last_name']    =   "required";
+        $arr_rules['mobile']       =   "required";
         $arr_rules['email']        =   "required|email";
         $arr_rules['password']     =   "required|min:6|confirmed";
         
@@ -51,6 +52,7 @@ class UserController extends Controller
         $first_name     =  $request->input('first_name');
         $last_name      =  $request->input('last_name');
         $email          =  $request->input('email');
+        $mobile         =  $request->input('mobile');
         $password       =  $request->input('password');
     
         /* Duplication Check*/
@@ -66,6 +68,7 @@ class UserController extends Controller
             'first_name' => $first_name,
             'last_name'  => $last_name,
             'email'      => $email,
+            'mobile_no'  => $mobile,
             'password'   => $password,
             
            ]);
