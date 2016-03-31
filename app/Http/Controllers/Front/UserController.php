@@ -516,28 +516,14 @@ class UserController extends Controller
 
     public function add_location_details(Request $request)
     {
-        
-Building:
-Street:
-Landmark:
-Area:
-City :
-State :
-Country :
-Zipcode :
-Map :
-            
-
+     
         $arr_rules = array();
-        $arr_rules['business_name'] = "required";
-        $arr_rules['category']      = "required";
         $arr_rules['building']      = "required";
         $arr_rules['landmark']      = "required";
         $arr_rules['area']          = "required";
         $arr_rules['city']          = "required";
-        
-        /*$arr_rules['mobile_number']  = "required";
-        $arr_rules['landline_number'] = "required";*/
+        $arr_rules['state']         = "required";
+        $arr_rules['country']       = "required";
 
         $validator = Validator::make($request->all(),$arr_rules);
 
@@ -545,60 +531,42 @@ Map :
         {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
-        $business_image  = "default.jpg";
-
-        if ($request->hasFile('business_image'))
-        {
-            $profile_pic_valiator = Validator::make(array('business_image'=>$request->file('business_image')),array( 'business_image' => 'mimes:jpg,jpeg,png' ));
-
-            if ($request->file('business_image')->isValid() && $profile_pic_valiator->passes())
-            {
-                $cv_path            = $request->file('business_image')->getClientOriginalName();
-                $image_extension    = $request->file('business_image')->getClientOriginalExtension();
-                $image_name         = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
-                $request->file('business_image')->move($this->business_base_img_path, $image_name);
-                $business_image     = $image_name;
-            }
-            else
-            {
-                return redirect()->back()->withErrors($validator)->withInput();
-            }
-
-        }
         
-        /*echo Session::get('user_mail');
-        exit;*/
+        $obj_user = UserModel::where('email',Session::get('user_mail'))->first(['id']);
+        if($obj_user)
+        {
+            $user_id = $obj_user->id;
+        }
+        else
+        {   
+            Session::flash('error','Error While Adding Location Information.');
+            return redirect()->back();
+        }
+
         $arr_data = array();
-        $arr_data['user_id']           =        Sentinel::getUser()->id;
-        $arr_data['business_name']     =        $request->input('business_name');
+        $business_category             =        $request->input('category');
+        $arr_data['user_id']           =        $user_id;
         $arr_data['building']          =        $request->input('building');
         $arr_data['landmark']          =        $request->input('landmark');
         $arr_data['area']              =        $request->input('area');
         $arr_data['street']            =        $request->input('street');
-        $arr_data['business_cat']      =        $request->input('category');
         $arr_data['city']              =        $request->input('city');
         $arr_data['state']             =        $request->input('state');
         $arr_data['country']           =        $request->input('country');
-        $arr_data['main_image']        =        $business_image;
+        $arr_data['zipcode']           =        $request->input('zipcode');
+        $arr_data['lat']               =        $request->input('lat');
+        $arr_data['lng']               =        $request->input('lng');
         
-         dd($arr_data);
 
-
-        $business_add = BusinessListingModel::create($arr_data);
-        if($business_add)
+        $location_add = BusinessListingModel::where(array('user_id'=>$user_id,'business_cat'=>$business_category))->update($arr_data);
+        if($location_add)
         {
             Session::flash('success','Business Added Successfully');
+            return redirect(url('/').'/front_users/add_contacts/'.base64_encode($arr_data['business_cat']));
         }else {
             Session::flash('success','Error While Adding Business');
         }   
 
-        /*if($business_add)
-        {
-            $request->session()->put('category_id', $request->input('category'));
-            return redirect(url('/')."front_users/contacts");   
-        }*/
-        //Session::flash('success','Business Added Successfully');
         return redirect()->back();
     }
 
