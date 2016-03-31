@@ -244,7 +244,7 @@ body:not(.device-touch) .social-icon i {transition: all 0.3s ease 0s;}
 #login_poup .login_box { padding-bottom: 10px;clear: both;margin: 0 auto;max-width: 321px;padding-top: 13px;text-align: center;width: 100%;}
 #login_poup .title_login { color: #535353;font-family: "varela_roundregular",serif;font-size: 16px;}
 #login_poup .label_form {color: #807f7f;margin-bottom: 6px;text-align: left;}
-.input_box {background: #f1f1f0;border: 1px solid #e3e3e3;height: 40px;margin-bottom: 7px;width: 100%; text-indent: 6px; text-transform: capitalize;}
+.input_box {background: #f1f1f0;border: 1px solid #e3e3e3;height: 40px;margin-bottom: 7px;width: 100%; text-indent: 6px;}
 .user_box {margin-bottom: 5px;
     margin-top: 8px;
     padding-bottom: 10px;
@@ -1033,3 +1033,73 @@ b.head-t {font-family: "open sans semibold";font-weight: normal;}
 .sub-c > a { color: #666;}
 .enquiry > a { color: #fff !important;cursor: pointer;}
 /*details page popup end here*/
+
+/*deals detail page css start here*/
+.detail_bx h2 {color: #454f59; font-family: "noto_sansregular",sans-serif;font-size: 24px;margin-bottom: 5px;margin-top: 0;}
+.rate_sec li {color: #888;display: inline-block;font-family: open sans;font-size: 17px;margin-right: 10px;}
+.rate_sec span {color: #53a318;font-family: "open sans semibold";font-size: 23px;padding-left: 5px;padding-right: 5px;vertical-align: middle;}
+.deals-detils { background: #fff none repeat scroll 0 0;
+    padding: 5px;
+    width: 100%;}
+
+.social_icon li { border: 0 none;
+    color: #888;
+    display: inline-block;  padding: 8px 6px 0 0;
+    font-family: "open sans semibold";
+    margin-bottom: 10px;}
+.social_icon {margin-top: 10px;
+    padding: 10px 32px;}
+.social_icon > ul {
+    margin-top: 10px;
+}
+.rate_sec {
+    margin-bottom: 12px;
+    margin-top: 10px;
+}
+.social_icon li a.fb {background: rgba(0, 0, 0, 0) url("../images/fb1.png") no-repeat scroll 0 0;cursor: pointer;display: block;height: 20px;
+    transition: all 0.4s ease-in-out 0s;width: 20px;}
+.social_icon li a.fb:hover {background-position: 0 -20px;}
+.social_icon li a.twitter {background: rgba(0, 0, 0, 0) url("../images/twitter1.png") no-repeat scroll 0 0;cursor: pointer;display: block;height: 20px;
+    transition: all 0.4s ease-in-out 0s;width: 20px;}
+.social_icon li a.twitter:hover {background-position: 0 -20px;}
+.social_icon li a.instagram {background: rgba(0, 0, 0, 0) url("../images/instagram1.png") no-repeat scroll 0 0;cursor: pointer;display: block;
+    height: 20px;transition: all 0.4s ease-in-out 0s;width: 20px;}
+.social_icon li a.instagram:hover {background-position: 0 -20px;}
+.social_icon li a.google {background: rgba(0, 0, 0, 0) url("../images/google1.png") no-repeat scroll 0 0;cursor: pointer;display: block;height: 20px;
+    transition: all 0.4s ease-in-out 0s;width: 20px;}
+.social_icon li a.google:hover {background-position: 0 -20px;}
+.social_icon li a.pioneer {background: rgba(0, 0, 0, 0) url("../images/pioneer1.png") no-repeat scroll 0 0;cursor: pointer;display: block;height: 20px;
+    transition: all 0.4s ease-in-out 0s;width: 20px;}
+.social_icon li a.pioneer:hover {background-position: 0 -20px;}
+.social_icon li a.in {background: rgba(0, 0, 0, 0) url("../images/in1.png") no-repeat scroll 0 0;cursor: pointer;display: block;
+    height: 20px;transition: all 0.4s ease-in-out 0s;width: 20px;}
+.social_icon li a.in:hover {background-position: 0 -20px;}
+.pad-dels-details { background: #ffffff none repeat scroll 0 0;border: 1px solid #eaeaea;padding: 20px;}
+.pad-dels-details h5 {font-size: 16px;font-weight: normal;margin-bottom: 0;text-transform: capitalize;}
+.divider {background: #ececec none repeat scroll 0 0;height: 1px;line-height: normal;margin: 15px 0;}
+.pad-dels-details h4 {color: #6c6e71;font-size: 15px;font-weight: normal;margin-bottom: 20px;text-align: justify;}
+.detail_link li {color: #6c6e71;font-size: 14px;line-height: 29px;list-style: inside none disc;}
+.detail_link {margin-top: 8px;}
+thead th {-moz-border-bottom-colors: none; -moz-border-left-colors: none;-moz-border-right-colors: none; -moz-border-top-colors: none;
+    border-color: #d4e8c5;border-image: none;border-style: solid;border-width: 1px 0;}
+.table.newdet th { text-align: center;}
+table.table.newdet { padding: 10px !important; margin-top: 10px; text-align: center; width: 17%;}
+table.table.newdet tr td { border: 0 none !important;}
+.buy_text {  color: #151e27;
+    font-family: "open sans";
+    font-size: 18px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: center;}
+.buy_price {color: #81b441;
+    font-family: "open sans semibold";
+    font-size: 40px;
+    padding-bottom: 0;
+    vertical-align: middle;}
+.btn.btn-post.center-b {
+     display: block;
+    float: none;
+    margin: 0 auto 20px;
+    text-align: center;
+    width: 80%;
+}

@@ -186,29 +186,7 @@
 
 <!--popup in detail page start here-->
 <!-- Modal -->
-<div class="modal fade" id="share" role="dialog">
-    <div class="modal-dialog">
-     <!-- Modal content-->
-      <div class="modal-content">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-       <div class="modal-body">
-          <p>Share With Friends</p>
-            <div class="soc-menu-top">
-            <ul>
-            <li><a href="#"><img src="{{ url('/') }}/assets/front/images/facebook-so.png" alt="facebook"/><span class="socail_name">Facebook</span></a></li>
-              <li><a href="#"><img src="{{ url('/') }}/assets/front/images/twitter-so.png" alt="twitter"/><span class="socail_name">Twitter</span></a></li>
-              <li><a href="#"><img src="{{ url('/') }}/assets/front/images/googlepls-soc.png" alt="googlepls"/><span class="socail_name">Google +</span></a></li>
-              <li><a href="#"><img src="{{ url('/') }}/assets/front/images/linkind-soc.png" alt="linkind"/><span class="socail_name">Linkedin</span></a></li>
-              <li><a href="#"><img src="{{ url('/') }}/assets/front/images/pins-soc.png" alt="pins"/><span class="socail_name">Pinterest</span></a></li>
-              <li><a href="#"><img src="{{ url('/') }}/assets/front/images/VKontakte-so.png" alt="VKontakte"/><span class="socail_name">VKontakte</span></a></li>
-              <li><a href="#"><img src="{{ url('/') }}/assets/front/images/msg-so.png" alt="msg"/><span class="socail_name">SMS</span></a></li>
-              <li><a href="#"><img src="{{ url('/') }}/assets/front/images/email-soc.png" alt="email"/><span class="socail_name">Email</span></a></li>
-            </ul>
-            </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
 <div class="modal fade" id="sms" role="dialog">
     <div class="modal-dialog">
      <!-- Modal content-->
@@ -404,13 +382,16 @@ If you need any more details on Justdial Verified, please refer to
                <div class="row">
                   <div class="col-sm-12 col-md-12 col-lg-12">
                      <div class="row">
+                     @if(sizeof($about_us)>0)
                         <div class="col-sm-3 col-md-3 col-lg-3">
-                           <div class="footer_heading">About US</div>
+                         <div class="footer_heading">{{$about_us['page_title']}}</div>
                            <div class="heading_bor"></div>
                            <div class="menu_name">
-                              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of
+                            <?php echo substr($about_us['page_desc'],0,250).'..';?>
                            </div>
                         </div>
+
+                       @endif
                         <div class="col-sm-3 col-md-3 col-lg-3">
                            <div class="footer_heading">Quick link</div>
                            <div class="heading_bor"></div>
@@ -429,10 +410,14 @@ If you need any more details on Justdial Verified, please refer to
                            <div class="heading_bor"></div>
                            <div class="menu_name">
                               <ul>
-                                 <li><a href="{{ url('/') }}/Mumbai/popular-city"><i class="fa fa-square"></i>Mumbai</a></li>
-                                 <li><a href="{{ url('/') }}/Delhi/popular-city"><i class="fa fa-square"></i>Delhi</a></li>
+                               @if(sizeof($popular_cities)>0)
+                                @foreach($popular_cities as $city)
+                                 <li><a href="{{ url('/') }}/{{$city['city_title']}}/popular-city"><i class="fa fa-square"></i>{{$city['city_title']}}</a></li>
+                                 @endforeach
+                                 @endif
+                                <!--  <li><a href="{{ url('/') }}/Delhi/popular-city"><i class="fa fa-square"></i>Delhi</a></li>
                                  <li><a href="{{ url('/') }}/kolkata/popular-city"><i class="fa fa-square"></i>kolkata</a></li>
-                                 <li><a href="{{ url('/') }}/Bangalore/popular-city"><i class="fa fa-square"></i>Bangalore</a></li>
+                                 <li><a href="{{ url('/') }}/Bangalore/popular-city"><i class="fa fa-square"></i>Bangalore</a></li> -->
                               </ul>
                            </div>
                         </div>
@@ -440,12 +425,10 @@ If you need any more details on Justdial Verified, please refer to
                            <div class="footer_heading">Contact Info</div>
                            <div class="heading_bor"></div>
                            <div class="menu_name contect-i">
-                              <ul>
-                                 <li><a href="#"><i class="fa fa-envelope"></i>Email : info@rightnext.com</a></li>
-                                 <li><a href="#"><i class="fa fa-phone phone-i"></i>Phone : +01-234-5789 </a></li>
-                                 <li><a href="#"><i class="fa fa-map-marker phone-i"></i>Address : Rightnext Mall 39,
-                                    M.G. Road Boulevard Ground Floor
-                                    London</a>
+                            <ul>
+                                 <li><a href="#"><i class="fa fa-envelope"></i>Email :  @if(isset($site_settings['site_email_address'])){{$site_settings['site_email_address']}}@endif</a></li>
+                                 <li><a href="#"><i class="fa fa-phone phone-i"></i>Phone :  @if(isset($site_settings['phone_number'])){{$site_settings['phone_number']}}@endif </a></li>
+                                 <li><a href="#"><i class="fa fa-map-marker phone-i"></i>Address :  @if(isset($site_settings['site_address'])){{$site_settings['site_address']}}@endif</a>
                                  </li>
                               </ul>
                            </div>
@@ -691,8 +674,8 @@ If you need any more details on Justdial Verified, please refer to
 
 
         <!-- Listing details Tabbing End -->
-         <script src="{{ url('/') }}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>
-            <link href="{{ url('/') }}/assets/front/css/easy-responsive-tabs.css" rel="stylesheet" type="text/css" />
-             <script src="{{ url('/') }}/assets/front/js/jquery-ui.js" type='text/javascript'></script>
+        <script src="{{ url('/') }}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>
+        <link href="{{ url('/') }}/assets/front/css/easy-responsive-tabs.css" rel="stylesheet" type="text/css" />
+        <script src="{{ url('/') }}/assets/front/js/jquery-ui.js" type='text/javascript'></script>
    </body>
 </html>

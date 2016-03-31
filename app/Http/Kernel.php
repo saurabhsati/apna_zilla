@@ -29,14 +29,15 @@ class Kernel extends HttpKernel
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
+            \App\Http\Middleware\GlobalSiteConfig::class,
         ],
 
         'api' => [
             'throttle:60,1',
         ],
         'sentinel_check' => [
-            \App\Http\Middleware\SentinelCheck::class  
-        ]   
+            \App\Http\Middleware\SentinelCheck::class
+        ]
 
     ];
 

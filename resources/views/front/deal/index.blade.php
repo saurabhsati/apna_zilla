@@ -64,7 +64,7 @@
                 <div class="col-sm-12 col-md-12 col-lg-12">
 
                   <div class="delas">
-                  <div id="dash_tab">
+                  <div id="dash_tab" style="background:#fff;padding:10px;">
                      <ul class="resp-tabs-list">
                         <li>Latest Deals</li>
                          <img class="dash_line" alt="line" src="{{ url('/')}}/assets/front/images/dash_menu_line.jpg">
