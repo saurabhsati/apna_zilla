@@ -85,6 +85,12 @@
          <div class="btn-group">
           <a href="{{ url('/web_admin/states/create')}}" class="btn btn-primary btn-add-new-records">Add New state</a>
           </div>
+
+           <div class="btn-group">
+                <a href="{{ url('/web_admin/states/export/csv')}}" class="btn btn-warning btn-add-new-records" title="Click to Excel Export"><i class="fa fa-file-excel-o"></i>
+</a>
+                </div>
+
           <div class="btn-group">
             <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
                     title="Multiple Active/Unblock"

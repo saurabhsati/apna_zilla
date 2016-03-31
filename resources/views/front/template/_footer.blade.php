@@ -157,6 +157,7 @@
                         <div class="label_form">Email</div>
                         <input type="text" name="email" class="input_box" placeholder="Enter Email Address"/>
                      </div>
+                     
                      <div class="user_box">
                         <div class="label_form">Password</div>
                         <input type="password" name="password" class="input_box" placeholder="Enter Password"/>
@@ -173,7 +174,7 @@
                <div class="modal-footer">
                   <div class="login_box">
                      <button type="submit" class="yellow1 ui button">Create An Account</button>
-                     <div class="other_valida">Already have an account? <a href="#">Sign in</a></div>
+                     <div class="other_valida">Already have an account? <a href="#login_poup">Sign in</a></div>
                   </div>
                </div>
                <div class="clr"></div>

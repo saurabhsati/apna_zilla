@@ -76,7 +76,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::post('multi_action',						['as' => 'admin_states_block' 			,'uses' => 'Admin\StateController@multi_action']);
 			Route::any('store',								['as' => 'admin_states_store'			,'uses' => 'Admin\StateController@store']);
 			Route::get('delete/{enc_id}',					['as' => 'admin_states_delete' 			,'uses' => 'Admin\StateController@delete']);
-
+			Route::get('export/{format}',					['as' => 'admin_states_excel' 		    ,'uses' => 'Admin\StateController@export_excel']);
 		});
 
 		Route::group(array('prefix' => '/cities'), function()
@@ -111,7 +111,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			//Route::any('nearby_destinations/{enc_id}',['as' => 'admin_nearby_destinations' ,'uses' => 'Admin\PlaceController@nearby_destinations']);
 			//Route::any('add_destinations',['as' => 'admin_add_destinations' ,'uses' => 'Admin\PlaceController@add_destinations']);
 			Route::get('delete/{enc_id}',['as' => 'admin_places_delete' ,'uses' => 'Admin\PlaceController@delete']);
-
+			Route::get('export/{format}',					['as' => 'admin_place_excel' 		  ,'uses' => 'Admin\PlaceController@export_excel']);
 		});
 
 		/*-----------------------------------------------------------------------------------*/
