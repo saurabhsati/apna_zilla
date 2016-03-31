@@ -22,7 +22,7 @@
             </span>
             <li>
                 <i class="fa fa-desktop"></i>
-                <a href="{{ url('/').'/web_admin/cities' }}">City</a>
+                <a href="{{ url('/').'/web_admin/places' }}">Places</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
@@ -74,29 +74,29 @@
           <form class="form-horizontal"
                 id="validation-form"
                 method="POST"
-                action="{{ url('/web_admin/cities/update/'.base64_encode($arr_city[0]['id'])) }}"
+                action="{{ url('/web_admin/places/update/'.base64_encode($arr_place[0]['id'])) }}"
                 enctype="multipart/form-data"
                 files="true"
                 >
 
            {{ csrf_field() }}
 
-
+           @if(sizeof($arr_place)>0)
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="country_code">Country Name <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" name="country_code" data-rule-required="true"
-                        value="{{ isset($arr_city[0]['country_details']['country_name'])? strtoupper($arr_city[0]['country_details']['country_name']):'' }}" readonly
+                        value="{{ isset($arr_place[0]['country_details']['country_name'])? strtoupper($arr_place[0]['country_details']['country_name']):'' }}" readonly
                     />
                     <span class='help-block'>{{ $errors->first('country_code') }}</span>
                 </div>
             </div>
 
            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="state">State name<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="state_title">State name<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" name="state_title" data-rule-required="true"
-                        value="{{ isset($arr_city[0]['state_details']['state_title'])?$arr_city[0]['state_details']['state_title']:'' }}"  readonly
+                        value="{{ isset($arr_place[0]['state_details']['state_title'])?$arr_place[0]['state_details']['state_title']:'' }}"  readonly
                      />
                     <span class='help-block'>{{ $errors->first('state_title') }}</span>
                 </div>
@@ -104,12 +104,48 @@
 
 
            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="state">City name<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="city_title">City name<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" name="city_title" data-rule-required="true"
-                        value="{{ isset($arr_city[0]['city_title'])?$arr_city[0]['city_title']:'' }}"
+                        value="{{ isset($arr_place[0]['city_details']['city_title'])?$arr_place[0]['city_details']['city_title']:'' }}" readonly
                      />
                     <span class='help-block'>{{ $errors->first('city_title') }}</span>
+                </div>
+            </div>
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="place_name">Place name<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input class="form-control" name="place_name" data-rule-required="true"
+                        value="{{ isset($arr_place[0]['place_name'])?$arr_place[0]['place_name']:'' }}"
+                     />
+                    <span class='help-block'>{{ $errors->first('city_title') }}</span>
+                </div>
+            </div>
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="state">Postal Code<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input class="form-control" name="postal_code" data-rule-required="true"
+                        value="{{ isset($arr_place[0]['postal_code'])?$arr_place[0]['postal_code']:'' }}"
+                     />
+                    <span class='help-block'>{{ $errors->first('postal_code') }}</span>
+                </div>
+            </div>
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="state">Latitude <i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input class="form-control" name="latitude" data-rule-required="true"
+                        value="{{ isset($arr_place[0]['latitude'])?$arr_place[0]['latitude']:'' }}"
+                     />
+                    <span class='help-block'>{{ $errors->first('latitude') }}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="longitude">longitude <i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input class="form-control" name="longitude" data-rule-required="true"
+                        value="{{ isset($arr_place[0]['longitude'])?$arr_place[0]['longitude']:'' }}"
+                     />
+                    <span class='help-block'>{{ $errors->first('longitude') }}</span>
                 </div>
             </div>
 
@@ -124,7 +160,7 @@
 
             </div>
         </div>
-
+        @endif
 
     </form>
 </div>
