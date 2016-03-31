@@ -266,4 +266,47 @@ class StateController extends Controller
                   ->delete();
     }
 
+    public function export_excel($format="csv")//export excel file
+    {
+        if($format=="csv")
+        {
+            $arr_state = array();
+            $obj_state = StateModel::with(['country_details'])->get();
+
+
+            if($obj_state)
+            {
+                $arr_state = $obj_state->toArray();
+
+                \Excel::create('STATE-'.date('Ymd').uniqid(), function($excel) use($arr_state)
+                {
+                    $excel->sheet('State', function($sheet) use($arr_state)
+                    {
+                        // $sheet->cell('A1', function($cell) {
+                        //     $cell->setValue('Generated on :'.date("d-m-Y H:i:s"));
+                        // });
+
+                        $sheet->row(3, array(
+                            'Sr.No.','States','Country'
+                        ));
+
+                        if(sizeof($arr_state)>0)
+                        {
+                            $arr_tmp = array();
+                            foreach ($arr_state as $key => $state)
+                            {
+                                $arr_tmp[$key][] = $key+1;
+                                $arr_tmp[$key][] = $state['state_title'];
+                                $arr_tmp[$key][] = $state['country_details']['country_name'];
+                            }
+
+                            $sheet->rows($arr_tmp);
+                        }
+
+                    });
+
+                })->export('csv');
+            }
+        }
+    }
 }
