@@ -257,7 +257,7 @@
                            id="user_id"
                            data-rule-required="true"
                            readonly="true"
-                           value="{{ isset($business['zipcode_details']['zipcode'])?$business['zipcode_details']['zipcode']:'' }}"
+                           value="{{ isset($arr_place[0]['postal_code'])?$arr_place[0]['postal_code']:'' }}"
                            />
                     <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
