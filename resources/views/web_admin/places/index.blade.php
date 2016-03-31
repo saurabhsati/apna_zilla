@@ -151,7 +151,7 @@
                   @foreach($arr_paginated_places['data'] as $places)
 
                    <?php
-                          //$show_url = '/web_admin/places/edit/'.base64_encode($places['id']);
+                          $show_url = '/web_admin/places/edit/'.base64_encode($places['id']);
                           //$desctination_url = '/web_admin/places/nearby_destinations/'.base64_encode($places['id']);
                     ?>
 
@@ -161,7 +161,7 @@
                              name="checked_record[]"
                              value="{{ base64_encode($places['id']) }}" />
                     </td>
-                    <td  onclick="show_details('{{ url('/') }}')" > {{ $places['place_name'] }} </td>
+                    <td  onclick="show_details('{{ url('/') .$show_url}}')" > {{ $places['place_name'] }} </td>
                     <td  onclick="show_details('{{ url('/')}}')" >
                     {{ isset($places['city_details']['city_title'])?$places['city_details']['city_title'].'::':''}}
                     {{ isset($places['state_details']['state_title'])?$places['state_details']['state_title'].'::':''}}

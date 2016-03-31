@@ -68,7 +68,7 @@ class PlaceController extends Controller
 
      public function show($enc_id)
     {
-        $page_title =   "Show city";
+        $page_title =   "Show Place";
         $id = base64_decode($enc_id);
         $arr_places = array();
         $obj_places_res = PlaceModel::where('id',$id)->with(['country_details','state_details','city_details'])->get();
@@ -78,51 +78,98 @@ class PlaceController extends Controller
             $arr_places = $obj_places_res->toArray();
         }
 
-      return view('web_admin.places.show',compact('page_title','arr_cities'));
+      return view('web_admin.places.show',compact('page_title','arr_places'));
     }
     public function edit($enc_id)
     {
         $id = base64_decode($enc_id);
-        $arr_city = array();
+        $arr_place = array();
 
-        $page_title = "Edit City";
+        $page_title = "Edit Place";
 
-        $obj_cities_res = PlaceModel::where('id',$id)->with(['country_details','state_details','city_details'])->get();
+        $obj_places_res = PlaceModel::where('id',$id)->with(['country_details','state_details','city_details'])->get();
 
-        if( $obj_cities_res != FALSE)
+        if( $obj_places_res != FALSE)
         {
-            $arr_city = $obj_cities_res->toArray();
+            $arr_place = $obj_places_res->toArray();
         }
 
-        return view('web_admin.places.edit',compact('page_title','arr_city'));
+        return view('web_admin.places.edit',compact('page_title','arr_place'));
     }
+    public function update($enc_id,Request $request)
+    {
+        $id = base64_decode($enc_id);
+        $arr_rules = array();
+        $arr_rules['place_name'] = "required";
+        $arr_rules['postal_code'] = "required";
+        $arr_rules['latitude'] = "required";
+        $arr_rules['longitude'] = "required";
+       // $arr_rules['is_popular'] = "required";
 
+         echo $check_popular = $request->input('is_popular');
+
+        if($check_popular=="on")
+        $is_popular = 1;
+
+        else
+        $is_popular = 0;
+
+        $validator = Validator::make($request->all(),$arr_rules);
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $form_data = array();
+        $form_data = $request->all();
+
+
+        $arr_data['place_name'] = $form_data['place_name'];
+        $arr_data['postal_code'] = $form_data['postal_code'];
+        $arr_data['latitude'] = $form_data['latitude'];
+        $arr_data['longitude'] = $form_data['longitude'];
+
+        //dd($arr_data);
+
+
+
+        if(PlaceModel::where('id',$id)->update($arr_data))
+        {
+            Session::flash('success','Place Updated Successfully');
+        }
+        else
+        {
+            Session::flash('error','Problem Occurred, While Updating Place');
+        }
+
+        return redirect('/web_admin/places/edit/'.$enc_id);
+    }
     public function toggle_status($enc_id,$action)
     {
         if($action=="activate")
         {
             $this->_activate($enc_id);
 
-            Session::flash('success','City/Cities Activated Successfully');
+            Session::flash('success','Place/Places Activated Successfully');
         }
         elseif($action=="deactivate")
         {
             $this->_block($enc_id);
 
-            Session::flash('success','City/Cities Deactivate/Blocked Successfully');
+            Session::flash('success','Place/Places Deactivate/Blocked Successfully');
         }
 
-        return redirect('/web_admin/cities');
+        return redirect('/web_admin/places');
     }
     public function delete($enc_id)
     {
         if($this->_delete($enc_id))
         {
-            Session::flash('success','City/Cities Deleted Successfully');
+            Session::flash('success','Place/Places Deleted Successfully');
         }
         else
         {
-            Session::flash('error','Problem Occured While Deleting City/Cities');
+            Session::flash('error','Problem Occurred While Deleting Place/Places');
         }
         return redirect()->back();
     }
@@ -137,7 +184,7 @@ class PlaceController extends Controller
 
         if($validator->fails())
         {
-            return redirect('/web_admin/cities')->withErrors($validator)->withInput();
+            return redirect('/web_admin/places')->withErrors($validator)->withInput();
         }
 
         $multi_action = $request->input('multi_action');
@@ -147,7 +194,7 @@ class PlaceController extends Controller
         if(is_array($checked_record) && sizeof($checked_record)<=0)
         {
             Session::flash('error','Problem Occured, While Doing Multi Action');
-            return redirect('/web_admin/cities');
+            return redirect('/web_admin/places');
 
         }
 
@@ -156,21 +203,21 @@ class PlaceController extends Controller
             if($multi_action=="delete")
             {
                $this->_delete($record_id);
-                Session::flash('success','City(ies) Deleted Successfully');
+                Session::flash('success','Places Deleted Successfully');
             }
             elseif($multi_action=="activate")
             {
                $this->_activate($record_id);
-               Session::flash('success','City(ies) Activated Successfully');
+               Session::flash('success','Places Activated Successfully');
             }
             elseif($multi_action=="block")
             {
                $this->_block($record_id);
-               Session::flash('success','City(ies) Blocked Successfully');
+               Session::flash('success','Places Blocked Successfully');
             }
         }
 
-        return redirect('/web_admin/cities');
+        return redirect('/web_admin/places');
     }
 
     protected function _activate($enc_id)
