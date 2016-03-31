@@ -114,31 +114,7 @@
             </div>
 
 
-           <div class="form-group">
-                            <label class="col-sm-3 col-lg-2 control-label"> Image <i class="red">*</i> </label>
-                            <div class="col-sm-9 col-lg-10 controls">
-                               <div class="fileupload fileupload-new" data-provides="fileupload">
-                                  <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
-                                     <img src={{ $city_public_img_path.$arr_city[0]['city_image']}} alt="" />
-                                  </div>
-                                  <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-                                  <div>
-                                     <span class="btn btn-default btn-file"><span class="fileupload-new" >Select image</span>
-                                     <span class="fileupload-exists">Change</span>
-                                     <input type="file" class="file-input" name="image" id="image"/></span>
-                                     <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
 
-                                     <span  >
-
-                                     </span>
-
-                                  </div>
-                               </div>
-                                <span class='help-block'>{{ $errors->first('image') }}</span>
-                                 <!--<br/>
-                                 <button class="btn btn-warning" onclick="return show_more_images()" id="show_more_images_button">Do you want to add slider images ? </button>  -->
-                            </div>
-                         </div>
             @if($arr_city[0]['is_popular']==1)
 
              <div class="form-group">

@@ -95,7 +95,26 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::get('delete/{enc_id}',					['as' => 'admin_cities_delete' 		  ,'uses' => 'Admin\CityController@delete']);
 			Route::get('export/{format}',					['as' => 'admin_cities_excel' 		  ,'uses' => 'Admin\CityController@export_excel']);
 		});
+		/*------------------------- web_admin Places Related ------------------------------*/
 
+		Route::group(array('prefix' => '/places'), function()
+		{
+
+			Route::get('/',['as' => 'admin_places_manage' ,'uses' => 'Admin\PlaceController@index']);
+			Route::get('show/{enc_id}',['as' => 'admin_places_show' ,'uses' => 'Admin\PlaceController@show']);
+			Route::get('edit/{enc_id}',['as' => 'admin_places_edit' ,'uses' => 'Admin\PlaceController@edit']);
+			Route::post('update/{enc_id}',['as' => 'admin_places_update' ,'uses' => 'Admin\PlaceController@update']);
+			Route::get('create',['as' => 'admin_places_create' ,'uses' => 'Admin\PlaceController@create']);
+			Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_places_toggle_status' ,'uses' => 'Admin\PlaceController@toggle_status']);
+			Route::post('multi_action',['as' => 'admin_places_multiaction' ,'uses' => 'Admin\PlaceController@multi_action']);
+			Route::any('store',['as' => 'admin_places_store' ,'uses' => 'Admin\PlaceController@store']);
+			//Route::any('nearby_destinations/{enc_id}',['as' => 'admin_nearby_destinations' ,'uses' => 'Admin\PlaceController@nearby_destinations']);
+			//Route::any('add_destinations',['as' => 'admin_add_destinations' ,'uses' => 'Admin\PlaceController@add_destinations']);
+			Route::get('delete/{enc_id}',['as' => 'admin_places_delete' ,'uses' => 'Admin\PlaceController@delete']);
+
+		});
+
+		/*-----------------------------------------------------------------------------------*/
 		Route::group(array('prefix' => '/zipcode'), function()
 		{
 

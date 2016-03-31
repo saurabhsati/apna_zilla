@@ -27,8 +27,8 @@ class CountryController extends Controller
         $arr_state = array();
         $arr_response = array();
 
-        $obj_states = StateModel::select('id','state_title','countries_id')
-                                       ->where('countries_id',$country_id)
+        $obj_states = StateModel::select('id','state_title','country_id')
+                                       ->where('country_id',$country_id)
                                        ->orderBy('state_title','ASC')->get();
 
         if($obj_states != FALSE)
@@ -80,8 +80,8 @@ class CountryController extends Controller
         $arr_state = array();
         $arr_response = array();
 
-        $obj_states = StateModel::select('id','state_title','countries_id')
-                                       ->where('countries_id',$country_id)
+        $obj_states = StateModel::select('id','state_title','country_id')
+                                       ->where('country_id',$country_id)
                                        ->where('id','<>',$state_id)
                                        ->orderBy('state_title','ASC')->get();
 

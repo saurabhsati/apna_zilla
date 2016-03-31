@@ -207,6 +207,7 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
+        'Input' => Illuminate\Support\Facades\Input::class,
         'Activation' => Cartalyst\Sentinel\Laravel\Facades\Activation::class,
         'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
         'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
@@ -217,7 +218,7 @@ return [
 
     ],
 
-   
+
     'project' => [
                     'name'=>'JustDial',
                     'img_path' =>[
@@ -238,11 +239,11 @@ return [
                                 5=>"year",
                                 6=>"date",
                                 7=>"multiSelect"
-                                
+
                                 ],
-                                
+
 
                 ],
-    
-   
+
+
 ];

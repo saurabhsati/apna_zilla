@@ -14,11 +14,9 @@ use App\Models\CityModel;
 use App\Http\Controllers\Common\GeneratorController;
 class StateController extends Controller
 {
-    //
     public function __construct()
     {
-    	$this->state_public_img_path = url('/')."/uploads/states/";
-        $this->state_base_img_path = base_path()."/public/uploads/states/";
+
     }
 
     public function index()
@@ -38,8 +36,7 @@ class StateController extends Controller
             $arr_states = $obj_countries_res->toArray();
         }
 
-        $state_public_img_path = $this->state_public_img_path;
-    	return view('web_admin.states.index',compact('page_title','arr_states','state_public_img_path'));
+       return view('web_admin.states.index',compact('page_title','arr_states'));
     }
 
     public function create()
@@ -72,34 +69,10 @@ class StateController extends Controller
         $form_data = $request->all();
         $arr_data['state_title'] = $form_data['state_title'];
         $arr_data['countries_id'] = $form_data['country_id'];
-        $arr_data['state_slug'] =str_slug($form_data['state_title'], "-");
 
         /*---------- File uploading code starts here ------------*/
 
         $form_data = $request->all();
-
-         $fileName = "default.jpg";
-         $file_url = "";
-
-         if ($request->hasFile('image'))
-         {
-            $file_name = $form_data['image'];
-            $fileExtension = strtolower($request->file('image')->getClientOriginalExtension());
-
-            if(in_array($fileExtension,['png','jpg','jpeg']))
-            {
-                $fileName = sha1(uniqid().$file_name.uniqid()).'.'.$fileExtension;
-                $request->file('image')->move($this->state_base_img_path, $fileName);
-            }
-            else
-            {
-                 Session::flash('error','Invalid file extension');
-            }
-
-            $file_url = $fileName;
-        }
-
-        $arr_data['state_image'] = $fileName;
 
 
         /*---------- File uploading code ends ------------*/
@@ -145,18 +118,14 @@ class StateController extends Controller
 
             $arr_state = $obj_countries_res->toArray();
         }
-
-        $state_public_img_path = $this->state_public_img_path;
-
-        return view('web_admin.states.show',compact('page_title','arr_state','state_public_img_path'));
+        return view('web_admin.states.show',compact('page_title','arr_state'));
     }
 
     public function edit($enc_id)
     {
-    	 $id = base64_decode($enc_id);
+    	$id = base64_decode($enc_id);
         $arr_state = array();
 
-       // $arr_states = $this->StateModel->where('id',$id)->first()->toArray();
         $page_title = "Edit State";
 
         $obj_countries_res = StateModel::where('id',$id)->get();
@@ -171,8 +140,7 @@ class StateController extends Controller
             $arr_state = $obj_countries_res->toArray();
         }
 
-        $state_public_img_path = $this->state_public_img_path;
-        return view('web_admin.states.edit',compact('page_title','arr_state','state_public_img_path'));
+       return view('web_admin.states.edit',compact('page_title','arr_state'));
     }
 
     public function update(Request $request, $enc_id)
@@ -193,39 +161,6 @@ class StateController extends Controller
 
 
         $arr_data['state_title'] = $form_data['state_title'];
-
-
-       /*---------- File uploading code starts here ------------*/
-
-
-         $fileName = "";
-         $file_url = "";
-
-         if ($request->hasFile('image'))
-         {
-            $excel_file_name = $form_data['image'];
-            $fileExtension = strtolower($request->file('image')->getClientOriginalExtension());
-
-            if(in_array($fileExtension,['png','jpg','jpeg']))
-            {
-
-                $fileName = sha1(uniqid().$excel_file_name.uniqid()).'.'.$fileExtension;
-                $request->file('image')->move($this->state_base_img_path, $fileName);
-            }
-            else
-            {
-                 Session::flash('error','Invalid file extension');
-            }
-
-            $file_url = $fileName;
-
-            $arr_data['state_image'] = $fileName;
-        }
-
-
-
-        /*---------- File uploading code ends ------------*/
-
 
         if(StateModel::where('id',$id)->update($arr_data))
         {

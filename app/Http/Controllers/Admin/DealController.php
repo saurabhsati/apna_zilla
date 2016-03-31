@@ -8,6 +8,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\BusinessListingModel;
 use App\Models\DealModel;
+use App\Models\BusinessCategoryModel;
+use App\Models\CategoryModel;
 use Validator;
 use Session;
 class DealController extends Controller
@@ -49,8 +51,23 @@ class DealController extends Controller
         {
             $arr_business = $obj_business->toArray();
         }
-       // dd($arr_business);
-    	return view('web_admin.deal.create',compact('page_title','arr_business'));
+        $obj_business_category = BusinessCategoryModel::where('business_id',$arr_business['id'])->get();
+        if(sizeof($obj_business_category)>0)
+        {
+            $business_sub_category = $obj_business_category->toArray();
+            if($business_sub_category)
+            {
+                $obj_sub_category = CategoryModel::where('cat_id',$business_sub_category[0]['category_id'])->get();
+                if($obj_sub_category)
+                {
+                    $parent_category_id='';
+                     $category = $obj_sub_category->toArray();
+                     $parent_category_id=$category[0]['parent'];
+                }
+            }
+        }
+
+    	return view('web_admin.deal.create',compact('page_title','arr_business','parent_category_id'));
     }
     public function store(Request $request)
     {
@@ -101,7 +118,9 @@ class DealController extends Controller
 	    		return redirect()->back();
 	    	}
     	$form_data	= $request->all();
-    	$data_arr['business_id']=$form_data['business_hide_id'];
+        $data_arr['business_id']=$form_data['business_hide_id'];
+    	$data_arr['parent_category_id']=$form_data['parent_category_id'];
+
     	$data_arr['name']=$form_data['name'];
     	$data_arr['price']=$form_data['price'];
     	$data_arr['deal_image']=$image_name ;
@@ -113,6 +132,7 @@ class DealController extends Controller
     	$data_arr['start_time']=$form_data['start_time'];
     	$data_arr['end_time']=$form_data['end_time'];
     	$data_arr['is_active']=$form_data['is_active'];
+        //dd($data_arr);
     	$deal_add = $this->DealModel->create($data_arr);
     	if($deal_add)
     	{

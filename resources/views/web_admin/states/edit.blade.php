@@ -85,7 +85,7 @@
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="country_code">Country Name <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control" name="country_code" data-rule-required="true"
+                    <input class="form-control" name="country_code"
                         value="{{ isset($arr_state[0]['country_details']['country_name'])? strtoupper($arr_state[0]['country_details']['country_name']):'' }}" readonly
                     />
                     <span class='help-block'>{{ $errors->first('country_code') }}</span>
@@ -101,37 +101,9 @@
                     <span class='help-block'>{{ $errors->first('state') }}</span>
                 </div>
             </div>
-
-
            <div class="form-group">
-                            <label class="col-sm-3 col-lg-2 control-label"> Image <i class="red">*</i> </label>
-                            <div class="col-sm-9 col-lg-10 controls">
-                               <div class="fileupload fileupload-new" data-provides="fileupload">
-                                  <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
-                                     <img src={{ $state_public_img_path.$arr_state[0]['state_image']}} alt="" />
-                                  </div>
-                                  <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-                                  <div>
-                                     <span class="btn btn-default btn-file"><span class="fileupload-new" >Select image</span>
-                                     <span class="fileupload-exists">Change</span>
-                                     <input type="file" class="file-input" name="image" id="image"/></span>
-                                     <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
-
-                                     <span  >
-
-                                     </span>
-
-                                  </div>
-                               </div>
-                                <span class='help-block'>{{ $errors->first('image') }}</span>
-                                 <!--<br/>
-                                 <button class="btn btn-warning" onclick="return show_more_images()" id="show_more_images_button">Do you want to add slider images ? </button>  -->
-                            </div>
-                         </div>
-                       <div class="form-group">
-                    <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
-                <input type="submit"  class="btn btn-primary" value="Update">
-
+             <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
+              <input type="submit"  class="btn btn-primary" value="Update">
             </div>
         </div>
 
