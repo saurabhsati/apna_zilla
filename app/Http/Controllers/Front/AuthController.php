@@ -252,25 +252,58 @@ class AuthController extends Controller
     public function process_login_ajax(Request $request)
     {   
         $json = array();
-
         $arr_creds =  array();
-        $arr_creds['email']     = $request->input('email');
+
+        $email_or_mobile = $request->input('email');
+
+        // $arr_creds['email'] = '';
+        // $arr_creds['mobile_no'] ='';
+        if(is_numeric($email_or_mobile))
+        {
+            
+            if(strlen($email_or_mobile)==10)
+            {
+                $arr_creds['mobile_no'] = $email_or_mobile;
+            }
+            else
+            {
+                $json = "Invalid Mobile_no";
+            }    
+        }
+        else
+        {
+            $arr_creds['email'] = $email_or_mobile;
+        }    
+        
+
+
         $arr_creds['password']  = $request->input('password');
 
         $user = Sentinel::authenticate($arr_creds);
-
+    
         if($user)
         {
             /* Check if Users Role is Admin */
             $role = Sentinel::findRoleBySlug('normal');
             if(Sentinel::inRole($role))
             {   
-                $obj_user_info = UserModel::where('email','=',$arr_creds['email'])->get();
+                if(is_numeric($email_or_mobile))
                 {
-                    if($obj_user_info);
+                    $obj_user_info = UserModel::Where('mobile_no','=',$arr_creds['mobile_no'])->get();
+                   
                 }
-                $arr_user_info = $obj_user_info->toArray();
+                else
+                {
+                    $obj_user_info = UserModel::where('email','=',$arr_creds['email'])->get();  
+                }
                 
+                
+                if($obj_user_info);
+                {
+                   $arr_user_info = $obj_user_info->toArray();
+                }
+                
+      
                 foreach ($arr_user_info as $user)
                 {
                     $user_id = base64_encode($user['id']) ;
@@ -313,10 +346,16 @@ class AuthController extends Controller
             if(Sentinel::inRole($role))
             {   
                 $obj_user_info = UserModel::where('email','=',$arr_creds['email'])->get();
+                // $obj_user_info = UserModel::where('email','=',$arr_creds['email'])
+                //                          ->orWhere('mobile_no','=',$arr_creds['email'])
+                //                          ->toSQL();
+
+                // dd($obj_user_info);
+                
+                if($obj_user_info);
                 {
-                    if($obj_user_info);
+                    $arr_user_info = $obj_user_info->toArray();
                 }
-                $arr_user_info = $obj_user_info->toArray();
                 
                 foreach ($arr_user_info as $user)
                 {
@@ -343,7 +382,7 @@ class AuthController extends Controller
     }
 
 
-         public function process_login_for_share(Request $request,$enc_id)
+    public function process_login_for_share(Request $request,$enc_id)
     {
 
         $arr_creds =  array();
@@ -358,11 +397,19 @@ class AuthController extends Controller
             $role = Sentinel::findRoleBySlug('normal');
             if(Sentinel::inRole($role))
             {   
-                $obj_user_info = UserModel::where('email','=',$arr_creds['email'])->get();
+                // $obj_user_info = UserModel::where('email','=',$arr_creds['email'])->get();
+                
+                $obj_user_info = UserModel::where('email','=',$arr_creds['email'])
+                                         ->orWhere('mobile_no','=',$arr_creds['email'])
+                                         ->toSQL();
+
+                dd($obj_user_info);
+
+                if($obj_user_info);
                 {
-                    if($obj_user_info);
+                    $arr_user_info = $obj_user_info->toArray();    
                 }
-                $arr_user_info = $obj_user_info->toArray();
+                
                 
                 foreach ($arr_user_info as $user)
                 {

@@ -33,11 +33,26 @@
                       <span id="display_msg"> </span>
                   </div>
                 @endif
+
+                <div class="alert alert-danger alert-dismissible" id="error_div" style="display: none;">
+                     
+                    <strong>Error!</strong>
+                    Incorrect Login Credentials
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <!-- <span aria-hidden="true">&times;</span> -->
+                      </button>
+                </div>
+               
+                <div class="alert alert-danger alert-dismissible" id=" mobile_error_div" style="display: none;">
+                    <strong>Error!</strong>
+                    Incorrect Mobile No.  
+                </div>
+
                   <div class="login_box">
                      <div class="title_login">Login with your email and password</div>
                      <div class="user_box">
-                        <div class="label_form">Email</div>
-                        <input type="text" name="email" id="email_login" class="input_box" placeholder="enter email address"/>
+                        <div class="label_form">Email/Mobile No.</div>
+                        <input type="text" name="email" id="email_login" class="input_box" placeholder="Enter Email Address/ Mobile No."/>
                      </div>
                      <div class="user_box">
                         <div class="label_form">Password</div>
@@ -158,6 +173,11 @@
                         <input type="text" name="email" class="input_box" placeholder="Enter Email Address"/>
                      </div>
                      
+                     <div class="user_box">
+                        <div class="label_form">Mobile</div>
+                        <input type="text" name="mobile" class="input_box" placeholder="Enter mobile No."/>
+                     </div>
+
                      <div class="user_box">
                         <div class="label_form">Password</div>
                         <input type="password" name="password" class="input_box" placeholder="Enter Password"/>
@@ -661,11 +681,15 @@ If you need any more details on Justdial Verified, please refer to
             if(response == "SUCCESS" )
             {
                location.href= site_url+"/front_users/profile";
-            }else
-            {
-                $("#login_error").css("display", "block");
-                $('#display_msg').html(response);
             }
+            else if(response == "Invalid Credentials")
+            {
+                $('#error_div').show();
+            }
+            else if(responce == "Invalid Mobile_no")
+            {
+               $('#mobile_error_div').show();
+            }    
          }
       });
 

@@ -87,12 +87,12 @@ class IlluminateUserRepository implements UserRepositoryInterface
         if (empty($credentials)) {
             return;
         }
-
         $instance = $this->createModel();
 
         $loginNames = $instance->getLoginNames();
 
         list($logins, $password, $credentials) = $this->parseCredentials($credentials, $loginNames);
+
 
         if (empty($logins)) {
             return;
@@ -230,7 +230,8 @@ class IlluminateUserRepository implements UserRepositoryInterface
      */
     protected function parseCredentials(array $credentials, array $loginNames)
     {
-        if (isset($credentials['password'])) {
+        if (isset($credentials['password'])) 
+        {
             $password = $credentials['password'];
 
             unset($credentials['password']);
