@@ -1,4 +1,4 @@
-    @extends('web_admin.template.admin')                
+    @extends('web_admin.template.admin')
 
 
     @section('main_content')
@@ -23,7 +23,7 @@
             <li>
                 <i class="fa fa-edit"></i>
                 <a href="{{ url('/').'/web_admin/categories' }}">Category</a>
-            </li>   
+            </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span>
@@ -56,7 +56,7 @@
                 </button>
                 {{ Session::get('success') }}
             </div>
-          @endif  
+          @endif
 
           @if(Session::has('error'))
             <div class="alert alert-danger alert-dismissible">
@@ -67,12 +67,12 @@
             </div>
           @endif
 
-          <form class="form-horizontal" 
-                id="validation-form" 
-                method="POST" 
-                action="{{ url('/web_admin/categories/store') }}" 
+          <form class="form-horizontal"
+                id="validation-form"
+                method="POST"
+                action="{{ url('/web_admin/categories/store') }}"
                 enctype="multipart/form-data"
-                >                                               
+                >
 
            {{ csrf_field() }}
 
@@ -130,7 +130,7 @@
                 </div>
             </div>
 
-            
+
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="is_popular">Popular<i class="red">*</i></label>
                 <div class="col-sm-1 col-lg-1 controls">
@@ -138,7 +138,21 @@
                     <span class='help-block'>{{ $errors->first('is_popular') }}</span>
                 </div>
             </div>
-                
+            <div class="form-group" id="explore_directory">
+                <label class="col-sm-3 col-lg-2 control-label" for="is_explore_directory">Explore Directory Category<i class="red">*</i></label>
+                <div class="col-sm-1 col-lg-1 controls">
+                    <input class="form-control" id="is_explore_directory"  type="checkbox" name="is_explore_directory" value="1" onclick="return check_explore_count();" />
+                    <span class='help-block'>{{ $errors->first('is_explore_directory') }}</span>
+                </div>
+                <div class="error" id="err_delete_payment_mode"></div>
+            </div>
+            <div class="form-group" id="allow_deal">
+                <label class="col-sm-3 col-lg-2 control-label" for="is_allow_to_add_deal">Allow to Add Deals<i class="red">*</i></label>
+                <div class="col-sm-1 col-lg-1 controls">
+                    <input class="form-control" id="is_allow_to_add_deal"  type="checkbox" name="is_allow_to_add_deal" value="1" />
+                    <span class='help-block'>{{ $errors->first('is_allow_to_add_deal') }}</span>
+                </div>
+            </div>
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
                 <input type="submit"  class="btn btn-primary" value="Create">
@@ -191,11 +205,17 @@
     {
         $("#cat_img_field").show();
         $("#cat_img").removeAttr("disabled");
+        $("#explore_directory").show();
+        $("#allow_deal").show();
+
+
     }
     function disableLogo()
     {
         $("#cat_img_field").hide();
         $("#cat_img").attr("disabled","disabled");
+         $("#explore_directory").attr("style","display:none");
+         $("#allow_deal").attr("style","display:none");
     }
 
     function preSelectCategory()
@@ -209,5 +229,26 @@
             $("#category").attr("disabled","disabled");
         }
     }
-</script>    
-@stop                    
+    function check_explore_count()
+    {
+         var _token = $('input[name=_token]').val();
+  var dataString = {  _token: _token };
+        var url= site_url+'/web_admin/categories/check_explore_count';
+        $.post( url,dataString)
+      .done(function( data ) {
+        if(data=='reached'){
+             $('#err_delete_payment_mode').html('<div style="color:red">Maximum Explore Directory Category Count Reached .</div>');
+             var request_id=$('.delete_payment_mode').parents('.main').attr('data-payment-mode');
+             $('div[data-payment-mode="'+request_id+'"]').remove();
+             $('#is_explore_directory').attr('disabled','disabled');
+        }
+        else
+        {
+            $('#err_delete_payment_mode').html('<div style="color:green">Allow to Add Explore Directory Category.</div>');
+             var request_id=$('.delete_payment_mode').parents('.main').attr('data-payment-mode');
+             $('div[data-payment-mode="'+request_id+'"]').remove();
+        }
+      });
+    }
+</script>
+@stop

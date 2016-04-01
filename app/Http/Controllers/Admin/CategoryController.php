@@ -75,6 +75,9 @@ class CategoryController extends Controller
         $is_priceable = $request->input('is_priceable','0');
         $cat_meta_keyword = $request->input('cat_meta_keyword');
         $cat_meta_description = $request->input('cat_meta_description');
+        $is_popular = $request->input('is_popular')==null?'0':$request->input('is_popular');
+        $is_explore_directory = $request->input('is_explore_directory')==null?'0':$request->input('is_explore_directory');
+        $is_allow_to_add_deal = $request->input('is_allow_to_add_deal')==null?'0':$request->input('is_allow_to_add_deal');
 
         $cat_slug = str_slug($title);
 
@@ -122,6 +125,10 @@ class CategoryController extends Controller
         $arr_cat['title'] = $title;
         $arr_cat['cat_meta_keyword'] =$cat_meta_keyword;
         $arr_cat['cat_meta_description'] =$cat_meta_description;
+        $arr_cat['is_popular'] =$is_popular;
+        $arr_cat['is_explore_directory'] =$is_explore_directory;
+        $arr_cat['is_allow_to_add_deal'] =$is_allow_to_add_deal;
+       // dd($arr_cat);
         $status=CategoryModel::create($arr_cat);
         $cat_id = $status->id;
         $status->save();
@@ -177,17 +184,26 @@ class CategoryController extends Controller
         }
 
         $category = $request->input('category');
-        $password   = $request->input('password',FALSE);
+        //$password   = $request->input('password',FALSE);
         $cat_meta_description = $request->input('cat_meta_description');
         $is_active = $request->input('is_active');
         $check_popular = $request->input('is_popular');
-
         if($check_popular=="on")
         $is_popular = 1;
-
         else
         $is_popular = 0;
 
+        $is_explore_directory = $request->input('is_explore_directory');
+        if($is_explore_directory=="on")
+        $is_explore_directory = 1;
+        else
+        $is_explore_directory = 0;
+
+        $is_allow_to_add_deal = $request->input('is_allow_to_add_deal');
+        if($is_allow_to_add_deal=="on")
+        $is_allow_to_add_deal = 1;
+        else
+        $is_allow_to_add_deal = 0;
         $cat_img = FALSE;
         if ($request->hasFile('cat_img'))
         {
@@ -218,19 +234,24 @@ class CategoryController extends Controller
             'cat_meta_description' => $cat_meta_description,
             'is_active' => $is_active,
             'is_popular' => $is_popular,
+            'is_explore_directory' => $is_explore_directory,
+            'is_allow_to_add_deal'=>$is_allow_to_add_deal,
         ];
-        if($password!=FALSE)
-        {
-            $arr_data['password'] = $password;
-        }
+        //dd($arr_data);
+
 
         if($cat_img!=FALSE)
         {
             $arr_data['cat_img'] = $cat_img;
         }
-
-
-        if(CategoryModel::where('title',$arr_data['title'])->where('cat_id','<>',$id)->get()->count()>0)
+       $data_chk_duplicate=CategoryModel::where('title',$arr_data['title'])->where('cat_id','!=',$id)->get();
+        //dd($data_chk_duplicate);
+        if($data_chk_duplicate)
+        {
+            $arr_data_duplicate = $data_chk_duplicate->toArray();
+        }
+        //dd($arr_data_duplicate);
+        if(sizeof($data_chk_duplicate)>0)
         {
             Session::flash('error','Category Already Exists');
             return redirect()->back();
@@ -440,4 +461,23 @@ class CategoryController extends Controller
         }
     }
 
+    public function check_explore_count()
+    {
+        $obj_explore_category = CategoryModel::where('is_explore_directory','1')->get();
+
+        if($obj_explore_category)
+        {
+            $arr_explore_category = $obj_explore_category->toArray();
+            $cat_count=sizeof($arr_explore_category);
+            if($cat_count>=6)
+            {
+                echo 'reached';
+            }
+            else
+            {
+                echo 'allow';
+            }
+            exit;
+        }
+    }
 }
