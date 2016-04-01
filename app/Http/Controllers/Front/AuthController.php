@@ -267,8 +267,7 @@ class AuthController extends Controller
             }
             else
             {
-                Session::flash('error','Incorrect Mobile No.');
-                
+                $json = "Invalid Mobile_no";
             }    
         }
         else

@@ -35,9 +35,19 @@
                 @endif
 
                 <div class="alert alert-danger alert-dismissible" id="error_div" style="display: none;">
+                     
                     <strong>Error!</strong>
                     Incorrect Login Credentials
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <!-- <span aria-hidden="true">&times;</span> -->
+                      </button>
                 </div>
+               
+                <div class="alert alert-danger alert-dismissible" id=" mobile_error_div" style="display: none;">
+                    <strong>Error!</strong>
+                    Incorrect Mobile No.  
+                </div>
+
                   <div class="login_box">
                      <div class="title_login">Login with your email and password</div>
                      <div class="user_box">
@@ -676,6 +686,10 @@ If you need any more details on Justdial Verified, please refer to
             {
                 $('#error_div').show();
             }
+            else if(responce == "Invalid Mobile_no")
+            {
+               $('#mobile_error_div').show();
+            }    
          }
       });
 
