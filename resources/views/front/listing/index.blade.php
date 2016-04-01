@@ -240,13 +240,14 @@
               ?>
 
               <!-- <img src="{{ url('/') }}/assets/front/images/star2.png" alt="rating"/> -->
-              <ul>
+             <div class="resta-rating-block">
               <?php for($i=0;$i<round($restaurants['avg_rating']);$i++){ ?>
-              <li><i class="fa fa-star-o ylow"></i></li>
+              <i class="fa fa-star star-acti"></i>
               <?php }?>
               <?php for($i=0;$i<(5-round($restaurants['avg_rating']));$i++){ ?>
-              <li><i class="fa fa-star-o"></i></li>
-                <?php }?></ul>
+              <i class="fa fa-star"></i>
+                <?php }?>
+                </div>
                &nbsp;@if(isset($tot_review)){{$tot_review}} @endif Ratings
               <span class=""> Estd.in {{ $restaurants['establish_year'] }} </span></div>
               <div class="p_details"><i class="fa fa-phone"></i><span> {{ $restaurants['landline_number'] }} &nbsp; {{ $restaurants['mobile_number'] }}</span></div>
@@ -254,7 +255,7 @@
                 <span>{{ $restaurants['building'] }} &nbsp; {{ $restaurants['street'] }} <br/>
                 {{ $restaurants['landmark'] }} &nbsp; {{ $restaurants['area'] }} &nbsp;{{ '-'.$restaurants['pincode'] }}<br/>
 
-             @if(Session::has('distance'))
+               @if(Session::has('distance'))
                Away From {{Session::get('distance')}} km distance
                 @endif
 
@@ -262,7 +263,7 @@
                 <div class="p_details"><a href="#" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>
                   <ul>
                     <li><a data-toggle="modal" data-target="#sms" href="#">SMS/Email</a></li>
-                    <li><a href="#" class="lst">Rate This</a></li>
+                    <li><a href="{{url('/')}}/{{$city}}/{{$business_area}}/{{base64_encode($restaurants['id'])}}" class="lst">Rate This</a></li>
                   </ul>
                 </div>
               </div>

@@ -437,6 +437,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	});
 
 	Route::get('/','Front\HomeController@index');
+	Route::post('/get_business_by_exp_categry','Front\HomeController@get_business_by_exp_categry');
 	Route::post('/locate_location','Front\HomeController@locate_location');
 	Route::get('/get_category_auto','Front\HomeController@get_category_auto');
 	Route::get('/get_city_auto','Front\HomeController@get_city_auto');
@@ -511,6 +512,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	{
 		Route::get('/',									['as' =>'deals_page'								,'uses' =>'Front\DealController@index']);
 		Route::get('details/{enc_id}',					['as' =>'deals_detail'								,'uses' =>'Front\DealController@details']);
+		Route::get('{enc_id}',					        ['as' =>'deals_by_category'			,'uses' =>'Front\DealController@deals_by_category']);
 	});
 
 	Route::post('/newsletter','Front\NewsLetterController@index');

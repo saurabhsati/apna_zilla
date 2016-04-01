@@ -158,14 +158,13 @@ class ListingController extends Controller
         $arr_rules['title'] = "required";
         $arr_rules['review'] = "required";
 
-       /* $validator = Validator::make($request->all(),$arr_rules);
+        $validator = Validator::make($request->all(),$arr_rules);
 
         if($validator->fails())
         {
             return redirect()->back()->withErrors($validator)->withInput();
-        }*/
+        }
 
-        $title       =  $request->input('title');
         $rating      =  $request->input('rating');
         $name        =  $request->input('name');
         $review      =  $request->input('review');
@@ -174,8 +173,7 @@ class ListingController extends Controller
         $id          =  $request->input('business_id');
 
         $arr_data = array();
-        $arr_data['title'] = $title;
-        $arr_data['ratings'] = $rating;
+         $arr_data['ratings'] = $rating;
         $arr_data['name'] = $name;
         $arr_data['message'] = $review;
         $arr_data['mobile_number'] = $mobile_no;
