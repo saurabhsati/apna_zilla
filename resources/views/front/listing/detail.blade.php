@@ -57,7 +57,7 @@
                         @else
                         <span>Business Time Not Available.</span>
                         @endif
-                        <div class="add_det"><i class="fa fa-globe"></i><a href="{{$arr_business_details['website']}}"> {{$arr_business_details['website']}}</a></div>
+                        <div class="add_det"><i class="fa fa-globe"></i><a href="http://{{$arr_business_details['website']}}" target="_blank"> {{$arr_business_details['website']}}</a></div>
                          <div class="enquiry"><a data-toggle="modal" data-target="#enquiry"><i class="fa fa-envelope"></i> Send Enquiry By Email</a></div>
                      </div>
                   </div>
@@ -109,7 +109,12 @@
                <div class="icons">
                   <div class="img_icons popup-v"><a data-toggle="modal" data-target="#share"><img src="{{ url('/') }}/assets/front/images/shar.png" alt="share"/>Share</a></div>
                   <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/write_review.png" alt="write_review">write review</div>
-                  <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/your-vote.png" alt="your-vote"/>Your Vote(0.5)</div>
+                  <div class="img_icons" onclick="showreview()" style="cursor: pointer;">
+                
+                    <img src="{{ url('/') }}/assets/front/images/your-vote.png" alt="your-vote"/>
+                      Your Vote
+                
+                  </div>
                   <div class="img_icons popup-v">
                      <a data-toggle="modal" data-target="#sms"><img src="{{ url('/') }}/assets/front/images/sms-emil.png" alt="write_review"/>Sms/Email</a>
                   </div>
@@ -154,7 +159,7 @@
                      <li>Gallery</li>
                      <div class="clearfix"></div>
                   </ul>
-                  <div class="resp-tabs-container">
+                  <div class="resp-tabs-container" id="review_rating">
                      <div>
                         @if(Session::has('success'))
                         <div class="alert alert-success alert-dismissible">
@@ -562,6 +567,11 @@
      $('#business_times_div').show();
    }
 
+   function showreview()
+   {
+    // $('#review').addClass('resp-tab-active');
+    // $('#review_rating').addClass('resp-tab-content-active');
+   }
 
    /*function show_map()
    {
