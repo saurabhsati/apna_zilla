@@ -185,7 +185,7 @@
 
                       </div>
                    </div>
-                    <span class='help-block'>{{ $errors->first('image') }}</span>
+                    <span class='help-block'>{{ $errors->first('main_image') }}</span>
                      <!--<br/>
                      <button class="btn btn-warning" onclick="return show_more_images()" id="show_more_images_button">Do you want to add slider images ? </button>  -->
                 </div>
@@ -263,7 +263,7 @@
 
 
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="street">Country <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="country">Country <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                 <select class="form-control" name="country" id="country" onchange="loadStates(this)" >
                 <option>Select Country</option>
@@ -279,7 +279,7 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="street">State <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="state">State <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                  <select class="form-control"  name="state" id="state" tabindex="1" onchange="loadCity(this)">
                  <option>Select State</option>

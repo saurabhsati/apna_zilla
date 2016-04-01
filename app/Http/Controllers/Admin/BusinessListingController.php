@@ -434,6 +434,7 @@ class BusinessListingController extends Controller
 
         if($validator->fails())
         {
+             //print_r( $validator->errors()->all());exit;
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
