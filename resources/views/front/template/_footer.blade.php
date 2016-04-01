@@ -35,17 +35,17 @@
                 @endif
 
                 <div class="alert alert-danger alert-dismissible" id="error_div" style="display: none;">
-                     
+
                     <strong>Error!</strong>
                     Incorrect Login Credentials
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                           <!-- <span aria-hidden="true">&times;</span> -->
                       </button>
                 </div>
-               
+
                 <div class="alert alert-danger alert-dismissible" id=" mobile_error_div" style="display: none;">
                     <strong>Error!</strong>
-                    Incorrect Mobile No.  
+                    Incorrect Mobile No.
                 </div>
 
                   <div class="login_box">
@@ -172,7 +172,7 @@
                         <div class="label_form">Email</div>
                         <input type="text" name="email" class="input_box" placeholder="Enter Email Address"/>
                      </div>
-                     
+
                      <div class="user_box">
                         <div class="label_form">Mobile</div>
                         <input type="text" name="mobile" class="input_box" placeholder="Enter mobile No."/>
@@ -689,7 +689,7 @@ If you need any more details on Justdial Verified, please refer to
             else if(responce == "Invalid Mobile_no")
             {
                $('#mobile_error_div').show();
-            }    
+            }
          }
       });
 
@@ -697,10 +697,8 @@ If you need any more details on Justdial Verified, please refer to
 
   });
 </script>
-<<<<<<< HEAD
-        <!-- jquery validation -->
-        <script type="text/javascript" src="{{url('/')}}/assets/jquery-validation/dist/jquery.validate.min.js"></script>  
-=======
+<!-- jquery validation -->
+<script type="text/javascript" src="{{url('/')}}/assets/jquery-validation/dist/jquery.validate.min.js"></script>
  <script type="text/javascript">
 var supports = (function () {
     var a = document.documentElement,
@@ -783,7 +781,6 @@ if ($("html").hasClass("no-touch")) {
 
  } //END IF no-touch for hover script & removeAttr for the links to work
 </script>
->>>>>>> 4a347079d46f02ec58fa07a221f87fb8e5d23bce
 
         <!-- Listing details Tabbing End -->
         <script src="{{ url('/') }}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>
