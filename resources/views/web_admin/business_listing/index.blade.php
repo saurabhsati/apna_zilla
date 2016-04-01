@@ -199,11 +199,42 @@
                        @endif
 
                     <td>
-                       @if($business['is_active']!="1")
+                       <?php
+                 foreach ($business['category'] as $business_category) {
+                 foreach ($arr_sub_category as $sub_category) {
+                      if($business_category['category_id']==$sub_category['cat_id'])
+                      {
+                         foreach ($arr_main_category as $main_category) {
+
+                          if($sub_category['parent']==$main_category['cat_id'])
+                          {
+                            if($main_category['is_allow_to_add_deal']=='1')
+                            {
+                              $check_allow='';
+                              $check_allow=1;
+                            }
+                            else
+                            {
+                               $check_allow='';
+                              $check_allow=0;
+                            }
+                          }
+
+
+                          }
+
+                       }
+                     }
+                   }
+                  ?>
+
+
+
+                       @if($business['is_active']!="1"  && $check_allow=='0')
                            <a class="btn btn-info" href="#">
                            Add Deal
                             </a>
-                       @elseif($business['is_active']=="1")
+                       @elseif($business['is_active']=="1" && $check_allow=='1')
                            <a class="btn btn-warning" href="{{ url('/web_admin/deals/'.base64_encode($business['id'])) }}">
                              Add Deal
                           </a>

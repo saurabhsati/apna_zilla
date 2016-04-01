@@ -1,4 +1,4 @@
-    @extends('web_admin.template.admin')                
+    @extends('web_admin.template.admin')
 
 
     @section('main_content')
@@ -23,7 +23,7 @@
             <li>
                 <i class="fa fa-bars"></i>
                 <a href="{{ url('/').'/web_admin/categories' }}">Category</a>
-            </li>   
+            </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span>
@@ -60,7 +60,7 @@
                 </button>
                 {{ Session::get('success') }}
             </div>
-          @endif  
+          @endif
 
           @if(Session::has('error'))
             <div class="alert alert-danger alert-dismissible">
@@ -73,10 +73,10 @@
 
           @if(isset($arr_data) && sizeof($arr_data)>0)
 
-          <form class="form-horizontal" 
-                id="validation-form" 
-                method="POST" 
-                action="{{ url('/web_admin/categories/update/'.base64_encode($arr_data['cat_id'])) }} ' " 
+          <form class="form-horizontal"
+                id="validation-form"
+                method="POST"
+                action="{{ url('/web_admin/categories/update/'.base64_encode($arr_data['cat_id']))}}"
                 enctype="multipart/form-data">
 
            {{ csrf_field() }}
@@ -88,14 +88,14 @@
                       <img src="{{url('/')}}/images/front/avatar.jpg" width="200" height="200" id="preview_cat_img"  />
                     @else
                       <img src="{{url('/')}}/uploads/category/{{$arr_data['cat_img']}}" width="200" height="200" id="preview_cat_img"  />
-                    @endif  
+                    @endif
 
                     @if($arr_data['cat_img']!="avatar.jpg")
                       <span class="btn btn-danger" id="removal_handle" onclick="clearPreviewImage()">X</span>
-                    @else  
+                    @else
                       <span class="btn btn-danger" id="removal_handle" onclick="clearPreviewImage()" style="display:none;">X</span>
-                    @endif  
-                    
+                    @endif
+
                     <input class="form-control" name="cat_img" id="cat_img" type="file" onchange="loadPreviewImage(this)"/>
 
                     <span class='help-block'>{{ $errors->first('cat_img') }}</span>
@@ -129,7 +129,7 @@
                 </div>
             </div>
 
-          
+
             @if($arr_data['is_popular']==1)
 
              <div class="form-group">
@@ -151,6 +151,50 @@
             </div>
 
             @endif
+            @if($arr_data['parent']==0)
+             @if($arr_data['is_explore_directory']==1)
+
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="is_explore_directory">Explore Directory Category<i class="red">*</i></label>
+                <div class="col-sm-1 col-lg-1 controls">
+                    <input class="form-control" id="is_explore_directory"  type="checkbox" name="is_explore_directory" checked="true" />
+                    <span class='help-block'>{{ $errors->first('is_explore_directory') }}</span>
+                </div>
+            </div>
+
+            @elseif($arr_data['is_explore_directory']==0)
+
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="is_explore_directory">Explore Directory Category<i class="red">*</i></label>
+                <div class="col-sm-1 col-lg-1 controls">
+                    <input class="form-control" id="is_explore_directory"  type="checkbox" name="is_explore_directory" onclick="return check_explore_count();" />
+                    <span class='help-block'>{{ $errors->first('is_explore_directory') }}</span>
+                </div>
+            </div>
+
+            @endif
+            <div class="error" id="err_delete_payment_mode"></div>
+             @if($arr_data['is_allow_to_add_deal']==1)
+
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="is_allow_to_add_deal">Allow to Add Deals<i class="red">*</i></label>
+                <div class="col-sm-1 col-lg-1 controls">
+                    <input class="form-control" id="is_allow_to_add_deal"  type="checkbox" name="is_allow_to_add_deal" checked="true" />
+                    <span class='help-block'>{{ $errors->first('is_allow_to_add_deal') }}</span>
+                </div>
+            </div>
+
+            @elseif($arr_data['is_allow_to_add_deal']==0)
+
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="is_allow_to_add_deal">Allow to Add Deals<i class="red">*</i></label>
+                <div class="col-sm-1 col-lg-1 controls">
+                    <input class="form-control" id="is_allow_to_add_deal"  type="checkbox" name="is_allow_to_add_deal" />
+                    <span class='help-block'>{{ $errors->first('is_allow_to_add_deal') }}</span>
+                </div>
+            </div>
+            @endif
+            @endif
 
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
@@ -161,7 +205,7 @@
     </form>
     @else
         <h5>No Records Found!</h5>
-    @endif    
+    @endif
 </div>
 </div>
 </div>
@@ -194,6 +238,27 @@ function loadPreviewImage(ref)
         $('#preview_cat_img').attr('src',site_url+'/images/front/avatar.jpg');
         $("#removal_handle").hide();
     }
+     function check_explore_count()
+    {
+         var _token = $('input[name=_token]').val();
+  var dataString = {  _token: _token };
+        var url= site_url+'/web_admin/categories/check_explore_count';
+        $.post( url,dataString)
+      .done(function( data ) {
+        if(data=='reached'){
+             $('#err_delete_payment_mode').html('<div style="color:red">Maximum Explore Directory Category Count Reached .</div>');
+             var request_id=$('.delete_payment_mode').parents('.main').attr('data-payment-mode');
+             $('div[data-payment-mode="'+request_id+'"]').remove();
+             $('#is_explore_directory').attr('disabled','disabled');
+        }
+        else
+        {
+            $('#err_delete_payment_mode').html('<div style="color:green">Allow to Add Explore Directory Category.</div>');
+             var request_id=$('.delete_payment_mode').parents('.main').attr('data-payment-mode');
+             $('div[data-payment-mode="'+request_id+'"]').remove();
 
-@stop     
-</script>               
+        }
+      });
+    }
+</script>
+@stop

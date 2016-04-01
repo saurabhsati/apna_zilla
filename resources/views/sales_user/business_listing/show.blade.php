@@ -249,7 +249,7 @@
                   <span class='help-block'>{{ $errors->first('city') }}</span>
                 </div>
             </div>
-            <div class="form-group">
+             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="pincode">Zipcode <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                  <input class="form-control"
@@ -257,7 +257,7 @@
                            id="user_id"
                            data-rule-required="true"
                            readonly="true"
-                           value="{{ isset($business['zipcode_details']['zipcode'])?$business['zipcode_details']['zipcode']:'' }}"
+                           value="{{ isset($arr_place[0]['postal_code'])?$arr_place[0]['postal_code']:'' }}"
                            />
                     <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
