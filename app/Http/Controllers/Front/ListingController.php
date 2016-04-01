@@ -142,7 +142,7 @@ class ListingController extends Controller
             }
         }
 
-     
+
         Meta::setDescription($arr_business_details['company_info']);
         Meta::addKeyword($arr_business_details['keywords']);
       //dd($arr_business_details);
@@ -152,7 +152,7 @@ class ListingController extends Controller
 
     public function store_reviews(Request $request)
     {
-        
+
         $arr_rules = array();
         $arr_rules['rating'] = "required";
         $arr_rules['title'] = "required";
@@ -171,7 +171,7 @@ class ListingController extends Controller
         $review      =  $request->input('review');
         $mobile_no   =  $request->input('mobile_no');
         $email       =  $request->input('email');
-        $id          =  $request->input('business_id'); 
+        $id          =  $request->input('business_id');
 
         $arr_data = array();
         $arr_data['title'] = $title;
@@ -181,8 +181,8 @@ class ListingController extends Controller
         $arr_data['mobile_number'] = $mobile_no;
         $arr_data['email'] = $email;
         $arr_data['business_id'] = $id;
-     
-       $status = 1;//ReviewsModel::create($arr_data);
+
+       $status = ReviewsModel::create($arr_data);
 
         if($status)
         {

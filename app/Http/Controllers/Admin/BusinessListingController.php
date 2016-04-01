@@ -436,6 +436,8 @@ class BusinessListingController extends Controller
         {
             return redirect()->back()->withErrors($validator)->withInput();
         }
+
+
         $user=Sentinel::createModel();
 
         $business_data['business_name']      = $request->input('business_name');
