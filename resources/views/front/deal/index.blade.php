@@ -17,7 +17,7 @@
                          <img class="dash_line" alt="line" src="{{ url('/')}}/assets/front/images/dash_menu_line.jpg">
                         <li>Maximum Discount</li>
                          <img class="dash_line" alt="line" src="{{ url('/')}}/assets/front/images/dash_menu_line.jpg">
-                        <li>Location</li>
+                        <li data-toggle="modal" data-target="#loc_deal">Location</li>
 
                         <div class="clearfix"></div>
                      </ul>
@@ -48,6 +48,8 @@
                               </div>
 
                           @endforeach
+                          @else
+                          <span class="col-sm-3 col-md-3 col-lg-12">No Deals  Available.</span>
                           @endif
                       </div>
                      </div>
@@ -73,6 +75,8 @@
                           </div>
 
                       @endforeach
+                      @else
+                          <span class="col-sm-3 col-md-3 col-lg-12">No Deals  Available.</span>
                       @endif
                   </div>
 
@@ -89,11 +93,79 @@
        </div>
       </div>
 
+  <!-- Modal -->
+    <div class="modal fade" id="loc_deal" role="dialog">
+      <div class="modal-dialog">
+{{ csrf_token() }}
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Sort By Location</h4>
+          </div>
+          <div class="modal-body">
+            <p>Where in  <?php
+             if(Session::has('search_city_title')){
+               echo Session::get('search_city_title');
+               }?>
+
+            </p>
+            <div class="row">
+              <div class="col-lg-10">
+              <input type="text" class="input-searchbx " id="location_search"
+              @if(!empty($loc))
+               value="{{ucwords($loc)}}"
+               @else
+                value=""
+               @endif/>
+              <input type="hidden" class="input-searchbx " id="business_search_by_location"
+                @if(!empty($loc))
+               value="{{ucwords($loc)}}"
+               @else
+                value=""
+               @endif
+               />
+               <input type="hidden" class="input-searchbx " id="business_search_by_city"
+               @if(Session::has('search_city_title'))
+               value="{{Session::get('search_city_title')}}"
+               @else
+                value="{{Session::get('city')}}"
+               @endif
+                />
+                 <input type="hidden" class="input-searchbx " id="location_latitude"
+               @if(Session::has('location_latitude'))
+               value="{{Session::get('location_latitude')}}"
+               @endif
+               />
+                 <input type="hidden" class="input-searchbx " id="location_longitude"
+               @if(Session::has('location_longitude'))
+               value="{{Session::get('location_longitude')}}"
+               @endif
+                />
+
+              @if(isset($sub_category))
+               <input type="hidden" class="input-searchbx " id="search_under_category" value="@if(isset($sub_category[0]['title'])){{str_slug($sub_category[0]['title'])}}@endif" />
+               @endif
+               </div>
+
+              <div class="col-lg-2"> <button type="submit" class="btn btn-warning" id="go_to_search">Go</button></div>
+              <div class="clr"></div></div>
+            </div>
+          </div>
+
+        </div>
+        <div class="clr"></div>
+      </div>
+
+
+
+
+
 
          <!-- jQuery -->
       <script src="{{ url('/')}}/assets/front/js/jquery.js" type="text/javascript"></script>
       <!-- Bootstrap Core JavaScript -->
-      <script src="{{ url('/')}}/assets/front/js/bootstrap.min.js" type="text/javascript"></script>
+      <!--<script src="{{ url('/')}}/assets/front/js/bootstrap.min.js" type="text/javascript"></script>-->
       <script type="text/javascript">
          $('.tag.example .ui.dropdown')
          .dropdown({
@@ -215,7 +287,48 @@ $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
 });
 </script>
+<script type="text/javascript">
+
+  var site_url = "{{ url('/') }}";
+  var csrf_token = "{{ csrf_token() }}";
+
+ $(document).ready(function()
+  {
+    //search by location
+        $("#location_search").autocomplete(
+                {
+                  minLength:3,
+                  source:site_url+"/get_location_auto",
+                  search: function( event, ui )
+                  {
+                   /* if(category==false)
+                    {
+                        alert("Select Category First");
+                        event.preventDefault();
+                        return false;
+                    }*/
+                  },
+                   select:function(event,ui)
+                  {
+                    $("input[name='location_search']").val(ui.item.label);
+                    $("#business_search_by_location").attr('value',ui.item.loc_slug);
+                    $("#location_search").attr('value',ui.item.loc);
+                    $('#location_latitude').attr('value',ui.item.loc_lat);
+                    $('#location_longitude').attr('value',ui.item.loc_lng);
+
+                  },
+                  response: function (event, ui)
+                  {
+
+                  }
+                });
+
+
+
+
+      });
+      </script>
         <script src="{{ url('/')}}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>
         <link href="{{ url('/')}}/assets/front/css/easy-responsive-tabs.css" rel="stylesheet" type="text/css" />
 
-@endsection
+      @endsection

@@ -10,6 +10,8 @@ use App\Models\BusinessListingModel;
 use App\Models\CategoryModel;
 use App\Models\CityModel;
 use App\Models\LocationModel;
+use App\Models\BusinessCategoryModel;
+use App\Models\PlaceModel;
 use Session;
 class HomeController extends Controller
 {
@@ -80,10 +82,63 @@ class HomeController extends Controller
 
 
  		}
- 		//dd($sub_category);
+    //set first explore category business on home page
+
+        $obj_explore_category = CategoryModel::where('is_explore_directory',1)->get();
+        if($obj_explore_category)
+        {
+            $explore_category = $obj_explore_category->toArray();
+        }
+
+        if(sizeof( $explore_category)>0)
+        {
+             $obj_sub_category = CategoryModel::where('parent',$explore_category[0]['cat_id'])->get();
+            if($obj_sub_category)
+            {
+                $arr_sub_category = $obj_sub_category->toArray();
+            }
+            if(sizeof($arr_sub_category)>0)
+            {
+              foreach ($arr_sub_category as $key => $value) {
+                $key_sub_cat[$value['cat_id']]=$value['cat_id'];
+              }
+            }
+             $obj_business_listing_cat = BusinessCategoryModel::whereIn('category_id',$key_sub_cat)->get();
+             if($obj_business_listing_cat)
+            {
+                $business_cat_listing = $obj_business_listing_cat->toArray();
+            }
+            $cat_ids=array();
+            $business_ids=array();
+            foreach ($business_cat_listing as $key => $value) {
+                if(!array_key_exists($value['category_id'],$cat_ids))
+                {
+                    $cat_ids[$value['category_id']]=$value['category_id'];
+                    $business_ids[$value['business_id']]=$value['business_id'];
+                }
+                else
+                {
+                    $business_ids[$value['business_id']]=$value['business_id'];
+                }
+
+            }
+             $obj_business_listing = BusinessListingModel::whereIn('id', $business_ids)->take(8)->get();
+            if($obj_business_listing)
+            {
+                $business_listing = $obj_business_listing->toArray();
+            }
+       }
+        //dd($business_listing);
+
+ 		//dd($arr_business_by_category);
+
  		 $cat_img_path = url('/').config('app.project.img_path.category');
- 		return view('front.home',compact('page_title','arr_category','sub_category','category_business','cat_img_path','current_city'));
+ 		return view('front.home',compact('page_title','arr_category','sub_category','category_business','arr_exp_sub_category','cat_img_path','current_city','explore_category','business_listing'));
     }
+
+
+
+
     //share location
     public function locate_location(Request $request)
     {
@@ -94,10 +149,10 @@ class HomeController extends Controller
 		    $content = file_get_contents($url); // get json content
 
 		    $metadata = json_decode($content, true); //json decoder
-		    if(sizeof($metadata['results'][4]) > 0) {
+		    if(sizeof($metadata['results'][7]) > 0) {
                 //echo '<pre>';
-               // print_r($metadata['results']);exit;
-			    $city = $metadata['results'][4]['address_components']['0']['long_name'];
+                //print_r($metadata['results']);exit;
+			    $city = $metadata['results'][7]['address_components']['0']['short_name'];
                 if(!empty($city))
                 {
 			       Session::put('city', $city);
@@ -141,9 +196,8 @@ class HomeController extends Controller
             $search_term = $request->input('term');
             $arr_obj_city = CityModel::where('is_active','=',1)
                                             ->where(function ($query) use ($search_term) {
-                                             $query->where("city_title", 'like', "%".$search_term."%")
-                                             ->orwhere("city_slug", 'like', "%".$search_term."%");
-                                             })->get();
+                                             $query->where("city_title", 'like', "%".$search_term."%");
+                                                                                        })->get();
             $arr_list_city = array();
             if($arr_obj_city)
             {
@@ -265,6 +319,8 @@ class HomeController extends Controller
  	}
     public function get_location_auto(Request $request)
     {
+         Session::forget('location_latitude');
+         Session::forget('location_longitude');
         if($request->has('term'))
         {
             $search_term='';
@@ -292,8 +348,8 @@ class HomeController extends Controller
                         $arr_final_location_list[$key]['loc_lng'] = $list['longitude'];
                         $arr_final_location_list[$key]['loc'] = str_replace('-',' ',($list['place_name']));
                          Session::put('business_search_by_location',$list['place_name']);
-                         //Session::put('location_latitude', $list['latitude']) ;
-                         //::put('location_longitude',$list['longitude']);
+
+
                     }
 
                 }
@@ -320,11 +376,101 @@ class HomeController extends Controller
     {
             $city_id = $request->input('city_id');
             $city_title = $request->input('city_title');
-
+            Session::forget('location_latitude');
+            Session::forget('location_longitude');
             Session::put('search_city_id',$city_id);
             Session::put('search_city_title',$city_title);
+
             $result['status'] ="1";
             return response()->json($result);
     }
+    public function get_business_by_exp_categry(Request $request)
+    {
+        $exp_cat=$request->input('exp_cat');
+         $obj_sub_category = CategoryModel::where('parent',$exp_cat)->get();
+        if($obj_sub_category)
+        {
+            $arr_sub_category = $obj_sub_category->toArray();
+        }
+        if(sizeof($arr_sub_category)>0)
+        {
+          foreach ($arr_sub_category as $key => $value) {
+            $key_sub_cat[$value['cat_id']]=$value['cat_id'];
+          }
+        }
+        $obj_business_listing_cat = BusinessCategoryModel::whereIn('category_id',$key_sub_cat)->get();
+         if($obj_business_listing_cat)
+        {
+            $business_cat_listing = $obj_business_listing_cat->toArray();
+        }
+        $cat_ids=array();
+        $business_ids=array();
+        foreach ($business_cat_listing as $key => $value) {
+            if(!array_key_exists($value['category_id'],$cat_ids))
+            {
+                $cat_ids[$value['category_id']]=$value['category_id'];
+                $business_ids[$value['business_id']]=$value['business_id'];
+            }
+            else
+            {
+                $business_ids[$value['business_id']]=$value['business_id'];
+            }
 
+        }
+         $obj_business_listing = BusinessListingModel::whereIn('id', $business_ids)->take(8)->with(['reviews'])->get();
+        if($obj_business_listing)
+        {
+            $business_listing = $obj_business_listing->toArray();
+        }
+        //dd($business_listing);
+         if(!empty($current_city))
+          {
+            $city=$current_city;
+          }
+          else
+          {
+            $city='Mumbai';
+          }
+        $html='';
+
+         foreach ($business_listing as $key => $business)
+         {
+             $slug_business=str_slug($business['business_name']);
+             $slug_area=str_slug($business['area']);
+             $business_area=$slug_business.'@'.$slug_area;
+
+            $html.='<div class="col-sm-3 col-md-3 col-lg-3 col-bott-mar">
+                                 <div class="first-cate-img">
+                                    <img class="over-img" alt="" src="'.url('/').'/uploads/business/main_image/'.$business['main_image'].'">
+                                 </div>
+                                 <div class="first-cate-white">
+                                    <div class="f1_container">
+                                       <div class="f1_card shadow">
+                                          <div class="cate-addre-block-two front face"><img alt="" src="'.url('/').'/assets/front/images/cate-address.png"> </div>
+                                       </div>
+                                       <div class="back face center">
+                                          <div class="cate-addre-block-two front face"><img alt="" src="'.url("/").'/assets/front/images/cate-address.png"> </div>
+                                       </div>
+                                    </div>
+                                    <div class="resta-name">
+                                       <h6><a href="'.url('/').'/'.$city.'/'.$business_area.'/'.base64_encode($business['id']).'">'.$business['business_name'].'</a></h6>
+                                       <span></span>
+                                    </div>
+                                    <div class="resta-content">
+                                       '. $business['building'].' '.$business['street'].' '.$business['landmark'].' '.$business['area'].' '.'-'.$business['pincode'].'
+                                    </div>
+                                        <div class="resta-rating-block">';
+                                    for($i=0;$i<round($business['avg_rating']);$i++)
+                                        {
+                                       $html.='<i class="fa fa-star star-acti"></i>';
+                                        }
+                                       for($i=0;$i<(5-round($business['avg_rating']));$i++){
+                                      $html.='<i class="fa fa-star"></i>';
+                                       }
+                                    $html.='
+                                 </div></div>
+                    </div>';
+               }
+        echo $html;
+  }
 }

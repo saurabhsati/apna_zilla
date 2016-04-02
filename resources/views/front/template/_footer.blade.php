@@ -81,7 +81,8 @@
                <div class="modal-footer">
                   <div class="login_box">
                      <div class="left_bar">
-                        <a class="forgt" data-toggle="modal" data-target="#forget_pwd">Forget your password?</a><a data-toggle="modal" data-target="#reg_poup" class="sign_up">Sign Up Now</a>
+                        <a class="forgt" data-toggle="modal" data-target="#forget_pwd">Forget your password?</a>
+                        <a data-toggle="modal" id="open_register" data-target="#reg_poup" class="sign_up">Sign Up Now</a>
                      </div>
                      <button type="button"  id="login_submit" class="yellow ui button">Login</button>
                   </div>
@@ -138,6 +139,7 @@
          </form>
       </div>
     <!--forget password poup end here-->
+
 
 
     <!--OTP popup start here-->
@@ -211,6 +213,7 @@
          </form>
       </div>
     <!--forget password poup end here-->
+
 
 
       <!--registration popup start here-->
@@ -594,19 +597,9 @@ If you need any more details on Justdial Verified, please refer to
             </div>
          </div>
       </div>
-      <!-- jQuery -->
-      <script src="{{ url('/') }}/assets/front/js/jquery.js" type="text/javascript"></script>
-      <!-- Bootstrap Core JavaScript -->
-      <script src="{{ url('/') }}/assets/front/js/bootstrap.min.js" type="text/javascript"></script>
 
       <!-- Home Page Popup for login & signup start -->
-      <script type="text/javascript">
-         $('.tag.example .ui.dropdown')
-         .dropdown({
-         allowAdditions: true
-         })
-         ;
-      </script>
+
       <script type="text/javascript">
          jQuery(document).ready(function(){
            jQuery(".sign_up").click(function(){
@@ -627,11 +620,12 @@ If you need any more details on Justdial Verified, please refer to
  <!-- Home Page Popup for login & signup end -->
   <!-- Listing details Tabbing Start -->
       <script type="text/javascript">
-         $('.tag.example .ui.dropdown')
+        $(document).ready(function () {
+          $('.tag.example .ui.dropdown')
          .dropdown({
          allowAdditions: true
-         })
-         ;
+         });
+         });
       </script>
       <script type="text/javascript">
          $(document).ready(function () {
@@ -1030,8 +1024,15 @@ If you need any more details on Justdial Verified, please refer to
 </script>
 
 
+<<<<<<< HEAD
 <!-- jquery validation -->
 <script type="text/javascript" src="{{url('/')}}/assets/jquery-validation/dist/jquery.validate.min.js"></script>
+=======
+
+<!-- <input type="hidden" id="is_session_mail" value="<?php //echo $is_mail ;?>" > </input>
+ -->
+
+>>>>>>> 22cdb6a9e8196734e0db2e855c2725311f80be41
  <script type="text/javascript">
 var supports = (function () {
     var a = document.documentElement,
@@ -1114,6 +1115,7 @@ if ($("html").hasClass("no-touch")) {
 
  } //END IF no-touch for hover script & removeAttr for the links to work
 </script>
+
 
         <!-- Listing details Tabbing End -->
         <script src="{{ url('/') }}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>

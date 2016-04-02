@@ -167,6 +167,7 @@ class BusinessListingController extends Controller
 
         if($validator->fails())
         {
+
             return redirect('/sales_user/business_listing/create')->withErrors($validator)->withInput();
         }
         $form_data=$request->all();

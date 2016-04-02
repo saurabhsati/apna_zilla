@@ -185,7 +185,7 @@
 
                       </div>
                    </div>
-                    <span class='help-block'>{{ $errors->first('image') }}</span>
+                    <span class='help-block'>{{ $errors->first('main_image') }}</span>
                      <!--<br/>
                      <button class="btn btn-warning" onclick="return show_more_images()" id="show_more_images_button">Do you want to add slider images ? </button>  -->
                 </div>
@@ -263,7 +263,7 @@
 
 
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="street">Country <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="country">Country <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                 <select class="form-control" name="country" id="country" onchange="loadStates(this)" >
                 <option>Select Country</option>
@@ -279,7 +279,7 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="street">State <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="state">State <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                  <select class="form-control"  name="state" id="state" tabindex="1" onchange="loadCity(this)">
                  <option>Select State</option>
@@ -443,7 +443,7 @@
                            placeholder="Enter Hours Of Operation"
                            value=""
                            ></textarea>
-                    <span class='help-block'>{{ $errors->first('hours_of_operation') }}</span>
+                    <span class='help-block'>{{-- $errors->first('hours_of_operation') --}}</span>
                 </div>
             </div> -->
 
@@ -714,11 +714,11 @@
                 </div>
             </div>
 
-            <div class="form-group">
+                      <div class="form-group">
                           <label class="col-sm-3 col-lg-2 control-label" for="building">
-                           <a href="" class="add_serc">Add Services</a></label>
-                         </div>
-                          <div class="form-group add_more_service" style="display: none;">
+                          <a href="" class="add_serc">Add Services</a></label>
+                      </div>
+                        <div class="form-group add_more_service" style="display: none;">
                           <div class="col-sm-5 col-md-7" style="float:right;">
                              <a href="javascript:void(0);" id='add-service'>
                                  <span class="glyphicon glyphicon-plus-sign" style="font-size: 20px;"></span>
@@ -740,12 +740,12 @@
                                 <div class="clr"></div>
 
                              <div id="append_service" class="class-add"></div>
-                              <div class="error_msg" id="error_business_image" ></div>
-                              <div class="error_msg" id="error_business_image1" ></div>
+                              <div class="error_msg" id="error_business_service" ></div>
+                              <!-- <div class="error_msg" id="error_business_image1" ></div> -->
                              <label class="col-sm-3 col-lg-2 control-label"></label>
 
-                              </div>
-                              </div>
+                            </div>
+                        </div>
 
 
 

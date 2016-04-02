@@ -158,11 +158,12 @@ class AuthController extends Controller
         {
             $credentials   = [ 'email' => $email ];
             $existing_user = Sentinel::findUserByCredentials($credentials);
-
             $login_status  = Sentinel::login($existing_user); // process login a user
+            //dd($login_status);
 
             Session::set('user_name', $fname);
             Session::set('user_mail', $email);
+            //Session::set('user_id', $email);
 
            Session::flash('success','Login Successfull');
             
@@ -283,6 +284,7 @@ class AuthController extends Controller
     
         if($user)
         {
+
             if($user->is_active == 1)
             {    
                     /* Check if Users Role is Admin */
@@ -322,6 +324,7 @@ class AuthController extends Controller
                         //Session::flash('error','Not Sufficient Privileges');
                         $json =  'No Sufficient Privileges';
                     }
+
             }
             else
             {

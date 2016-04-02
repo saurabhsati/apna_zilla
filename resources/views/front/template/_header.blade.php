@@ -35,38 +35,11 @@
       <script type="text/javascript" src="{{url('/')}}/js/front/jquery.rating.js"></script>
       <link rel="stylesheet" href="{{ url('/') }}/css/front/jquery.rating.css" type="text/css"/>
 
+       <!-- jQuery -->
+      <!-- <script src="{{-- url('/') --}}/assets/front/js/jquery.js" type="text/javascript"></script> -->
+      <!-- Bootstrap Core JavaScript -->
+      <script src="{{ url('/') }}/assets/front/js/bootstrap.min.js" type="text/javascript"></script>
 
-      <script type="text/javascript">
-         $(function() {
-           var availableTags = [
-             "ActionScript",
-             "AppleScript",
-             "Asp",
-             "BASIC",
-             "C",
-             "C++",
-             "Clojure",
-             "COBOL",
-             "ColdFusion",
-             "Erlang",
-             "Fortran",
-             "Groovy",
-             "Haskell",
-             "Java",
-             "JavaScript",
-             "Lisp",
-             "Perl",
-             "PHP",
-             "Python",
-             "Ruby",
-             "Scala",
-             "Scheme"
-           ];
-           $( "#tags" ).autocomplete({
-             source: availableTags
-           });
-         });
-      </script>
       <!--category droup doun mobile effect-->
        <script>
 $(document).ready(function(){
@@ -140,10 +113,12 @@ $(document).ready(function(){
          });
 
       </script>
+      <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
        <script src="{{ url('/') }}/assets/front/js/jquery.validate.min.js"></script>
        <script src="{{ url('/') }}/assets/front/js/google_ajax_jquery.min.js"></script>
+       <!-- jquery validation -->
+      <script type="text/javascript" src="{{url('/')}}/assets/jquery-validation/dist/jquery.validate.min.js"></script>
 
-      <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
          <!-- Share Location  -->
 
 <script>

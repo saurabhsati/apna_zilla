@@ -434,6 +434,7 @@ class BusinessListingController extends Controller
 
         if($validator->fails())
         {
+             //print_r( $validator->errors()->all());exit;
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -569,6 +570,8 @@ class BusinessListingController extends Controller
         }
         }
       }
+
+      
         if($business_data /*&& $user_data*/)
         {
             $arr_time['business_id'] = $id;

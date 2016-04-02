@@ -38,19 +38,21 @@
                          @if(Session::has('user_name'))
 
                           <li class="nav-item">
-                        <div class="dropdown">
-                                <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Hi {{--{{ session('user_first_name') }}--}} {{Session::get('user_name')}} <span class="caret"></span>
+                            
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Hi  nayan <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                   <li><a href="{{url('/front_users/profile')}}">My Account</a></li>
+                                   <li><a href="http://localhost/justdial/public/front_users/profile">My Account</a></li>
                                    <li><a href="#">My Favorites</a></li>
                                    <li><a href="#">Friend's Ratings </a></li>
-                                   <li><a href="{{ url('/front_users/my_business') }}">My Business </a></li>
-                                   <li><a href="{{ url('/front_users/add_business') }}">Add Business </a></li>
-                                   <li><a href="{{ url('/front_users/logout') }}" onclick="social_logout(this)" >Logout</a></li>
+                                   <li><a href="http://localhost/justdial/public/front_users/my_business">My Business </a></li>
+                                   <li><a href="http://localhost/justdial/public/front_users/add_business">Add Business </a></li>
+                                   <li><a href="http://localhost/justdial/public/front_users/logout" onclick="social_logout(this)" >Logout</a></li>
                                 </ul>
                              </div>
-                             </li>
+                            
+                            </li>
 
                         @else
 
@@ -58,8 +60,18 @@
 
                         @endif
 
+
                         </ul>
-                        <a class="btn btn-post" href="#">List your Bussiness</a>
+                        <?php if(empty(session::get('user_mail')))
+                        {
+                          echo '<a data-toggle="modal" id="open_register" data-target="#reg_poup" class="btn btn-post" >List your Business </a>';
+                        }
+                        else {
+                          echo '<a class="btn btn-post" href="'.url('/').'/front_users/add_business" id="list_your_business" >List your Business</a>';
+                        }
+
+                      ?>
+                      
                      </div>
                      <div class="clearfix"></div>
                   </div>

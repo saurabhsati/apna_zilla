@@ -27,17 +27,14 @@
                <div style="background: url('{{ url('/') }}/uploads/business/main_image/{{ $arr_business_details['main_image'] }}'); background-repeat: repeat;  background-size: 100% auto;">
                   <div class="product_detail_banner" style="background-color:rgba(0,0,0,0.7);">
                      <div class="product_title"><a href="#">{{$arr_business_details['business_name']}}</a></div>
-                     <div class="rating_star">
-                        <ul>
-                           <?php for($i=0;$i<round($arr_business_details['avg_rating']);$i++){ ?>
-                           <li><i class="fa fa-star-o ylow"></i></li>
-                           <?php }?>
-                           <?php for($i=0;$i<(5-round($arr_business_details['avg_rating']));$i++){ ?>
-                           <li><i class="fa fa-star-o"></i></li>
-                           <?php }?>
-                        </ul>
-                        {{round($arr_business_details['avg_rating'])}}&nbsp;out of 5 <a href="#" onclick="clickReview()">reviews</a>
-                     </div>
+                      <div class="resta-rating-block11">
+                      <?php for($i=0;$i<round($arr_business_details['avg_rating']);$i++){ ?>
+                      <i class="fa fa-star star-acti"></i>
+                      <?php }?>
+                      <?php for($i=0;$i<(5-round($arr_business_details['avg_rating']));$i++){ ?>
+                      <i class="fa fa-star"></i>
+                        <?php }?>
+                      </div>
                      <div class="p_details"><i class="fa fa-phone"></i><span> {{$arr_business_details['landline_number']}} &nbsp; {{$arr_business_details['mobile_number']}}</span></div>
                      <div class="p_details"><i class="fa fa-map-marker"></i> <span>{{$arr_business_details['building']}} &nbsp; {{$arr_business_details['street']}},<br/> {{$arr_business_details['landmark']}},&nbsp;{{$arr_business_details['area']}},&nbsp;{{$arr_business_details['state_details']['state_title']}},&nbsp;{{$arr_business_details['country_details']['country_name']}} (<a href="javascript:void(0);" onclick="show_map()">map</a>)</span></div>
                      <div class="p_details lst">
@@ -109,11 +106,19 @@
                <div class="icons">
                   <div class="img_icons popup-v"><a data-toggle="modal" data-target="#share"><img src="{{ url('/') }}/assets/front/images/shar.png" alt="share"/>Share</a></div>
                   <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/write_review.png" alt="write_review">write review</div>
+
                   <div class="img_icons" onclick="showreview()" style="cursor: pointer;">
-                
-                    <img src="{{ url('/') }}/assets/front/images/your-vote.png" alt="your-vote"/>
-                      Your Vote
-                
+                    <div class="yr_rating-over">
+                                    <input class="star required" type="radio" name="rating" value="1" id="rating" title="1 Star" />
+                                    <input class="star" type="radio" name="rating" id="rating" value="2" title="2 Star" onclick="return set_rating(this);" />
+                                    <input class="star" type="radio" name="rating" id="rating" value="3" title="3 Star" onclick="return set_rating(this);"/>
+                                    <input class="star" type="radio" name="rating" id="rating" value="4" title="4 Star" onclick="return set_rating(this);"/>
+                                    <input class="star" type="radio" name="rating" id="rating" value="5" title="5 Star" onclick="return set_rating(this);"/>
+
+                                 </div><br/>
+                   <!--  <img src="{{ url('/') }}/assets/front/images/your-vote.png" alt="your-vote"/> -->
+                      Your Vote(<span id="dprtng">-</span>)
+
                   </div>
                   <div class="img_icons popup-v">
                      <a data-toggle="modal" data-target="#sms"><img src="{{ url('/') }}/assets/front/images/sms-emil.png" alt="write_review"/>Sms/Email</a>
@@ -181,7 +186,7 @@
                            <div class="write-review-head">
                               Write a Review
                            </div>
-                           
+
                            <form class="form-horizontal"
                               id="validation-form"
                               method="POST"
@@ -192,21 +197,7 @@
                               <div class="review-title">
                                  <div class="your-rating"> Your rating </div>
                                  <input type="hidden" name="business_id" value="{{$business_id}}">
-                                <!--  <input type="hidden" value="" name="rating" id="rating"> -->
-                               <!--   <span class="wrtrvtxt hidden-xs" id="mratdet">( <span id="dprtng">-</span> )</span> -->
                                  <div class="yr_rating-over">
-                                    <!-- <ul>
-                                   
-                                       <li>
-                                          <a class="ratingStar{{$i}}" href="javascript:void(0);" rel="0.5">
-                                             <img src="{{ url('/') }}/assets/front/images/comman-over.png" id="common{{$i}}" alt="hover imag"/>
-                                             <img src="{{ url('/') }}/assets/front/images/over1.png" id="over{{$i}}" style="display: none;" alt="hover imag"/>
-                                          </a>
-                                       </li>
-                                      
-                                      
-                                    </ul> -->
-
                                     <input class="star required" type="radio" name="rating" value="1" id="rating" title="1 Star" />
                                     <input class="star" type="radio" name="rating" id="rating" value="2" title="2 Star"/>
                                     <input class="star" type="radio" name="rating" id="rating" value="3" title="3 Star"/>
@@ -216,23 +207,14 @@
                                  </div>
                                  <div class="clearfix"></div>
                               </div>
-                           <!--    <div class="review-title">
-                                 <div class="title-review">
-                                    Title
-                                 </div>
-                                 <div class="title-rev-field">
-                                    <input type="text" name="title" id="title" data-rule-required="true" placeholder="Title" />
-                                    <div id="msgRating_title"></div>  
-                                 </div>
-                                 <div class="clearfix"></div>
-                              </div> -->
+
                               <div class="review-title">
                                  <div class="title-review">
                                     Add review
                                  </div>
                                  <div class="title-rev-field">
                                     <textarea class="message-review" data-rule-required="true" placeholder="Add review" rows="" cols="" name="review" id="review"></textarea>
-                                    <div id="msgRating_message"></div> 
+                                    <div id="msgRating_message"></div>
                                  </div>
                                  <div class="clearfix"></div>
                               </div>
@@ -254,7 +236,7 @@
                                     <div class="input-group">
                                        <div class="input-group-addon">+91</div>
                                        <input type="text" name="mobile_no" id="mobile_no" data-rule-required="true" class="form-control" id="exampleInputAmount" placeholder="Mobile Number">
-                                       <div id="msgRating_mobile"></div> 
+                                       <div id="msgRating_mobile"></div>
                                     </div>
                                  </div>
                                  <div class="clearfix"></div>
@@ -270,11 +252,11 @@
                                  <div class="clearfix"></div>
                               </div>
                               <div class="submit-btn">
-                                
+
                                  <button type="submit" name="submit_review" id="submit_review">SUBMIT REVIEW</button>
                               </div>
                            </form>
-                        
+
                         </div>
                      </div>
                      <div>
@@ -323,10 +305,7 @@
                                     <?php for($i=0;$i<$review['ratings'];$i++){ ?>
                                     <i class="fa fa-star-o stars-rat"></i>
                                     <?php } ?>
-                                    <!-- <i class="fa fa-star-o stars-rat"></i>
-                                       <i class="fa fa-star-o stars-rat"></i>
-                                       <i class="fa fa-star-o stars-rat"></i>
-                                       <i class="fa fa-star-o"></i> -->
+
                                  </span>
                                  <span class="label-block"><?php echo date('F Y',strtotime($review['created_at'])); ?></span>
                                  <div class="clearfix"></div>
@@ -336,45 +315,7 @@
                         </div>
                         @endforeach
                         @endif
-                        <!--  <div class="testimo-one lst">
-                           <div class="img-div-testi">
-                              <img src="images/testi-user.png" alt="" />
-                           </div>
-                           <div class="testimo-content">
-                              <div class="user-name-testio">
-                                 coumess
-                              </div>
-                              <div class="testimo-user-mess">
-                               Awesome tool for creating a global business directory! Adding new cities is as easy as it can get, the extensive backend features for admin makes this theme a clear winner in this niche.
-                              </div>
-                              <div class="acad-rating-block">
-                                 <span class="stars-block"><i class="fa fa-star-o stars-rat"></i><i class="fa fa-star-o stars-rat"></i><i class="fa fa-star-o stars-rat"></i><i class="fa fa-star-o stars-rat"></i><i class="fa fa-star-o"></i></span>
-                                 <span class="label-block">January 2016</span>
-                                 <div class="clearfix"></div>
-                              </div>
-                           </div>
-                           <div class="clearfix"></div>
 
-                           <div class="testimo-one replay">
-                           <div class="img-div-testi">
-                              <img src="images/testi-user.png" alt="" />
-                           </div>
-                           <div class="testimo-content">
-                              <div class="user-name-testio">
-                                 Emma
-                              </div>
-                              <div class="testimo-user-mess">
-                                I have not seen better Google map integration then this ever. Marker clustering is one hell of a useful feature when you have a huge directory with thousands of listings on map.
-                              </div>
-                              <div class="acad-rating-block">
-                                 <span class="stars-block"><i class="fa fa-star-o stars-rat"></i><i class="fa fa-star-o stars-rat"></i><i class="fa fa-star-o stars-rat"></i><i class="fa fa-star-o stars-rat"></i><i class="fa fa-star-o"></i></span>
-                                 <span class="label-block">January 2016</span>
-                                 <div class="clearfix"></div>
-                              </div>
-                           </div>
-                           <div class="clearfix"></div>
-                           </div>
-                           </div> -->
                      </div>
                      <div>
                         <div class="gallery_view">
@@ -557,7 +498,7 @@
            jQuery("#msgRating_email").html("<div style='color:red;'>Please Enter Correct Email.</div>");
            return false;
         }
-       
+
     });
 
 
@@ -705,14 +646,16 @@
        marker.setPosition(location);
        map.setZoom(16);
    }
-   
-   // $(".ratingStar").hover(function(){
-   //    var rate=$(this).attr('rel');
-   //    $("#dprtng").html(rate);
-   //    $("input[name='rating']").val(rate);
-   // });
+  function set_rating(ref)
+  {
+     var rate=$(ref).val();
+      $("#dprtng").html(rate);
+      //$("input[name='rating']").val(rate);
 
-     
+  }
+
+
+
 
 
 
