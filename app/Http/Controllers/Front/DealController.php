@@ -20,7 +20,7 @@ class DealController extends Controller
  	{
  		$page_title = "Deals and Offers";
 
- 		$obj_deals_info = DealModel::get();
+ 		$obj_deals_info = DealModel::orderBy('created_at','DESC')->get();
 
  		if($obj_deals_info)
  		{
@@ -50,7 +50,7 @@ class DealController extends Controller
         if( $arr_category_info)
         {
 
-            $obj_deals_info = DealModel::get()->where('parent_category_id',$arr_category_info[0]['cat_id']);
+            $obj_deals_info = DealModel::where('parent_category_id',$arr_category_info[0]['cat_id'])->orderBy('created_at','DESC')->get();
 
             if($obj_deals_info)
             {

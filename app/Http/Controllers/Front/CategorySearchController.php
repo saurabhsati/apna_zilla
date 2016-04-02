@@ -222,7 +222,7 @@ class CategorySearchController extends Controller
               $arr_business = array();
               if(sizeof($result)>0)
               {
-               // echo $loc;
+                echo $loc;
 
 
                 $obj_business_listing = BusinessListingModel::whereIn('id',$result)
@@ -234,8 +234,9 @@ class CategorySearchController extends Controller
                                                    ->orwhere("building", 'like', "%".$loc."%");
                                                  })->with(['reviews']);
 
-                                                //->get();
-
+                                               // ->get();
+//dd($obj_business_listing->toSql());
+//dd($arr_business);
                                                  /*$obj_business_listing->toSql();
                                                   dd($obj_business_listing);
                                                  exit;*/
@@ -277,8 +278,8 @@ class CategorySearchController extends Controller
                 }
 
 
-                $obj_business_listing= $obj_business_listing->get();
-                //dd($obj_business_listing->toSql());
+                $obj_business_listing= $obj_business_listing->toSql();
+                dd($obj_business_listing);
 
                 if($obj_business_listing)
                 {

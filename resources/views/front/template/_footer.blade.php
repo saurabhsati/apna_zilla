@@ -133,6 +133,7 @@
     <!--forget password poup end here-->
 
 
+
       <!--registration popup start here-->
       <div id="reg_poup" class="modal fade" role="dialog" style="overflow:auto;">
 

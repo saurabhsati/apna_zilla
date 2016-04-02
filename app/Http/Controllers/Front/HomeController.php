@@ -11,6 +11,7 @@ use App\Models\CategoryModel;
 use App\Models\CityModel;
 use App\Models\LocationModel;
 use App\Models\BusinessCategoryModel;
+use App\Models\PlaceModel;
 use Session;
 class HomeController extends Controller
 {
