@@ -446,10 +446,9 @@ class BusinessListingController extends Controller
 
         $business_category = BusinessCategoryModel::where('business_id',$id);
         $res= $business_category->delete();
-        if($res)
+        $business_cat=$request->input('business_cat');
+        if($business_cat)
         {
-         $business_cat=$request->input('business_cat');
-
             foreach ($business_cat as $key => $value)
             {
                 $arr_cat_data['business_id']=$id;
@@ -571,7 +570,7 @@ class BusinessListingController extends Controller
         }
       }
 
-      
+
         if($business_data /*&& $user_data*/)
         {
             $arr_time['business_id'] = $id;

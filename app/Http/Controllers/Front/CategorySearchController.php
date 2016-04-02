@@ -36,7 +36,8 @@ class CategorySearchController extends Controller
       {
         $c_city='Mumbai';
       }
-      $page_title	='List Of Category ';
+      $page_title	=ucfirst(str_replace('-',' ',$cat_slug));
+
       $obj_sub_category = CategoryModel::where('parent',$cat_id)->orderBy('is_popular', 'DESC')->get();
   	 	if($obj_sub_category)
   	 	{

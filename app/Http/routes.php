@@ -490,11 +490,11 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::get('add_business',		    			['as' => 'business_add' 	        				,'uses' =>'Front\UserController@add_business']);
 		// for getting country state from city_id ajax called function.
 		Route::post('get_state',		    			['as' => 'get_state' 	        		    		,'uses' =>'Front\UserController@get_state']);
-		
+
 		Route::post('get_city',		    				['as' => 'get_city' 	        		    		,'uses' =>'Front\UserController@get_city']);
-		
+
 		Route::post('get_zip',		    				['as' => 'get_zip' 	        		    			,'uses' =>'Front\UserController@get_zip']);
-		
+
 
 		// for saving business data.
 		Route::post('add_business_details',		    	['as' => 'business_add' 	        				,'uses' =>'Front\UserController@add_business_details']);
@@ -505,22 +505,22 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 			// for showing contact information page for business
 		Route::post('add_other_details',		    			['as' => 'add_other_details' 	        			,'uses' =>'Front\UserController@add_other_details']);
-	
 
-	
+
+
 		// for saving business data.
-		Route::post('add_location_details',		    	['as' => 'add_location' 	        				,'uses' =>'Front\UserController@add_location_details']);	
+		Route::post('add_location_details',		    	['as' => 'add_location' 	        				,'uses' =>'Front\UserController@add_location_details']);
 		// For adding other inforamation  for business
 		Route::get('other_details/{enc_id}',		    			['as' => 'other_information' 	        			,'uses' =>'Front\UserController@show_other_info_details']);
 		// For getting location info
 		Route::get('add_location/{enc_id}',		    			['as' => 'show_location_details' 	        		,'uses' =>'Front\UserController@show_location_details']);
 		// For getting Services Page.
 		Route::get('add_services/{enc_id}',		    			['as' => 'show_services_details' 	        	    ,'uses' =>'Front\UserController@show_services_details']);
-		
+
 		Route::post('add_services_details',		    			['as' => 'add_services_details' 	        			,'uses' =>'Front\UserController@add_services_details']);
-	
-		
-		
+
+
+
 	    Route::get('edit_business/{enc_id}',		    ['as' => 'business_edit' 	        				,'uses' =>'Front\UserController@edit_business']);
 		Route::post('update_business_details/{enc_id}',	['as' => 'front_users_store_business_details'       ,'uses' =>'Front\UserController@update_business_details']);
 
@@ -539,6 +539,8 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::get('/',									['as' =>'deals_page'								,'uses' =>'Front\DealController@index']);
 		Route::get('details/{enc_id}',					['as' =>'deals_detail'								,'uses' =>'Front\DealController@details']);
 		Route::get('{enc_id}',					        ['as' =>'deals_by_category'			,'uses' =>'Front\DealController@deals_by_category']);
+		Route::post('fetch_location_deal',				['as' =>'deals_by_location'			,'uses' =>'Front\DealController@fetch_location_deal']);
+
 	});
 
 	Route::post('/newsletter','Front\NewsLetterController@index');

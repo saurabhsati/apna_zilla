@@ -55,6 +55,7 @@
 
                   <div class="login_box">
                      <div class="title_login">Login with your email and password</div>
+                    
                      <div class="user_box">
                         <div class="label_form">Email/Mobile No.</div>
                         <input type="text" name="email" id="email_login" class="input_box" data-rule-required="true" placeholder="Enter Email Address/ Mobile No."/>
@@ -122,7 +123,7 @@
                      <div class="user_box">
                         <div class="label_form">Email</div>
                         <input type="text" class="input_box" placeholder="Enter Email Address"/>
-
+                        
                      </div>
 
                      <div class="clr"></div>
@@ -198,6 +199,8 @@
                         <div class="label_form">OTP</div>
                         <input type="text" class="input_box" name="otp_no" id="otp_no" placeholder="Enter Your OTP"/>
                         <input type="hidden" class="input_box" name="mobile_no_otp" id="mobile_no_otp" value=""/>
+                        <div id="otp_error" style="display: none;"><i style="color: red;">Please Fill Field</i></div> 
+                        <div id="otp_rule_error" style="display: none;"><i style="color: red;">Invalid OTP</i></div>   
                      </div>
 
                      <div class="clr"></div>
@@ -574,21 +577,23 @@ If you need any more details on Justdial Verified, please refer to
                 <div class="col-sm-4 col-md-4 col-lg-4">
                   <div class="social-icon-block">
                      <div class="social-icon-footer">
-                        <a title="" data-placement="top" data-toggle="tooltip" class="social-icon si-borderless si-facebook" href="#" data-original-title="Facebook">
+                        
+                        <a title="" data-placement="top" data-toggle="tooltip" class="social-icon si-borderless si-facebook" href="{{isset($site_settings['fb_url'])?$site_settings['fb_url']:''}}" data-original-title="Facebook">
                         <i class="fa fa-facebook"></i>
                         <i class="fa fa-facebook"></i>
                         </a>
                         <div class="clearfix"></div>
                      </div>
                      <div class="social-icon-footer">
-                        <a data-original-title="Twitter" href="#" class="social-icon si-borderless si-twitter" data-toggle="tooltip" data-placement="top" title="">
+                        <a data-original-title="Twitter" href="{{isset($site_settings['twitter_url'])?$site_settings['twitter_url']:''}}" class="social-icon si-borderless si-twitter" data-toggle="tooltip" data-placement="top" title="">
                         <i class="fa fa-twitter"></i>
                         <i class="fa fa-twitter"></i>
                         </a>
                         <div class="clearfix"></div>
                      </div>
                      <div class="social-icon-footer">
-                        <a data-original-title="Google Plus" href="#" class="social-icon si-borderless si-gplus" data-toggle="tooltip" data-placement="top" title="">                                        <i class="fa fa-google-plus"></i>
+                        <a data-original-title="Google Plus" href="{{isset($site_settings['youtube_url'])?$site_settings['youtube_url']:''}}" class="social-icon si-borderless si-gplus" data-toggle="tooltip" data-placement="top" title="">
+                        
                         <i class="fa fa-google-plus"></i>
                         </a>
                         <div class="clearfix"></div>
@@ -621,14 +626,7 @@ If you need any more details on Justdial Verified, please refer to
       
  <!-- Home Page Popup for login & signup end -->
   <!-- Listing details Tabbing Start -->
-      <script type="text/javascript">
-        $(document).ready(function () {
-          $('.tag.example .ui.dropdown')
-         .dropdown({
-         allowAdditions: true
-         });
-         });
-      </script>
+
       <script type="text/javascript">
          $(document).ready(function () {
              $('#dash_tab').easyResponsiveTabs({
@@ -675,8 +673,27 @@ If you need any more details on Justdial Verified, please refer to
     var otp        = $('#otp_no').val();
     var mobile_no  = $('#mobile_no_otp').val();
     var token      = jQuery("input[name=_token]").val();
+
     var bus_listing= jQuery("#bus_listing").val();
 
+    var otp_filter = /^[0-9]{0,30}$/;
+
+    $('#otp_no').keyup(function(){
+       $('#otp_error').hide(); 
+       $('#otp_rule_error').hide(); 
+    });
+
+
+    if(otp=="")
+    {
+      $('#otp_error').show();
+    } 
+    else if(!otp_filter.test(otp))
+    {
+      $('#otp_rule_error').show();
+    } 
+    else
+    {  
      jQuery.ajax({
          url      : site_url+"/front_users/otp_check?_token="+token,
          method   : 'POST',
@@ -721,6 +738,7 @@ If you need any more details on Justdial Verified, please refer to
             
          }
       });
+    } 
   }
 
 
@@ -830,6 +848,7 @@ If you need any more details on Justdial Verified, please refer to
 
                 $('#otp_div_popup').click();
                 $('#mobile_no_otp').val(response.mobile_no);
+                $('#reg_poup').modal('hide');
                  //$('#reg_succ_div').show();
               }
               else if(response.status == "ERROR")
@@ -1160,5 +1179,6 @@ if ($("html").hasClass("no-touch")) {
         <script src="{{ url('/') }}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>
         <link href="{{ url('/') }}/assets/front/css/easy-responsive-tabs.css" rel="stylesheet" type="text/css" />
         <script src="{{ url('/') }}/assets/front/js/jquery-ui.js" type='text/javascript'></script>
+
    </body>
 </html>
