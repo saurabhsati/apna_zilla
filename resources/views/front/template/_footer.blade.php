@@ -55,6 +55,7 @@
 
                   <div class="login_box">
                      <div class="title_login">Login with your email and password</div>
+                    
                      <div class="user_box">
                         <div class="label_form">Email/Mobile No.</div>
                         <input type="text" name="email" id="email_login" class="input_box" data-rule-required="true" placeholder="Enter Email Address/ Mobile No."/>
@@ -122,7 +123,7 @@
                      <div class="user_box">
                         <div class="label_form">Email</div>
                         <input type="text" class="input_box" placeholder="Enter Email Address"/>
-
+                        
                      </div>
 
                      <div class="clr"></div>
@@ -197,6 +198,8 @@
                         <div class="label_form">OTP</div>
                         <input type="text" class="input_box" name="otp_no" id="otp_no" placeholder="Enter Your OTP"/>
                         <input type="hidden" class="input_box" name="mobile_no_otp" id="mobile_no_otp" value=""/>
+                        <div id="otp_error" style="display: none;"><i style="color: red;">Please Fill Field</i></div> 
+                        <div id="otp_rule_error" style="display: none;"><i style="color: red;">Invalid OTP</i></div>   
                      </div>
 
                      <div class="clr"></div>
@@ -663,7 +666,23 @@ If you need any more details on Justdial Verified, please refer to
     var otp        = $('#otp_no').val();
     var mobile_no  = $('#mobile_no_otp').val();
     var token      = jQuery("input[name=_token]").val();
+    var otp_filter = /^[0-9]{0,30}$/;
 
+    $('#otp_no').keyup(function(){
+       $('#otp_error').hide(); 
+       $('#otp_rule_error').hide(); 
+    });
+
+    if(otp=="")
+    {
+      $('#otp_error').show();
+    } 
+    else if(!otp_filter.test(otp))
+    {
+      $('#otp_rule_error').show();
+    } 
+    else
+    {  
      jQuery.ajax({
          url      : site_url+"/front_users/otp_check?_token="+token,
          method   : 'POST',
@@ -699,6 +718,7 @@ If you need any more details on Justdial Verified, please refer to
             
          }
       });
+    } 
   }
 
 
