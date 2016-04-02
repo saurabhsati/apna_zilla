@@ -432,7 +432,8 @@ class HomeController extends Controller
             $city='Mumbai';
           }
         $html='';
-
+        if(sizeof($business_listing)>0)
+        {
          foreach ($business_listing as $key => $business)
          {
              $slug_business=str_slug($business['business_name']);
@@ -471,6 +472,7 @@ class HomeController extends Controller
                                  </div></div>
                     </div>';
                }
+         }
         echo $html;
   }
 }

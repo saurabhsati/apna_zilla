@@ -35,9 +35,9 @@
                             @if(Session::has('user_name'))
 
                             <li class="nav-item">
-                              
-                              <div class="dropdown">
-                                <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Hi  nayan <span class="caret"></span>
+
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Hi {{ucfirst(Session::get('user_name'))}}  <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                    <li><a href="http://localhost/justdial/public/front_users/profile">My Account</a></li>
@@ -47,8 +47,8 @@
                                    <li><a href="http://localhost/justdial/public/front_users/add_business">Add Business </a></li>
                                    <li><a href="http://localhost/justdial/public/front_users/logout" onclick="social_logout(this)" >Logout</a></li>
                                 </ul>
-                              </div>
-                            
+                             </div>
+
                             </li>
 
                         @else

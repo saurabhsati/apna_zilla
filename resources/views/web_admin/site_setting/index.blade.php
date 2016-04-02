@@ -152,7 +152,7 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="youtube_url">Youtube Url<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="youtube_url">Google+ Url<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" name="youtube_url" id="youtube_url" data-rule-required="true"   data-rule-url="true"  value="{{ $arr_site_setting['youtube_url'] }}" />
                     <span class='help-block'>{{ $errors->first('youtube_url') }}</span>

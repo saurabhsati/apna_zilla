@@ -22,7 +22,7 @@
 				<ol class="breadcrumb">
 					<span>You are here:</span>
 					<li><a href="{{ url('/') }}">Home</a></li>
-					<li class="active">search </li>
+					<li class="active">{{$page_title}} </li>
 
 				</ol>
 			</div>

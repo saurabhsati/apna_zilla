@@ -17,7 +17,7 @@
        <ol class="breadcrumb">
          <span>You are here:</span>
          <li><a href="{{ url('/') }}">Home</a></li>
-         <li class="active"><?php if(sizeof($parent_category)>0 && (sizeof($sub_category)>0)){echo $sub_category[0]['title'].' '.$parent_category[0]['title'];} ?></li>
+         <li class="active"><?php if(sizeof($parent_category)>0 && (sizeof($sub_category)>0)){echo $parent_category[0]['title'].' :: '.$sub_category[0]['title'];} ?></li>
        </ol>
      </div>
    </div>

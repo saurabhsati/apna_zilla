@@ -21,7 +21,7 @@
 
                         <div class="clearfix"></div>
                      </ul>
-                     <div class="resp-tabs-container">
+                     <div class="resp-tabs-container" id="deal_result">
                      <!-- All Deals -->
                         <div>
                        <div class="row">
@@ -81,8 +81,8 @@
                   </div>
 
                  </div>
-                    <div>
-                  &nbsp;
+                    <div id="deal_by_location">
+
                     </div>
                   </div>
                   </div>
@@ -107,6 +107,9 @@
             <p>Where in  <?php
              if(Session::has('search_city_title')){
                echo Session::get('search_city_title');
+               }
+               else if(Session::has('city')) {
+                echo Session::get('city');
                }?>
 
             </p>
@@ -166,13 +169,7 @@
       <script src="{{ url('/')}}/assets/front/js/jquery.js" type="text/javascript"></script>
       <!-- Bootstrap Core JavaScript -->
       <!--<script src="{{ url('/')}}/assets/front/js/bootstrap.min.js" type="text/javascript"></script>-->
-      <script type="text/javascript">
-         $('.tag.example .ui.dropdown')
-         .dropdown({
-         allowAdditions: true
-         });
 
-      </script>
       <script type="text/javascript">
          $(document).ready(function () {
              $('#dash_tab').easyResponsiveTabs({
@@ -322,13 +319,73 @@ $(document).ready(function(){
 
                   }
                 });
+      $("#go_to_search").click(function(){
+        //$('#loc_deal').modal('hide');
+         var business_search_by_location=$('#business_search_by_location').val();
+         var search_under_city=$('#business_search_by_city').val();
+         var loc_lat=$('#location_latitude').val();
+         var loc_lng=$('#location_longitude').val();
+         if(search_under_city!='')
+         {
+          var city=search_under_city;
+         }
+          else if(session_city!='')
+         {
+          var city=session_city;
+         }
+         else
+         {
+            var city="Mumbai";
+         }
 
+
+
+         if(business_search_by_location=='')
+          {
+              alert("Select Location");
+              event.preventDefault();
+              return false;
+          }
+          else
+          {
+            if(loc_lat!='' && loc_lng!='')
+           {
+
+
+            var fromData = {
+                            lat:loc_lat,
+                            lng:loc_lng,
+                            search_under_city:search_under_city,
+                            business_search_by_location:business_search_by_location,
+                            _token:csrf_token
+                            };
+                          $.ajax({
+                             url: site_url+"/deals/fetch_location_deal",
+                             type: 'POST',
+                             data: fromData,
+                             
+
+                             success: function(responseresult)
+                             {
+                             
+                                $('#deal_by_location').html('<div class="row">'+responseresult+'</div>');
+
+                              
+                               //$('.container').html('<h2>trst</h2>');
+                               
+                             }
+                         });
+
+             }
+          }
+
+           $('#loc_deal').modal('hide');
+      });
 
 
 
       });
       </script>
-        <script src="{{ url('/')}}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>
-        <link href="{{ url('/')}}/assets/front/css/easy-responsive-tabs.css" rel="stylesheet" type="text/css" />
+
 
       @endsection
