@@ -502,7 +502,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::post('update_password',				  	['as' => 'front_users_update_password'				,'uses' =>'Front\AuthController@update_password']);
 
 		Route::post('process_login_for_share/{enc_id}', ['as' => 'front_users_process_login_for_share'      ,'uses' =>'Front\AuthController@process_login_for_share']);
-
+		Route::post('otp_check', ['as' => 'front_users_otp_check'      ,'uses' =>'Front\UserController@otp_check']);
 
 
 	});

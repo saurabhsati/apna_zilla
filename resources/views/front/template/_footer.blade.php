@@ -2,7 +2,7 @@
       <div id="login_poup" class="modal fade" role="dialog">
 
       <form class="form-horizontal"
-                           id="validation-form"
+                           id="login_form"
                            method="POST"
                            action="{{ url('/front_users/process_login') }}"
                            enctype="multipart/form-data"
@@ -43,20 +43,26 @@
                       </button>
                 </div>
 
-                <div class="alert alert-danger alert-dismissible" id=" mobile_error_div" style="display: none;">
+                <div class="alert alert-danger alert-dismissible" id="mobile_error_div" style="display: none;">
                     <strong>Error!</strong>
                     Incorrect Mobile No.
+                </div>
+                
+                <div class="alert alert-danger alert-dismissible" id="Acc_activation_err_div" style="display: none;">
+                    <strong>Error!</strong>
+                    Your Account Not Activate Yet.
                 </div>
 
                   <div class="login_box">
                      <div class="title_login">Login with your email and password</div>
                      <div class="user_box">
                         <div class="label_form">Email/Mobile No.</div>
-                        <input type="text" name="email" id="email_login" class="input_box" placeholder="Enter Email Address/ Mobile No."/>
+                        
+                        <input type="text" name="email" id="email_login" class="input_box" data-rule-required="true" placeholder="Enter Email Address/ Mobile No."/>
                      </div>
                      <div class="user_box">
                         <div class="label_form">Password</div>
-                        <input type="password" name="password"  id="password_login" class="input_box" placeholder="enter password"/>
+                        <input type="password" name="password"  id="password_login" data-rule-required="true" class="input_box" placeholder="enter password"/>
                      </div>
                      <div class="login_social">
                         <div class="title_login"> Log in with social accounts</div>
@@ -114,6 +120,7 @@
                      <div class="user_box">
                         <div class="label_form">Email</div>
                         <input type="text" class="input_box" placeholder="Enter Email Address"/>
+
                      </div>
 
                      <div class="clr"></div>
@@ -123,6 +130,79 @@
                <div class="modal-footer">
                   <div class="login_box">
                      <button type="submit" class="yellow1 ui button">Submit</button>
+                   </div>
+               </div>
+               <div class="clr"></div>
+            </div>
+         </div>
+         </form>
+      </div>
+    <!--forget password poup end here-->
+
+
+    <!--OTP popup start here-->
+        <a class="forgt" id="otp_div_popup" data-toggle="modal" data-target="#otp_popup"></a>
+        <div id="otp_popup" class="modal fade" role="dialog" style="overflow:auto;">
+
+        <form class="form-horizontal"
+                           id="validation-form"
+                           method="POST"
+                           action=""
+                           enctype="multipart/form-data"
+                           >
+
+        {{ csrf_field() }}
+
+
+         <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close login_close1" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_poup.png" alt="login logo"/></h4>
+               </div>
+               <div class="modal-body">
+
+                <div class="alert alert-success alert-dismissible" id="otp_succ_div" style="display: none;">
+                    <strong>Success!</strong>
+                   Your Account Successfully Activated.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <!-- <span aria-hidden="true">&times;</span> -->
+                    </button>
+                </div>
+
+                <div class="alert alert-danger alert-dismissible" id="otp_err_div" style="display: none;">
+                    <strong>Error!</strong>
+                   Incorrect OTP
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <!-- <span aria-hidden="true">&times;</span> -->
+                    </button>
+                </div>
+
+                 <div class="alert alert-danger alert-dismissible" id="otp_mobile_err_div" style="display: none;">
+                    <strong>Error!</strong>
+                   Incorrect Mobile No.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <!-- <span aria-hidden="true">&times;</span> -->
+                    </button>
+                </div>
+
+                  <div class="login_box">
+                     <div class="title_login">Confirm OTP</div>
+
+                     <div class="user_box">
+                        <div class="label_form">OTP</div>
+                        <input type="text" class="input_box" name="otp_no" id="otp_no" placeholder="Enter Your OTP"/>
+                        <input type="hidden" class="input_box" name="mobile_no_otp" id="mobile_no_otp" value=""/>
+                     </div>
+
+                     <div class="clr"></div>
+                  </div>
+               </div>
+               <div class="clr"></div>
+               <div class="modal-footer">
+                  <div class="login_box">
+                     <button type="button" onclick="OTP_check()" class="yellow1 ui button">Submit</button>
                    </div>
                </div>
                <div class="clr"></div>
@@ -152,49 +232,66 @@
             <!-- Modal content-->
             <div class="modal-content">
                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <button type="button" class="close" id="reg_close" data-dismiss="modal">&times;</button>
                    <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_poup.png" alt="login logo"/></h4>
                </div>
                <div class="modal-body">
+
+               <div id="reg_err_div"> 
+               
+               </div>
+
+                
+
                   <div class="login_box">
 
                      <div class="title_login">New account sign up</div>
 
                      <div class="user_box">
                         <div class="label_form">First Name</div>
-                        <input type="text" name="first_name" class="input_box" placeholder="Enter First Name"/>
+                        <input type="text" name="first_name" id="first_name" class="input_box" placeholder="Enter First Name"/>
+                        <div id="f_name_error" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div>  
                      </div>
                      <div class="user_box">
                         <div class="label_form">Last Name</div>
-                        <input type="text" name="last_name" class="input_box" placeholder="Enter Last Name"/>
+                        <input type="text" name="last_name" id="last_name" class="input_box" placeholder="Enter Last Name"/>
+                        <div id="l_name_error" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div>    
                      </div>
                      <div class="user_box">
                         <div class="label_form">Email</div>
-                        <input type="text" name="email" class="input_box" placeholder="Enter Email Address"/>
+                        <input type="text" name="email" id="email" class="input_box" placeholder="Enter Email Address"/>
+                        <div id="e_error" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div> 
+                        <div id="email_error" style="display: none;"><i style="color: red;margin-left: -200px;">Invalid Email Id</i></div>   
                      </div>
 
                      <div class="user_box">
                         <div class="label_form">Mobile</div>
-                        <input type="text" name="mobile" class="input_box" placeholder="Enter mobile No."/>
+                        <input type="text" name="mobile" id="mobile" class="input_box" placeholder="Enter mobile No."/>
+                        <div id="m_error" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div>
+                         <div id="mobile_no_error" style="display: none;"><i style="color: red;margin-left: -200px;">Invalid Mobile No</i></div>  
                      </div>
 
                      <div class="user_box">
                         <div class="label_form">Password</div>
-                        <input type="password" name="password" class="input_box" placeholder="Enter Password"/>
+                        <input type="password" name="password" id="password" class="input_box" placeholder="Enter Password"/>
+                        <div id="p_error" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div> 
+                        <div id="p_len_error" style="display: none;"><i style="color: red;margin-left: -200px;">Password length Atleast 6</i></div>  
                      </div>
                      <div class="user_box">
                         <div class="label_form">Confirm Password</div>
-                        <input type="password" name="password_confirmation" class="input_box" placeholder="Enter Confirm Password"/>
+                        <input type="password" name="password_confirmation" id="password_confirmation" class="input_box" placeholder="Enter Confirm Password"/>
+                        <div id="c_pass_error" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div> 
+                        <div id="confirm_pass_error" style="display: none;"><i style="color: red;margin-left: -170px;">Password Missmatched</i></div>  
                      </div>
-                     <div class="terms_service"><input type="checkbox" class="chk_bx"/> Yes, I agree with Terms of services</div>
+                     <div class="terms_service"><input type="checkbox" id="terms_to_agree" class="chk_bx"/> Yes, I agree with Terms of services</div>
                      <div class="clr"></div>
                   </div>
                </div>
                <div class="clr"></div>
                <div class="modal-footer">
-                  <div class="login_box">
-                     <button type="submit" class="yellow1 ui button">Create An Account</button>
-                     <div class="other_valida">Already have an account? <a href="#login_poup">Sign in</a></div>
+                  <div class="login_box"> 
+                     <button type="button" id="register_acount" onclick="register_new_account()" class="yellow1 ui button">Create An Account</button>
+                     <div class="other_valida">Already have an account? <a data-toggle="modal" data-target="#login_poup">Sign in</a></div>
                   </div>
                </div>
                <div class="clr"></div>
@@ -518,10 +615,15 @@ If you need any more details on Justdial Verified, please refer to
              jQuery(".forgt").click(function(){
          jQuery(".login_close").click();
            });
-
+             jQuery("#log_in_popup").click(function(){
+         jQuery("#reg_close").click();
+           });
          });
 
       </script>
+
+
+      
  <!-- Home Page Popup for login & signup end -->
   <!-- Listing details Tabbing Start -->
       <script type="text/javascript">
@@ -556,6 +658,220 @@ If you need any more details on Justdial Verified, please refer to
              });
          });
       </script>
+
+
+<script type="text/javascript">
+  function OTP_check()
+  {
+  
+    var site_url   = "{{ url('/') }}";
+    var otp        = $('#otp_no').val();
+    var mobile_no  = $('#mobile_no_otp').val();
+    var token      = jQuery("input[name=_token]").val();
+
+     jQuery.ajax({
+         url      : site_url+"/front_users/otp_check?_token="+token,
+         method   : 'POST',
+         dataType : 'json',
+         data     : 'otp='+otp+'&mobile_no='+mobile_no,
+         success: function(response)
+         {
+          //console.log(response);
+            if(response.status == "SUCCESS" )
+            {
+              //console.log(response.mobile_no);
+             $('#otp_no').val(''); 
+             $('#mobile_no_otp').val('');
+
+             $('#otp_succ_div').show();
+             $('#otp_err_div').hide();
+             $('#otp_mobile_err_div').hide();
+
+             //$('#reg_succ_div').show();
+            }
+            else if(response.status == "ERROR")
+            {
+                $('#otp_err_div').show();
+                $('#otp_mobile_err_div').hide();
+                $('#otp_succ_div').hide();
+            }
+            else if(response.status == "MOBILE_ERROR")
+            {
+                $('#otp_mobile_err_div').show();
+                $('#otp_err_div').hide();
+                $('#otp_succ_div').hide();
+            }
+            
+         }
+      });
+  }
+
+
+  function register_new_account()
+  {
+
+    var site_url   = "{{ url('/') }}";
+    var first_name = $('#first_name').val();
+    var last_name  = $('#last_name').val();
+    var email      = $('#email').val();
+    var mobile     = $('#mobile').val();
+    var password   = $('#password').val();
+    var conf_password  = $('#password_confirmation').val();
+    var filter = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
+    var mob_filter = /^[0-9]{10}$/;
+    var token      = jQuery("input[name=_token]").val();
+
+    $('#first_name').keyup(function()
+      { 
+        $('#f_name_error').hide(); 
+      });
+    $('#last_name').keyup(function()
+      { 
+        $('#l_name_error').hide();
+      });
+    $('#email').keyup(function()
+      { 
+        $('#email_error').hide();
+        $('#e_error').hide();
+      });
+    $('#mobile').keyup(function()
+      { 
+        
+          $('#m_error').hide();
+          $('#mobile_no_error').hide();
+      
+ 
+      });
+    $('#password').keyup(function()
+      { 
+        $('#p_error').hide(); 
+        $('#p_len_error').hide();
+      });
+    $('#password_confirmation').keyup(function()
+      { 
+        $('#c_pass_error').hide(); 
+        $('#confirm_pass_error').hide();
+      });
+
+    if(first_name=="")
+    {
+      $('#f_name_error').show();
+    }
+    else if(last_name=="")
+    {
+      $('#l_name_error').show();
+    }  
+    else if(email=="")
+    {
+      $('#e_error').show();
+    }
+    else if(!filter.test(email))
+    {
+      $('#email_error').show();
+    }  
+    else if(mobile=="")
+    {
+      $('#m_error').show();
+    }
+    else if(!mob_filter.test(mobile))
+    {
+      $('#mobile_no_error').show();
+    }
+    else if(password=="")
+    {
+      $('#p_error').show();
+    }
+    else if(conf_password=="")
+    {
+      $('#c_pass_error').show();
+    }
+    else if(conf_password!=password)
+    {
+      $('#confirm_pass_error').show();
+    }
+    else
+    {  
+      jQuery.ajax({
+           url      : site_url+"/front_users/store?_token="+token,
+           method   : 'POST',
+           dataType : 'json',
+           data     : 'email='+email+'&password='+password+'&first_name='+first_name+'&last_name='+last_name+'&mobile='+mobile,
+           success: function(response)
+           {
+            //console.log(response);
+              if(response.status == "SUCCESS" )
+              {
+                //console.log(response.mobile_no);
+                $('#first_name').val('');
+                $('#last_name').val('');
+                $('#email').val('');
+                $('#mobile').val('');
+                $('#password').val('');
+                $('#password_confirmation').val('');
+                $('#terms_to_agree').val('');
+
+                $('#otp_div_popup').click();
+                $('#mobile_no_otp').val(response.mobile_no);
+                 //$('#reg_succ_div').show();
+              }
+              else if(response.status == "ERROR")
+              {
+                  $("#reg_err_div").empty();
+                  $("#reg_err_div").fadeIn();
+                  $("#reg_err_div").html("<div class='alert alert-danger'><strong>Error! </strong>"+response.msg+"</div>");
+                  return false;
+              }
+              else if(response.status == "OTP_ERROR")
+              {
+                 $("#reg_err_div").empty();
+                 $("#reg_err_div").fadeIn(); 
+                 $("#reg_err_div").html("<div class='alert alert-danger'><strong>Error! </strong>"+response.msg+"</div>");
+                 return false;
+              }
+              else if(response.status == "MOBILE_ERROR")
+              {
+                 $("#reg_err_div").empty();
+                 $("#reg_err_div").fadeIn();
+                  $("#reg_err_div").html("<div class='alert alert-danger'><strong>Error! </strong>"+response.msg+"</div>");
+                 return false;
+              }
+              else if(response.status == "EMAIL_EXIST_ERROR")
+              {
+                 $("#reg_err_div").empty();
+                 $("#reg_err_div").fadeIn();
+                  $("#reg_err_div").html("<div class='alert alert-danger'><strong>Error! </strong>"+response.msg+"</div>");
+                 return false; 
+              }
+              else if(response.status == "VALIDATION_ERROR")
+              {
+                 $("#reg_err_div").empty();
+                 $("#reg_err_div").fadeIn();
+                  $("#reg_err_div").html("<div class='alert alert-danger'><strong>Error! </strong>"+response.msg+"</div>");
+                 return false;
+              }
+              else if(response.status == "MOBILE_EXIST_ERROR")
+              {
+                 $("#reg_err_div").empty();
+                 $("#reg_err_div").fadeIn();
+                 $("#reg_err_div").html("<div class='alert alert-danger'><strong>Error! </strong>"+response.msg+"</div>");
+                 return false;
+              }
+              else
+              {
+
+              } 
+
+              setTimeout(function()
+              {
+                  $("#reg_err_div").fadeOut();
+              },5000);
+
+              return false;
+           }
+        });
+    }  
+  }
+</script>
 
       <script type="text/javascript">
 
@@ -685,11 +1001,26 @@ If you need any more details on Justdial Verified, please refer to
             else if(response == "Invalid Credentials")
             {
                 $('#error_div').show();
+                $('#mobile_error_div').hide();
+                $('#Acc_activation_err_div').hide();
             }
-            else if(responce == "Invalid Mobile_no")
+            else if(response == "Invalid Mobile_no")
             {
                $('#mobile_error_div').show();
+               $('#error_div').hide();
+               $('#Acc_activation_err_div').hide();
             }
+            else if(response == "ACC_ACT_ERROR")
+            {
+              $('#Acc_activation_err_div').show();
+              $('#error_div').hide();
+              $('#mobile_error_div').hide();
+            } 
+            else
+            {
+
+            } 
+
          }
       });
 
@@ -697,6 +1028,8 @@ If you need any more details on Justdial Verified, please refer to
 
   });
 </script>
+
+
 <!-- jquery validation -->
 <script type="text/javascript" src="{{url('/')}}/assets/jquery-validation/dist/jquery.validate.min.js"></script>
  <script type="text/javascript">

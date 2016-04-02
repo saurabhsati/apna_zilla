@@ -46,58 +46,149 @@ class UserController extends Controller
 
         if($validator->fails())                                                                 
         {
-            return redirect()->back()->withErrors($validator)->withInput();
+          $json['status'] = "VALIDATION_ERROR";  
+          //return response()->json($json); 
+          //return redirect()->back()->withErrors($validator)->withInput();
         }
         
         $first_name     =  $request->input('first_name');
         $last_name      =  $request->input('last_name');
         $email          =  $request->input('email');
-        $mobile         =  $request->input('mobile');
+        $mobile_no      =  $request->input('mobile');
         $password       =  $request->input('password');
-    
-        /* Duplication Check*/
-        $user = Sentinel::createModel();
+       
 
-        if($user->where('email',$email)->get()->count()>0)
+        if(is_numeric($mobile_no) && strlen($mobile_no)==10)
         {
-        	Session::flash('error','User Already Exists with this email id');
-            return redirect()->back();
+            $mobile = $mobile_no;
+            /* Duplication Check*/
+
+            $user = Sentinel::createModel();
+
+            if($user->where('email',$email)->get()->count()>0)
+            {
+            	$json['status'] = "EMAIL_EXIST_ERROR";
+                $json['msg']    = "Email Id Already Exists";
+                return response()->json($json); 
+            }
+
+            if($user->where('mobile_no',$mobile)->get()->count()>0)
+            {
+                $json['status'] = "MOBILE_EXIST_ERROR";
+                $json['msg']    = "Mobile No.Already Exists";
+                return response()->json($json); 
+            }
+
+            $mobile_otp =  mt_rand(0,66666);
+            // dd($mobile_otp);
+             $status = Sentinel::registerAndActivate([
+                'first_name' => $first_name,
+                'last_name'  => $last_name,
+                'email'      => $email,
+                'mobile_no'  => $mobile,
+                'password'   => $password,
+                'mobile_OTP' => $mobile_otp,
+                'is_active'  => '0'
+               ]);
+
+            if($status)
+            {
+                /*-------------send SMS OTP-----------------*/
+               
+    			$response  = $this->send_otp($mobile,$mobile_otp);
+                //dd($response);
+                if($response!='')
+                {
+                     /*------------------------------------------*/
+
+                    /* Assign Normal Users Role */
+
+                        $role = Sentinel::findRoleBySlug('normal');
+
+                        $user = Sentinel::findById($status->id);
+                        
+                        //$user = Sentinel::getUser();
+
+                        $user->roles()->attach($role);
+                        
+                               
+                        $json['status']     = "SUCCESS";
+                        $json['mobile_no']  = $mobile;
+                    }
+                    else
+                    {
+                        $json['status'] = "ERROR";
+                        $json['msg']    = "Error while Registration";
+                    }
+                     return response()->json($json); 
+                       
+                }
+                else
+                {
+                   $json['status'] = "OTP_ERROR";
+                   $json['msg']    = "Mobile OTP Error.";
+
+                }    
+                return response()->json($json); 
         }
-
-         $status = Sentinel::registerAndActivate([
-            'first_name' => $first_name,
-            'last_name'  => $last_name,
-            'email'      => $email,
-            'mobile_no'  => $mobile,
-            'password'   => $password,
-            
-           ]);
-
-        if($status)
-        {
-			/* Assign Normal Users Role */
-
-            $role = Sentinel::findRoleBySlug('normal');
-
-            $user = Sentinel::findById($status->id);
-            
-            //$user = Sentinel::getUser();
-
-            $user->roles()->attach($role);
-            
-            Session::flash('success','User Registered Successfully.');
-            return redirect(url('/'));
-        }
-
         else
         {
-            Session::flash('error','Problem Occured While Creating User ');
-        }
+            $json['status'] = "MOBILE_ERROR";
+            $json['msg']    = "Invalid Mobile No.";
+        } 
 
-        return redirect()->back();
+        return response()->json($json);
     }
 
-     public function profile()
+    public function send_otp($mobile,$mobile_otp)
+    {
+        
+        $url = "http://smsway.co.in/api/sendhttp.php?authkey=70Asotxsg0Q556948f8&mobiles='".$mobile."'&message=RightNext Registration OPT = '".$mobile_otp."'&sender=SMSWAY&route=4&country=91";
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        return $response;
+    }
+
+    public function otp_check(Request $request)
+    {
+        $otp            =  $request->input('otp');
+        $mobile_no      =  $request->input('mobile_no');
+
+        if(is_numeric($mobile_no) && strlen($mobile_no)==10)
+        {
+            $mobile = $mobile_no;
+
+            $user = UserModel::where('mobile_no',$mobile)->get()->toArray();
+            
+            if($user)
+            {
+
+                $active_account = UserModel::where('mobile_OTP',$otp)->update(['is_active'=>'1']);
+             
+                if($active_account)
+                {
+                    $json['status'] = "SUCCESS";
+                }
+                else
+                {
+                    $json['status'] = "ERROR";
+                }    
+            }
+            
+        }
+        else
+        {
+             $json['status'] = "MOBILE_ERROR";
+        }   
+
+        return response()->json($json); 
+    }
+
+    public function profile()
     {
         $id = session('user_id');
         $user_id = base64_decode($id);
