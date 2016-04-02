@@ -433,6 +433,8 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::post('store_reviews',			 ['as' => 'front_store_reviews'     ,'uses' => 'Front\ListingController@store_reviews']);
   	    Route::get('share_business/{enc_id}',			 ['as' => 'business_share' 	        ,'uses' => 'Front\ListingController@share_business']);
   	    Route::get('sms_email/{enc_id}',			     ['as' => 'business_sms_email' 	    ,'uses' => 'Front\ListingController@sms_email']);
+  	    // add to fav
+  	    Route::post('add_to_favourite', 				 ['as' =>'add_favourite'			,'uses'=>'Front\ListingController@add_to_favourite']);
 
 	});
 

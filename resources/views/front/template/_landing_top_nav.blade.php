@@ -62,7 +62,7 @@
                       <?php
                        if(empty(session::get('user_mail')))
                         {
-                          echo '<a data-toggle="modal" id="open_register" data-target="#reg_poup" class="btn btn-post" >List your Business </a>';
+                          echo '<a data-toggle="modal" id="open_register" data-target="#reg_poup" class="btn btn-post" data-businessList="1" >List your Business </a>';
                         }
                         else{
                            echo '<a class="btn btn-post" href="'.url('/').'/front_users/add_business" id="list_your_business" >List your Business</a>';

@@ -1040,6 +1040,8 @@ If you need any more details on Justdial Verified, please refer to
   }
 </script>
 
+<!-- <script type="text/javascript" src="{{--url('/')--}}/assets/jquery-validation/dist/jquery.validate.min.js"></script> -->
+
 
 
 <!-- jquery validation -->
@@ -1047,6 +1049,7 @@ If you need any more details on Justdial Verified, please refer to
 
 <!-- <input type="hidden" id="is_session_mail" value="<?php //echo $is_mail ;?>" > </input>
  -->
+
 
  <script type="text/javascript">
 var supports = (function () {
@@ -1130,7 +1133,10 @@ if ($("html").hasClass("no-touch")) {
 
  } //END IF no-touch for hover script & removeAttr for the links to work
 </script>
+<<<<<<< HEAD
+=======
 
+>>>>>>> 235bc48abc52e6e00ddd7f1e5c7da33e44c39ad1
 
         <!-- Listing details Tabbing End -->
         <script src="{{ url('/') }}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>
