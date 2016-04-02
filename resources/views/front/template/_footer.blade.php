@@ -694,8 +694,6 @@ If you need any more details on Justdial Verified, please refer to
 
   });
 </script>
-<<<<<<< HEAD
-
 
 <!-- <input type="hidden" id="is_session_mail" value="<?php //echo $is_mail ;?>" > </input>
  -->
@@ -782,10 +780,6 @@ if ($("html").hasClass("no-touch")) {
 
  } //END IF no-touch for hover script & removeAttr for the links to work
 </script>
-<<<<<<< HEAD
-
-=======
->>>>>>> 327d3f40375d49ab1ba2ce3c9ced1dce23c9958a
 
         <!-- Listing details Tabbing End -->
         <script src="{{ url('/') }}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>
