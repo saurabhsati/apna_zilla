@@ -20,10 +20,12 @@
       <link href="{{ url('/') }}/assets/front/css/rightnext.css" rel="stylesheet" type="text/css" />
       <!--menu css-->
       <link href="{{ url('/') }}/assets/front/css/menu.css" rel="stylesheet" type="text/css" media="screen" />
-      <script type='text/javascript' src="{{ url('/') }}/assets/front/js/jquery-1.11.3.min.js"></script>
+      <!-- <script type='text/javascript' src="{{ url('/') }}/assets/front/js/jquery-1.11.3.min.js"></script> -->
       <!-- <script type='text/javascript' src="{{ url('/') }}/assets/front/js/jquery-migrate-1.2.1.min.js"></script> -->
-      <script type="text/javascript" language="javascript" src="{{ url('/') }}/assets/front/js/flaunt.js"></script>
-      <script src="{{ url('/') }}/assets/front/js/google_ajax_jquery.min.js"></script>
+      <link rel="stylesheet" href="{{ url('/') }}/css/front/jquery.rating.css" type="text/css"/>
+
+      
+      
       <!--font-awesome-css-start-here-->
       <link href="{{ url('/') }}/assets/front/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
       <!--select autocomplete-->
@@ -31,15 +33,18 @@
       <link rel="stylesheet" href="{{ url('/') }}/assets/front/css/jquery-ui.css" type="text/css"/>
       <!-- <script src="{{ url('/') }}/assets/front/js/jquery-1.10.2.js" type='text/javascript'></script> -->
 
-      <link rel="stylesheet" href="{{ url('/') }}/assets/front/css/style.css" type="text/css"/>
-
+      <!-- <link rel="stylesheet" href="{{ url('/') }}/assets/front/css/style.css" type="text/css"/>
+ -->
+      <script src="{{ url('/') }}/assets/front/js/google_ajax_jquery.min.js"></script>
+      <script src="{{ url('/') }}/assets/front/js/bootstrap.min.js" type="text/javascript"></script>
+      <script type="text/javascript" language="javascript" src="{{ url('/') }}/assets/front/js/flaunt.js"></script>
       <script type="text/javascript" src="{{url('/')}}/js/front/jquery.rating.js"></script>
-      <link rel="stylesheet" href="{{ url('/') }}/css/front/jquery.rating.css" type="text/css"/>
+      
 
        <!-- jQuery -->
       <!-- <script src="{{-- url('/') --}}/assets/front/js/jquery.js" type="text/javascript"></script> -->
       <!-- Bootstrap Core JavaScript -->
-      <script src="{{ url('/') }}/assets/front/js/bootstrap.min.js" type="text/javascript"></script>
+      
 
       <!--category droup doun mobile effect-->
        <script>

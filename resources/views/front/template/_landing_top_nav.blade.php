@@ -34,24 +34,19 @@
                             {{-- @if ($user = Sentinel::check()) --}}
                             @if(Session::has('user_name'))
 
-                            <li class="nav-item">
-
-                            <div class="dropdown">
-                                <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Hi {{ucfirst(Session::get('user_name'))}}  <span class="caret"></span>
+                             <li class="nav-item">
+                              <div class="dropdown">
+                                <a class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Hi {{ucfirst(Session::get('user_name'))}}  <span class="caret"></span>
                                 </a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                    <li><a href="{{ url('/').'/front_users/profile' }}">My Account</a></li>
-                                  <!--  <li><a href="#">My Favorites</a></li>
-                                   <li><a href="#">Friend's Ratings </a></li> -->
+                                   
                                    <li><a href="{{ url('/').'/front_users/my_business' }}" >My Business </a></li>
                                    <li><a href="{{ url('/').'/front_users/add_business' }}" >Add Business </a></li>
-                                   <li><a href="{{ url('/').'/front_users/logout' }}" onclick="social_logout(this)" >social_logout(this)" >Logout</a></li>
+                                   <li><a href="{{ url('/').'/front_users/logout' }}" onclick="social_logout(this)" >Logout</a></li>
                                 </ul>
                              </div>
-
-
-
-                            </li>
+                          </li>
                             
                         @else
 
