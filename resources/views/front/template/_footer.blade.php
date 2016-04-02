@@ -244,11 +244,11 @@
                
                </div>
 
-                
-
                   <div class="login_box">
 
                      <div class="title_login">New account sign up</div>
+
+                     <input type="hidden" value="" />
 
                      <div class="user_box">
                         <div class="label_form">First Name</div>
