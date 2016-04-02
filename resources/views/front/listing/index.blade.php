@@ -11,7 +11,7 @@
     }
   </style>
 
-   <?php 
+   <?php
   // echo "<pre>";
   // print_r($arr_business);
   // exit();
@@ -213,7 +213,7 @@
 
     <div id="list_view">
       @if(isset($arr_business) && sizeof($arr_business)>0)
-        
+
       @foreach($arr_business as $restaurants)
 
       <div class="product_list_view" >
@@ -251,12 +251,7 @@
               ?>
 
 
-              <!-- <img src="{{-- url('/') --}}/assets/front/images/star2.png" alt="rating"/> -->
-             <div class="resta-rating-block">
-
-              <!-- <img src="{{-- url('/') --}}/assets/front/images/star2.png" alt="rating"/> -->
-<!--              <div class="resta-rating-block11"> -->
-
+              <div class="resta-rating-block11">
               <?php for($i=0;$i<round($restaurants['avg_rating']);$i++){ ?>
               <i class="fa fa-star star-acti"></i>
               <?php }?>
@@ -279,7 +274,7 @@
                 </div>
 
                 <input type="hidden"  id="business_id" value="{{ $restaurants['id'] }}"  />
-                
+
                   <div class="p_details"  >
                     @if(!empty(Session::get('user_mail')))
                       <span id="show_fav_status" style="width: 175px;">
@@ -289,8 +284,8 @@
                     <span>
                       <a data-target="#login_poup" data-toggle="modal" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>
                       </span>
-                    @endif  
-                    
+                    @endif
+
                     <ul>
                       <li><a data-toggle="modal" data-target="#sms" href="#">SMS/Email</a></li>
                       <li><a href="{{url('/')}}/{{$city}}/{{$business_area}}/{{base64_encode($restaurants['id'])}}" class="lst">Rate This</a></li>
@@ -315,7 +310,7 @@
           <div class="row">
  @if(isset($arr_business) && sizeof($arr_business)>0)
 
- 
+
 
       @foreach($arr_business as $restaurants)
        <div class="col-sm-6 col-md-6 col-lg-6">
@@ -631,25 +626,27 @@
           var business_id = jQuery('#business_id').val();
           var user_mail     = "{{ session::get('user_mail') }}";
           var data        = { business_id:business_id, user_mail:user_mail ,_token:csrf_token };
-          jQuery.ajax({ 
+          jQuery.ajax({
             url:site_url+'/listing/add_to_favourite',
             type:'POST',
             dataType:'json',
             data: data,
             success:function(response){
+
               if(response.status == "favorites")
-              { 
+              {
                 var str = '<a href="javascript:void(0);" id="remove_favourite" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Remove favorite</span></a>';
                 jQuery('#show_fav_status').html(str);
               }
 
               if(response.status=="un_favorites")
-              { 
+              {
+
                 var str = '<a href="javascript:void(0);" id="add_favourite" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>';
                 jQuery('#show_fav_status').html(str);
               }
 
-            }            
+            }
           });
         });
 
@@ -660,25 +657,25 @@
           var business_id = jQuery('#business_id').val();
           var user_mail     = "{{ session::get('user_mail') }}";
           var data        = { business_id:business_id, user_mail:user_mail ,_token:csrf_token };
-          jQuery.ajax({ 
+          jQuery.ajax({
             url:site_url+'/listing/add_to_favourite',
             type:'POST',
             dataType:'json',
             data: data,
             success:function(response){
               /*if(response.status == "favorites")
-              { 
+              {
                 var str = '<a href="javascript:void(0);" id="add_favourite" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Remove favorite</span></a>';
                 jQuery('#show_fav_status').html(str);
               }*/
 
               if(response.status=="un_favorites")
-              { 
+              {
                 var str = '<a href="javascript:void(0);" id="add_favourite" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>';
                 jQuery('#show_fav_status').html(str);
               }
 
-            }            
+            }
           });
         });
 

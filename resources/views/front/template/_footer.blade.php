@@ -47,7 +47,7 @@
                     <strong>Error!</strong>
                     Incorrect Mobile No.
                 </div>
-                
+
                 <div class="alert alert-danger alert-dismissible" id="Acc_activation_err_div" style="display: none;">
                     <strong>Error!</strong>
                     Your Account Not Activate Yet.
@@ -55,16 +55,16 @@
 
                   <div class="login_box">
                      <div class="title_login">Login with your email and password</div>
-                    
+
                      <div class="user_box">
                         <div class="label_form">Email/Mobile No.</div>
                         <input type="text" name="email" id="email_login" class="input_box" data-rule-required="true" placeholder="Enter Email Address/ Mobile No."/>
-                        <div id="email_login_err" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div>  
+                        <div id="email_login_err" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div>
                      </div>
                      <div class="user_box">
                         <div class="label_form">Password</div>
                         <input type="password" name="password"  id="password_login" data-rule-required="true" class="input_box" placeholder="enter password"/>
-                        <div id="password_login_err" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div>  
+                        <div id="password_login_err" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div>
                      </div>
                      <div class="login_social">
                         <div class="title_login"> Log in with social accounts</div>
@@ -123,7 +123,7 @@
                      <div class="user_box">
                         <div class="label_form">Email</div>
                         <input type="text" class="input_box" placeholder="Enter Email Address"/>
-                        
+
                      </div>
 
                      <div class="clr"></div>
@@ -199,8 +199,8 @@
                         <div class="label_form">OTP</div>
                         <input type="text" class="input_box" name="otp_no" id="otp_no" placeholder="Enter Your OTP"/>
                         <input type="hidden" class="input_box" name="mobile_no_otp" id="mobile_no_otp" value=""/>
-                        <div id="otp_error" style="display: none;"><i style="color: red;">Please Fill Field</i></div> 
-                        <div id="otp_rule_error" style="display: none;"><i style="color: red;">Invalid OTP</i></div>   
+                        <div id="otp_error" style="display: none;"><i style="color: red;">Please Fill Field</i></div>
+                        <div id="otp_rule_error" style="display: none;"><i style="color: red;">Invalid OTP</i></div>
                      </div>
 
                      <div class="clr"></div>
@@ -245,8 +245,8 @@
                </div>
                <div class="modal-body">
 
-               <div id="reg_err_div"> 
-               
+               <div id="reg_err_div">
+
                </div>
 
                   <div class="login_box">
@@ -258,38 +258,38 @@
                      <div class="user_box">
                         <div class="label_form">First Name</div>
                         <input type="text" name="first_name" id="first_name" class="input_box" placeholder="Enter First Name"/>
-                        <div id="f_name_error" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div>  
+                        <div id="f_name_error" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div>
                      </div>
                      <div class="user_box">
                         <div class="label_form">Last Name</div>
                         <input type="text" name="last_name" id="last_name" class="input_box" placeholder="Enter Last Name"/>
-                        <div id="l_name_error" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div>    
+                        <div id="l_name_error" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div>
                      </div>
                      <div class="user_box">
                         <div class="label_form">Email</div>
                         <input type="text" name="email" id="email" class="input_box" placeholder="Enter Email Address"/>
-                        <div id="e_error" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div> 
-                        <div id="email_error" style="display: none;"><i style="color: red;margin-left: -200px;">Invalid Email Id</i></div>   
+                        <div id="e_error" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div>
+                        <div id="email_error" style="display: none;"><i style="color: red;margin-left: -200px;">Invalid Email Id</i></div>
                      </div>
 
                      <div class="user_box">
                         <div class="label_form">Mobile</div>
                         <input type="text" name="mobile" id="mobile" class="input_box" placeholder="Enter mobile No."/>
                         <div id="m_error" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div>
-                         <div id="mobile_no_error" style="display: none;"><i style="color: red;margin-left: -200px;">Invalid Mobile No</i></div>  
+                         <div id="mobile_no_error" style="display: none;"><i style="color: red;margin-left: -200px;">Invalid Mobile No</i></div>
                      </div>
 
                      <div class="user_box">
                         <div class="label_form">Password</div>
                         <input type="password" name="password" id="password" class="input_box" placeholder="Enter Password"/>
-                        <div id="p_error" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div> 
-                        <div id="p_len_error" style="display: none;"><i style="color: red;margin-left: -200px;">Password length Atleast 6</i></div>  
+                        <div id="p_error" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div>
+                        <div id="p_len_error" style="display: none;"><i style="color: red;margin-left: -200px;">Password length Atleast 6</i></div>
                      </div>
                      <div class="user_box">
                         <div class="label_form">Confirm Password</div>
                         <input type="password" name="password_confirmation" id="password_confirmation" class="input_box" placeholder="Enter Confirm Password"/>
-                        <div id="c_pass_error" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div> 
-                        <div id="confirm_pass_error" style="display: none;"><i style="color: red;margin-left: -170px;">Password Missmatched</i></div>  
+                        <div id="c_pass_error" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div>
+                        <div id="confirm_pass_error" style="display: none;"><i style="color: red;margin-left: -170px;">Password Missmatched</i></div>
                      </div>
                      <div class="terms_service"><input type="checkbox" id="terms_to_agree" class="chk_bx"/> Yes, I agree with Terms of services</div>
                      <div class="clr"></div>
@@ -297,7 +297,7 @@
                </div>
                <div class="clr"></div>
                <div class="modal-footer">
-                  <div class="login_box"> 
+                  <div class="login_box">
                      <button type="button" id="register_acount" onclick="register_new_account()" class="yellow1 ui button">Create An Account</button>
                      <div class="other_valida">Already have an account? <a data-toggle="modal" data-target="#login_poup">Sign in</a></div>
                   </div>
@@ -377,99 +377,10 @@
       </div>
     </div>
   </div>
-<div class="modal fade" id="enquiry" role="dialog">
-    <div class="modal-dialog modal-sm">
-     <!-- Modal content-->
-      <div class="modal-content">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-       <div class="modal-body">
-          <b class="head-t">Send Enquiry By Email</b>
-
-            <div class="soc-menu-top" style="margin-top:20px;">
-                <div class="col-lg-11">
-                     <div class="user_box1">
-                           <div class="row">
-                    <div class="col-lg-3  label-text1">To</div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-
-                          <div class="label-text1">Classic Fine Dine</div>
-                        </div>
-                         </div>
-                    </div>
-            <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-3  label-text">Name<span style="color:red">*</span></div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" placeholder="Enter Name" class="input_acct">
-                          <div class="error_msg">please enter correct</div>
-                        </div>
-                         </div>
-                    </div>
 
 
 
-            <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-3  label-text">Mobile</div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                        <div class="input-group">
-                        <span id="basic-addon1" class="input-group-addon">+91</span>
-                        <input type="text" required="" aria-describedby="basic-addon1" placeholder="Mobile" class="form-control">
 
-                        </div>
-                          <div class="error_msg">please enter correct</div>
-                        </div>
-                         </div>
-                    </div>
-
-
-                <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-3  label-text">Email<span style="color:red">*</span></div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" placeholder="Enter Email" class="input_acct">
-                          <div class="error_msg">please enter correct</div>
-                        </div>
-                         </div>
-                    </div>
-                     <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-3  label-text">Subject<span style="color:red">*</span></div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" placeholder="Enter Subject" class="input_acct">
-                          <div class="error_msg">please enter correct</div>
-                        </div>
-                         </div>
-                    </div>
-
-                     <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-3  label-text">Body<span style="color:red">*</span></div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" placeholder="Enter Body" class="input_acct">
-                          <div class="error_msg">please enter correct</div>
-                        </div>
-                         </div>
-                    </div>
-                    <div class="clr"></div>
-                       <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-3  label-text">&nbsp;</div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                    <div class="submit-btn"><button>Ok</button></div>
-
-                    </div>
-                           </div>
-                    </div>
-
-                     <span class="mandt"><span style="color:red">*</span>Denotes mandatory fields. </span>
-                </div>
-            </div>
-           <div class="clr"></div>
-        </div>
-      </div>
-    </div>
-  </div>
 <div class="modal fade" id="verifed" role="dialog">
     <div class="modal-dialog">
      <!-- Modal content-->
@@ -577,7 +488,7 @@ If you need any more details on Justdial Verified, please refer to
                 <div class="col-sm-4 col-md-4 col-lg-4">
                   <div class="social-icon-block">
                      <div class="social-icon-footer">
-                        
+
                         <a title="" data-placement="top" data-toggle="tooltip" class="social-icon si-borderless si-facebook" href="{{isset($site_settings['fb_url'])?$site_settings['fb_url']:''}}" data-original-title="Facebook">
                         <i class="fa fa-facebook"></i>
                         <i class="fa fa-facebook"></i>
@@ -593,7 +504,7 @@ If you need any more details on Justdial Verified, please refer to
                      </div>
                      <div class="social-icon-footer">
                         <a data-original-title="Google Plus" href="{{isset($site_settings['youtube_url'])?$site_settings['youtube_url']:''}}" class="social-icon si-borderless si-gplus" data-toggle="tooltip" data-placement="top" title="">
-                        
+
                         <i class="fa fa-google-plus"></i>
                         </a>
                         <div class="clearfix"></div>
@@ -623,7 +534,7 @@ If you need any more details on Justdial Verified, please refer to
       </script>
 
 
-      
+
  <!-- Home Page Popup for login & signup end -->
   <!-- Listing details Tabbing Start -->
 
@@ -668,7 +579,7 @@ If you need any more details on Justdial Verified, please refer to
 
   function OTP_check()
   {
-  
+
     var site_url   = "{{ url('/') }}";
     var otp        = $('#otp_no').val();
     var mobile_no  = $('#mobile_no_otp').val();
@@ -679,21 +590,21 @@ If you need any more details on Justdial Verified, please refer to
     var otp_filter = /^[0-9]{0,30}$/;
 
     $('#otp_no').keyup(function(){
-       $('#otp_error').hide(); 
-       $('#otp_rule_error').hide(); 
+       $('#otp_error').hide();
+       $('#otp_rule_error').hide();
     });
 
 
     if(otp=="")
     {
       $('#otp_error').show();
-    } 
+    }
     else if(!otp_filter.test(otp))
     {
       $('#otp_rule_error').show();
-    } 
+    }
     else
-    {  
+    {
      jQuery.ajax({
          url      : site_url+"/front_users/otp_check?_token="+token,
          method   : 'POST',
@@ -706,6 +617,10 @@ If you need any more details on Justdial Verified, please refer to
             {
               //console.log(response.mobile_no);
 
+             $('#otp_no').val('');
+             $('#mobile_no_otp').val('');
+
+
               if(bus_listing == "1")
               {
                 document.location.href = site_url+"/front_users/add_business";
@@ -714,7 +629,7 @@ If you need any more details on Justdial Verified, please refer to
               if(bus_listing == "0")
               {
                 document.location.href = site_url;
-               /*$('#otp_no').val(''); 
+               /*$('#otp_no').val('');
                $('#mobile_no_otp').val('');
 
                $('#otp_succ_div').show();
@@ -735,10 +650,10 @@ If you need any more details on Justdial Verified, please refer to
                 $('#otp_err_div').hide();
                 $('#otp_succ_div').hide();
             }
-            
+
          }
       });
-    } 
+    }
   }
 
 
@@ -758,34 +673,34 @@ If you need any more details on Justdial Verified, please refer to
     //var business_listing = $('#bus_listing').val();
 
     $('#first_name').keyup(function()
-      { 
-        $('#f_name_error').hide(); 
+      {
+        $('#f_name_error').hide();
       });
     $('#last_name').keyup(function()
-      { 
+      {
         $('#l_name_error').hide();
       });
     $('#email').keyup(function()
-      { 
+      {
         $('#email_error').hide();
         $('#e_error').hide();
       });
     $('#mobile').keyup(function()
-      { 
-        
+      {
+
           $('#m_error').hide();
           $('#mobile_no_error').hide();
-      
- 
+
+
       });
     $('#password').keyup(function()
-      { 
-        $('#p_error').hide(); 
+      {
+        $('#p_error').hide();
         $('#p_len_error').hide();
       });
     $('#password_confirmation').keyup(function()
-      { 
-        $('#c_pass_error').hide(); 
+      {
+        $('#c_pass_error').hide();
         $('#confirm_pass_error').hide();
       });
 
@@ -796,7 +711,7 @@ If you need any more details on Justdial Verified, please refer to
     else if(last_name=="")
     {
       $('#l_name_error').show();
-    }  
+    }
     else if(email=="")
     {
       $('#e_error').show();
@@ -804,7 +719,7 @@ If you need any more details on Justdial Verified, please refer to
     else if(!filter.test(email))
     {
       $('#email_error').show();
-    }  
+    }
     else if(mobile=="")
     {
       $('#m_error').show();
@@ -826,7 +741,7 @@ If you need any more details on Justdial Verified, please refer to
       $('#confirm_pass_error').show();
     }
     else
-    {  
+    {
       jQuery.ajax({
            url      : site_url+"/front_users/store?_token="+token,
            method   : 'POST',
@@ -861,7 +776,7 @@ If you need any more details on Justdial Verified, please refer to
               else if(response.status == "OTP_ERROR")
               {
                  $("#reg_err_div").empty();
-                 $("#reg_err_div").fadeIn(); 
+                 $("#reg_err_div").fadeIn();
                  $("#reg_err_div").html("<div class='alert alert-danger'><strong>Error! </strong>"+response.msg+"</div>");
                  return false;
               }
@@ -877,7 +792,7 @@ If you need any more details on Justdial Verified, please refer to
                  $("#reg_err_div").empty();
                  $("#reg_err_div").fadeIn();
                   $("#reg_err_div").html("<div class='alert alert-danger'><strong>Error! </strong>"+response.msg+"</div>");
-                 return false; 
+                 return false;
               }
               else if(response.status == "VALIDATION_ERROR")
               {
@@ -896,7 +811,7 @@ If you need any more details on Justdial Verified, please refer to
               else
               {
 
-              } 
+              }
 
               setTimeout(function()
               {
@@ -906,7 +821,7 @@ If you need any more details on Justdial Verified, please refer to
               return false;
            }
         });
-    }  
+    }
   }
 </script>
 
@@ -1016,12 +931,12 @@ If you need any more details on Justdial Verified, please refer to
 
 <!-- BY nayan For login -->
 <script type="text/javascript">
-  
+
 
 
   function login_submit_form()
   {
-    var site_url = "{{ url('/') }}";  
+    var site_url = "{{ url('/') }}";
     var token     = jQuery("input[name=_token]").val();
     var email     = jQuery("#email_login").val();
     var password  = jQuery("#password_login").val();
@@ -1036,13 +951,13 @@ If you need any more details on Justdial Verified, please refer to
     if(email=="")
     {
       $('#email_login_err').show();
-    } 
+    }
     else if(password=="")
     {
       $('#password_login_err').show();
     }
     else
-    {  
+    {
       jQuery.ajax({
          url      : site_url+"/front_users/process_login_ajax?_token="+token,
          method   : 'POST',
@@ -1070,15 +985,15 @@ If you need any more details on Justdial Verified, please refer to
               $('#Acc_activation_err_div').show();
               $('#error_div').hide();
               $('#mobile_error_div').hide();
-            } 
+            }
             else
             {
 
-            } 
+            }
 
          }
       });
-    }  
+    }
   }
 </script>
 
