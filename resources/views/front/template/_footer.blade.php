@@ -576,21 +576,23 @@ If you need any more details on Justdial Verified, please refer to
                 <div class="col-sm-4 col-md-4 col-lg-4">
                   <div class="social-icon-block">
                      <div class="social-icon-footer">
-                        <a title="" data-placement="top" data-toggle="tooltip" class="social-icon si-borderless si-facebook" href="@if(isset($site_settings['fb_url'])){{$site_settings['fb_url']}}@endif" data-original-title="Facebook">
+                        
+                        <a title="" data-placement="top" data-toggle="tooltip" class="social-icon si-borderless si-facebook" href="{{isset($site_settings['fb_url'])?$site_settings['fb_url']:''}}" data-original-title="Facebook">
                         <i class="fa fa-facebook"></i>
                         <i class="fa fa-facebook"></i>
                         </a>
                         <div class="clearfix"></div>
                      </div>
                      <div class="social-icon-footer">
-                        <a data-original-title="Twitter" href="@if(isset($site_settings['twitter_url'])){{$site_settings['twitter_url']}}@endif" class="social-icon si-borderless si-twitter" data-toggle="tooltip" data-placement="top" title="">
+                        <a data-original-title="Twitter" href="{{isset($site_settings['twitter_url'])?$site_settings['twitter_url']:''}}" class="social-icon si-borderless si-twitter" data-toggle="tooltip" data-placement="top" title="">
                         <i class="fa fa-twitter"></i>
                         <i class="fa fa-twitter"></i>
                         </a>
                         <div class="clearfix"></div>
                      </div>
                      <div class="social-icon-footer">
-                        <a data-original-title="Google Plus" href="@if(isset($site_settings['youtube_url'])){{$site_settings['youtube_url']}}@endif" class="social-icon si-borderless si-gplus" data-toggle="tooltip" data-placement="top" title="">                                        <i class="fa fa-google-plus"></i>
+                        <a data-original-title="Google Plus" href="{{isset($site_settings['youtube_url'])?$site_settings['youtube_url']:''}}" class="social-icon si-borderless si-gplus" data-toggle="tooltip" data-placement="top" title="">
+                        
                         <i class="fa fa-google-plus"></i>
                         </a>
                         <div class="clearfix"></div>
@@ -820,6 +822,7 @@ If you need any more details on Justdial Verified, please refer to
 
                 $('#otp_div_popup').click();
                 $('#mobile_no_otp').val(response.mobile_no);
+                $('#reg_poup').modal('hide');
                  //$('#reg_succ_div').show();
               }
               else if(response.status == "ERROR")
