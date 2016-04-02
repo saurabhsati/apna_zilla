@@ -108,8 +108,10 @@ class CategorySearchController extends Controller
             {
              $obj_business_listing->orderBy('visited_count','DESC');
             }
-            $obj_business_listing=$obj_business_listing->get();
-            //dd($obj_business_listing->toSql());
+            $obj_business_listing=$obj_business_listing
+             //->with('favorite_business')
+             ->get();
+           // dd($obj_business_listing->toArray());
             if($obj_business_listing)
             {
               $arr_business = $obj_business_listing->toArray();
@@ -243,7 +245,7 @@ class CategorySearchController extends Controller
                                                  //echo Session::get('location_latitude');
                 if(Session::has('location_latitude') && Session::has('location_longitude'))
                 {
-                     $latitude=Session::has('location_latitude') ? Session::get('location_latitude'):'51.033320760';
+                    $latitude=Session::has('location_latitude') ? Session::get('location_latitude'):'51.033320760';
                     $longitude=Session::has('location_longitude') ? Session::get('location_longitude'):'13.757242110';
 
 
@@ -280,8 +282,10 @@ class CategorySearchController extends Controller
                 }
 
 
-                $obj_business_listing= $obj_business_listing->get();
-                //dd($obj_business_listing);
+                $obj_business_listing= $obj_business_listing
+                                       
+                                        ->get();
+                dd($obj_business_listing->toArray);
 
                 if($obj_business_listing)
                 {

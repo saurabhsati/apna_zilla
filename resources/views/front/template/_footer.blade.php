@@ -83,7 +83,7 @@
                   <div class="login_box">
                      <div class="left_bar">
                         <a class="forgt" data-toggle="modal" data-target="#forget_pwd">Forget your password?</a>
-                        <a data-toggle="modal" id="open_register" data-target="#reg_poup" class="sign_up">Sign Up Now</a>
+                        <a data-toggle="modal" id="open_register" data-target="#reg_poup" onclick="set_business_list_flag()" class="sign_up">Sign Up Now</a>
                      </div>
                      <button type="button"  id="login_submit" onclick="login_submit_form()" class="yellow ui button">Login</button>
                   </div>
@@ -156,6 +156,7 @@
 
         {{ csrf_field() }}
 
+        <input type="hidden" id="bus_listing" value="" />
 
          <div class="modal-dialog">
             <!-- Modal content-->
@@ -249,7 +250,7 @@
 
                      <div class="title_login">New account sign up</div>
 
-                     <input type="hidden" value="" />
+                       <a class="forgt" id="otp_div_popup" data-toggle="modal" data-target="#otp_popup">Check</a>
 
                      <div class="user_box">
                         <div class="label_form">First Name</div>
@@ -656,6 +657,17 @@ If you need any more details on Justdial Verified, please refer to
 
 
 <script type="text/javascript">
+
+  function set_flag()
+  {
+      $("#bus_listing").val("1");
+  }
+
+  function set_business_list_flag()
+  {
+     $("#bus_listing").val("0");
+  }
+
   function OTP_check()
   {
   
@@ -663,6 +675,7 @@ If you need any more details on Justdial Verified, please refer to
     var otp        = $('#otp_no').val();
     var mobile_no  = $('#mobile_no_otp').val();
     var token      = jQuery("input[name=_token]").val();
+    var bus_listing= jQuery("#bus_listing").val();
 
      jQuery.ajax({
          url      : site_url+"/front_users/otp_check?_token="+token,
@@ -675,13 +688,22 @@ If you need any more details on Justdial Verified, please refer to
             if(response.status == "SUCCESS" )
             {
               //console.log(response.mobile_no);
-             $('#otp_no').val(''); 
-             $('#mobile_no_otp').val('');
 
-             $('#otp_succ_div').show();
-             $('#otp_err_div').hide();
-             $('#otp_mobile_err_div').hide();
+              if(bus_listing == "1")
+              {
+                document.location.href = site_url+"/front_users/add_business";
+              }
 
+              if(bus_listing == "0")
+              {
+                document.location.href = site_url;
+               /*$('#otp_no').val(''); 
+               $('#mobile_no_otp').val('');
+
+               $('#otp_succ_div').show();
+               $('#otp_err_div').hide();
+               $('#otp_mobile_err_div').hide();*/
+             }
              //$('#reg_succ_div').show();
             }
             else if(response.status == "ERROR")
@@ -715,6 +737,7 @@ If you need any more details on Justdial Verified, please refer to
     var filter = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
     var mob_filter = /^[0-9]{10}$/;
     var token      = jQuery("input[name=_token]").val();
+    //var business_listing = $('#bus_listing').val();
 
     $('#first_name').keyup(function()
       { 

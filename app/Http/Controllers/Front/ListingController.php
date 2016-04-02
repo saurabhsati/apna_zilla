@@ -256,7 +256,7 @@ class ListingController extends Controller
     {
       $user_mail      = $request->input('user_mail');
       $business_id    = $request->input('business_id');
-
+      $json   = array();
       $obj_user  =  UserModel::where('email',$user_mail)->first(['id']);   
       {
         $obj_fav = FavouriteBusinessesModel::where(array('user_id'=>$obj_user->id,'business_id'=>$business_id))->get();
@@ -268,7 +268,7 @@ class ListingController extends Controller
             if($arr[0]['is_favourite']== '0')
             {
               $result = FavouriteBusinessesModel::where(array('user_id'=>$obj_user->id,'business_id'=>$business_id))->update(array('is_favourite'=>'1'));
-              $json   = "favorites";
+              $json['status'] = "favorites";
             } 
             if($arr[0]['is_favourite']== '1')
             {
@@ -279,7 +279,7 @@ class ListingController extends Controller
           else
           {
             $result = FavouriteBusinessesModel::create(array('user_id'=>$obj_user->id,'business_id'=>$business_id,'is_favourite'=>'1'));
-            $json   = "favorites";
+            $json['status'] = "favorites";
           }
         }
       }
