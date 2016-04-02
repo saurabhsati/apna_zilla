@@ -435,6 +435,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
   	    Route::get('sms_email/{enc_id}',			     ['as' => 'business_sms_email' 	    ,'uses' => 'Front\ListingController@sms_email']);
   	    // add to fav
   	    Route::post('add_to_favourite', 				 ['as' =>'add_favourite'			,'uses'=>'Front\ListingController@add_to_favourite']);
+  	    Route::post('send_enquiry', 				 ['as' =>'send_enquiry'			,'uses'=>'Front\ListingController@send_enquiry']);
 
 	});
 

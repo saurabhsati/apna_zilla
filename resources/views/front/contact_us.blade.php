@@ -216,10 +216,9 @@ $("#contact_submit").click(function(e){
           success:function(res)
           {
             var tmp="";
-            if(res=="success")
+            if(res=="1")
             {
-              alert("In success");
-              $("#contact_succ").fadeIn(3000).fadeOut(3000);
+               $("#contact_succ").fadeIn(3000).fadeOut(3000);
               $("#contact_form").trigger('reset');
             }
             else

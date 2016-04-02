@@ -14,6 +14,7 @@ use App\Models\ReviewsModel;
 use App\Models\UserModel;
 use App\Models\CityModel;
 use App\Models\FavouriteBusinessesModel;
+use App\Models\BusinessSendEnquiryModel;
 
 use Sentinel;
 use Session;
@@ -242,14 +243,7 @@ class ListingController extends Controller
         return view('front.listing.share_business',compact('business_id','page_title'));
     }
 
-    public function sms_email($enc_id)
-    {
-        if ($user = Sentinel::getUser())
-        {
-            $arr_user_info = $user->toArray();
-        }
-        return view('front.listing.sms_email',compact('arr_user_info'));
-    }
+
 
 
     public function add_to_favourite(Request $request)
@@ -257,7 +251,7 @@ class ListingController extends Controller
       $user_mail      = $request->input('user_mail');
       $business_id    = $request->input('business_id');
 
-      $obj_user  =  UserModel::where('email',$user_mail)->first(['id']);   
+      $obj_user  =  UserModel::where('email',$user_mail)->first(['id']);
       {
         $obj_fav = FavouriteBusinessesModel::where(array('user_id'=>$obj_user->id,'business_id'=>$business_id))->get();
         if($obj_fav)
@@ -269,12 +263,12 @@ class ListingController extends Controller
             {
               $result = FavouriteBusinessesModel::where(array('user_id'=>$obj_user->id,'business_id'=>$business_id))->update(array('is_favourite'=>'1'));
               $json   = "favorites";
-            } 
+            }
             if($arr[0]['is_favourite']== '1')
             {
               $result = FavouriteBusinessesModel::where(array('user_id'=>$obj_user->id,'business_id'=>$business_id))->update(array('is_favourite'=>'0'));
               $json   = "un_favorites";
-            } 
+            }
           }
           else
           {
@@ -283,8 +277,51 @@ class ListingController extends Controller
           }
         }
       }
-      
+
       return response()->json($json);
+    }
+    public function send_enquiry(Request $request)
+    {
+        $arr_rules = array();
+        $arr_rules['name'] = "required";
+        $arr_rules['mobile'] = "required";
+        $arr_rules['email'] = "required";
+        $arr_rules['subject'] = "required";
+        $arr_rules['message'] = "required";
+
+        $validator = Validator::make($request->all(),$arr_rules);
+
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $name        =  $request->input('name');
+        $email      =  $request->input('email');
+        $mobile   =  $request->input('mobile');
+        $subject       =  $request->input('subject');
+        $message       =  $request->input('message');
+        $business_id          =  $request->input('business_id');
+
+        $arr_data = array();
+        $arr_data['name'] = $name;
+        $arr_data['email'] = $email;
+        $arr_data['mobile'] = $mobile;
+        $arr_data['subject'] = $subject;
+        $arr_data['message'] = $message;
+        $arr_data['business_id'] = $business_id;
+        //dd($arr_data);
+         $status = BusinessSendEnquiryModel::create($arr_data);
+
+        if($status)
+        {
+           Session::flash('success','Enquiry Send Successfully');
+        }
+        else
+        {
+          Session::flash('error','Problem Occurred While Sending Enquiry ');
+        }
+         return redirect()->back();
     }
 
 }

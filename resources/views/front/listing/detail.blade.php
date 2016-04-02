@@ -439,6 +439,110 @@
       </div>
    </div>
 </div>
+
+<div class="modal fade" id="enquiry" role="dialog">
+    <div class="modal-dialog modal-sm">
+     <!-- Modal content-->
+      <div class="modal-content">
+      <form class="form-horizontal"
+                              id="validation-form"
+                              method="POST"
+                              action="{{ url('/listing/send_enquiry')}}"
+                              enctype="multipart/form-data"
+                              >
+                              {{ csrf_field() }}
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+       <div class="modal-body">
+          <b class="head-t">Send Enquiry By Email</b>
+
+            <div class="soc-menu-top" style="margin-top:20px;">
+                <div class="col-lg-11">
+                     <div class="user_box1">
+                           <div class="row">
+                    <div class="col-lg-3  label-text1">To</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                     @if(isset($arr_business_details) && sizeof($arr_business_details)>0)
+                         <div class="label-text1">{{$arr_business_details['business_name']}}</div>
+                         <input type="hidden" id="business_id" name="business_id" value="{{$arr_business_details['id']}}">
+                  @endif
+                        </div>
+                         </div>
+                    </div>
+            <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Name<span style="color:red">*</span></div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                         <input type="text" required="" aria-describedby="basic-addon1" placeholder="Enter Name" id="name" name="name" class="input_acct form-control">
+                          <div class="error_msg"></div>
+                        </div>
+                         </div>
+                    </div>
+
+
+
+            <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Mobile</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                        <div class="input-group">
+                        <span id="basic-addon1" class="input-group-addon">+91</span>
+                        <input type="text" required="" aria-describedby="basic-addon1" id="mobile" name="mobile" id="mobile" placeholder="Mobile" class="form-control">
+
+                        </div>
+                          <div class="error_msg"></div>
+                        </div>
+                         </div>
+                    </div>
+
+
+                <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Email<span style="color:red">*</span></div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                         <input type="text" required="" aria-describedby="basic-addon1" placeholder="Enter Email" name="email" id="email" class="input_acct form-control">
+                          <div class="error_msg"></div>
+                        </div>
+                         </div>
+                    </div>
+                     <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Subject<span style="color:red">*</span></div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                         <input type="text" required="" aria-describedby="basic-addon1" placeholder="Enter Subject"  name="subject" id="subject" class="input_acct form-control">
+                          <div class="error_msg"></div>
+                        </div>
+                         </div>
+                    </div>
+
+                     <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Body<span style="color:red">*</span></div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                         <input type="textarea" required="" aria-describedby="basic-addon1" placeholder="Enter Body" name="message" id="message" class="input_acct form-control">
+                          <div class="error_msg"></div>
+                        </div>
+                         </div>
+                    </div>
+                    <div class="clr"></div>
+                       <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">&nbsp;</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                    <div class="submit-btn"><button type="submit" name="submit_enquiry" id="submit_enquiry">Ok</button></div>
+
+                    </div>
+                           </div>
+                    </div>
+
+                     <span class="mandt"><span style="color:red">*</span>Denotes mandatory fields. </span>
+                </div>
+            </div>
+           <div class="clr"></div>
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
 <script type="text/javascript">
 
     $('#submit_review').click(function(){
