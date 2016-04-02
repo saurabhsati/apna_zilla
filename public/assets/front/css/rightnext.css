@@ -152,6 +152,14 @@ dl, dt, dd, ol, ul, li {
 .resta-rating-block{margin: 0 auto; max-width: 106px; width: 100%;}
 .resta-rating-block i{font-size: 17px; color: #7f7f7f; margin-right: 2px;}
 .star-acti{color: #e6ab2a !important;}
+
+.resta-rating-block11 { max-width: 106px; width: 100%;}
+.resta-rating-block11 i {font-size: 17px; color: #fff; margin-right: 2px;}
+.star-acti{color: #e6ab2a !important;}
+
+
+
+
 .col-bott-mar{margin-bottom: 30px;}
 .email-block{height: 300px; background-image: url(../images/email-img.jpg); box-shadow: 0 5px 0 #da7d09; padding: 55px 0; margin-top: 40px; background-attachment: fixed;
     background-size: cover;}

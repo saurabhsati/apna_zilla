@@ -135,6 +135,7 @@
       </ul>
     </div>
 
+
     <!-- Modal -->
     <div class="modal fade" id="loc" role="dialog">
       <div class="modal-dialog">
@@ -149,6 +150,9 @@
             <p>Where in  <?php
              if(Session::has('search_city_title')){
                echo Session::get('search_city_title');
+               }
+               else{
+                echo $city;
                }?>
 
             </p>
@@ -240,8 +244,13 @@
               }
               ?>
 
+
               <!-- <img src="{{-- url('/') --}}/assets/front/images/star2.png" alt="rating"/> -->
              <div class="resta-rating-block">
+
+              <!-- <img src="{{-- url('/') --}}/assets/front/images/star2.png" alt="rating"/> -->
+<!--              <div class="resta-rating-block11"> -->
+
               <?php for($i=0;$i<round($restaurants['avg_rating']);$i++){ ?>
               <i class="fa fa-star star-acti"></i>
               <?php }?>

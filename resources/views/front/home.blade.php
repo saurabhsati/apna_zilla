@@ -129,7 +129,7 @@
                                        </div>
                                     </div>
                                     <div class="resta-name">
-                                       <h6><a href="'{{url('/')}}/{{$current_city}}/{{$business_area}}/{{base64_encode($business['id'])}}">{{$business['business_name']}}</a></h6>
+                                       <h6><a href="{{url('/')}}/{{$current_city}}/{{$business_area}}/{{base64_encode($business['id'])}}">{{$business['business_name']}}</a></h6>
                                        <span></span>
                                     </div>
                                     <div class="resta-content">

@@ -62,6 +62,7 @@ class EloquentUser extends Model implements RoleableInterface, PermissibleInterf
         'work_experience',
         'street_address',
         'mobile_no',
+        'mobile_OTP',
         'home_landline',
         'office_landline',
         'is_active',
