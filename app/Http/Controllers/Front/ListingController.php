@@ -328,5 +328,45 @@ class ListingController extends Controller
         }
          return redirect()->back();
     }
+     public function sms_send(Request $request)
+    {
+        $arr_rules = array();
+        $arr_rules['name'] = "required";
+        $arr_rules['mobile'] = "required";
+        $arr_rules['email'] = "required";
+
+
+        $validator = Validator::make($request->all(),$arr_rules);
+
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $name        =  $request->input('name');
+        $email      =  $request->input('email');
+        $mobile   =  $request->input('mobile');
+
+        $business_id          =  $request->input('business_id');
+
+        $arr_data = array();
+        $arr_data['name'] = $name;
+        $arr_data['email'] = $email;
+        $arr_data['mobile'] = $mobile;
+
+        $arr_data['business_id'] = $business_id;
+        //dd($arr_data);
+         $status = BusinessSendEnquiryModel::create($arr_data);
+
+        if($status)
+        {
+           Session::flash('success','SMS Send Successfully');
+        }
+        else
+        {
+          Session::flash('error','Problem Occurred While Sending SMS ');
+        }
+         return redirect()->back();
+    }
 
 }
