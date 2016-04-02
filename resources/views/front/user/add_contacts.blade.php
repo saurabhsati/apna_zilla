@@ -8,7 +8,7 @@
                 <div class="col-sm-12 col-md-12 col-lg-12">
      <ol class="breadcrumb">
          <span>You are here :</span>
-          <li><a href="#">Home</a></li>
+          <li><a href="{{ url('/') }}">Home</a></li>
           <li class="active">Contact Information</li>
   
 </ol>
