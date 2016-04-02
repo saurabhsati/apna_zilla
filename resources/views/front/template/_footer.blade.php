@@ -253,7 +253,7 @@
 
                      <div class="title_login">New account sign up</div>
 
-                       <a class="forgt" id="otp_div_popup" data-toggle="modal" data-target="#otp_popup">Check</a>
+                       <!-- <a class="forgt" id="otp_div_popup" data-toggle="modal" data-target="#otp_popup">Check</a> -->
 
                      <div class="user_box">
                         <div class="label_form">First Name</div>
