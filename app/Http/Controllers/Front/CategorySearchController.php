@@ -161,12 +161,12 @@ class CategorySearchController extends Controller
         {
           $meta_keyword = explode(',',$parent_category[0]['cat_meta_keyword']);
         }
-      
+
 
         Meta::setDescription($meta_desp);
         Meta::addKeyword($meta_keyword);
 
-    
+
       return view('front.listing.index',compact('page_title','arr_business','arr_sub_cat','parent_category','sub_category','city'));
     }
 

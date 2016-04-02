@@ -286,7 +286,8 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::post('sub_categories/update',						['as' => 'admin_sub_categories_update' 			,'uses' => 'Admin\CategoryController@update']);
 			Route::get('sub_categories/toggle_status/{enc_id}/{action}',['as' => 'admin_sub_categories_toggle_status' 	,'uses' => 'Admin\CategoryController@toggle_status']);
 			Route::post('sub_categories/multi_action',					['as' => 'admin_sub_categories_block' 			,'uses' => 'Admin\CategoryController@multi_action']);
-			Route::get('export/{format}',					['as' => 'admin_sub_categories_block' 			,'uses' => 'Admin\CategoryController@export_excel']);
+			Route::get('export/{format}',					            ['as' => 'admin_sub_categories_export_excel' 	,'uses' => 'Admin\CategoryController@export_excel']);
+			Route::post('check_explore_count',							['as' => 'admin_sub_categories_check_explore_count' ,'uses' => 'Admin\CategoryController@check_explore_count']);
 
 		});
 
@@ -436,6 +437,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	});
 
 	Route::get('/','Front\HomeController@index');
+	Route::post('/get_business_by_exp_categry','Front\HomeController@get_business_by_exp_categry');
 	Route::post('/locate_location','Front\HomeController@locate_location');
 	Route::get('/get_category_auto','Front\HomeController@get_category_auto');
 	Route::get('/get_city_auto','Front\HomeController@get_city_auto');
@@ -534,6 +536,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	{
 		Route::get('/',									['as' =>'deals_page'								,'uses' =>'Front\DealController@index']);
 		Route::get('details/{enc_id}',					['as' =>'deals_detail'								,'uses' =>'Front\DealController@details']);
+		Route::get('{enc_id}',					        ['as' =>'deals_by_category'			,'uses' =>'Front\DealController@deals_by_category']);
 	});
 
 	Route::post('/newsletter','Front\NewsLetterController@index');

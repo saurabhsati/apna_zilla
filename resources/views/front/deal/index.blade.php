@@ -48,6 +48,8 @@
                               </div>
 
                           @endforeach
+                          @else
+                          <span class="col-sm-3 col-md-3 col-lg-12">No Deals  Available.</span>
                           @endif
                       </div>
                      </div>
@@ -73,6 +75,8 @@
                           </div>
 
                       @endforeach
+                      @else
+                          <span class="col-sm-3 col-md-3 col-lg-12">No Deals  Available.</span>
                       @endif
                   </div>
 

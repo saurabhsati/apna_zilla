@@ -23,6 +23,8 @@ class CategoryModel extends Model
                             'is_active',
                             'cat_logo',
                             'is_popular',
+                            'is_explore_directory',
+                            'is_allow_to_add_deal',
                             ];
 
     /**

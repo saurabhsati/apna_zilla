@@ -434,8 +434,11 @@ class BusinessListingController extends Controller
 
         if($validator->fails())
         {
+             //print_r( $validator->errors()->all());exit;
             return redirect()->back()->withErrors($validator)->withInput();
         }
+
+
         $user=Sentinel::createModel();
 
         $business_data['business_name']      = $request->input('business_name');

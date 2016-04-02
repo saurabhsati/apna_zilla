@@ -18,7 +18,7 @@ use App\Models\RestaurantReviewModel;
 use App\Models\BusinessServiceModel;
 use App\Models\CountryModel;
 use App\Models\StateModel;
-use App\Models\ZipModel;
+use App\Models\PlaceModel;
 use App\Models\CityModel;
 use App\Models\BusinessTimeModel;
 use Validator;
@@ -91,11 +91,7 @@ class BusinessListingController extends Controller
         {
             $arr_country = $obj_countries_res->toArray();
         }
-        $obj_zipcode_res = ZipModel::get();
-        if( $obj_zipcode_res != FALSE)
-        {
-            $arr_zipcode = $obj_zipcode_res->toArray();
-        }
+
         $arr_city = array();
         $obj_city_res = CityModel::get();
         if($obj_city_res != FALSE)
@@ -171,6 +167,7 @@ class BusinessListingController extends Controller
 
         if($validator->fails())
         {
+
             return redirect('/sales_user/business_listing/create')->withErrors($validator)->withInput();
         }
         $form_data=$request->all();
@@ -339,11 +336,7 @@ class BusinessListingController extends Controller
         {
             $arr_country = $obj_countries_res->toArray();
         }
-        $obj_zipcode_res = ZipModel::get();
-        if( $obj_zipcode_res != FALSE)
-        {
-            $arr_zipcode = $obj_zipcode_res->toArray();
-        }
+
         $arr_city = array();
         $obj_city_res = CityModel::get();
         if($obj_city_res != FALSE)
@@ -357,6 +350,22 @@ class BusinessListingController extends Controller
         {
             $arr_state = $obj_state_res->toArray();
         }
+         $obj_business_arr=BusinessListingModel::where('id',$id)->get();
+        if( $obj_business_arr != FALSE)
+        {
+            $business = $obj_business_arr->toArray();
+        }
+        if( $business != FALSE)
+        {
+             $arr_place = array();
+
+            $obj_place_res = PlaceModel::where('id',$business[0]['pincode'])->get();
+
+            if( $obj_place_res != FALSE)
+            {
+                $arr_place = $obj_place_res->toArray();
+            }
+        }
          $arr_upload_image = array();
         $obj_upload_image_res = BusinessImageUploadModel::where('business_id',$id)->get();
 
@@ -367,7 +376,7 @@ class BusinessListingController extends Controller
 
         $business_data=BusinessListingModel::with(['category','user_details','city_details','zipcode_details','country_details','state_details','image_upload_details','service','business_times','payment_mode'])->where('id',$id)->get()->toArray();
  		//dd($business_data);
-         return view('sales_user.business_listing.edit',compact('page_title','business_data','arr_user','arr_category','business_public_img_path','business_base_upload_img_path','arr_state','arr_country','arr_zipcode','arr_city','arr_upload_image'));
+         return view('sales_user.business_listing.edit',compact('page_title','business_data','arr_user','arr_category','business_public_img_path','business_base_upload_img_path','arr_state','arr_country','arr_zipcode','arr_place','arr_city','arr_upload_image'));
 
  	}
  	public function update(Request $request,$enc_id)
@@ -434,7 +443,10 @@ class BusinessListingController extends Controller
 
         if($validator->fails())
         {
-            return redirect()->back()->withErrors($validator)->withInput();
+
+            //print_r( $validator->errors()->all());
+           // exit;
+           return redirect()->back()->withErrors($validator)->withInput();
         }
         $user=Sentinel::createModel();
 
@@ -655,10 +667,26 @@ class BusinessListingController extends Controller
         {
             $arr_sub_category = $obj_sub_category->toArray();
         }
+        $obj_business_arr=BusinessListingModel::where('id',$id)->get();
+        if( $obj_business_arr != FALSE)
+        {
+            $business = $obj_business_arr->toArray();
+        }
+        if( $business != FALSE)
+        {
+             $arr_place = array();
+
+            $obj_place_res = PlaceModel::where('id',$business[0]['pincode'])->get();
+
+            if( $obj_place_res != FALSE)
+            {
+                $arr_place = $obj_place_res->toArray();
+            }
+        }
         $business_data = array();
         $business_data=BusinessListingModel::with(['user_details','city_details','zipcode_details','country_details','payment_mode','state_details','category','service','image_upload_details'])->where('id',$id)->get()->toArray();
          //dd($business_data);
-         return view('sales_user.business_listing.show',compact('page_title','business_data','business_public_img_path','business_base_upload_img_path','arr_main_category','arr_sub_category'));
+         return view('sales_user.business_listing.show',compact('page_title','business_data','business_public_img_path','business_base_upload_img_path','arr_main_category','arr_sub_category','arr_place'));
 
     }
    	public function toggle_status($enc_id,$action)
