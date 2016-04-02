@@ -57,12 +57,13 @@
                      <div class="title_login">Login with your email and password</div>
                      <div class="user_box">
                         <div class="label_form">Email/Mobile No.</div>
-                        
                         <input type="text" name="email" id="email_login" class="input_box" data-rule-required="true" placeholder="Enter Email Address/ Mobile No."/>
+                        <div id="email_login_err" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div>  
                      </div>
                      <div class="user_box">
                         <div class="label_form">Password</div>
                         <input type="password" name="password"  id="password_login" data-rule-required="true" class="input_box" placeholder="enter password"/>
+                        <div id="password_login_err" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div>  
                      </div>
                      <div class="login_social">
                         <div class="title_login"> Log in with social accounts</div>
@@ -84,7 +85,7 @@
                         <a class="forgt" data-toggle="modal" data-target="#forget_pwd">Forget your password?</a>
                         <a data-toggle="modal" id="open_register" data-target="#reg_poup" class="sign_up">Sign Up Now</a>
                      </div>
-                     <button type="button"  id="login_submit" class="yellow ui button">Login</button>
+                     <button type="button"  id="login_submit" onclick="login_submit_form()" class="yellow ui button">Login</button>
                   </div>
                </div>
                <div class="clr"></div>
@@ -973,15 +974,33 @@ If you need any more details on Justdial Verified, please refer to
 
 <!-- BY nayan For login -->
 <script type="text/javascript">
-  jQuery(document).ready(function () {
+  
 
-  var site_url = "{{ url('/') }}";
-   jQuery( "#login_submit").bind( "click", function() {
 
+  function login_submit_form()
+  {
+    var site_url = "{{ url('/') }}";  
     var token     = jQuery("input[name=_token]").val();
     var email     = jQuery("#email_login").val();
     var password  = jQuery("#password_login").val();
 
+    $("#email_login").keyup(function(){
+        $('#email_login_err').hide();
+    });
+     $("#password_login").keyup(function(){
+       $('#password_login_err').hide();
+    });
+
+    if(email=="")
+    {
+      $('#email_login_err').show();
+    } 
+    else if(password=="")
+    {
+      $('#password_login_err').show();
+    }
+    else
+    {  
       jQuery.ajax({
          url      : site_url+"/front_users/process_login_ajax?_token="+token,
          method   : 'POST',
@@ -1017,22 +1036,18 @@ If you need any more details on Justdial Verified, please refer to
 
          }
       });
-
-    });
-
-  });
+    }  
+  }
 </script>
 
 
-<<<<<<< HEAD
+
 <!-- jquery validation -->
 <script type="text/javascript" src="{{url('/')}}/assets/jquery-validation/dist/jquery.validate.min.js"></script>
-=======
 
 <!-- <input type="hidden" id="is_session_mail" value="<?php //echo $is_mail ;?>" > </input>
  -->
 
->>>>>>> 22cdb6a9e8196734e0db2e855c2725311f80be41
  <script type="text/javascript">
 var supports = (function () {
     var a = document.documentElement,
