@@ -65,7 +65,8 @@
                <div class="modal-footer">
                   <div class="login_box">
                      <div class="left_bar">
-                        <a class="forgt" data-toggle="modal" data-target="#forget_pwd">Forget your password?</a><a data-toggle="modal" data-target="#reg_poup" class="sign_up">Sign Up Now</a>
+                        <a class="forgt" data-toggle="modal" data-target="#forget_pwd">Forget your password?</a>
+                        <a data-toggle="modal" id="open_register" data-target="#reg_poup" class="sign_up">Sign Up Now</a>
                      </div>
                      <button type="button"  id="login_submit" class="yellow ui button">Login</button>
                   </div>
@@ -487,11 +488,7 @@ If you need any more details on Justdial Verified, please refer to
             </div>
          </div>
       </div>
-      <!-- jQuery -->
-      <script src="{{ url('/') }}/assets/front/js/jquery.js" type="text/javascript"></script>
-      <!-- Bootstrap Core JavaScript -->
-      <script src="{{ url('/') }}/assets/front/js/bootstrap.min.js" type="text/javascript"></script>
-
+     
       <!-- Home Page Popup for login & signup start -->
       <script type="text/javascript">
          $('.tag.example .ui.dropdown')
@@ -683,10 +680,14 @@ If you need any more details on Justdial Verified, please refer to
 
   });
 </script>
-<<<<<<< HEAD
-        <!-- jquery validation -->
-        <script type="text/javascript" src="{{url('/')}}/assets/jquery-validation/dist/jquery.validate.min.js"></script>  
-=======
+
+
+<!-- <input type="hidden" id="is_session_mail" value="<?php //echo $is_mail ;?>" > </input>
+ -->
+
+<!-- jquery validation -->
+<script type="text/javascript" src="{{url('/')}}/assets/jquery-validation/dist/jquery.validate.min.js"></script>  
+
  <script type="text/javascript">
 var supports = (function () {
     var a = document.documentElement,
@@ -769,7 +770,7 @@ if ($("html").hasClass("no-touch")) {
 
  } //END IF no-touch for hover script & removeAttr for the links to work
 </script>
->>>>>>> 4a347079d46f02ec58fa07a221f87fb8e5d23bce
+
 
         <!-- Listing details Tabbing End -->
         <script src="{{ url('/') }}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>

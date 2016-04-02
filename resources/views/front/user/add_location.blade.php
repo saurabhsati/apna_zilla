@@ -27,11 +27,11 @@
                 <div class="sidebar-brand">Business Information</div>
                 <div class="bor_head">&nbsp;</div>
                 <ul class="">
-                    <li class="brdr"><a href="{{ url('/').'/front_users/add_business' }}">Business Information</a></li>
-                    <li class="brdr"><a href="{{ url('/').'/front_users/add_location' }}">Location Information</a></li>
-                  <li class="brdr"><a href="{{ url('/').'/front_users/add_contacts' }}">Contact Information</a></li>
-                  <li class="brdr"><a href="{{ url('/').'/front_users/other_details' }}">Other Information</a></li>
-                  <li class="brdr"><a href="{{ url('/').'/front_users/add_services' }}">Video/Pictures/Services</a></li>
+                  <li class="brdr"><a href="{{-- url('/').'/front_users/add_business' --}}#">Business Information</a></li>
+                  <li class="brdr"><a href="{{-- url('/').'/front_users/add_location' --}}#">Location Information</a></li>
+                  <li class="brdr"><a href="{{-- url('/').'/front_users/add_contacts' --}}#">Contact Information</a></li>
+                  <li class="brdr"><a href="{{-- url('/').'/front_users/other_details' --}}#">Other Information</a></li>
+                  <li class="brdr"><a href="{{-- url('/').'/front_users/add_services' --}}#">Video/Pictures/Services</a></li>
                     <!-- <li class="brdr has-sub"><a href="#"><span>business keywords</span></a>
                     <ul class="make_list" style="display:none;">
                      <li><a href="#">view/remove keywords</a> </li>
@@ -55,7 +55,9 @@
             </div> 
 
             {{-- view('front.user.business_sidebar') --}}
-             
+            
+
+
              <div class="col-sm-12 col-md-9 col-lg-9">
               @if(Session::has('success'))
                 <div class="alert alert-success alert-dismissible">
@@ -85,6 +87,7 @@
                            action="{{ url('/front_users/add_location_details') }}" 
                            enctype="multipart/form-data"
                            >
+                  <input type="hidden" name="business_id" value="{{ $business_id }}" >  </input>
 
                 {{ csrf_field() }}
 <!--  
@@ -149,7 +152,8 @@
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="text" name="building" 
                                 class="input_acct"
-                                placeholder="Enter Building's Name" />
+                                placeholder="Enter Building's Name" 
+                                data-rule-required="true"/>
                           <div class="error_msg">{{ $errors->first('building') }} </div>
                         </div>
                          </div>
@@ -190,19 +194,20 @@
                          </div>
                     </div>
 
+
           <div class="user_box_sub">
             <div class="row">
-             <div class="col-lg-3  label-text">City :</div>
+             <div class="col-lg-3  label-text">Country :</div>
               <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                  <select class="input_acct"  id="city" name="city" >
-                    <option value="">Select City</option>
-                    @if (isset($arr_city)&& (count($arr_city) > 0))
-                      @foreach($arr_city as $city)
-                          <option value="{{ $city['id'] }}">{{ $city['city_title'] }}</option>
+                  <select class="input_acct"  id="country" name="country" >
+                    <option value="">Select Country</option>
+                    @if (isset($arr_country)&& (count($arr_country) > 0))
+                      @foreach($arr_country as $country)
+                          <option value="{{ $country['id'] }}">{{ $country['country_name'] }}</option>
                       @endforeach  
                     @endif 
                   </select>
-                   <div class="error_msg">{{ $errors->first('city') }} </div>
+                   <div class="error_msg">{{ $errors->first('country') }} </div>
                 </div>
               </div>
             </div>
@@ -210,7 +215,7 @@
           <div class="user_box_sub">
            <div class="row">
             <div class="col-lg-3  label-text">State :</div>
-              <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+              <div class="col-sm-12 col-md-12 col-lg-9 m_l" >
                 <select class="input_acct" name="state" id="state" >
                   <option id="show_state" value="" >State</option>
                 </select>
@@ -221,10 +226,10 @@
 
           <div class="user_box_sub">
             <div class="row">
-             <div class="col-lg-3  label-text">Country :</div>
+             <div class="col-lg-3  label-text">City :</div>
               <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-               <select class="input_acct"  name="country" id="country">
-                  <option value="" id="show_country" >Country</option>
+               <select class="input_acct"  name="city" id="city">
+                  <option value="" >City</option>
                  </select>
                 </div>
               </div>
@@ -234,18 +239,19 @@
               <div class="row">
                 <div class="col-lg-3  label-text">Zipcode :</div>
                   <div class="col-sm-9 col-md-9 col-lg-9 m_l">
-                    <select class="input_acct"  name="zipcode" >
+                    <select class="input_acct"  id="zipcode"  name="zipcode" >
                       <option value="">Select Zipcode</option>
-                          @if (isset($arr_zipcode)&& (count($arr_zipcode) > 0))
-                            @foreach($arr_zipcode as $code)
-                              <option value="{{ $code['id'] }}">{{ $code['zipcode'] }}</option>
-                            @endforeach  
-                          @endif                       
                     </select>
                     <div class="error_msg">{{ $errors->first('zipcode') }} </div>
                 </div>
               </div>
             </div>     
+
+            {{-- @if (isset($arr_zipcode)&& (count($arr_zipcode) > 0))
+                            @foreach($arr_zipcode as $code)
+                              <option value="{{ $code['id'] }}">{{ $code['zipcode'] }}</option>
+                            @endforeach  
+                          @endif --}}                      
 
 
              <div class="user_box_sub">
@@ -302,6 +308,7 @@
               <div class="clr"></div>     
                
             </div>
+            </form>
           </div>
          </div>
        </div>
@@ -466,34 +473,102 @@
 <script type="text/javascript"> 
 jQuery(document).ready(function () {
  token   = jQuery("input[name=_token]").val();
-  jQuery('#city').on('change', function() {
+  jQuery('#country').on('change', function() {
 
-    var addr = $("#city option:selected").text();
+/*    var addr = $("#city option:selected").text();
     setMapLocation(addr);
+*/
+    var country_id = jQuery(this).val();
+    jQuery.ajax({
+       url      : site_url+"/front_users/get_state?_token="+token,
+       method   : 'POST',
+       dataType : 'json',
+       data     : { country_id:country_id },
+       success: function(responce){
+        
+          if(responce.length > 0)
+          {
+            var state ;
+            for (var i = 0; i < responce.length; i++) 
+            {
+              state  += '<option value="'+responce[i].id+'" >'+responce[i].state_title+'</option>';
+            }
+          }else{
+              var state  = '<option value="" >State</option>';
+          } 
 
+          $('#state').html("<option  value='' >--Select--</option>"+state);
+         
+       }  
+    });
+  }); 
+
+    jQuery('#state').on('change', function() {
+    var state_id = jQuery(this).val();
+    jQuery.ajax({
+       url      : site_url+"/front_users/get_city?_token="+token,
+       method   : 'POST',
+       dataType : 'json',
+       data     : { state_id:state_id },
+       success: function(responce){
+        console.log(responce);
+          if(responce.length > 0)
+          {
+            var city ;
+            for (var i = 0; i < responce.length; i++) 
+            {
+              city  += '<option value="'+responce[i].city_id+'" >'+responce[i].city_title+'</option>';
+            }
+          }else{
+              var city  = '<option value="" >--Select--</option>';
+          } 
+
+          $('#city').html("<option  value='' >--Select--</option>"+city);
+         
+       }  
+    });
+  }); 
+
+
+   jQuery('#city').on('change', function() {
 
     var city_id = jQuery(this).val();
     jQuery.ajax({
-       url      : site_url+"/front_users/get_state_country?_token="+token,
+       url      : site_url+"/front_users/get_zip?_token="+token,
        method   : 'POST',
        dataType : 'json',
        data     : { city_id:city_id },
        success: function(responce){
-          if(responce.length == 0)
+        console.log(responce);
+          if(responce.length > 0)
           {
-            var  state   = "<option value='' >State</option>";
-            var  country = "<option value='' >Country</option>";  
-          }else
-          {
-            var  state   = "<option value='"+responce.state_id+"' >"+responce.state_name+"</option>";
-            var  country = "<option value='"+responce.country_id+"' >"+responce.country_name+"</option>";
-          }
-          $('#state').html(state);
-          $('#country').html(country);
+            var zipcode ;
+            for (var i = 0; i < responce.length; i++) 
+            {
+              zipcode  += '<option value="'+responce[i].zip_id+'" >'+responce[i].postal_code+'</option>';
+            }
+          }else{
+              var zipcode  = '<option value="" >--Select--</option>';
+          } 
+
+          $('#zipcode').html("<option  value='' >--Select--</option>"+zipcode);
+         
        }  
     });
-  });  
+  }); 
+  
+
+  jQuery('#zipcode').on('change',function() {
+    var addr = jQuery('#zipcode option:selected').text();
+    setMapLocation(addr);
+  });
+
 });
+
+
+
+  
+
 </script>
 
 

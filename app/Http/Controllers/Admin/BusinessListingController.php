@@ -567,6 +567,8 @@ class BusinessListingController extends Controller
         }
         }
       }
+
+      
         if($business_data /*&& $user_data*/)
         {
             $arr_time['business_id'] = $id;

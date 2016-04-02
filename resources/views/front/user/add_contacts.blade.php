@@ -27,11 +27,11 @@
                 <div class="sidebar-brand">Business Information</div>
                  <div class="bor_head">&nbsp;</div>
                  <ul class="">
-                  <li class="brdr"><a href="{{ url('/').'/front_users/add_business' }}">Business Information</a></li>
-                  <li class="brdr"><a href="{{ url('/').'/front_users/add_location' }}">Location Information</a></li>
-                  <li class="brdr"><a href="{{ url('/').'/front_users/add_contacts' }}">Contact Information</a></li>
-                  <li class="brdr"><a href="{{ url('/').'/front_users/other_details' }}">Other Information</a></li>
-                  <li class="brdr"><a href="{{ url('/').'/front_users/add_services' }}">Video/Pictures/Services</a></li>
+                  <li class="brdr"><a href="{{-- url('/').'/front_users/add_business' --}}#">Business Information</a></li>
+                  <li class="brdr"><a href="{{-- url('/').'/front_users/add_location' --}}#">Location Information</a></li>
+                  <li class="brdr"><a href="{{-- url('/').'/front_users/add_contacts' --}}#">Contact Information</a></li>
+                  <li class="brdr"><a href="{{-- url('/').'/front_users/other_details' --}}#">Other Information</a></li>
+                  <li class="brdr"><a href="{{-- url('/').'/front_users/add_services' --}}#">Video/Pictures/Services</a></li>
                      <!-- <li class="brdr has-sub"><a href="#"><span>business keywords</span></a>
                     <ul class="make_list" style="display:none;">
                      <li><a href="#">view/remove keywords</a> </li>
@@ -55,7 +55,41 @@
                 </div> -->
             </div>
              
-         
+              
+            <div class="col-sm-12 col-md-9 col-lg-9">
+              @if(Session::has('success'))
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ Session::get('success') }}
+                </div>
+              @endif 
+
+              @if(Session::has('error'))
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ Session::get('error') }}
+                </div>
+              @endif 
+             
+              <div class="my_whit_bg">
+                 <div class="title_acc">Please Provide Business Information</div>
+                 <div class="row">
+
+                  <form class="form-horizontal" 
+                           id="validation-form" 
+                           method="POST"
+                           action="{{ url('/front_users/add_contacts_details') }}" 
+                           enctype="multipart/form-data"
+                           >
+
+                {{ csrf_field() }}
+
+                 <input type="hidden" name="business_id" value="{{ $business_id }}" >  </input>
+
              
              
              <div class="col-sm-12 col-md-9 col-lg-9">
@@ -73,7 +107,7 @@
                         <div class="col-sm-12 col-md-12 col-lg-10 m_l">
                           <div class="row">
                             <div class="col-sm-2 col-md-2 col-lg-2">
-                              <select class="input_acct">
+                              <select class="input_acct" name="prefix_name" >
                                  <option value="0" >Mr.</option>
                                  <option value="1" >Ms.</option>
                                  <option value="2" >Mrs.</option>
@@ -192,9 +226,11 @@
             
               
              </div>
+             </form>
          </div>
        </div>
-       
+      </div>
+      </div> 
       </div>      
 
 

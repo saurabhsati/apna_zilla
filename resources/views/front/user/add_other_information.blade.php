@@ -2,6 +2,14 @@
 
 @section('main_section')
 
+<!-- Timepicker css -->
+<link rel="stylesheet" type="text/css" href="{{ url('/').'/assets/bootstrap-timepicker/compiled/timepicker.css' }}" />
+
+<!-- Timepicker js  -->
+<script type="text/javascript" src="{{ url('/').'/assets/bootstrap-timepicker/js/bootstrap-timepicker.js' }}"></script>
+ 
+  
+
   <div class="gry_container">
       <div class="container">
          <div class="row">
@@ -27,18 +35,18 @@
                 <div class="sidebar-brand">Business Information</div>
                  <div class="bor_head">&nbsp;</div>
                  <ul class="">
-                     <li class="brdr"><a href="{{ url('/').'/front_users/add_business' }}">Business Information</a></li>
-                     <li class="brdr"><a href="{{ url('/').'/front_users/add_location' }}">Location Information</a></li>
-                     <li class="brdr"><a href="{{ url('/').'/front_users/add_contacts' }}">Contact Information</a></li>
-                     <li class="brdr"><a href="{{ url('/').'/front_users/other_details' }}">Other Information</a></li>
-                     <li class="brdr"><a href="{{ url('/').'/front_users/add_services' }}">Video/Pictures/Services</a></li>
-                     <!-- <li class="brdr has-sub"><a href="#"><span>business keywords</span></a>
+                    <li class="brdr"><a href="{{-- url('/').'/front_users/add_business' --}}#">Business Information</a></li>
+                    <li class="brdr"><a href="{{-- url('/').'/front_users/add_location' --}}#">Location Information</a></li>
+                    <li class="brdr"><a href="{{-- url('/').'/front_users/add_contacts' --}}#">Contact Information</a></li>
+                    <li class="brdr"><a href="{{-- url('/').'/front_users/other_details' --}}#">Other Information</a></li>
+                    <li class="brdr"><a href="{{-- url('/').'/front_users/add_services' --}}#">Video/Pictures/Services</a></li>
+                    <!-- <li class="brdr has-sub"><a href="#"><span>business keywords</span></a>
                     <ul class="make_list" style="display:none;">
                      <li><a href="#">view/remove keywords</a> </li>
                          <li><a href="#">add keywords</a></li> 
                        </ul>
                      </li>
-                  <li class="brdr"><a href="#">upload video/logo/pictures</a></li> -->
+                    <li class="brdr"><a href="#">upload video/logo/pictures</a></li> -->
                 </ul>
                
                 <div class="clearfix"></div>
@@ -55,10 +63,37 @@
                 </div> -->
             </div>
              
+         <div class="col-sm-12 col-md-9 col-lg-9">
+             @if(Session::has('success'))
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ Session::get('success') }}
+            </div>
+          @endif 
+
+          @if(Session::has('error'))
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ Session::get('error') }}
+            </div>
+          @endif 
          
+              <form class="form-horizontal" 
+                       id="validation-form" 
+                       method="POST"
+                       action="{{ url('/front_users/add_other_details') }}" 
+                       enctype="multipart/form-data"
+                       >
+
+            {{ csrf_field() }}
+
+             <input type="hidden" name="business_id" value="{{ $business_id }}" >  </input>
+
              
-             
-             <div class="col-sm-12 col-md-9 col-lg-9">
             <div class="my_whit_bg">
               <div class="title_acc">Please Provide Other Information</div>
                 <div class="row">
@@ -98,18 +133,16 @@
                        </div>
                   </div>
 
-                  <!--  <div class="user_box_sub">
-                      <div class="row">
-                        <div class="col-lg-2 label-text">Company Information <span>:</span></div>
-                          <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                            <textarea  class="input_acct" id="company_info" name="company_info" style="width: 682px;" placeholder="Enter Company Information"/></textarea>
-                            <div class="error_msg">{{ $errors->first('company_info') }} </div>
-                          </div>
-                       </div>
-                    </div> -->
-                  
-                  
-
+                <!--  <div class="user_box_sub">
+                    <div class="row">
+                      <div class="col-lg-2 label-text">Company Information <span>:</span></div>
+                        <div class="col-sm-12 col-md-12 col-lg-10 m_l">
+                          <textarea  class="input_acct" id="company_info" name="company_info" style="width: 682px;" placeholder="Enter Company Information"/></textarea>
+                          <div class="error_msg">{{-- $errors->first('company_info') --}} </div>
+                        </div>
+                     </div>
+                  </div> -->
+                 
 
               <div class="user_box_sub">
                 <div class="col-sm-5 col-md-3" style="float:right;margin-right: -133px;">
@@ -123,12 +156,10 @@
                   </span>
                  </div>
                   <div class="row">
-                    <label class="col-lg-2 label-text">Payment Mode:</label>
+                   <div class="col-lg-2 label-text">Payment Mode <span>:</span></div>
                     <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-
-                    <input type="text" name="payment_mode[]" id="payment_mode" class="form-control" data-rule-required="true"  />
+                    <input type="text" name="payment_mode[]" id="payment_mode" class="input_acct"  placeholder="Enter Payment Mode" data-rule-required="true"  />
                     <div class="error" id="error_payment_mode">{{ $errors->first('payment_mode') }}</div>
-                    
                     <div class="clr"></div><br/>
                       <div class="error" id="error_set_default"></div>
                       <div class="clr"></div>
@@ -137,17 +168,181 @@
 
                     <div class="error_msg" style="color: red" id="error_payment_mode" ></div>
                     <div class="error_msg" style="color: red" id="error_payment_mode1" ></div>
-                   <label class="col-sm-3 col-lg-2 control-label"></label>
+                   <label class="col-lg-2 label-text"></label>
 
                     </div>
                     </div>
                 </div>
+              <hr/>
 
+            <div class="title_acc">Opening Hours</div>
+              <div class="row" style="margin-bottom: 15px;">
 
-
-
-
+             <div class="user_box_sub">
+              <div class="row" style=" margin-left: 10px;">
+              <div class="col-lg-2 label-text">Monday<span>:</span></div>
+               <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="mon_in" id="mon_in" type="text" data-rule-required="true">
+                    </div>
                 </div>
+
+                <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="mon_out" id="mon_out" type="text" data-rule-required="true">
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <div class="user_box_sub">
+              <div class="row" style=" margin-left: 10px;">
+              <div class="col-lg-2 label-text">Tuesday<span>:</span></div>
+               <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="tue_in" id="tue_in" type="text" data-rule-required="true">
+                    </div>
+                </div>
+
+                <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="tue_out" id="tue_out" type="text" data-rule-required="true">
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <div class="user_box_sub">
+              <div class="row" style=" margin-left: 10px;">
+              <div class="col-lg-2 label-text">Wednesday<span>:</span></div>
+               <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="wed_in" id="wed_in" type="text" data-rule-required="true">
+                    </div>
+                </div>
+
+                <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="wed_out" id="wed_out" type="text" data-rule-required="true">
+                    </div>
+                </div>
+                </div>
+            </div>
+
+           <div class="user_box_sub">
+              <div class="row" style=" margin-left: 10px;">
+              <div class="col-lg-2 label-text">Thursday<span>:</span></div>
+               <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="thu_in" id="thu_in" type="text" data-rule-required="true">
+                    </div>
+                </div>
+
+                <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="thu_out" id="thu_out" type="text" data-rule-required="true">
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <div class="user_box_sub">
+              <div class="row" style=" margin-left: 10px;">
+              <div class="col-lg-2 label-text">Friday<span>:</span></div>
+               <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="fri_in" id="fri_in" type="text" data-rule-required="true">
+                    </div>
+                </div>
+
+                <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="fri_out" id="fri_out" type="text" data-rule-required="true">
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <div class="user_box_sub">
+              <div class="row" style=" margin-left: 10px;">
+              <div class="col-lg-2 label-text">Saturday<span>:</span></div>
+               <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="sat_in" id="sat_in" type="text" data-rule-required="true">
+                    </div>
+                </div>
+
+                <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="sat_out" id="sat_out" type="text" data-rule-required="true">
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <div class="user_box_sub">
+              <div class="row" style=" margin-left: 10px;">
+              <div class="col-lg-2 label-text ">Sunday<span>:</span></div>
+               <div class="col-sm-3 col-md-3 col-lg-3 m_l controls">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="sun_in" id="sun_in" type="text" data-rule-required="true">
+                    </div>
+                </div>
+
+                <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                    <div class="input-group">
+                        <a class="input-group-addon" href="#">
+                            <i class="fa fa-clock-o"></i>
+                        </a>
+                        <input class="form-control timepicker-default" name="sun_out" id="sun_out" type="text" data-rule-required="true">
+                    </div>
+                </div>
+                </div>
+            </div>
+
+          </div>
+
+            <hr/>
+
            <div class="button_save1">
                     <button type="submit" class="btn btn-post" name="add_contacts" style="float: left; margin-left:125px; ">Save &amp; continue</button>
                     <!-- <a class="btn btn-post pull-left" href="#">previous</a>
@@ -161,7 +356,7 @@
                  </div>
                
             
-              
+                </form>
              </div>
          </div>
        </div>
@@ -270,7 +465,14 @@ $('#remove-payment').click(function()
 
 
 </script>
-
+<!--TimePicker-->
+<script type="text/javascript">
+   $('#timepicker5').timepicker({
+                template: false,
+                showInputs: false,
+                minuteStep: 5
+    });
+</script>
 
 
 @stop
