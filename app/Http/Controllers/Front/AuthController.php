@@ -284,43 +284,52 @@ class AuthController extends Controller
     
         if($user)
         {
-            /* Check if Users Role is Admin */
-            $role = Sentinel::findRoleBySlug('normal');
-            if(Sentinel::inRole($role))
-            {   
-                if(is_numeric($email_or_mobile))
-                {
-                    $obj_user_info = UserModel::Where('mobile_no','=',$arr_creds['mobile_no'])->get();
-                   
-                }
-                else
-                {
-                    $obj_user_info = UserModel::where('email','=',$arr_creds['email'])->get();  
-                }
-                
-                
-                if($obj_user_info);
-                {
-                   $arr_user_info = $obj_user_info->toArray();
-                }
-                
-      
-                foreach ($arr_user_info as $user)
-                {
-                    $user_id = base64_encode($user['id']) ;
-                    Session::set('user_id', $user_id);
-                    Session::set('user_name', $user['first_name']);
-                    Session::set('user_mail', $user['email']);
-                }
-                Session::flash('success','Login Successfull.');
-                $json = "SUCCESS";
-                //return redirect('front_users/profile');
+
+            if($user->is_active == 1)
+            {    
+                    /* Check if Users Role is Admin */
+                    $role = Sentinel::findRoleBySlug('normal');
+                    if(Sentinel::inRole($role))
+                    {   
+                        if(is_numeric($email_or_mobile))
+                        {
+                            $obj_user_info = UserModel::Where('mobile_no','=',$arr_creds['mobile_no'])->get();
+                           
+                        }
+                        else
+                        {
+                            $obj_user_info = UserModel::where('email','=',$arr_creds['email'])->get();  
+                        }
+                        
+                        
+                        if($obj_user_info);
+                        {
+                           $arr_user_info = $obj_user_info->toArray();
+                        }
+                        
+              
+                        foreach ($arr_user_info as $user)
+                        {
+                            $user_id = base64_encode($user['id']) ;
+                            Session::put('user_id', $user_id);
+                            Session::set('user_name', $user['first_name']);
+
+                        }
+                        Session::flash('success','Login Successfull.');
+                        $json = "SUCCESS";
+                        //return redirect('front_users/profile');
+                    }
+                    else
+                    {
+                        //Session::flash('error','Not Sufficient Privileges');
+                        $json =  'No Sufficient Privileges';
+                    }
+
             }
             else
             {
-                //Session::flash('error','Not Sufficient Privileges');
-                $json =  'No Sufficient Privileges';
-            }
+                $json =  'ACC_ACT_ERROR';
+            }        
         }
         else
         {

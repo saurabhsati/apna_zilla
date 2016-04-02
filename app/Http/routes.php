@@ -433,6 +433,8 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::post('store_reviews',			 ['as' => 'front_store_reviews'     ,'uses' => 'Front\ListingController@store_reviews']);
   	    Route::get('share_business/{enc_id}',			 ['as' => 'business_share' 	        ,'uses' => 'Front\ListingController@share_business']);
   	    Route::get('sms_email/{enc_id}',			     ['as' => 'business_sms_email' 	    ,'uses' => 'Front\ListingController@sms_email']);
+  	    // add to fav
+  	    Route::post('add_to_favourite', 				 ['as' =>'add_favourite'			,'uses'=>'Front\ListingController@add_to_favourite']);
 
 	});
 
@@ -527,7 +529,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::post('update_password',				  	['as' => 'front_users_update_password'				,'uses' =>'Front\AuthController@update_password']);
 
 		Route::post('process_login_for_share/{enc_id}', ['as' => 'front_users_process_login_for_share'      ,'uses' =>'Front\AuthController@process_login_for_share']);
-
+		Route::post('otp_check', ['as' => 'front_users_otp_check'      ,'uses' =>'Front\UserController@otp_check']);
 
 
 	});

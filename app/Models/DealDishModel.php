@@ -15,7 +15,7 @@ class DealDishModel extends Model
     					   'deal_id',
     					   'dish_id',
     					   'quantity',
-                 parent_category_id];
+                 'parent_category_id'];
 
 
     public function category()
