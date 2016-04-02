@@ -40,39 +40,6 @@
       <!-- Bootstrap Core JavaScript -->
       <script src="{{ url('/') }}/assets/front/js/bootstrap.min.js" type="text/javascript"></script>
 
-     
-
-      <script type="text/javascript">
-         $(function() {
-           var availableTags = [
-             "ActionScript",
-             "AppleScript",
-             "Asp",
-             "BASIC",
-             "C",
-             "C++",
-             "Clojure",
-             "COBOL",
-             "ColdFusion",
-             "Erlang",
-             "Fortran",
-             "Groovy",
-             "Haskell",
-             "Java",
-             "JavaScript",
-             "Lisp",
-             "Perl",
-             "PHP",
-             "Python",
-             "Ruby",
-             "Scala",
-             "Scheme"
-           ];
-           $( "#tags" ).autocomplete({
-             source: availableTags
-           });
-         });
-      </script>
       <!--category droup doun mobile effect-->
        <script>
 $(document).ready(function(){

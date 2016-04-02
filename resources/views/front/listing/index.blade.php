@@ -150,6 +150,9 @@
             <p>Where in  <?php
              if(Session::has('search_city_title')){
                echo Session::get('search_city_title');
+               }
+               else{
+                echo $city;
                }?>
 
             </p>

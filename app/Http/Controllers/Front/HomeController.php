@@ -149,10 +149,10 @@ class HomeController extends Controller
 		    $content = file_get_contents($url); // get json content
 
 		    $metadata = json_decode($content, true); //json decoder
-		    if(sizeof($metadata['results'][4]) > 0) {
+		    if(sizeof($metadata['results'][7]) > 0) {
                 //echo '<pre>';
-               // print_r($metadata['results']);exit;
-			    $city = $metadata['results'][4]['address_components']['0']['long_name'];
+                //print_r($metadata['results']);exit;
+			    $city = $metadata['results'][7]['address_components']['0']['short_name'];
                 if(!empty($city))
                 {
 			       Session::put('city', $city);
@@ -196,9 +196,8 @@ class HomeController extends Controller
             $search_term = $request->input('term');
             $arr_obj_city = CityModel::where('is_active','=',1)
                                             ->where(function ($query) use ($search_term) {
-                                             $query->where("city_title", 'like', "%".$search_term."%")
-                                             ->orwhere("city_slug", 'like', "%".$search_term."%");
-                                             })->get();
+                                             $query->where("city_title", 'like', "%".$search_term."%");
+                                                                                        })->get();
             $arr_list_city = array();
             if($arr_obj_city)
             {
@@ -320,6 +319,8 @@ class HomeController extends Controller
  	}
     public function get_location_auto(Request $request)
     {
+         Session::forget('location_latitude');
+         Session::forget('location_longitude');
         if($request->has('term'))
         {
             $search_term='';
@@ -347,8 +348,8 @@ class HomeController extends Controller
                         $arr_final_location_list[$key]['loc_lng'] = $list['longitude'];
                         $arr_final_location_list[$key]['loc'] = str_replace('-',' ',($list['place_name']));
                          Session::put('business_search_by_location',$list['place_name']);
-                         //Session::put('location_latitude', $list['latitude']) ;
-                         //::put('location_longitude',$list['longitude']);
+
+
                     }
 
                 }
@@ -375,9 +376,11 @@ class HomeController extends Controller
     {
             $city_id = $request->input('city_id');
             $city_title = $request->input('city_title');
-
+            Session::forget('location_latitude');
+            Session::forget('location_longitude');
             Session::put('search_city_id',$city_id);
             Session::put('search_city_title',$city_title);
+
             $result['status'] ="1";
             return response()->json($result);
     }

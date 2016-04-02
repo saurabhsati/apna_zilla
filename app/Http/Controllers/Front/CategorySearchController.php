@@ -222,7 +222,7 @@ class CategorySearchController extends Controller
               $arr_business = array();
               if(sizeof($result)>0)
               {
-                echo $loc;
+               // echo $loc;
 
 
                 $obj_business_listing = BusinessListingModel::whereIn('id',$result)
@@ -243,7 +243,7 @@ class CategorySearchController extends Controller
                                                  //echo Session::get('location_latitude');
                 if(Session::has('location_latitude') && Session::has('location_longitude'))
                 {
-                    $latitude=Session::has('location_latitude') ? Session::get('location_latitude'):'51.033320760';
+                     $latitude=Session::has('location_latitude') ? Session::get('location_latitude'):'51.033320760';
                     $longitude=Session::has('location_longitude') ? Session::get('location_longitude'):'13.757242110';
 
 
@@ -271,15 +271,17 @@ class CategorySearchController extends Controller
                 }
                  if( Session::has('review_rating'))
                 {
-                   $obj_business_listing->orderBy('avg_rating','DESC');
+                  $obj_business_listing->orderBy('avg_rating','DESC');
+
                 }else
                 {
-                  $obj_business_listing->orderBy('visited_count','DESC');
+                 $obj_business_listing->orderBy('visited_count','DESC');
+
                 }
 
 
-                $obj_business_listing= $obj_business_listing->toSql();
-                dd($obj_business_listing);
+                $obj_business_listing= $obj_business_listing->get();
+                //dd($obj_business_listing);
 
                 if($obj_business_listing)
                 {
@@ -335,6 +337,9 @@ class CategorySearchController extends Controller
 
     public function set_rating()
     {
+            Session::forget('location_latitude');
+            Session::forget('location_longitude');
+            Session::forget('distance');
             Session::put('review_rating','higher');
             $result['status'] ="1";
             return response()->json($result);
