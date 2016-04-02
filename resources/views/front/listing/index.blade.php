@@ -10,6 +10,12 @@
       position:fixed;
     }
   </style>
+
+   <?php
+  // echo "<pre>";
+  // print_r($arr_business);
+  // exit();
+  ?>
   <div class="gry_container">
     <div class="container">
      <div class="row">
@@ -271,7 +277,7 @@
 
                   <div class="p_details"  >
                     @if(!empty(Session::get('user_mail')))
-                      <span id="show_fav_status">
+                      <span id="show_fav_status" style="width: 175px;">
                       <a href="javascript:void(0);" id="add_favourite" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>
                       </span>
                     @else
@@ -303,6 +309,9 @@
       <div  id="grid_view" style="display: none;">
           <div class="row">
  @if(isset($arr_business) && sizeof($arr_business)>0)
+
+
+
       @foreach($arr_business as $restaurants)
        <div class="col-sm-6 col-md-6 col-lg-6">
                          <div class="product_grid_view">
@@ -612,7 +621,7 @@
         }
 
 
-      jQuery(document).ready(function(){
+      /*jQuery(document).ready(function(){*/
         jQuery('#add_favourite').on('click',function () {
           var business_id = jQuery('#business_id').val();
           var user_mail     = "{{ session::get('user_mail') }}";
@@ -623,13 +632,44 @@
             dataType:'json',
             data: data,
             success:function(response){
-              if(response=="favorites")
+
+              if(response.status == "favorites")
               {
-                var str = '<a href="javascript:void(0);" id="add_favourite" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Remove favorite</span></a>';
+                var str = '<a href="javascript:void(0);" id="remove_favourite" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Remove favorite</span></a>';
                 jQuery('#show_fav_status').html(str);
               }
 
-              if(response=="un_favorites")
+              if(response.status=="un_favorites")
+              {
+
+                var str = '<a href="javascript:void(0);" id="add_favourite" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>';
+                jQuery('#show_fav_status').html(str);
+              }
+
+            }
+          });
+        });
+
+
+         jQuery('#remove_favourite').on('click',function () {
+
+          alert(0);
+          var business_id = jQuery('#business_id').val();
+          var user_mail     = "{{ session::get('user_mail') }}";
+          var data        = { business_id:business_id, user_mail:user_mail ,_token:csrf_token };
+          jQuery.ajax({
+            url:site_url+'/listing/add_to_favourite',
+            type:'POST',
+            dataType:'json',
+            data: data,
+            success:function(response){
+              /*if(response.status == "favorites")
+              {
+                var str = '<a href="javascript:void(0);" id="add_favourite" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Remove favorite</span></a>';
+                jQuery('#show_fav_status').html(str);
+              }*/
+
+              if(response.status=="un_favorites")
               {
                 var str = '<a href="javascript:void(0);" id="add_favourite" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>';
                 jQuery('#show_fav_status').html(str);
@@ -638,7 +678,9 @@
             }
           });
         });
-      });
+
+
+     // });
        </script>
 
 

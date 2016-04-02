@@ -84,7 +84,7 @@
                   <div class="login_box">
                      <div class="left_bar">
                         <a class="forgt" data-toggle="modal" data-target="#forget_pwd">Forget your password?</a>
-                        <a data-toggle="modal" id="open_register" data-target="#reg_poup" class="sign_up">Sign Up Now</a>
+                        <a data-toggle="modal" id="open_register" data-target="#reg_poup" onclick="set_business_list_flag()" class="sign_up">Sign Up Now</a>
                      </div>
                      <button type="button"  id="login_submit" onclick="login_submit_form()" class="yellow ui button">Login</button>
                   </div>
@@ -157,6 +157,7 @@
 
         {{ csrf_field() }}
 
+        <input type="hidden" id="bus_listing" value="" />
 
          <div class="modal-dialog">
             <!-- Modal content-->
@@ -252,7 +253,7 @@
 
                      <div class="title_login">New account sign up</div>
 
-                     <input type="hidden" value="" />
+                       <a class="forgt" id="otp_div_popup" data-toggle="modal" data-target="#otp_popup">Check</a>
 
                      <div class="user_box">
                         <div class="label_form">First Name</div>
@@ -487,21 +488,23 @@ If you need any more details on Justdial Verified, please refer to
                 <div class="col-sm-4 col-md-4 col-lg-4">
                   <div class="social-icon-block">
                      <div class="social-icon-footer">
-                        <a title="" data-placement="top" data-toggle="tooltip" class="social-icon si-borderless si-facebook" href="@if(isset($site_settings['fb_url'])){{$site_settings['fb_url']}}@endif" data-original-title="Facebook">
+
+                        <a title="" data-placement="top" data-toggle="tooltip" class="social-icon si-borderless si-facebook" href="{{isset($site_settings['fb_url'])?$site_settings['fb_url']:''}}" data-original-title="Facebook">
                         <i class="fa fa-facebook"></i>
                         <i class="fa fa-facebook"></i>
                         </a>
                         <div class="clearfix"></div>
                      </div>
                      <div class="social-icon-footer">
-                        <a data-original-title="Twitter" href="@if(isset($site_settings['twitter_url'])){{$site_settings['twitter_url']}}@endif" class="social-icon si-borderless si-twitter" data-toggle="tooltip" data-placement="top" title="">
+                        <a data-original-title="Twitter" href="{{isset($site_settings['twitter_url'])?$site_settings['twitter_url']:''}}" class="social-icon si-borderless si-twitter" data-toggle="tooltip" data-placement="top" title="">
                         <i class="fa fa-twitter"></i>
                         <i class="fa fa-twitter"></i>
                         </a>
                         <div class="clearfix"></div>
                      </div>
                      <div class="social-icon-footer">
-                        <a data-original-title="Google Plus" href="@if(isset($site_settings['youtube_url'])){{$site_settings['youtube_url']}}@endif" class="social-icon si-borderless si-gplus" data-toggle="tooltip" data-placement="top" title="">                                        <i class="fa fa-google-plus"></i>
+                        <a data-original-title="Google Plus" href="{{isset($site_settings['youtube_url'])?$site_settings['youtube_url']:''}}" class="social-icon si-borderless si-gplus" data-toggle="tooltip" data-placement="top" title="">
+
                         <i class="fa fa-google-plus"></i>
                         </a>
                         <div class="clearfix"></div>
@@ -563,6 +566,17 @@ If you need any more details on Justdial Verified, please refer to
 
 
 <script type="text/javascript">
+
+  function set_flag()
+  {
+      $("#bus_listing").val("1");
+  }
+
+  function set_business_list_flag()
+  {
+     $("#bus_listing").val("0");
+  }
+
   function OTP_check()
   {
 
@@ -570,12 +584,16 @@ If you need any more details on Justdial Verified, please refer to
     var otp        = $('#otp_no').val();
     var mobile_no  = $('#mobile_no_otp').val();
     var token      = jQuery("input[name=_token]").val();
+
+    var bus_listing= jQuery("#bus_listing").val();
+
     var otp_filter = /^[0-9]{0,30}$/;
 
     $('#otp_no').keyup(function(){
        $('#otp_error').hide();
        $('#otp_rule_error').hide();
     });
+
 
     if(otp=="")
     {
@@ -598,13 +616,26 @@ If you need any more details on Justdial Verified, please refer to
             if(response.status == "SUCCESS" )
             {
               //console.log(response.mobile_no);
+
              $('#otp_no').val('');
              $('#mobile_no_otp').val('');
 
-             $('#otp_succ_div').show();
-             $('#otp_err_div').hide();
-             $('#otp_mobile_err_div').hide();
 
+              if(bus_listing == "1")
+              {
+                document.location.href = site_url+"/front_users/add_business";
+              }
+
+              if(bus_listing == "0")
+              {
+                document.location.href = site_url;
+               /*$('#otp_no').val('');
+               $('#mobile_no_otp').val('');
+
+               $('#otp_succ_div').show();
+               $('#otp_err_div').hide();
+               $('#otp_mobile_err_div').hide();*/
+             }
              //$('#reg_succ_div').show();
             }
             else if(response.status == "ERROR")
@@ -639,6 +670,7 @@ If you need any more details on Justdial Verified, please refer to
     var filter = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
     var mob_filter = /^[0-9]{10}$/;
     var token      = jQuery("input[name=_token]").val();
+    //var business_listing = $('#bus_listing').val();
 
     $('#first_name').keyup(function()
       {
@@ -731,6 +763,7 @@ If you need any more details on Justdial Verified, please refer to
 
                 $('#otp_div_popup').click();
                 $('#mobile_no_otp').val(response.mobile_no);
+                $('#reg_poup').modal('hide');
                  //$('#reg_succ_div').show();
               }
               else if(response.status == "ERROR")

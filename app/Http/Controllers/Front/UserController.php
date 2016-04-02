@@ -173,7 +173,7 @@ class UserController extends Controller
         {
             $mobile = $mobile_no;
 
-            $user = UserModel::where('mobile_no',$mobile)->get()->toArray();
+            $user = UserModel::where('mobile_no',$mobile)->where('mobile_OTP',$otp)->first()->toArray();
             
             if($user)
             {
@@ -182,7 +182,13 @@ class UserController extends Controller
              
                 if($active_account)
                 {
+
+                    Session::set('user_id',$user['id']);
+                    Session::set('user_name', $user['first_name']);   
+                    Session::set('user_mail', $user['email']);   
+
                     $json['status'] = "SUCCESS";
+                    Session::flash('success','You Are Registered Successfully.');
                 }
                 else
                 {
