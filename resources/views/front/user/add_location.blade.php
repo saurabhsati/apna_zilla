@@ -8,7 +8,7 @@
               <div class="col-sm-12 col-md-12 col-lg-12">
                <ol class="breadcrumb">
                    <span>You are here :</span>
-                  <li><a href="#">Home</a></li>
+                  <li><a href="{{ url('/') }}">Home</a></li>
                   <li class="active">Business Information</li>
                 </ol>
              </div>
@@ -78,7 +78,7 @@
               @endif 
              
               <div class="my_whit_bg">
-                 <div class="title_acc">Please Provide Business Information</div>
+                 <div class="title_acc">Please Provide Location Information</div>
                  <div class="row">
 
                   <form class="form-horizontal" 
@@ -153,7 +153,8 @@
                          <input type="text" name="building" 
                                 class="input_acct"
                                 placeholder="Enter Building's Name" 
-                                data-rule-required="true"/>
+                                data-rule-required="true"
+                                required="" aria-describedby="basic-addon1"/>
                           <div class="error_msg">{{ $errors->first('building') }} </div>
                         </div>
                          </div>
@@ -165,8 +166,9 @@
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="text" name="street" 
                                 class="input_acct"
-                                placeholder="Enter Street's Name" />
-                          
+                                placeholder="Enter Street's Name" 
+                                required="" aria-describedby="basic-addon1"/>
+                                
                         </div>
                          </div>
                     </div>
@@ -177,7 +179,8 @@
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="text" name="landmark" 
                                 class="input_acct"
-                                placeholder="Enter Landmark's Name" />
+                                placeholder="Enter Landmark's Name" 
+                                required="" aria-describedby="basic-addon1"/>
                         <div class="error_msg">{{ $errors->first('landmark') }} </div>
                         </div>
                          </div>
@@ -189,7 +192,8 @@
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="text" name="area" 
                                 class="input_acct"
-                                placeholder="Enter Area's Name" />
+                                placeholder="Enter Area's Name"
+                                required="" aria-describedby="basic-addon1" />
                         </div>
                          </div>
                     </div>
@@ -199,7 +203,7 @@
             <div class="row">
              <div class="col-lg-3  label-text">Country :</div>
               <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                  <select class="input_acct"  id="country" name="country" >
+                  <select class="input_acct"  id="country" name="country" required="" aria-describedby="basic-addon1" >
                     <option value="">Select Country</option>
                     @if (isset($arr_country)&& (count($arr_country) > 0))
                       @foreach($arr_country as $country)
@@ -216,8 +220,8 @@
            <div class="row">
             <div class="col-lg-3  label-text">State :</div>
               <div class="col-sm-12 col-md-12 col-lg-9 m_l" >
-                <select class="input_acct" name="state" id="state" >
-                  <option id="show_state" value="" >State</option>
+                <select class="input_acct" name="state" id="state" required="" aria-describedby="basic-addon1">
+                  <option id="show_state" value="" >--Select--</option>
                 </select>
               </div>
             </div>
@@ -228,8 +232,8 @@
             <div class="row">
              <div class="col-lg-3  label-text">City :</div>
               <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-               <select class="input_acct"  name="city" id="city">
-                  <option value="" >City</option>
+               <select class="input_acct"  name="city" id="city" required="" aria-describedby="basic-addon1">
+                  <option value="" >--Select--</option>
                  </select>
                 </div>
               </div>
@@ -239,8 +243,8 @@
               <div class="row">
                 <div class="col-lg-3  label-text">Zipcode :</div>
                   <div class="col-sm-9 col-md-9 col-lg-9 m_l">
-                    <select class="input_acct"  id="zipcode"  name="zipcode" >
-                      <option value="">Select Zipcode</option>
+                    <select class="input_acct"  id="zipcode"  name="zipcode" required="" aria-describedby="basic-addon1">
+                      <option value="">--Select--</option>
                     </select>
                     <div class="error_msg">{{ $errors->first('zipcode') }} </div>
                 </div>

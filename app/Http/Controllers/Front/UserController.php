@@ -885,9 +885,10 @@ class UserController extends Controller
                 }
             }
 
+            Session::flash('success','Business Information Added Successfully');
+            return redirect('/front_users/add_business');
 
 
-            Session::flash('success','Services Information Added Successfully');
         }else {
             Session::flash('error','Error While Adding Services Information');
         }   

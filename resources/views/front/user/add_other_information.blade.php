@@ -16,7 +16,7 @@
                 <div class="col-sm-12 col-md-12 col-lg-12">
      <ol class="breadcrumb">
          <span>You are here :</span>
-          <li><a href="#">Home</a></li>
+          <li><a href="{{ url('/') }}">Home</a></li>
           <li class="active">Contact Information</li>
   
 </ol>
@@ -106,7 +106,7 @@
                       <div class="row">
                         <div class="col-lg-2 label-text">Company Information <span>:</span></div>
                           <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                            <textarea  class="input_acct" id="company_info" name="company_info" style="width: 682px;" placeholder="Enter Company Information"/></textarea>
+                            <textarea  class="input_acct" id="company_info" name="company_info" style="width: 682px;" placeholder="Enter Company Information"  required=""  aria-describedby="basic-addon1" /></textarea>
                             <div class="error_msg">{{ $errors->first('company_info') }} </div>
                           </div>
                        </div>
@@ -117,7 +117,7 @@
                     <div class="row">
                       <div class="col-lg-2 label-text">Establishment Year <span>:</span></div>
                         <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                          <input type="text"  class="input_acct"  id="establish_year" name="establish_year"  placeholder="Enter Establishment Year"/>
+                          <input type="text"  class="input_acct"  id="establish_year" name="establish_year"  placeholder="Enter Establishment Year"  required=""  aria-describedby="basic-addon1" />
                            <div class="error_msg">{{ $errors->first('establish_year') }} </div>
                         </div>
                     </div>
@@ -127,7 +127,9 @@
                       <div class="row">
                         <div class="col-lg-2 label-text">Keywords <span>:</span></div>
                           <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                            <textarea  class="input_acct" id="keywords" name="keywords" style="width: 682px;" placeholder="Enter Keywords"/></textarea>
+                            <textarea  class="input_acct" id="keywords" name="keywords" style="width: 682px;" placeholder="Enter Keywords"
+                            required=""  aria-describedby="basic-addon1"
+                            /></textarea>
                             <div class="error_msg">{{ $errors->first('keywords') }} </div>
                           </div>
                        </div>
@@ -173,7 +175,7 @@
                     </div>
                     </div>
                 </div>
-              <hr/>
+            <!--   <hr/>
 
             <div class="title_acc">Opening Hours</div>
               <div class="row" style="margin-bottom: 15px;">
@@ -341,7 +343,7 @@
 
           </div>
 
-            <hr/>
+            <hr/> -->
 
            <div class="button_save1">
                     <button type="submit" class="btn btn-post" name="add_contacts" style="float: left; margin-left:125px; ">Save &amp; continue</button>
@@ -349,7 +351,7 @@
                     <a class="btn btn-post" href="#">Save &amp; exit</a>
                     <a class="btn btn-post pull-right" href="#">Next</a> -->
                  </div>
-                       </div>
+                </div>
                       
                 </div>
                 

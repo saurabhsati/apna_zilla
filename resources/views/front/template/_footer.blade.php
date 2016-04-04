@@ -253,7 +253,7 @@
 
                      <div class="title_login">New account sign up</div>
 
-                       <a class="forgt" id="otp_div_popup" data-toggle="modal" data-target="#otp_popup">Check</a>
+                       <!-- <a class="forgt" id="otp_div_popup" data-toggle="modal" data-target="#otp_popup">Check</a> -->
 
                      <div class="user_box">
                         <div class="label_form">First Name</div>
@@ -518,6 +518,11 @@ If you need any more details on Justdial Verified, please refer to
 
       <!-- Home Page Popup for login & signup start -->
 
+     <!--  <script type='text/javascript' src="{{ url('/') }}/assets/front/js/jquery-1.11.3.min.js"></script> -->
+      
+
+
+
       <script type="text/javascript">
          jQuery(document).ready(function(){
            jQuery(".sign_up").click(function(){
@@ -535,11 +540,13 @@ If you need any more details on Justdial Verified, please refer to
 
 
 
+
  <!-- Home Page Popup for login & signup end -->
   <!-- Listing details Tabbing Start -->
 
       <script type="text/javascript">
          $(document).ready(function () {
+            $(".dropdown-toggle").dropdown();
              $('#dash_tab').easyResponsiveTabs({
                  type: 'default', //Types: default, vertical, accordion
                  width: 'auto', //auto or any width like 600px

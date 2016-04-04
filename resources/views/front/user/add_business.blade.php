@@ -8,7 +8,7 @@
               <div class="col-sm-12 col-md-12 col-lg-12">
                <ol class="breadcrumb">
                    <span>You are here :</span>
-                  <li><a href="#">Home</a></li>
+                  <li><a href="{{ url('/') }}">Home</a></li>
                   <li class="active">Business Information</li>
                 </ol>
              </div>
@@ -27,11 +27,11 @@
                 <div class="sidebar-brand">Business Information</div>
                 <div class="bor_head">&nbsp;</div>
                 <ul class="">
-                  <li class="brdr"><a href="{{ url('/').'/front_users/add_business' }}">Business Information</a></li>
-                  <li class="brdr"><a href="{{ url('/').'/front_users/add_location' }}">Location Information</a></li>
-                  <li class="brdr"><a href="{{ url('/').'/front_users/add_contacts' }}">Contact Information</a></li>
-                  <li class="brdr"><a href="{{ url('/').'/front_users/other_details' }}">Other Information</a></li>
-                  <li class="brdr"><a href="{{ url('/').'/front_users/add_services' }}">Video/Pictures/Services</a></li>
+                   <li class="brdr"><a href="{{-- url('/').'/front_users/add_business' --}}#">Business Information</a></li>
+                  <li class="brdr"><a href="{{-- url('/').'/front_users/add_location' --}}#">Location Information</a></li>
+                  <li class="brdr"><a href="{{-- url('/').'/front_users/add_contacts' --}}#">Contact Information</a></li>
+                  <li class="brdr"><a href="{{-- url('/').'/front_users/other_details' --}}#">Other Information</a></li>
+                  <li class="brdr"><a href="{{-- url('/').'/front_users/add_services' --}}#">Video/Pictures/Services</a></li>
                    <!--  <li class="brdr has-sub"><a href="#"><span>business keywords</span></a>
                     <ul class="make_list" style="display:none;">
                      <li><a href="#">view/remove keywords</a> </li>
@@ -116,7 +116,7 @@
                     <div class="row">
                       <div class="col-lg-3  label-text">Category :</div>
                         <div class="col-sm-9 col-md-9 col-lg-9 m_l">
-                          <select class="input_acct"  name="category" >
+                          <select class="input_acct"  name="category" required="" aria-describedby="basic-addon1" >
                             <option value="">Select Category</option>
                                 @if (isset($arr_category)&& (count($arr_category) > 0))
                                   @foreach($arr_category as $cat)
@@ -136,7 +136,9 @@
                       <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                        <input type="text" name="business_name" 
                               class="input_acct"
-                              placeholder="Enter Business Name" />
+                              placeholder="Enter Business Name" 
+                              required=""  aria-describedby="basic-addon1"
+                              />
                         <div class="error_msg">{{ $errors->first('business_name') }} </div>
                       </div>
                   </div>
