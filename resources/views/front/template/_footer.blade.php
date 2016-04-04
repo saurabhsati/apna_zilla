@@ -1,3 +1,76 @@
+
+  <!--Sens SMS OTP popup start here-->
+        <a class="forgt" id="sms_otp_div_popup" data-toggle="modal" data-target="#otp_popup"></a>
+        <div id="otp_popup" class="modal fade" role="dialog" style="overflow:auto;">
+
+        <form class="form-horizontal"
+                           id="validation-form"
+                           method="POST"
+                           action=""
+                           enctype="multipart/form-data"
+                           >
+
+        {{ csrf_field() }}
+
+         <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close login_close1" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_poup.png" alt="login logo"/></h4>
+               </div>
+               <div class="modal-body">
+
+                <div class="alert alert-success alert-dismissible" id="otp_succ_div" style="display: none;">
+                    <strong>Success!</strong>
+                   Your SMS Send Successfully Activated.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <!-- <span aria-hidden="true">&times;</span> -->
+                    </button>
+                </div>
+
+                <div class="alert alert-danger alert-dismissible" id="otp_err_div" style="display: none;">
+                    <strong>Error!</strong>
+                   Incorrect OTP
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <!-- <span aria-hidden="true">&times;</span> -->
+                    </button>
+                </div>
+
+                 <div class="alert alert-danger alert-dismissible" id="otp_mobile_err_div" style="display: none;">
+                    <strong>Error!</strong>
+                   Incorrect Mobile No.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <!-- <span aria-hidden="true">&times;</span> -->
+                    </button>
+                </div>
+
+                  <div class="login_box">
+                     <div class="title_login">Confirm OTP</div>
+
+                     <div class="user_box">
+                        <div class="label_form">OTP</div>
+                        <input type="text" class="input_box" name="otp_no" id="otp_no" placeholder="Enter Your OTP"/>
+                        <input type="hidden" class="input_box" name="mobile_no_otp" id="mobile_no_otp" value=""/>
+                        <div id="otp_error" style="display: none;"><i style="color: red;">Please Fill Field</i></div>
+                        <div id="otp_rule_error" style="display: none;"><i style="color: red;">Invalid OTP</i></div>
+                     </div>
+
+                     <div class="clr"></div>
+                  </div>
+               </div>
+               <div class="clr"></div>
+               <div class="modal-footer">
+                  <div class="login_box">
+                     <button type="button" onclick="SMS_OTP_check()" class="yellow1 ui button">Submit</button>
+                   </div>
+               </div>
+               <div class="clr"></div>
+            </div>
+         </div>
+         </form>
+      </div>
+    <!--Send Sms OTP poup end here-->
  <!--login popup start here-->
       <div id="login_poup" class="modal fade" role="dialog">
 
@@ -311,72 +384,6 @@
 
 
 <!--popup in detail page start here-->
-<!-- Modal -->
-
-<div class="modal fade" id="sms" role="dialog">
-    <div class="modal-dialog">
-     <!-- Modal content-->
-      <div class="modal-content">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-       <div class="modal-body">
-          <b class="head-t">Get information by SMS/Email</b>
-           <p class="in-li">Enter the details below and click on SEND</p>
-            <div class="soc-menu-top">
-                <div class="col-lg-11">
-            <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-3  label-text">Name</div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" placeholder="Enter Name" class="input_acct">
-                          <div class="error_msg">please enter correct</div>
-                        </div>
-                         </div>
-                    </div>
-
-
-
-            <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-3  label-text">Mobile</div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                        <div class="input-group">
-                        <span id="basic-addon1" class="input-group-addon">+91</span>
-                        <input type="text" required="" aria-describedby="basic-addon1" placeholder="Mobile" class="form-control">
-
-                        </div>
-                          <div class="error_msg">please enter correct</div>
-                        </div>
-                         </div>
-                    </div>
-
-
-                <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-3  label-text">Email</div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" placeholder="Enter Email" class="input_acct">
-                          <div class="error_msg">please enter correct</div>
-                        </div>
-                         </div>
-                    </div>
-                    <div class="clr"></div>
-                       <div class="user_box_sub">
-                           <div class="row">
-                    <div class="col-lg-3  label-text">&nbsp;</div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                    <div class="submit-btn">
-<button>Send</button>
-</div>
-                    </div>
-                           </div>
-                    </div>
-                </div>
-            </div>
-           <div class="clr"></div>
-        </div>
-      </div>
-    </div>
-  </div>
 
 
 
@@ -519,7 +526,7 @@ If you need any more details on Justdial Verified, please refer to
       <!-- Home Page Popup for login & signup start -->
 
      <!--  <script type='text/javascript' src="{{ url('/') }}/assets/front/js/jquery-1.11.3.min.js"></script> -->
-      
+
 
 
 
@@ -546,7 +553,7 @@ If you need any more details on Justdial Verified, please refer to
 
     <script type="text/javascript">
         $(document).ready(function(){
-          $(".dropdown-toggle").dropdown();   
+          $(".dropdown-toggle").dropdown();
         });
     </script>
 
@@ -937,6 +944,62 @@ If you need any more details on Justdial Verified, please refer to
 
       }
 
+      function SMS_OTP_check()
+      {
+          var site_url   = "{{ url('/') }}";
+          var otp        = $('#otp_no').val();
+          var mobile_no  = $('#mobile_no_otp').val();
+          var token      = jQuery("input[name=_token]").val();
+
+          var otp_filter = /^[0-9]{0,30}$/;
+
+          $('#otp_no').keyup(function(){
+             $('#otp_error').hide();
+             $('#otp_rule_error').hide();
+          });
+          if(otp=="")
+          {
+            $('#otp_error').show();
+          }
+          else if(!otp_filter.test(otp))
+          {
+            $('#otp_rule_error').show();
+          }
+          else
+          {
+           jQuery.ajax({
+               url      : site_url+"/listing/sms_otp_check?_token="+token,
+               method   : 'POST',
+               dataType : 'json',
+               data     : 'otp='+otp+'&mobile_no='+mobile_no,
+               success: function(response)
+               {
+                //console.log(response);
+                  if(response.status == "SUCCESS" )
+                  {
+                    $('#otp_no').val('');
+                    $('#mobile_no_otp').val('');
+                     $('#otp_succ_div').show();
+                    $('#otp_succ_div').html("SMS Send Successfully");
+
+                  }
+                  else if(response.status == "ERROR")
+                  {
+                      $('#otp_err_div').show();
+                      $('#otp_mobile_err_div').hide();
+                      $('#otp_succ_div').hide();
+                  }
+                  else if(response.status == "MOBILE_ERROR")
+                  {
+                      $('#otp_mobile_err_div').show();
+                      $('#otp_err_div').hide();
+                      $('#otp_succ_div').hide();
+                  }
+
+               }
+            });
+        }
+      }
       </script>
 
   @if(!Auth::check())

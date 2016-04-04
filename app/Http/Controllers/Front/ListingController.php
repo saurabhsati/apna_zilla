@@ -30,10 +30,10 @@ class ListingController extends Controller
 
     public function list_details($city,$slug_area,$enc_id)
     {
-           $enc_id;
-          $id = base64_decode($enc_id);
-         if($id=='')
-         {
+        $enc_id;
+        $id = base64_decode($enc_id);
+        if($id=='')
+        {
 
           return redirect()->back();
          }
@@ -331,45 +331,100 @@ class ListingController extends Controller
         }
          return redirect()->back();
     }
-     public function sms_send(Request $request)
+     public function send_sms(Request $request)
     {
         $arr_rules = array();
         $arr_rules['name'] = "required";
         $arr_rules['mobile'] = "required";
-        $arr_rules['email'] = "required";
+        $arr_rules['email'] = "required|email";
 
 
         $validator = Validator::make($request->all(),$arr_rules);
 
         if($validator->fails())
         {
-            return redirect()->back()->withErrors($validator)->withInput();
+           $json['status'] = "VALIDATION_ERROR";
+            //return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $name        =  $request->input('name');
         $email      =  $request->input('email');
         $mobile   =  $request->input('mobile');
-
+        $mobile_otp =  mt_rand(0,66666);
         $business_id          =  $request->input('business_id');
 
-        $arr_data = array();
-        $arr_data['name'] = $name;
-        $arr_data['email'] = $email;
-        $arr_data['mobile'] = $mobile;
 
-        $arr_data['business_id'] = $business_id;
-        //dd($arr_data);
-         $status = BusinessSendEnquiryModel::create($arr_data);
-
-        if($status)
+        if(is_numeric($mobile) && strlen($mobile)==10)
         {
-           Session::flash('success','SMS Send Successfully');
+            $arr_data = array();
+            $arr_data['name'] = $name;
+            $arr_data['email'] = $email;
+            $arr_data['mobile'] = $mobile;
+            $arr_data['mobile_OTP'] = $mobile_otp;
+            $arr_data['business_id'] = $business_id;
+
+            $status = BusinessSendEnquiryModel::create($arr_data);
+            $send_enquiry_id = $status->id;
+            if($status)
+            {
+              $response  = $this->send_otp($mobile,$mobile_otp);
+              if($response!='')
+              {
+                 $json['status']     = "SUCCESS";
+                 $json['mobile_no']  = $mobile;
+              }
+
+            }
         }
         else
         {
-          Session::flash('error','Problem Occurred While Sending SMS ');
+            $json['status'] = "MOBILE_ERROR";
+            $json['msg']    = "Invalid Mobile No.";
         }
-         return redirect()->back();
+          return response()->json($json);
+    }
+      public function send_otp($mobile,$mobile_otp)
+    {
+
+        $url = "http://smsway.co.in/api/sendhttp.php?authkey=70Asotxsg0Q556948f8&mobiles='".$mobile."'&message=Send SMS To RightNext OPT = '".$mobile_otp."'&sender=SMSWAY&route=4&country=91";
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        return $response;
+    }
+    public function sms_otp_check(Request $request)
+    {
+        $otp            =  $request->input('otp');
+        $mobile_no      =  $request->input('mobile_no');
+
+        if(is_numeric($mobile_no) && strlen($mobile_no)==10)
+        {
+            $mobile = $mobile_no;
+
+            $user = BusinessSendEnquiryModel::where('mobile',$mobile)->where('mobile_OTP',$otp)->first()->toArray();
+
+            if($user)
+            {
+
+                 $json['status'] = "SUCCESS";
+                // Session::flash('success','SMS Send Successfully.');
+            }
+            else
+            {
+                $json['status'] = "ERROR";
+            }
+
+
+        }
+        else
+        {
+             $json['status'] = "MOBILE_ERROR";
+        }
+
+        return response()->json($json);
     }
 
 }

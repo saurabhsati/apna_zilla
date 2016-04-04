@@ -464,6 +464,9 @@
                      @if(isset($arr_business_details) && sizeof($arr_business_details)>0)
                          <div class="label-text1">{{$arr_business_details['business_name']}}</div>
                          <input type="hidden" id="business_id" name="business_id" value="{{$arr_business_details['id']}}">
+
+
+
                   @endif
                         </div>
                          </div>
@@ -486,7 +489,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                         <div class="input-group">
                         <span id="basic-addon1" class="input-group-addon">+91</span>
-                        <input type="text" required="" aria-describedby="basic-addon1" id="mobile" name="mobile" id="mobile" placeholder="Mobile" class="form-control">
+                        <input type="text" required="" aria-describedby="basic-addon1" id="mobile" name="mobile"  placeholder="Mobile" class="form-control">
 
                         </div>
                           <div class="error_msg"></div>
@@ -543,6 +546,90 @@
       </form>
     </div>
   </div>
+
+
+  <!-- Modal -->
+
+<div class="modal fade" id="sms" role="dialog">
+    <div class="modal-dialog">
+     <!-- Modal content-->
+      <div class="modal-content">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+       <div class="modal-body">
+       <div id="sms_err_div">
+
+               </div>
+       <form class="form-horizontal"
+                              id="validation-form"
+                              method="POST"
+                              action="{{ url('/listing/send_sms/') }}"
+                              enctype="multipart/form-data"
+                              >
+          {{ csrf_field() }}
+          @if(isset($arr_business_details) && sizeof($arr_business_details)>0)
+                        <input type="hidden" id="business_id" name="business_id" value="{{$arr_business_details['id']}}">
+
+                  @endif
+          <b class="head-t">Get information by SMS/Email</b>
+           <p class="in-li">Enter the details below and click on SEND</p>
+            <div class="soc-menu-top">
+                <div class="col-lg-11">
+            <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Name</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                         <input type="text" placeholder="Enter Name"   id="name" name="name" class="input_acct">
+                          <div class="error_msg"></div>
+                        </div>
+                         </div>
+                    </div>
+
+
+
+            <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Mobile</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                        <div class="input-group">
+                        <span id="basic-addon1" class="input-group-addon">+91</span>
+                        <input type="text" required="" aria-describedby="basic-addon1" id="sms_mobile_no" name="sms_mobile_no" placeholder="Mobile" class="form-control">
+
+                        </div>
+                          <div class="error_msg"></div>
+                        </div>
+                         </div>
+                    </div>
+
+
+                <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Email</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                         <input type="text" placeholder="Enter Email" name="email" id="email" class="input_acct">
+                          <div class="error_msg"></div>
+                        </div>
+                         </div>
+                    </div>
+                    <div class="clr"></div>
+                       <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">&nbsp;</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                    <div class="submit-btn">
+                     <button type="button" name="send_sms" id="send_sms" onclick="Send_SMS()">Send</button>
+                      </div>
+                    </div>
+                           </div>
+                    </div>
+                </div>
+            </div>
+           <div class="clr"></div>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
 <script type="text/javascript">
 
     $('#submit_review').click(function(){
@@ -618,10 +705,7 @@
     // $('#review_rating').addClass('resp-tab-content-active');
    }
 
-   /*function show_map()
-   {
-     $('#map_show').show();
-   }*/
+
 
 </script>
 <script type="text/javascript">
@@ -758,6 +842,78 @@
 
   }
 
+  function Send_SMS()
+  {
+    var site_url   = "{{ url('/') }}";
+    var name = $('#name').val();
+    var mobile  = $('#sms_mobile_no').val();
+    var email   = $('#email').val();
+    var business_id   = $('#business_id').val();
+    var token      = jQuery("input[name=_token]").val();
+
+     jQuery.ajax({
+           url      : site_url+"/listing/send_sms?_token="+token,
+           method   : 'POST',
+           dataType : 'json',
+           data     : 'name='+name+'&mobile='+mobile+'&email='+email+'&business_id='+business_id,
+           success: function(response)
+           {
+            //console.log(response);
+              if(response.status == "SUCCESS" )
+              {
+                //console.log(response.mobile_no);
+                $('#name').val('');
+                $('#mobile').val('');
+                $('#email').val('');
+
+
+                $('#sms_otp_div_popup').click();
+                $('#mobile_no_otp').val(response.mobile_no);
+                //$('#reg_succ_div').show();
+              }
+              else if(response.status == "ERROR")
+              {
+                  $("#sms_err_div").empty();
+                  $("#sms_err_div").fadeIn();
+                  $("#sms_err_div").html("<div class='alert alert-danger'><strong>Error! </strong>"+response.msg+"</div>");
+                  return false;
+              }
+              else if(response.status == "OTP_ERROR")
+              {
+                 $("#sms_err_div").empty();
+                 $("#sms_err_div").fadeIn();
+                 $("#sms_err_div").html("<div class='alert alert-danger'><strong>Error! </strong>"+response.msg+"</div>");
+                 return false;
+              }
+               else if(response.status == "VALIDATION_ERROR")
+              {
+                 $("#sms_err_div").empty();
+                 $("#sms_err_div").fadeIn();
+                  $("#sms_err_div").html("<div class='alert alert-danger'><strong>Error! </strong>"+response.msg+"</div>");
+                 return false;
+              }
+              else if(response.status == "MOBILE_ERROR")
+              {
+                 $("#sms_err_div").empty();
+                 $("#sms_err_div").fadeIn();
+                  $("#sms_err_div").html("<div class='alert alert-danger'><strong>Error! </strong>"+response.msg+"</div>");
+                 return false;
+              }
+
+              else
+              {
+
+              }
+
+              setTimeout(function()
+              {
+                  $("#reg_err_div").fadeOut();
+              },5000);
+
+              return false;
+           }
+        });
+  }
 
 
 
