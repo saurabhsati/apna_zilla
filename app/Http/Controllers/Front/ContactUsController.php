@@ -61,19 +61,15 @@ class ContactUsController extends Controller
 
         if($status)
         {
-             $obj_email_template = EmailTemplateModel::where('id','9')->first();
+            $obj_email_template = EmailTemplateModel::where('id','9')->first();
             if($obj_email_template)
             {
                 $arr_email_template = $obj_email_template->toArray();
 
                 $content = $arr_email_template['template_html'];
-
-                $content        = str_replace("##USER FULL NAM##",$name,$content);
+                $content        = str_replace("##USER FULL NAME##",$name,$content);
                 $content        = str_replace("##USER EMAILID##",$email,$content);
-                $content        = str_replace("##USER CONTACT NUMBER##",$email,$content);
-
-
-
+                $content        = str_replace("##USER CONTACT NUMBER##",$mobile_no,$content);
 
                 $content = view('email.contact_us_user',compact('content'))->render();
                 $content = html_entity_decode($content);

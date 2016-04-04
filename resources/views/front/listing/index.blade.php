@@ -402,7 +402,12 @@
                          <div class="product_grid_view">
                   <div class="p_images">
                      <div class="grid_product">
-                      <div class="name-grid"><a href="{{url('/').'/listing/details/'.base64_encode($restaurants['id'])}}">{{ $restaurants['business_name'] }}</a></div>
+                       <?php
+                       $slug_business=str_slug($restaurants['business_name']);
+                       $slug_area=str_slug($restaurants['area']);
+                       $business_area=$slug_business.'@'.$slug_area;
+                      ?>
+                      <div class="name-grid"><a href="{{url('/')}}/{{$city}}/{{$business_area}}/{{base64_encode($restaurants['id'])}}">{{ $restaurants['business_name'] }}</a></div>
                         <?php $reviews=0; ?>
                         @if(isset($restaurants['reviews']) && sizeof($restaurants['reviews'])>0)
                         @foreach($restaurants['reviews'] as $review)

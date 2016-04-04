@@ -166,21 +166,22 @@
                   </ul>
                   <div class="resp-tabs-container" id="review_rating">
                      <div>
-                        @if(Session::has('success'))
-                        <div class="alert alert-success alert-dismissible">
-                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                           <span aria-hidden="true">&times;</span>
-                           </button>
-                           {{ Session::get('success') }}
-                        </div>
+                          @if(Session::has('success'))
+                          <div class="alert alert-success alert-dismissible">
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+                              {{ Session::get('success') }}
+                          </div>
                         @endif
+
                         @if(Session::has('error'))
-                        <div class="alert alert-danger alert-dismissible">
-                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                           <span aria-hidden="true">&times;</span>
-                           </button>
-                           {{ Session::get('error') }}
-                        </div>
+                          <div class="alert alert-danger alert-dismissible">
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+                              {{ Session::get('error') }}
+                          </div>
                         @endif
                         <div class="write-review-main" id="review_id">
                            <div class="write-review-head">
@@ -188,7 +189,7 @@
                            </div>
 
                            <form class="form-horizontal"
-                              id="validation-form"
+                              id="review-form"
                               method="POST"
                               action="{{ url('/listing/store_reviews/') }}"
                               enctype="multipart/form-data"
@@ -205,7 +206,9 @@
                                     <input class="star" type="radio" name="rating" id="rating" value="5" title="5 Star"/>
 
                                  </div>
-                                 <div class="clearfix"></div>
+                                    <div class="error_msg" id="err_rating" name="err_rating"></div>
+
+                                 <div class="clearfix" ></div>
                               </div>
 
                               <div class="review-title">
@@ -213,8 +216,8 @@
                                     Add review
                                  </div>
                                  <div class="title-rev-field">
-                                    <textarea class="message-review" data-rule-required="true" placeholder="Add review" rows="" cols="" name="review" id="review"></textarea>
-                                    <div id="msgRating_message"></div>
+                                    <textarea class="message-review"  placeholder="Add review" rows="" cols="" name="review" id="review" ></textarea>
+                                    <div class="error_msg" id="err_review" name="err_review"></div>
                                  </div>
                                  <div class="clearfix"></div>
                               </div>
@@ -223,8 +226,8 @@
                                     Name
                                  </div>
                                  <div class="title-rev-field">
-                                    <input type="text" name="name" id="name" data-rule-required="true" placeholder="Name" />
-                                    <div id="msgRating_name"></div>
+                                    <input type="text" name="name" id="name" placeholder="Name" value=""/>
+                                    <div class="error_msg" id="err_name" name="err_name"></div>
                                  </div>
                                  <div class="clearfix"></div>
                               </div>
@@ -235,9 +238,9 @@
                                  <div class="title-rev-field">
                                     <div class="input-group">
                                        <div class="input-group-addon">+91</div>
-                                       <input type="text" name="mobile_no" id="mobile_no" data-rule-required="true" class="form-control" id="exampleInputAmount" placeholder="Mobile Number">
-                                       <div id="msgRating_mobile"></div>
+                                       <input type="text" name="mobile_no" id="mobile_no"  class="form-control"  value="" placeholder="Mobile Number">
                                     </div>
+                                     <div class="error_msg" id="err_mobile_no" name="err_mobile_no"></div>
                                  </div>
                                  <div class="clearfix"></div>
                               </div>
@@ -246,14 +249,14 @@
                                     Email Id
                                  </div>
                                  <div class="title-rev-field">
-                                    <input type="text" name="email" id="email" data-rule-required="true" placeholder="Email Id" />
-                                    <div id="msgRating_email"></div>
+                                    <input type="text" name="email" id="email"  placeholder="Email Id" value=""/>
+                                    <div class="error_msg" id="err_email" name="err_email"></div>
                                  </div>
                                  <div class="clearfix"></div>
                               </div>
                               <div class="submit-btn">
 
-                                 <button type="submit" name="submit_review" id="submit_review">SUBMIT REVIEW</button>
+                                 <button type="submit" name="submit_review" id="submit_review" onclick="return check_review();">SUBMIT REVIEW</button>
                               </div>
                            </form>
 
@@ -592,7 +595,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                         <div class="input-group">
                         <span id="basic-addon1" class="input-group-addon">+91</span>
-                        <input type="text" required="" aria-describedby="basic-addon1" id="sms_mobile_no" name="sms_mobile_no" placeholder="Mobile" class="form-control">
+                        <input type="text" required="" aria-describedby="basic-addon1" id="sms_mobile_no" name="sms_mobile_no" placeholder="Mobile" class="form-control" >
 
                         </div>
                           <div class="error_msg"></div>
@@ -605,7 +608,7 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Email</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" placeholder="Enter Email" name="email" id="email" class="input_acct">
+                         <input type="text" placeholder="Enter Email" name="email" id="email" class="input_acct" value="">
                           <div class="error_msg"></div>
                         </div>
                          </div>
@@ -631,66 +634,106 @@
   </div>
 
 <script type="text/javascript">
+//var site_url="{{url('/')}}";
+   // $('#submit_review').click(function(){
 
-    $('#submit_review').click(function(){
-        var title   = $('#title').val();
+
+function check_review()
+{
+        var rating  = $('#rating').val();
         var review  = $('#review').val();
         var name    = $('#name').val();
         var mobile  = $('#mobile_no').val();
         var email   = $('#email').val();
         var filter = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
-        var mobile_fliter = [0-9];
-        if(title=="")
+        var filter_contact=/^(?:(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d?)\)?)?[\-\.\ \\\/]?)?((?:\(?\d{1,}\)?[\-\.\ \\\/]?){0,})(?:[\-\.\ \\\/]?(?:#|ext\.?|extension|x)[\-\.\ \\\/]?(\d+))?$/i;
+
+        var flag=1;
+
+        if(rating=="")
         {
-           jQuery("#msgRating_title").empty();
-           jQuery("#msgRating_title").fadeIn();
-           jQuery("#msgRating_title").html("<div style='color:red;'>Please Enter Title.</div>");
-           return false;
+
+          $('#err_rating').html('Enter Your Rating.');
+          $('#err_rating').show();
+          $('#rating').focus();
+          $('#rating').on('click',function(){
+          $('#err_rating').hide();
+            });
+          flag=0;
         }
-        else if($review=="")
+
+          if(review=="")
         {
-           jQuery("#msgRating_message").empty();
-           jQuery("#msgRating_message").fadeIn();
-           jQuery("#msgRating_message").html("<div style='color:red;'>Please Enter Review Message.</div>");
-           return false;
+          $('#err_review').html('Enter Your Review.');
+          $('#err_review').show();
+          $('#review').show();
+          $('textarea#review').on('keyup', function(){
+          $('#err_review').hide();
+            });
+          flag=0;
         }
-        if($name=="")
+        if(name=="")
         {
-           jQuery("#msgRating_name").empty();
-           jQuery("#msgRating_name").fadeIn();
-           jQuery("#msgRating_name").html("<div style='color:red;'>Please Enter Full Name.</div>");
-           return false;
+          $('#err_name').html('Enter Your Name.');
+          $('#err_name').show();
+          $('#name').focus();
+          $('#name').on('keyup', function(){
+          $('#err_name').hide();
+            });
+          flag=0;
         }
-        if($mobile=="")
+        if(mobile=="")
         {
-           jQuery("#msgRating_mobile").empty();
-           jQuery("#msgRating_mobile").fadeIn();
-           jQuery("#msgRating_mobile").html("<div style='color:red;'>Please Enter Mobile No.</div>");
-           return false;
+
+          $('#err_mobile_no').html('Enter Your Mobile Number.');
+          $('#err_mobile_no').show();
+          $('#mobile_no').focus();
+          $('#mobile_no').on('keyup', function(){
+          $('#err_mobile_no').hide();
+            });
+          flag=0;
         }
-        if(!mobile_fliter($mobile))
+        if(!filter_contact.test(mobile))
         {
-           jQuery("#msgRating_title").empty();
-           jQuery("#msgRating_title").fadeIn();
-           jQuery("#msgRating_title").html("<div style='color:red;'>Please Enter Correct Mobile.</div>");
-           return false;
+          $('#err_mobile_no').html('Enter Your Valid Mobile Number.');
+          $('#err_mobile_no').show();
+          $('#mobile_no').focus();
+          $('#mobile_no').on('keyup', function(){
+          $('#err_mobile_no').hide();
+            });
+          flag=0;
         }
-        if($email=="")
+        if(email=="")
         {
-           jQuery("#msgRating_email").empty();
-           jQuery("#msgRating_email").fadeIn();
-           jQuery("#msgRating_email").html("<div style='color:red;'>Please Enter Email.</div>");
-           return false;
+          $('#err_email').html('Enter Your Email ID.');
+          $('#err_email').show();
+          $('#email').focus();
+          $('#email').on('keyup', function(){
+          $('#err_email').hide();
+            });
+          flag=0;
         }
         if(!filter.test(email))
         {
-           jQuery("#msgRating_email").empty();
-           jQuery("#msgRating_email").fadeIn();
-           jQuery("#msgRating_email").html("<div style='color:red;'>Please Enter Correct Email.</div>");
-           return false;
+          $('#err_email').html('Enter Your Valid Email ID.');
+          $('#err_email').show();
+          $('#email').focus();
+          $('#email').on('keyup', function(){
+          $('#err_email').hide();
+            });
+          flag=0;
         }
 
-    });
+        if(flag==1)
+        {
+            return true;
+        }
+        else
+        {
+          return false;
+        }
+
+    }
 
 
 
