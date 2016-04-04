@@ -284,9 +284,9 @@ class CategorySearchController extends Controller
 
 
                 $obj_business_listing= $obj_business_listing
-                                       
+
                                         ->get();
-                dd($obj_business_listing->toArray);
+                //dd($obj_business_listing->toArray);
 
                 if($obj_business_listing)
                 {
