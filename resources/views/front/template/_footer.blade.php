@@ -544,9 +544,16 @@ If you need any more details on Justdial Verified, please refer to
  <!-- Home Page Popup for login & signup end -->
   <!-- Listing details Tabbing Start -->
 
+    <script type="text/javascript">
+        $(document).ready(function(){
+          $(".dropdown-toggle").dropdown();   
+        });
+    </script>
+
+
       <script type="text/javascript">
          $(document).ready(function () {
-            $(".dropdown-toggle").dropdown();
+
              $('#dash_tab').easyResponsiveTabs({
                  type: 'default', //Types: default, vertical, accordion
                  width: 'auto', //auto or any width like 600px
