@@ -103,17 +103,17 @@ class CategorySearchController extends Controller
           if(sizeof($result)>0)
           {
 
-            $obj_business_listing = BusinessListingModel::whereIn('id', $result)->with(['reviews' ]);
+            $obj_business_listing = BusinessListingModel::whereIn('id', $result)->with(['reviews']);
             if( Session::has('review_rating'))
             {
-               $obj_business_listing->orderBy('avg_rating','DESC');
+                $obj_business_listing->orderBy('avg_rating','DESC');
             }
             else
             {
-             $obj_business_listing->orderBy('visited_count','DESC');
+                $obj_business_listing->orderBy('visited_count','DESC');
             }
+            
             $obj_business_listing=$obj_business_listing
-                          //->with('favorite_business')
                           ->get();
 
             if($obj_business_listing)
