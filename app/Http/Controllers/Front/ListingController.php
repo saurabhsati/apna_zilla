@@ -154,11 +154,12 @@ class ListingController extends Controller
 
     public function store_reviews(Request $request)
     {
-
         $arr_rules = array();
         $arr_rules['rating'] = "required";
-        $arr_rules['title'] = "required";
         $arr_rules['review'] = "required";
+        $arr_rules['name'] = "required";
+        $arr_rules['mobile_no'] = "required";
+        $arr_rules['email'] = "required";
 
         $validator = Validator::make($request->all(),$arr_rules);
 
@@ -167,12 +168,13 @@ class ListingController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $rating      =  $request->input('rating');
-        $name        =  $request->input('name');
-        $review      =  $request->input('review');
-        $mobile_no   =  $request->input('mobile_no');
-        $email       =  $request->input('email');
-        $id          =  $request->input('business_id');
+          $rating      =  $request->input('rating');
+          $name        =  $request->input('name');
+          $review      =  $request->input('review');
+          $mobile_no   =  $request->input('mobile_no');
+          $email       =  $request->input('email');
+          $id          =  $request->input('business_id');
+
 
         $arr_data = array();
          $arr_data['ratings'] = $rating;
