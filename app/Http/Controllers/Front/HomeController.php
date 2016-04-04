@@ -149,10 +149,10 @@ class HomeController extends Controller
 		    $content = file_get_contents($url); // get json content
 
 		    $metadata = json_decode($content, true); //json decoder
-		    if(sizeof($metadata['results'][7]) > 0) {
+		    if(sizeof($metadata['results'][4]) > 0) {
                 //echo '<pre>';
                 //print_r($metadata['results']);exit;
-			    $city = $metadata['results'][7]['address_components']['0']['short_name'];
+			    $city = $metadata['results'][4]['address_components']['0']['short_name'];
                 if(!empty($city))
                 {
 			       Session::put('city', $city);
