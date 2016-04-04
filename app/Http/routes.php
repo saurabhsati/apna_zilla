@@ -436,6 +436,8 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
   	    // add to fav
   	    Route::post('add_to_favourite', 				 ['as' =>'add_favourite'			,'uses'=>'Front\ListingController@add_to_favourite']);
   	    Route::post('send_enquiry', 				 ['as' =>'send_enquiry'			,'uses'=>'Front\ListingController@send_enquiry']);
+  	    Route::post('send_sms', 				 ['as' =>'send_sms'			,'uses'=>'Front\ListingController@send_sms']);
+  	    Route::post('sms_otp_check', 				 ['as' =>'sms_otp_check'			,'uses'=>'Front\ListingController@sms_otp_check']);
 
 	});
 

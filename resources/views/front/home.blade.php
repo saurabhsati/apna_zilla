@@ -195,7 +195,7 @@
 
    <div class="email-textbox">
       <img src="{{ url('/') }}/assets/front/images/email-image.png" alt="" />
-      <input type="text" name="email" placeholder="Enter Your Email Address" />
+      <input type="text" name="email" placeholder="Enter Your Email Address" required="" aria-describedby="basic-addon1"/>
       <button><i class="fa fa-paper-plane"></i></button>
    </div>
 

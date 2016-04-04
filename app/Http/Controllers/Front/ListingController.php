@@ -15,11 +15,12 @@ use App\Models\UserModel;
 use App\Models\CityModel;
 use App\Models\FavouriteBusinessesModel;
 use App\Models\BusinessSendEnquiryModel;
-
+use App\Models\EmailTemplateModel;
 use Sentinel;
 use Session;
 use Validator;
 use Meta;
+use Mail;
 
 class ListingController extends Controller
 {
@@ -30,10 +31,10 @@ class ListingController extends Controller
 
     public function list_details($city,$slug_area,$enc_id)
     {
-           $enc_id;
-          $id = base64_decode($enc_id);
-         if($id=='')
-         {
+        $enc_id;
+        $id = base64_decode($enc_id);
+        if($id=='')
+        {
 
           return redirect()->back();
          }
@@ -208,12 +209,18 @@ class ListingController extends Controller
 
         $business_data['avg_rating']=round($avg_review);
         $business_data=BusinessListingModel::where('id',$id)->update($business_data);
+        if($business_data)
+        {
+          //echo 'success';
+           Session::flash('success','Review Submitted Successfully');
+        }
+         // Session::flash('success','Review Submitted Successfully');
 
-          Session::flash('success','Review Submitted Successfully');
         }
         else
         {
-          Session::flash('error','Problem Occured While Submitting Review ');
+          //echo 'error';
+          Session::flash('error','Problem Occurred While Submitting Review ');
         }
 
         return redirect()->back();
@@ -298,7 +305,7 @@ class ListingController extends Controller
         $arr_rules['message'] = "required";
 
         $validator = Validator::make($request->all(),$arr_rules);
-
+         $business_id ='';
         if($validator->fails())
         {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -311,6 +318,7 @@ class ListingController extends Controller
         $message       =  $request->input('message');
         $business_id          =  $request->input('business_id');
 
+
         $arr_data = array();
         $arr_data['name'] = $name;
         $arr_data['email'] = $email;
@@ -319,57 +327,163 @@ class ListingController extends Controller
         $arr_data['message'] = $message;
         $arr_data['business_id'] = $business_id;
         //dd($arr_data);
-         $status = BusinessSendEnquiryModel::create($arr_data);
+        $business_data = array();
+        $obj_business_data=BusinessListingModel::where('id',$business_id)->first();
 
+        if($obj_business_data)
+        {
+            $business_data = $obj_business_data->toArray();
+        }
+
+        $status = BusinessSendEnquiryModel::create($arr_data);
         if($status)
         {
-           Session::flash('success','Enquiry Send Successfully');
+           $obj_email_template = EmailTemplateModel::where('id','10')->first();
+            if($obj_email_template)
+            {
+                $arr_email_template = $obj_email_template->toArray();
+                if(sizeof($business_data)>0)
+                {
+                  if($business_data['email_id']!='')
+                  {
+                    $t_email=$business_data['email_id'];
+                  }
+                }
+                else
+                {
+                  $t_email=$arr_email_template['template_from_mail'];
+                }
+
+
+                $content = $arr_email_template['template_html'];
+                $content        = str_replace("##USER FULL NAME##",$name,$content);
+                $content        = str_replace("##USER EMAILID##",$email,$content);
+                $content        = str_replace("##USER CONTACT NUMBER##",$mobile,$content);
+                $content        = str_replace("##SUBJECT##",$subject,$content);
+                $content        = str_replace("##MESSAGE##",$message,$content);
+
+                $content = view('email.send_enquiry',compact('content'))->render();
+                $content = html_entity_decode($content);
+               // echo $content;exit;
+                $send_mail = Mail::send(array(),array(), function($message) use($email,$name,$arr_email_template,$content,$t_email)
+                            {
+                                $message->from($email, $arr_email_template['template_from']);
+
+                                $message->to($t_email,"RightNext")
+                                        ->subject($arr_email_template['template_subject'])
+                                        ->setBody($content, 'text/html');
+                            });
+
+                //return $send_mail;
+                if($send_mail)
+                {
+                  Session::flash('success','Enquiry Send Successfully');
+                }
+                else
+                {
+                  Session::flash('error','Problem Occurred While Sending Enquiry ');
+                }
+
+              }
+
         }
-        else
-        {
-          Session::flash('error','Problem Occurred While Sending Enquiry ');
-        }
+
          return redirect()->back();
     }
-     public function sms_send(Request $request)
+     public function send_sms(Request $request)
     {
         $arr_rules = array();
         $arr_rules['name'] = "required";
         $arr_rules['mobile'] = "required";
-        $arr_rules['email'] = "required";
+        $arr_rules['email'] = "required|email";
 
 
         $validator = Validator::make($request->all(),$arr_rules);
 
         if($validator->fails())
         {
-            return redirect()->back()->withErrors($validator)->withInput();
+           $json['status'] = "VALIDATION_ERROR";
+            //return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $name        =  $request->input('name');
         $email      =  $request->input('email');
         $mobile   =  $request->input('mobile');
-
+        $mobile_otp =  mt_rand(0,66666);
         $business_id          =  $request->input('business_id');
 
-        $arr_data = array();
-        $arr_data['name'] = $name;
-        $arr_data['email'] = $email;
-        $arr_data['mobile'] = $mobile;
 
-        $arr_data['business_id'] = $business_id;
-        //dd($arr_data);
-         $status = BusinessSendEnquiryModel::create($arr_data);
-
-        if($status)
+        if(is_numeric($mobile) && strlen($mobile)==10)
         {
-           Session::flash('success','SMS Send Successfully');
+            $arr_data = array();
+            $arr_data['name'] = $name;
+            $arr_data['email'] = $email;
+            $arr_data['mobile'] = $mobile;
+            $arr_data['mobile_OTP'] = $mobile_otp;
+            $arr_data['business_id'] = $business_id;
+
+            $status = BusinessSendEnquiryModel::create($arr_data);
+            $send_enquiry_id = $status->id;
+            if($status)
+            {
+              $response  = $this->send_otp($mobile,$mobile_otp);
+              if($response!='')
+              {
+                 $json['status']     = "SUCCESS";
+                 $json['mobile_no']  = $mobile;
+              }
+
+            }
         }
         else
         {
-          Session::flash('error','Problem Occurred While Sending SMS ');
+            $json['status'] = "MOBILE_ERROR";
+            $json['msg']    = "Invalid Mobile No.";
         }
-         return redirect()->back();
+          return response()->json($json);
+    }
+      public function send_otp($mobile,$mobile_otp)
+    {
+
+        $url = "http://smsway.co.in/api/sendhttp.php?authkey=70Asotxsg0Q556948f8&mobiles='".$mobile."'&message=Send SMS To RightNext OPT = '".$mobile_otp."'&sender=SMSWAY&route=4&country=91";
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        return $response;
+    }
+    public function sms_otp_check(Request $request)
+    {
+        $otp            =  $request->input('otp');
+        $mobile_no      =  $request->input('mobile_no');
+
+        if(is_numeric($mobile_no) && strlen($mobile_no)==10)
+        {
+            $mobile = $mobile_no;
+
+            $user = BusinessSendEnquiryModel::where('mobile',$mobile)->where('mobile_OTP',$otp)->first()->toArray();
+
+            if($user)
+            {
+
+                 $json['status'] = "SUCCESS";
+                // Session::flash('success','SMS Send Successfully.');
+            }
+            else
+            {
+                $json['status'] = "ERROR";
+            }
+
+
+        }
+        else
+        {
+             $json['status'] = "MOBILE_ERROR";
+        }
+
+        return response()->json($json);
     }
 
 }

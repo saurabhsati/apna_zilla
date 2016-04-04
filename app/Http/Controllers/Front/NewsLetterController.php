@@ -8,12 +8,12 @@ use App\Models\NewsLetterModel;
 
 use Session;
 
- 
+
 class NewsLetterController extends Controller
 {
 
-	private $NewsLetterModel; 
-    
+	private $NewsLetterModel;
+
     public function __construct()
     {
 
@@ -28,24 +28,24 @@ class NewsLetterController extends Controller
             Session::flash('error','Record with this Email Already Exists');
             return redirect()->back();
         }
-       
+
         $status = NewsLetterModel::create(['email_address'=>$email,
         									'is_active' => 1
-        								  ]);             
-	      
-	    
-	     
+        								  ]);
+
+
+
 
 	        if($status)
 	        {
 	            Session::flash('success','News Letter Subscribed Successfully');
-	        }   
+	        }
 	        else
 	        {
-	            Session::flash('error','Problem Occured While Subscribing');
-	        }   
+	            Session::flash('error','Problem Occurred While Subscribing');
+	        }
 
-        	return redirect()->back(); 
+        	return redirect()->back();
     }
-	
+
 }

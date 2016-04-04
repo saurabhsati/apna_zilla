@@ -113,25 +113,10 @@ class CategorySearchController extends Controller
              $obj_business_listing->orderBy('visited_count','DESC');
             }
             $obj_business_listing=$obj_business_listing
-                                  //->with(['favorite_business' => function ($q){ }])  
-                                  ->get();
+                          //->with('favorite_business')
+                          ->get();
 
-            
-            //dd($obj_business_listing->toArray());
-             /* if(!empty(Session::get('user_mail')))
-              {
-                $user_id = UserModel::where('email',Session::get('user_mail'))->first(['id']);
-                $u = $user_id->id; 
-                $obj  = UserModel::select('id')->where('id',$u)->with(['favourite_businesses'=> function($q) use($u) 
-                    { 
-                      $q->where('is_favourite','=','1');
-                      $q->select('id','user_id','business_id','is_favourite');
-                    } ])->get();                                  
-              }
-              */
-            //dd($obj->toArray());
-
-            if(!empty(Session::get('user_mail')))
+            if($obj_business_listing)
             {
               $obj_user = UserModel::where('email',Session::get('user_mail'))->first(['id']);
               $user_id  = $obj_user->id;

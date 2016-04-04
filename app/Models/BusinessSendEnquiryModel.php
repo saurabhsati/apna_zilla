@@ -13,5 +13,6 @@ class BusinessSendEnquiryModel extends Model
      					  'mobile',
      					  'subject',
      					  'message',
+     					  'mobile_OTP'
                          ];
 }
