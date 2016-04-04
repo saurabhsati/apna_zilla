@@ -275,7 +275,7 @@
 
                 <input type="hidden"  id="business_id" value="{{ $restaurants['id'] }}"  />
 
-                  <div class="p_details"  >
+                  <div class="p_details" >
                     @if(!empty(Session::get('user_mail')))
                       <span id="show_fav_status" style="width: 175px;">
                       <a href="javascript:void(0);" id="add_favourite" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>
@@ -635,23 +635,23 @@
 
               if(response.status == "favorites")
               {
-                var str = '<a href="javascript:void(0);" id="remove_favourite" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Remove favorite</span></a>';
+                var str = '<a href="javascript:void(0);" id="add_favourite" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Remove favorite</span></a>';
                 jQuery('#show_fav_status').html(str);
               }
 
-              /*if(response.status=="un_favorites")
+              if(response.status=="un_favorites")
               {
 
                 var str = '<a href="javascript:void(0);" id="add_favourite" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>';
                 jQuery('#show_fav_status').html(str);
-              }*/
+              }
 
             }
           });
         });
 
 
-         jQuery('#remove_favourite').on('click',function () {
+         jQuery('#remove_favourite').bind('click',function () {
 
           alert(0);
           var business_id = jQuery('#business_id').val();
@@ -663,17 +663,17 @@
             dataType:'json',
             data: data,
             success:function(response){
-              /*if(response.status == "favorites")
+              if(response.status == "favorites")
               {
                 var str = '<a href="javascript:void(0);" id="add_favourite" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Remove favorite</span></a>';
                 jQuery('#show_fav_status').html(str);
-              }*/
+              }
 
-              if(response.status=="un_favorites")
+             /* if(response.status=="un_favorites")
               {
                 var str = '<a href="javascript:void(0);" id="add_favourite" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>';
                 jQuery('#show_fav_status').html(str);
-              }
+              }*/
 
             }
           });
