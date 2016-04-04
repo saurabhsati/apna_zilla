@@ -112,8 +112,7 @@ class CategorySearchController extends Controller
             $obj_business_listing=$obj_business_listing
              //->with('favorite_business')
              ->get();
-             dd($obj_business_listing->toArray());
-            if($obj_business_listing)
+             if($obj_business_listing)
             {
               $arr_business = $obj_business_listing->toArray();
 
