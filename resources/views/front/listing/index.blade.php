@@ -276,10 +276,40 @@
                 <input type="hidden"  id="business_id" value="{{ $restaurants['id'] }}"  />
 
                   <div class="p_details" >
+      
                     @if(!empty(Session::get('user_mail')))
-                      <span id="show_fav_status" style="width: 175px;">
-                      <a href="javascript:void(0);" id="add_favourite" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>
-                      </span>
+
+                    <?php
+                    if(isset($arr_fav_business) && count($arr_fav_business)>0 )
+                    {
+                      if(in_array($restaurants['id'], $arr_fav_business))
+                      {
+                    ?>  <span id="{{ 'show_fav_status_'.$restaurants['id'] }}" style="width: 175px;">
+                        <a href="javascript:void(0);"  onclick="add_to_favourite('{{$restaurants['id']}}')"  style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Remove favourite</span></a>
+                        </span>
+                    <?php 
+                      } 
+                      else
+                      {
+                    ?>
+                        <span id="{{'show_fav_status_'.$restaurants['id'] }}" style="width: 175px;">
+                        <a href="javascript:void(0);"  onclick="add_to_favourite('{{$restaurants['id']}}')"  style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add To favourite</span></a>
+                        </span> 
+                    <?php
+                      }
+                    }
+                    else{
+                      ?>
+                         <span id="{{'show_fav_status_'.$restaurants['id'] }}" style="width: 175px;">
+                        <a href="javascript:void(0);"  onclick="add_to_favourite('{{$restaurants['id']}}')"  style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add To favourite</span></a>
+                        </span>  
+                      <?php 
+                    } 
+                    ?>
+                      <!-- <span id="{{-- 'show_fav_status_'.$restaurants['id'] --}}" style="width: 175px;">
+                      <a href="javascript:void(0);"  onclick="add_to_favourite('{{--$restaurants['id']--}}')"  style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add To favourite</span></a>
+                      </span> -->
+
                     @else
                     <span>
                       <a data-target="#login_poup" data-toggle="modal" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>
@@ -335,9 +365,65 @@
                           $avg_review= $tot_review=0;
                         }
                         ?>
-                       <div class="rating_star"><img src="{{ url('/') }}/assets/front/images/rating-4.png" alt="rating" width="73"/><span> &nbsp;@if(isset($tot_review)){{$tot_review}} @endif Ratings</span></div>
-                        <a href="#" style="border-right:0;display:inline-block;" data-toggle="tooltip" title="Add to favorites"><i class="fa fa-heart"></i><span> </span></a>
-                         </div>
+                       <div class="rating_star"><img src="{{ url('/') }}/assets/front/images/rating-4.png" alt="rating" width="73"/>
+                        <span> &nbsp;@if(isset($tot_review)){{$tot_review}} @endif Ratings</span>
+                       </div>
+
+
+                    @if(!empty(Session::get('user_mail')))
+
+                    <?php
+                    if(isset($arr_fav_business) && count($arr_fav_business)>0 )
+                    {
+                      if(in_array($restaurants['id'], $arr_fav_business))
+                      {
+                    ?>  <span id="{{ 'show_fav_status_grid_'.$restaurants['id'] }}" style="width: 175px;">
+                        <a href="javascript:void(0);"  onclick="add_to_favourite_grid('{{$restaurants['id']}}')"  style="border-right:0;display:inline-block;"
+                          data-toggle="tooltip" title="Remove favourite"
+                        ><i class="fa fa-heart"></i><span>R</span></a>
+                        </span>
+                    <?php 
+                      } 
+                      else
+                      {
+                    ?>
+                        <span id="{{'show_fav_status_grid_'.$restaurants['id'] }}" style="width: 175px;">
+                        <a href="javascript:void(0);"  onclick="add_to_favourite_grid('{{$restaurants['id']}}')"  style="border-right:0;display:inline-block;"
+                          data-toggle="tooltip" title="Add to favorites"
+                        ><i class="fa fa-heart"></i><span>A</span></a>
+                        </span> 
+                    <?php
+                      }
+                    }
+                    else{
+                      ?>
+                         <span id="{{'show_fav_status_grid_'.$restaurants['id'] }}" style="width: 175px;">
+                        <a href="javascript:void(0);"  onclick="add_to_favourite_grid('{{$restaurants['id']}}')"  style="border-right:0;display:inline-block;" 
+                          data-toggle="tooltip" title="Add to favorites"
+                        ><i class="fa fa-heart"></i><span>A</span></a>
+                        </span>  
+                      <?php 
+                    } 
+                    ?>
+                      <!-- <span id="{{-- 'show_fav_status_'.$restaurants['id'] --}}" style="width: 175px;">
+                      <a href="javascript:void(0);"  onclick="add_to_favourite('{{--$restaurants['id']--}}')"  style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add To favourite</span></a>
+                      </span> -->
+
+                    @else
+                    <span>
+                      <a data-target="#login_poup" data-toggle="modal" style="border-right:0;display:inline-block;"
+                      ><i class="fa fa-heart"></i><span> </span></a>
+                      </span>
+                    @endif
+
+
+
+                       <!--  <a href="#" style="border-right:0;display:inline-block;" data-toggle="tooltip" title="Add to favorites"><i class="fa fa-heart"></i><span> </span>
+                        </a> -->
+                       
+
+
+                        </div>
                        <img src="{{ url('/') }}/uploads/business/main_image/{{ $restaurants['main_image'] }}" alt="product img" >
 
                     </div>
@@ -620,11 +706,10 @@
                          });
         }
 
-
-      /*jQuery(document).ready(function(){*/
-        jQuery('#add_favourite').on('click',function () {
-          var business_id = jQuery('#business_id').val();
-          var user_mail     = "{{ session::get('user_mail') }}";
+        function add_to_favourite(ref)
+        {
+          var business_id = ref;
+          var user_mail   = "{{ session::get('user_mail') }}";
           var data        = { business_id:business_id, user_mail:user_mail ,_token:csrf_token };
           jQuery.ajax({
             url:site_url+'/listing/add_to_favourite',
@@ -635,27 +720,27 @@
 
               if(response.status == "favorites")
               {
-                var str = '<a href="javascript:void(0);" id="add_favourite" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Remove favorite</span></a>';
-                jQuery('#show_fav_status').html(str);
+                var str = '<a href="javascript:void(0);"  onclick="add_to_favourite('+ref+')" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Remove favorite</span></a>';
+                jQuery('#show_fav_status_'+ref+'').html(str);
               }
 
               if(response.status=="un_favorites")
               {
 
-                var str = '<a href="javascript:void(0);" id="add_favourite" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>';
-                jQuery('#show_fav_status').html(str);
+                 var str = '<a href="javascript:void(0);"  onclick="add_to_favourite('+ref+')" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span>Add To favorite</span></a>';
+                jQuery('#show_fav_status_'+ref+'').html(str);
+
               }
 
             }
           });
-        });
+        }
 
 
-         jQuery('#remove_favourite').bind('click',function () {
-
-          alert(0);
-          var business_id = jQuery('#business_id').val();
-          var user_mail     = "{{ session::get('user_mail') }}";
+        function add_to_favourite_grid(ref)
+        {
+          var business_id = ref;
+          var user_mail   = "{{ session::get('user_mail') }}";
           var data        = { business_id:business_id, user_mail:user_mail ,_token:csrf_token };
           jQuery.ajax({
             url:site_url+'/listing/add_to_favourite',
@@ -663,24 +748,29 @@
             dataType:'json',
             data: data,
             success:function(response){
+
               if(response.status == "favorites")
               {
-                var str = '<a href="javascript:void(0);" id="add_favourite" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Remove favorite</span></a>';
-                jQuery('#show_fav_status').html(str);
+                var str = '<a href="javascript:void(0);"  onclick="add_to_favourite_grid('+ref+')" style="border-right:0;display:inline-block;" data-toggle="tooltip" title="Remove favorite"><i class="fa fa-heart"></i><span>R</span></a>';
+                jQuery('#show_fav_status_grid_'+ref+'').html(str);
               }
 
-             /* if(response.status=="un_favorites")
+              if(response.status=="un_favorites")
               {
-                var str = '<a href="javascript:void(0);" id="add_favourite" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>';
-                jQuery('#show_fav_status').html(str);
-              }*/
+
+                 var str = '<a href="javascript:void(0);"  onclick="add_to_favourite_grid('+ref+')" style="border-right:0;display:inline-block;" data-toggle="tooltip" title="Add to favorites" ><i class="fa fa-heart"></i><span>A</span></a>';
+                jQuery('#show_fav_status_grid_'+ref+'').html(str);
+
+              }
 
             }
           });
-        });
+        }
 
 
-     // });
+        
+
+
        </script>
 
 

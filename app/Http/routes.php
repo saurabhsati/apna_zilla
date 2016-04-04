@@ -519,8 +519,8 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::get('add_services/{enc_id}',		    			['as' => 'show_services_details' 	        	    ,'uses' =>'Front\UserController@show_services_details']);
 
 		Route::post('add_services_details',		    			['as' => 'add_services_details' 	        			,'uses' =>'Front\UserController@add_services_details']);
-
-
+		//Get My favourites Businesses page.
+		Route::get('my_favourites',		    					['as' => 'my_favourite_businesses' 	        				,'uses' =>'Front\UserController@my_favourite_businesses']);
 
 	    Route::get('edit_business/{enc_id}',		    ['as' => 'business_edit' 	        				,'uses' =>'Front\UserController@edit_business']);
 		Route::post('update_business_details/{enc_id}',	['as' => 'front_users_store_business_details'       ,'uses' =>'Front\UserController@update_business_details']);

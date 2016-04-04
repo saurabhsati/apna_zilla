@@ -1194,4 +1194,26 @@ class UserController extends Controller
         }
 
     }
+
+
+    public function my_favourite_businesses()
+    {
+        if(!empty(Session::get('user_mail')))
+          {
+            $user_id    = UserModel::where('email',Session::get('user_mail'))->first(['id']);
+            $u          = $user_id->id; 
+            $arr_fav    = array();
+
+            $obj_fav = UserModel::where('id',$u)->select('id','email')
+                              ->with('favourite_businesses.reviews')
+                              ->first();
+        
+            if($obj_fav)
+            {
+                $arr_fav = $obj_fav->toArray();
+            }
+          }
+          return view('front.user.my_favourite_businesses',compact('arr_fav'));
+    }
+
 }
