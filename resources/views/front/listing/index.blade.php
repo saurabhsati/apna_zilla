@@ -639,12 +639,12 @@
                 jQuery('#show_fav_status').html(str);
               }
 
-              if(response.status=="un_favorites")
+              /*if(response.status=="un_favorites")
               {
 
                 var str = '<a href="javascript:void(0);" id="add_favourite" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>';
                 jQuery('#show_fav_status').html(str);
-              }
+              }*/
 
             }
           });
