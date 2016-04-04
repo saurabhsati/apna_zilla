@@ -801,19 +801,12 @@
                          });
         }
 
-<<<<<<< HEAD
+
         function add_to_favourite(ref)
         {
           var business_id = ref;
           var user_mail   = "{{ session::get('user_mail') }}";
-=======
 
-      /*jQuery(document).ready(function(){*/
-        jQuery('#add_favourite').on('click',function ()
-        {
-          var business_id = jQuery('#business_id').val();
-          var user_mail     = "{{ session::get('user_mail') }}";
->>>>>>> 6efe385f2848516086b4bf2250ee14fc743d60c3
           var data        = { business_id:business_id, user_mail:user_mail ,_token:csrf_token };
           jQuery.ajax({
             url:site_url+'/listing/add_to_favourite',
@@ -840,11 +833,6 @@
           });
         }
 
-<<<<<<< HEAD
-=======
-         jQuery('#remove_favourite').bind('click',function ()
-        {
->>>>>>> 6efe385f2848516086b4bf2250ee14fc743d60c3
 
         function add_to_favourite_grid(ref)
         {
@@ -880,8 +868,6 @@
         
 
 
-<<<<<<< HEAD
-=======
      // });
         function Send_SMS(business_id)
         {
@@ -957,7 +943,7 @@
                  }
               });
         }
->>>>>>> 6efe385f2848516086b4bf2250ee14fc743d60c3
+
        </script>
 
 

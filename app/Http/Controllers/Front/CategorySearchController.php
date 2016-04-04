@@ -116,8 +116,8 @@ class CategorySearchController extends Controller
             $obj_business_listing=$obj_business_listing
                           ->get();
 
-            if($obj_business_listing)
-            {
+            /*if($obj_business_listing)
+            {*/
               $obj_user = UserModel::where('email',Session::get('user_mail'))->first(['id']);
               $user_id  = $obj_user->id;
               $arr_fav_business = array();
@@ -133,10 +133,14 @@ class CategorySearchController extends Controller
                   array_push($arr_fav_business, $value['business_id']);
                 }
               }
-            }
+              else
+              {
+                $arr_fav_business = array(); 
+              }
+            /*}
             else{
                $arr_fav_business = array();
-            }                
+            } */               
 
 
             if($obj_business_listing)
