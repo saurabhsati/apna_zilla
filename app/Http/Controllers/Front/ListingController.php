@@ -279,7 +279,7 @@ class ListingController extends Controller
             if($arr[0]['is_favourite']== '1')
             {
               $result = FavouriteBusinessesModel::where(array('user_id'=>$obj_user->id,'business_id'=>$business_id))->update(array('is_favourite'=>'0'));
-              $json   = "un_favorites";
+              $json['status']   = "un_favorites";
             }
           }
           else

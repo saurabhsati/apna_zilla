@@ -41,4 +41,14 @@ class UserModel extends Model
                            'sales_user_public_id'];
 
 
+    public function favourite_businesses()
+    {
+        return $this->belongsToMany('App\Models\BusinessListingModel','favourite_businesses', 
+          'user_id','business_id')->where('is_favourite','1');
+    }
+
+
+
+
+
 }

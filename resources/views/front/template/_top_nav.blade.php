@@ -43,9 +43,9 @@
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                    <li><a href="{{ url('/').'/front_users/profile' }}">My Account</a></li>
-                                   
                                    <li><a href="{{ url('/').'/front_users/my_business' }}" >My Business </a></li>
                                    <li><a href="{{ url('/').'/front_users/add_business' }}" >Add Business </a></li>
+                                   <li><a href="{{ url('/').'/front_users/my_favourites' }}">My Favourites</a></li>
                                    <li><a href="{{ url('/').'/front_users/logout' }}" onclick="social_logout(this)" >Logout</a></li>
                                 </ul>
                              </div>

@@ -9,6 +9,9 @@ use App\Http\Controllers\Controller;
 use App\Models\CategoryModel;
 use App\Models\BusinessListingModel;
 use App\Models\BusinessCategoryModel;
+use App\Models\FavouriteBusinessesModel;
+use App\Models\UserModel;
+
 use App\Models\CityModel;
 use DB,Event;
 use Session;
@@ -103,22 +106,48 @@ class CategorySearchController extends Controller
             $obj_business_listing = BusinessListingModel::whereIn('id', $result)->with(['reviews']);
             if( Session::has('review_rating'))
             {
-               $obj_business_listing->orderBy('avg_rating','DESC');
+                $obj_business_listing->orderBy('avg_rating','DESC');
             }
             else
             {
-             $obj_business_listing->orderBy('visited_count','DESC');
+                $obj_business_listing->orderBy('visited_count','DESC');
             }
+            
             $obj_business_listing=$obj_business_listing
-             //->with('favorite_business')
-             ->get();
+                          ->get();
+
+            /*if($obj_business_listing)
+            {*/
+              $obj_user = UserModel::where('email',Session::get('user_mail'))->first(['id']);
+              $user_id  = $obj_user->id;
+              $arr_fav_business = array();
+              $str = "";
+              $obj_favourite = FavouriteBusinessesModel::where(array('user_id'=>$user_id ,'is_favourite'=>"1" ))->get(['business_id']);
+              
+              if($obj_favourite)
+              {
+                $obj_favourite->toArray();
+
+                foreach ($obj_favourite as $key => $value) 
+                { 
+                  array_push($arr_fav_business, $value['business_id']);
+                }
+              }
+              else
+              {
+                $arr_fav_business = array(); 
+              }
+            /*}
+            else{
+               $arr_fav_business = array();
+            } */               
+
 
             if($obj_business_listing)
             {
               $arr_business = $obj_business_listing->toArray();
-
-            }
-          }
+            } 
+         }
       }
 
       // Get Sub category & Main Category data
@@ -170,7 +199,7 @@ class CategorySearchController extends Controller
         Meta::addKeyword($meta_keyword);
 
 
-      return view('front.listing.index',compact('page_title','arr_business','arr_sub_cat','parent_category','sub_category','city'));
+      return view('front.listing.index',compact('page_title','arr_business','arr_fav_business','arr_sub_cat','parent_category','sub_category','city'));
     }
 
 

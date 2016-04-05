@@ -109,4 +109,9 @@ class BusinessListingModel extends Model
         return $this->hasMany('App\Models\BusinessPaymentModeModel','business_id','id');
     }
 
+    /*public function favourite_businesses()
+    {
+        return $this->hasMany('App\Models\FavouriteBusinessesModel','business_id','id');
+    }*/
+
 }

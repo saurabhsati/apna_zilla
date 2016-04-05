@@ -15,11 +15,5 @@ class FavouriteBusinessesModel extends Model
 						      'is_favourite'
 
 						       ];
-
-	public function favorite_business()
-    {
-        return $this->belongsTo('App\Models\BusinessListingModel','id','business_id');
-    }
-
-
+ 
 }
