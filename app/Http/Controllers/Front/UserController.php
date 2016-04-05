@@ -16,6 +16,8 @@ use App\Models\BusinessPaymentModeModel;
 use App\Models\BusinessServiceModel;
 use App\Models\BusinessTimeModel;
 use App\Models\BusinessImageUploadModel;
+use App\Models\BusinessCategoryModel;
+
 use App\Models\PlaceModel;
 use Session;
 use Sentinel;
@@ -27,7 +29,7 @@ class UserController extends Controller
  	public function __construct()
  	{
         $this->profile_pic_base_path = base_path().'/public'.config('app.project.img_path.user_profile_pic');
-        $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');      
+        $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');
 
         $this->business_base_img_path = base_path().'/public'.config('app.project.img_path.business_base_img_path');
         $this->business_public_img_path = url('/').config('app.project.img_path.business_base_img_path');
@@ -38,36 +40,38 @@ class UserController extends Controller
         $arr_except_auth_methods = array();
         $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
 
+
+
        /* $this->business_public_upload_img_path = url('/')."/uploads/business/business_upload_image/";
         $this->business_base_upload_img_path = base_path()."/public/uploads/business/business_upload_image/";*/
 
  	}
 
-        
+
  	public function store(Request $request)
-    {    
+    {
         $arr_rules = array();
         $arr_rules['first_name']   =   "required";
         $arr_rules['last_name']    =   "required";
         $arr_rules['mobile']       =   "required";
         $arr_rules['email']        =   "required|email";
         $arr_rules['password']     =   "required|min:6|confirmed";
-        
+
         $validator = Validator::make($request->all(),$arr_rules);
 
-        if($validator->fails())                                                                 
+        if($validator->fails())
         {
-          $json['status'] = "VALIDATION_ERROR";  
-          //return response()->json($json); 
+          $json['status'] = "VALIDATION_ERROR";
+          //return response()->json($json);
           //return redirect()->back()->withErrors($validator)->withInput();
         }
-        
+
         $first_name     =  $request->input('first_name');
         $last_name      =  $request->input('last_name');
         $email          =  $request->input('email');
         $mobile_no      =  $request->input('mobile');
         $password       =  $request->input('password');
-       
+
 
         if(is_numeric($mobile_no) && strlen($mobile_no)==10)
         {
@@ -80,14 +84,14 @@ class UserController extends Controller
             {
             	$json['status'] = "EMAIL_EXIST_ERROR";
                 $json['msg']    = "Email Id Already Exists";
-                return response()->json($json); 
+                return response()->json($json);
             }
 
             if($user->where('mobile_no',$mobile)->get()->count()>0)
             {
                 $json['status'] = "MOBILE_EXIST_ERROR";
                 $json['msg']    = "Mobile No.Already Exists";
-                return response()->json($json); 
+                return response()->json($json);
             }
 
             $mobile_otp =  mt_rand(0,66666);
@@ -105,7 +109,7 @@ class UserController extends Controller
             if($status)
             {
                 /*-------------send SMS OTP-----------------*/
-               
+
     			$response  = $this->send_otp($mobile,$mobile_otp);
                 //dd($response);
                 if($response!='')
@@ -117,12 +121,12 @@ class UserController extends Controller
                         $role = Sentinel::findRoleBySlug('normal');
 
                         $user = Sentinel::findById($status->id);
-                        
+
                         //$user = Sentinel::getUser();
 
                         $user->roles()->attach($role);
-                        
-                               
+
+
                         $json['status']     = "SUCCESS";
                         $json['mobile_no']  = $mobile;
                     }
@@ -131,29 +135,29 @@ class UserController extends Controller
                         $json['status'] = "ERROR";
                         $json['msg']    = "Error while Registration";
                     }
-                     return response()->json($json); 
-                       
+                     return response()->json($json);
+
                 }
                 else
                 {
                    $json['status'] = "OTP_ERROR";
                    $json['msg']    = "Mobile OTP Error.";
 
-                }    
-                return response()->json($json); 
+                }
+                return response()->json($json);
         }
         else
         {
             $json['status'] = "MOBILE_ERROR";
             $json['msg']    = "Invalid Mobile No.";
-        } 
+        }
 
         return response()->json($json);
     }
 
     public function send_otp($mobile,$mobile_otp)
     {
-        
+
         $url = "http://smsway.co.in/api/sendhttp.php?authkey=70Asotxsg0Q556948f8&mobiles='".$mobile."'&message=RightNext Registration OPT = '".$mobile_otp."'&sender=SMSWAY&route=4&country=91";
 
         $ch = curl_init();
@@ -174,18 +178,18 @@ class UserController extends Controller
             $mobile = $mobile_no;
 
             $user = UserModel::where('mobile_no',$mobile)->where('mobile_OTP',$otp)->first()->toArray();
-            
+
             if($user)
             {
 
                 $active_account = UserModel::where('mobile_OTP',$otp)->update(['is_active'=>'1']);
-             
+
                 if($active_account)
                 {
 
                     Session::set('user_id',$user['id']);
-                    Session::set('user_name', $user['first_name']);   
-                    Session::set('user_mail', $user['email']);   
+                    Session::set('user_name', $user['first_name']);
+                    Session::set('user_mail', $user['email']);
 
                     $json['status'] = "SUCCESS";
                     Session::flash('success','You Are Registered Successfully.');
@@ -193,23 +197,23 @@ class UserController extends Controller
                 else
                 {
                     $json['status'] = "ERROR";
-                }    
+                }
             }
-            
+
         }
         else
         {
              $json['status'] = "MOBILE_ERROR";
-        }   
+        }
 
-        return response()->json($json); 
+        return response()->json($json);
     }
 
     public function profile()
     {
         $id = session('user_id');
         $user_id = base64_decode($id);
-        
+
         $obj_user_info = UserModel::where('id','=',$user_id)->get();
 
         if($obj_user_info)
@@ -242,7 +246,7 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(),$arr_rules);
 
-        if($validator->fails())                                                                 
+        if($validator->fails())
         {
             return redirect()->back()->withErrors($validator)->withInput();
         }
@@ -317,13 +321,13 @@ class UserController extends Controller
         }
         else
         {
-           if(isset($arr_user_info[0]['profile_pic'])) 
+           if(isset($arr_user_info[0]['profile_pic']))
             {
                $profile_pic = $arr_user_info[0]['profile_pic'];
-            } 
-            else 
-            { 
-               $profile_pic = "default.jpg"; 
+            }
+            else
+            {
+               $profile_pic = "default.jpg";
             }
 
         }
@@ -392,7 +396,7 @@ class UserController extends Controller
 
     public function store_address_details(Request $request)
     {
-        
+
         $arr_rules = array();
         $arr_rules['city']               = "required";
         $arr_rules['area']               = "required";
@@ -401,16 +405,16 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(),$arr_rules);
 
-        if($validator->fails())                                                                 
+        if($validator->fails())
         {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-       
+
         $id     =  $request->input('user_id');
         $arr_data['city']     = $request->input('city');
         $arr_data['area']     = $request->input('area');
         $arr_data['pincode']     = $request->input('pincode');
-        $arr_data['street_address']     = $request->input('street_address');      
+        $arr_data['street_address']     = $request->input('street_address');
 
         $status = UserModel::where('id',$id)->update($arr_data);
 
@@ -440,16 +444,16 @@ class UserController extends Controller
             'street_address' => $street_address
         ];
         $status = Sentinel::update($user, $credentials);
-*/      
+*/
         return redirect()->back();
     }
-    
-    public function my_business()         
+
+    public function my_business()
     {
         $id = session('user_id');
         $user_id = base64_decode($id);
 
-        $obj_business_info = BusinessListingModel::where('user_id','=',$user_id)->get();
+        $obj_business_info = BusinessListingModel::where('user_id','=',$user_id)->with('reviews')->get();
 
         $arr_business_info =  array();
         $cat_title =  "";
@@ -458,7 +462,7 @@ class UserController extends Controller
             $arr_business_info = $obj_business_info->toArray();
             if(count($arr_business_info)>0)
             {
-                foreach ($arr_business_info as $business) 
+                foreach ($arr_business_info as $business)
                 {
                    $cat_id = $business['business_cat'];
                 }
@@ -472,7 +476,7 @@ class UserController extends Controller
 
                 if(count($arr_cat_details)>0)
                 {
-                   foreach ($arr_cat_details as $category) 
+                   foreach ($arr_cat_details as $category)
                    {
                        $cat_title = $category['title'];
                    }
@@ -484,24 +488,26 @@ class UserController extends Controller
         return view('front.user.my_business',compact('arr_business_info','cat_title'));
     }
 #######
- 
+
 
     public function add_business()
     {
         //Getting all the details of the Category Table
      $obj_cat_full_details = CategoryModel::get();
-     if($obj_cat_full_details) {
+     if($obj_cat_full_details)
+      {
          $arr_category = $obj_cat_full_details->toArray();
        }
 
      //Getting all the details of the City Table
      $obj_city_full_details = CityModel::get();
 
-     if($obj_city_full_details){    
+     if($obj_city_full_details)
+     {
          $arr_city = $obj_city_full_details->toArray();
       }
      //Getting all the details of the State Table
-    $obj_state_full_details = StateModel::get();
+      $obj_state_full_details = StateModel::get();
      if($obj_state_full_details){
         $arr_state = $obj_state_full_details->toArray();
      }
@@ -518,36 +524,36 @@ class UserController extends Controller
 
 
     public function get_state(Request $request)
-    {   
+    {
         $country_id   = $request->input('country_id');
-        $json         =  array();  
+        $json         =  array();
         $obj_result   = StateModel::where('country_id',$country_id)->get(['id','state_title']);
         if($obj_result)
         {
             $json = $obj_result->toArray();
         }
-      
+
         return response()->json($json);
     }
 
 
     public function get_city(Request $request)
-    {   
+    {
         $state_id   = $request->input('state_id');
-        $json         =  array();  
+        $json         =  array();
         $obj_result   = CityModel::where('state_id',$state_id)->get(['id as city_id','city_title']);
         if($obj_result)
         {
             $json = $obj_result->toArray();
         }
-      
+
         return response()->json($json);
     }
 
     public function get_zip(Request $request)
-    {   
+    {
         $city_id      = $request->input('city_id');
-        $json         = array();  
+        $json         = array();
         $obj_result   = PlaceModel::where(array('city_id'=>$city_id))->distinct('postal_code')->get(['id as zip_id','postal_code']);
         if($obj_result)
         {
@@ -561,15 +567,15 @@ class UserController extends Controller
     {
         $arr_rules = array();
         $arr_rules['business_name'] = "required";
-        $arr_rules['category']      = "required";
-       
+        $arr_rules['business_cat']      = "required";
+
         $validator = Validator::make($request->all(),$arr_rules);
 
-        if($validator->fails())                                                                 
+        if($validator->fails())
         {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-      
+
         $business_image  = "default.jpg";
 
         if ($request->hasFile('business_image'))
@@ -598,32 +604,43 @@ class UserController extends Controller
             $user_id = $obj_user->id;
         }
         else
-        {   
+        {
             Session::flash('error','Error While Adding Business');
             return redirect()->back();
         }
-        
+
         $arr_data = array();
         $arr_data['user_id']           =        $user_id;
         $arr_data['business_name']     =        $request->input('business_name');
-        $arr_data['business_cat']      =        $request->input('category');
+        $business_cat                  =        $request->input('business_cat');
+
+        //dd($business_cat);
+
         $arr_data['main_image']        =        $business_image;
-        
+
         //dd($arr_data);
 
         $business_add = BusinessListingModel::create($arr_data);
-        if($business_add)
+        $business_id=$business_add->id;
+          foreach ($business_cat as $key => $value)
+        {
+            $arr_cat_data['business_id']=$business_id;
+            $arr_cat_data['category_id']=$value;
+            $insert_data = BusinessCategoryModel::create($arr_cat_data);
+
+        }
+        if($insert_data)
         {
             Session::flash('success','Business Added Successfully');
-            return redirect(url('/').'/front_users/add_location/'.base64_encode($business_add->id));
+            return redirect(url('/').'/front_users/add_location/'.base64_encode($business_id));
         }else {
             Session::flash('error','Error While Adding Business');
-        }   
+        }
 
         /*if($business_add)
         {
             $request->session()->put('category_id', $request->input('category'));
-            return redirect(url('/')."front_users/contacts");   
+            return redirect(url('/')."front_users/contacts");
         }*/
         //Session::flash('success','Business Added Successfully');
 
@@ -633,7 +650,7 @@ class UserController extends Controller
 
     public function add_location_details(Request $request)
     {
-     
+
         $arr_rules = array();
         $arr_rules['building']      = "required";
         $arr_rules['landmark']      = "required";
@@ -645,18 +662,18 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(),$arr_rules);
 
-        if($validator->fails())                                                                 
+        if($validator->fails())
         {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        
+
         $obj_user = UserModel::where('email',Session::get('user_mail'))->first(['id']);
         if($obj_user)
         {
             $user_id = $obj_user->id;
         }
         else
-        {   
+        {
             Session::flash('error','Error While Adding Location Information.');
             return redirect()->back();
         }
@@ -674,7 +691,7 @@ class UserController extends Controller
         $arr_data['pincode']           =        $request->input('zipcode');
         $arr_data['lat']               =        $request->input('lat');
         $arr_data['lng']               =        $request->input('lng');
-        
+
 
         $location_add = BusinessListingModel::where(array('user_id'=>$user_id,'id'=>$business_id))->update($arr_data);
         if($location_add)
@@ -683,7 +700,7 @@ class UserController extends Controller
             return redirect(url('/').'/front_users/add_contacts/'.base64_encode($business_id));
         }else {
             Session::flash('error','Error While Adding Location Information');
-        }   
+        }
 
         return redirect()->back();
     }
@@ -691,7 +708,7 @@ class UserController extends Controller
 
     public function add_contacts_details(Request $request)
     {
-     
+
         $arr_rules = array();
         $arr_rules['prefix_name']      = "required";
         $arr_rules['contact_name']     = "required";
@@ -704,18 +721,18 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(),$arr_rules);
 
-        if($validator->fails())                                                                 
+        if($validator->fails())
         {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        
+
         $obj_user = UserModel::where('email',Session::get('user_mail'))->first(['id']);
         if($obj_user)
         {
             $user_id = $obj_user->id;
         }
         else
-        {   
+        {
             Session::flash('error','Error While Adding Contact Person\'s Information');
             return redirect()->back();
         }
@@ -730,9 +747,9 @@ class UserController extends Controller
         $arr_data['toll_free_number']        =        $request->input('toll_free_no');
         $arr_data['email_id']                =        $request->input('email');
         $arr_data['website']                 =        $request->input('website');
-        
+
         //$arr_data['user_id']               =        $user_id;
-        //$arr_data['designation']           =        $request->input('designation'); 
+        //$arr_data['designation']           =        $request->input('designation');
 
         $location_add = BusinessListingModel::where(array('user_id'=>$user_id,'id'=>$business_id))->update($arr_data);
         if($location_add)
@@ -741,14 +758,14 @@ class UserController extends Controller
             return redirect(url('/').'/front_users/other_details/'.base64_encode($business_id ));
         }else {
             Session::flash('error','Error While Adding Contact Person\'s Information');
-        }   
+        }
 
         return redirect()->back();
     }
 
     public function add_other_details(Request $request)
     {
-     
+
         $arr_rules = array();
         $arr_rules['company_info']      = "required";
         $arr_rules['establish_year']    = "required";
@@ -757,18 +774,18 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(),$arr_rules);
 
-        if($validator->fails())                                                                 
+        if($validator->fails())
         {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        
+
         $obj_user = UserModel::where('email',Session::get('user_mail'))->first(['id']);
         if($obj_user)
         {
             $user_id = $obj_user->id;
         }
         else
-        {   
+        {
             Session::flash('error','Error While Adding Other Information');
             return redirect()->back();
         }
@@ -785,10 +802,10 @@ class UserController extends Controller
         $arr_payment        =  $request->input('payment_mode');
         if(count($arr_payment)>0)
         {
-            foreach ($arr_payment as $key => $value) 
+            foreach ($arr_payment as $key => $value)
             {
                 BusinessPaymentModeModel::create(array('business_id'=>$business_id,'title'=>$value));
-            }   
+            }
         }
 
         $location_add = BusinessListingModel::where(array('user_id'=>$user_id,'id'=>$business_id))->update($arr_data);
@@ -798,7 +815,7 @@ class UserController extends Controller
             return redirect(url('/').'/front_users/add_services/'.base64_encode( $business_id ));
         }else {
             Session::flash('error','Error While Adding Other Information');
-        }   
+        }
 
         return redirect()->back();
     }
@@ -806,24 +823,24 @@ class UserController extends Controller
 
     public function add_services_details(Request $request)
     {
-     
+
         $arr_rules = array();
         $arr_rules['youtube_link']      = "required";
         $arr_rules['business_service']  = "required";
 
         $validator   = Validator::make($request->all(),$arr_rules);
-        if($validator->fails())                                                                 
+        if($validator->fails())
         {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        
+
         $obj_user = UserModel::where('email',Session::get('user_mail'))->first(['id']);
         if($obj_user)
         {
             $user_id = $obj_user->id;
         }
         else
-        {   
+        {
             Session::flash('error','Error While Adding Services Information');
             return redirect()->back();
         }
@@ -836,8 +853,8 @@ class UserController extends Controller
 
         $files          = $request->file('business_image');
         $file_count     = count($files);
-       
-       
+
+
 
         //$arr_data['user_id']          =        $user_id;
         /* $arr_data['establish_year']  =        $request->input('establish_year');
@@ -848,16 +865,16 @@ class UserController extends Controller
         {
             if(count($business_services)>0)
             {
-                foreach ($business_services as $key => $value) 
+                foreach ($business_services as $key => $value)
                 {
-                    BusinessServiceModel::create(array('name'=>$value,'business_id'=>$business_id)); 
+                    BusinessServiceModel::create(array('name'=>$value,'business_id'=>$business_id));
                 }
             }
 
              if($file_count>0)
-            {  
+            {
                 $uploadcount = 0;
-                foreach($files as $file) 
+                foreach($files as $file)
                 {
                      if($file!=null)
                      {
@@ -885,13 +902,13 @@ class UserController extends Controller
                 }
             }
 
-            Session::flash('success','Business Information Added Successfully');
+            Session::flash('success','Complete Business Information Added Successfully');
             return redirect('/front_users/add_business');
 
 
         }else {
             Session::flash('error','Error While Adding Services Information');
-        }   
+        }
 
         return redirect()->back();
     }
@@ -908,7 +925,7 @@ class UserController extends Controller
     {
         $business_id =  base64_decode($enc_id);
         return view('front.user.add_other_information',compact('business_id'));
-    }   
+    }
 
     public function show_location_details($enc_id)
     {
@@ -924,7 +941,7 @@ class UserController extends Controller
 
         $obj_city_full_details = CityModel::get();
 
-        if($obj_city_full_details){    
+        if($obj_city_full_details){
             $arr_city = $obj_city_full_details->toArray();
         }
        /* $obj_zipcode_res = ZipModel::get();
@@ -941,273 +958,419 @@ class UserController extends Controller
         return view('front.user.add_services',compact('business_id'));
     }
 
-#######
+        /*Edit User Business*/
 
-    public function edit_business($enc_id)
-    {   
-      $buss_id = $enc_id;
-      $business_id = base64_decode($enc_id);
-      $page_title = "Edit Business";
-
-      $obj_business_details = BusinessListingModel::where('id','=',$business_id)->get();
-
-      if($obj_business_details)
-      {
-        $arr_business_details = $obj_business_details->toArray();
-      }
-
-      foreach ($arr_business_details as $business) 
-      {
-          $cat_id = $business['business_cat'];
-          $city_id = $business['city'];
-          $pincode = $business['pincode'];
-          $state_id = $business['state'];
-          $country_id = $business['country'];
-      }
-     
-
-     $obj_cat_details = CategoryModel::where('cat_id','=',$cat_id)->get();
-     if($obj_cat_details)
-     {
-        $arr_cat_details = $obj_cat_details->toArray();
-     }
-
-     foreach ($arr_cat_details as $category) 
-     {
-         $cat_title = $category['title'];
-     }
-
-     //Getting all the details of the Category Table
-     $obj_cat_full_details = CategoryModel::get();
-     
-     if($obj_cat_full_details)
-       {
-         $arr_cat_full_details = $obj_cat_full_details->toArray();
-       }
-     //Getting all the details of the City Table
-
-     $obj_city_full_details = CityModel::get();
-
-     if($obj_city_full_details)
-      {
-         $arr_city_full_details = $obj_city_full_details->toArray();
-      }
-
-      //Getting all the details of the State Table
-
-     $obj_state_full_details = StateModel::get();
-
-     if($obj_state_full_details)
-     {
-        $arr_state_full_details = $obj_state_full_details->toArray();
-     }
-      //Getting all the details of the Country Table
-     $obj_country_full_details = CountryModel::get();
-
-     if($obj_country_full_details)
+    public function edit_business_step1($enc_id)
     {
-      $arr_country_full_details = $obj_country_full_details->toArray();
-    }
-      
-     $obj_city_details = CityModel::where('id','=',$city_id)->get();
-     if($obj_city_details)
-     {
-        $arr_city_details = $obj_city_details->toArray();
-     }
+       $id = base64_decode($enc_id);
+       $business_public_img_path = url('/')."/uploads/business/main_image/";
+      $page_title ="Edit Business";
+      $obj_category = CategoryModel::get();
 
-     foreach ($arr_city_details as $city) 
-     {
-        $city_name = $city['city_title'];         
-     }
-
-
-     $obj_state_details = StateModel::where('id','=',$state_id)->get();
-     if($obj_state_details)
-     {
-        $arr_state_details = $obj_state_details->toArray();
-     }
-
-     foreach ($arr_state_details as $state) 
-     {
-        $state_name = $state['state_title'];         
-     }
-
-
-     $obj_country_details = CountryModel::where('id','=',$country_id)->get();
-     if($obj_country_details)
-     {
-        $arr_country_details = $obj_country_details->toArray();
-     }
-
-     foreach ($arr_country_details as $country)                                                                                                                                                                                                                                        
-     {                                                                                                                                                                                     
-        $country_name = $country['country_name'];                                                                                                                                                              
-     }                                                                                                                                                                                                                                            
-
-   //  $business_image = $this->$business_base_img_path;
-     // echo $business_image;
-     // exit;
-     
-      return view('front.user.edit_business',
-             compact('page_title','arr_business_details','arr_cat_details',
-                  'arr_cat_full_details','arr_city_full_details','arr_state_full_details','arr_country_full_details',
-                  'cat_title','city_name','state_name','country_name','buss_id','business_image'));
-    }                                                                                                                             
-
-
-
-    public function update_business_details(Request $request,$enc_id)
-    {
-        $business_id = base64_decode($enc_id);
-
-        ######################
-      
-        $obj_business_record   = BusinessListingModel::where('id',$business_id)->first();
-        if($obj_business_record)
+        if($obj_category)
         {
-            $arr_business_data     = $obj_business_record->toArray();
+            $arr_category = $obj_category->toArray();
         }
-
-        /*echo $arr_business_data['main_image'];
-        exit;*/
-
-        $business_pic = "default.jpg";
-
-        if ($request->hasFile('business_pic'))
+        $business_data=BusinessListingModel::with(['category'])->where('id',$id)->get()->toArray();
+       //dd($business_data);
+      return view('front.user.Edit_Business.edit_business_step1',compact('page_title','arr_category','business_data','enc_id','business_public_img_path'));
+    }
+    public function update_business_step1(Request $request,$enc_id)
+    {
+        if(Session::has('user_mail'))
         {
-            $profile_pic_valiator = Validator::make(array('business_pic'=>$request->file('business_pic')),array( 'business_pic' => 'mimes:jpg,jpeg,png' ));
+            $business_base_img_upload_path = base_path()."/public/uploads/business/main_image";
+            $id = base64_decode($enc_id);
+            $arr_rules = array();
+            $arr_rules['business_name'] = "required";
+            $arr_rules['business_cat']      = "required";
 
-            if ($request->file('business_pic')->isValid() && $profile_pic_valiator->passes())
+            $validator = Validator::make($request->all(),$arr_rules);
+
+            if($validator->fails())
             {
-                $cv_path            = $request->file('business_pic')->getClientOriginalName();
-                $image_extension    = $request->file('business_pic')->getClientOriginalExtension();
-                $image_name         = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
 
-                if(isset($arr_business_data['main_image']))
+            $business_image=$request->input('business_image');
+            if ($request->hasFile('business_image'))
+            {
+                $profile_pic_valiator = Validator::make(array('business_image'=>$request->file('business_image')),array( 'business_image' => 'mimes:jpg,jpeg,png' ));
+
+                if ($request->file('business_image')->isValid() && $profile_pic_valiator->passes())
                 {
-                  @unlink($this->business_base_img_path.'/'.$arr_business_data['main_image']);
+                    $cv_path            = $request->file('business_image')->getClientOriginalName();
+                    $image_extension    = $request->file('business_image')->getClientOriginalExtension();
+                    $image_name         = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
+                    $request->file('business_image')->move($business_base_img_upload_path, $image_name);
+                    $business_image     = $image_name;
                 }
-                $request->file('business_pic')->move( $this->business_base_img_path, $image_name);
-                $business_pic = $image_name;
-               /* exit;*/
+                else
+                {
+                    return redirect()->back()->withErrors($validator)->withInput();
+                }
+
+            }
+            $business_data['business_name']      = $request->input('business_name');
+            $business_data['main_image']      = $business_image;
+            //dd($business_data);
+            $business_category = BusinessCategoryModel::where('business_id',$id);
+            $res= $business_category->delete();
+            $business_cat=$request->input('business_cat');
+            if($business_cat)
+            {
+                foreach ($business_cat as $key => $value)
+                {
+                    $arr_cat_data['business_id']=$id;
+                    $arr_cat_data['category_id']=$value;
+                    $insert_data = BusinessCategoryModel::create($arr_cat_data);
+                }
+            }
+            $business_data_res=BusinessListingModel::where('id',$id)->update($business_data);
+            if($business_data_res)
+            {
+                Session::flash('success','Business Information Updated Successfully');
+
             }
             else
             {
-                return redirect()->back();
+                Session::flash('error','Error While Adding Business');
             }
+            return redirect(url('/').'/front_users/edit_business_step2/'.base64_encode($id));
+      }
+      else
+      {
+        return redirect(url('/'));
+      }
+
+
+    }
+    public function edit_business_step2($enc_id)
+    {
+       $id = base64_decode($enc_id);
+       $page_title ="Edit Business";
+       $obj_countries_res = CountryModel::get();
+        if( $obj_countries_res != FALSE)
+        {
+            $arr_country = $obj_countries_res->toArray();
+        }
+
+        $arr_city = array();
+        $obj_city_res = CityModel::get();
+        if($obj_city_res != FALSE)
+        {
+            $arr_city = $obj_city_res->toArray();
+        }
+        $arr_state = array();
+        $obj_state_res = StateModel::get();
+
+        if( $obj_countries_res != FALSE)
+        {
+            $arr_state = $obj_state_res->toArray();
+        }
+        $obj_business_arr=BusinessListingModel::where('id',$id)->get();
+        if( $obj_business_arr != FALSE)
+        {
+            $business = $obj_business_arr->toArray();
+        }
+        if( $business != FALSE)
+        {
+             $arr_place = array();
+
+            $obj_place_res = PlaceModel::where('id',$business[0]['pincode'])->get();
+
+            if( $obj_place_res != FALSE)
+            {
+                $arr_place = $obj_place_res->toArray();
+            }
+        }
+        $business_data=BusinessListingModel::with(['city_details','country_details','zipcode_details','state_details'])->where('id',$id)->get()->toArray();
+       //dd($business_data);
+
+      return view('front.user.Edit_Business.edit_business_step2',compact('page_title','business_data','enc_id','arr_place','arr_state','arr_city','arr_country'));
+    }
+    public function update_business_step2(Request $request,$enc_id)
+    {
+        $id = base64_decode($enc_id);
+        $arr_rules = array();
+          //location fields
+        $arr_rules['building']='required';
+        $arr_rules['street']='required';
+        $arr_rules['landmark']='required';
+        $arr_rules['area']='required';
+        $arr_rules['city']='required';
+        $arr_rules['zipcode']='required';
+        $arr_rules['state']='required';
+        $arr_rules['country']='required';
+        $arr_rules['lat']='required';
+        $arr_rules['lng']='required';
+         $validator=validator::make($request->all(),$arr_rules);
+
+        if($validator->fails())
+        {
+             //print_r( $validator->errors()->all());exit;
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        //location input array
+        $business_data['building']=$request->input('building');
+        $business_data['street']=$request->input('street');
+        $business_data['landmark']=$request->input('landmark');
+        $business_data['area']=$request->input('area');
+        $business_data['city']=$request->input('city');
+        $business_data['pincode']=$request->input('zipcode');
+        $business_data['state']=$request->input('state');
+        $business_data['country']=$request->input('country');
+        $business_data['lat']=$request->input('lat');
+        $business_data['lng']=$request->input('lng');
+        //dd($business_data);
+         $business_data_res=BusinessListingModel::where('id',$id)->update($business_data);
+        if($business_data_res)
+        {
+            Session::flash('success','Business Location Updated Successfully');
 
         }
         else
         {
-           if(isset($arr_business_data['main_image'])) 
-            {
-               $business_pic = $arr_business_data['main_image'];
-              // exit;
-            } 
-            else 
-            { 
-               $business_pic = "default.jpg"; 
+            Session::flash('error','Error While Adding Business');
+        }
+        return redirect(url('/').'/front_users/edit_business_step3/'.base64_encode($id));
+    }
+    public function edit_business_step3($enc_id)
+    {
+        $id = base64_decode($enc_id);
+        $page_title ="Edit Business";
+        $business_data=BusinessListingModel::where('id',$id)->get()->toArray();
+        return view('front.user.Edit_Business.edit_business_step3',compact('page_title','business_data','enc_id'));
+    }
+    public function update_business_step3(Request $request,$enc_id)
+    {
+        $id = base64_decode($enc_id);
+        $arr_rules = array();
+           //contact info fields
+        $arr_rules['contact_person_name']='required';
+        $arr_rules['mobile_number']='required';
+        $arr_rules['landline_number']='required';
+        $arr_rules['fax_no']='required';
+        $arr_rules['toll_free_number']='required';
+        $arr_rules['email_id']='required';
+        $arr_rules['website']='required';
+        $validator=validator::make($request->all(),$arr_rules);
+
+        if($validator->fails())
+        {
+             //print_r( $validator->errors()->all());exit;
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        $business_data['contact_person_name']=$request->input('contact_person_name');
+        $business_data['mobile_number']=$request->input('mobile_number');
+        $business_data['landline_number']=$request->input('landline_number');
+        $business_data['fax_no']=$request->input('fax_no');
+        $business_data['toll_free_number']=$request->input('toll_free_number');
+        $business_data['email_id']=$request->input('email_id');
+        $business_data['website']=$request->input('website');
+        //dd($business_data);
+         $business_data_res=BusinessListingModel::where('id',$id)->update($business_data);
+        if($business_data_res)
+        {
+            Session::flash('success','Business Contact Information Updated Successfully');
+
+        }
+        else
+        {
+            Session::flash('error','Error While Adding Business');
+        }
+        return redirect(url('/').'/front_users/edit_business_step4/'.base64_encode($id));
+    }
+    public function edit_business_step4($enc_id)
+    {
+        $id = base64_decode($enc_id);
+        $page_title ="Edit Business";
+        $business_data=BusinessListingModel::with(['payment_mode'])->where('id',$id)->get()->toArray();
+        return view('front.user.Edit_Business.edit_business_step4',compact('page_title','business_data','enc_id'));
+    }
+    public function update_business_step4(Request $request,$enc_id)
+    {
+         $id = base64_decode($enc_id);
+         $arr_rules = array();
+         $arr_rules['company_info']='required';
+         $arr_rules['establish_year']='required';
+         $arr_rules['keywords']='required';
+         $validator=validator::make($request->all(),$arr_rules);
+
+         if($validator->fails())
+         {
+             //print_r( $validator->errors()->all());exit;
+            return redirect()->back()->withErrors($validator)->withInput();
+         }
+
+         $arr_all=$request->all();
+         $payment_mode=$arr_all['payment_mode'];
+         $payment_count = count($payment_mode);
+         //exit;
+        if($payment_count>0)
+        {
+            foreach($payment_mode as $key =>$value) {
+             if($value!=null)
+             {
+
+                    $arr_payment_mode_data['business_id']=$id;
+                    $arr_payment_mode_data['title']=$value;
+                    $insert_data = BusinessPaymentModeModel::create($arr_payment_mode_data);
+            }
+
             }
 
         }
-
-
-        /*echo $business_pic ;
-        exit;*/
-        #######################
-
-
-        $cat_name      =  $request->input('category');
-        $obj_cat_details = CategoryModel::where('title','=',$cat_name)->first();
-
-        if($obj_cat_details)
+        $business_data['company_info']=$request->input('company_info');
+        $business_data['establish_year']=$request->input('establish_year');
+        $business_data['keywords']=$request->input('keywords');
+        $business_data_res=BusinessListingModel::where('id',$id)->update($business_data);
+        if($business_data_res)
         {
-          $arr_cat_details = $obj_cat_details->toArray();
+            Session::flash('success','Business Other Information Updated Successfully');
+
         }
-
-        $cat_id = $arr_cat_details['cat_id'];
-       
-                    //Getting the city id
-
-        $city_name      =  $request->input('city');
-        $obj_city_details = CityModel::where('city_title','=',$city_name)->first();
-
-        if($obj_city_details)
+        else
         {
-          $arr_city_details = $obj_city_details->toArray();
+            Session::flash('error','Error While Adding Business');
         }
+        return redirect(url('/').'/front_users/edit_business_step4/'.base64_encode($id));
+    }
+     public function edit_business_step5($enc_id)
+    {
+        $id = base64_decode($enc_id);
+        $page_title ="Edit Business";
+        $business_public_img_path=url('/')."/uploads/business/business_upload_image/";
+        $business_data=BusinessListingModel::with(['image_upload_details','service'])->where('id',$id)->get()->toArray();
+        return view('front.user.Edit_Business.edit_business_step5',compact('page_title','business_data','enc_id','business_public_img_path'));
+    }
+    public function update_business_step5(Request $request,$enc_id)
+    {
+         $id = base64_decode($enc_id);
+         $destinationPath = base_path()."/public/uploads/business/business_upload_image";
+         $arr_rules = array();
+         $arr_rules['youtube_link']='required';
+         $arr_rules['business_image']='required';
+         $arr_rules['business_service']='required';
+         $validator=validator::make($request->all(),$arr_rules);
 
-        $city_id = $arr_city_details['id'];
-
-                    //Getting the State id
-
-        $state_name      =  $request->input('state');
-
-        $obj_state_details = StateModel::where('state_title','=',$state_name)->first();
-
-        if($obj_state_details)
-        {
-          $arr_state_details = $obj_state_details->toArray();
-        }
-
-        $state_id = $arr_state_details['id'];
-
-       //Getting the Country id
- 
-        $country_name      =  $request->input('country');
-        $obj_country_details = CountryModel::where('country_name','=',$country_name)->first();
-
-        if($obj_country_details)
-        {
-          $arr_country_details = $obj_country_details->toArray();
-        }
-
-        $country_id = $arr_country_details['id'];
-
-
-        $arr_data = array();
-        $arr_data['business_name']     =        $request->input('business_name');
-        $arr_data['building']          =        $request->input('building');
-        $arr_data['landmark']          =        $request->input('landmark');
-        $arr_data['area']              =        $request->input('area');
-        $arr_data['street']            =        $request->input('street');
-        $arr_data['business_cat']      =        $cat_id;
-        $arr_data['city']              =        $city_id;
-        $arr_data['state']             =        $state_id;
-        $arr_data['country']           =        $country_id;
-        $arr_data['mobile_number']     =        $request->input('mobile_number');
-        $arr_data['landline_number']   =        $request->input('landline_number');
-        $arr_data['main_image']        =         $business_pic ;
-
-                                                               
-        /* $arr_data['city'] = $request->input('city');
-            $arr_data['pincode'] = $request->input('pincode');
-            $arr_data['state'] = $request->input('state');
-            $arr_data['country'] = $request->input('country');
-        */
-        $business_update = BusinessListingModel::where('id','=',$business_id)->update($arr_data);
-
-        if($business_update)
+         if($validator->fails())
          {
-            Session::flash('success','Business Updated Successfully');
-            return redirect()->back();
+             //print_r( $validator->errors()->all());exit;
+            return redirect()->back()->withErrors($validator)->withInput();
+         }
+
+         $arr_all=$request->all();
+        //dd($arr_all);
+         $business_service=$arr_all['business_service'];
+          if(sizeof($business_service))
+          {
+                foreach($business_service as $key =>$value) {
+                 if($value!=null)
+                 {
+
+                        $arr_serv_data['business_id']=$id;
+                        $arr_serv_data['name']=$value;
+                        $insert_data = BusinessServiceModel::create($arr_serv_data);
+                }
+
+           }
+          }
+
+         $files = $request->file('business_image');
+         $file_count = count($files);
+         $uploadcount = 0;
+         foreach($files as $file)
+         {
+             if($file!=null)
+             {
+                $fileName = $file->getClientOriginalName();
+                $fileExtension  = strtolower($file->getClientOriginalExtension());
+                if(in_array($fileExtension,['png','jpg','jpeg']))
+                {
+                      $filename =sha1(uniqid().$fileName.uniqid()).'.'.$fileExtension;
+                      $file->move($destinationPath,$filename);
+                      $arr_insert['image_name']=$filename;
+                      $arr_insert['business_id']=$id;
+                      $insert_data1=$this->BusinessImageUploadModel->create($arr_insert);
+                      $uploadcount ++;
+                }
+                else
+                {
+                     Session::flash('error','Invalid file extension');
+                }
+            }
+         }
+         $business_data['youtube_link']=$request->input('youtube_link');
+         $business_data_res=BusinessListingModel::where('id',$id)->update($business_data);
+        if($business_data_res)
+        {
+            Session::flash('success','Business Media Information Updated Successfully');
+
+        }
+        else
+        {
+            Session::flash('error','Error While Adding Business');
+        }
+        return redirect(url('/').'/front_users/edit_business_step5/'.base64_encode($id));
+
+    }
+     public function delete_payment_mode(Request $request)
+    {
+       $id=$request->input('id');
+        $payment_mode = BusinessPaymentModeModel::where('id',$id);
+        $res= $payment_mode->delete();
+        if($res)
+        {
+
+            echo "done";
+
         }
 
     }
+    public function delete_gallery(Request $request)
+    {
 
+       $business_base_upload_img_path =base_path()."/public/uploads/business/business_upload_image/";
+        $image_name=$request->input('image_name');
+        $id=$request->input('id');
+        $Business = $this->BusinessImageUploadModel->where('id',$id);
+        $res= $Business->delete();
+        if($res)
+        {
+             $business_base_upload_img_path.$image_name;
+           if(unlink($business_base_upload_img_path.$image_name))
+           {
+            echo "done";
+           }
+        }
 
+    }
+    public function delete_service(Request $request)
+    {
+       $id=$request->input('id');
+        $service = BusinessServiceModel::where('id',$id);
+        $res= $service->delete();
+        if($res)
+        {
+
+            echo "done";
+
+        }
+
+    }
     public function my_favourite_businesses()
     {
         if(!empty(Session::get('user_mail')))
           {
             $user_id    = UserModel::where('email',Session::get('user_mail'))->first(['id']);
-            $u          = $user_id->id; 
+            $u          = $user_id->id;
             $arr_fav    = array();
 
             $obj_fav = UserModel::where('id',$u)->select('id','email')
                               ->with('favourite_businesses.reviews')
                               ->first();
-        
+
             if($obj_fav)
             {
                 $arr_fav = $obj_fav->toArray();

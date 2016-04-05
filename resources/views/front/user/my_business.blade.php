@@ -9,22 +9,22 @@
      <ol class="breadcrumb">
          <span>You are here:</span>
     <li><a href="{{ url('/').'/front_users/profile' }}">Home</a></li>
-    
+
     <li class="active">@if($cat_title != ""){{ $cat_title }} @endif </li>
-  
+
 </ol>
              </div>
           </div>
      </div>
      <hr/>
-     
+
        <div class="container">
          <div class="row">
-             
+
             <div class="col-sm-12 col-md-3 col-lg-3">
                <!-- Categories Start -->
                 <!-- <div class="categories_sect sidebar-nav">
-              
+
                  <div class="sidebar-brand">Related Categories<span class="spe_mobile"><a href="#"></a></span></div>
                  <div class="bor_head">&nbsp;</div>
                  <ul class="spe_submobile">
@@ -48,21 +48,21 @@
                 <div class="clearfix"></div>
               </div> -->
             </div>
-             
+
              <div class="col-sm-12 col-md-9 col-lg-9">
              <div class="title_head">@if($cat_title != ""){{ $cat_title }} @endif</div>
-                        
+
                 <!-- <div class="sorted_by">Sort By :</div>
                 <div class="filter_div">
                  <ul>
                   <li><a href="#">Most Recent </a></li>
                   <li><a href="#" class="active">Most Popular </a></li>
-                  <li><a href="#">Alphabetical</a></li>     
-                 </ul>  
-               </div> -->  
+                  <li><a href="#">Alphabetical</a></li>
+                 </ul>
+               </div> -->
 
              @if(isset($arr_business_info) && (count($arr_business_info)>0 ))
-                @foreach($arr_business_info as $business) 
+                @foreach($arr_business_info as $business)
 
                 <div class="product_list_view">
                 <div class="row">
@@ -72,36 +72,57 @@
                     <div class="col-sm-9 col-md-9 col-lg-8">
                     <div class="product_details">
                         <div class="product_title"><a href="#">{{$business['business_name']}}</a></div>
-                        <div class="rating_star"><img src="images/rating.jpg" alt="rating"/> 10 Ratings <span class=""> Estd.in {{ $business['establish_year'] }} </span></div>
+                        <div class="rating_star">
+                         <?php
+                          if(sizeof($business['reviews']))
+                          {
+                            $tot_review=sizeof($business['reviews']);
+
+                          }
+                          else
+                          {
+                             $tot_review=0;
+                          }
+                          ?>
+                          <div class="resta-rating-block11">
+                          <?php for($i=0;$i<round($business['avg_rating']);$i++){ ?>
+                          <i class="fa fa-star star-acti"></i>
+                          <?php }?>
+                          <?php for($i=0;$i<(5-round($business['avg_rating']));$i++){ ?>
+                          <i class="fa fa-star"></i>
+                            <?php }?>
+                            </div>
+                           &nbsp;@if(isset($tot_review)){{$tot_review}} @endif Ratings
+                         <span class=""> Estd.in {{ $business['establish_year'] }} </span></div>
                         <div class="p_details"><i class="fa fa-phone"></i><span>  {{$business['mobile_number']}}, {{$business['landline_number']}}</span></div>
-                        <div class="p_details"><i class="fa fa-map-marker"></i> <span>{{$business['building']}}, {{$business['street']}} <br/>  
+                        <div class="p_details"><i class="fa fa-map-marker"></i> <span>{{$business['building']}}, {{$business['street']}} <br/>
                         {{$business['landmark']}}, {{$business['area']}} <br/> </span></div>
                         <div class="p_details">
                         <!-- <a href="#" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a> -->
                         <ul>
                         <!-- <li><a href="#">SMS/Email</a></li>  -->
-                        <li><a href="{{ url('/front_users/edit_business/'.base64_encode($business['id'])) }}" class="active">Edit</a></li>    
+                        <li><a href="{{ url('/front_users/edit_business_step1/'.base64_encode($business['id'])) }}" class="active">Edit</a></li>
                         <!-- <li><a href="#">Own This</a></li>     -->
                         <!-- <li><a href="#" class="lst">Rate This</a></li>         -->
                         </ul>
                         </div>
                         </div>
-                    
+
                 </div>
                 </div>
-                 </div> 
+                 </div>
 
                  @endforeach
 
-                 @else 
+                 @else
                     <div class="row">
                        <strong><h4> Please Add Business </h4> </strong>
                     </div>
                  @endif
-               
+
             </div>
          </div>
        </div>
-   </div>      
+   </div>
 
 @stop

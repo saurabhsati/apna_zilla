@@ -524,8 +524,19 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		//Get My favourites Businesses page.
 		Route::get('my_favourites',		    					['as' => 'my_favourite_businesses' 	        				,'uses' =>'Front\UserController@my_favourite_businesses']);
 
-	    Route::get('edit_business/{enc_id}',		    ['as' => 'business_edit' 	        				,'uses' =>'Front\UserController@edit_business']);
-		Route::post('update_business_details/{enc_id}',	['as' => 'front_users_store_business_details'       ,'uses' =>'Front\UserController@update_business_details']);
+	    Route::get('edit_business_step1/{enc_id}',		    ['as' => 'business_edit1' 	        				,'uses' =>'Front\UserController@edit_business_step1']);
+	    Route::post('update_business_step1/{enc_id}',		['as' => 'update_business_step1' 	        		,'uses' =>'Front\UserController@update_business_step1']);
+	    Route::get('edit_business_step2/{enc_id}',		    ['as' => 'business_edit2' 	        				,'uses' =>'Front\UserController@edit_business_step2']);
+	    Route::post('update_business_step2/{enc_id}',		['as' => 'update_business_step1' 	        		,'uses' =>'Front\UserController@update_business_step2']);
+	    Route::get('edit_business_step3/{enc_id}',		    ['as' => 'business_edit3' 	        				,'uses' =>'Front\UserController@edit_business_step3']);
+	    Route::post('update_business_step3/{enc_id}',		['as' => 'update_business_step3' 	        		,'uses' =>'Front\UserController@update_business_step3']);
+	    Route::get('edit_business_step4/{enc_id}',		    ['as' => 'business_edit4' 	        				,'uses' =>'Front\UserController@edit_business_step4']);
+	    Route::post('update_business_step4/{enc_id}',		['as' => 'update_business_step4' 	        		,'uses' =>'Front\UserController@update_business_step4']);
+	    Route::post('delete_payment_mode',		       		['as' => 'delete_payment_mode' 	 					,'uses'=>'Front\UserController@delete_payment_mode']);
+	    Route::get('edit_business_step5/{enc_id}',		    ['as' => 'business_edit5' 	        				,'uses' =>'Front\UserController@edit_business_step5']);
+	    Route::post('update_business_step5/{enc_id}',		['as' => 'update_business_step5' 	        		,'uses' =>'Front\UserController@update_business_step5']);
+	    Route::post('delete_gallery',		       		['as' => 'delete_gallery' 	 					,'uses'=>'Front\UserController@delete_gallery']);
+	    Route::post('delete_service',		       		['as' => 'delete_service' 	 					,'uses'=>'Front\UserController@delete_service']);
 
 		Route::get('logout',							['as' => 'front_users_logout'     					,'uses' =>'Front\AuthController@logout']);
 		Route::get('change_password',				  	['as' => 'front_users_change_password'              ,'uses' =>'Front\AuthController@change_password']);

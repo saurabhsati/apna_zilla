@@ -24,7 +24,7 @@
 
        <div class="container">
          <div class="row">
-         @include('front.user.left_side_bar_user_business')
+         @include('front.user.Edit_Business.edit_business_left_side_bar_menu')
 
              <div class="col-sm-12 col-md-9 col-lg-9">
               @if(Session::has('success'))
@@ -48,11 +48,12 @@
               <div class="my_whit_bg">
                  <div class="title_acc">Please Provide Business Information</div>
                  <div class="row">
-
+                  @if(isset($business_data) && sizeof($business_data)>0)
+                  @foreach($business_data as $business)
                   <form class="form-horizontal"
                            id="validation-form"
                            method="POST"
-                           action="{{ url('/front_users/add_business_details') }}"
+                           action="{{ url('/front_users/update_business_step1/'.$enc_id)}}"
                            enctype="multipart/form-data"
                            >
 
@@ -64,12 +65,13 @@
                     <div class="profile_box">
 
                     <div class="ig_profile" id="dvPreview"  >
-                      <img src="{{ url('/') }}/images/front/no-profile.png" id="preview_profile_pic"/>
+                      <img src="{{ $business_public_img_path.$business['main_image']}}" id="preview_profile_pic"/>
                     </div>
                   <div class="button_shpglst">
                     <div style="" class="fileUpload or_btn">
                       <span>Upload Photo</span>
                       <input id="fileupload" type="file" name="business_image" class="upload change_pic" onchange="loadPreviewImage(this)">
+                       <input type="hidden" class="file-input" name="business_image" id="business_image" value="{{$business['main_image']}}"/>
                     </div>
                      <div class="remove_b" onclick="clearPreviewImage()"><a href="#" style=""><i class="fa fa-times"></i> Remove</a></div>
                      <div class="clr"></div>
@@ -87,55 +89,40 @@
                     <div class="row">
                   <div class="col-lg-3  label-text" for="business_cat">Business Category </div>
                   <div class="col-sm-9 col-md-9 col-lg-9 m_l">
-                  <select class="input_acct" name="business_cat[]" id="business_cat" onchange="updateCategoryOptGroup(this)" multiple="" height="100px">
-                  <option> Select Business Categories</option>
-                   @if(isset($arr_category) && sizeof($arr_category)>0)
-                   @foreach($arr_category as $category)
-                   @if($category['parent'] =='0')
+                  <select class="form-control" name="business_cat[]" id="business_cat" onchange="updateCategoryOptGroup(this)" multiple="">
+                     <option> Select Business Category</option>
+                      @if(isset($arr_category) && sizeof($arr_category)>0)
+                        @foreach($arr_category as $category)
+                          @if($category['parent'] =='0')
                             <optgroup label="{{ $category['title'] }}" >
-                                @foreach($arr_category as $subcategory)
-                                  @if( $subcategory['parent']==$category['cat_id'])
-                                    <option  name="sub_cat" id="sub_cat" value="{{ $subcategory['cat_id'] }}" >
-                                   {{ $subcategory['title'] }}
-                                    </option  name="sub_cat" id="sub_cat">
-                                   @endif
-                                   @endforeach
 
-                          </optgroup>
-                    @endif
-                    @endforeach
-                    @endif
+                                  @foreach($arr_category as $subcategory)
+                                    @if( $subcategory['parent']==$category['cat_id'])
+                                  <?php
+                                    $arr_selected=array();
+                                    foreach($business['category'] as $sel_category)
+                                    {
+                                       array_push($arr_selected,$sel_category['category_id']);
+                                    }
+                                  ?>
+                                  <option  name="sub_cat" id="sub_cat" value="{{ $subcategory['cat_id'] }}"
+                                    <?php if(in_array($subcategory['cat_id'],$arr_selected)){ echo 'selected="selected"'; }?> >
+                                    <!--  <input type="checkbox" name="main_cat" id="main_cat" value="{{-- $subcategory['cat_id'] --}}"> -->
+                                    {{ $subcategory['title'] }}
+                                    </option>
+                                  <!-- </option  name="sub_cat" id="sub_cat"> -->
+                                    @endif
+                                 @endforeach
+
+                            </optgroup>
+                          @endif
+                        @endforeach
+                      @endif
                   </select><a href="javascript:void(0);" onclick="clearCategoryOptGroup(this)">Clear Selected Option</a>
-                  <div class="alert alert-warning">Note: Press Ctrl To Select Multiple Category</div>
-                  <span class='help-block'>{{ $errors->first('business_cat') }}</span>
+                <span class='help-block'>{{ $errors->first('business_cat') }}</span>
                   </div>
                   </div></div>
-
-
-
-
-
-
-
-                  <!--   <div class="user_box_sub">
-                    <div class="row">
-                      <div class="col-lg-3  label-text">Category :</div>
-                        <div class="col-sm-9 col-md-9 col-lg-9 m_l">
-                          <select class="input_acct"  name="category" required="" aria-describedby="basic-addon1" >
-                            <option value="">Select Category</option>
-                                @if (isset($arr_category)&& (count($arr_category) > 0))
-                                  @foreach($arr_category as $cat)
-                                    <option value="{{ $cat['cat_id'] }}">{{ $cat['title'] }}</option>
-                                  @endforeach
-                                @endif
-                          </select>
-                          <div class="error_msg">{{ $errors->first('category') }} </div>
-                      </div>
-                    </div>
-                  </div> -->
-
-
-                  <div class="user_box_sub">
+                 <div class="user_box_sub">
                     <div class="row">
                      <div class="col-lg-3  label-text">Business Name :</div>
                       <div class="col-sm-12 col-md-12 col-lg-9 m_l">
@@ -143,6 +130,7 @@
                               class="input_acct"
                               placeholder="Enter Business Name"
                               required=""  aria-describedby="basic-addon1"
+                              value="{{ isset($business['business_name'])?$business['business_name']:'' }}"
                               />
                         <div class="error_msg">{{ $errors->first('business_name') }} </div>
                       </div>
@@ -157,6 +145,9 @@
                     <a href="#" class="btn btn-post">Save &amp; exit</a>
                     <a href="#" class="btn btn-post pull-right">Next</a> -->
               </div>
+              </form>
+               @endforeach
+@endif
               <div class="clr"></div>
 
             </div>

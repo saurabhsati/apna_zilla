@@ -532,7 +532,7 @@ class BusinessListingController extends Controller
 
 
 
-        $business_data['hours_of_operation']=$request->input('hours_of_operation');
+        //$business_data['hours_of_operation']=$request->input('hours_of_operation');
     	$business_data['company_info']=$request->input('company_info');
         $business_data['establish_year']=$request->input('establish_year');
     	$business_data['keywords']=$request->input('keywords');

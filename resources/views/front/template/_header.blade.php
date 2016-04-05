@@ -47,6 +47,7 @@
 
 
       <!--category droup doun mobile effect-->
+
        <script>
 $(document).ready(function(){
     $(".spe_mobile").click(function(){

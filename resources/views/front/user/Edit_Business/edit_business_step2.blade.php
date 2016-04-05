@@ -20,7 +20,7 @@
 
 
          <div class="row">
-          @include('front.user.left_side_bar_user_business')
+          @include('front.user.Edit_Business.edit_business_left_side_bar_menu')
           <div class="col-sm-12 col-md-9 col-lg-9">
               @if(Session::has('success'))
                 <div class="alert alert-success alert-dismissible">
@@ -43,14 +43,15 @@
               <div class="my_whit_bg">
                  <div class="title_acc">Please Provide Location Information</div>
                  <div class="row">
-
+                    @if(isset($business_data) && sizeof($business_data)>0)
+                  @foreach($business_data as $business)
                   <form class="form-horizontal"
                            id="validation-form"
                            method="POST"
-                           action="{{ url('/front_users/add_location_details') }}"
+                          action="{{ url('/front_users/update_business_step2/'.$enc_id)}}"
                            enctype="multipart/form-data"
                            >
-                  <input type="hidden" name="business_id" value="{{ $business_id }}" >  </input>
+
 
                 {{ csrf_field() }}
 
@@ -65,7 +66,9 @@
                                 class="input_acct"
                                 placeholder="Enter Building's Name"
                                 data-rule-required="true"
-                                required="" aria-describedby="basic-addon1"/>
+                                required="" aria-describedby="basic-addon1"
+                                value="{{ isset($business['building'])?$business['building']:'' }}"
+                                />
                           <div class="error_msg">{{ $errors->first('building') }} </div>
                         </div>
                          </div>
@@ -78,6 +81,7 @@
                          <input type="text" name="street"
                                 class="input_acct"
                                 placeholder="Enter Street's Name"
+                                value="{{ isset($business['street'])?$business['street']:'' }}"
                                 required="" aria-describedby="basic-addon1"/>
 
                         </div>
@@ -91,6 +95,7 @@
                          <input type="text" name="landmark"
                                 class="input_acct"
                                 placeholder="Enter Landmark's Name"
+                                value="{{ isset($business['landmark'])?$business['landmark']:'' }}"
                                 required="" aria-describedby="basic-addon1"/>
                         <div class="error_msg">{{ $errors->first('landmark') }} </div>
                         </div>
@@ -105,6 +110,7 @@
                                 class="input_acct"
                                 placeholder="Enter Area's Name"
                                 onchange="setAddress()"
+                                value="{{ isset($business['area'])?$business['area']:'' }}"
                                 required="" aria-describedby="basic-addon1" />
                         </div>
                          </div>
@@ -116,12 +122,12 @@
              <div class="col-lg-3  label-text">Country :</div>
               <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                   <select class="input_acct"  id="country" name="country" required="" aria-describedby="basic-addon1" >
-                    <option value="">Select Country</option>
-                    @if (isset($arr_country)&& (count($arr_country) > 0))
-                      @foreach($arr_country as $country)
-                          <option value="{{ $country['id'] }}">{{ $country['country_name'] }}</option>
+                    @if(isset($arr_country) && sizeof($arr_country)>0)
+                         @foreach($arr_country as $country)
+                      <option value="{{ isset($country['id'])?$country['id']:'' }}" {{ $business['country']==$country['id']?'selected="selected"':'' }}>{{ isset($country['country_name'])?$country['country_name']:'' }}
+                      </option>
                       @endforeach
-                    @endif
+                       @endif
                   </select>
                    <div class="error_msg">{{ $errors->first('country') }} </div>
                 </div>
@@ -133,7 +139,12 @@
             <div class="col-lg-3  label-text">State :</div>
               <div class="col-sm-12 col-md-12 col-lg-9 m_l" >
                 <select class="input_acct" name="state" id="state" required="" aria-describedby="basic-addon1">
-                  <option id="show_state" value="" >--Select--</option>
+                   @if(isset($arr_state) && sizeof($arr_state)>0)
+                   @foreach($arr_state as $state)
+                    <option value="{{ isset($state['id'])?$state['id']:'' }}" {{ $business['state']==$state['id']?'selected="selected"':'' }}>{{ isset($state['state_title'])?$state['state_title']:'' }}
+                    </option>
+                    @endforeach
+                    @endif
                 </select>
               </div>
             </div>
@@ -145,7 +156,12 @@
              <div class="col-lg-3  label-text">City :</div>
               <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                <select class="input_acct"  name="city" id="city" required="" aria-describedby="basic-addon1">
-                  <option value="" >--Select--</option>
+                 @if(isset($arr_city) && sizeof($arr_city)>0)
+                   @foreach($arr_city as $city)
+                <option value="{{ isset($city['id'])?$city['id']:'' }}" {{ $business['city']==$city['id']?'selected="selected"':'' }}>{{ isset($city['city_title'])?$city['city_title']:'' }}
+                </option>
+                @endforeach
+                @endif
                  </select>
                 </div>
               </div>
@@ -156,26 +172,23 @@
                 <div class="col-lg-3  label-text">Zipcode :</div>
                   <div class="col-sm-9 col-md-9 col-lg-9 m_l">
                     <select class="input_acct"  id="zipcode"  name="zipcode" required="" aria-describedby="basic-addon1">
-                      <option value="">--Select--</option>
+                       <option value="{{ isset($arr_place[0]['id'])?$arr_place[0]['id']:'' }}" >{{ isset($arr_place[0]['postal_code'])?$arr_place[0]['postal_code']:'' }}
+                </option>
                     </select>
                     <div class="error_msg">{{ $errors->first('zipcode') }} </div>
                 </div>
               </div>
             </div>
 
-            {{-- @if (isset($arr_zipcode)&& (count($arr_zipcode) > 0))
-                            @foreach($arr_zipcode as $code)
-                              <option value="{{ $code['id'] }}">{{ $code['zipcode'] }}</option>
-                            @endforeach
-                          @endif --}}
+
 
 
              <div class="user_box_sub">
             <div class="row">
              <div class="col-lg-3  label-text">Map :</div>
               <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                    <input type="hidden" name="lat" value="" id="lat" />
-                    <input type="hidden" name="lng" value="" id="lng"/>
+                    <input type="hidden" name="lat" value="{{ isset($business['lat'])?$business['lat']:'' }}" id="lat" />
+                    <input type="hidden" name="lng" value="{{ isset($business['lng'])?$business['lng']:'' }}" id="lng"/>
                      <div id="location_map" style="height:400px"></div>
                     <label>Note: Click On the Map to Pick Nearby Custom Location </label>
                 </div>
@@ -183,34 +196,7 @@
             </div>
 
 
-            <!--  <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" >Map<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input type="hidden" name="lat" value="" id="lat" />
-                    <input type="hidden" name="lng" value="" id="lng"/>
 
-                    <div id="restaurant_location_map" style="height:400px"></div>
-                    <label>Note: Click On the Map to Pick Nearby Custom Location </label>
-                </div>
-            </div> -->
-
-             <!--  <div class="user_box_sub">
-                <div class="row">
-                  <div class="col-lg-3  label-text">Mobile No:</div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                      <input type="text" name="mobile_number" class="input_acct" placeholder="Enter Mobile Number" />
-                    </div>
-                  </div>
-              </div>
-
-               <div class="user_box_sub">
-                 <div class="row">
-                    <div class="col-lg-3  label-text">Landline No:</div>
-                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="landline_number"  class="input_acct" placeholder="Enter Landline Number" />
-                    </div>
-                  </div>
-                </div> -->
 
                     </div>
                   </div>
@@ -225,21 +211,22 @@
 
             </div>
             </form>
+            @endforeach
+@endif
           </div>
          </div>
        </div>
       </div>
-
 <script type="text/javascript">
 
     var  map;
     var ref_input_lat = $('#lat');
     var ref_input_lng = $('#lng');
 
-    function setMapLocation(city)
+    function setMapLocation(address)
     {
 
-        geocoder.geocode({'address': city}, function(results, status) {
+        geocoder.geocode({'address': address}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK)
             {
 
@@ -274,9 +261,9 @@
     }
     function initializeMap()
     {
-         var latlng = new google.maps.LatLng(1.10, 1.10);
+         var latlng = new google.maps.LatLng($(ref_input_lat).val(), $(ref_input_lng).val());
          var myOptions = {
-             zoom: 5,
+             zoom: 18,
              center: latlng,
              panControl: true,
              scrollwheel: true,
@@ -298,7 +285,7 @@
 
          map.streetViewControl = false;
          infowindow = new google.maps.InfoWindow({
-             content: "(1.10, 1.10)"
+             content: "("+$(ref_input_lat).val()+", "+$(ref_input_lng).val()+")"
          });
 
          google.maps.event.addListener(map, 'click', function(event) {
@@ -346,44 +333,27 @@
         map.setZoom(16);
     }
 
-    /*function setAddress(ref)
+    function setAddress()
     {
+        var street = $('#street').val();
+         var area = $('#area').val();
+         var city = $('#city option:selected').text();
+         var state = $('#state option:selected').text();
+         var country = $('#country option:selected').text();
 
-        var addr = $("#city option:selected").text();
+        var addr = street+", "+area+", "+city+", "+state+", "+country;
 
-        // var addr = $(ref).text();
-        alert(addr);
         setMapLocation(addr);
-    }*/
+    }
+
+ /*   $('#street').onchange(function (){
+      setAddress()
+    });*/
 
 </script>
-
-
 <script type="text/javascript">
 
     var site_url = "{{url('/')}}";
-
-    function loadPreviewImage(ref)
-    {
-        var file = $(ref)[0].files[0];
-
-        var img = document.createElement("img");
-        reader = new FileReader();
-        reader.onload = (function (theImg) {
-            return function (evt) {
-                theImg.src = evt.target.result;
-                $('#preview_profile_pic').attr('src', evt.target.result);
-            };
-        }(img));
-        reader.readAsDataURL(file);
-        $("#removal_handle").show();
-    }
-
-    function clearPreviewImage()
-    {
-        $('#preview_profile_pic').attr('src',site_url+'/images/front/avatar.jpg');
-        $("#removal_handle").hide();
-    }
 </script>
 
 <script type="text/javascript">
@@ -391,9 +361,7 @@ jQuery(document).ready(function () {
  token   = jQuery("input[name=_token]").val();
   jQuery('#country').on('change', function() {
 
-/*    var addr = $("#city option:selected").text();
-    setMapLocation(addr);
-*/
+
     var country_id = jQuery(this).val();
     jQuery.ajax({
        url      : site_url+"/front_users/get_state?_token="+token,
@@ -474,25 +442,9 @@ jQuery(document).ready(function () {
   });
 
 
- /* jQuery('#city').on('change',function() {
-    var addr = jQuery('#city').text();
-    setMapLocation(addr);
-  });*/
 
 });
 
- function setAddress()
-    {
-         var street = $('#street').val();
-         var area = $('#area').val();
-         var city = $('#city option:selected').text();
-         var state = $('#state option:selected').text();
-         var country = $('#country option:selected').text();
-
-        var addr = street+", "+area+", "+city+", "+state+", "+country;
-
-        setMapLocation(addr);
-    }
 
 
 

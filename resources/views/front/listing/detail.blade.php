@@ -641,7 +641,7 @@
 function check_review()
 {
         var rating  = $('#rating').val();
-        var review  = $('#review').val();
+        var review  = $('textarea#review').val();
         var name    = $('#name').val();
         var mobile  = $('#mobile_no').val();
         var email   = $('#email').val();
@@ -653,13 +653,13 @@ function check_review()
         if(rating=="")
         {
 
-          $('#err_rating').html('Enter Your Rating.');
+        /*  $('#err_rating').html('Enter Your Rating.');
           $('#err_rating').show();
           $('#rating').focus();
           $('#rating').on('click',function(){
           $('#err_rating').hide();
             });
-          flag=0;
+          flag=0;*/
         }
 
           if(review=="")

@@ -24,7 +24,7 @@
 
        <div class="container">
          <div class="row">
-          @include('front.user.left_side_bar_user_business')
+          @include('front.user.Edit_Business.edit_business_left_side_bar_menu')
           <div class="col-sm-12 col-md-9 col-lg-9">
               @if(Session::has('success'))
                 <div class="alert alert-success alert-dismissible">
@@ -43,18 +43,17 @@
                     {{ Session::get('error') }}
                 </div>
               @endif
-
+              @if(isset($business_data) && sizeof($business_data)>0)
+                  @foreach($business_data as $business)
               <form class="form-horizontal"
                        id="validation-form"
                        method="POST"
-                       action="{{ url('/front_users/add_other_details') }}"
+                      action="{{ url('/front_users/update_business_step4/'.$enc_id)}}"
                        enctype="multipart/form-data"
                        >
 
             {{ csrf_field() }}
-
-            <input type="hidden" name="business_id" value="{{ $business_id }}" >  </input>
-            <div class="my_whit_bg">
+             <div class="my_whit_bg">
             <div class="title_acc">Please Provide Other Information</div>
             <div class="row">
 
@@ -65,7 +64,7 @@
                       <div class="row">
                         <div class="col-lg-2 label-text">Company Information <span>:</span></div>
                           <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                            <textarea  class="input_acct" id="company_info" name="company_info" style="width: 682px;" placeholder="Enter Company Information"  required=""  aria-describedby="basic-addon1" /></textarea>
+                            <textarea  class="input_acct" id="company_info" name="company_info" style="width: 682px;" placeholder="Enter Company Information"  required=""  aria-describedby="basic-addon1" />{{ isset($business['company_info'])?$business['company_info']:'' }}</textarea>
                             <div class="error_msg">{{ $errors->first('company_info') }} </div>
                           </div>
                        </div>
@@ -76,7 +75,7 @@
                         <div class="row">
                           <div class="col-lg-2 label-text">Establishment Year <span>:</span></div>
                             <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                              <input type="text"  class="input_acct"  id="establish_year" name="establish_year"  placeholder="Enter Establishment Year"  required=""  aria-describedby="basic-addon1" />
+                              <input type="text"  class="input_acct"  id="establish_year" name="establish_year"  placeholder="Enter Establishment Year"  required=""  aria-describedby="basic-addon1" value="{{ isset($business['establish_year'])?$business['establish_year']:'' }}" />
                                <div class="error_msg">{{ $errors->first('establish_year') }} </div>
                             </div>
                         </div>
@@ -88,25 +87,43 @@
                               <div class="col-sm-12 col-md-12 col-lg-10 m_l">
                                 <textarea  class="input_acct" id="keywords" name="keywords" style="width: 682px;" placeholder="Enter Keywords"
                                 required=""  aria-describedby="basic-addon1"
-                                />
+                                />{{ isset($business['keywords'])?$business['keywords']:'' }}
                                 </textarea>
                                 <div class="error_msg">{{ $errors->first('keywords') }} </div>
                               </div>
                            </div>
                       </div>
 
-                              <!--  <div class="user_box_sub">
-                                  <div class="row">
-                                    <div class="col-lg-2 label-text">Company Information <span>:</span></div>
-                                      <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                                        <textarea  class="input_acct" id="company_info" name="company_info" style="width: 682px;" placeholder="Enter Company Information"/></textarea>
-                                        <div class="error_msg">{{-- $errors->first('company_info') --}} </div>
-                                      </div>
-                                   </div>
-                                </div> -->
+                       <div class="user_box_sub">
+                        <div class="row">
+                          <div class="col-lg-2 label-text">Modes Of Payment <span>:</span></div>
+                            <div class="col-sm-12 col-md-12 col-lg-10 m_l">
+                               <div class="fileupload fileupload-new business_upload_image_" data-provides="fileupload">
+                                 @foreach($business['payment_mode'] as $payment_mode)
 
+                                  <div class="fileupload-new img-thumbnail main" style="width: 300px; height: 62px;" data-payment-mode="{{ $payment_mode['title'] }}">
+                                     <input class="form-control" type="text" name="payment_mode" id="payment_mode" class="pimg"  value="{{ $payment_mode['title']}}" />
+                                     <div class="caption">
+                                     <p class="pull-left">
+                                        <a href="javascript:void(0);"class="delete_payment_mode" data-payment-mode="{{ $payment_mode['title'] }}" onclick="javascript: return delete_payment_mode('<?php echo $payment_mode['id'] ;?>')">
+                                         <span class="glyphicon glyphicon-minus-sign " style="font-size: 20px;"></span></a>
+                                     </p>
+                                    </div>
+                                  </div>
+                                  @endforeach
+                                 <div class="error" id="err_delete_payment_mode"></div>
+                               </div>
+                                <span class='help-block'>{{ $errors->first('main_image') }}</span>
+                            </div>
+                         </div>
+                         </div>
 
-                            <div class="user_box_sub">
+                         <div class="user_box_sub">
+                         <div class="row">
+                          <div class="col-lg-2 label-text"><a href="#" class="add_payment_mode">Add More Payment Mode</a> <span>:</span></div>
+                         </div></div>
+
+                        <div class="user_box_sub add_more_payment_mode" style="display: none;">
                               <div class="col-sm-5 col-md-3" style="float:right;margin-right: -133px;">
                                      <a href="javascript:void(0);" id='add-payment'>
                                          <span class="glyphicon glyphicon-plus-sign" style="font-size: 22px;"></span>
@@ -135,6 +152,7 @@
                                       </div>
                                   </div>
                               </div>
+
                           <!--   <hr/>
 
                           <div class="title_acc">Opening Hours</div>
@@ -316,6 +334,8 @@
                  </div>
                  </div>
                 </form>
+                @endforeach
+                @endif
              </div>
          </div>
        </div>
@@ -324,58 +344,28 @@
 
 
 <script type="text/javascript">
-
     var site_url = "{{url('/')}}";
-
-    function loadPreviewImage(ref)
-    {
-        var file = $(ref)[0].files[0];
-
-        var img = document.createElement("img");
-        reader = new FileReader();
-        reader.onload = (function (theImg) {
-            return function (evt) {
-                theImg.src = evt.target.result;
-                $('#preview_profile_pic').attr('src', evt.target.result);
-            };
-        }(img));
-        reader.readAsDataURL(file);
-        $("#removal_handle").show();
-    }
-
-    function clearPreviewImage()
-    {
-        $('#preview_profile_pic').attr('src',site_url+'/images/front/avatar.jpg');
-        $("#removal_handle").hide();
-    }
 </script>
 
 <script type="text/javascript">
-jQuery(document).ready(function () {
- token   = jQuery("input[name=_token]").val();
-  jQuery('#city').on('change', function() {
-    var city_id = jQuery(this).val();
-    jQuery.ajax({
-       url      : site_url+"/front_users/get_state_country?_token="+token,
-       method   : 'POST',
-       dataType : 'json',
-       data     : { city_id:city_id },
-       success: function(responce){
-          if(responce.length == 0)
-          {
-            var  state   = "<option value='' >State</option>";
-            var  country = "<option value='' >Country</option>";
-          }else
-          {
-            var  state   = "<option value='"+responce.state_id+"' >"+responce.state_name+"</option>";
-            var  country = "<option value='"+responce.country_id+"' >"+responce.country_name+"</option>";
-          }
-          $('#state').html(state);
-          $('#country').html(country);
-       }
-    });
-  });
+$('.add_payment_mode').click(function()
+{
+      $(".add_more_payment_mode").removeAttr("style");
 });
+function delete_payment_mode(id)
+{
+  var _token = $('input[name=_token]').val();
+  var dataString = { id:id, _token: _token };
+  var url_delete= site_url+'/front_users/delete_payment_mode';
+  $.post( url_delete, dataString)
+      .done(function( data ) {
+        if(data=='done'){
+             $('#err_delete_payment_mode').html('<div style="color:green">Payment Mode deleted successfully.</div>');
+             var request_id=$('.delete_payment_mode').parents('.main').attr('data-payment-mode');
+             $('div[data-payment-mode="'+request_id+'"]').remove();
+        }
+      });
+}
 </script>
 
 <script type="text/javascript">

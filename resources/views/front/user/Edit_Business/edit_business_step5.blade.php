@@ -41,22 +41,18 @@
                 </div>
               @endif
 
-
-
+                  @if(isset($business_data) && sizeof($business_data)>0)
+                  @foreach($business_data as $business)
                   <form class="form-horizontal"
                            id="validation-form"
                            method="POST"
-                           action="{{ url('/front_users/add_services_details') }}"
+                            action="{{ url('/front_users/update_business_step5/'.$enc_id)}}"
                            enctype="multipart/form-data"
                            >
 
                 {{ csrf_field() }}
 
-                 <input type="hidden" name="business_id" value="{{ $business_id }}" >  </input>
-
-
-
-            <div class="my_whit_bg">
+               <div class="my_whit_bg">
               <div class="title_acc">Please Provide Other Information</div>
                 <div class="row">
 
@@ -69,48 +65,46 @@
                     <div class="row">
                       <div class="col-lg-2 label-text">Youtube Link <span>:</span></div>
                         <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                          <input type="text"  class="input_acct"  id="youtube_link" name="youtube_link"  placeholder="Enter Youtube Link" required=""  aria-describedby="basic-addon1"/>
+                          <input type="text"  class="input_acct"  id="youtube_link" name="youtube_link"  placeholder="Enter Youtube Link" value="{{ isset($business['youtube_link'])?$business['youtube_link']:'' }}"  aria-describedby="basic-addon1"/>
                            <div class="error_msg">{{ $errors->first('youtube_link') }} </div>
                         </div>
                     </div>
                   </div>
+                  <div class="user_box_sub">
+                            <div class="col-lg-2 label-text">Uploaded Business Gallery Images<span>:</span></div>
+                            <div class="col-sm-12 col-md-12 col-lg-10 m_l">
+                               <div class="fileupload fileupload-new business_upload_image_" data-provides="fileupload">
+                                 @foreach($business['image_upload_details'] as $image)
 
+                                  <div class="fileupload-new img-thumbnail main" style="width: 202px; height: 160px;" data-image="{{ $image['image_name'] }}">
+                                     <img style="width:191px;height:132px"
+                                      src={{ $business_public_img_path.$image['image_name']}} alt="" />
+                                     <div class="caption">
+                                     <p class="pull-left">
+                                        <a href="javascript:void(0);"class="delete_image" data-image="{{ $image['image_name'] }}" onclick="javascript: return delete_gallery('<?php echo $image['id'] ;?>','<?php echo $image['image_name'];?>')">
+                                         <span class="glyphicon glyphicon-minus-sign " style="font-size: 20px;"></span></a>
+                                     </p>
+                                    </div>
+                                  </div>
+                               @endforeach
+                               <div class="error" id="err_delete_image"></div>
+                               </div>
+                                <span class='help-block'>{{ $errors->first('main_image') }}</span>
+                            </div>
 
-                <!--     <div class="user_box_sub">
-                <div class="col-sm-5 col-md-3" style="float:right;margin-right: -133px;">
-                   <a href="javascript:void(0);" id='add-payment'>
-                       <span class="glyphicon glyphicon-plus-sign" style="font-size: 22px;"></span>
-                   </a>
-                  <span style="margin-left:05px;">
-                  <a href="javascript:void(0);" id='remove-payment'>
-                      <span class="glyphicon glyphicon-minus-sign" style="font-size: 22px;"></span>
-                  </a>
-                  </span>
-                 </div>
-                  <div class="row">
-                   <div class="col-lg-2 label-text">Payment Mode <span>:</span></div>
-                    <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                    <input type="text" name="payment_mode[]" id="payment_mode" class="input_acct"  placeholder="Enter Payment Mode" data-rule-required="true"  />
-                    <div class="error" id="error_payment_mode">{{-- $errors->first('payment_mode') --}}</div>
-                    <div class="clr"></div><br/>
-                      <div class="error" id="error_set_default"></div>
-                      <div class="clr"></div>
+                         </div>
 
-                   <div id="append_payment" class="class-add"></div>
-
-                    <div class="error_msg" style="color: red" id="error_payment_mode" ></div>
-                    <div class="error_msg" style="color: red" id="error_payment_mode1" ></div>
-                   <label class="col-sm-3 col-lg-2 control-label"></label>
-
-                    </div>
-                    </div>
-                </div>
- -->
+                <div class="user_box_sub">
+                         <div class="row">
+                          <div class="col-lg-2 label-text"><a href="#" class="add_more">Add More Gallery Images </a> <span>:</span></div>
+                </div></div>
 
 
 
 
-             <div class="user_box_sub">
+
+
+             <div class="user_box_sub add_more_image" style="display: none;">
                 <div class="col-sm-5 col-md-2" style="float:right;margin-right:-50px;">
                    <a href="javascript:void(0);" id='add-image'>
                        <span class="glyphicon glyphicon-plus-sign" style="font-size: 22px;"></span>
@@ -122,7 +116,7 @@
                     </span>
                 </div>
                   <div class="row">
-                    <div class="col-lg-2 label-text">Business Images<span>:</span></div>
+                    <div class="col-lg-2 label-text">Upload Business Gallery Images<span>:</span></div>
                        <div class="col-sm-12 col-md-12 col-lg-10 m_l">
                         <input type="file" name="business_image[]" id="business_image" class="input_acct" data-rule-required="true"  />
                         <div class="error" id="error_business_image">{{ $errors->first('business_image') }}</div>
@@ -139,8 +133,38 @@
                 </div>
                 </div>
 
+                 <div class="fouser_box_sub">
+                            <div class="col-lg-2 label-text">Business Services<span>:</span></div>
+                            <div class="col-sm-12 col-md-12 col-lg-10 m_l">
+                               <div class="fileupload fileupload-new business_upload_image_" data-provides="fileupload">
+                                 @foreach($business['service'] as $service)
 
-                <div class="user_box_sub add_more_service" >
+                                  <div class="fileupload-new img-thumbnail main" style="width: 300px; height: 62px;" data-service="{{ $service['name'] }}">
+                                     <input class="form-control" type="text" name="service" id="service" class="pimg"  value="{{ $service['name']}}" />
+                                     <div class="caption">
+                                     <p class="pull-left">
+                                        <a href="javascript:void(0);"class="delete_service" data-service="{{ $service['name'] }}" onclick="javascript: return delete_service('<?php echo $service['id'] ;?>')">
+                                         <span class="glyphicon glyphicon-minus-sign " style="font-size: 20px;"></span></a>
+                                     </p>
+                                    </div>
+                                  </div>
+
+                                  @endforeach
+                                  <div class="error" id="err_delete_service"></div>
+
+                               </div>
+                                <span class='help-block'>{{ $errors->first('main_image') }}</span>
+                            </div>
+
+                         </div>
+                <div class="user_box_sub">
+                         <div class="row">
+                          <div class="col-lg-2 label-text"><a href="#" class="add_serc">Add More Business Services </a> <span>:</span></div>
+                </div></div>
+
+
+
+                <div class="user_box_sub add_more_service" style="display: none;" >
                   <div class="col-sm-5 col-md-2" style="float:right;margin-right:-50px;" >
                      <a href="javascript:void(0);" id='add-service'>
                          <span class="glyphicon glyphicon-plus-sign" style="font-size: 22px;"></span>
@@ -262,6 +286,8 @@
                  </div>
                 </div>
                 </form>
+                @endforeach
+                @endif
               </div>
             </div>
            </div>
@@ -271,6 +297,39 @@
       </div>
 
 <script type="text/javascript">
+function delete_gallery(id,image_name)
+{
+  var _token = $('input[name=_token]').val();
+  var dataString = { id:id, image_name:image_name, _token: _token };
+  var url_delete= site_url+'/front_users/delete_gallery';
+  $.post( url_delete, dataString)
+      .done(function( data ) {
+        if(data=='done'){
+             $('#err_delete_image').html('<div style="color:green">Image deleted successfully.</div>');
+             var request_id=$('.delete_image').parents('.main').attr('data-image');
+             $('div[data-image="'+request_id+'"]').remove();
+        }
+      });
+}
+function delete_service(id)
+{
+  var _token = $('input[name=_token]').val();
+  var dataString = { id:id, _token: _token };
+  var url_delete= site_url+'/front_users/delete_service';
+   $.post( url_delete, dataString)
+      .done(function( data ) {
+        if(data=='done'){
+             $('#err_delete_service').html('<div style="color:green">Service deleted successfully.</div>');
+             var request_id=$('.delete_service').parents('.main').attr('data-service');
+             $('div[data-service="'+request_id+'"]').remove();
+        }
+      });
+}
+$('.add_more').click(function(){
+     $(".add_more_image").removeAttr("style");
+     return false;
+});
+
 $('#add-image').click(function()
  {
    flag=1;
