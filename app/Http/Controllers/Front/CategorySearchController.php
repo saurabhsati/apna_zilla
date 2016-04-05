@@ -54,7 +54,7 @@ class CategorySearchController extends Controller
      $page_title	='Business List';
 
      //dd($request->all());
-      //echo $cat_id;
+      //echo $city;
 
       // get business listing by city and category id
      if($cat_id==0)

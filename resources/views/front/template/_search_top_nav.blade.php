@@ -10,7 +10,7 @@
                               <!--<button class="form-control-map ui-widget" aria-hidden="true" type="submit"><img src="images/home_map.png" alt="" /></button>-->
                                <input type="text"
                                  @if(Request::segment(1))
-                                value="{{Request::segment(1)}}"
+                                value="{{urldecode(Request::segment(1))}}"
                                 @else value="Mumbai"
                                 @endif
                                id="city_search"
