@@ -50,7 +50,7 @@
 	                                     <div class="about_box">
 	                                     <div class="steps_about">2. Get Discovered by Visitors</div>
 	                                         <div class="sub-text-about">Upon confirmation, your listing will appear throughout the website and will be searchable by visitors interested on similar places. A badge will be added to your listing to mark it as official.</div>
-	                                         <div class="link_about"><a href="#">See How a Claimed Listings Looks <img class="abot_img" src="images/arrow.png" alt="arrow"/></a></div>
+	                                         <div class="link_about"><a href="#">See How a Claimed Listings Looks <img class="abot_img" src="{{ url('/') }}/assets/front/images/arrow.png" alt="arrow"/></a></div>
 	                                     </div>
 	                         </div>
                              <div class="col-sm-6 col-md-6 col-lg-6 abot_img_r"><img src="{{ url('/') }}/assets/front/images/about_us_1.png" alt="2. Get Discovered by Visitors"/></div>
