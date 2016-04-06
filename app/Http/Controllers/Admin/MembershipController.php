@@ -142,11 +142,11 @@ class MembershipController extends Controller
 
         if($status)
         {
-            Session::flash('success','Plan Updated Successfully');
+            Session::flash('success','Membership Plan Updated Successfully');
         }
         else
         {
-            Session::flash('error','PRoblem Occurred, While Updating Plan');
+            Session::flash('error','PRoblem Occurred, While Updating Membership Plan');
         }
 
         return redirect()->back();

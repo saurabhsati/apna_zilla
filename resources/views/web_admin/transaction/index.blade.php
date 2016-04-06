@@ -1,8 +1,8 @@
-    @extends('web_admin.template.admin')                
+    @extends('web_admin.template.admin')
 
 
     @section('main_content')
-  
+
     <link rel="stylesheet" type="text/css" href="{{ url('/assets/data-tables/latest/') }}/dataTables.bootstrap.min.css">
     <!-- BEGIN Page Title -->
     <div class="page-title">
@@ -21,15 +21,15 @@
             </li>
 
             <span class="divider">
-               <i class="fa fa-angle-right"></i>   
-                
+               <i class="fa fa-angle-right"></i>
+
             </span>
             <li>
-            
+
             <i class="fa fa-credit-card"></i>
                <a href="{{ url('/web_admin/transactions/') }}">Payment Transaction</a>
-            </li>   
-            
+            </li>
+
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span>
@@ -50,7 +50,7 @@
             <div class="box-title">
               <h3>
                 <i class="fa fa-credit-card"></i>
-                 
+
                 {{ isset($page_title)?$page_title:"" }}
             </h3>
             <div class="box-tool">
@@ -59,7 +59,7 @@
             </div>
         </div>
         <div class="box-content">
-        
+
           @if(Session::has('success'))
             <div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -67,7 +67,7 @@
                 </button>
                 {{ Session::get('success') }}
             </div>
-          @endif  
+          @endif
 
           @if(Session::has('error'))
             <div class="alert alert-danger alert-dismissible">
@@ -82,10 +82,10 @@
             {{ csrf_field() }}
 
             <div class="col-md-10">
-            
+
 
             <div id="ajax_op_status">
-                
+
             </div>
             <div class="alert alert-danger" id="no_select" style="display:none;"></div>
             <div class="alert alert-warning" id="warning_msg" style="display:none;"></div>
@@ -93,17 +93,17 @@
           <div class="btn-toolbar pull-right clearfix">
             <!--- Add new record - - - -->
                <div class="btn-group">
-                                 
+
                 </div>
             <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-            
-            <div class="btn-group"> 
-                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip" 
-                     title="Refresh" 
+
+            <div class="btn-group">
+                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
+                     title="Refresh"
                      href="{{ url('/web_admin/transactions/') }}"
                      style="text-decoration:none;">
                      <i class="fa fa-repeat"></i>
-                  </a> 
+                  </a>
             </div>
           </div>
           <br/><br/>
@@ -116,12 +116,12 @@
               <thead>
                 <tr>
                   <th> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
-                  <th>Sr. No.</th>  
+                  <th>Sr. No.</th>
                   <th>Transaction Id</th>
                   <th>Transaction Status</th>
                   <th>User Name</th>
                   <th>Membership</th>
-                  <th>Price</th>
+
                   <th>Start Date</th>
                   <th>Expire Date</th>
                  <!--  <th>Action</th> -->
@@ -129,13 +129,13 @@
               </thead>
               <tbody>
               @if(sizeof($arr_transaction)>0)
-              @foreach($arr_transaction as $key => $transaction)  
-                
+              @foreach($arr_transaction as $key => $transaction)
+
                   <tr>
-                    <td> 
-                      <input type="checkbox" 
-                             name="checked_record[]"  
-                             value="{{ base64_encode($transaction['id']) }}" /> 
+                    <td>
+                      <input type="checkbox"
+                             name="checked_record[]"
+                             value="{{ base64_encode($transaction['id']) }}" />
                     </td>
                     <td>{{ $key+1 }}</td>
                     <td>
@@ -145,35 +145,33 @@
                         {{ $transaction['transaction_status'] }}
                     </td>
                     <td>
-                        {{ isset($transaction['user_records']) && $transaction['user_records']? $transaction['user_records']['first_name']:'' }} 
+                        {{ isset($transaction['user_records']) && $transaction['user_records']? ucfirst($transaction['user_records']['first_name']):'' }}
 
-                        {{ isset($transaction['user_records']) && $transaction['user_records']? $transaction['user_records']['last_name']:'' }}
+                        {{ isset($transaction['user_records']) && $transaction['user_records']? ucfirst($transaction['user_records']['last_name']):'' }}
                     </td>
                     <td>
-                        {{ isset($transaction['membership']) && $transaction['membership']? $transaction['membership']['membership']:'' }}
+                        {{ isset($transaction['membership']) && $transaction['membership']? $transaction['membership']['title']:'' }}
                     </td>
-                    <td>
-                        {{ $transaction['price'] }}
-                    </td>
+
                     <td>
                         {{ date('d M Y',strtotime($transaction['start_date'])) }}
                     </td>
                     <td>
                         {{ date('d M Y',strtotime($transaction['expire_date'])) }}
                     </td>
-                    <!-- 
-                    <td> 
+                    <!--
+                    <td>
 
                         <a href="{{ url('/web_admin/transactions/view/'.base64_encode($transaction['id'])) }}">
                           <i class="fa fa-eye" ></i>
-                        </a>  
+                        </a>
 
                     </td> -->
                   </tr>
-                
+
                 @endforeach
                 @endif
-                  
+
               </tbody>
             </table>
           </div>
@@ -195,6 +193,6 @@
 
 </script>
 
-@stop                    
+@stop
 
 

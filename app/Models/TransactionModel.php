@@ -19,10 +19,10 @@ class TransactionModel extends Model
     public function user_records()
     {
     	return $this->belongsTo('App\Models\UserModel','user_id','id');
-    } 
+    }
 
     public function membership()
     {
-    	return $this->belongsTo('App\Models\MembershipModel','membership_id','id');
-    }						
+    	return $this->belongsTo('App\Models\MembershipModel','membership_id','plan_id');
+    }
 }

@@ -33,9 +33,9 @@ class TransactionController extends Controller
 
             $arr_transaction = $obj_transaction->toArray();
         }
-
+       // dd($arr_transaction);
         return view('web_admin.transaction.index',compact('page_title','arr_transaction'));
-    } 
+    }
 
     public function view($enc_id)
     {
@@ -55,5 +55,5 @@ class TransactionController extends Controller
     	}
 
     	return view('web_admin.transaction.view',compact('page_title','arr_single_transaction'));
-    } 
+    }
 }

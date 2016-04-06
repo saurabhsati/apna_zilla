@@ -310,6 +310,12 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::post('update/{enc_id}',						['as' => 'admin_membershpcost_update' 					,'uses' => 'Admin\MembershipCostController@update']);
 
 		});
+		/*-------------Payment Records Module------------*/
+		Route::group(['prefix'=>'transactions'], function (){
+			Route::get('/','Admin\TransactionController@index');
+			Route::get('view/{enc_id}','Admin\TransactionController@view');
+		});
+		/*-------------End--------------------------*/
 
 	/*------------------------- web_admin Contact Enquiry Related ----------*--------------------*/
 
