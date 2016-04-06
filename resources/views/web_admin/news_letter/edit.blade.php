@@ -1,4 +1,4 @@
-    @extends('web_admin.template.admin')                
+    @extends('web_admin.template.admin')
 
 
     @section('main_content')
@@ -23,7 +23,7 @@
             <li>
                 <i class="fa fa-desktop"></i>
                 <a href="{{ url('/').'/web_admin/newsletter' }}">News Letter</a>
-            </li>   
+            </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span>
@@ -60,7 +60,7 @@
                 </button>
                 {{ Session::get('success') }}
             </div>
-          @endif  
+          @endif
 
           @if(Session::has('error'))
             <div class="alert alert-danger alert-dismissible">
@@ -71,18 +71,18 @@
             </div>
           @endif
 
-          <form class="form-horizontal" 
-                id="validation-form" 
-                method="POST" 
+          <form class="form-horizontal"
+                id="validation-form"
+                method="POST"
                 action="{{ url('/web_admin/newsletter/update/'.base64_encode($arr_newsletter['news_letter_id'])) }}"
                 enctype="multipart/form-data"
                 files="true"
                 >
- 
-           {{ csrf_field() }}
-            
 
-           <div class="form-group">
+           {{ csrf_field() }}
+
+
+           <!-- <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="name">Name<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" name="name" data-rule-required="true"
@@ -90,28 +90,28 @@
                      />
                     <span class='help-block'>{{ $errors->first('name') }}</span>
                 </div>
-            </div>
- 
+            </div> -->
+
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="email_address">Email Address<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control" name="email_address" data-rule-required="true"  data-rule-email="true" 
+                    <input class="form-control" name="email_address" data-rule-required="true"  data-rule-email="true"
                     value="{{ isset($arr_newsletter['email_address'])?$arr_newsletter['email_address']:'' }}"
                     />
                     <span class='help-block'>{{ $errors->first('email_address') }}</span>
                 </div>
             </div>
-           
+
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="is_active">Status<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls"> 
-                    <input type="checkbox" {{ ($arr_newsletter['is_active']==1)?'checked':'' }} name="is_active"  
-                    value="1" 
-                      /> 
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input type="checkbox" {{ ($arr_newsletter['is_active']==1)?'checked':'' }} name="is_active"
+                    value="1"
+                      />
                     <span class='help-block'>{{ $errors->first('is_active') }}</span>
                 </div>
             </div>
-            
+
 
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
@@ -129,11 +129,11 @@
 <!-- END Main Content -->
 
 <script type="text/javascript">
-   
+
     var url = '{{ url('/') }}';
     function loadCities(ref)
      {
-        var selected_country = jQuery(ref).val();   
+        var selected_country = jQuery(ref).val();
 
         jQuery.ajax({
                         url:url+'/web_admin/commonFunctions/get_cities/'+selected_country,
@@ -151,21 +151,21 @@
                                 jQuery('select[name="city"]').removeAttr('disabled');
                                 if(typeof(response.arr_city) == "object")
                                 {
-                                   var option = '<option value="">Select</option>'; 
+                                   var option = '<option value="">Select</option>';
                                    jQuery(response.arr_city).each(function(index,city)
                                    {
 
                                       option+='<option value="'+city.city_id+'" >'+city.city_name+'</option>';
-                                       
+
                                    });
 
                                    jQuery('select[name="city"]').html(option);
                                 }
                             }
                             return false;
-                        }    
+                        }
         });
      }
 
 </script>
-@stop                    
+@stop

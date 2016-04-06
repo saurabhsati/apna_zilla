@@ -108,10 +108,11 @@ class BusinessListingModel extends Model
     {
         return $this->hasMany('App\Models\BusinessPaymentModeModel','business_id','id');
     }
-
-    /*public function favourite_businesses()
+     public function membership_plan_details()
     {
-        return $this->hasMany('App\Models\FavouriteBusinessesModel','business_id','id');
-    }*/
+        return $this->hasMany('App\Models\TransactionModel','business_id','id');
+    }
+
+
 
 }

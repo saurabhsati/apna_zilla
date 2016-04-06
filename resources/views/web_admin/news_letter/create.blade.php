@@ -1,4 +1,4 @@
-    @extends('web_admin.template.admin')                
+    @extends('web_admin.template.admin')
 
 
     @section('main_content')
@@ -23,7 +23,7 @@
             <li>
                 <i class="fa fa-edit"></i>
                 <a href="{{ url('/').'/web_admin/newsletter' }}">News Letter</a>
-            </li>   
+            </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span>
@@ -56,7 +56,7 @@
                 </button>
                 {{ Session::get('success') }}
             </div>
-          @endif  
+          @endif
 
           @if(Session::has('error'))
             <div class="alert alert-danger alert-dismissible">
@@ -67,27 +67,27 @@
             </div>
           @endif
 
-          <form class="form-horizontal" 
-                id="validation-form" 
-                method="POST" 
-                action="{{ url('/web_admin/newsletter/store') }}" 
+          <form class="form-horizontal"
+                id="validation-form"
+                method="POST"
+                action="{{ url('/web_admin/newsletter/store') }}"
                 enctype="multipart/form-data"
           >
 
 
            {{ csrf_field() }}
 
- 
- 
-            <div class="form-group">
+
+
+           <!--  <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="name">Name<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input type="text" class="form-control" id="name" name="name" data-rule-required="true" />
                     <span class='help-block'>{{ $errors->first('name') }}</span>
                 </div>
-            </div>
-          
-            
+            </div> -->
+
+
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="email_address">Email Address<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
@@ -99,13 +99,13 @@
 
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="is_active">Status </label>
-                <div class="col-sm-6 col-lg-4 controls"> 
-                    <input type="checkbox"  name="is_active" value="1" 
-                      /> 
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input type="checkbox"  name="is_active" value="1"
+                      />
                     <span class='help-block'>{{ $errors->first('is_active') }}</span>
                 </div>
             </div>
-                
+
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
                 <input type="submit"  class="btn btn-primary" value="Add">
@@ -117,5 +117,5 @@
 </div>
 </div>
 <!-- END Main Content -->
-  
-@stop                    
+
+@stop

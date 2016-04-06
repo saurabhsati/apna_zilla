@@ -10,11 +10,16 @@ class TransactionModel extends Model
 
     protected $fillable = ['order_id',
     						'transaction_id',
+                            'business_id',
+                            'category_id',
     						'user_id',
     						'membership_id',
     						'price',
     						'start_date',
-    						'expire_date'];
+    						'expire_date',
+                            'transaction_status',
+                            'sales_user_public_id'
+                            ];
 
     public function user_records()
     {

@@ -1,4 +1,4 @@
-      @extends('web_admin.template.admin')                
+      @extends('web_admin.template.admin')
 
 
       @section('main_content')
@@ -23,7 +23,7 @@
             <li>
                 <i class="fa fa-desktop"></i>
                 <a href="{{ url('/').'/web_admin/newsletter' }}">News Letter</a>
-            </li>   
+            </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span>
@@ -32,7 +32,7 @@
       </div>
       <!-- END Breadcrumb -->
 
- 
+
         <!-- START Main Content -->
 
 
@@ -42,7 +42,7 @@
                             <div class="box-title">
                                 <h3><i class="fa fa-file"></i> News Letter Subscribers Information</h3>
                                 <div class="box-tool">
-                                  
+
                                 </div>
                             </div>
                             <div class="box-content">
@@ -52,8 +52,8 @@
                                         <br/><br/>
                                     </div>
                                     <div class="col-md-9 user-profile-info">
-                                        <p><span>Name:</span>{{ isset($arr_newsletter['name'])?$arr_newsletter['name']:'' }}</p>  
-                                        <p><span>Email:</span> {{ isset($amail_address)?$amail_address:'' }}</p> 
+                                      <!--   <p><span>Name:</span>{{ isset($arr_newsletter['name'])?$arr_newsletter['name']:'' }}</p>   -->
+                                        <p><span>Email:</span> {{ isset($arr_newsletter['email_address'])?$arr_newsletter['email_address']:'' }}</p>
                                         <p><span>Status:</span> {{ ($arr_newsletter['is_active'])?'Active':'Deactive' }}</p>
                                     </div>
                                 </div>
@@ -67,6 +67,6 @@
         <!-- END Main Content -->
 
 
-  @stop                    
+  @stop
 
 

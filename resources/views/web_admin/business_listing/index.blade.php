@@ -210,12 +210,12 @@
                           {
                             if($main_category['is_allow_to_add_deal']=='1')
                             {
-                              $check_allow='';
+                              //$check_allow='';
                               $check_allow=1;
                             }
                             else
                             {
-                               $check_allow='';
+                               //$check_allow='';
                               $check_allow=0;
                             }
                           }

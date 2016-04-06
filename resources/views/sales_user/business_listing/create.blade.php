@@ -1070,7 +1070,7 @@ $('#remove-payment').click(function()
 
         jQuery.ajax({
                         url:url+'/web_admin/common/get_states/'+selected_country,
-                        type:'GET',
+                        type:'POST',
                         data:'flag=true',
                         dataType:'json',
                         beforeSend:function()

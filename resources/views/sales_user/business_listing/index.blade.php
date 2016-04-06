@@ -141,6 +141,8 @@
                   <th style="width:25px;">Deals</th>
                   <th width="" style="text-align:center">Status</th>
                   <th>Action</th>
+                   <th>Assign Membership</th>
+                   <th>Validity Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -168,6 +170,7 @@
                           if($sub_category['parent']==$main_category['cat_id'])
                           {
                             echo $main_category['title'].' :: ';
+
                           }
 
 
@@ -194,6 +197,7 @@
                        @endif
 
                     <td>
+
                        <?php
                  foreach ($business['category'] as $business_category) {
                  foreach ($arr_sub_category as $sub_category) {
@@ -205,12 +209,12 @@
                           {
                             if($main_category['is_allow_to_add_deal']=='1')
                             {
-                              $check_allow='';
+                              //$check_allow='';
                               $check_allow=1;
                             }
                             else
                             {
-                               $check_allow='';
+                              // $check_allow='';
                               $check_allow=0;
                             }
                           }
@@ -267,6 +271,59 @@
                           <i class="fa fa-trash" ></i>
                         </a>
 
+                    </td>
+                    <td>
+                      <?php
+                         foreach ($business['category'] as $business_category)
+                          {
+                             foreach ($arr_sub_category as $sub_category)
+                              {
+                                if($business_category['category_id']==$sub_category['cat_id'])
+                                {
+                                   foreach ($arr_main_category as $main_category)
+                                   {
+                                      if($sub_category['parent']==$main_category['cat_id'])
+                                      {
+                                       $category_id=$sub_category['parent'];
+                                      }
+                                    }
+                                }
+                              }
+                          }
+                            $business_id=$business['id'];
+                            $user_id=$business['user_details']['id'];
+                      ?>
+                      <a href="{{ url('/sales_user/business_listing/assign_membership').'/'.base64_encode($business['id']).'/'.base64_encode($user_id).'/'.base64_encode($category_id) }}" class="show-tooltip" title="Assign Membership">
+                          <i class="fa fa-euro" ></i>
+                        </a>
+                    </td>
+                    <td>
+                    <?php
+                    if(sizeof($business['membership_plan_details']  )>0)
+                    {
+                      $date1 = date('Y-m-d',strtotime($business['membership_plan_details'][0]['expire_date']));
+                       $date2 = date('Y-m-d h:m:s');
+
+                       $diff = abs(strtotime($date1) - strtotime($date2));
+
+                      $years = floor($diff / (365*60*60*24));
+                      $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+                      $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+                      if($days>0)
+                        {
+                          echo $days.' Days Ago To Expire' ;
+                        }
+                        else
+                        {
+                          echo "Expired";
+                        }
+
+
+                    }
+
+
+
+                     ?>
                     </td>
 
                   </tr>

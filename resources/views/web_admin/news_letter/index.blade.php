@@ -1,4 +1,4 @@
-@extends('web_admin.template.admin')                
+@extends('web_admin.template.admin')
 
 
     @section('main_content')
@@ -24,7 +24,7 @@
                 <i class="fa fa-angle-right"></i>
                 <i class="fa fa-desktop"></i>
                 <a href="{{ url('/').'/web_admin/newsletter' }}">News Letter</a>
-            </span> 
+            </span>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
                   <i class="fa fa-edit"></i>
@@ -50,7 +50,7 @@
             </div>
         </div>
         <div class="box-content">
-        
+
           @if(Session::has('success'))
             <div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -58,7 +58,7 @@
                 </button>
                 {{ Session::get('success') }}
             </div>
-          @endif  
+          @endif
 
           @if(Session::has('error'))
             <div class="alert alert-danger alert-dismissible">
@@ -73,59 +73,59 @@
             {{ csrf_field() }}
 
             <div class="col-md-10">
-            
+
 
             <div id="ajax_op_status">
-                
+
             </div>
             <div class="alert alert-danger" id="no_select" style="display:none;"></div>
             <div class="alert alert-warning" id="warning_msg" style="display:none;"></div>
           </div>
           <div class="btn-toolbar pull-right clearfix">
- 
+
           <div class="btn-group">
-          <a href="{{ url('/web_admin/newsletter/create')}}" class="btn btn-primary btn-add-new-records">Add New Letter</a> 
+          <a href="{{ url('/web_admin/newsletter/create')}}" class="btn btn-primary btn-add-new-records">Add New Letter</a>
           </div>
             <div class="btn-group">
-          <a href="{{ url('/web_admin/newsletter/compose')}}" class="btn btn-primary btn-add-new-records">Compose Email</a> 
+          <a href="{{ url('/web_admin/newsletter/compose')}}" class="btn btn-primary btn-add-new-records">Compose Email</a>
           </div>
 
              <div class="btn-group">
-            <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip" 
-                    title="Multiple Active/Unblock" 
-                    href="javascript:void(0);" 
-                    onclick="javascript : return check_multi_action('frm_dynamic_pages_manage','activate');" 
+            <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
+                    title="Multiple Active/Unblock"
+                    href="javascript:void(0);"
+                    onclick="javascript : return check_multi_action('frm_dynamic_pages_manage','activate');"
                     style="text-decoration:none;">
 
                     <i class="fa fa-unlock"></i>
-                </a> 
+                </a>
                 </div>
                 <div class="btn-group">
-                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip" 
-                   title="Multiple Deactive/Block" 
-                   href="javascript:void(0);" 
-                   onclick="javascript : return check_multi_action('frm_dynamic_pages_manage','block');"  
+                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
+                   title="Multiple Deactive/Block"
+                   href="javascript:void(0);"
+                   onclick="javascript : return check_multi_action('frm_dynamic_pages_manage','block');"
                    style="text-decoration:none;">
                     <i class="fa fa-lock"></i>
-                </a> 
+                </a>
                 </div>
              <div class="btn-group">
-                
-                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip" 
-                   title="Multiple Delete" 
-                   href="javascript:void(0);" 
-                   onclick="javascript : return check_multi_action('frm_dynamic_pages_manage','delete');"  
+
+                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
+                   title="Multiple Delete"
+                   href="javascript:void(0);"
+                   onclick="javascript : return check_multi_action('frm_dynamic_pages_manage','delete');"
                    style="text-decoration:none;">
                    <i class="fa fa-trash-o"></i>
                 </a>
-            </div> 
-            <div class="btn-group"> 
-                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip" 
-                   title="Refresh" 
+            </div>
+            <div class="btn-group">
+                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
+                   title="Refresh"
                    href="{{ url('/').'/web_admin/newsletter' }}"
                    style="text-decoration:none;">
                    <i class="fa fa-repeat"></i>
-                </a> 
+                </a>
             </div>
           </div>
           <br/>
@@ -138,36 +138,36 @@
               <thead>
                 <tr>
                   <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" /></th>
-                  <th>Name</th>
-                  <th>Email address</th>                    
+                 <!--  <th>Name</th> -->
+                  <th>Email address</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-              
+
                 @if(sizeof($arr_data)>0)
                   @foreach($arr_data as $news_letter)
                   <tr>
-                    <td> 
-                      <input type="checkbox" 
-                             name="checked_record[]"  
-                             value="{{ base64_encode($news_letter['news_letter_id']) }}" /> 
+                    <td>
+                      <input type="checkbox"
+                             name="checked_record[]"
+                             value="{{ base64_encode($news_letter['news_letter_id']) }}" />
                     </td>
-                    <td> {{ $news_letter['name'] }} </td>   
-                    <td> {{ $news_letter['email_address'] }} </td>  
+                   <!--  <td> {{ $news_letter['name'] }} </td> -->
+                    <td> {{ $news_letter['email_address'] }} </td>
 
                     @if($news_letter['is_active']==1)
-                      <td> 
-                        <a class="btn btn-success" href="{{ url('/').'/web_admin/newsletter/toggle_status/'.base64_encode($news_letter['news_letter_id']).'/deactivate' }}">Active</a> 
+                      <td>
+                        <a class="btn btn-success" href="{{ url('/').'/web_admin/newsletter/toggle_status/'.base64_encode($news_letter['news_letter_id']).'/deactivate' }}">Active</a>
                       </td>
                     @else
-                      <td> 
-                        <a class="btn btn-danger"href="{{ url('/').'/web_admin/newsletter/toggle_status/'.base64_encode($news_letter['news_letter_id']).'/activate' }}">Blocked</a>   
+                      <td>
+                        <a class="btn btn-danger"href="{{ url('/').'/web_admin/newsletter/toggle_status/'.base64_encode($news_letter['news_letter_id']).'/activate' }}">Blocked</a>
                       </td>
                     @endif
-                   
-                    <td> 
+
+                    <td>
                       <a href="{{ url('/').'/web_admin/newsletter/show/'.base64_encode($news_letter['news_letter_id']) }}">
                           <i class="fa fa-eye" > </i>
                         </a>
@@ -175,29 +175,29 @@
 
                         <a href="{{ url('/').'/web_admin/newsletter/edit/'.base64_encode($news_letter['news_letter_id']) }}">
                           <i class="fa fa-edit" ></i>
-                        </a>  
-                        &nbsp;        
-                      
+                        </a>
+                        &nbsp;
+
                         @if($news_letter['is_active']==0)
                         <a href="{{ url('/').'/web_admin/newsletter/toggle_status/'.base64_encode($news_letter['news_letter_id']).'/activate' }}">
                             <i class="fa fa-lock" ></i>
-                        </a>                                 
+                        </a>
                         @elseif($news_letter['is_active']==1)
                         <a href="{{ url('/').'/web_admin/newsletter/toggle_status/'.base64_encode($news_letter['news_letter_id']).'/deactivate' }}">
                             <i class="fa fa-unlock" ></i>
-                        </a>   
-                        @endif   
+                        </a>
+                        @endif
                          &nbsp;
-                          <a href="{{ url('/').'/web_admin/newsletter/toggle_status/'.base64_encode($news_letter['news_letter_id']).'/delete' }}" 
+                          <a href="{{ url('/').'/web_admin/newsletter/toggle_status/'.base64_encode($news_letter['news_letter_id']).'/delete' }}"
                           onclick="return confirm_delete()">
                           <i class="fa fa-trash" ></i>
-                        </a>  
-                      
+                        </a>
+
                     </td>
                   </tr>
                   @endforeach
                 @endif
-                 
+
               </tbody>
             </table>
           </div>
@@ -223,7 +223,7 @@
 
     function check_multi_action(frm_id,action)
     {
- 
+
       var frm_ref = jQuery("#"+frm_id);
       if(jQuery(frm_ref).length && action!=undefined && action!="")
       {
@@ -236,7 +236,7 @@
 
         /* Get hidden input reference */
         var input_multi_action = jQuery('input[name="multi_action"]');
-        
+
         if(jQuery(input_multi_action).length)
         {
           /* Set Action in hidden input*/
@@ -257,6 +257,6 @@
       }
     }
 </script>
-@stop                    
+@stop
 
 
