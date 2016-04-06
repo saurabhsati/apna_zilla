@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\StaticPageModel;
-
+use Session;
 class CMSController extends Controller
 {
      public function __construct()

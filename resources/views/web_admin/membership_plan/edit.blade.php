@@ -1,4 +1,4 @@
-    @extends('web_admin.template.admin')                
+    @extends('web_admin.template.admin')
 
 
     @section('main_content')
@@ -23,7 +23,7 @@
             <li>
                 <i class="fa fa-text-width"></i>
                 <a href="{{ url('/').'/web_admin/membership' }}">Membership Plans</a>
-            </li>   
+            </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span>
@@ -60,7 +60,7 @@
                 </button>
                 {{ Session::get('success') }}
             </div>
-          @endif  
+          @endif
 
           @if(Session::has('error'))
             <div class="alert alert-danger alert-dismissible">
@@ -71,9 +71,9 @@
             </div>
           @endif
 
-          <form class="form-horizontal" 
-          id="validation-form" 
-          method="POST" 
+          <form class="form-horizontal"
+          id="validation-form"
+          method="POST"
           action="{{ url('/web_admin/membership/update/'.base64_encode($arr_plan_data['plan_id'])) }} ' "
           >
 
@@ -82,62 +82,158 @@
 
 
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="title">Title<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="title">Title</label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control" 
-                           name="title" 
-                           id="title" 
+                    <input class="form-control"
+                           name="title"
+                           id="title"
                            value="{{ isset($arr_plan_data['title'])?$arr_plan_data['title']:'' }}"
                            disabled="disabled" />
 
                     <span class='help-block'>{{ $errors->first('title') }}</span>
                 </div>
             </div>
+            <div class="form-group">
 
-             
+                <label class="col-sm-2 col-lg-2 control-label" for="no_normal_deal">No. Normal Deals</label>
+
+                    @if($arr_plan_data['title']=='Premium')
+                        <div class="col-sm-3 col-lg-2 controls">
+
+                         @if($arr_plan_data['no_normal_deals']=='Unlimited')
+                         <input class="form-control" name="no_normal_deal" id="no_normal_deal" data-rule-number="true"  value="{{ $arr_plan_data['no_normal_deals'] }}" disabled="">
+                         @else
+                         <input class="form-control" name="no_normal_deal" id="no_normal_deal" data-rule-number="true"  value="{{ $arr_plan_data['no_normal_deals'] }}">
+                         @endif
+
+
+                            <span class='help-block'>{{ $errors->first('no_normal_deals') }}</span>
+
+
+                        </div>
+
+                        <label class="col-sm-2 col-lg-1 control-label" for="unlimited_normal_deal">Unlimited</label>
+                        <div class="col-sm-3 col-lg-1 controls">
+
+                            @if($arr_plan_data['no_normal_deals']=='Unlimited')
+                                <input type="checkbox" class="form-control" name="unlimited_normal_deal" checked="checked" id="unlimited_normal_deal"/>
+                            @else
+                                <input type="checkbox" class="form-control" name="unlimited_normal_deal" id="unlimited_normal_deal"/>
+                            @endif
+
+                        </div>
+                    @else
+                       <div class="col-sm-3 col-lg-2 controls">
+                            <input class="form-control" name="no_normal_deal" id="no_normal_deal"  value="{{ $arr_plan_data['no_normal_deals'] }}" data-rule-number="true"  />
+                            <span class='help-block'>{{ $errors->first('no_normal_deals') }}</span>
+                        </div>
+                    @endif
+
+              </div>
+              <div class="form-group">
+
+                <label class="col-sm-2 col-lg-2 control-label" for="no_instant_deal">No. Instant Deals</label>
+
+                 @if($arr_plan_data['title']=='Premium')
+                        <div class="col-sm-3 col-lg-2 controls">
+
+                         @if($arr_plan_data['no_instant_deals']=='Unlimited')
+                            <input class="form-control" name="no_instant_deal" id="no_instant_deal" data-rule-number="true"  value="{{ $arr_plan_data['no_instant_deals'] }}" disabled="" />
+                         @else
+                            <input class="form-control" name="no_instant_deal" id="no_instant_deal" data-rule-number="true"  value="{{ $arr_plan_data['no_instant_deals'] }}" />
+                         @endif
+
+
+                            <span class='help-block'>{{ $errors->first('no_instant_deal') }}</span>
+                        </div>
+
+                        <label class="col-sm-2 col-lg-1 control-label" for="unlimited_instant_deal">Unlimited</label>
+                        <div class="col-sm-3 col-lg-1 controls">
+
+                         @if($arr_plan_data['no_instant_deals']=='Unlimited')
+                            <input type="checkbox" class="form-control" checked="checked" name="unlimited_instant_deal" id="unlimited_instant_deal"/>
+                         @else
+                            <input type="checkbox" class="form-control" name="unlimited_instant_deal" id="unlimited_instant_deal"/>
+                         @endif
+
+
+                        </div>
+                    @else
+                       <div class="col-sm-3 col-lg-2 controls">
+                            <input class="form-control" name="no_instant_deal" id="no_instant_deal"  value="{{ $arr_plan_data['no_instant_deals'] }}" data-rule-number="true" />
+                            <span class='help-block'>{{ $errors->first('no_instant_deal') }}</span>
+                        </div>
+                    @endif
+
+
+               </div>
 
              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="description">Description(<i class="red">*</i></label>
+
+                <label class="col-sm-2 col-lg-2 control-label" for="no_featured_deal">No. Featured Deals</label>
+
+                @if($arr_plan_data['title']=='Premium')
+                    <div class="col-sm-3 col-lg-2 controls">
+
+                        @if($arr_plan_data['no_featured_deals']=='Unlimited')
+                            <input class="form-control" name="no_featured_deal" id="no_featured_deal" data-rule-number="true"  value="{{ $arr_plan_data['no_featured_deals'] }}" disabled="" />
+                        @else
+                            <input class="form-control" name="no_featured_deal" id="no_featured_deal" data-rule-number="true"  value="{{ $arr_plan_data['no_featured_deals'] }}"  />
+                        @endif
+
+
+                        <span class='help-block'>{{ $errors->first('no_featured_deal') }}</span>
+                    </div>
+
+                    <label class="col-sm-2 col-lg-1 control-label" for="unlimited_featured_deal">Unlimited</label>
+                    <div class="col-sm-3 col-lg-1 controls">
+
+                        @if($arr_plan_data['no_featured_deals']=='Unlimited')
+                            <input type="checkbox" class="form-control" checked="checked" name="unlimited_featured_deal" id="unlimited_featured_deal "/>
+                        @else
+                            <input type="checkbox" class="form-control" name="unlimited_featured_deal" id="unlimited_featured_deal "/>
+                        @endif
+
+
+                    </div>
+                @else
+                    <div class="col-sm-3 col-lg-2 controls">
+                        <input class="form-control" name="no_featured_deal" id="no_featured_deal"  value="{{ $arr_plan_data['no_featured_deals'] }}" data-rule-number="true" />
+                        <span class='help-block'>{{ $errors->first('no_featured_deal') }}</span>
+                    </div>
+                @endif
+
+
+            </div>
+
+
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="description">Description</label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control" 
-                           name="description" 
-                           id="description" 
-                           data-rule-required="true" 
-                           value="{{ isset($arr_plan_data['description'])?$arr_plan_data['description']:'' }}" />
+                <textarea rows="5" class="form-control" name="description" id="description" data-rule-required="true" />{{ $arr_plan_data['description'] }} </textarea>
+                   <!--  <input class="form-control"
+                           name="description"
+                           id="description"
+                           data-rule-required="true"
+                           value="{{ isset($arr_plan_data['description'])?$arr_plan_data['description']:'' }}" /> -->
 
                     <span class='help-block'>{{ $errors->first('description') }}</span>
                 </div>
             </div>
-
-
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="price">Price<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="validity">Validity(in days)</label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control" 
-                           name="price" 
-                           id="price" 
-                           data-rule-required="true" 
-                           {{-- data-rule-min="1"  --}}
-                           value="{{ isset($arr_plan_data['price'])?$arr_plan_data['price']:'' }}" />
-
-                    <span class='help-block'>{{ $errors->first('price') }}</span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="validity">Validity(in days)<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control" 
-                           name="validity" 
-                           id="validity" 
-                           data-rule-required="true" 
+                    <input class="form-control"
+                           name="validity"
+                           id="validity"
+                           data-rule-required="true"
                            {{-- data-rule-min="1"  --}}
                            value="{{ isset($arr_plan_data['validity'])?$arr_plan_data['validity']:'' }}" />
 
                     <span class='help-block'>{{ $errors->first('validity') }}</span>
                 </div>
             </div>
-          
+
 
 
             <div class="form-group">
@@ -157,7 +253,7 @@
 
 <script type="text/javascript">
     var site_url = "{{url('/')}}";
-   
- 
+
+
 </script>
-@stop                    
+@stop

@@ -150,7 +150,7 @@
                 </ul>
             </li>
 
-               <li class="{{ Request::segment(2)=='faq'? 'active':'' }}">
+               <li class="{{ Request::segment(2)=='membership'? 'active':'' }}">
                 <a href="javascript:void(0)"  class="dropdown-toggle">
                     <i class="fa fa-question-circle"></i>
                     <span>Membership Plans</span>
@@ -158,6 +158,16 @@
                 </a>
                  <ul class="submenu">
                     <li style="display: block;"><a href="{{ url('/web_admin/membership')}}">Manage</a> </li>
+                </ul>
+            </li>
+             <li class="{{ Request::segment(2)=='membershipcost'? 'active':'' }}">
+                <a href="javascript:void(0)"  class="dropdown-toggle">
+                    <i class="fa fa-question-circle"></i>
+                    <span>Membership Cost</span>
+                    <b class="arrow fa fa-angle-right"></b>
+                </a>
+                 <ul class="submenu">
+                    <li style="display: block;"><a href="{{ url('/web_admin/membershipcost')}}">Manage</a> </li>
                 </ul>
             </li>
 

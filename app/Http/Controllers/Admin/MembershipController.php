@@ -12,13 +12,13 @@ use Session;
 
 class MembershipController extends Controller
 {
-   
+
 
     public function __construct()
     {
         $arr_except_auth_methods = array();
         $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
-    }       
+    }
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +26,7 @@ class MembershipController extends Controller
      */
     public function index()
     {
-        $page_title = "Manage Membership Plans";  
+        $page_title = "Manage Membership Plans";
 
         $arr_ad_membership_plan = array();
 
@@ -47,7 +47,7 @@ class MembershipController extends Controller
      */
     public function create()
     {
-        $page_title = "Create Ad Plan";  
+        $page_title = "Create Ad Plan";
 
         return view('web_admin.membership_plan.create',compact('page_title','arr_plan_data'));
     }
@@ -82,7 +82,7 @@ class MembershipController extends Controller
      */
     public function edit($enc_id)
     {
-        $page_title = "Edit Membership Plan";  
+        $page_title = "Edit Membership Plan";
 
         $plan_id = base64_decode($enc_id);
 
@@ -97,7 +97,7 @@ class MembershipController extends Controller
         {
             return redirect()->back();
         }
-
+       // dd( $arr_plan_data);
         return view('web_admin.membership_plan.edit',compact('page_title','arr_plan_data'));
     }
 
@@ -114,7 +114,7 @@ class MembershipController extends Controller
 
         $arr_rules = array();
         $arr_rules['description']       = "required";
-        $arr_rules['price']             = "required";
+        //$arr_rules['price']             = "required";
         $arr_rules['validity']          = "required";
 
         $validator = Validator::make($request->all(),$arr_rules);
@@ -127,9 +127,16 @@ class MembershipController extends Controller
         $arr_data = array();
 
         $arr_data['description']        = $request->input('description');
-        $arr_data['price']              = abs($request->input('price'));
+       // $arr_data['price']              = abs($request->input('price'));
         $arr_data['validity']           = abs($request->input('validity'));
 
+        $unlimited_normal_deal   = $request->input('unlimited_normal_deal');
+        $unlimited_instant_deal  = $request->input('unlimited_instant_deal');
+        $unlimited_featured_deal = $request->input('unlimited_featured_deal');
+
+        $arr_data['no_normal_deals']  = (isset($unlimited_normal_deal) && $unlimited_normal_deal=='on'?'Unlimited':$request->input('no_normal_deal'));
+        $arr_data['no_instant_deals'] = (isset($unlimited_instant_deal) && $unlimited_instant_deal=='on'?'Unlimited':$request->input('no_instant_deal'));
+        $arr_data['no_featured_deals']= (isset($unlimited_featured_deal) && $unlimited_featured_deal=='on'?'Unlimited':$request->input('no_featured_deal'));
 
         $status = MembershipModel::where('plan_id',$plan_id)->update($arr_data);
 
@@ -139,7 +146,7 @@ class MembershipController extends Controller
         }
         else
         {
-            Session::flash('error','PRoblem Occurred, While Updating Plan');   
+            Session::flash('error','PRoblem Occurred, While Updating Plan');
         }
 
         return redirect()->back();
@@ -159,7 +166,7 @@ class MembershipController extends Controller
 
     public function entity_attribute()
     {
-        $page_title = "Create Ad Plan";  
+        $page_title = "Create Ad Plan";
 
         return view('web_admin.ad_plan.create',compact('page_title','arr_plan_data'));
     }

@@ -23,7 +23,7 @@
             </span>
             <li>
                 <i class="fa fa-text-width"></i>
-                <a href="{{ url('/').'/web_admin/membership' }}">Mmebership Plans</a>
+                <a href="{{ url('/').'/web_admin/membershipcost' }}">Mmebership Plans</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
@@ -71,9 +71,9 @@
           @endif
 
           <form class="form-horizontal"
-                id="frm_ad_membership_plans_manage"
+                id="frm_ad_membershipcost_manage"
                 method="POST"
-                action="{{ url('/').'/web_admin/membership/multi_action' }}"
+                action="{{ url('/').'/web_admin/membershipcost/multi_action' }}"
                 >
 
             {{ csrf_field() }}
@@ -93,13 +93,18 @@
 
             </div>
             <div class="btn-group">
+          <a href="{{ url('/web_admin/membershipcost/create')}}" class="btn btn-primary btn-add-new-records">Add New Cost</a>
+          </div>
+
+            <div class="btn-group">
                 <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
                    title="Refresh"
-                   href="{{ url('/').'/web_admin/membership' }}"
+                   href="{{ url('/').'/web_admin/membershipcost' }}"
                    style="text-decoration:none;">
                    <i class="fa fa-repeat"></i>
                 </a>
             </div>
+
           </div>
           <br/>
           <div class="clearfix"></div>
@@ -107,35 +112,33 @@
 
             <input type="hidden" name="multi_action" value="" />
 
-            <table class="table table-advance"  id="ad_membership_plans_manage" >
+            <table class="table table-advance"  id="ad_membershipcost_plans_manage" >
               <thead>
                 <tr>
                   <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
-                  <th>Title</th>
-                   <th>No. Normal Deals</th>
-                   <th>No. Instant Deals</th>
-                   <th>No. Featured Deals</th>
-                  <th>Validity(in days)</th>
+                  <th>Category</th>
+                  <th>Premium Cost</th>
+                  <th>Gold Cost</th>
+                  <th>Basic Cost</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
 
-                @if(sizeof($arr_ad_membership_plan)>0)
-                  @foreach($arr_ad_membership_plan as $plan)
+                @if(sizeof($arr_membership_cost)>0)
+                  @foreach($arr_membership_cost as $cost)
                   <tr>
                     <td>
                       <input type="checkbox"
                              name="checked_record[]"
-                             value="{{ base64_encode($plan['plan_id']) }}" />
+                             value="{{ base64_encode($cost['id']) }}" />
                     </td>
-                    <td> {{ $plan['title'] }} </td>
-                    <td> {{ $plan['no_normal_deals'] }} </td>
-                    <td> {{ $plan['no_instant_deals'] }} </td>
-                    <td> {{ $plan['no_featured_deals'] }} </td>
-                    <td> {{ $plan['validity'] }} </td>
+                     <td> {{ $cost['category']['title'] }} </td>
+                    <td> {{ $cost['premium_cost'] }} </td>
+                    <td> {{ $cost['gold_cost'] }} </td>
+                    <td> {{ $cost['basic_cost'] }} </td>
                     <td>
-                        <a href="{{ url('/').'/web_admin/membership/edit/'.base64_encode($plan['plan_id']) }}">
+                        <a href="{{ url('/').'/web_admin/membershipcost/edit/'.base64_encode($cost['id']) }}">
                           <i class="fa fa-edit" ></i>
                         </a>
                     </td>
@@ -159,7 +162,7 @@
 
    $(document).ready(function()
     {
-        $("#ad_membership_plans_manage").DataTable();
+        $("#ad_membershipcost_plans_manage").DataTable();
     });
 
     function confirm_delete()

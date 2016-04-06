@@ -301,6 +301,15 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 		});
 
+		Route::group(['prefix'=>'membershipcost'], function ()
+		{
+			Route::get('/',       								['as' => 'admin_membershpcost_index'     				,'uses' => 'Admin\MembershipCostController@index']);
+			Route::get('create',								['as' => 'admin_membershpcost_create' 				,'uses' => 'Admin\MembershipCostController@create']);
+			Route::post('store',								['as' => 'admin_membershpcost_store' 				,'uses' => 'Admin\MembershipCostController@store']);
+			Route::get('edit/{enc_id}',							['as' => 'admin_membershpcost_edit' 					,'uses' => 'Admin\MembershipCostController@edit']);
+			Route::post('update/{enc_id}',						['as' => 'admin_membershpcost_update' 					,'uses' => 'Admin\MembershipCostController@update']);
+
+		});
 
 	/*------------------------- web_admin Contact Enquiry Related ----------*--------------------*/
 

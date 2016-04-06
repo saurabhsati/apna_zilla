@@ -66,7 +66,19 @@
 	                         </div>
        					</div>
                          <div class="text_a"> Ready to reach all of the people who matter most to your business?</div>
-                         <div class="post_org"><a href="#">Add Your Listng Now</a></div>
+                         <div class="post_org">
+                        <!--  <a href="#">Add Your Listng Now</a> -->
+                        <?php if(Session::has('user_mail'))
+                        {
+                          /*echo '<a data-toggle="modal" id="open_register" data-target="#reg_poup" class="btn btn-post" >List your Business </a>';*/
+                          echo '<a data-toggle="modal" id="open_register" data-target="#reg_poup" class="btn btn-post" onclick="set_flag()" >List your Business </a>';
+                        }
+                        else {
+                          echo '<a class="btn btn-post" href="'.url('/').'/front_users/add_business" id="list_your_business" >List your Business</a>';
+                        }
+
+                      ?>
+                         </div>
            </div>
               <div class="col-lg-1">&nbsp;</div>
       </div>
