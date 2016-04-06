@@ -166,8 +166,8 @@
                     <select class="form-control" name="deal_type" id="deal_type" onchange="isInstantDeal(this)" data-rule-required="true">
                             <option value="">Select Deal</option>
                             <option value="1">Normal Deal</option>
-                            <option value="2">Instant Deal</option>
-                            <option value="3">Featured Deal</option>
+                           <!--  <option value="2">Instant Deal</option>
+                            <option value="3">Featured Deal</option> -->
                     </select>
                     <span class='help-block'>{{ $errors->first('deal_type') }}</span>
                 </div>
@@ -198,7 +198,7 @@
 
             </div>
 
-            <div class="form-group">
+          <!--   <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label">Start Time<i style="color:red;">*</i></label>
                 <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
@@ -224,7 +224,7 @@
                         <span>Only 2 Hour Deal</span>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <hr/>
             <div class="form-group">

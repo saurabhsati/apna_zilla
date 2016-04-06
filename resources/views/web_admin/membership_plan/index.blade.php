@@ -113,8 +113,8 @@
                   <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
                   <th>Title</th>
                    <th>No. Normal Deals</th>
-                   <th>No. Instant Deals</th>
-                   <th>No. Featured Deals</th>
+                   <!-- <th>No. Instant Deals</th>
+                   <th>No. Featured Deals</th> -->
                   <th>Validity(in days)</th>
                   <th>Action</th>
                 </tr>
@@ -131,8 +131,8 @@
                     </td>
                     <td> {{ $plan['title'] }} </td>
                     <td> {{ $plan['no_normal_deals'] }} </td>
-                    <td> {{ $plan['no_instant_deals'] }} </td>
-                    <td> {{ $plan['no_featured_deals'] }} </td>
+                    <!-- <td> {{ $plan['no_instant_deals'] }} </td>
+                    <td> {{ $plan['no_featured_deals'] }} </td> -->
                     <td> {{ $plan['validity'] }} </td>
                     <td>
                         <a href="{{ url('/').'/web_admin/membership/edit/'.base64_encode($plan['plan_id']) }}">

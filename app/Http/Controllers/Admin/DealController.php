@@ -80,8 +80,8 @@ class DealController extends Controller
     	$arr_rule['deal_type']='required';
     	$arr_rule['start_day']='required';
     	$arr_rule['end_day']='required';
-    	$arr_rule['start_time']='required';
-    	$arr_rule['end_time']='required';
+    	/*$arr_rule['start_time']='required';
+    	$arr_rule['end_time']='required';*/
     	$arr_rule['is_active']='required';
 
     	$validator=Validator::make($request->all(),$arr_rule);
@@ -129,8 +129,8 @@ class DealController extends Controller
     	$data_arr['deal_type']=$form_data['deal_type'];
     	$data_arr['start_day']=date('Y-m-d',strtotime($form_data['start_day']));
     	$data_arr['end_day']=date('Y-m-d',strtotime($form_data['end_day']));
-    	$data_arr['start_time']=$form_data['start_time'];
-    	$data_arr['end_time']=$form_data['end_time'];
+    	/*$data_arr['start_time']=$form_data['start_time'];
+    	$data_arr['end_time']=$form_data['end_time'];*/
     	$data_arr['is_active']=$form_data['is_active'];
         //dd($data_arr);
     	$deal_add = $this->DealModel->create($data_arr);
@@ -167,8 +167,8 @@ class DealController extends Controller
         $arr_rule['deal_type']='required';
         $arr_rule['start_day']='required';
         $arr_rule['end_day']='required';
-        $arr_rule['start_time']='required';
-        $arr_rule['end_time']='required';
+      /*  $arr_rule['start_time']='required';
+        $arr_rule['end_time']='required';*/
         $arr_rule['is_active']='required';
 
         $validator=Validator::make($request->all(),$arr_rule);
@@ -220,8 +220,8 @@ class DealController extends Controller
             $data_arr['deal_type']=$form_data['deal_type'];
             $data_arr['start_day']=date('Y-m-d',strtotime($form_data['start_day']));
             $data_arr['end_day']=date('Y-m-d',strtotime($form_data['end_day']));
-            $data_arr['start_time']=$form_data['start_time'];
-            $data_arr['end_time']=$form_data['end_time'];
+           /* $data_arr['start_time']=$form_data['start_time'];
+            $data_arr['end_time']=$form_data['end_time'];*/
             $data_arr['is_active']=$form_data['is_active'];
             $deal_update = $this->DealModel->where('id',$id)->update($data_arr);
             if($deal_update)

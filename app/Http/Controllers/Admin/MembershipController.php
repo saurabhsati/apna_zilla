@@ -131,12 +131,12 @@ class MembershipController extends Controller
         $arr_data['validity']           = abs($request->input('validity'));
 
         $unlimited_normal_deal   = $request->input('unlimited_normal_deal');
-        $unlimited_instant_deal  = $request->input('unlimited_instant_deal');
-        $unlimited_featured_deal = $request->input('unlimited_featured_deal');
+        //$unlimited_instant_deal  = $request->input('unlimited_instant_deal');
+        //$unlimited_featured_deal = $request->input('unlimited_featured_deal');
 
         $arr_data['no_normal_deals']  = (isset($unlimited_normal_deal) && $unlimited_normal_deal=='on'?'Unlimited':$request->input('no_normal_deal'));
-        $arr_data['no_instant_deals'] = (isset($unlimited_instant_deal) && $unlimited_instant_deal=='on'?'Unlimited':$request->input('no_instant_deal'));
-        $arr_data['no_featured_deals']= (isset($unlimited_featured_deal) && $unlimited_featured_deal=='on'?'Unlimited':$request->input('no_featured_deal'));
+        //$arr_data['no_instant_deals'] = (isset($unlimited_instant_deal) && $unlimited_instant_deal=='on'?'Unlimited':$request->input('no_instant_deal'));
+       // $arr_data['no_featured_deals']= (isset($unlimited_featured_deal) && $unlimited_featured_deal=='on'?'Unlimited':$request->input('no_featured_deal'));
 
         $status = MembershipModel::where('plan_id',$plan_id)->update($arr_data);
 

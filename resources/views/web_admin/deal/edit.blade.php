@@ -164,8 +164,8 @@
                     <select class="form-control" name="deal_type" id="deal_type" onchange="isInstantDeal(this)" data-rule-required="true">
                             <option value="">Select Deal</option>
                             <option value="1" @if($deal_arr['deal_type']=='1'){{'selected'}} @endif>Normal Deal</option>
-                            <option value="2" @if($deal_arr['deal_type']=='2'){{'selected'}} @endif>Instant Deal</option>
-                            <option value="3" @if($deal_arr['deal_type']=='3'){{'selected'}} @endif>Featured Deal</option>
+                          <!--   <option value="2" @if($deal_arr['deal_type']=='2'){{'selected'}} @endif>Instant Deal</option>
+                            <option value="3" @if($deal_arr['deal_type']=='3'){{'selected'}} @endif>Featured Deal</option> -->
                     </select>
                     <span class='help-block'>{{ $errors->first('deal_type') }}</span>
                 </div>
@@ -196,7 +196,7 @@
 
             </div>
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label">Start Time<i style="color:red;">*</i></label>
                 <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
@@ -239,7 +239,7 @@
                         <span>Only 2 Hour Deal</span>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
 
 

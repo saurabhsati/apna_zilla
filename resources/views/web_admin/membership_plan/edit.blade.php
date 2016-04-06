@@ -130,7 +130,7 @@
                     @endif
 
               </div>
-              <div class="form-group">
+             <!--  <div class="form-group">
 
                 <label class="col-sm-2 col-lg-2 control-label" for="no_instant_deal">No. Instant Deals</label>
 
@@ -204,7 +204,7 @@
                 @endif
 
 
-            </div>
+            </div> -->
 
 
              <div class="form-group">
