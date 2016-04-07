@@ -1,7 +1,8 @@
-    @extends('web_admin.template.admin')
+@extends('web_admin.template.admin')
+@section('main_content')
+<style type="text/css">
 
-
-    @section('main_content')
+</style>
     <link rel="stylesheet" type="text/css" href="{{ url('/assets/data-tables/latest/') }}/dataTables.bootstrap.min.css">
     <!-- BEGIN Page Title -->
     <div class="page-title">
@@ -312,8 +313,9 @@
                                 }
                               }
                           }
-                            $business_id=$business['id'];
-                            $user_id=$business['user_details']['id'];
+                           $category_id;
+                           $business_id=$business['id'];
+                           $user_id=$business['user_details']['id'];
 
                       if(!sizeof($business['membership_plan_details'])>0)
                     {?>

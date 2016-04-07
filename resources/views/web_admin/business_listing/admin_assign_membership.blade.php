@@ -155,6 +155,11 @@ function get_plan_cost()
                                    var option = response.validity;
                                   $('input[name="validity"]').attr('value',option);
                             }
+                            else if(response.status=="CategoryCostAbsent")
+                            {
+                                  var get_url=site_url+'/web_admin/business_listing';
+                                  window.location.href = get_url;
+                            }
       });
 
   }

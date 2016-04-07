@@ -798,13 +798,28 @@ class BusinessListingController extends Controller
 
         $user_id=base64_decode($enc_user_id);
         $category_id=base64_decode($enc_category_id);
-        $obj_membership_plan = MembershipModel::get();
-        if($obj_membership_plan)
-        {
-            $arr_membership_plan = $obj_membership_plan->toArray();
-        }
-        return view('sales_user.business_listing.sales_user_assign_membership',compact('page_title','arr_membership_plan','enc_business_id','enc_user_id','enc_category_id'));
 
+        $arr_cost_data=array();
+        $obj_cost_data = MemberCostModel::where('category_id',$category_id)->first();
+        if($obj_cost_data)
+        {
+            $arr_cost_data = $obj_cost_data->toArray();
+        }
+        if(sizeof($arr_cost_data)>0)
+        {
+            $obj_membership_plan = MembershipModel::get();
+            if($obj_membership_plan)
+            {
+                $arr_membership_plan = $obj_membership_plan->toArray();
+            }
+            return view('sales_user.business_listing.sales_user_assign_membership',compact('page_title','arr_membership_plan','enc_business_id','enc_user_id','enc_category_id'));
+
+        }
+        else
+        {
+            Session::flash('error','Error ! Business Category Cost Not Present ,Firstly add the plan cost for this business category ! ');
+            return redirect()->back();
+        }
 
     }
     public function get_plan_cost(Request $request)

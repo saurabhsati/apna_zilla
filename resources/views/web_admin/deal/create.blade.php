@@ -191,8 +191,9 @@
                         <span class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </span>
-                        <input name="end_day" id="end_day" class="form-control" type="text"  size="16" data-rule-required="true" readonly="" />
+                        <input name="end_day" id="end_day" class="form-control" type="text"  size="16" data-rule-required="true" readonly="" value="{{date('m/d/Y',strtotime($expired_date))}}" />
                         <span class='help-block'>{{ $errors->first('end_day') }}</span>
+                         <input type="hidden" name="expired_date" id="expired_date" value="{{date('m/d/Y',strtotime($expired_date))}}">
                     </div>
                 </div>
 
@@ -278,51 +279,7 @@
         });
 
 
-            function newCategoryDishes(ref)///Load New Div with Category Select, Dish Select and Enter Quantity
-              {
-                var field= "";
 
-                //for multiple images
-                //console.log(elements);
-                //alert(elements);
-                var parent_ref = jQuery(ref).parent('div.dish_deal');
-
-                var field = field + '<div class="form-group dish_deal" id="new_div">'+
-                                   '<label class="col-sm-3 col-lg-2 control-label deal_category_section" for="deal_category">Category<i class="red">*</i></label>' +
-                                    '<div class="col-sm-6 col-lg-2 controls">'+
-                                        '<select class="form-control deal_category" name="deal_category[]" id="deal_category" data-rule-required="">'+
-                                               $("#deal_category").html()+
-                                        '</select>'+
-                                    '</div>'+
-                                    '<label class="col-sm-1 col-lg-1 control-label" for="deal_dish">Dish<i class="red">*</i></label>'+
-                                    '<div class="col-sm-4 col-lg-2 controls category_dish_section">'+
-                                        '<select class="form-control category_dish" name="deal_dish[]" id="deal_dish" data-rule-required="" data-selected-category="">'+
-                                                '<option value="NA">Select Dish</option>'+
-                                        '</select>'+
-                                        '<span class="help-block">{{ $errors->first("deal_dish") }}</span>'+
-                                    '</div>'+
-
-                                    '<label class="col-sm-1 col-lg-1 control-label" for="deal_quantity">Quantity<i class="red">*</i></label>'+
-                                    '<div class="col-sm-6 col-lg-1 controls dish_quantity_section">'+
-                                        '<input type="text" class="form-control dish_quantity" name="deal_quantity[]" id="deal_quantity" data-rule-required="">'+
-
-                                        '<span class="help-block">{{ $errors->first("deal_quantity") }}</span>'+
-                                    '</div>'+
-                                    '<i class="fa fa-minus-square-o fa-2x" style="cursor:pointer;" onclick="removeImage(this)"></i>'+
-                                    '</div>';
-
-
-                  //jQuery(field).insertAfter(parent_ref);
-                 // jQuery(field).insertAfter("#new_div");
-                 jQuery("#new_div").append(field);
-                 bindDynamicDealCategory();
-              }
-
-              function removeImage(ref)////Remove Category, Dish and quantity Div
-              {
-                var parent_ref = jQuery(ref).parent('div.dish_deal');
-                jQuery(parent_ref).remove();
-              }
         </script>
 
 <script type="text/javascript">
@@ -330,8 +287,8 @@
     var dt_start_day;
     var dt_end_day;
 
-    var tp_start_time;
-    var tp_end_time;
+   // var tp_start_time;
+    //var tp_end_time;
 
     var arr_selected_category_dishes = [];
 
@@ -356,17 +313,17 @@
         bindDynamicDealCategory();
 
         dt_start_day = $('#start_day').datepicker();
-        dt_end_day = $('#end_day').datepicker();
+        //dt_end_day = $('#end_day').datepicker();
 
-        tp_start_time = $("#start_time").timepicker();
-        tp_end_time = $("#end_time").timepicker();
+        //tp_start_time = $("#start_time").timepicker();
+        //tp_end_time = $("#end_time").timepicker();
 
         /* Init Default Start and End Date */
         initStartAndEndDate();
 
         $(dt_start_day).on('changeDate',function(evt)
         {
-            $(dt_end_day).datepicker('setDate',getLastDayofWeek(evt.date));
+           // $(dt_end_day).datepicker('setDate',getLastDayofWeek(evt.date));
         });
 
         $(tp_start_time).on('changeTime.timepicker',checkForInstantDeal);
@@ -517,7 +474,7 @@
     {
 
         $(dt_start_day).datepicker('setDate',new Date());
-        $(dt_end_day).datepicker('setDate',getLastDayofWeek(new Date()));
+        //$(dt_end_day).datepicker('setDate',getLastDayofWeek(new Date()));
     }
 
     /* ie Sunday */

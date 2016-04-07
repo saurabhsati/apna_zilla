@@ -178,7 +178,7 @@
                         <span class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </span>
-                        <input name="start_day" id="start_day" class="form-control" value="{{ date('m-d-Y',strtotime($deal_arr['start_day'])) }}" type="text"  size="16" data-rule-required="true"/>
+                        <input name="start_day" id="start_day" class="form-control" value="{{ date('m/d/Y',strtotime($deal_arr['start_day'])) }}" type="text"  size="16" data-rule-required="true"/>
                          <span class='help-block'>{{ $errors->first('start_day') }}</span>
                     </div>
                 </div>
@@ -189,7 +189,7 @@
                         <span class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </span>
-                        <input name="end_day" id="end_day" class="form-control" type="text" value="{{ date('m-d-Y',strtotime($deal_arr['end_day'] ))}}"  size="16" data-rule-required="true" readonly="" />
+                        <input name="end_day" id="end_day" class="form-control" type="text" value="{{ date('m/d/Y',strtotime($deal_arr['end_day'] ))}}"  size="16" data-rule-required="true" readonly="" />
                         <span class='help-block'>{{ $errors->first('end_day') }}</span>
                     </div>
                 </div>
