@@ -361,7 +361,7 @@
                 <input type="hidden"  id="business_id" value="{{ $restaurants['id'] }}"  />
 
                   <div class="p_details" >
-      
+
                     @if(!empty(Session::get('user_mail')))
 
                     <?php
@@ -372,14 +372,14 @@
                     ?>  <span id="{{ 'show_fav_status_'.$restaurants['id'] }}" style="width: 175px;">
                         <a href="javascript:void(0);"  onclick="add_to_favourite('{{$restaurants['id']}}')"  style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Remove favourite</span></a>
                         </span>
-                    <?php 
-                      } 
+                    <?php
+                      }
                       else
                       {
                     ?>
                         <span id="{{'show_fav_status_'.$restaurants['id'] }}" style="width: 175px;">
                         <a href="javascript:void(0);"  onclick="add_to_favourite('{{$restaurants['id']}}')"  style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add To favourite</span></a>
-                        </span> 
+                        </span>
                     <?php
                       }
                     }
@@ -387,9 +387,9 @@
                       ?>
                          <span id="{{'show_fav_status_'.$restaurants['id'] }}" style="width: 175px;">
                         <a href="javascript:void(0);"  onclick="add_to_favourite('{{$restaurants['id']}}')"  style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add To favourite</span></a>
-                        </span>  
-                      <?php 
-                    } 
+                        </span>
+                      <?php
+                    }
                     ?>
                       <!-- <span id="{{-- 'show_fav_status_'.$restaurants['id'] --}}" style="width: 175px;">
                       <a href="javascript:void(0);"  onclick="add_to_favourite('{{--$restaurants['id']--}}')"  style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add To favourite</span></a>
@@ -472,8 +472,8 @@
                           data-toggle="tooltip" title="Remove favourite"
                         ><i class="fa fa-heart"></i><span>R</span></a>
                         </span>
-                    <?php 
-                      } 
+                    <?php
+                      }
                       else
                       {
                     ?>
@@ -481,19 +481,19 @@
                         <a href="javascript:void(0);"  onclick="add_to_favourite_grid('{{$restaurants['id']}}')"  style="border-right:0;display:inline-block;"
                           data-toggle="tooltip" title="Add to favorites"
                         ><i class="fa fa-heart"></i><span>A</span></a>
-                        </span> 
+                        </span>
                     <?php
                       }
                     }
                     else{
                       ?>
                          <span id="{{'show_fav_status_grid_'.$restaurants['id'] }}" style="width: 175px;">
-                        <a href="javascript:void(0);"  onclick="add_to_favourite_grid('{{$restaurants['id']}}')"  style="border-right:0;display:inline-block;" 
+                        <a href="javascript:void(0);"  onclick="add_to_favourite_grid('{{$restaurants['id']}}')"  style="border-right:0;display:inline-block;"
                           data-toggle="tooltip" title="Add to favorites"
                         ><i class="fa fa-heart"></i><span>A</span></a>
-                        </span>  
-                      <?php 
-                    } 
+                        </span>
+                      <?php
+                    }
                     ?>
                       <!-- <span id="{{-- 'show_fav_status_'.$restaurants['id'] --}}" style="width: 175px;">
                       <a href="javascript:void(0);"  onclick="add_to_favourite('{{--$restaurants['id']--}}')"  style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add To favourite</span></a>
@@ -510,7 +510,7 @@
 
                        <!--  <a href="#" style="border-right:0;display:inline-block;" data-toggle="tooltip" title="Add to favorites"><i class="fa fa-heart"></i><span> </span>
                         </a> -->
-                       
+
 
 
                         </div>
@@ -865,7 +865,7 @@
         }
 
 
-        
+
 
 
      // });
@@ -874,7 +874,7 @@
           var site_url   = "{{ url('/') }}";
 
           var business_id   = $('#business_id-'+business_id).val();
-          alert(business_id);
+         // alert(business_id);
           var name = $('#name-'+business_id).val();
           var mobile  = $('#sms_mobile_no-'+business_id).val();
           var email   = $('#email-'+business_id).val();
