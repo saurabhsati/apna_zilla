@@ -210,7 +210,25 @@ class DealController extends Controller
         {
             $deal_arr = $obj_deal_arr->toArray();
         }
-        return view('web_admin.deal.edit',compact('page_title','deal_arr','deal_public_img_path'));
+        if(sizeof($deal_arr)>0)
+        {
+        $obj_tran_data=TransactionModel::where('business_id',$deal_arr['business_id'])->first();
+        $transaction_details=array();
+        if($obj_tran_data)
+        {
+
+            $transaction_details = $obj_tran_data->toArray();
+        }
+         if(sizeof($transaction_details)>0)
+         {
+            $expired_date=$transaction_details['expire_date'];
+         }
+        }
+        else
+        {
+            $expired_date='';
+        }
+        return view('web_admin.deal.edit',compact('page_title','deal_arr','deal_public_img_path','expired_date'));
     }
     public function update(Request $request,$enc_id)
     {
