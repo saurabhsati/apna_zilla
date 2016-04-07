@@ -20,7 +20,9 @@ use App\Models\StateModel;
 use App\Models\PlaceModel;
 use App\Models\CityModel;
 use App\Models\BusinessTimeModel;
-
+use App\Models\MembershipModel;
+use App\Models\MemberCostModel;
+use App\Models\TransactionModel;
 
 use Validator;
 use Session;
@@ -62,7 +64,7 @@ class BusinessListingController extends Controller
             $arr_sub_category = $obj_sub_category->toArray();
         }
 
-    	$business_listing = BusinessListingModel::with(['category','user_details','reviews'])->get()->toArray();
+    	$business_listing = BusinessListingModel::with(['category','user_details','reviews','membership_plan_details'])->get()->toArray();
     	//dd($business_listing);
         return view('web_admin.business_listing.index',compact('page_title','business_listing','business_public_img_path','arr_main_category','arr_sub_category'));
     }
@@ -780,6 +782,121 @@ class BusinessListingController extends Controller
     	$id = base64_decode($enc_id);
         $Business = BusinessListingModel::where('id',$id);
 		return $Business->delete();
+    }
+
+    public function assign_membership($enc_business_id,$enc_user_id,$enc_category_id)
+    {
+        $page_title="Assign Membership";
+        $business_id=base64_decode($enc_business_id);
+
+        $user_id=base64_decode($enc_user_id);
+        $category_id=base64_decode($enc_category_id);
+        $obj_membership_plan = MembershipModel::get();
+        if($obj_membership_plan)
+        {
+            $arr_membership_plan = $obj_membership_plan->toArray();
+        }
+        return view('web_admin.business_listing.admin_assign_membership',compact('page_title','arr_membership_plan','enc_business_id','enc_user_id','enc_category_id'));
+
+
+    }
+    public function get_plan_cost(Request $request)
+    {
+        $category_id=base64_decode($request->input('category_id'));
+        $plan_id=$request->input('plan_id');
+
+        $obj_membership_plan = MembershipModel::where('plan_id',$plan_id)->first();
+        if($obj_membership_plan)
+        {
+            $arr_membership_plan = $obj_membership_plan->toArray();
+        }
+        if(sizeof($arr_membership_plan)>0)
+        {   $price=0;
+            $obj_cost_data = MemberCostModel::where('category_id',$category_id)->first();
+            if($obj_cost_data)
+            {
+                $arr_cost_data = $obj_cost_data->toArray();
+                if($arr_membership_plan['title']=='Premium')
+                {
+                    $price=$arr_cost_data['premium_cost'];
+
+                }
+                if($arr_membership_plan['title']=='Gold')
+                {
+                    $price=$arr_cost_data['gold_cost'];
+
+                }
+                 if($arr_membership_plan['title']=='Basic')
+                {
+                    $price=$arr_cost_data['basic_cost'];
+
+                }
+                $validity=$arr_membership_plan['validity'];
+
+            }
+            $arr_response['status'] ="SUCCESS";
+            $arr_response['price'] =$price;
+            $arr_response['validity'] = $validity;
+
+        }
+        else
+        {
+             $arr_response['status'] ="ERROR";
+            $arr_response['arr_state'] = array();
+        }
+        return response()->json($arr_response);
+
+    }
+    public function purchase_plan(Request $request)
+    {
+         if(Session::has('public_id'))
+         {
+          $sales_user_public_id=Session::get('public_id');
+         }else
+         {
+            return view('sales_user.account.login');
+         }
+        $arr_rules=array();
+        $arr_rules['business_id']='required';
+        $arr_rules['user_id']='required';
+        $arr_rules['category_id']='required';
+        $arr_rules['plan_id']='required';
+        $arr_rules['price']='required';
+        $validator = Validator::make($request->all(),$arr_rules);
+
+        if($validator->fails())
+        {
+            Session::flash('error','Please Select Record(s)');
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $business_id=base64_decode($request->input('business_id'));
+        $user_id=base64_decode($request->input('user_id'));
+        $category_id=base64_decode($request->input('category_id'));
+        $plan_id=$request->input('plan_id');
+        $price=$request->input('price');
+        $validity=$request->input('validity');
+
+        $arr_data['business_id']=$business_id;
+        $arr_data['user_id']=$user_id;
+        $arr_data['category_id']=$category_id;
+        $arr_data['membership_id']=$plan_id;
+        $arr_data['price']=$price;
+        $arr_data['transaction_status']='Active';
+        $arr_data['sales_user_public_id']=$sales_user_public_id;
+        $arr_data['start_date']=date('Y-m-d');
+        $arr_data['expire_date']=date('Y-m-d', strtotime("+".$validity."days"));
+       // dd($arr_data);
+        $transaction = TransactionModel::create($arr_data);
+        if($transaction)
+        {
+            Session::flash('success','Membership Assign Successfully');
+        }
+        else
+        {
+            Session::flash('error','Error Occurred While Updating Business List ');
+        }
+        return redirect(url('/web_admin/business_listing'));
     }
 
     public function export_excel($format="csv")//export excel file

@@ -1,4 +1,4 @@
-  @extends('sales_user.template.sales')
+ @extends('web_admin.template.admin')
 
 
     @section('main_content')
@@ -15,14 +15,14 @@
         <ul class="breadcrumb">
             <li>
                 <i class="fa fa-home"></i>
-                <a href="{{ url('/').'/sales_user/dashboard' }}">Dashboard</a>
+                <a href="{{ url('/').'/web_admin/dashboard' }}">Dashboard</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span>
             <li>
                 <i class="fa fa-text-width"></i>
-                <a href="{{ url('/').'/sales_user/business_listing' }}">Business Listing</a>
+                <a href="{{ url('/').'/web_admin/business_listing' }}">Business Listing</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
@@ -74,7 +74,7 @@
           <form class="form-horizontal"
           id="validation-form"
           method="POST"
-          action="{{ url('/sales_user/business_listing/purchase_plan')}}"
+          action="{{ url('/web_admin/business_listing/purchase_plan')}}"
           >
 
 
@@ -144,7 +144,7 @@ function get_plan_cost()
   if(plan_id!='' && category_id!='')
   {
   var dataString = { plan_id:plan_id, category_id:category_id, _token: _token };
-  var url= site_url+'/sales_user/business_listing/get_plan_cost';
+  var url= site_url+'/web_admin/business_listing/get_plan_cost';
   $.post( url, dataString)
       .done(function( response ) {
                             if(response.status=="SUCCESS")

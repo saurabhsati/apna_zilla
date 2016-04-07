@@ -23,7 +23,7 @@
             </span>
             <li>
                 <i class="fa fa-money"></i>
-                <a href="{{ url('/sales_user/business/business_listing') }}">Business Listing</a>
+                <a href="{{ url('/sales_user/business_listing') }}">Business Listing</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
@@ -94,8 +94,12 @@
           <div class="btn-toolbar pull-right clearfix">
             <!--- Add new record - - - -->
                 <div class="btn-group">
+                @if($add_deal=="1")
                  @if(isset($arr_business) && sizeof($arr_business)>0)
                     <a href="{{ url('/sales_user/deals/create/'.base64_encode($arr_business['id']))}}" class="btn btn-primary btn-add-new-records">Add Deal</a>
+                  @endif
+                  @else
+                  <div style="color: Red;">Total Deal Count Reached</div>
                   @endif
                 </div>
             <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -152,6 +156,7 @@
                   <th>Discount Price</th>
                   <th>Status</th>
                   <th>Action</th>
+                  <th>Validity status</th>
                 </tr>
               </thead>
               <tbody>
@@ -207,6 +212,29 @@
                           <i class="fa fa-trash" ></i>
                         </a>
 
+                    </td>
+                    <td>
+                     <?php
+                    if($expired_date!='')
+                    {
+                      $date1 = date('Y-m-d',strtotime($expired_date));
+                       $date2 = date('Y-m-d h:m:s');
+
+                       $diff = abs(strtotime($date1) - strtotime($date2));
+
+                      $years = floor($diff / (365*60*60*24));
+                      $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+                      $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+                      if($days>0)
+                        {
+                           echo "<div style='color: Green;'>".$days.' Days Remains To Expire</div>' ;
+                        }
+                        else
+                        {
+                           echo "<div style='color: red;'>Expired</div>";
+                        }
+                      }
+                      ?>
                     </td>
                   </tr>
                   @endforeach

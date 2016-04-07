@@ -146,6 +146,8 @@
                   <th style="width:25px;">Deals</th>
                   <th width="" style="text-align:center">Status</th>
                   <th>Action</th>
+                  <th>Assign Membership</th>
+                   <th>Validity Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -228,7 +230,20 @@
                    }
                   ?>
 
+                    <?php
+                    if(sizeof($business['membership_plan_details']  )>0)
+                    {
+                      $date1 = date('Y-m-d',strtotime($business['membership_plan_details'][0]['expire_date']));
+                       $date2 = date('Y-m-d h:m:s');
 
+                       $diff = abs(strtotime($date1) - strtotime($date2));
+
+                      $years = floor($diff / (365*60*60*24));
+                      $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+                      $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+                      if($days>0)
+                      {
+                      ?>
 
                        @if($business['is_active']!="1"  && $check_allow=='0')
                            <a class="btn btn-info" href="#">
@@ -239,6 +254,11 @@
                              Add Deal
                           </a>
                        @endif
+
+                         <?php
+                          }
+                        }
+                       ?>
 
                     </td>
                     <td width="" style="text-align:center">
@@ -273,6 +293,67 @@
                           <i class="fa fa-trash" ></i>
                         </a>
 
+                    </td>
+                     <td>
+                      <?php
+                         foreach ($business['category'] as $business_category)
+                          {
+                             foreach ($arr_sub_category as $sub_category)
+                              {
+                                if($business_category['category_id']==$sub_category['cat_id'])
+                                {
+                                   foreach ($arr_main_category as $main_category)
+                                   {
+                                      if($sub_category['parent']==$main_category['cat_id'])
+                                      {
+                                       $category_id=$sub_category['parent'];
+                                      }
+                                    }
+                                }
+                              }
+                          }
+                            $business_id=$business['id'];
+                            $user_id=$business['user_details']['id'];
+
+                      if(!sizeof($business['membership_plan_details'])>0)
+                    {?>
+                      <a href="{{ url('/web_admin/business_listing/assign_membership').'/'.base64_encode($business['id']).'/'.base64_encode($user_id).'/'.base64_encode($category_id) }}" class="show-tooltip" title="Assign Membership">
+                          <i class="fa fa-euro" ></i>
+                        </a>
+                        <?php }
+                        else
+                          {?>
+                              <div style="color: Green;">Assigned</div>
+                           <?php }?>
+
+                    </td>
+                    <td>
+                    <?php
+                    if(sizeof($business['membership_plan_details']  )>0)
+                    {
+                      $date1 = date('Y-m-d',strtotime($business['membership_plan_details'][0]['expire_date']));
+                       $date2 = date('Y-m-d h:m:s');
+
+                       $diff = abs(strtotime($date1) - strtotime($date2));
+
+                      $years = floor($diff / (365*60*60*24));
+                      $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+                      $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+                      if($days>0)
+                        {
+                          echo "<div style='color: Green;'>".$days.' Days Remains To Expire</div>' ;
+                        }
+                        else
+                        {
+                          echo "<div style='color: red;'>Expired</div>";
+                        }
+
+
+                    }
+
+
+
+                     ?>
                     </td>
 
                   </tr>

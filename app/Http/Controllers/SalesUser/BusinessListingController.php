@@ -795,6 +795,7 @@ class BusinessListingController extends Controller
     {
         $page_title="Assign Membership";
         $business_id=base64_decode($enc_business_id);
+
         $user_id=base64_decode($enc_user_id);
         $category_id=base64_decode($enc_category_id);
         $obj_membership_plan = MembershipModel::get();
@@ -902,6 +903,6 @@ class BusinessListingController extends Controller
         {
             Session::flash('error','Error Occurred While Updating Business List ');
         }
-        return redirect()->back();
+        return redirect(url('/sales_user/business_listing'));
     }
 }

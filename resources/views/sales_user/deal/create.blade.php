@@ -196,10 +196,11 @@
                         <span class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </span>
-                        <input name="end_day" id="end_day" class="form-control" type="text"  size="16" data-rule-required="true" readonly="" />
+                        <input name="end_day" id="end_day" class="form-control" type="text"  size="16" data-rule-required="true" readonly="" value="{{date('m/d/Y',strtotime($expired_date))}}"/>
                         <span class='help-block'>{{ $errors->first('end_day') }}</span>
                     </div>
                 </div>
+                <input type="hidden" name="expired_date" id="expired_date" value="{{date('m/d/Y',strtotime($expired_date))}}">
 
             </div>
 
@@ -358,20 +359,23 @@
     $(document).ready(function()
     {
 
+
         bindDynamicDealCategory();
 
         dt_start_day = $('#start_day').datepicker();
-        dt_end_day = $('#end_day').datepicker();
+        //dt_end_day = $('#end_day').datepicker();
 
-        tp_start_time = $("#start_time").timepicker();
-        tp_end_time = $("#end_time").timepicker();
+        //tp_start_time = $("#start_time").timepicker();
+        //tp_end_time = $("#end_time").timepicker();
+
+         var expired_date=$("input[name='expired_date']").val();
 
         /* Init Default Start and End Date */
         initStartAndEndDate();
 
         $(dt_start_day).on('changeDate',function(evt)
         {
-            $(dt_end_day).datepicker('setDate',getLastDayofWeek(evt.date));
+           // $(dt_end_day).datepicker('setDate',getLastDayofWeek(evt.date));
         });
 
         $(tp_start_time).on('changeTime.timepicker',checkForInstantDeal);
@@ -522,7 +526,7 @@
     {
 
         $(dt_start_day).datepicker('setDate',new Date());
-        $(dt_end_day).datepicker('setDate',getLastDayofWeek(new Date()));
+       // $(dt_end_day).datepicker('setDate',getLastDayofWeek(new Date()));
     }
 
     /* ie Sunday */

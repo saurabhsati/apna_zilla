@@ -12,14 +12,14 @@ class DealModel extends Model
     protected $table = 'deals';
 
     protected $fillable = ['business_id',
-    					   'name',
-    					   'price',
+              					   'name',
+              					   'price',
                            'discount_price',
-    					   'description',
-    					   'deal_image',
-    					   'deal_type',
-    					   'start_day',
-    					   'end_day',
+              					   'description',
+              					   'deal_image',
+              					   'deal_type',
+              					   'start_day',
+              					   'end_day',
                            'start_time',
                            'end_time',
                            'parent_category_id'];
@@ -28,6 +28,7 @@ class DealModel extends Model
     {
         return $this->belongsTo('App\Models\BusinessListingModel','business_id','id');
     }
+
 
 
 }

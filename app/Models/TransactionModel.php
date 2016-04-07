@@ -30,4 +30,5 @@ class TransactionModel extends Model
     {
     	return $this->belongsTo('App\Models\MembershipModel','membership_id','plan_id');
     }
+
 }

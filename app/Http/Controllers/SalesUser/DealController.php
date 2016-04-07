@@ -10,6 +10,8 @@ use App\Models\BusinessListingModel;
 use App\Models\BusinessCategoryModel;
 use App\Models\CategoryModel;
 use App\Models\SalesDealModel;
+use App\Models\TransactionModel;
+use App\Models\MembershipModel;
 use Validator;
 use Session;
 class DealController extends Controller
@@ -28,8 +30,34 @@ class DealController extends Controller
     	$id=base64_decode($enc_id);
     	$arr_restaurant = array();
         $deal_public_img_path = $this->deal_public_img_path;
-        $obj_business = BusinessListingModel::where('id',$id)->first();
+        $obj_tran_data=TransactionModel::where('business_id',$id)->first();
+        $transaction_details=array();
+        if($obj_tran_data)
+        {
+            $transaction_details = $obj_tran_data->toArray();
+        }
+         if(sizeof($transaction_details)>0)
+         {
+            $expired_date=$transaction_details['expire_date'];
+            $arr_plan=array();
+            $no_of_deals=$add_deal=0;
+            $plan_id=$transaction_details['membership_id'];
+            if($plan_id==1)
+            {
+                $no_of_deals="unlimited";
+            }
+            else
+            {
+                $obj_plan=MembershipModel::where('plan_id',$plan_id)->first();
+                if($obj_plan)
+                {
+                    $arr_plan=$obj_plan->toArray();
+                    $no_of_deals=$arr_plan['no_normal_deals'];
 
+                }
+            }
+         }
+        $obj_business = BusinessListingModel::where('id',$id)->first();
         if($obj_business)
         {
             $arr_business = $obj_business->toArray();
@@ -38,13 +66,28 @@ class DealController extends Controller
         if($obj_deal)
         {
             $arr_deal = $obj_deal->toArray();
+            $total_deal_count=count($arr_deal);
         }
-    	return view('sales_user.deal.index',compact('page_title','arr_business','arr_deal','deal_public_img_path'));
+        if($no_of_deals=="unlimited")
+        {
+            $add_deal=1;
+        }
+        else if($no_of_deals>$total_deal_count)
+        {
+            $add_deal=1;
+        }
+        else
+        {
+            $add_deal=0;
+        }
+        //dd($add_deal );
+        return view('sales_user.deal.index',compact('page_title','arr_business','arr_deal','deal_public_img_path','add_deal','expired_date'));
     }
     public function create($enc_id)
     {
     	$page_title=' Create Deal';
     	$id=base64_decode($enc_id);
+
     	$obj_business = $this->BusinessListingModel->where('id',$id)->first();
 
         if($obj_business)
@@ -66,8 +109,18 @@ class DealController extends Controller
                 }
             }
         }
-       // dd($arr_business);
-    	return view('sales_user.deal.create',compact('page_title','arr_business','parent_category_id'));
+        $obj_tran_data=TransactionModel::where('business_id',$id)->first();
+        $transaction_details=array();
+        if($obj_tran_data)
+        {
+            $transaction_details = $obj_tran_data->toArray();
+        }
+         if(sizeof($transaction_details)>0)
+         {
+            $expired_date=$transaction_details['expire_date'];
+         }
+        //dd($expired_date);
+    	return view('sales_user.deal.create',compact('page_title','arr_business','parent_category_id','expired_date'));
     }
     public function store(Request $request)
     {
@@ -153,6 +206,7 @@ class DealController extends Controller
         {
             $deal_arr = $obj_deal_arr->toArray();
         }
+
         return view('sales_user.deal.edit',compact('page_title','deal_arr','deal_public_img_path'));
     }
     public function update(Request $request,$enc_id)
