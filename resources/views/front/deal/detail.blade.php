@@ -26,7 +26,7 @@
    @if(sizeof($deals_info)>0)
 
      <div class="detail_bx">
-       <h2>{{$deals_info[0]['name']}}</h2>
+       <h2>{{ucfirst($deals_info[0]['name'])}}</h2>
        <div class="rate_sec">
         <ul>
           <li><img alt="write_review" src="{{ url('/') }}/assets/front/images/verified.png" width="33px"/><span>{{$deals_info[0]['discount_price']}}%</span>  </li>
@@ -39,10 +39,8 @@
     <div class="pad-dels-details">
       <div class="col-sm-12 col-md-9 col-lg-9">
 
-        <h5>The Specifics</h5>
+        <h5>{{$deals_info[0]['description']}}</h5>
         <div class="detail_link">
-        {{$deals_info[0]['description']}}
-
        </div>
        </div>
 
@@ -57,6 +55,26 @@
       <span class="buy_price">£
       <?php echo round($deals_info[0]['price']-(($deals_info[0]['price'])*($deals_info[0]['discount_price']/100)));?></span>
       <div class="price-old">£{{ $deals_info[0]['price'] }} <!--| <span>offers 50% OFF</span>--></div>
+       <?php
+                    if($deals_info[0]['end_day']!='')
+                    {
+                      $date1 = date('Y-m-d',strtotime($deals_info[0]['end_day']));
+                      $date2 = date('Y-m-d h:m:s');
+
+                      $diff = abs(strtotime($date1) - strtotime($date2));
+
+                      $years = floor($diff / (365*60*60*24));
+                      $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+                      $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+                      if($days>0)
+                        {
+                          echo '<div class="social_icon"> Limited For '.$days.' Days Only</div>' ;
+                        }
+
+
+
+                    }
+                    ?>
       </div>
 
       <button class="btn btn-post center-b">Buy Now</button>

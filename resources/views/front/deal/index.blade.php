@@ -36,7 +36,7 @@
                               <div class="dels">
                               <div class="deals-img"><span class="discount ribbon">{{$deals['discount_price'] }}%</span><img src="{{ url('/')}}/uploads/deal/{{$deals['deal_image']}}" alt="img" width="250" height="200" /></div>
                               <div class="deals-product">
-                              <div class="deals-nm"><a href="#">{{ $deals['name'] }}</a></div>
+                              <div class="deals-nm"><a href="{{url('/').'/deals/details/'.base64_encode($deals['id'])}}">{{ $deals['name'] }}</a></div>
                               <div class="online-spend"></div>
                                       <div class="price-box">
                                       <div class="price-new">£<?php echo round($deals['price']-(($deals['price'])*($deals['discount_price']/100)));?></div>
@@ -63,7 +63,7 @@
                           <div class="dels">
                           <div class="deals-img"><span class="discount ribbon">{{$max_dis_deals['discount_price'] }}%</span><img src="{{ url('/')}}/uploads/deal/{{$max_dis_deals['deal_image']}}" alt="img" width="250" height="200" /></div>
                           <div class="deals-product">
-                          <div class="deals-nm"><a href="#">{{ $max_dis_deals['name'] }}</a></div>
+                          <div class="deals-nm"><a href="{{url('/').'/deals/details/'.base64_encode($max_dis_deals['id'])}}">{{ $max_dis_deals['name'] }}</a></div>
                           <div class="online-spend"></div>
                                   <div class="price-box">
                                   <div class="price-new">£<?php echo round($max_dis_deals['price']-(($max_dis_deals['price'])*($max_dis_deals['discount_price']/100)));?></div>
@@ -81,8 +81,30 @@
                   </div>
 
                  </div>
-                    <div id="deal_by_location">
+                    <div class="row" id="deal_by_location">
 
+                       @if(sizeof($arr_deals_loc_info)>0)
+                          @foreach($arr_deals_loc_info as $loc_deals)
+
+                          <div class="col-sm-6 col-md-3 col-lg-3">
+                          <div class="dels">
+                          <div class="deals-img"><span class="discount ribbon">{{$loc_deals['discount_price'] }}%</span><img src="{{ url('/')}}/uploads/deal/{{$loc_deals['deal_image']}}" alt="img" width="250" height="200" /></div>
+                          <div class="deals-product">
+                          <div class="deals-nm"><a href="{{url('/').'/deals/details/'.base64_encode($loc_deals['id'])}}">{{ $loc_deals['name'] }}</a></div>
+                          <div class="online-spend"></div>
+                                  <div class="price-box">
+                                  <div class="price-new">£<?php echo round($loc_deals['price']-(($loc_deals['price'])*($loc_deals['discount_price']/100)));?></div>
+                                      <div class="price-old">£{{ $loc_deals['price'] }} <!--| <span>offers 50% OFF</span>--></div>
+                                      <div class="view"><a href="{{url('/').'/deals/details/'.base64_encode($loc_deals['id'])}}" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
+                                  </div>
+                          </div>
+                          </div>
+                          </div>
+
+                      @endforeach
+                      @else
+                          <span class="col-sm-3 col-md-3 col-lg-12">No Deals  Available.</span>
+                      @endif
                     </div>
                   </div>
                   </div>
@@ -363,16 +385,16 @@ $(document).ready(function(){
                              url: site_url+"/deals/fetch_location_deal",
                              type: 'POST',
                              data: fromData,
-                             
+
 
                              success: function(responseresult)
                              {
-                             
+
                                 $('#deal_by_location').html('<div class="row">'+responseresult+'</div>');
 
-                              
+
                                //$('.container').html('<h2>trst</h2>');
-                               
+
                              }
                          });
 
