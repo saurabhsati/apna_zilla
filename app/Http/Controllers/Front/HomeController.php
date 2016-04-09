@@ -140,6 +140,9 @@ class HomeController extends Controller
 
 
     //share location
+    //test
+
+
     public function locate_location(Request $request)
     {
     	 $lat=$request->input('lat');
