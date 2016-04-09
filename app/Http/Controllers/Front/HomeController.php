@@ -34,7 +34,7 @@ class HomeController extends Controller
         	$current_city='Mumbai';
         }
     	$arr_category = array();
-    	$where_arr=array('is_popular'=>1,'parent'=>0);
+    	$where_arr=array('is_popular'=>1,'parent'=>0,'is_active'=>1);
     	$obj_main_category = CategoryModel::where($where_arr)->get();
  		if($obj_main_category)
  		{
@@ -122,7 +122,7 @@ class HomeController extends Controller
                 }
 
             }
-             $obj_business_listing = BusinessListingModel::whereIn('id', $business_ids)->take(8)->get();
+             $obj_business_listing = BusinessListingModel::where('is_active','1')->whereIn('id', $business_ids)->take(8)->get();
             if($obj_business_listing)
             {
                 $business_listing = $obj_business_listing->toArray();
@@ -256,6 +256,7 @@ class HomeController extends Controller
             $search_term = $request->input('term');
             /*List category by keyword*/
             $arr_obj_list = CategoryModel::where('parent','!=',0)
+                                           ->where('is_active','=',1)
                                             ->where(function ($query) use ($search_term) {
                                              $query->where("title", 'like', "%".$search_term."%")
                                              ->orwhere("cat_desc", 'like', "%".$search_term."%")
@@ -433,7 +434,7 @@ class HomeController extends Controller
             }
 
         }
-         $obj_business_listing = BusinessListingModel::whereIn('id', $business_ids)->take(8)->with(['reviews'])->get();
+         $obj_business_listing = BusinessListingModel::where('is_active','1')->whereIn('id', $business_ids)->take(8)->with(['reviews'])->get();
         if($obj_business_listing)
         {
             $business_listing = $obj_business_listing->toArray();

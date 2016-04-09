@@ -24,13 +24,13 @@ class DealController extends Controller
 
 
 
- 		$obj_deals_info = DealModel::where('end_day', '>=', date('Y-m-d').' 00:00:00')->orderBy('created_at','DESC')->get();
+ 		$obj_deals_info = DealModel::where('is_active','1')->where('end_day', '>=', date('Y-m-d').' 00:00:00')->orderBy('created_at','DESC')->get();
 
  		if($obj_deals_info)
  		{
  			$arr_deals_info = $obj_deals_info->toArray();
 		}
- 		$obj_deals_max_dis_info = DealModel::where('end_day', '>=', date('Y-m-d').' 00:00:00')->orderBy('discount_price','DESC')->get();
+ 		$obj_deals_max_dis_info = DealModel::where('is_active','1')->where('end_day', '>=', date('Y-m-d').' 00:00:00')->orderBy('discount_price','DESC')->get();
 
  		if($obj_deals_max_dis_info)
  		{
@@ -51,7 +51,7 @@ class DealController extends Controller
         }
       }
 
-   $obj_deals_default_loc = DealModel::where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->get();
+   $obj_deals_default_loc = DealModel::where('is_active','1')->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->get();
   if($obj_deals_default_loc)
   {
       $arr_deals_loc_info = $obj_deals_default_loc->toArray();
@@ -74,14 +74,14 @@ class DealController extends Controller
         if( $arr_category_info)
         {
 
-            $obj_deals_info = DealModel::where('parent_category_id',$arr_category_info[0]['cat_id'])->where('end_day', '>=', date('Y-m-d').' 00:00:00')->orderBy('created_at','DESC')->get();
+            $obj_deals_info = DealModel::where('is_active','1')->where('parent_category_id',$arr_category_info[0]['cat_id'])->where('end_day', '>=', date('Y-m-d').' 00:00:00')->orderBy('created_at','DESC')->get();
 
             if($obj_deals_info)
             {
                 $arr_deals_info = $obj_deals_info->toArray();
             }
 
-            $obj_deals_max_dis_info = DealModel::where('parent_category_id',$arr_category_info[0]['cat_id'])->where('end_day', '>=', date('Y-m-d').' 00:00:00')->orderBy('discount_price','DESC')->get();
+            $obj_deals_max_dis_info = DealModel::where('is_active','1')->where('parent_category_id',$arr_category_info[0]['cat_id'])->where('end_day', '>=', date('Y-m-d').' 00:00:00')->orderBy('discount_price','DESC')->get();
 
             if($obj_deals_max_dis_info)
             {
@@ -103,7 +103,7 @@ class DealController extends Controller
                 }
               }
 
-           $obj_deals_default_loc = DealModel::where('parent_category_id',$arr_category_info[0]['cat_id'])->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->get();
+           $obj_deals_default_loc = DealModel::where('is_active','1')->where('parent_category_id',$arr_category_info[0]['cat_id'])->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->get();
           if($obj_deals_default_loc)
           {
               $arr_deals_loc_info = $obj_deals_default_loc->toArray();

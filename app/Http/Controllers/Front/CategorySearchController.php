@@ -41,7 +41,7 @@ class CategorySearchController extends Controller
       }
       $page_title	=ucfirst(str_replace('-',' ',$cat_slug));
 
-      $obj_sub_category = CategoryModel::where('parent',$cat_id)->orderBy('is_popular', 'DESC')->get();
+      $obj_sub_category = CategoryModel::where('parent',$cat_id)->where('is_active','1')->orderBy('is_popular', 'DESC')->get();
   	 	if($obj_sub_category)
   	 	{
   	 		$arr_sub_category = $obj_sub_category->toArray();
@@ -103,7 +103,7 @@ class CategorySearchController extends Controller
           if(sizeof($result)>0)
           {
 
-            $obj_business_listing = BusinessListingModel::whereIn('id', $result)->with(['reviews']);
+            $obj_business_listing = BusinessListingModel::where('is_active','1')->whereIn('id', $result)->with(['reviews']);
             if( Session::has('review_rating'))
             {
                 $obj_business_listing->orderBy('avg_rating','DESC');
