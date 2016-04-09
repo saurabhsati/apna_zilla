@@ -581,7 +581,7 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Name</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" placeholder="Enter Name"   id="name" name="name" class="input_acct">
+                         <input type="text" placeholder="Enter Name"   id="sms_name" name="sms_name" class="input_acct">
                           <div class="error_msg"></div>
                         </div>
                          </div>
@@ -608,7 +608,7 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Email</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" placeholder="Enter Email" name="email" id="email" class="input_acct" value="">
+                         <input type="text" placeholder="Enter Email" name="sms_email" id="sms_email" class="input_acct" value="">
                           <div class="error_msg"></div>
                         </div>
                          </div>
@@ -888,9 +888,9 @@ function check_review()
   function Send_SMS()
   {
     var site_url   = "{{ url('/') }}";
-    var name = $('#name').val();
+    var name = $('#sms_name').val();
     var mobile  = $('#sms_mobile_no').val();
-    var email   = $('#email').val();
+    var email   = $('#sms_email').val();
     var business_id   = $('#business_id').val();
     var token      = jQuery("input[name=_token]").val();
 
@@ -905,9 +905,9 @@ function check_review()
               if(response.status == "SUCCESS" )
               {
                 //console.log(response.mobile_no);
-                $('#name').val('');
-                $('#mobile').val('');
-                $('#email').val('');
+                $('#sms_name').val('');
+                $('#sms_mobile_no').val('');
+                $('#sms_email').val('');
 
 
                 $('#sms_otp_div_popup').click();
