@@ -19,7 +19,8 @@
 
        <div class="container">
          <div class="row">
-          @include('front.user.left_side_bar_user_business')
+         @include('front.user.Edit_Business.edit_business_left_side_bar_menu')
+
               <div class="col-sm-12 col-md-9 col-lg-9">
 
 

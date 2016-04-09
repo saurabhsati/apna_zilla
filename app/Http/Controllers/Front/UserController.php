@@ -1234,7 +1234,7 @@ class UserController extends Controller
         {
             Session::flash('error','Error While Adding Business');
         }
-        return redirect(url('/').'/front_users/edit_business_step4/'.base64_encode($id));
+        return redirect(url('/').'/front_users/edit_business_step5/'.base64_encode($id));
     }
      public function edit_business_step5($enc_id)
     {
