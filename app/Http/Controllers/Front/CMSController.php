@@ -25,7 +25,7 @@ class CMSController extends Controller
     	$page_slug=$slug;
     	$arr_data 	=	array();
         $page_title ='CMS';
-    	$obj_static_page=StaticPageModel::where('page_slug',$page_slug)->first();
+    	$obj_static_page=StaticPageModel::where('is_active','1')->where('page_slug',$page_slug)->first();
     	if($obj_static_page)
     	{
     		$data_page=$obj_static_page->toArray();

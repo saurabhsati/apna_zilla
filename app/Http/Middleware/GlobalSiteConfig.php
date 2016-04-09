@@ -25,7 +25,7 @@ class GlobalSiteConfig
         view()->share('site_settings', $arr_site_settings);
 
           /* Popular city info*/
-         $obj_popular_cities = CityModel::where('is_popular','1')->take(6)->get();
+         $obj_popular_cities = CityModel::where('is_active','1')->where('is_popular','1')->take(6)->get();
           if( $obj_popular_cities != FALSE)
         {
             $arr_cities = $obj_popular_cities->toArray();
@@ -33,7 +33,7 @@ class GlobalSiteConfig
         view()->share('popular_cities', $arr_cities);
 
         $data_page='';
-        $obj_static_page=StaticPageModel::where('page_slug','about-us')->first();
+        $obj_static_page=StaticPageModel::where('is_active','1')->where('page_slug','about-us')->first();
         if($obj_static_page)
         {
             $data_page=$obj_static_page->toArray();
@@ -41,7 +41,7 @@ class GlobalSiteConfig
         view()->share('about_us', $data_page);
 
         $deal_category='';
-        $obj_allow_deal_category = CategoryModel::where('is_allow_to_add_deal',1)->get();
+        $obj_allow_deal_category = CategoryModel::where('is_active','1')->where('is_allow_to_add_deal',1)->get();
         if($obj_allow_deal_category)
         {
             $deal_category = $obj_allow_deal_category->toArray();

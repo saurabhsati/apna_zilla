@@ -28,13 +28,13 @@ class AllCategoryController extends Controller
         }
         $arr_category = array();
     	$where_arr=array('parent'=>0);
-    	$obj_main_category = CategoryModel::where($where_arr)->get();
+    	$obj_main_category = CategoryModel::where('is_active','1')->where($where_arr)->get();
  		if($obj_main_category)
  		{
  			$arr_category = $obj_main_category->toArray();
  		}
 
- 		$obj_sub_category = CategoryModel::where('parent','!=',0)->get();
+ 		$obj_sub_category = CategoryModel::where('is_active','1')->where('parent','!=',0)->get();
  		if($obj_sub_category)
  		{
  			$sub_category = $obj_sub_category->toArray();
