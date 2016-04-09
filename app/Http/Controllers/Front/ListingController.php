@@ -463,7 +463,7 @@ class ListingController extends Controller
         {
             $mobile = $mobile_no;
 
-            $user = BusinessSendEnquiryModel::where('mobile',$mobile)->where('mobile_OTP',$otp)->first()->toArray();
+            $user = BusinessSendEnquiryModel::where('mobile',$mobile)->where('mobile_OTP',$otp)->first();
 
             if($user)
             {

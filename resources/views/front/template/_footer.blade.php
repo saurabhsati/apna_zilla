@@ -1,7 +1,7 @@
 
   <!--Sens SMS OTP popup start here-->
-        <a class="forgt" id="sms_otp_div_popup" data-toggle="modal" data-target="#otp_popup"></a>
-        <div id="otp_popup" class="modal fade" role="dialog" style="overflow:auto;">
+        <a class="forgt" id="sms_otp_div_popup" data-toggle="modal" data-target="#sms_otp_popup"></a>
+        <div id="sms_otp_popup" class="modal fade" role="dialog" style="overflow:auto;">
 
         <form class="form-horizontal"
                            id="validation-form"
@@ -46,7 +46,7 @@
                 </div>
 
                   <div class="login_box">
-                     <div class="title_login">Confirm OTP</div>
+                     <div class="title_login">Confirm SMS Sending OTP</div>
 
                      <div class="user_box">
                         <div class="label_form">OTP</div>
@@ -217,9 +217,9 @@
 
 
 
-    <!--OTP popup start here-->
-        <a class="forgt" id="otp_div_popup" data-toggle="modal" data-target="#otp_popup"></a>
-        <div id="otp_popup" class="modal fade" role="dialog" style="overflow:auto;">
+    <!--Registration OTP popup start here-->
+        <a class="forgt" id="reg_otp_div_popup" data-toggle="modal" data-target="#reg_otp_popup"></a>
+        <div id="reg_otp_popup" class="modal fade" role="dialog" style="overflow:auto;">
 
         <form class="form-horizontal"
                            id="validation-form"
@@ -266,12 +266,12 @@
                 </div>
 
                   <div class="login_box">
-                     <div class="title_login">Confirm OTP</div>
+                     <div class="title_login">Confirm Registration OTP</div>
 
                      <div class="user_box">
                         <div class="label_form">OTP</div>
-                        <input type="text" class="input_box" name="otp_no" id="otp_no" placeholder="Enter Your OTP"/>
-                        <input type="hidden" class="input_box" name="mobile_no_otp" id="mobile_no_otp" value=""/>
+                        <input type="text" class="input_box" name="reg_otp_no" id="reg_otp_no" placeholder="Enter Your OTP"/>
+                        <input type="hidden" class="input_box" name="reg_mobile_no_otp" id="reg_mobile_no_otp" value=""/>
                         <div id="otp_error" style="display: none;"><i style="color: red;">Please Fill Field</i></div>
                         <div id="otp_rule_error" style="display: none;"><i style="color: red;">Invalid OTP</i></div>
                      </div>
@@ -602,9 +602,11 @@ If you need any more details on Justdial Verified, please refer to
   {
 
     var site_url   = "{{ url('/') }}";
-    var otp        = $('#otp_no').val();
-    var mobile_no  = $('#mobile_no_otp').val();
+    var otp        = $('#reg_otp_no').val();
+    var mobile_no  = $('#reg_mobile_no_otp').val();
     var token      = jQuery("input[name=_token]").val();
+    console.log(mobile_no);
+    console.log(otp);
 
     var bus_listing= jQuery("#bus_listing").val();
 
@@ -638,8 +640,8 @@ If you need any more details on Justdial Verified, please refer to
             {
               //console.log(response.mobile_no);
 
-             $('#otp_no').val('');
-             $('#mobile_no_otp').val('');
+             $('#reg_otp_no').val('');
+             $('#reg_mobile_no_otp').val('');
 
 
               if(bus_listing == "1")
@@ -782,8 +784,9 @@ If you need any more details on Justdial Verified, please refer to
                 $('#password_confirmation').val('');
                 $('#terms_to_agree').val('');
 
-                $('#otp_div_popup').click();
-                $('#mobile_no_otp').val(response.mobile_no);
+                $('#reg_otp_div_popup').click();
+                $('#reg_mobile_no_otp').val(response.mobile_no);
+                //$('#mobile_no_otp').val(response.mobile_no);
                 $('#reg_poup').modal('hide');
                  //$('#reg_succ_div').show();
               }
