@@ -149,7 +149,7 @@ class HomeController extends Controller
 		    $content = file_get_contents($url); // get json content
 
 		    $metadata = json_decode($content, true); //json decoder
-		    if(sizeof($metadata['results'][3]) > 0) {
+		    if(isset($metadata['results'][3])) {
                 //echo '<pre>';
                 //print_r($metadata['results']);exit;
 			    $city = $metadata['results'][3]['address_components']['1']['long_name'];
