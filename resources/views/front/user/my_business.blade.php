@@ -10,7 +10,7 @@
          <span>You are here:</span>
     <li><a href="{{ url('/').'/front_users/profile' }}">Home</a></li>
 
-    <li class="active">@if($cat_title != ""){{ $cat_title }} @endif </li>
+    <li class="active">My Business </li>
 
 </ol>
              </div>
@@ -49,7 +49,7 @@
               </div> -->
             </div>
 
-             <div class="col-sm-12 col-md-9 col-lg-9">
+             <div class="col-sm-12 col-md-12 col-lg-12">
              <div class="title_head">@if($cat_title != ""){{ $cat_title }} @endif</div>
 
                 <!-- <div class="sorted_by">Sort By :</div>
