@@ -151,45 +151,58 @@ class HomeController extends Controller
 		    $content = file_get_contents($url); // get json content
 
 		    $metadata = json_decode($content, true); //json decoder
-            print_r($metadata['results']);exit;
-		    if(sizeof($metadata['results'][0])) {
-                //echo '<pre>';
-                print_r($metadata['results']);exit;
-			    $city = $metadata['results'][3]['address_components']['1']['long_name'];
-                if(!empty($city))
-                {
-			       Session::put('city', $city);
-                   $obj_city = CityModel::where('city_title',$city)->first();
-                    if($obj_city)
+            $result=array();
+            //print_r( $metadata);exit;
+            $result = $metadata['results'][0];
+            $city = "";
+            if(sizeof($result)>0)
+            {
+                    for($i=0, $len=count($result['address_components']); $i<$len; $i++)
                     {
-                        $arr_city = $obj_city->toArray();
-                        if(!empty($arr_city))
+                        $ac = $result['address_components'][$i];
+                       if(in_array('locality',$ac['types']))
                         {
-                            Session::put('city_id', $arr_city['id']);
+                            $city = $ac['long_name'];
                         }
 
+
                     }
+                    if($city != '')
+                    {
+                        Session::put('city', $city);
+                           $obj_city = CityModel::where('city_title',$city)->first();
+                            if($obj_city)
+                            {
+                                $arr_city = $obj_city->toArray();
+                                if(!empty($arr_city))
+                                {
+                                    Session::put('city_id', $arr_city['id']);
+                                }
+
+                            }
+                    }
+                    else
+                    {
+                             Session::put('city', 'Mumbai');
+                             $obj_city = CityModel::where('city_title',"Mumbai")->first();
+                            if($obj_city)
+                            {
+                                $arr_city = $obj_city->toArray();
+                                if(!empty($arr_city))
+                                {
+                                    Session::put('city_id', $arr_city['id']);
+                                }
+
+                            }
+                    }
+                    echo "done";
                 }
                 else
                 {
-                     Session::put('city', 'Mumbai');
-                     $obj_city = CityModel::where('city_title',"Mumbai")->first();
-                    if($obj_city)
-                    {
-                        $arr_city = $obj_city->toArray();
-                        if(!empty($arr_city))
-                        {
-                            Session::put('city_id', $arr_city['id']);
-                        }
-
-                    }
+                    echo "fail";
                 }
-			    echo 'done';
-			}
-			else
-			{
-		    	echo 'fail';
-	    	}
+
+
  	}
     public function get_city_auto(Request $request)
     {
