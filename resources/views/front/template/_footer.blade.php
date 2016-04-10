@@ -173,7 +173,7 @@
         <div id="forget_pwd" class="modal fade" role="dialog" style="overflow:auto;">
 
         <form class="form-horizontal"
-                           id="validation-form"
+                           id="recover_password"
                            method="POST"
                            action="{{ url('/forgot_password') }}"
                            enctype="multipart/form-data"
@@ -188,15 +188,35 @@
                <div class="modal-header">
                   <button type="button" class="close login_close1" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_poup.png" alt="login logo"/></h4>
+               <div style="position:fixed;
+                top: 0;
+                bottom: 0;
+                left:0;
+                right:0;
+                background-color:#ccc;
+                opacity:0.5;
+                display:none;"
+                 id="subscribr_loader">
+                <img src="{{ url('/') }}/assets/front/images/ajax-loader.gif" style="height:100px; width:100px; position:absolute; top:35%;left:45%" />
                </div>
+               </div>
+
                <div class="modal-body">
+
                   <div class="login_box">
                      <div class="title_login">Forget Password</div>
-
+                     <div class="alert alert-success fade in " id = "contact_succ" style="display:none;">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      <strong>Success!</strong> We have sent you an email with a confirmation link. Please click on the link to confirm your recover password ! ..
+                      </div>
+                       <div class="alert alert-danger" style="display:none;" id = "contact_err">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      <strong>Error!</strong>While Sending Enquiry .
+                      </div>
                      <div class="user_box">
                         <div class="label_form">Email</div>
-                        <input type="text" class="input_box" placeholder="Enter Email Address"/>
-
+                        <input type="text" name="recover_email" id="recover_email" class="input_box" placeholder="Enter Email Address"/>
+                          <div class="error_msg" id="err_recover_email"></div>
                      </div>
 
                      <div class="clr"></div>
@@ -205,7 +225,7 @@
                <div class="clr"></div>
                <div class="modal-footer">
                   <div class="login_box">
-                     <button type="submit" class="yellow1 ui button">Submit</button>
+                     <button type="submit" id="forgot_submit" name="forgot_submit" class="yellow1 ui button">Submit</button>
                    </div>
                </div>
                <div class="clr"></div>
@@ -511,7 +531,7 @@ If you need any more details on Justdial Verified, please refer to
                      </div>
                      <div class="social-icon-footer">
                         <a data-original-title="Google Plus" href="{{isset($site_settings['youtube_url'])?$site_settings['youtube_url']:''}}" class="social-icon si-borderless si-gplus" data-toggle="tooltip" data-placement="top" title="">
-
+                        <i class="fa fa-google-plus"></i>
                         <i class="fa fa-google-plus"></i>
                         </a>
                         <div class="clearfix"></div>
@@ -556,8 +576,6 @@ If you need any more details on Justdial Verified, please refer to
           $(".dropdown-toggle").dropdown();
         });
     </script>
-
-
       <script type="text/javascript">
          $(document).ready(function () {
 
@@ -849,9 +867,8 @@ If you need any more details on Justdial Verified, please refer to
   }
 </script>
 
-      <script type="text/javascript">
-
-         var url = "{{ url('/') }}";
+<script type="text/javascript">
+ var url = "{{ url('/') }}";
 
       (function() {
          var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -1078,7 +1095,74 @@ If you need any more details on Justdial Verified, please refer to
 </script>
 
 <!-- <script type="text/javascript" src="{{--url('/')--}}/assets/jquery-validation/dist/jquery.validate.min.js"></script> -->
+<script type="text/javascript">
+  $(document).ready(function(){
 
+  $("#forgot_submit").click(function(e){
+     e.preventDefault();
+      var email=$('#recover_email').val();
+       var filter = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
+       if(email.trim()=='')
+      {
+        $('#err_recover_email').html('Enter Your Email ID.');
+        $('#err_recover_email').show();
+        $('#recover_email').focus();
+        $('#recover_email').on('keyup', function(){
+        $('#err_recover_email').hide();
+          });
+
+
+      }
+      else if(!filter.test(email))
+     {
+        $('#err_recover_email').html('Enter Valid Email ID.');
+        $('#err_recover_email').show();
+        $('#recover_email').focus();
+        $('#recover_email').on('keyup', function(){
+        $('#err_recover_email').hide();
+          });
+       }
+       else
+      {
+        $.ajax({
+          type:"POST",
+          url:site_url+'/front_users/recover_password',
+          data:$("#recover_password").serialize(),
+          beforeSend: function()
+          {
+            $("#subscribr_loader").show();
+          },
+          success:function(res)
+          {
+            if(res=="success")
+            {
+               $("#contact_succ").fadeIn(3000).fadeOut(3000);
+               $("#recover_password").trigger('reset');
+            }
+            else if(res=="sending_error")
+            {
+               $("#contact_err").fadeIn(3000).fadeOut(3000);
+               $("#recover_password").trigger('reset');
+            }
+            else
+            {
+
+              $("#contact_err").fadeIn(3000).fadeOut(3000);
+            }
+          },
+          complete: function() {
+
+          $("#subscribr_loader").hide();
+
+          }
+        });
+
+
+      }
+
+  });
+});
+</script>
 
 
 <!-- jquery validation -->

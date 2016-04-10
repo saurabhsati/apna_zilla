@@ -503,6 +503,10 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	{
 		Route::any('store',								['as' => 'front_users_store'    		  		    ,'uses' =>'Front\UserController@store']);
 		Route::post('process_login',					['as' => 'front_users_process_login'        		,'uses' =>'Front\AuthController@process_login']);
+		Route::post('recover_password',					['as' => 'front_users_recover_password'        		,'uses' =>'Front\AuthController@recover_password']);
+		Route::get('/validate_reset_password_link/{enc_id}/{enc_reminder_code}','Front\AuthController@validate_reset_password_link');
+	    Route::post('/reset_password','Front\AuthController@reset_password');
+
 		// for testing  using ajax.
 		Route::post('process_login_ajax',				['as' => 'front_users_process_login'        		,'uses' =>'Front\AuthController@process_login_ajax']);
 

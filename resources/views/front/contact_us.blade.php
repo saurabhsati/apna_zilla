@@ -61,7 +61,7 @@
 
            <div class="bor_grn">&nbsp;</div>
            <div class="user_box">
-           <input class="input_acct" type="text" name="name" id="name" value="" placeholder="Name">
+           <input class="input_acct " type="text" name="name" id="name" value="" placeholder="Name">
            <div class="error_msg" id="err_name"></div>
            </div>
            <div class="user_box">

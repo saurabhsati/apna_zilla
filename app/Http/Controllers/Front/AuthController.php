@@ -16,19 +16,20 @@ use Mail;
 use Hash;
 use Activation;
 use URL;
+use Reminder;
 
 class AuthController extends Controller
 {
     public function __construct()
     {
-    } 
+    }
 
     public function register_via_google_plus(Request $request)
     {
         $arr_rules = array();
         $arr_rules['name'] = "required";
         $arr_rules['email'] = "required|email";
-     
+
         $validator = Validator::make($request->all(),$arr_rules);
 
         if($validator->fails())
@@ -39,8 +40,8 @@ class AuthController extends Controller
         }
 
         $name         = $request->input('name');
-        $email        = $request->input('email');    
-        
+        $email        = $request->input('email');
+
         $array_name     = explode(" ",$name);
         $first_name     = $array_name[0];
         $last_name      = "";
@@ -73,14 +74,14 @@ class AuthController extends Controller
             $login_status = Sentinel::login($existing_user); // process login a user
 
             Session::flash('success','Login Successfull');
-            
+
             $data['status'] = "SUCCESS";
             $data['msg']    = "Redirect to my account page";
             return response()->json($data);
         }
 
         $arr_data = [
-                        
+
                     'first_name'            => $first_name,
                     'last_name'             => $last_name,
                     'email'                 => $email,
@@ -92,7 +93,7 @@ class AuthController extends Controller
         $status = Sentinel::registerAndActivate($arr_data);
 //dd($status);
         if($status)
-        {   
+        {
             $user = Sentinel::findById($status->id);
 
             $id = $status->id;
@@ -111,7 +112,7 @@ class AuthController extends Controller
 
              Session::set('user_name', $status->first_name);
              Session::set('user_mail', $status->email);
-           
+
             Session::flash('success','Login Successfull');
 
             $data['status'] = "SUCCESS";
@@ -124,7 +125,7 @@ class AuthController extends Controller
             $data['msg'] = "Problem Occured While Registration";
             return response()->json($data);
         }
-    }   
+    }
 
 
     public function register_via_facebook(Request $request)
@@ -133,7 +134,7 @@ class AuthController extends Controller
         $arr_rules['fname'] = "required";
         $arr_rules['lname'] = "required";
         $arr_rules['email'] = "required|email";
-        
+
         $validator = Validator::make($request->all(),$arr_rules);
 
         if($validator->fails())
@@ -145,8 +146,8 @@ class AuthController extends Controller
 
         $fname         = $request->input('fname');
         $lname         = $request->input('lname');
-        $email         = $request->input('email');    
-        
+        $email         = $request->input('email');
+
         /* -------------     Generate a Password    ------------------------ */
         $digits = 8;
         $password =  rand(pow(10, $digits-1), pow(10, $digits)-1);
@@ -166,14 +167,14 @@ class AuthController extends Controller
             //Session::set('user_id', $email);
 
            Session::flash('success','Login Successfull');
-            
+
             $data['status'] = "SUCCESS";
             $data['msg'] 	= "Redirect to my account page";
             return response()->json($data);
         }
 
         $arr_data = [
-                        
+
                     'first_name'            => $fname,
                     'last_name'             => $lname,
                     'email'                 => $email,
@@ -185,7 +186,7 @@ class AuthController extends Controller
         $status = Sentinel::registerAndActivate($arr_data);
 
         if($status)
-        {   
+        {
             $user = Sentinel::findById($status->id);
 
             $id   = $status->id;
@@ -221,7 +222,7 @@ class AuthController extends Controller
 
     public function via_social_registration_send_mail($arr_data)
     {
-        // Retrieve Email Template 
+        // Retrieve Email Template
 
         $obj_email_template = EmailTemplate::where('id','3')->first();
         if($obj_email_template)
@@ -239,7 +240,7 @@ class AuthController extends Controller
             $content = html_entity_decode($content);
 
             $send_mail = Mail::send(array(),array(), function($message) use($arr_data,$arr_email_template,$content)
-                        {   
+                        {
                             $message->from($arr_email_template['template_from_mail'], $arr_email_template['template_from']);
                             $message->to($arr_data['email'], $arr_data['first_name'])
                                     ->subject($arr_email_template['template_subject'])
@@ -247,11 +248,11 @@ class AuthController extends Controller
                         });
 
             return $send_mail;
-        }  
+        }
     }
 
     public function process_login_ajax(Request $request)
-    {   
+    {
         $json = array();
         $arr_creds =  array();
 
@@ -261,7 +262,7 @@ class AuthController extends Controller
         // $arr_creds['mobile_no'] ='';
         if(is_numeric($email_or_mobile))
         {
-            
+
             if(strlen($email_or_mobile)==10)
             {
                 $arr_creds['mobile_no'] = $email_or_mobile;
@@ -269,45 +270,45 @@ class AuthController extends Controller
             else
             {
                 $json = "Invalid Mobile_no";
-            }    
+            }
         }
         else
         {
             $arr_creds['email'] = $email_or_mobile;
-        }    
-        
+        }
+
 
 
         $arr_creds['password']  = $request->input('password');
 
         $user = Sentinel::authenticate($arr_creds);
-    
+
         if($user)
         {
 
             if($user->is_active == 1)
-            {    
+            {
                     /* Check if Users Role is Admin */
                     $role = Sentinel::findRoleBySlug('normal');
                     if(Sentinel::inRole($role))
-                    {   
+                    {
                         if(is_numeric($email_or_mobile))
                         {
                             $obj_user_info = UserModel::Where('mobile_no','=',$arr_creds['mobile_no'])->get();
-                           
+
                         }
                         else
                         {
-                            $obj_user_info = UserModel::where('email','=',$arr_creds['email'])->get();  
+                            $obj_user_info = UserModel::where('email','=',$arr_creds['email'])->get();
                         }
-                        
-                        
+
+
                         if($obj_user_info);
                         {
                            $arr_user_info = $obj_user_info->toArray();
                         }
-                        
-              
+
+
                         foreach ($arr_user_info as $user)
                         {
                             $user_id = base64_encode($user['id']) ;
@@ -329,7 +330,7 @@ class AuthController extends Controller
             else
             {
                 $json =  'ACC_ACT_ERROR';
-            }        
+            }
         }
         else
         {
@@ -354,19 +355,19 @@ class AuthController extends Controller
             /* Check if Users Role is Admin */
             $role = Sentinel::findRoleBySlug('normal');
             if(Sentinel::inRole($role))
-            {   
+            {
                 $obj_user_info = UserModel::where('email','=',$arr_creds['email'])->get();
                 // $obj_user_info = UserModel::where('email','=',$arr_creds['email'])
                 //                          ->orWhere('mobile_no','=',$arr_creds['email'])
                 //                          ->toSQL();
 
                 // dd($obj_user_info);
-                
+
                 if($obj_user_info);
                 {
                     $arr_user_info = $obj_user_info->toArray();
                 }
-                
+
                 foreach ($arr_user_info as $user)
                 {
                     $user_id = base64_encode($user['id']) ;
@@ -406,9 +407,9 @@ class AuthController extends Controller
             /* Check if Users Role is Admin */
             $role = Sentinel::findRoleBySlug('normal');
             if(Sentinel::inRole($role))
-            {   
+            {
                 // $obj_user_info = UserModel::where('email','=',$arr_creds['email'])->get();
-                
+
                 $obj_user_info = UserModel::where('email','=',$arr_creds['email'])
                                          ->orWhere('mobile_no','=',$arr_creds['email'])
                                          ->toSQL();
@@ -417,10 +418,10 @@ class AuthController extends Controller
 
                 if($obj_user_info);
                 {
-                    $arr_user_info = $obj_user_info->toArray();    
+                    $arr_user_info = $obj_user_info->toArray();
                 }
-                
-                
+
+
                 foreach ($arr_user_info as $user)
                 {
                     $user_id = base64_encode($user['id']) ;
@@ -496,6 +497,164 @@ class AuthController extends Controller
         else
         {
             Session::flash('error','Incorrect Old Password');
+            return redirect()->back();
+        }
+
+    }
+    public function recover_password(Request $request)
+    {
+        $arr_rules = array();
+
+        $arr_rules['recover_email'] = "required";
+        $validator = Validator::make($request->all(),$arr_rules);
+
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $email = $request->input('recover_email');
+        $user = Sentinel::findByCredentials(['email' => $email]);
+
+        if($user)
+        {
+            /* Check if Users Role is Admin */
+
+            $reminder = Reminder::create($user);
+
+            $email_status = $this->forget_password_send_mail($email,$reminder->code);
+            if($email_status)
+            {
+                echo "success";
+            }
+            else
+            {
+                echo "sending_error";
+            }
+
+        }
+        else
+        {
+             echo 'error';
+        }
+        exit;
+    }
+     private function forget_password_send_mail($email, $reminder_code)
+    {
+        // Retrieve Email Template
+
+        $user = $this->get_user_details($email);
+
+        if($user)
+        {
+            $obj_email_template = EmailTemplate::where('id','11')->first();
+            if($obj_email_template)
+            {
+                $arr_email_template = $obj_email_template->toArray();
+
+                $content = $arr_email_template['template_html'];
+
+                $content        = str_replace("##USER_FNAME##",$user->first_name,$content);
+                $content        = str_replace("##EMAIL##",$user->email,$content);
+
+
+                $reminder_url = '<a href=" '.URL::to('front_users/validate_reset_password_link/'.base64_encode($user->id).'/'.base64_encode($reminder_code) ).'">Click Here</a>.<br/>' ;
+
+                $content        = str_replace("##APP_NAME##","RightNext",$content);
+                $content        = str_replace("##RESET_LINK##",$reminder_url,$content);
+
+
+                $content        = str_replace("##RESET_LINK##",$reminder_code,$content);
+
+                $content = view('email.front_general',compact('content'))->render();
+                $content = html_entity_decode($content);
+
+                $send_mail = Mail::send(array(),array(), function($message) use($user,$arr_email_template,$content)
+                            {
+                                $message->from($arr_email_template['template_from_mail'], $arr_email_template['template_from']);
+                                $message->to($user->email, $user->first_name)
+                                        ->subject($arr_email_template['template_subject'])
+                                        ->setBody($content, 'text/html');
+                            });
+
+                return $send_mail;
+            }
+        }
+
+    }
+    public function validate_reset_password_link($enc_id, $enc_reminder_code)
+    {
+        $user_id = base64_decode($enc_id);
+        $reminder_code = base64_decode($enc_reminder_code);
+
+        $user = Sentinel::findById($user_id);
+
+        if(!$user)
+        {
+            Session::flash('error','Invalid User Request');
+            return redirect()->back();
+        }
+
+        if(Reminder::exists($user))
+        {
+            return view('front.reset_password',compact('enc_id','enc_reminder_code'));
+        }
+        else
+        {
+            Session::flash('error','Reset Password Link Expired');
+            return redirect()->back();
+        }
+    }
+    public function get_user_details($email)
+    {
+        $credentials = ['email'    => $email];
+        $user = Sentinel::findByCredentials($credentials); // check if user exists
+
+        if($user)
+        {
+            return $user;
+        }
+        return FALSE;
+    }
+     public function reset_password(Request $request)
+    {
+        $arr_rules = array();
+        $arr_rules['password'] = "required|confirmed";
+        $arr_rules['enc_id'] = "required";
+        $arr_rules['enc_reminder_code'] = "required";
+
+        $validator = Validator::make($request->all(),$arr_rules);
+
+        if($validator->fails())
+        {
+            return redirect()->back();
+        }
+
+
+        $enc_id = $request->input('enc_id');
+        $enc_reminder_code = $request->input('enc_reminder_code');
+        $password = $request->input('password');
+
+        $user_id = base64_decode($enc_id);
+        $reminder_code = base64_decode($enc_reminder_code);
+
+        $user = Sentinel::findById($user_id);
+
+        if(!$user)
+        {
+            Session::flash('error','Invalid User Request');
+            return redirect()->back();
+        }
+
+        if ($reminder = Reminder::complete($user, $reminder_code, $password))
+        {
+            Session::flash('success','Password Resetted Successfully');
+            return redirect()->back();
+        }
+        else
+        {
+            // Reminder not found or not completed.
+            Session::flash('error','Reset Password Link Expired');
             return redirect()->back();
         }
 
