@@ -153,49 +153,52 @@ class HomeController extends Controller
 		    $metadata = json_decode($content, true); //json decoder
             $result=array();
             //print_r( $metadata);exit;
-            $result = $metadata['results'][0];
-            $city = "";
-            if(sizeof($result)>0)
+            if(sizeof($metadata['results'][0]))
             {
-                    for($i=0, $len=count($result['address_components']); $i<$len; $i++)
-                    {
-                        $ac = $result['address_components'][$i];
-                       if(in_array('locality',$ac['types']))
+                $result = $metadata['results'][0];
+                $city = "";
+                if(sizeof($result)>0)
+                {
+                        for($i=0, $len=count($result['address_components']); $i<$len; $i++)
                         {
-                            $city = $ac['long_name'];
+                            $ac = $result['address_components'][$i];
+                           if(in_array('locality',$ac['types']))
+                            {
+                                $city = $ac['long_name'];
+                            }
+
+
                         }
-
-
-                    }
-                    if($city != '')
-                    {
-                        Session::put('city', $city);
-                           $obj_city = CityModel::where('city_title',$city)->first();
-                            if($obj_city)
-                            {
-                                $arr_city = $obj_city->toArray();
-                                if(!empty($arr_city))
+                        if($city != '')
+                        {
+                            Session::put('city', $city);
+                               $obj_city = CityModel::where('city_title',$city)->first();
+                                if($obj_city)
                                 {
-                                    Session::put('city_id', $arr_city['id']);
-                                }
+                                    $arr_city = $obj_city->toArray();
+                                    if(!empty($arr_city))
+                                    {
+                                        Session::put('city_id', $arr_city['id']);
+                                    }
 
-                            }
-                    }
-                    else
-                    {
-                             Session::put('city', 'Mumbai');
-                             $obj_city = CityModel::where('city_title',"Mumbai")->first();
-                            if($obj_city)
-                            {
-                                $arr_city = $obj_city->toArray();
-                                if(!empty($arr_city))
+                                }
+                        }
+                        else
+                        {
+                                 Session::put('city', 'Mumbai');
+                                 $obj_city = CityModel::where('city_title',"Mumbai")->first();
+                                if($obj_city)
                                 {
-                                    Session::put('city_id', $arr_city['id']);
-                                }
+                                    $arr_city = $obj_city->toArray();
+                                    if(!empty($arr_city))
+                                    {
+                                        Session::put('city_id', $arr_city['id']);
+                                    }
 
-                            }
+                                }
+                        }
+                        echo "done";
                     }
-                    echo "done";
                 }
                 else
                 {

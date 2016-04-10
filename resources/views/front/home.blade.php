@@ -246,19 +246,8 @@
 </div>
 </div>
 </div>
-
-
-
-
-
-
-
-
 <div class="clearfix"></div>
 <script type="text/javascript">
-
-
-
    $('.browse_all_cat').click(function(){
       $('ul.category_list *').removeAttr('style');
    });
