@@ -237,7 +237,7 @@
                           <div class="col-lg-3  label-text">Name</div>
                           <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                                <input type="text" placeholder="Enter Name"   id="name-{{ $restaurants['id'] }}" name="name-{{ $restaurants['id'] }}" class="input_acct">
-                                <div class="error_msg"></div>
+                                 <div class="error_msg" id="err_name-{{ $restaurants['id'] }}"></div>
                               </div>
                                </div>
                           </div>
@@ -253,7 +253,7 @@
                               <input type="text" required="" aria-describedby="basic-addon1" id="sms_mobile_no-{{ $restaurants['id'] }}" name="sms_mobile_no-{{ $restaurants['id'] }}" placeholder="Mobile" class="form-control">
 
                               </div>
-                                <div class="error_msg"></div>
+                                <div class="error_msg" id="err_sms_mobile_no-{{ $restaurants['id'] }}"></div>
                               </div>
                                </div>
                           </div>
@@ -264,7 +264,7 @@
                           <div class="col-lg-3  label-text">Email</div>
                           <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                                <input type="text" placeholder="Enter Email" name="email-{{ $restaurants['id'] }}" id="email-{{ $restaurants['id'] }}" class="input_acct">
-                                <div class="error_msg"></div>
+                                <div class="error_msg" id="err_email-{{ $restaurants['id'] }}"></div>
                               </div>
                                </div>
                           </div>
@@ -879,8 +879,56 @@
           var mobile  = $('#sms_mobile_no-'+business_id).val();
           var email   = $('#email-'+business_id).val();
           var token      = jQuery("input[name=_token]").val();
+           var filter = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
 
-           jQuery.ajax({
+             if(name.trim()=='')
+             {
+                  $('#err_name-'+business_id).html('Enter Your Name.');
+                  $('#err_name-'+business_id).show();
+                  $('#name-'+business_id).focus();
+                  $('#name-'+business_id).on('keyup', function(){
+                  $('#err_name-'+business_id).hide();
+              });
+             }
+             else if(mobile.trim()=='')
+             {
+               $('#err_sms_mobile_no-'+business_id).html('Enter Your Mobile Number.');
+                  $('#err_sms_mobile_no-'+business_id).show();
+                  $('#sms_mobile_no-'+business_id).focus();
+                  $('#sms_mobile_no-'+business_id).on('keyup', function(){
+                  $('#err_sms_mobile_no-'+business_id).hide();
+              });
+             }
+             else if(isNaN(mobile))
+             {
+               $('#err_sms_mobile_no-'+business_id).html('Enter Valid Mobile Number.');
+                  $('#err_sms_mobile_no-'+business_id).show();
+                  $('#sms_mobile_no-'+business_id).focus();
+                  $('#sms_mobile_no-'+business_id).on('keyup', function(){
+                  $('#err_sms_mobile_no-'+business_id).hide();
+              });
+             }
+             else if(email.trim()=='')
+             {
+               $('#err_email-'+business_id).html('Enter Your Email Id.');
+                  $('#err_email-'+business_id).show();
+                  $('#email-'+business_id).focus();
+                  $('#email-'+business_id).on('keyup', function(){
+                  $('#err_email-'+business_id).hide();
+              });
+             }
+             else if(!filter.test(email))
+             {
+                $('#err_email-'+business_id).html('Enter Valid Email Id.');
+                  $('#err_email-'+business_id).show();
+                  $('#email-'+business_id).focus();
+                  $('#email-'+business_id).on('keyup', function(){
+                  $('#err_email-'+business_id).hide();
+              });
+             }
+             else
+             {
+              jQuery.ajax({
                  url      : site_url+"/listing/send_sms?_token="+token,
                  method   : 'POST',
                  dataType : 'json',
@@ -942,6 +990,7 @@
                     return false;
                  }
               });
+            }
         }
 
        </script>

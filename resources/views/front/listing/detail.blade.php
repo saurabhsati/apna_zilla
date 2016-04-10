@@ -478,8 +478,8 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Name<span style="color:red">*</span></div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" required="" aria-describedby="basic-addon1" placeholder="Enter Name" id="name" name="name" class="input_acct form-control">
-                          <div class="error_msg"></div>
+                         <input type="text"  placeholder="Enter Name" id="enquiry_name" name="enquiry_name" class="input_acct form-control">
+                          <div class="error_msg" id="err_enquiry_name"></div>
                         </div>
                          </div>
                     </div>
@@ -492,10 +492,10 @@
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                         <div class="input-group">
                         <span id="basic-addon1" class="input-group-addon">+91</span>
-                        <input type="text" required="" aria-describedby="basic-addon1" id="mobile" name="mobile"  placeholder="Mobile" class="form-control">
+                        <input type="text"  id="enquiry_mobile" name="enquiry_mobile"  placeholder="Mobile" class="form-control">
 
                         </div>
-                          <div class="error_msg"></div>
+                          <div class="error_msg" id="err_enquiry_mobile"></div>
                         </div>
                          </div>
                     </div>
@@ -505,8 +505,8 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Email<span style="color:red">*</span></div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" required="" aria-describedby="basic-addon1" placeholder="Enter Email" name="email" id="email" class="input_acct form-control">
-                          <div class="error_msg"></div>
+                         <input type="text"  placeholder="Enter Email" name="enquiry_email" id="enquiry_email" class="input_acct form-control">
+                          <div class="error_msg" id="err_enquiry_email"></div>
                         </div>
                          </div>
                     </div>
@@ -514,8 +514,8 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Subject<span style="color:red">*</span></div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" required="" aria-describedby="basic-addon1" placeholder="Enter Subject"  name="subject" id="subject" class="input_acct form-control">
-                          <div class="error_msg"></div>
+                         <input type="text"  placeholder="Enter Subject"  name="enquiry_subject" id="enquiry_subject" class="input_acct form-control">
+                          <div class="error_msg" id="err_enquiry_subject"></div>
                         </div>
                          </div>
                     </div>
@@ -524,8 +524,8 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Body<span style="color:red">*</span></div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="textarea" required="" aria-describedby="basic-addon1" placeholder="Enter Body" name="message" id="message" class="input_acct form-control">
-                          <div class="error_msg"></div>
+                         <input type="textarea"  placeholder="Enter Body" name="enquiry_message" id="enquiry_message" class="input_acct form-control">
+                          <div class="error_msg"  id="err_enquiry_message"></div>
                         </div>
                          </div>
                     </div>
@@ -534,7 +534,7 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">&nbsp;</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                    <div class="submit-btn"><button type="submit" name="submit_enquiry" id="submit_enquiry">Ok</button></div>
+                    <div class="submit-btn"><button type="submit" name="submit_enquiry" id="submit_enquiry" onclick="return send_enquiry();">Ok</button></div>
 
                     </div>
                            </div>
@@ -582,7 +582,7 @@
                     <div class="col-lg-3  label-text">Name</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="text" placeholder="Enter Name"   id="sms_name" name="sms_name" class="input_acct">
-                          <div class="error_msg"></div>
+                          <div class="error_msg" id="err_sms_name"></div>
                         </div>
                          </div>
                     </div>
@@ -595,10 +595,10 @@
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                         <div class="input-group">
                         <span id="basic-addon1" class="input-group-addon">+91</span>
-                        <input type="text" required="" aria-describedby="basic-addon1" id="sms_mobile_no" name="sms_mobile_no" placeholder="Mobile" class="form-control" >
+                        <input type="text"  id="sms_mobile_no" name="sms_mobile_no" placeholder="Mobile" class="form-control" >
 
                         </div>
-                          <div class="error_msg"></div>
+                          <div class="error_msg" id="err_sms_mobile_no"></div>
                         </div>
                          </div>
                     </div>
@@ -609,7 +609,7 @@
                     <div class="col-lg-3  label-text">Email</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="text" placeholder="Enter Email" name="sms_email" id="sms_email" class="input_acct" value="">
-                          <div class="error_msg"></div>
+                          <div class="error_msg" id="err_sms_email"></div>
                         </div>
                          </div>
                     </div>
@@ -735,6 +735,98 @@ function check_review()
 
     }
 
+  function send_enquiry()
+  {
+        var name  = $('#enquiry_name').val();
+        var mobile  = $('#enquiry_mobile').val();
+        var email    = $('#enquiry_email').val();
+        var subject  = $('#enquiry_subject').val();
+        var message   = $('#enquiry_message').val();
+        var filter = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
+       // var filter_contact=/^(?:(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d?)\)?)?[\-\.\ \\\/]?)?((?:\(?\d{1,}\)?[\-\.\ \\\/]?){0,})(?:[\-\.\ \\\/]?(?:#|ext\.?|extension|x)[\-\.\ \\\/]?(\d+))?$/i;
+
+        var flag=1;
+        if(name=="")
+        {
+          $('#err_enquiry_name').html('Enter Your Name.');
+          $('#err_enquiry_name').show();
+          $('#enquiry_name').show();
+          $('#enquiry_name').on('keyup', function(){
+          $('#err_enquiry_name').hide();
+            });
+          flag=0;
+        }
+        else if(mobile=="")
+        {
+          $('#err_enquiry_mobile').html('Enter Your Mobile Number.');
+          $('#err_enquiry_mobile').show();
+          $('#enquiry_mobile').show();
+          $('#enquiry_mobile').on('keyup', function(){
+          $('#err_enquiry_mobile').hide();
+            });
+          flag=0;
+        }
+         else if(isNaN(mobile))
+        {
+          $('#err_enquiry_mobile').html('Enter Valid Mobile Number.');
+          $('#err_enquiry_mobile').show();
+          $('#enquiry_mobile').show();
+          $('#enquiry_mobile').on('keyup', function(){
+          $('#err_enquiry_mobile').hide();
+            });
+          flag=0;
+        }
+
+        else if(email=="")
+        {
+          $('#err_enquiry_email').html('Enter Your Email Id.');
+          $('#err_enquiry_email').show();
+          $('#enquiry_email').show();
+          $('#enquiry_email').on('keyup', function(){
+          $('#err_enquiry_email').hide();
+            });
+          flag=0;
+        }
+         else if(!filter.test(email))
+        {
+          $('#err_enquiry_email').html('Enter Valid Email Id.');
+          $('#err_enquiry_email').show();
+          $('#enquiry_email').show();
+          $('#enquiry_email').on('keyup', function(){
+          $('#err_enquiry_email').hide();
+            });
+          flag=0;
+        }
+         else if(subject=="")
+        {
+          $('#err_enquiry_subject').html('Enter Subject.');
+          $('#err_enquiry_subject').show();
+          $('#enquiry_subject').show();
+          $('#enquiry_subject').on('keyup', function(){
+          $('#err_enquiry_subject').hide();
+            });
+          flag=0;
+        }
+         else if(message=="")
+        {
+           $('#err_enquiry_message').html('Enter Subject.');
+          $('#err_enquiry_message').show();
+          $('#enquiry_message').show();
+          $('#enquiry_message').on('keyup', function(){
+          $('#err_enquiry_message').hide();
+            });
+          flag=0;
+        }
+
+         if(flag==1)
+        {
+            return true;
+        }
+        else
+        {
+          return false;
+        }
+  }
 
 
    function show_opening_times()
@@ -893,69 +985,116 @@ function check_review()
     var email   = $('#sms_email').val();
     var business_id   = $('#business_id').val();
     var token      = jQuery("input[name=_token]").val();
+    var filter = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
 
-     jQuery.ajax({
-           url      : site_url+"/listing/send_sms?_token="+token,
-           method   : 'POST',
-           dataType : 'json',
-           data     : 'name='+name+'&mobile='+mobile+'&email='+email+'&business_id='+business_id,
-           success: function(response)
-           {
-            //console.log(response);
-              if(response.status == "SUCCESS" )
-              {
-                //console.log(response.mobile_no);
-                $('#sms_name').val('');
-                $('#sms_mobile_no').val('');
-                $('#sms_email').val('');
+             if(name.trim()=='')
+             {
+                  $('#err_sms_name').html('Enter Your Name.');
+                  $('#err_sms_name').show();
+                  $('#sms_name').focus();
+                  $('#sms_name').on('keyup', function(){
+                  $('#err_sms_name').hide();
+              });
+             }
+             else if(mobile.trim()=='')
+             {
+               $('#err_sms_mobile_no').html('Enter Your Mobile Number.');
+                  $('#err_sms_mobile_no').show();
+                  $('#sms_mobile_no').focus();
+                  $('#sms_mobile_no').on('keyup', function(){
+                  $('#err_sms_mobile_no').hide();
+              });
+             }
+             else if(isNaN(mobile))
+             {
+               $('#err_sms_mobile_no').html('Enter Valid Mobile Number.');
+                  $('#err_sms_mobile_no').show();
+                  $('#sms_mobile_no').focus();
+                  $('#sms_mobile_no').on('keyup', function(){
+                  $('#err_sms_mobile_no').hide();
+              });
+             }
+             else if(email.trim()=='')
+             {
+               $('#err_sms_email').html('Enter Your Email Id.');
+                  $('#err_sms_email').show();
+                  $('#sms_email').focus();
+                  $('#sms_email').on('keyup', function(){
+                  $('#err_sms_email').hide();
+              });
+             }
+             else if(!filter.test(email))
+             {
+                $('#err_sms_email').html('Enter Valid Email Id.');
+                  $('#err_sms_email').show();
+                  $('#sms_email').focus();
+                  $('#sms_email').on('keyup', function(){
+                  $('#err_sms_email').hide();
+              });
+             }
+             else
+             {
+            jQuery.ajax({
+                 url      : site_url+"/listing/send_sms?_token="+token,
+                 method   : 'POST',
+                 dataType : 'json',
+                 data     : 'name='+name+'&mobile='+mobile+'&email='+email+'&business_id='+business_id,
+                 success: function(response)
+                 {
+                  //console.log(response);
+                    if(response.status == "SUCCESS" )
+                    {
+                      //console.log(response.mobile_no);
+
+                      $('#sms_name').val('');
+                      $('#sms_mobile_no').val('');
+                      $('#sms_email').val('');
 
 
-                $('#sms_otp_div_popup').click();
-                $('#mobile_no_otp').val(response.mobile_no);
-                //$('#reg_succ_div').show();
-              }
-              else if(response.status == "ERROR")
-              {
-                  $("#sms_err_div").empty();
-                  $("#sms_err_div").fadeIn();
-                  $("#sms_err_div").html("<div class='alert alert-danger'><strong>Error! </strong>"+response.msg+"</div>");
-                  return false;
-              }
-              else if(response.status == "OTP_ERROR")
-              {
-                 $("#sms_err_div").empty();
-                 $("#sms_err_div").fadeIn();
-                 $("#sms_err_div").html("<div class='alert alert-danger'><strong>Error! </strong>"+response.msg+"</div>");
-                 return false;
-              }
-               else if(response.status == "VALIDATION_ERROR")
-              {
-                 $("#sms_err_div").empty();
-                 $("#sms_err_div").fadeIn();
-                  $("#sms_err_div").html("<div class='alert alert-danger'><strong>Error! </strong>"+response.msg+"</div>");
-                 return false;
-              }
-              else if(response.status == "MOBILE_ERROR")
-              {
-                 $("#sms_err_div").empty();
-                 $("#sms_err_div").fadeIn();
-                  $("#sms_err_div").html("<div class='alert alert-danger'><strong>Error! </strong>"+response.msg+"</div>");
-                 return false;
-              }
+                      $('#sms_otp_div_popup').click();
+                      $('#mobile_no_otp').val(response.mobile_no);
+                      //$('#reg_succ_div').show();
+                    }
+                    else if(response.status == "ERROR")
+                    {
+                        $("#sms_err_div").empty();
+                        $("#sms_err_div").fadeIn();
+                        $("#sms_err_div").html("<div class='alert alert-danger'><strong>Error! </strong>"+response.msg+"</div>");
+                        return false;
+                    }
+                    else if(response.status == "OTP_ERROR")
+                    {
+                       $("#sms_err_div").empty();
+                       $("#sms_err_div").fadeIn();
+                       $("#sms_err_div").html("<div class='alert alert-danger'><strong>Error! </strong>"+response.msg+"</div>");
+                       return false;
+                    }
+                     else if(response.status == "VALIDATION_ERROR")
+                    {
+                       $("#sms_err_div").empty();
+                       $("#sms_err_div").fadeIn();
+                        $("#sms_err_div").html("<div class='alert alert-danger'><strong>Error! </strong>"+response.msg+"</div>");
+                       return false;
+                    }
+                    else if(response.status == "MOBILE_ERROR")
+                    {
+                       $("#sms_err_div").empty();
+                       $("#sms_err_div").fadeIn();
+                        $("#sms_err_div").html("<div class='alert alert-danger'><strong>Error! </strong>"+response.msg+"</div>");
+                       return false;
+                    }
 
-              else
-              {
 
-              }
 
-              setTimeout(function()
-              {
-                  $("#reg_err_div").fadeOut();
-              },5000);
+                    setTimeout(function()
+                    {
+                        $("#reg_err_div").fadeOut();
+                    },5000);
 
-              return false;
-           }
-        });
+                    return false;
+                 }
+              });
+          }
   }
 
 

@@ -298,11 +298,11 @@ class ListingController extends Controller
     public function send_enquiry(Request $request)
     {
         $arr_rules = array();
-        $arr_rules['name'] = "required";
-        $arr_rules['mobile'] = "required";
-        $arr_rules['email'] = "required";
-        $arr_rules['subject'] = "required";
-        $arr_rules['message'] = "required";
+        $arr_rules['enquiry_name'] = "required";
+        $arr_rules['enquiry_mobile'] = "required";
+        $arr_rules['enquiry_email'] = "required";
+        $arr_rules['enquiry_subject'] = "required";
+        $arr_rules['enquiry_message'] = "required";
 
         $validator = Validator::make($request->all(),$arr_rules);
          $business_id ='';
@@ -311,11 +311,11 @@ class ListingController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $name        =  $request->input('name');
-        $email      =  $request->input('email');
-        $mobile   =  $request->input('mobile');
-        $subject       =  $request->input('subject');
-        $message       =  $request->input('message');
+        $name        =  $request->input('enquiry_name');
+        $email      =  $request->input('enquiry_email');
+        $mobile   =  $request->input('enquiry_mobile');
+        $subject       =  $request->input('enquiry_subject');
+        $message       =  $request->input('enquiry_message');
         $business_id          =  $request->input('business_id');
 
 
