@@ -518,7 +518,7 @@ class AuthController extends Controller
 
         if($user)
         {
-            /* Check if Users Role is Admin */
+
 
             $reminder = Reminder::create($user);
 
@@ -648,7 +648,7 @@ class AuthController extends Controller
 
         if ($reminder = Reminder::complete($user, $reminder_code, $password))
         {
-            Session::flash('success','Password Resetted Successfully');
+            Session::flash('success','Password Reset Successfully');
             return redirect()->back();
         }
         else
