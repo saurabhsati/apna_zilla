@@ -41,7 +41,7 @@
                 opacity:0.5;
                 display:none;"
           id="subscribr_loader">
-                <img src="{{url('/')}}/assets/front/images/ajax-loader.gif" style="height:100px; width:100px; position:absolute; top:35%;left:45%" />
+                <img src="{{ url('/') }}/assets/front/images/ajax-loader.gif" style="height:100px; width:100px; position:absolute; top:35%;left:45%" />
         </div>
          <div class="box_contact">
          <div class="alert alert-success fade in " id = "contact_succ" style="display:none;">
