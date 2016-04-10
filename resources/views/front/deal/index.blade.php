@@ -130,7 +130,12 @@
              if(Session::has('city')){
                echo Session::get('city');
                }
-               else  {
+               else if(Session::has('search_city_title'))
+               {
+                 echo Session::get('search_city_title');
+               }
+               else
+               {
                 echo "Mumbai";
                }?>
 

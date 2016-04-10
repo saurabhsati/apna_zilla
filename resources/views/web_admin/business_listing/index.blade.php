@@ -248,11 +248,11 @@
 
                        @if($business['is_active']!="1"  && $check_allow=='0')
                            <a class="btn btn-info" href="#">
-                           Add Deal
+                           View Deal
                             </a>
                        @elseif($business['is_active']=="1" && $check_allow=='1')
                            <a class="btn btn-warning" href="{{ url('/web_admin/deals/'.base64_encode($business['id'])) }}">
-                             Add Deal
+                             View Deal
                           </a>
                        @endif
 
@@ -280,7 +280,7 @@
                     </td>
 
                     <td>
-                      <a href="{{ url('/web_admin/business_listing/show/').'/'.base64_encode($business['id']) }}" class="show-tooltip" title="Edit">
+                      <a href="{{ url('/web_admin/business_listing/show/').'/'.base64_encode($business['id']) }}" class="show-tooltip" title="Show">
                           <i class="fa fa-eye" ></i>
                         </a>
                          &nbsp;
