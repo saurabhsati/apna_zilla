@@ -205,11 +205,11 @@
 
                   <div class="login_box">
                      <div class="title_login">Forget Password</div>
-                     <div class="alert alert-success fade in " id = "contact_succ" style="display:none;">
+                     <div class="alert alert-success fade in " id = "rec_pwd_succ" style="display:none;">
                       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                       <strong>Success!</strong> We have sent you an email with a confirmation link. Please click on the link to confirm your recover password ! ..
                       </div>
-                       <div class="alert alert-danger" style="display:none;" id = "contact_err">
+                       <div class="alert alert-danger" style="display:none;" id = "rec_pwd_err">
                       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                       <strong>Error!</strong>While Sending Enquiry .
                       </div>
@@ -1137,18 +1137,18 @@ If you need any more details on Justdial Verified, please refer to
           {
             if(res=="success")
             {
-               $("#contact_succ").fadeIn(3000).fadeOut(3000);
+               $("#rec_pwd_succ").fadeIn(3000).fadeOut(3000);
                $("#recover_password").trigger('reset');
             }
             else if(res=="sending_error")
             {
-               $("#contact_err").fadeIn(3000).fadeOut(3000);
+               $("#rec_pwd_err").fadeIn(3000).fadeOut(3000);
                $("#recover_password").trigger('reset');
             }
             else
             {
 
-              $("#contact_err").fadeIn(3000).fadeOut(3000);
+              $("#rec_pwd_err").fadeIn(3000).fadeOut(3000);
             }
           },
           complete: function() {
