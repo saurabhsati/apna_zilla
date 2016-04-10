@@ -116,7 +116,7 @@
          <div class="whit_box">
            <div class="any_q">Have Any Question?</div>
            <div class="get_tuch">Getting in touch? If You have any more Question Not Listed in.</div>
-           <div class="btn_gren"><a href="#">Ask a Quesion</a></div>
+           <div class="btn_gren"><a href="{{ url('/') }}/faqs">Any Question?</a></div>
          </div>
        </div>
      </div>

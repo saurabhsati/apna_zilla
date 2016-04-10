@@ -1,0 +1,53 @@
+/*faq accordian start here*/
+a:hover, a:focus{text-decoration: none;}
+#faq_acc,#faq_acc ul,#faq_acc li,#faq_acc a {position: relative; margin: 0;list-style-type: none;
+    padding: 0;}
+#faq_acc a {line-height: 1.3;}
+#faq_acc {}
+#faq_acc > ul > li {margin: 0 0 10px 0; list-style: outside none none;}
+#faq_acc > ul > li:last-child {margin: 0;}
+#faq_acc > ul > li > a {background: #fff ;border: 1px solid #d8d8d8;border-radius: 2px;color: #9d9d9d;display: block;font-size: 16px;padding: 12px;}
+#faq_acc > ul > li > a > span {display: block;}
+.has-sub.active > a:focus{text-decoration: none!important;}
+#faq_acc > ul > li > a:hover {text-decoration: none!important;}
+#faq_acc > ul > li.active {border-bottom: none; }
+#faq_acc > ul > li.active > a {
+    border-bottom: medium none;
+}
+#faq_acc > ul > li.has-sub > a span {
+    background: url("../images/plus_faq.png") no-repeat left center;
+    line-height: 20px;
+    padding-left: 40px;
+}
+.active1 {
+    color: #3498db !important;
+    
+    font-size: 14px !important;
+    color: #3498db !important;
+}
+#faq_acc > ul > li.has-sub.active > a span {
+    background: url("../images/minus_faq.png") no-repeat scroll left center;
+    line-height: 20px;
+    outline: medium none;
+    color: #e6ab2a  !important;
+}
+.faq-text {
+    color: #848383;
+    font-size: 14px;
+    padding-left: 30px;
+    padding-top: 10px;
+}
+#faq_acc .has-sub > ul {
+    background: #fafafa ;
+    display: none;
+    padding:0px 35px 10px;
+    border: 1px solid #d8d8d8;
+    border-top: none;
+}
+#faq_acc {
+    margin-bottom: 22px;
+}
+.keyword_bx > div:last-child {
+    margin-bottom: 0 !important;
+}
+/*faq accoredian css end here*/

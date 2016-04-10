@@ -498,7 +498,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::post('store',							 ['as' => 'contact_us_store'     ,'uses' => 'Front\ContactUsController@store']);
 
 	});
-
+	Route::get('/faqs',									 ['as' => 'contact_us_form'      ,'uses' => 'Front\FaqController@index']);
 	Route::group(array('prefix' => '/front_users'), function()
 	{
 		Route::any('store',								['as' => 'front_users_store'    		  		    ,'uses' =>'Front\UserController@store']);

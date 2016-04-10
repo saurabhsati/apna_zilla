@@ -39,8 +39,11 @@
       <script src="{{ url('/') }}/assets/front/js/bootstrap.min.js" type="text/javascript"></script>
       <script type="text/javascript" language="javascript" src="{{ url('/') }}/assets/front/js/flaunt.js"></script>
       <script type="text/javascript" src="{{url('/')}}/js/front/jquery.rating.js"></script>
-
-
+      <!-- FAQ Start -->
+        <!--faq css start-->
+      <link rel="stylesheet" href="{{ url('/') }}/assets/front/css/accordion.css" />
+      <script type="text/javascript" language="javascript" src="{{ url('/') }}/assets/front/js/script.js"></script>
+      <!-- FAQ End -->
        <!-- jQuery -->
       <!-- <script src="{{-- url('/') --}}/assets/front/js/jquery.js" type="text/javascript"></script> -->
       <!-- Bootstrap Core JavaScript -->
