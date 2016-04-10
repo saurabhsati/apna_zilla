@@ -182,10 +182,20 @@
       Be A Part Of Our Family &amp; Get Everything In Your
       Email Address
    </div>
-
+<div style="position:fixed;
+                top: 0;
+                bottom: 0;
+                left:0;
+                right:0;
+                background-color:#ccc;
+                opacity:0.5;
+                display:none;"
+          id="subscribr_loader">
+                <img src="{{url('/')}}/assets/front/images/ajax-loader.gif" style="height:100px; width:100px; position:absolute; top:35%;left:45%" />
+        </div>
 
    <form class="form-horizontal"
-   id="validation-form"
+   id="newsletter_form"
    method="POST"
    action="{{ url('/newsletter') }}"
    enctype="multipart/form-data"
@@ -194,9 +204,24 @@
    {{ csrf_field() }}
 
    <div class="email-textbox">
+
       <img src="{{ url('/') }}/assets/front/images/email-image.png" alt="" />
-      <input type="text" name="email" placeholder="Enter Your Email Address" required="" aria-describedby="basic-addon1"/>
-      <button><i class="fa fa-paper-plane"></i></button>
+      <input type="text" name="email" id="email" placeholder="Enter Your Email Address" />
+      <div class="error_msg" id="err_email"></div>
+      <div class="alert alert-success fade in  " id = "contact_succ_info" style="display:none;">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Info!</strong> Already Subscribe For This Email ID..
+          </div>
+          <div class="alert alert-success fade in " id = "contact_succ" style="display:none;">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Success!</strong> Thank You ,Your are Subscribe Successfully..
+          </div>
+           <div class="alert alert-danger" style="display:none;" id = "contact_err">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Error!</strong>While Subscribing Email .
+          </div>
+
+      <button  type="button" id="submit_subscriber" name="submit_subscriber"><i class="fa fa-paper-plane"></i></button>
    </div>
 
 </form>
@@ -273,6 +298,72 @@ function get_business_by_exp_categry(ref)
                                  }
                              });
 }
+$(document).ready(function(){
+
+  $("#submit_subscriber").click(function(e){
+     e.preventDefault();
+      var email=$('#email').val();
+       var filter = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
+       if(email.trim()=='')
+      {
+        $('#err_email').html('Enter Your Email ID.');
+        $('#err_email').show();
+        $('#email').focus();
+        $('#email').on('keyup', function(){
+        $('#err_email').hide();
+          });
+
+
+      }
+      else if(!filter.test(email))
+     {
+        $('#err_email').html('Enter Valid Email ID.');
+        $('#err_email').show();
+        $('#email').focus();
+        $('#email').on('keyup', function(){
+        $('#err_email').hide();
+          });
+       }
+       else
+      {
+        $.ajax({
+          type:"POST",
+          url:site_url+'/newsletter',
+          data:$("#newsletter_form").serialize(),
+          beforeSend: function()
+          {
+            $("#subscribr_loader").show();
+          },
+          success:function(res)
+          {
+            if(res=="success")
+            {
+               $("#contact_succ").fadeIn(3000).fadeOut(3000);
+               $("#newsletter_form").trigger('reset');
+            }
+            else if(res=="exist")
+            {
+               $("#contact_succ_info").fadeIn(3000).fadeOut(3000);
+               $("#newsletter_form").trigger('reset');
+            }
+            else
+            {
+
+              $("#contact_err").fadeIn(3000).fadeOut(3000);
+            }
+          },
+          complete: function() {
+
+          $("#subscribr_loader").hide();
+
+          }
+        });
+
+
+      }
+
+  });
+});
 </script>
 
 

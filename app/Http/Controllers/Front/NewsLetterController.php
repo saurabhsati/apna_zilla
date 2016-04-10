@@ -22,30 +22,29 @@ class NewsLetterController extends Controller
     public function index(Request $request)
     {
     	$email = $request->input('email');
-
         if(NewsLetterModel::where('email_address',$email)->get()->count()>0)
         {
-            Session::flash('error','Record with this Email Already Exists');
-            return redirect()->back();
+            echo 'exist';
+            //Session::flash('error','Your Are Already Subscribe For This Email ID');
+            //return redirect()->back();
         }
-
-        $status = NewsLetterModel::create(['email_address'=>$email,
-        									'is_active' => 1
-        								  ]);
-
-
-
-
+        else
+        {
+            $status = NewsLetterModel::create(['email_address'=>$email,'is_active' => 1]);
 	        if($status)
 	        {
-	            Session::flash('success','News Letter Subscribed Successfully');
+                echo 'success';
+	            //Session::flash('success','News Letter Subscribed Successfully');
 	        }
 	        else
 	        {
-	            Session::flash('error','Problem Occurred While Subscribing');
+                echo 'fail';
+	            //Session::flash('error','Problem Occurred While Subscribing');
 	        }
 
-        	return redirect()->back();
+
+        }
+        exit;
     }
 
 }

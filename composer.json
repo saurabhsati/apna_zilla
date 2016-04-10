@@ -12,8 +12,8 @@
         "barryvdh/laravel-debugbar": "2.1",
         "intervention/image": "^2.3",
         "paypal/rest-api-sdk-php": "*",
-        "maatwebsite/excel": "^2.1",
-        "orzcc/autometa": "dev-master"
+        "maatwebsite/excel": "^2.1"
+        
 	
         
     },
