@@ -171,34 +171,37 @@
                         <div class="row">
 
                      <div class="col-sm-3 col-md-3 col-lg-2">
+                     <?php //echo $user['d_o_b'];
+                      $date_explode=explode('-',$user['d_o_b']);
+                      //print_r($date_explode) ;?>
                        <select class="input_acct" name="dd">
                             @for($i=1;$i<=31;$i++)
-                              <option value="<?php echo $i;?>" <?php  if(isset($user['dd'])  &&  $user['dd'] ==  $i ) { echo "selected=selected";}?>>{{ $i }}</option>
+                              <option value="<?php echo $i;?>" <?php  if(isset($date_explode[2])  &&  $date_explode[2] ==  $i ) { echo "selected=selected";}?>>{{ $i }}</option>
                             @endfor
                         </select>
                          </div>
 
                              <div class="col-sm-3 col-md-3 col-lg-3">
                            <select class="input_acct" name="mm">
-                                 <option value="01" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '1' ) { echo "selected=selected";}?>>January</option>
-                                 <option value="02" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '2' ) { echo "selected=selected";}?>>February</option>
-                                 <option value="03" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '5' ) { echo "selected=selected";}?>>March</option>
-                                 <option value="04" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '4' ) { echo "selected=selected";}?>>April</option>
-                                 <option value="05" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '5' ) { echo "selected=selected";}?>>May</option>
-                                 <option value="06" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '6' ) { echo "selected=selected";}?>>June</option>
-                                 <option value="07" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '7' ) { echo "selected=selected";}?>>July</option>
-                                 <option value="08" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '8' ) { echo "selected=selected";}?>>August</option>
-                                 <option value="09" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '9' ) { echo "selected=selected";}?>>September</option>
-                                 <option value="10" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '10' ) { echo "selected=selected";}?>>October</option>
-                                 <option value="11" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '11' ) { echo "selected=selected";}?>>November</option>
-                                 <option value="12" <?php  if(isset($user['mm'])  &&  $user['mm'] ==  '12' ) { echo "selected=selected";}?>>December</option>
+                                 <option value="01" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '01' ) { echo "selected=selected";}?>>January</option>
+                                 <option value="02" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '02' ) { echo "selected=selected";}?>>February</option>
+                                 <option value="03" <?php  if(isset($$date_explode[1])  &&  $date_explode[1] ==  '05' ) { echo "selected=selected";}?>>March</option>
+                                 <option value="04" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '04' ) { echo "selected=selected";}?>>April</option>
+                                 <option value="05" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '05' ) { echo "selected=selected";}?>>May</option>
+                                 <option value="06" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '06' ) { echo "selected=selected";}?>>June</option>
+                                 <option value="07" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '07' ) { echo "selected=selected";}?>>July</option>
+                                 <option value="08" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '08' ) { echo "selected=selected";}?>>August</option>
+                                 <option value="09" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '09' ) { echo "selected=selected";}?>>September</option>
+                                 <option value="10" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '10' ) { echo "selected=selected";}?>>October</option>
+                                 <option value="11" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '11' ) { echo "selected=selected";}?>>November</option>
+                                 <option value="12" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '12' ) { echo "selected=selected";}?>>December</option>
                            </select>
                             </div>
 
                             <div class="col-sm-3 col-md-3 col-lg-3">
                                 <select class="input_acct" name="yy">
                                 @for($j=date('Y');$j>= 1950 ;$j--)
-                                  <option value="<?php echo $j;?>" <?php  if(isset($user['yy'])  &&  $user['yy'] ==  $j ) { echo "selected=selected";}?> >{{ $j }}</option>
+                                  <option value="<?php echo $j;?>" <?php  if(isset($date_explode[0])  &&  $date_explode[0] ==  $j ) { echo "selected=selected";}?> >{{ $j }}</option>
                                 @endfor
                                </select>
                             </div>
