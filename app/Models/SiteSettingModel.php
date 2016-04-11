@@ -11,12 +11,12 @@ class SiteSettingModel extends Model
     protected $fillable = ['site_name',
     					   'site_address',
     					   'site_contact_number',
+                           'phone_number',
+                           'map_iframe',
     					   'meta_keyword',
     					   'meta_desc',
     					   'site_email',
     					   'fb_url',
-                           'phone_number',
-                           'map_iframe',
-    					   'twitter_url',
+                           'twitter_url',
     					   'youtube_url'];
 }
