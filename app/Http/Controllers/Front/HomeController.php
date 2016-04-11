@@ -340,6 +340,7 @@ class HomeController extends Controller
     {
          Session::forget('location_latitude');
          Session::forget('location_longitude');
+         Session::forget('review_rating','higher');
         if($request->has('term'))
         {
             $search_term='';

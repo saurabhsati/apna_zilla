@@ -354,6 +354,7 @@ class CategorySearchController extends Controller
             $lng = $request->input('lng');
             Session::put('location_latitude',$lat);
             Session::put('location_longitude',$lng);
+            Session::forget('review_rating');
             $result['status'] ="1";
             return response()->json($result);
 
@@ -382,6 +383,9 @@ class CategorySearchController extends Controller
     public function clear_rating()
     {
             Session::forget('review_rating');
+            Session::forget('location_latitude');
+            Session::forget('location_longitude');
+
             $result['status'] ="1";
             return response()->json($result);
     }

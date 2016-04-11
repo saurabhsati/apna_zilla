@@ -72,12 +72,12 @@
      <div class="filter_div">
        <ul>
 
-        <li><a href="javascript:void(0);" class="<?php if(!Session::has('review_rating')){echo"active";} ?>" onclick="clearRating();">Most Popular </a></li>
+        <li><a href="javascript:void(0);"  class="<?php if( !Session::has('review_rating') && !Session::has('location_latitude') ){echo"active";} ?>" onclick="clearRating();">Most Popular </a></li>
         <li>
-          <a class="act" data-toggle="modal" data-target="#loc">Location</a>
+          <a   href="javascript:void(0);" data-toggle="modal" class="<?php if(Session::has('location_latitude')){echo"active";} ?>"  data-target="#loc">Location</a>
         </li>
 
-        <li id="distance" style="cursor:pointer;" class="new_new_act1">
+        <li id="distance" style="cursor:pointer;" class="new_new_act1 <?php if(Session::has('distance')){echo 'open';}?>">
          <a onclick="#" href="javascript:void(0);" class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Distance <span class="caret"></span></a>
 
         <?php
@@ -116,10 +116,10 @@
 
              ?>
          <ul class="dropdown-menu distance_dropdown" aria-labelledby="dropdownMenu1">
-           <li><a href="#" onclick="return setdistance('<?php echo $city;?>','1','<?php echo $category_search;?>','<?php echo $location;?>');">1 km</a></li>
-           <li><a href="#" onclick="return setdistance('<?php echo $city;?>','2','<?php echo $category_search;?>','<?php echo $location;?>');">2 km</a></li>
-           <li><a href="#" onclick="return setdistance('<?php echo $city;?>','3','<?php echo $category_search;?>','<?php echo $location;?>');">3 km</a></li>
-           <li><a href="#" onclick="return setdistance('<?php echo $city;?>','4','<?php echo $category_search;?>','<?php echo $location;?>');">4 km</a></li>
+           <li><a href="#" class="<?php if(Session::has('distance')){if(Session::get('distance')==1){echo 'active';}}?>" onclick="return setdistance('<?php echo $city;?>','1','<?php echo $category_search;?>','<?php echo $location;?>');">1 km</a></li>
+           <li><a href="#" class="<?php if(Session::has('distance')){if(Session::get('distance')==2){echo 'active';}}?>"onclick="return setdistance('<?php echo $city;?>','2','<?php echo $category_search;?>','<?php echo $location;?>');">2 km</a></li>
+           <li><a href="#" class="<?php if(Session::has('distance')){if(Session::get('distance')==3){echo 'active';}}?>"onclick="return setdistance('<?php echo $city;?>','3','<?php echo $category_search;?>','<?php echo $location;?>');">3 km</a></li>
+           <li><a href="#" class="<?php if(Session::has('distance')){if(Session::get('distance')==4){echo 'active';}}?>"onclick="return setdistance('<?php echo $city;?>','4','<?php echo $category_search;?>','<?php echo $location;?>');">4 km</a></li>
 
          </ul>
 
