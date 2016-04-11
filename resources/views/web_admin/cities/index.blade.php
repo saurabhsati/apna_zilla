@@ -169,29 +169,29 @@
                     {{ $city['country_details']['country_name'] }} </td>
 
                     <td>
-                      <a href="{{ url('/').'/web_admin/cities/show/'.base64_encode($city['id']) }}"
+                      <a href="{{ url('/').'/web_admin/cities/show/'.base64_encode($city['id']) }}" class="show-tooltip" title="Show"
                           >
                           <i class="fa fa-eye" > </i>
                         </a>
                         &nbsp;
 
-                        <a href="{{ url('/').'/web_admin/cities/edit/'.base64_encode($city['id']) }}">
+                        <a href="{{ url('/').'/web_admin/cities/edit/'.base64_encode($city['id']) }}" class="show-tooltip" title="Edit">
                           <i class="fa fa-edit" ></i>
                         </a>
 
                         &nbsp;
                         @if($city['is_active']==0)
-                        <a href="{{ url('/').'/web_admin/cities/toggle_status/'.base64_encode($city['id']).'/activate' }}">
+                        <a href="{{ url('/').'/web_admin/cities/toggle_status/'.base64_encode($city['id']).'/activate' }}" class="show-tooltip" title="Block">
                             <i class="fa fa-lock" ></i>
                         </a>
 
                         @elseif($city['is_active']==1)
-                        <a href="{{ url('/').'/web_admin/cities/toggle_status/'.base64_encode($city['id']).'/deactivate' }}">
+                        <a href="{{ url('/').'/web_admin/cities/toggle_status/'.base64_encode($city['id']).'/deactivate' }}" class="show-tooltip" title="Active">
                             <i class="fa fa-unlock" ></i>
                         </a>
                         @endif
                         &nbsp;
-                     <a href="{{ url('/').'/web_admin/cities/delete/'.base64_encode($city['id'])}}"
+                     <a href="{{ url('/').'/web_admin/cities/delete/'.base64_encode($city['id'])}}" class="show-tooltip" title="Delete"
                        onclick="return confirm_delete();"
                            onclick="javascript:return confirm_delete()">
                           <i class="fa fa-trash" ></i>

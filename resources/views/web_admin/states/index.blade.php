@@ -163,28 +163,28 @@
                     <td  onclick="show_details('{{ url('/').$show_url }}')" > {{ $state['country_details']['country_name'] }} </td>
 
                     <td>
-                      <a href="{{ url('/').'/web_admin/states/show/'.base64_encode($state['id']) }}"
+                      <a href="{{ url('/').'/web_admin/states/show/'.base64_encode($state['id']) }}" class="show-tooltip" title="Show"
                           >
                           <i class="fa fa-eye" > </i>
                         </a>
                         &nbsp;
 
-                        <a href="{{ url('/').'/web_admin/states/edit/'.base64_encode($state['id']) }}">
+                        <a href="{{ url('/').'/web_admin/states/edit/'.base64_encode($state['id']) }}" class="show-tooltip" title="Edit">
                           <i class="fa fa-edit" ></i>
                         </a>
                         &nbsp;
                         @if($state['is_active']==0)
-                        <a href="{{ url('/').'/web_admin/states/toggle_status/'.base64_encode($state['id']).'/activate' }}">
+                        <a href="{{ url('/').'/web_admin/states/toggle_status/'.base64_encode($state['id']).'/activate' }}" class="show-tooltip" title="Active">
                             <i class="fa fa-lock" ></i>
                         </a>
 
                         @elseif($state['is_active']==1)
-                        <a href="{{ url('/').'/web_admin/states/toggle_status/'.base64_encode($state['id']).'/deactivate' }}">
+                        <a href="{{ url('/').'/web_admin/states/toggle_status/'.base64_encode($state['id']).'/deactivate' }}" class="show-tooltip" title="Block">
                             <i class="fa fa-unlock" ></i>
                         </a>
                         @endif
                         &nbsp;
-                     <a href="{{ url('/').'/web_admin/states/delete/'.base64_encode($state['id']) }}"
+                     <a href="{{ url('/').'/web_admin/states/delete/'.base64_encode($state['id']) }}" class="show-tooltip" title="Delete"
                        onclick="return confirm_delete();"
                            onclick="javascript:return confirm_delete()">
                           <i class="fa fa-trash" ></i>

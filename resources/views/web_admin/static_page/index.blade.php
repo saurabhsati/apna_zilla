@@ -177,12 +177,12 @@
               </td>
               <td>
 
-                  <a href="{{ url('/web_admin/static_pages/edit/').'/'.base64_encode($pages['id']) }}">
+                  <a href="{{ url('/web_admin/static_pages/edit/').'/'.base64_encode($pages['id']) }}" class="show-tooltip" title="Edit">
                     <i class="fa fa-edit" ></i>
                   </a>
 
                   &nbsp;
-                  <a href="{{ url('/web_admin/static_pages/delete/').'/'.base64_encode($pages['id'])}}"
+                  <a href="{{ url('/web_admin/static_pages/delete/').'/'.base64_encode($pages['id'])}}" class="show-tooltip" title="Delete"
                      onclick="javascript:return confirm_delete()">
                     <i class="fa fa-trash" ></i>
                   </a>

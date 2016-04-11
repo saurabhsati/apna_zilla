@@ -157,7 +157,7 @@
                 <span class='help-block'>{{ $errors->first('business_cat') }}</span>
                 </div>
             </div>
-              
+
               <div class="form-group">
                   <label class="col-sm-3 col-lg-2 control-label"> Image <i class="red">*</i> </label>
                   <div class="col-sm-9 col-lg-10 controls">
@@ -844,7 +844,7 @@ function delete_gallery(id,image_name)
   $.post( url_delete, dataString)
       .done(function( data ) {
         if(data=='done'){
-             $('#err_delete_image').html('<div style="color:green">Product deleted successfully.</div>');
+             $('#err_delete_image').html('<div style="color:green">Business upload images deleted successfully.</div>');
              var request_id=$('.delete_image').parents('.main').attr('data-image');
              $('div[data-image="'+request_id+'"]').remove();
         }

@@ -338,7 +338,11 @@ class NewsLetterController extends Controller
     {
         $page_title = "Compose Email";
 
-        $arr_newsletter = NewsLetterModel::get()->toArray();
+        $obj_arr_newsletter = NewsLetterModel::where('is_active',1)->get();
+        if($obj_arr_newsletter)
+        {
+            $arr_newsletter=$obj_arr_newsletter->toArray();
+        }
         return view('web_admin.news_letter.compose',compact('page_title','arr_newsletter'));
     }
 
