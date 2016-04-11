@@ -30,7 +30,8 @@ class TransactionController extends Controller
  		{
  			$obj_transaction->load(['user_records']);
  			$obj_transaction->load(['membership']);
-
+            $obj_transaction->load(['business']);
+            $obj_transaction->load(['category']);
             $arr_transaction = $obj_transaction->toArray();
         }
        // dd($arr_transaction);

@@ -120,6 +120,8 @@
                   <th>Transaction Id</th>
                   <th>Transaction Status</th>
                   <th>User Name</th>
+                  <th>Business Name</th>
+                  <th>Category Name</th>
                   <th>Membership</th>
 
                   <th>Start Date</th>
@@ -152,7 +154,12 @@
                     <td>
                         {{ isset($transaction['membership']) && $transaction['membership']? $transaction['membership']['title']:'' }}
                     </td>
-
+                     <td>
+                        {{ isset($transaction['business']) && $transaction['business']? $transaction['business']['business_name']:'' }}
+                    </td>
+                     <td>
+                        {{ isset($transaction['category']) && $transaction['category']? $transaction['category']['title']:'' }}
+                    </td>
                     <td>
                         {{ date('d M Y',strtotime($transaction['start_date'])) }}
                     </td>

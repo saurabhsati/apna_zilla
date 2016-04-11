@@ -30,5 +30,13 @@ class TransactionModel extends Model
     {
     	return $this->belongsTo('App\Models\MembershipModel','membership_id','plan_id');
     }
+      public function business()
+    {
+        return $this->belongsTo('App\Models\BusinessListingModel','business_id','id');
+    }
+      public function category()
+    {
+        return $this->belongsTo('App\Models\CategoryModel','category_id','cat_id');
+    }
 
 }
