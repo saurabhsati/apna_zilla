@@ -19,7 +19,7 @@ use App\Models\StateModel;
 use Sentinel;
 use Session;
 use Validator;
-
+use Hash;
 
 class SalesAccountController extends Controller
 {
@@ -75,22 +75,37 @@ class SalesAccountController extends Controller
 
 
         $user = Sentinel::authenticate($arr_creds);
-
+        //dd($user);
 
         if($user)
         {
-            /* Check if Users Role is Sales */
-            $role = Sentinel::findRoleBySlug('sales');
-            if(Sentinel::inRole($role))
-            {
-                Session::put('public_id', $public_id);
-                return redirect('sales_user/dashboard');
-            }
-            else
-            {
-                Session::flash('error','Not Sufficient Privileges');
-                return redirect()->back();
-            }
+            if($user)
+               {
+                  $user_details = $user->toArray();
+               }
+               if(sizeof($user_details))
+               {
+                   if($user_details['is_active']==1)
+                   {
+                         /* Check if Users Role is Sales */
+                        $role = Sentinel::findRoleBySlug('sales');
+                        if(Sentinel::inRole($role))
+                        {
+                            Session::put('public_id', $public_id);
+                            return redirect('sales_user/dashboard');
+                        }
+                        else
+                        {
+                            Session::flash('error','Not Sufficient Privileges');
+                            return redirect()->back();
+                        }
+                    }
+                    else
+                    {
+                         Session::flash('error','Your account is block by Admin');
+                         return redirect()->back();
+                    }
+                }
         }
         else
         {

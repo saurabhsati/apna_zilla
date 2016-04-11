@@ -4,8 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
-use App\Models\UserMembershipModel;
-use App\Models\RestaurantModel;
+//use App\Models\UserMembershipModel;
+use App\Models\UserModel;
 
 
 class SentinelCheck
@@ -19,39 +19,30 @@ class SentinelCheck
      */
     public function handle($request, Closure $next)
     {
-        /*if(!Sentinel::check())
-        {
-            return redirect('/');
-        }
 
         $user = Sentinel::check();
 
         if($user)
-        {   
-            $role = Sentinel::findRoleBySlug('restaurant_admin');
-           
+        {
+            $role = Sentinel::findRoleBySlug('sales');
+
             if(Sentinel::inRole($role))
-            {  
-               
-                $arr_condition           = array('user_id'=>$user->id,'is_active'=>'1');
+            {
 
-                $user_restaurant_active  = RestaurantModel::where($arr_condition)->first();
-                $user_membership_active  = UserMembershipModel::where($arr_condition)->first();
+                $arr_condition           = array('id'=>$user->id,'is_active'=>'1');
 
-                if(!$user_restaurant_active)
+                $sale_user_active  = UserModel::where($arr_condition)->first();
+                //$user_membership_active  = UserMembershipModel::where($arr_condition)->first();
+
+                if(!$sale_user_active)
                 {
-                    return redirect('/restaurant_admin/restaurants/create');
-                }
-
-                if(!$user_membership_active)
-                {
-                    return redirect('/restaurant_admin/restaurants/create');
+                    return redirect('/sales_user/');
                 }
 
             }
-           
+
         }
-*/
+
         return $next($request);
     }
 }
