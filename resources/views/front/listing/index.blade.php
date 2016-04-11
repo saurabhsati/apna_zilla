@@ -9,6 +9,13 @@
       overflow: auto;
       position:fixed;
     }
+
+  .remo_fav span{
+    color: #f9a820 !important;
+  }
+  .remo_fav i{
+    color: #f9a820 !important;
+  }
   </style>
 
    <?php
@@ -369,8 +376,8 @@
                     {
                       if(in_array($restaurants['id'], $arr_fav_business))
                       {
-                    ?>  <span id="{{ 'show_fav_status_'.$restaurants['id'] }}" style="width: 175px;">
-                        <a href="javascript:void(0);"  onclick="add_to_favourite('{{$restaurants['id']}}')"  style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Remove favorite</span></a>
+                    ?>  <span class="remo_fav" id="{{ 'show_fav_status_'.$restaurants['id'] }}" style="width: 175px;">
+                        <a href="javascript:void(0);" class="active" onclick="add_to_favourite('{{$restaurants['id']}}')"  style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Remove favorite</span></a>
                         </span>
                     <?php
                       }
@@ -467,7 +474,7 @@
                     {
                       if(in_array($restaurants['id'], $arr_fav_business))
                       {
-                    ?>  <span id="{{ 'show_fav_status_grid_'.$restaurants['id'] }}" style="width: 175px;">
+                    ?>  <span class="remo_fav" id="{{ 'show_fav_status_grid_'.$restaurants['id'] }}" style="width: 175px;">
                         <a href="javascript:void(0);"  onclick="add_to_favourite_grid('{{$restaurants['id']}}')"  style="border-right:0;display:inline-block;"
                           data-toggle="tooltip" title="Remove favourite"
                         ><i class="fa fa-heart"><span style="width:19px height=10px;">Remove favorite</span></i></a>
@@ -817,13 +824,14 @@
 
               if(response.status == "favorites")
               {
+                 jQuery('#show_fav_status_'+ref+'').addClass("remo_fav");
                 var str = '<a href="javascript:void(0);"  onclick="add_to_favourite('+ref+')" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Remove favorite</span></a>';
                 jQuery('#show_fav_status_'+ref+'').html(str);
               }
 
               if(response.status=="un_favorites")
               {
-
+                 jQuery('#show_fav_status_'+ref+'').removeClass("remo_fav");
                  var str = '<a href="javascript:void(0);"  onclick="add_to_favourite('+ref+')" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span>Add To favorite</span></a>';
                 jQuery('#show_fav_status_'+ref+'').html(str);
 
@@ -848,14 +856,15 @@
 
               if(response.status == "favorites")
               {
-                var str = '<a href="javascript:void(0);"  onclick="add_to_favourite_grid('+ref+')" style="border-right:0;display:inline-block;" data-toggle="tooltip" title="Remove favorite"><i class="fa fa-heart"></i><span>R</span></a>';
+                jQuery('#show_fav_status_grid_'+ref+'').addClass("remo_fav");
+                var str = '<a href="javascript:void(0);"  onclick="add_to_favourite_grid('+ref+')" style="border-right:0;display:inline-block;" data-toggle="tooltip" title="Remove favorite"><i class="fa fa-heart"></i><span>Remove favorite</span></a>';
                 jQuery('#show_fav_status_grid_'+ref+'').html(str);
               }
 
               if(response.status=="un_favorites")
               {
-
-                 var str = '<a href="javascript:void(0);"  onclick="add_to_favourite_grid('+ref+')" style="border-right:0;display:inline-block;" data-toggle="tooltip" title="Add to favorites" ><i class="fa fa-heart"></i><span>A</span></a>';
+                 jQuery('#show_fav_status_grid_'+ref+'').removeClass("remo_fav");
+                 var str = '<a href="javascript:void(0);"  onclick="add_to_favourite_grid('+ref+')" style="border-right:0;display:inline-block;" data-toggle="tooltip" title="Add to favorites" ><i class="fa fa-heart"></i><span>Add To favorite</span></a>';
                 jQuery('#show_fav_status_grid_'+ref+'').html(str);
 
               }

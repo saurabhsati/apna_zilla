@@ -346,7 +346,35 @@ class CategorySearchController extends Controller
             {
                 $arr_sub_cat = $obj_sub_cat->toArray();
             }
-        return view('front.listing.index',compact('page_title','arr_business','city','arr_sub_cat','parent_category','sub_category','loc','category_set'));
+          if(Session::has('user_mail'))
+              {
+                  $obj_user = UserModel::where('email',Session::get('user_mail'))->first(['id']);
+                  $user_id  = $obj_user->id;
+                  $arr_fav_business = array();
+                  $str = "";
+                  $obj_favourite = FavouriteBusinessesModel::where(array('user_id'=>$user_id ,'is_favourite'=>"1" ))->get(['business_id']);
+
+                  if($obj_favourite)
+                  {
+                    $obj_favourite->toArray();
+
+                    foreach ($obj_favourite as $key => $value)
+                    {
+                      array_push($arr_fav_business, $value['business_id']);
+                    }
+                  }
+                  else
+                  {
+                    $arr_fav_business = array();
+                  }
+              }
+              else
+              {
+                  $arr_fav_business = array();
+               }
+
+
+        return view('front.listing.index',compact('page_title','arr_business','city','arr_sub_cat','parent_category','sub_category','loc','category_set','arr_fav_business'));
     }
     public function set_location_lat_lng(Request $request)
     {
