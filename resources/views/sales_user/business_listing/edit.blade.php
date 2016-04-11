@@ -823,7 +823,7 @@ function delete_gallery(id,image_name)
   $.post( url_delete, dataString)
       .done(function( data ) {
         if(data=='done'){
-             $('#err_delete_image').html('<div style="color:green">Product deleted successfully.</div>');
+             $('#err_delete_image').html('<div style="color:green">Business upload image deleted successfully.</div>');
              var request_id=$('.delete_image').parents('.main').attr('data-image');
              $('div[data-image="'+request_id+'"]').remove();
         }
