@@ -4,10 +4,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\UserModel;
+use App\Models\EmailTemplateModel;
+
+
 use Sentinel;
 use Session;
 use Validator;
-
+use Mail;
 class UserController extends Controller
 {
  	public function __construct()
@@ -163,15 +166,47 @@ class UserController extends Controller
             $role = Sentinel::findRoleBySlug('normal');
 
             $user = Sentinel::findById($status->id);
-        //$user = Sentinel::getUser();
+            //$user = Sentinel::getUser();
 
             $user->roles()->attach($role);
+            $obj_email_template = EmailTemplateModel::where('id','12')->first();
+            if($obj_email_template)
+            {
+                $arr_email_template = $obj_email_template->toArray();
 
-            Session::flash('success','User Created Successfully');
+                $content = $arr_email_template['template_html'];
+                $content        = str_replace("##USER_FNAME##",$first_name,$content);
+                $content        = str_replace("##USER_EMAIL##",$email,$content);
+                $content        = str_replace("##USER_PASSWORD##",$password,$content);
+                $content        = str_replace("##APP_NAME##","RightNext",$content);
+                //print_r($content);exit;
+                $content = view('email.front_general',compact('content'))->render();
+                $content = html_entity_decode($content);
+
+                $send_mail = Mail::send(array(),array(), function($message) use($email,$first_name,$arr_email_template,$content)
+                            {
+                                $message->from($arr_email_template['template_from_mail'], $arr_email_template['template_from']);
+                                $message->to($email, $first_name)
+                                        ->subject($arr_email_template['template_subject'])
+                                        ->setBody($content, 'text/html');
+                            });
+
+                //return $send_mail;
+            if($send_mail)
+            {
+                Session::flash('success','User Created Successfully');
+            }
+            else
+            {
+                Session::flash('success','User Created Successfully But Mail Not Delivered');
+            }
+
+
+            }
         }
         else
         {
-            Session::flash('error','Problem Occured While Creating User ');
+            Session::flash('error','Problem Occurred While Creating User ');
         }
 
         return redirect()->back();
