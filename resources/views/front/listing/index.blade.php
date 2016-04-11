@@ -368,9 +368,7 @@
                 <input type="hidden"  id="business_id" value="{{ $restaurants['id'] }}"  />
 
                   <div class="p_details" >
-
                     @if(!empty(Session::get('user_mail')))
-
                     <?php
                     if(isset($arr_fav_business) && count($arr_fav_business)>0 )
                     {
@@ -468,7 +466,6 @@
 
 
                     @if(!empty(Session::get('user_mail')))
-
                     <?php
                     if(isset($arr_fav_business) && count($arr_fav_business)>0 )
                     {
