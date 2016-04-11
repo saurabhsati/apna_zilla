@@ -476,8 +476,10 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	Route::post('/set_distance_range','Front\CategorySearchController@set_distance_range');
 	Route::post('/set_rating','Front\CategorySearchController@set_rating');
 	Route::post('/clear_rating','Front\CategorySearchController@clear_rating');
-
-
+	Route::get('payumoney','Front\PayumoneyController@index');
+	Route::get('payumoney/success','Front\PayumoneyController@payment_success');
+	Route::get('payumoney/fail','Front\PayumoneyController@payment_fail');
+	Route::get('payumoney/cancle','Front\PayumoneyController@payment_cancle');
 
 	/*--------------------------Front-login-section-------------------------------*/
 

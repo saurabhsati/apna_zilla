@@ -102,7 +102,7 @@
                         <ul>
                         <!-- <li><a href="#">SMS/Email</a></li>  -->
                         <li><a href="{{ url('/front_users/edit_business_step1/'.base64_encode($business['id'])) }}" class="active">Edit</a></li>
-                        <!-- <li><a href="#">Own This</a></li>     -->
+                       <!--  <li><a href="#">Pay Membership</a></li> -->
                         <!-- <li><a href="#" class="lst">Rate This</a></li>         -->
                         </ul>
                         </div>
