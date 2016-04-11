@@ -15,6 +15,7 @@ class SiteSettingModel extends Model
     					   'meta_desc',
     					   'site_email',
     					   'fb_url',
+                           'phone_number',
     					   'twitter_url',
     					   'youtube_url'];
 }

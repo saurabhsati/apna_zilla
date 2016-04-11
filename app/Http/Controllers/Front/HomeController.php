@@ -152,8 +152,7 @@ class HomeController extends Controller
 
 		    $metadata = json_decode($content, true); //json decoder
             $result=array();
-            //print_r( $metadata);exit;
-            if(sizeof($metadata['results'][0]))
+            if(sizeof($metadata['results']))
             {
                 $result = $metadata['results'][0];
                 $city = "";
