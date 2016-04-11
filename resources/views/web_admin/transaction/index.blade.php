@@ -120,9 +120,10 @@
                   <th>Transaction Id</th>
                   <th>Transaction Status</th>
                   <th>User Name</th>
+                   <th>Membership</th>
                   <th>Business Name</th>
                   <th>Category Name</th>
-                  <th>Membership</th>
+
 
                   <th>Start Date</th>
                   <th>Expire Date</th>
