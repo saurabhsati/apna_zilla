@@ -368,7 +368,7 @@
                 <input type="hidden"  id="business_id" value="{{ $restaurants['id'] }}"  />
 
                   <div class="p_details" >
-                    @if(!empty(Session::get('user_mail')))
+                    @if(Session::has('user_mail'))
                     <?php
                     if(isset($arr_fav_business) && count($arr_fav_business)>0 )
                     {
@@ -402,7 +402,7 @@
 
                     @else
                     <span>
-                      <a data-target="#login_poup" data-toggle="modal" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>
+                      <a href="javascript:void(0);" data-target="#login_poup" data-toggle="modal" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>
                       </span>
                     @endif
 
@@ -465,7 +465,7 @@
                        </div>
 
 
-                    @if(!empty(Session::get('user_mail')))
+                     @if(Session::has('user_mail'))
                     <?php
                     if(isset($arr_fav_business) && count($arr_fav_business)>0 )
                     {
@@ -505,7 +505,7 @@
 
                     @else
                     <span>
-                      <a data-target="#login_poup" data-toggle="modal" style="border-right:0;display:inline-block;"
+                      <a href="javascript:void(0);" data-target="#login_poup" data-toggle="modal" style="border-right:0;display:inline-block;"
                       ><i class="fa fa-heart"></i><span> </span></a>
                       </span>
                     @endif
