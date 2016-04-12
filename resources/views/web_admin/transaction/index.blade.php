@@ -120,6 +120,7 @@
                   <th>Transaction Id</th>
                   <th>Transaction Status</th>
                   <th>User Name</th>
+                   <th>User Email</th>
                    <th>Membership</th>
                   <th>Business Name</th>
                   <th>Category Name</th>
@@ -152,6 +153,7 @@
 
                         {{ isset($transaction['user_records']) && $transaction['user_records']? ucfirst($transaction['user_records']['last_name']):'' }}
                     </td>
+                    <td> {{ isset($transaction['user_records']) && $transaction['user_records']? ucfirst($transaction['user_records']['email']):'' }}</td>
                     <td>
                         {{ isset($transaction['membership']) && $transaction['membership']? $transaction['membership']['title']:'' }}
                     </td>
