@@ -9,7 +9,7 @@
   <div class="col-sm-12 col-md-12 col-lg-12">
    <ol class="breadcrumb">
      <span>You are here :</span>
-     <li><a href="#">Home</a></li>
+     <li><a href="{{ url('/') }}">Home</a></li>
      @if(sizeof($deals_info)>0)
      <li><a href="{{ url('/deals') }}">Deals</a></li>
      <li class="active"><?php echo substr($deals_info[0]['name'],0,120).'..';?></li>

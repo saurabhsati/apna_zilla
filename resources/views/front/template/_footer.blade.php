@@ -360,7 +360,7 @@
                      </div>
                      <div class="user_box">
                         <div class="label_form">Email</div>
-                        <input type="text" name="email" id="email" class="input_box" placeholder="Enter Email Address"/>
+                        <input type="text" name="email" id="emailid" class="input_box" placeholder="Enter Email Address"/>
                         <div id="e_error" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div>
                         <div id="email_error" style="display: none;"><i style="color: red;margin-left: -200px;">Invalid Email Id</i></div>
                      </div>
@@ -705,7 +705,7 @@ If you need any more details on Justdial Verified, please refer to
     var site_url   = "{{ url('/') }}";
     var first_name = $('#first_name').val();
     var last_name  = $('#last_name').val();
-    var email      = $('#email').val();
+    var email      = $('#emailid').val();
     var mobile     = $('#mobile').val();
     var password   = $('#password').val();
     var conf_password  = $('#password_confirmation').val();
@@ -714,37 +714,6 @@ If you need any more details on Justdial Verified, please refer to
     var token      = jQuery("input[name=_token]").val();
     //var business_listing = $('#bus_listing').val();
 
-    $('#first_name').keyup(function()
-      {
-        $('#f_name_error').hide();
-      });
-    $('#last_name').keyup(function()
-      {
-        $('#l_name_error').hide();
-      });
-    $('#email').keyup(function()
-      {
-        $('#email_error').hide();
-        $('#e_error').hide();
-      });
-    $('#mobile').keyup(function()
-      {
-
-          $('#m_error').hide();
-          $('#mobile_no_error').hide();
-
-
-      });
-    $('#password').keyup(function()
-      {
-        $('#p_error').hide();
-        $('#p_len_error').hide();
-      });
-    $('#password_confirmation').keyup(function()
-      {
-        $('#c_pass_error').hide();
-        $('#confirm_pass_error').hide();
-      });
 
     if(first_name=="")
     {
@@ -866,6 +835,39 @@ If you need any more details on Justdial Verified, please refer to
         });
     }
   }
+  $(document).ready(function(){
+    $('#first_name').keyup(function()
+      {
+        $('#f_name_error').hide();
+      });
+    $('#last_name').keyup(function()
+      {
+        $('#l_name_error').hide();
+      });
+    $('#emailid').keyup(function()
+      {
+        $('#email_error').hide();
+        $('#e_error').hide();
+      });
+    $('#mobile').keyup(function()
+      {
+
+          $('#m_error').hide();
+          $('#mobile_no_error').hide();
+
+
+      });
+    $('#password').keyup(function()
+      {
+        $('#p_error').hide();
+        $('#p_len_error').hide();
+      });
+    $('#password_confirmation').keyup(function()
+      {
+        $('#c_pass_error').hide();
+        $('#confirm_pass_error').hide();
+      });
+  });
 </script>
 
 <script type="text/javascript">
