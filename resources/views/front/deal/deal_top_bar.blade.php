@@ -1,3 +1,8 @@
+<style type="text/css">
+ .categ li .active{
+    color: #f9a820 !important;
+  }
+</style>
 <div class="gry_container" style="padding: 7px 0 16px;">
 <div class="black-strip">
    <div class="container">
@@ -8,7 +13,7 @@
           <li><a href="{{ url('/deals') }}">All Deals</a></li>
           @if(isset($deal_category) && sizeof($deal_category)>0)
             @foreach($deal_category as $key => $category)
-                 <li><a href="{{ url('/deals') }}/{{$category['cat_slug']}}">{{ ucfirst($category['title'])}}</a></li>
+                 <li><a class="<?php if($category['cat_slug']==Request::segment(2)){echo'active';}?>" href="{{ url('/deals') }}/{{$category['cat_slug']}}">{{ ucfirst($category['title'])}}</a></li>
                    @endforeach
                           @endif
 
@@ -32,7 +37,7 @@
                       <ul class="dropdown-menu">
                         <li class="w3_megamenu-content withdesc">
                            <ul>
-                  <li><a href="#">Restaurant</a></li>
+                  <li><a class="active" href="#">Restaurant</a></li>
                 <li><a href="#">Beauty/Spa</a></li>
                 <li><a href="#">Wellness</a></li>
                 <li><a href="#">Travel</a></li>
