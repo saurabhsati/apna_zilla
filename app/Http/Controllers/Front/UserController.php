@@ -212,7 +212,7 @@ class UserController extends Controller
     public function profile()
     {
         $id = Session::get('user_id');
-        dd($id);
+        //dd($id);
         $user_id = base64_decode($id);
 
         $obj_user_info = UserModel::where('id','=',$user_id)->get();
