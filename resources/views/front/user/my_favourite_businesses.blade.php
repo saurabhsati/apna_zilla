@@ -1,7 +1,7 @@
   @extends('front.template.master')
 
   @section('main_section')
- 
+
 <style>
     .fixed-height {
       padding: 1px;
@@ -17,7 +17,7 @@
   // exit();
   ?>
   <div class="gry_container">
-   
+
  <hr/>
 
  <div class="container">
@@ -96,7 +96,7 @@
       @endif
       </div>
 
-  
+
 <!--Product Lisiting End  -->
 
 
