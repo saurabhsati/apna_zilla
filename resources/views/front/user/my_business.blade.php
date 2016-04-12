@@ -131,7 +131,7 @@
                         <!-- <a href="#" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a> -->
                         <ul>
                         <!-- <li><a href="#">SMS/Email</a></li>  -->
-                        <li><a href="{{ url('/front_users/edit_business_step1/'.base64_encode($business['id'])) }}" class="active">Edit</a></li>
+                        <li><a href="{{ url('/front_users/edit_business_step1/'.base64_encode($business['id'])) }}" >Edit</a></li>
                          <!-- <form class="form-horizontal"
                               id="review-form"
                               method="GET"
@@ -144,11 +144,11 @@
                         <input type="hidden" name="user_id" id="user_id" value="{{base64_decode(session('user_id'))}}">
                         <?php if(!sizeof($business['membership_plan_details'])>0)
                          { ?>
-                          <li><a href="{{ url('/front_users/assign_membership').'/'.base64_encode($business['id']).'/'.base64_encode($business['business_name']).'/'.Session::get('user_id').'/'.base64_encode($category_id) }}" class="lst">Purchase Plan</a></li>
+                          <li><a class="lst" href="{{ url('/front_users/assign_membership').'/'.base64_encode($business['id']).'/'.base64_encode($business['business_name']).'/'.Session::get('user_id').'/'.base64_encode($category_id) }}" class="lst">Purchase Plan</a></li>
                         <?php }
                         else
                           {?>
-                              <div style="color: Green;">Verified</div>
+                              <li><a href="#" class="lst" style="color:green;">Verified</a></li>
                            <?php }?>
                         <!-- </form>
                         --> <!-- <li><a href="#" class="lst">Rate This</a></li>         -->
