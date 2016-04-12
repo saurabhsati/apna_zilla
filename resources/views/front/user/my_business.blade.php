@@ -50,16 +50,26 @@
             </div>
 
              <div class="col-sm-12 col-md-12 col-lg-12">
-             <div class="title_head">@if($cat_title != ""){{ $cat_title }} @endif</div>
+             <div class="title_head"></div>
 
-                <!-- <div class="sorted_by">Sort By :</div>
-                <div class="filter_div">
-                 <ul>
-                  <li><a href="#">Most Recent </a></li>
-                  <li><a href="#" class="active">Most Popular </a></li>
-                  <li><a href="#">Alphabetical</a></li>
-                 </ul>
-               </div> -->
+                   @if(Session::has('success_payment'))
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ Session::get('success_payment') }}
+            </div>
+          @endif
+
+          @if(Session::has('error_payment'))
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ Session::get('error_payment') }}
+            </div>
+          @endif
+
 
              @if(isset($arr_business_info) && (count($arr_business_info)>0 ))
                 @foreach($arr_business_info as $business)
@@ -71,7 +81,27 @@
                      </div>
                     <div class="col-sm-9 col-md-9 col-lg-8">
                     <div class="product_details">
-                        <div class="product_title"><a href="#">{{$business['business_name']}}</a></div>
+                     <?php foreach ($business['category'] as $business_category)
+                          {
+                             foreach ($arr_sub_category as $sub_category)
+                              {
+                                if($business_category['category_id']==$sub_category['cat_id'])
+                                {
+                                   foreach ($arr_main_category as $main_category)
+                                   {
+                                      if($sub_category['parent']==$main_category['cat_id'])
+                                      {
+                                       $category_id=$sub_category['parent'];
+                                       $title=$main_category['title'];
+                                      }
+                                    }
+                                }
+                              }
+                          }
+
+                          ?>
+                        <h3>@if(isset($title))Category::{{$title}}@endif</h3>
+                        <div class="product_title"><a href="#">{{ucwords($business['business_name'])}}</a></div>
                         <div class="rating_star">
                          <?php
                           if(sizeof($business['reviews']))
@@ -102,8 +132,26 @@
                         <ul>
                         <!-- <li><a href="#">SMS/Email</a></li>  -->
                         <li><a href="{{ url('/front_users/edit_business_step1/'.base64_encode($business['id'])) }}" class="active">Edit</a></li>
-                       <!--  <li><a href="#">Pay Membership</a></li> -->
-                        <!-- <li><a href="#" class="lst">Rate This</a></li>         -->
+                         <!-- <form class="form-horizontal"
+                              id="review-form"
+                              method="GET"
+                              action="{{ url('/front_users/assign_membership').'/'.base64_encode($business['id']).'/'.base64_encode(session('user_id')).'/'.base64_encode($category_id) }}"
+                              enctype="multipart/form-data"
+                              > -->
+                        <input type="hidden" name="business_id" id="business_id" value="{{$business['id']}}">
+                        <input type="hidden" name="business_name" id="business_name" value="{{$business['business_name']}}">
+                        <input type="hidden" name="category_id" id="category_id" value="{{$category_id}}">
+                        <input type="hidden" name="user_id" id="user_id" value="{{base64_decode(session('user_id'))}}">
+                        <?php if(!sizeof($business['membership_plan_details'])>0)
+                         { ?>
+                          <li><a href="{{ url('/front_users/assign_membership').'/'.base64_encode($business['id']).'/'.base64_encode($business['business_name']).'/'.Session::get('user_id').'/'.base64_encode($category_id) }}" class="lst">Purchase Plan</a></li>
+                        <?php }
+                        else
+                          {?>
+                              <div style="color: Green;">Verified</div>
+                           <?php }?>
+                        <!-- </form>
+                        --> <!-- <li><a href="#" class="lst">Rate This</a></li>         -->
                         </ul>
                         </div>
                         </div>

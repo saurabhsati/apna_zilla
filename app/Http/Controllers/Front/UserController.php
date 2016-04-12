@@ -211,7 +211,8 @@ class UserController extends Controller
 
     public function profile()
     {
-        $id = session('user_id');
+        $id = Session::get('user_id');
+        dd($id);
         $user_id = base64_decode($id);
 
         $obj_user_info = UserModel::where('id','=',$user_id)->get();
@@ -451,16 +452,16 @@ class UserController extends Controller
     public function my_business()
     {
         $id = session('user_id');
-        $user_id = base64_decode($id);
+         $user_id = base64_decode($id);
 
-        $obj_business_info = BusinessListingModel::where('user_id','=',$user_id)->with('reviews')->get();
+        $obj_business_info = BusinessListingModel::with(['category','membership_plan_details'])->where('user_id','=',$user_id)->with('reviews')->get();
 
         $arr_business_info =  array();
         $cat_title =  "";
         if($obj_business_info)
         {
             $arr_business_info = $obj_business_info->toArray();
-            if(count($arr_business_info)>0)
+           /* if(count($arr_business_info)>0)
             {
                 foreach ($arr_business_info as $business)
                 {
@@ -482,12 +483,22 @@ class UserController extends Controller
                    }
                 }
 
-            }
-        }
+            }*/
+             $obj_main_category = CategoryModel::where('parent','0')->get();
+               if($obj_main_category)
+                {
+                    $arr_main_category = $obj_main_category->toArray();
+                }
+                $obj_sub_category = CategoryModel::where('parent','!=','0')->get();
+                if($obj_sub_category)
+                {
+                    $arr_sub_category = $obj_sub_category->toArray();
+                }
+                }
 
-        return view('front.user.my_business',compact('arr_business_info','cat_title'));
+        return view('front.user.my_business',compact('arr_business_info','arr_main_category','arr_sub_category'));
     }
-#######
+
 
 
     public function add_business()

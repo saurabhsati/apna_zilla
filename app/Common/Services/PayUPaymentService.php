@@ -78,7 +78,7 @@ class PayUPaymentService
 		if ( empty( $this->params['amount'] ) ) return $this->error( 'amount' );
 		if ( empty( $this->params['firstname'] ) ) return $this->error( 'firstname' );
 		if ( empty( $this->params['email'] ) ) return $this->error( 'email' );
-		if ( empty( $this->params['phone'] ) ) return $this->error( 'phone' );
+		//if ( empty( $this->params['phone'] ) ) return $this->error( 'phone' );
 		if ( empty( $this->params['productinfo'] ) ) return $this->error( 'productinfo' );
 		if ( empty( $this->params['surl'] ) ) return $this->error( 'surl' );
 		if ( empty( $this->params['furl'] ) ) return $this->error( 'furl' );
@@ -94,6 +94,7 @@ class PayUPaymentService
 	{
 		if ( $result['status'] === PayUMiscService::SUCCESS )
 		{
+
 			return $result['data'];
 		}
 		else
@@ -101,5 +102,18 @@ class PayUPaymentService
 			throw new Exception( $result['data'] );
 		}
 	}
+	public static function show_reponse ( $result )
+	{
+		if ( $result['status'] === PayUMiscService::SUCCESS )
+		{
+
+			$result['data']();
+		}
+		else
+			{return $result['data'];}
+	}
+
+
+
 
 }

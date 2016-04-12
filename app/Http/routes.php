@@ -476,10 +476,16 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	Route::post('/set_distance_range','Front\CategorySearchController@set_distance_range');
 	Route::post('/set_rating','Front\CategorySearchController@set_rating');
 	Route::post('/clear_rating','Front\CategorySearchController@clear_rating');
-	Route::get('payumoney','Front\PayumoneyController@index');
-	Route::get('payumoney/success','Front\PayumoneyController@payment_success');
-	Route::get('payumoney/fail','Front\PayumoneyController@payment_fail');
-	Route::get('payumoney/cancle','Front\PayumoneyController@payment_cancle');
+
+
+	Route::group(array('prefix' => '/payumoney'), function()
+	{
+		Route::post('/','Front\PayumoneyController@index');
+		Route::post('success','Front\PayumoneyController@payment_success');
+		Route::post('fail','Front\PayumoneyController@payment_fail');
+		Route::post('cancel','Front\PayumoneyController@payment_cancle');
+	});
+
 
 	/*--------------------------Front-login-section-------------------------------*/
 
@@ -519,6 +525,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::post('store_address_details',			['as' => 'front_users_store_address_details'        ,'uses' =>'Front\UserController@store_address_details']);
 
 		Route::get('my_business',						['as' => 'front_users_business'        				,'uses' =>'Front\UserController@my_business']);
+
 		// for adding business.
 		Route::get('add_business',		    			['as' => 'business_add' 	        				,'uses' =>'Front\UserController@add_business']);
 		// for getting country state from city_id ajax called function.
@@ -574,6 +581,10 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 		Route::post('process_login_for_share/{enc_id}', ['as' => 'front_users_process_login_for_share'      ,'uses' =>'Front\AuthController@process_login_for_share']);
 		Route::post('otp_check', ['as' => 'front_users_otp_check'      ,'uses' =>'Front\UserController@otp_check']);
+
+
+		Route::get('assign_membership/{enc_id}/{business_name}/{user_id}/{category_id}',				 ['as' => 'assign_membership' 	  ,'uses' 	=>'Front\MembershipPlanController@assign_membership']);
+		Route::post('get_plan_cost/',				 ['as' => 'get_plan_cost' 	  ,'uses' 	=>'Front\MembershipPlanController@get_plan_cost']);
 
 
 	});

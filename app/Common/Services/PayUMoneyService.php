@@ -65,8 +65,9 @@ class PayUMoneyService
 		if ( $error === true ) {
 			$this->params['hash'] = PayUMiscService::get_hash( $this->params, $this->salt );
 			$result = PayUMiscService::curl_call( $this->url . '_payment?type=merchant_txn', http_build_query( $this->params ) );
+			//dd($result);
 			$transaction_id = ($result['curl_status'] === PayUMiscService::SUCCESS) ? $result['result'] : null;
-
+			//die();
 			if ( empty( $transaction_id ) ) return array (
 				'status' => 0,
 				'data' => $result['error'] );
@@ -87,7 +88,7 @@ class PayUMoneyService
 		if ( empty( $this->params['amount'] ) ) return $this->error( 'amount' );
 		if ( empty( $this->params['firstname'] ) ) return $this->error( 'firstname' );
 		if ( empty( $this->params['email'] ) ) return $this->error( 'email' );
-		if ( empty( $this->params['phone'] ) ) return $this->error( 'phone' );
+		//if ( empty( $this->params['phone'] ) ) return $this->error( 'phone' );
 		if ( empty( $this->params['productinfo'] ) ) return $this->error( 'productinfo' );
 		if ( empty( $this->params['surl'] ) ) return $this->error( 'surl' );
 		if ( empty( $this->params['furl'] ) ) return $this->error( 'furl' );
