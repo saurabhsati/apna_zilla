@@ -35,7 +35,7 @@
 				<div class="content_page">
 					<div class="cont_head">{{ isset($data_page['meta_desc'])?$data_page['meta_desc']:"" }}</div>
 
-					<div class="cont_txt"><p>{{ isset($data_page['page_desc'])?$data_page['page_desc']:"" }}</p></div>
+					<div class="cont_txt"><p>{{ isset($data_page['page_desc'])?strip_tags($data_page['page_desc']):"" }}</p></div>
 
 					<!-- <div class="cont_head">1. Welcome to Right Next.com</div>
 					<div class="cont_txt">
