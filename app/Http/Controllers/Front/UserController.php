@@ -587,7 +587,7 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $business_image  = "default.jpg";
+        $business_image  = "default_banner.jpg";
 
         if ($request->hasFile('business_image'))
         {

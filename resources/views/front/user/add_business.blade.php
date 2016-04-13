@@ -64,11 +64,11 @@
                     <div class="profile_box">
 
                     <div class="ig_profile" id="dvPreview"  >
-                      <img src="{{ url('/') }}/images/front/no-profile.png" id="preview_profile_pic"/>
+                      <img src="{{ url('/') }}/assets/front/images/default_banner.jpg" id="preview_profile_pic" width="80px"/>
                     </div>
                   <div class="button_shpglst">
                     <div style="" class="fileUpload or_btn">
-                      <span>Upload Photo</span>
+                      <span>Upload Business Main Image</span>
                       <input id="fileupload" type="file" name="business_image" class="upload change_pic" onchange="loadPreviewImage(this)">
                     </div>
                      <div class="remove_b" onclick="clearPreviewImage()"><a href="#" style=""><i class="fa fa-times"></i> Remove</a></div>
