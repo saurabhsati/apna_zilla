@@ -15,8 +15,10 @@
                           {{ csrf_field() }}
                               <!--<button class="form-control-map ui-widget" aria-hidden="true" type="submit"><img src="images/home_map.png" alt="" /></button>-->
                                <input type="text" class="search-txt city_finder" id="city_search"
-                               placeholder="Vishakhapatanm"
-                               @if(Session::has('city'))
+                               placeholder="Enter City "
+                                @if(Session::has('search_city_title'))
+                                 value="{{Session::get('search_city_title')}}"
+                               @elseif(Session::has('city'))
                                value="{{Session::get('city') }}"
                                 @else value="Mumbai"
                                 @endif />

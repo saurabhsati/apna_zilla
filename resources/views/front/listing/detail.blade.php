@@ -522,9 +522,9 @@
 
                      <div class="user_box_sub">
                            <div class="row">
-                    <div class="col-lg-3  label-text">Body<span style="color:red">*</span></div>
+                    <div class="col-lg-3  label-text">Message<span style="color:red">*</span></div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="textarea"  placeholder="Enter Body" name="enquiry_message" id="enquiry_message" class="input_acct form-control">
+                         <textarea placeholder="Enter Message" name="enquiry_message" id="enquiry_message" class="input_acct form-control"></textarea>
                           <div class="error_msg"  id="err_enquiry_message"></div>
                         </div>
                          </div>

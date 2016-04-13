@@ -18,7 +18,11 @@ class AllCategoryController extends Controller
     {
 
     	$page_title	='All Categories';
-    	if(Session::has('city'))
+        if(Session::has('search_city_title'))
+        {
+            $current_city=Session::get('search_city_title');
+        }
+    	else if(Session::has('city'))
         {
         	$current_city=Session::get('city');
         }
@@ -44,7 +48,8 @@ class AllCategoryController extends Controller
     }
     public function popular_city($city_title)
     {
-        Session::put('city', $city_title);
+        Session::put('search_city_title',$city_title);
+        //Session::put('city', $city_title);
         return redirect($city_title.'/all-categories');
     }
 }

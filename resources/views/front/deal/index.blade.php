@@ -127,12 +127,12 @@
           </div>
           <div class="modal-body">
             <p>Where in  <?php
-             if(Session::has('city')){
-               echo Session::get('city');
-               }
-               else if(Session::has('search_city_title'))
+             if(Session::has('search_city_title'))
                {
                  echo Session::get('search_city_title');
+               }
+               else if(Session::has('city')){
+               echo Session::get('city');
                }
                else
                {

@@ -28,12 +28,13 @@ class CategorySearchController extends Controller
 
     public function index($city,$cat_slug,$cat_id)
     {
-      $current_city='';
-      $current_city = Session::get('city');
-
-      if(!empty($current_city))
+      if(Session::has('search_city_title'))
       {
-        $c_city=$current_city;
+          $c_city=Session::get('search_city_title');
+      }
+      else if(Session::has('city'))
+      {
+        $c_city=Session::get('city');
       }
       else
       {
