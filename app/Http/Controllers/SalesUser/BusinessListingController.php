@@ -24,9 +24,11 @@ use App\Models\BusinessTimeModel;
 use App\Models\MembershipModel;
 use App\Models\MemberCostModel;
 use App\Models\TransactionModel;
+use App\Models\EmailTemplateModel;
 use Validator;
 use Session;
 use Sentinel;
+use Mail;
 class BusinessListingController extends Controller
 {
 	public function __construct()
@@ -912,12 +914,63 @@ class BusinessListingController extends Controller
         $transaction = TransactionModel::create($arr_data);
         if($transaction)
         {
-            Session::flash('success','Membership Assign Successfully');
-        }
-        else
-        {
-            Session::flash('error','Error Occurred While Updating Business List ');
-        }
+             $obj_single_transaction=TransactionModel::where('id',$transaction->id)->first();
+            if($obj_single_transaction)
+            {
+                $obj_single_transaction->load(['user_records']);
+                $obj_single_transaction->load(['membership']);
+                $obj_single_transaction->load(['business']);
+                $obj_single_transaction->load(['category']);
+
+                $arr_single_transaction = $obj_single_transaction->toArray();
+            }
+            $first_name=ucfirst($arr_single_transaction['user_records']['first_name']);
+            $email=ucfirst($arr_single_transaction['user_records']['email']);
+            $business_name=ucfirst($arr_single_transaction['business']['business_name']);
+            $plan=ucfirst($arr_single_transaction['membership']['title']);
+            $category=ucfirst($arr_single_transaction['category']['title']);
+            $expiry_date=date('d-M-Y',strtotime($arr_single_transaction['expire_date']));
+            //echo "Payment Success" . "<pre>" . print_r( $_POST, true ) . "</pre>";die();
+
+            $obj_email_template = EmailTemplateModel::where('id','13')->first();
+            if($obj_email_template)
+            {
+                $arr_email_template = $obj_email_template->toArray();
+
+                $content        = $arr_email_template['template_html'];
+                $content         = str_replace("##USER_FNAME##",$first_name,$content);
+                $content        = str_replace("##BUSINESS_NAME##",$business_name,$content);
+                $content        = str_replace("##CATEGORY##",$category,$content);
+                $content        = str_replace("##TRANS_ID##","Payment Done BY Sales User",$content);
+                $content        = str_replace("##TRANS_STATUS##","Active",$content);
+
+                $content        = str_replace("##MODE##","Payment Hand Over To Sales User",$content);
+                $content        = str_replace("##EXPIRY##",$expiry_date,$content);
+                $content        = str_replace("##PLAN##",$plan,$content);
+                $content        = str_replace("##APP_LINK##","RightNext",$content);
+                 //print_r($content);exit;
+                $content = view('email.front_general',compact('content'))->render();
+                $content = html_entity_decode($content);
+
+                $send_mail = Mail::send(array(),array(), function($message) use($email,$first_name,$arr_email_template,$content)
+                            {
+                                $message->from($arr_email_template['template_from_mail'], $arr_email_template['template_from']);
+                                $message->to($email, $first_name)
+                                        ->subject($arr_email_template['template_subject'])
+                                        ->setBody($content, 'text/html');
+                            });
+
+                //return $send_mail;
+                if($send_mail)
+                {
+                  Session::flash('success','Success ! Membership Assign Successfully! ');
+                }
+                else
+                {
+                  Session::flash('error','Membership Assign Successfully But Mail Not Delivered Yet !');
+                }
+           }
+         }
         return redirect(url('/sales_user/business_listing'));
     }
 }

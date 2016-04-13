@@ -13,8 +13,10 @@ use App\Common\Services\PayUMiscService;
 use App\Common\Services\PayUMoneyService;
 use App\Common\Services\PayUPaymentService;
 use App\Models\TransactionModel;
+use App\Models\EmailTemplateModel;
 use Session;
 use URL;
+use Mail;
 class PayumoneyController extends Controller
 {
 	private $payu;
@@ -77,9 +79,71 @@ class PayumoneyController extends Controller
 		$arr_data['mode']=$_POST['mode'];
         $arr_data['transaction_status']=$_POST['status'];
         $transaction = TransactionModel::where('transaction_id',$_POST['txnid'])->update($arr_data);
-		//echo "Payment Success" . "<pre>" . print_r( $_POST, true ) . "</pre>";die();
-		 Session::flash('success_payment','Success ! Payment done successfully ! ');
-		 return redirect(url('/').'/front_users/my_business');
+        if($transaction)
+        {
+
+        	$obj_single_transaction=TransactionModel::where('transaction_id',$_POST['txnid'])->first();
+        	if($obj_single_transaction)
+	    	{
+	    		$obj_single_transaction->load(['user_records']);
+		    	$obj_single_transaction->load(['membership']);
+            	$obj_single_transaction->load(['business']);
+            	$obj_single_transaction->load(['category']);
+
+	    		$arr_single_transaction = $obj_single_transaction->toArray();
+	    	}
+	    	$first_name=ucfirst($arr_single_transaction['user_records']['first_name']);
+	    	$email=ucfirst($arr_single_transaction['user_records']['email']);
+	    	$business_name=ucfirst($arr_single_transaction['business']['business_name']);
+	    	$plan=ucfirst($arr_single_transaction['membership']['title']);
+	    	$category=ucfirst($arr_single_transaction['category']['title']);
+	    	$transaction_id=$_POST['txnid'];
+	    	$transaction_status=$_POST['status'];
+	    	$payment_mode=$arr_data['mode'];
+	    	$expiry_date=date('d-M-Y',strtotime($arr_single_transaction['expire_date']));
+			//echo "Payment Success" . "<pre>" . print_r( $_POST, true ) . "</pre>";die();
+
+			$obj_email_template = EmailTemplateModel::where('id','13')->first();
+            if($obj_email_template)
+            {
+                $arr_email_template = $obj_email_template->toArray();
+
+                $content	    = $arr_email_template['template_html'];
+                $content   	    = str_replace("##USER_FNAME##",$first_name,$content);
+                $content        = str_replace("##BUSINESS_NAME##",$business_name,$content);
+                $content        = str_replace("##CATEGORY##",$category,$content);
+                $content        = str_replace("##TRANS_ID##",$transaction_id,$content);
+                $content        = str_replace("##TRANS_STATUS##",$transaction_status,$content);
+
+                $content        = str_replace("##MODE##",$payment_mode,$content);
+                $content        = str_replace("##EXPIRY##",$expiry_date,$content);
+                $content        = str_replace("##PLAN##",$plan,$content);
+                $content        = str_replace("##APP_LINK##","RightNext",$content);
+                 //print_r($content);exit;
+                $content = view('email.front_general',compact('content'))->render();
+                $content = html_entity_decode($content);
+
+                $send_mail = Mail::send(array(),array(), function($message) use($email,$first_name,$arr_email_template,$content)
+                            {
+                                $message->from($arr_email_template['template_from_mail'], $arr_email_template['template_from']);
+                                $message->to($email, $first_name)
+                                        ->subject($arr_email_template['template_subject'])
+                                        ->setBody($content, 'text/html');
+                            });
+
+                //return $send_mail;
+            if($send_mail)
+            {
+			 Session::flash('success_payment','Success ! Payment done successfully ! ');
+			 return redirect(url('/').'/front_users/my_business');
+			}
+			else
+            {
+                Session::flash('error_payment','Payment done successfully But Mail Not Delivered Yet !');
+                 return redirect(url('/').'/front_users/my_business');
+            }
+        }
+      }
 		//echo "Payment Success" . "<pre>" . print_r( $_POST, true ) . "</pre>";
 
 	}
