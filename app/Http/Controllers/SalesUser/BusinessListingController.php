@@ -78,8 +78,13 @@ class BusinessListingController extends Controller
     public function create()
     {
     	$page_title="Create Business List";
-
-    	$obj_user_res = UserModel::where('role','normal')->get();
+        if(Session::has('public_id')){
+          $sales_user_public_id=Session::get('public_id');
+         }else
+         {
+            return view('sales_user.account.login');
+         }
+    	$obj_user_res = UserModel::where('role','normal')->where('sales_user_public_id',Session::get('public_id'))->get();
         if( $obj_user_res != FALSE)
         {
             $arr_user = $obj_user_res->toArray();
@@ -320,6 +325,12 @@ class BusinessListingController extends Controller
     public function edit($enc_id)
  	{
  		$id = base64_decode($enc_id);
+        if(Session::has('public_id')){
+          $sales_user_public_id=Session::get('public_id');
+         }else
+         {
+            return view('sales_user.account.login');
+         }
  		$page_title = "Business Listing: Edit ";
  		$business_public_img_path = $this->business_public_img_path;
         $business_base_upload_img_path =$this->business_public_upload_img_path;
@@ -330,7 +341,7 @@ class BusinessListingController extends Controller
  		{
  			$arr_category = $obj_category->toArray();
  		}
- 		$obj_user_res = UserModel::where('role','normal')->get();
+ 		$obj_user_res = UserModel::where('role','normal')->where('sales_user_public_id',Session::get('public_id'))->get();
         if( $obj_user_res != FALSE)
         {
             $arr_user = $obj_user_res->toArray();

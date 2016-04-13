@@ -16,7 +16,10 @@
                           <!--  <li class="nav-item"><a href="{{ url('/') }}" class=" {{ Request::segment(1)==''? 'act':'' }}">Home</a></li> -->
                           <?php
                           $city='';
-                          if(Session::has('city')){
+                          if(Session::has('search_city_title')){
+                          $city= Session::get('search_city_title');
+                         }
+                          else if(Session::has('city')){
                           $city=Session::get('city');
                           }else{
                           $city='Mumbai';

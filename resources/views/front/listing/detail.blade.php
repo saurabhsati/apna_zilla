@@ -86,7 +86,7 @@
                           <li><a href="https://plus.google.com/share?url=<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;"><img src="{{ url('/') }}/assets/front/images/googlepls-soc.png" alt="googlepls"/><span class="socail_name">Google +</span></a></li>
                           <li><a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;"><img src="{{ url('/') }}/assets/front/images/linkind-soc.png" alt="linkind"/><span class="socail_name">Linkedin</span></a></li>
                           <li><a href="mailto:to@email.com?subject=Share Business <?php echo ucwords($arr_business_details['business_name']);?>&body=[sub]" onclick="this.href = this.href.replace('[sub]',window.location)"><img src="{{ url('/') }}/assets/front/images/email-soc.png" alt="linkind"/><span class="socail_name">Email</span></a></li>
-                          <li><a href="whatsapp://send?text=The text to share!" data-action="share/whatsapp/share">What'sApp</a></li>
+                          <!-- <li><a href="whatsapp://send?text=The text to share!" data-action="share/whatsapp/share">What'sApp</a></li> -->
                           </ul>
                         </div>
                     </div>
