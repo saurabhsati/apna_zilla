@@ -37,6 +37,7 @@
                       </div>
                      <div class="p_details"><i class="fa fa-phone"></i><span> {{$arr_business_details['landline_number']}} &nbsp; {{$arr_business_details['mobile_number']}}</span></div>
                      <div class="p_details"><i class="fa fa-map-marker"></i> <span>{{$arr_business_details['building']}} &nbsp; {{$arr_business_details['street']}},<br/> {{$arr_business_details['landmark']}},&nbsp;{{$arr_business_details['area']}},&nbsp;{{$arr_business_details['state_details']['state_title']}},&nbsp;{{$arr_business_details['country_details']['country_name']}} (<a href="javascript:void(0);" onclick="show_map()">map</a>)</span></div>
+                     <input type="hidden" value=" <?php echo strip_tags($arr_business_details['building'] .', ' .$arr_business_details['street'].',<br/>' .$arr_business_details['landmark'].', '.$arr_business_details['area'].', '.$arr_business_details['state_details']['state_title'].', '.$arr_business_details['country_details']['country_name']); ?>" name="set_loc_info" id="set_loc_info">
                      <div class="p_details lst">
                         <i class="fa fa-clock-o"></i><span>
                         @if(isset($arr_business_details['business_times']) && $arr_business_details['business_times']!='')
@@ -880,6 +881,7 @@ function check_review()
 
                infowindow.open(map, marker);
 
+
            } else {
                alert("Lat and long cannot be found.");
            }
@@ -887,8 +889,9 @@ function check_review()
    }
    function initializeMap()
    {
+      var address=$("#set_loc_info").val();
         var latlng = new google.maps.LatLng($(ref_input_lat).val(), $(ref_input_lng).val());
-        var myOptions = {
+         var myOptions = {
             zoom: 18,
             center: latlng,
             panControl: true,
@@ -911,22 +914,26 @@ function check_review()
 
         map.streetViewControl = false;
         infowindow = new google.maps.InfoWindow({
-            content: "("+$(ref_input_lat).val()+", "+$(ref_input_lng).val()+")"
+            content:address
         });
 
-        google.maps.event.addListener(map, 'click', function(event) {
+      /*  google.maps.event.addListener(map, 'click', function(event) {
             marker.setPosition(event.latLng);
 
             var yeri = event.latLng;
 
             var latlongi = "(" + yeri.lat().toFixed(6) + ", " + yeri.lng().toFixed(6) + ")";
-
             infowindow.setContent(latlongi);
+
 
             $(ref_input_lat).val(yeri.lat().toFixed(6));
             $(ref_input_lng).val(yeri.lng().toFixed(6));
 
-        });
+
+        });*/
+         google.maps.event.addListener(marker, 'click', function() {
+            infowindow.open(map,marker);
+          });
 
         google.maps.event.addListener(map, 'mousewheel', function(event, delta) {
 
