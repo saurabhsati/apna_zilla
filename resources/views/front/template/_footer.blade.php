@@ -136,7 +136,7 @@
                      </div>
                      <div class="user_box">
                         <div class="label_form">Password</div>
-                        <input type="password" name="password"  id="password_login" data-rule-required="true" class="input_box" placeholder="enter password"/>
+                        <input type="password" name="password"  id="password_login" data-rule-required="true" class="input_box" placeholder="Enter password"/>
                         <div id="password_login_err" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div>
                      </div>
                      <div class="login_social">
@@ -416,17 +416,17 @@
        <div class="modal-body">
           <div class="img-verify"><img src="{{ url('/') }}/assets/front/images/process_done.png" alt=""/></div>
           <div class="center-section">
-           <b class="head-t-center">What is Just Dial Verified?</b>
-           <p class="just-v">Just Dial Verified(JD Verified) is an added service offering.</p>
+           <b class="head-t-center">What is RightNext Verified?</b>
+           <p class="just-v">RightNext Verified(RightNext Verified) is an added service offering.</p>
           </div>
 
-           <p class="sub-c"> Justdial verified means that the information of business establishments, professionals or service providers has been verified as existing and correct at the time of the advertiser's application to register with Justdial.  				</p>
+           <p class="sub-c"> RightNext verified means that the information of business establishments, professionals or service providers has been verified as existing and correct at the time of the advertiser's application to register with RightNext.  				</p>
             <div class="soc-menu-top" style="margin-top:20px; text-align:center;">
-              <b class="head-t-center">What is Just Dial Verified?</b>
+              <b class="head-t-center">What is RightNext Verified?</b>
                 <p class="sub-c">Makes short-listing of business establishments, professionals or service providers fast & easy. Information verification time is saved. </p>
                  <p class="sub-c">(PS: There is no documentary evidence gathered for verification)
 <br>
-If you need any more details on Justdial Verified, please refer to
+If you need any more details on RightNext Verified, please refer to
                 <a href="#">terms &amp; conditions</a></p>
             </div>
            <div class="clr"></div>

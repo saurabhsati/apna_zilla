@@ -71,6 +71,11 @@
                         <div class="soc-menu-top">
                         <ul>
                         <li>
+                         <?php
+                           $slug_business=str_slug($arr_business_details['business_name']);
+                           $slug_area=str_slug($arr_business_details['area']);
+                           $business_area=$slug_business.'@'.$slug_area;
+                           ?>
                        <!--  <a href="https://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.mynide.com%2Fdeals%2Fdetails%2FMQ%3D%3D&amp;t=1+Cocktail" target="_blank" style="cursor:pointer;">
                         </a> -->
                         <a href="https://www.facebook.com/sharer.php?<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;"><img src="{{ url('/') }}/assets/front/images/facebook-so.png" alt="facebook"/>
@@ -80,11 +85,8 @@
                           <li><a href="http://twitter.com/share?url=<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;"><img src="{{ url('/') }}/assets/front/images/twitter-so.png" alt="twitter"/><span class="socail_name">Twitter</span></a></li>
                           <li><a href="https://plus.google.com/share?url=<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;"><img src="{{ url('/') }}/assets/front/images/googlepls-soc.png" alt="googlepls"/><span class="socail_name">Google +</span></a></li>
                           <li><a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;"><img src="{{ url('/') }}/assets/front/images/linkind-soc.png" alt="linkind"/><span class="socail_name">Linkedin</span></a></li>
-                          <!-- <li><a href="#"><img src="{{ url('/') }}/assets/front/images/pins-soc.png" alt="pins"/><span class="socail_name">Pinterest</span></a></li>
-                          <li><a href="#"><img src="{{ url('/') }}/assets/front/images/VKontakte-so.png" alt="VKontakte"/><span class="socail_name">VKontakte</span></a></li>
-                          <li><a href="#"><img src="{{ url('/') }}/assets/front/images/msg-so.png" alt="msg"/><span class="socail_name">SMS</span></a></li>
-                          <li><a href="#"><img src="{{ url('/') }}/assets/front/images/email-soc.png" alt="email"/><span class="socail_name">Email</span></a></li>
-                        --> </ul>
+                          <li><a href="mailto:to@email.com?subject=Share Business <?php echo ucwords($arr_business_details['business_name']);?>&body=[sub]" onclick="this.href = this.href.replace('[sub]',window.location)"><img src="{{ url('/') }}/assets/front/images/email-soc.png" alt="linkind"/><span class="socail_name">Email</span></a></li>
+                          </ul>
                         </div>
                     </div>
                   </div>
@@ -227,7 +229,7 @@
                                     Name
                                  </div>
                                  <div class="title-rev-field">
-                                    <input type="text" name="name" id="name" placeholder="Name" value=""/>
+                                    <input type="text" name="name" id="name" placeholder="Name" value="@if(Session::has('user_name')){{Session::get('user_name')}}@endif"/>
                                     <div class="error_msg" id="err_name" name="err_name"></div>
                                  </div>
                                  <div class="clearfix"></div>
@@ -250,7 +252,7 @@
                                     Email Id
                                  </div>
                                  <div class="title-rev-field">
-                                    <input type="text" name="email" id="email"  placeholder="Email Id" value=""/>
+                                    <input type="text" name="email" id="email"  placeholder="Email Id" value="@if(Session::has('user_email')){{Session::get('user_email')}}@endif"/>
                                     <div class="error_msg" id="err_email" name="err_email"></div>
                                  </div>
                                  <div class="clearfix"></div>
@@ -423,7 +425,7 @@
                         <?php
                            $slug_business=str_slug($related_business['business_name']);
                            $slug_area=str_slug($related_business['area']);
-                           $business_area=$slug_business.'<near>'.$slug_area;
+                           $business_area=$slug_business.'@'.$slug_area;
                            ?>
                         <div class="name_product"> <a href="{{url('/')}}/{{$city}}/{{$business_area}}/{{base64_encode($related_business['id'])}}" style="color: #ffffff;">{{ $related_business['business_name'] }}</a></div>
                         <img src="{{ url('/') }}/uploads/business/main_image/{{ $related_business['main_image'] }}" alt="product img"/>

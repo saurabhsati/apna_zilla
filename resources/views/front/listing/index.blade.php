@@ -316,7 +316,7 @@
 
         <div class="col-sm-9 col-md-9 col-lg-8">
           <div class="product_details">
-            <div class="product_title">
+            <div class="product_title"><img src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>
             <?php
              $slug_business=str_slug($restaurants['business_name']);
              $slug_area=str_slug($restaurants['area']);

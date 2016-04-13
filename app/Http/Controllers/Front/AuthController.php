@@ -313,6 +313,7 @@ class AuthController extends Controller
                         {
                             $user_id = base64_encode($user['id']) ;
                             Session::put('user_id', $user_id);
+                            Session::put('user_email', $user['email']);
                             Session::set('user_name', $user['first_name']);
 
                         }
@@ -347,7 +348,6 @@ class AuthController extends Controller
         $arr_creds =  array();
         $arr_creds['email']     = $request->input('email');
         $arr_creds['password']  = $request->input('password');
-
         $user = Sentinel::authenticate($arr_creds);
 
         if($user)
@@ -371,7 +371,7 @@ class AuthController extends Controller
                 foreach ($arr_user_info as $user)
                 {
                     $user_id = base64_encode($user['id']) ;
-                    Session::put('user_id', $user_id);
+                     Session::put('user_id', $user_id);
                     Session::set('user_name', $user['first_name']);
 
                 }
