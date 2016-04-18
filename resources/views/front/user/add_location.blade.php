@@ -473,7 +473,7 @@ jQuery(document).ready(function () {
     });
   });
 
-
+// test
  /* jQuery('#city').on('change',function() {
     var addr = jQuery('#city').text();
     setMapLocation(addr);
@@ -493,8 +493,6 @@ jQuery(document).ready(function () {
 
         setMapLocation(addr);
     }
-
-
 
 </script>
 
