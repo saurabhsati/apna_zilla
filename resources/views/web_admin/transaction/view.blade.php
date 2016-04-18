@@ -1,4 +1,4 @@
-    @extends('web_admin.template.admin')                
+    @extends('web_admin.template.admin')
 
 
     @section('main_content')
@@ -32,7 +32,7 @@
                 <!-- BEGIN Main Content -->
                 <div class="row">
                     <div class="col-md-12">
-                       @if(isset($arr_single_transaction) && sizeof($arr_single_transaction)>0) 
+                       @if(isset($arr_single_transaction) && sizeof($arr_single_transaction)>0)
                         <div class="box">
                             <div class="box-content">
                                 <div class="invoice">
@@ -46,7 +46,7 @@
                                         </div>
                                         <div class="col-md-6 invoice-info">
                                             <p class="font-size-17">
-                                            <strong>Date</strong> - 
+                                            <strong>Date</strong> -
                                             {{ date('d M Y',strtotime($arr_single_transaction['created_at'])) }}</p>
                                         </div>
                                     </div>
@@ -58,7 +58,7 @@
                                             <h4><b><u>Transaction Id</u></b> - {{ $arr_single_transaction['transaction_id'] }}</h4>
 
                                             <br/>
-                                            <p><i class="fa fa-envelope"></i> 
+                                            <p><i class="fa fa-envelope"></i>
                                                 {{ isset($arr_single_transaction['user_records']) && $arr_single_transaction['user_records']?
                                                 $arr_single_transaction['user_records']['email']:'' }}
                                             </p>
@@ -66,10 +66,10 @@
                                               {{ isset($arr_single_transaction['user_records']) && $arr_single_transaction['user_records']?
                                                 $arr_single_transaction['user_records']['mobile_no']:'' }}
                                              </p>
-                                            
-                                           
+
+
                                         </div>
-                                        
+
                                     </div>
 
                                     <br/><br/>
@@ -79,8 +79,10 @@
                                             <thead>
                                                 <tr>
                                                     <th class="center">#</th>
-                                                    <th>Order Id</th>
+                                                    <th>Transaction Id</th>
                                                     <th>Membership Plan</th>
+                                                     <th>Business Name</th>
+                                                    <th>Category Name</th>
                                                     <th>Price</th>
                                                     <th>Start Date</th>
                                                     <th>Expire Date</th>
@@ -90,22 +92,28 @@
                                                 <tr>
                                                     <td class="center">1</td>
                                                     <td>
-                                                        {{ $arr_single_transaction['order_id'] }}
+                                                        {{ $arr_single_transaction['transaction_id'] }}
                                                     </td>
                                                     <td>
                                                         {{ isset($arr_single_transaction['membership']) && $arr_single_transaction['membership']?
-                                                        $arr_single_transaction['membership']['membership']:'' }}
-                                                    </td>
-                                                    <td>$
-                                                    {{ $arr_single_transaction['price'] }} </td>
-                                                    <td>
-                                                     {{ date('d-m-Y',strtotime($arr_single_transaction['start_date'])) }}   
+                                                        $arr_single_transaction['membership']['title']:'' }}
                                                     </td>
                                                     <td>
-                                                     {{ date('d-m-Y',strtotime($arr_single_transaction['expire_date'])) }}   
+                                                    {{ isset($arr_single_transaction['business']) && $arr_single_transaction['business']? $arr_single_transaction['business']['business_name']:'' }}
+                                                </td>
+                                                 <td>
+                                                    {{ isset($arr_single_transaction['category']) && $arr_single_transaction['category']? $arr_single_transaction['category']['title']:'' }}
+                                                </td>
+                                                    <td>Rs.
+                                                    {{ $arr_single_transaction['price'] }}/- </td>
+                                                    <td>
+                                                     {{ date('d-m-Y',strtotime($arr_single_transaction['start_date'])) }}
+                                                    </td>
+                                                    <td>
+                                                     {{ date('d-m-Y',strtotime($arr_single_transaction['expire_date'])) }}
                                                     </td>
                                                 </tr>
-                                                
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -121,4 +129,4 @@
                 <!-- END Main Content -->
 
 
-@stop                    
+@stop

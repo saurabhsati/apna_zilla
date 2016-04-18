@@ -140,7 +140,10 @@
              },
             response: function (event, ui)
             {
+              $('.ui-autocomplete').css({
+                     'position': 'absolute'
 
+                  });
             }
           });
 
@@ -148,7 +151,7 @@
 
         $(document.body).on( 'click', '.search_buisness', function( event )
         {
-         var city_search=$("#city_search").val();
+         var city_search=$("#ho").val();
          var category_search=$("#category_search").val();
            if(city_search!='')
           {

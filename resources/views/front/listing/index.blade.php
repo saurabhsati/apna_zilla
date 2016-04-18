@@ -16,6 +16,10 @@
   .remo_fav i{
     color: #f9a820 !important;
   }
+
+
+
+
   </style>
 
    <?php
@@ -311,18 +315,18 @@
       <div class="product_list_view" >
        <div class="row">
          <div class="col-sm-3 col-md-3 col-lg-4">
-          <div class="product_img"><img src="{{ url('/') }}/uploads/business/main_image/{{ $restaurants['main_image'] }}" alt="list product"/></div>
+          <div class="product_img"><img src="{{ url('/') }}/uploads/business/main_image/{{ $restaurants['main_image'] }}" alt="list product"/><img class="product-like-icon" src="{{ url('/') }}/assets/front/images/verified_2.png" alt="write_review"/></div>
         </div>
 
         <div class="col-sm-9 col-md-9 col-lg-8">
           <div class="product_details">
-            <div class="product_title"><img src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>
+            <div class="product_title">
             <?php
              $slug_business=str_slug($restaurants['business_name']);
              $slug_area=str_slug($restaurants['area']);
              $business_area=$slug_business.'@'.$slug_area;
             ?>
-            <a href="{{url('/')}}/{{$city}}/{{$business_area}}/{{base64_encode($restaurants['id'])}}">
+            <a href="{{url('/')}}/{{$city}}/{{$business_area}}/{{base64_encode($restaurants['id'])}}"><img src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>
                 {{ $restaurants['business_name'] }}
               </a>
 
@@ -519,7 +523,7 @@
 
                         </div>
                        <img src="{{ url('/') }}/uploads/business/main_image/{{ $restaurants['main_image'] }}" alt="product img" >
-
+                        <img class="product-like-icon" src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>
                     </div>
 
 
@@ -589,6 +593,8 @@
                   },
                    select:function(event,ui)
                   {
+
+
                     $("input[name='location_search']").val(ui.item.label);
                     $("#business_search_by_location").attr('value',ui.item.loc_slug);
                     $("#location_search").attr('value',ui.item.loc);
@@ -598,7 +604,10 @@
                   },
                   response: function (event, ui)
                   {
+                    $('.ui-autocomplete').css({
+                      'position': 'fixed'
 
+                  });
                   }
                 });
 

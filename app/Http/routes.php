@@ -319,6 +319,8 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		Route::group(['prefix'=>'transactions'], function (){
 			Route::get('/','Admin\TransactionController@index');
 			Route::get('view/{enc_id}','Admin\TransactionController@view');
+			Route::get('edit/{enc_id}','Admin\TransactionController@edit');
+			Route::post('update/{enc_id}','Admin\TransactionController@update');
 		});
 		/*-------------End--------------------------*/
 

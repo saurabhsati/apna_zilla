@@ -62,7 +62,7 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Building:</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="building"
+                         <input type="text" name="building" id="building"
                                 class="input_acct"
                                 placeholder="Enter Building's Name"
                                 data-rule-required="true"
@@ -78,7 +78,7 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Street:</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="street"
+                         <input type="text" name="street" id="street"
                                 class="input_acct"
                                 placeholder="Enter Street's Name"
                                 value="{{ isset($business['street'])?$business['street']:'' }}"
@@ -92,7 +92,7 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Landmark:</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="landmark"
+                         <input type="text" name="landmark" id="landmark"
                                 class="input_acct"
                                 placeholder="Enter Landmark's Name"
                                 value="{{ isset($business['landmark'])?$business['landmark']:'' }}"
@@ -106,7 +106,7 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Area:</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="area"
+                         <input type="text" name="area" id="area"
                                 class="input_acct"
                                 placeholder="Enter Area's Name"
                                 onchange="setAddress()"
