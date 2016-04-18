@@ -3,9 +3,10 @@
 @section('main_section')
 <style type="text/css">
   select.input_acct {
-    color: #999;
-    height: 100px;
+    color: #555;
+    height: 150px;
     text-indent: 1px;
+      padding: 5px 10px;
 }
 </style>
  <div class="gry_container">

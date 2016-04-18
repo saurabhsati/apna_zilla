@@ -456,6 +456,10 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	{
 		Route::get('/',							 	 	 ['as' => 'listing' 	        	,'uses' => 'Front\ListingController@index']);
 		Route::get('details/{enc_id}',					 ['as' => 'list_details' 	        ,'uses' => 'Front\ListingController@list_details']);
+		//cookies
+		Route::get('showCookie',					 ['as' => 'showcookies' 	        ,'uses' => 'Front\ListingController@showCookie']);
+		Route::post('cekLogin',					 ['as' => 'ceklogin' 	        ,'uses' => 'Front\ListingController@cekLogin']);
+
 		Route::post('store_reviews',			 ['as' => 'front_store_reviews'     ,'uses' => 'Front\ListingController@store_reviews']);
   	    Route::get('share_business/{enc_id}',			 ['as' => 'business_share' 	        ,'uses' => 'Front\ListingController@share_business']);
   	    Route::get('sms_email/{enc_id}',			     ['as' => 'business_sms_email' 	    ,'uses' => 'Front\ListingController@sms_email']);

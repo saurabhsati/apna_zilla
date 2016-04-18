@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Http\Response;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\BusinessListingModel;
@@ -13,13 +13,14 @@ use App\Models\LocationModel;
 use App\Models\BusinessCategoryModel;
 use App\Models\PlaceModel;
 use Session;
+use Cookie;
 class HomeController extends Controller
 {
     public function __construct()
     {
 
     }
-    public function index()
+    public function index(Request $request)
     {
 
     	$page_title	='Home';
@@ -128,9 +129,6 @@ class HomeController extends Controller
                 $business_listing = $obj_business_listing->toArray();
             }
        }
-        //dd($business_listing);
-
- 		//dd($arr_business_by_category);
 
  		 $cat_img_path = url('/').config('app.project.img_path.category');
  		return view('front.home',compact('page_title','arr_category','sub_category','category_business','arr_exp_sub_category','cat_img_path','current_city','explore_category','business_listing'));

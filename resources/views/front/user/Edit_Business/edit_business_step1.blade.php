@@ -3,10 +3,12 @@
 @section('main_section')
 <style type="text/css">
   select.input_acct {
-    color: #999;
-    height: 100px;
+    color: #555;
+    height: 150px !important;
     text-indent: 1px;
+    padding: 5px 10px;
 }
+.form-control{}
 </style>
  <div class="gry_container">
       <div class="container">
@@ -89,7 +91,7 @@
                     <div class="row">
                   <div class="col-lg-3  label-text" for="business_cat">Business Category </div>
                   <div class="col-sm-9 col-md-9 col-lg-9 m_l">
-                  <select class="form-control" name="business_cat[]" id="business_cat" onchange="updateCategoryOptGroup(this)" multiple="">
+                  <select class="form-control input_acct" name="business_cat[]" id="business_cat" onchange="updateCategoryOptGroup(this)" multiple="">
                      <option> Select Business Category</option>
                       @if(isset($arr_category) && sizeof($arr_category)>0)
                         @foreach($arr_category as $category)

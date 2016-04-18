@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -21,7 +22,7 @@ use Session;
 use Validator;
 use Meta;
 use Mail;
-
+use Cookie;
 class ListingController extends Controller
 {
     public function __construct()
@@ -33,7 +34,10 @@ class ListingController extends Controller
     {
         $enc_id;
         $id = base64_decode($enc_id);
-        if($id=='')
+
+
+
+       if($id=='')
         {
 
           return redirect()->back();
@@ -485,5 +489,17 @@ class ListingController extends Controller
 
         return response()->json($json);
     }
+
+    public function showCookie(Request $request)
+    {
+        return $request->cookie('rightnext_recent_search');
+    }
+
+    public function cekLogin($param)
+    {    $response = new Response('Recent Search');
+        return $response->withCookie(cookie('rightnext_recent_search', $param, 60));
+    }
+
+
 
 }
