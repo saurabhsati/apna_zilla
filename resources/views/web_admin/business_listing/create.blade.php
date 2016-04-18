@@ -241,7 +241,7 @@
                            data-rule-required="true"
                            placeholder="Enter Street"
                            value=""
-                            onchange="setAddress()"
+
                            />
                     <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
@@ -259,7 +259,20 @@
                     <span class='help-block'>{{ $errors->first('landmark') }}</span>
                 </div>
             </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="area">Area <i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input class="form-control"
+                           name="area"
+                           id="area"
+                           data-rule-required="true"
+                           placeholder="Enter Area"
+                           value=""
 
+                           />
+                    <span class='help-block'>{{ $errors->first('area') }}</span>
+                </div>
+            </div>
 
 
             <div class="form-group">
@@ -311,7 +324,7 @@
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="pincode">Zipcode <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                <select class="form-control"  name="pincode" id="pincode">
+                <select class="form-control"  name="pincode" id="pincode"  onchange="setAddress()">
                 <option>Select Zipcode</option>
                  @if(isset($arr_zipcode) && sizeof($arr_zipcode)>0)
                  @foreach($arr_zipcode as $zipcode)
@@ -323,20 +336,7 @@
                   <span class='help-block'>{{ $errors->first('pincode') }}</span>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="area">Area <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="area"
-                           id="area"
-                           data-rule-required="true"
-                           placeholder="Enter Area"
-                           value=""
-                           onchange="setAddress()"
-                           />
-                    <span class='help-block'>{{ $errors->first('area') }}</span>
-                </div>
-            </div>
+
 
 
             <div class="form-group">
@@ -1002,7 +1002,7 @@ $('#remove-payment').click(function()
              content: "(1.10, 1.10)"
          });
 
-         google.maps.event.addListener(map, 'click', function(event) {
+         /*google.maps.event.addListener(map, 'click', function(event) {
              marker.setPosition(event.latLng);
 
              var yeri = event.latLng;
@@ -1014,7 +1014,7 @@ $('#remove-payment').click(function()
              $(ref_input_lat).val(yeri.lat().toFixed(6));
              $(ref_input_lng).val(yeri.lng().toFixed(6));
 
-         });
+         });*/
 
          google.maps.event.addListener(map, 'mousewheel', function(event, delta) {
 

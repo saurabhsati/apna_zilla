@@ -261,9 +261,9 @@
                     infowindow.close();
                 }
 
-                google.maps.event.addListener(marker, 'click', function() {
+               /* google.maps.event.addListener(marker, 'click', function() {
                     infowindow.open(map, marker);
-                });
+                });*/
 
                 infowindow.open(map, marker);
 
@@ -301,7 +301,7 @@
              content: "(1.10, 1.10)"
          });
 
-         google.maps.event.addListener(map, 'click', function(event) {
+      /*   google.maps.event.addListener(map, 'click', function(event) {
              marker.setPosition(event.latLng);
 
              var yeri = event.latLng;
@@ -313,7 +313,7 @@
              $(ref_input_lat).val(yeri.lat().toFixed(6));
              $(ref_input_lng).val(yeri.lng().toFixed(6));
 
-         });
+         });*/
 
          google.maps.event.addListener(map, 'mousewheel', function(event, delta) {
 

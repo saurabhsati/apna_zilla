@@ -241,7 +241,7 @@
                            data-rule-required="true"
                            placeholder="Enter Street"
                            value=""
-                            onchange="setAddress()"
+
                            />
                     <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
@@ -257,6 +257,20 @@
                            value=""
                            />
                     <span class='help-block'>{{ $errors->first('landmark') }}</span>
+                </div>
+            </div>
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="area">Area <i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input class="form-control"
+                           name="area"
+                           id="area"
+                           data-rule-required="true"
+                           placeholder="Enter Area"
+                           value=""
+                           onchange="setAddress()"
+                           />
+                    <span class='help-block'>{{ $errors->first('area') }}</span>
                 </div>
             </div>
             <div class="form-group">
@@ -320,20 +334,7 @@
                   <span class='help-block'>{{ $errors->first('pincode') }}</span>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="area">Area <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="area"
-                           id="area"
-                           data-rule-required="true"
-                           placeholder="Enter Area"
-                           value=""
-                           onchange="setAddress()"
-                           />
-                    <span class='help-block'>{{ $errors->first('area') }}</span>
-                </div>
-            </div>
+
 
               <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="contact_person_name">Contact Person Name<i class="red">*</i></label>
@@ -997,7 +998,7 @@ $('#remove-payment').click(function()
              content: "(1.10, 1.10)"
          });
 
-         google.maps.event.addListener(map, 'click', function(event) {
+     /*    google.maps.event.addListener(map, 'click', function(event) {
              marker.setPosition(event.latLng);
 
              var yeri = event.latLng;
@@ -1009,7 +1010,7 @@ $('#remove-payment').click(function()
              $(ref_input_lat).val(yeri.lat().toFixed(6));
              $(ref_input_lng).val(yeri.lng().toFixed(6));
 
-         });
+         });*/
 
          google.maps.event.addListener(map, 'mousewheel', function(event, delta) {
 
@@ -1057,7 +1058,7 @@ $('#remove-payment').click(function()
          var country = $('#country option:selected').text();
 
         var addr = street+", "+area+", "+city+", "+state+", "+country;
-
+        console.log=addr;
         setMapLocation(addr);
     }
 
