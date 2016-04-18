@@ -261,6 +261,13 @@
     }
     function initializeMap()
     {
+         var street = $('#street').val();
+         var area = $('#area').val();
+         var city = $('#city option:selected').text();
+         var state = $('#state option:selected').text();
+         var country = $('#country option:selected').text();
+
+        var addr = street+", "+area+", "+city+", "+state+", "+country;
          var latlng = new google.maps.LatLng($(ref_input_lat).val(), $(ref_input_lng).val());
          var myOptions = {
              zoom: 18,
@@ -285,10 +292,10 @@
 
          map.streetViewControl = false;
          infowindow = new google.maps.InfoWindow({
-             content: "("+$(ref_input_lat).val()+", "+$(ref_input_lng).val()+")"
+             content: addr
          });
 
-         google.maps.event.addListener(map, 'click', function(event) {
+         /*google.maps.event.addListener(map, 'click', function(event) {
              marker.setPosition(event.latLng);
 
              var yeri = event.latLng;
@@ -300,8 +307,10 @@
              $(ref_input_lat).val(yeri.lat().toFixed(6));
              $(ref_input_lng).val(yeri.lng().toFixed(6));
 
-         });
-
+         });*/
+         google.maps.event.addListener(marker, 'click', function() {
+            infowindow.open(map,marker);
+          });
          google.maps.event.addListener(map, 'mousewheel', function(event, delta) {
 
              console.log(delta);
@@ -342,7 +351,7 @@
          var country = $('#country option:selected').text();
 
         var addr = street+", "+area+", "+city+", "+state+", "+country;
-
+        console.log(addr);
         setMapLocation(addr);
     }
 
