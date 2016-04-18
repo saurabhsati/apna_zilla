@@ -268,7 +268,7 @@
                            data-rule-required="true"
                            placeholder="Enter Area"
                            value=""
-                           onchange="setAddress()"
+
                            />
                     <span class='help-block'>{{ $errors->first('area') }}</span>
                 </div>
@@ -322,7 +322,7 @@
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="pincode">Zipcode <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                <select class="form-control"  name="pincode" id="pincode">
+                <select class="form-control"  name="pincode" id="pincode" onchange="setAddress()">
                 <option>Select Zipcode</option>
                  @if(isset($arr_zipcode) && sizeof($arr_zipcode)>0)
                  @foreach($arr_zipcode as $zipcode)

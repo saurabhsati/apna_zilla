@@ -255,11 +255,19 @@ class BusinessListingController extends Controller
             $arr_paymentmode_data['title']=$value;
             $insert_data = BusinessPaymentModeModel::create($arr_paymentmode_data);
         }
-        foreach ($business_service as $key => $value)
+        $ser_count = count($business_service);
+         //exit;
+        if($ser_count>0)
         {
-            $arr_serv_data['business_id']=$business_id;
-            $arr_serv_data['name']=$value;
-            $insert_data = BusinessServiceModel::create($arr_serv_data);
+            foreach ($business_service as $key => $value)
+            {
+                if($value!=null)
+                {
+                    $arr_serv_data['business_id']=$business_id;
+                    $arr_serv_data['name']=$value;
+                    $insert_data = BusinessServiceModel::create($arr_serv_data);
+               }
+            }
         }
 
 

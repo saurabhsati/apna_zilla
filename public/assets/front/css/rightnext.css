@@ -406,7 +406,7 @@ body:not(.device-touch) .social-icon i {transition: all 0.3s ease 0s;}
 }
 /*listing page start here*/
 
-.product-like-icon{position: absolute; right: 10px; bottom: 10px; width: auto !important; height: auto !important; z-index: 1;}
+.product-like-icon{position: absolute; right: 10px; bottom: 10px; width: auto !important; height: auto !important; z-index: 1; transition: 0 !important;}
 .sidebar-nav{ -moz-border-bottom-colors: none; -moz-border-left-colors: none;-moz-border-right-colors: none; -moz-border-top-colors: none; background-color: #fff;
     border-color: #fcb339 #e1e1e1 #e1e1e1;border-image: none;border-style: solid;border-width: 3px 1px 1px;list-style: outside none none;margin: 0 0 15px;    padding: 0;top: 0;width: 100%; position: relative;}
 .sidebar-nav li{ border-bottom: 1px dotted #aaa9a9;line-height: normal;padding: 7px 5px 6px 21px; position: relative; color: #777777;}
