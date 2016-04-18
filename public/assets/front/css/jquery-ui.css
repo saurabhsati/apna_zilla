@@ -851,7 +851,9 @@ body .ui-tooltip {
 	background: #ffffff url("images/ui-bg_flat_75_ffffff_40x100.png") 50% 50% repeat-x;
 	color: #222222;
 	z-index: 9999;
+
 }
+#ui-id-2.ui-autocomplete{left: 658px !important;}
 .ui-widget-content a {
 	color: #222222;
 }

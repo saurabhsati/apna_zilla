@@ -61,7 +61,7 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Building:</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="building"
+                         <input type="text" name="building" id="building"
                                 class="input_acct"
                                 placeholder="Enter Building's Name"
                                 data-rule-required="true"
@@ -75,7 +75,7 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Street:</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="street"
+                         <input type="text" name="street" id="street"
                                 class="input_acct"
                                 placeholder="Enter Street's Name"
                                 required="" aria-describedby="basic-addon1"/>
@@ -88,7 +88,7 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Landmark:</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="landmark"
+                         <input type="text" name="landmark" id="landmark"
                                 class="input_acct"
                                 placeholder="Enter Landmark's Name"
                                 required="" aria-describedby="basic-addon1"/>
@@ -101,10 +101,10 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Area:</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="area"
+                         <input type="text" name="area" id="area"
                                 class="input_acct"
                                 placeholder="Enter Area's Name"
-                                onchange="setAddress()"
+
                                 required="" aria-describedby="basic-addon1" />
                         </div>
                          </div>
@@ -144,7 +144,7 @@
             <div class="row">
              <div class="col-lg-3  label-text">City :</div>
               <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-               <select class="input_acct"  name="city" id="city" required="" aria-describedby="basic-addon1">
+               <select class="input_acct"  name="city" id="city" required="" aria-describedby="basic-addon1" onchange="setAddress()">
                   <option value="" >--Select--</option>
                  </select>
                 </div>
@@ -236,10 +236,10 @@
     var ref_input_lat = $('#lat');
     var ref_input_lng = $('#lng');
 
-    function setMapLocation(city)
+    function setMapLocation(addr)
     {
-
-        geocoder.geocode({'address': city}, function(results, status) {
+      console.log(addr);
+        geocoder.geocode({'address': addr}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK)
             {
 
@@ -250,7 +250,7 @@
 
                 var latlong = "(" + results[0].geometry.location.lat().toFixed(6) + ", " +
                         +results[0].geometry.location.lng().toFixed(6)+ ")";
-
+                console.log(latlong);
 
 
                 marker.setPosition(results[0].geometry.location);

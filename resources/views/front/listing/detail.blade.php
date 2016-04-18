@@ -1,5 +1,3 @@
-
-
 @extends('front.template.master')
 @section('main_section')
 @include('front.template._search_top_nav')
@@ -26,7 +24,7 @@
                <!--  <div class="product_detail_banner" style="background: url('{{ url('/') }}/assets/front/images/banner_detail.jpg') repeat scroll 0px 0px;"> -->
                <div style="background: url('{{ url('/') }}/uploads/business/main_image/{{ $arr_business_details['main_image'] }}'); background-repeat: repeat;  background-size: 100% auto;">
                   <div class="product_detail_banner" style="background-color:rgba(0,0,0,0.7);">
-                     <div class="product_title"><a href="#">{{$arr_business_details['business_name']}}</a></div>
+                     <div class="product_title"><a href="#"><img src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>{{$arr_business_details['business_name']}}</a></div>
                       <div class="resta-rating-block11">
                       <?php for($i=0;$i<round($arr_business_details['avg_rating']);$i++){ ?>
                       <i class="fa fa-star star-acti"></i>

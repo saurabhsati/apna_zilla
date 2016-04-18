@@ -123,10 +123,7 @@
                                     <div class="f1_container">
                                        <div class="f1_card shadow">
                                           <div class="cate-addre-block-two front face"><img alt="" src="{{url('/')}}/assets/front/images/cate-address.png"> </div>
-                                       </div>
-                                       <div class="back face center">
-                                          <div class="cate-addre-block-two front face"><img alt="" src="{{url("/")}}/assets/front/images/cate-address.png"> </div>
-                                       </div>
+                                       </div>                                       
                                     </div>
                                     <div class="resta-name">
                                        <h6><a href="{{url('/')}}/{{$current_city}}/{{$business_area}}/{{base64_encode($business['id'])}}">{{$business['business_name']}}</a></h6>

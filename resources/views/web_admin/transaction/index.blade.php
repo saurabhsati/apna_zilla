@@ -120,15 +120,14 @@
                   <th>Transaction Id</th>
                   <th>Transaction Status</th>
                   <th>User Name</th>
-                   <th>User Email</th>
-                   <th>Membership</th>
+                  <th>User Email</th>
+                  <th>Membership</th>
                   <th>Business Name</th>
                   <th>Category Name</th>
-
-
+                  <th>Price</th>
                   <th>Start Date</th>
                   <th>Expire Date</th>
-                 <!--  <th>Action</th> -->
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -163,20 +162,26 @@
                      <td>
                         {{ isset($transaction['category']) && $transaction['category']? $transaction['category']['title']:'' }}
                     </td>
+                    <td>Rs.{{ $transaction['price'] }} /- </td>
+
                     <td>
                         {{ date('d M Y',strtotime($transaction['start_date'])) }}
                     </td>
                     <td>
                         {{ date('d M Y',strtotime($transaction['expire_date'])) }}
                     </td>
-                    <!--
+
                     <td>
 
-                        <a href="{{ url('/web_admin/transactions/view/'.base64_encode($transaction['id'])) }}">
+                        <a href="{{ url('/web_admin/transactions/view/'.base64_encode($transaction['id'])) }}" class="show-tooltip" title="View">
                           <i class="fa fa-eye" ></i>
                         </a>
+                         &nbsp;
+                        <a href="{{ url('/web_admin/transactions/edit/'.base64_encode($transaction['id'])) }}" class="show-tooltip" title="Edit">
+                          <i class="fa fa-edit" ></i>
+                        </a>
 
-                    </td> -->
+                    </td>
                   </tr>
 
                 @endforeach
