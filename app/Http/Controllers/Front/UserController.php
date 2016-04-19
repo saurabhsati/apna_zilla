@@ -926,7 +926,7 @@ class UserController extends Controller
                 {
                      if($file!=null)
                      {
-                        $destinationPath    = $this->business_base_img_path;
+                        //$destinationPath    = $this->business_base_img_path;
                         $fileName           = $file->getClientOriginalName();
                         $fileExtension      = strtolower($file->getClientOriginalExtension());
                         if(in_array($fileExtension,['png','jpg','jpeg']))
