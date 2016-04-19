@@ -170,7 +170,8 @@ class ListingController extends Controller
 
         if($validator->fails())
         {
-            return redirect()->back()->withErrors($validator)->withInput();
+          print_r( $validator->errors()->all());exit;
+           // return redirect()->back()->withErrors($validator)->withInput();
         }
 
           $rating      =  $request->input('rating');

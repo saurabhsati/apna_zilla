@@ -36,7 +36,7 @@
       <!-- <link rel="stylesheet" href="{{ url('/') }}/assets/front/css/style.css" type="text/css"/>
  -->
       <script src="{{ url('/') }}/assets/front/js/google_ajax_jquery.min.js"></script>
-      <script src="{{ url('/') }}/assets/front/js/bootstrap.min.js" type="text/javascript"></script>
+<!--      <script src="{{ url('/') }}/assets/front/js/bootstrap.min.js" type="text/javascript"></script>-->
       <script type="text/javascript" language="javascript" src="{{ url('/') }}/assets/front/js/flaunt.js"></script>
       <script type="text/javascript" src="{{url('/')}}/js/front/jquery.rating.js"></script>
       <!-- FAQ Start -->

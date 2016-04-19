@@ -154,7 +154,7 @@ dl, dt, dd, ol, ul, li {
 .cate-btns li a{display: block; background: #e6ab2a; color: #ffffff; font-family: 'varela_roundregular'; font-size: 14px; text-align: center; padding: 10px 30px; text-transform: uppercase; border-radius: 30px;}
 .cate-btns li a:hover{background: #5ead40;}
 .acti{background: #5ead40 !important;}
-.first-cate-img{border-radius: 15px 15px 0 0; overflow: hidden;}
+.first-cate-img{border-radius: 15px 15px 0 0; overflow: hidden; position: relative;}
 .first-cate-img img{border-radius: 15px 15px 0 0; width: 100%;height: 175px;}
 .first-cate-white{background: #ffffff; padding: 55px 25px 27px; border-radius: 0 0 15px 15px; position: relative; }
 .resta-name{text-align: center;}
@@ -206,7 +206,7 @@ dl, dt, dd, ol, ul, li {
 .f1_card {width: 100%; height: 100%; overflow: visible !important; transform-style: preserve-3d; -webkit-transform-style: preserve-3d; -webkit-transform-style: preserve-3d;
   -ms-transform-style: preserve-3d; -o-transform-style: preserve-3d; transform-style: preserve-3d; transition: all 0.3s linear; -webkit-transition: all 0.3s linear;}
 */
-.face {position: absolute;/* width: 100%;*/ height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden;}
+.face {position: absolute;/* width: 100%;*/ height: auto; backface-visibility: hidden; -webkit-backface-visibility: hidden;}
 /*.face.back {display: block; -webkit-transform: rotateY(180deg); -ms-transform: rotateY(180deg); -o-transform: rotateY(180deg); transform: rotateY(180deg); box-sizing: border-box; padding: 10px; color: white; text-align: center; background-color: #aaa;}*/
 /*.first-cate-white:hover .f1_card{-webkit-transform: rotateY(180deg); -ms-transform: rotateY(180deg); -o-transform: rotateY(180deg); transform: rotateY(180deg);  transform: rotateY(180deg); -webkit-transform: rotateY(180deg); box-shadow: -5px 5px 5px #aaa;}*/
 .f1_container-tow{width: 91px; margin: 0 auto;}
@@ -356,6 +356,8 @@ body:not(.device-touch) .social-icon i {transition: all 0.3s ease 0s;}
 #login_poup .modal-header {background: #ddddda;text-align: center;border-radius: 3px;}
 #login_poup .login_box { padding-bottom: 10px;clear: both;margin: 0 auto;max-width: 321px;padding-top: 13px;text-align: center;width: 100%;}
 #login_poup .title_login { color: #535353;font-family: "varela_roundregular",serif;font-size: 16px; margin-bottom: 15px;}
+.resta-name > h6{color: #434343; font-family: "varela_roundregular"; font-size: 16px; transition: all 0.5s ease 0s;}
+.resta-name > h6:hover{color: #e6ab2a;}
 #login_poup .label_form {color: #807f7f;margin-bottom: 6px;text-align: left;}
 .input_box {background: #f1f1f0;border: 1px solid #e3e3e3;height: 40px;margin-bottom: 7px;width: 100%; text-indent: 6px;}
 .user_box {margin-bottom: 5px;
@@ -443,7 +445,7 @@ body:not(.device-touch) .social-icon i {transition: all 0.3s ease 0s;}
 .p_details > span {color: #989898; max-width: 88%;width: 100%;display: inline-block;vertical-align: top;}
 .p_details i { padding-right: 10px; font-size: 18px;vertical-align: bottom;}
 .product_img{position: relative; overflow: hidden; height: 228px;}
-.product_img > img { max-width: 100%; height: 100%;}
+.product_img > img { max-width: 100%; height: auto !important;}
 .product_list_view {background: #fff;padding: 20px;border-bottom: 1px solid #e4e4e4;}
 .title_head {color: #5c5c5c;font-family: "noto_sansregular",sans-serif;font-size: 22px;margin-bottom: 10px;}
 .product_title a {color: #4d4d4d;font-size: 20px; cursor: pointer;margin-bottom: 3px; display: block;}
@@ -473,7 +475,7 @@ body:not(.device-touch) .social-icon i {transition: all 0.3s ease 0s;}
 .gry_container .breadcrumb {color: #707070;border-radius: 4px;list-style: outside none none;margin-bottom: 2px;padding: 9px 0;}
 .gry_container .breadcrumb > li + li::before {color: #707070;content: "/ ";padding: 0 5px;}
 .gry_container .breadcrumb a {color: #f9a820;}
-
+.first-cate-veri{position: absolute; right: 10px; bottom: 10px; height: auto !important; width: auto !important;}
 /*search section sub pages*/
 .search_sub > li .form-group {border: 1px solid #faddae;border-radius: 7px;font-size: 16px;min-height: 49px;padding-left: 3px;padding-right: 0;padding-top: 9px;}
 .search_sub > li {max-width: 647px;width: 100%;display: inline-block;}

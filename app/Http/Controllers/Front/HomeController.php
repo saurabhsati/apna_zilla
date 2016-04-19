@@ -463,6 +463,7 @@ class HomeController extends Controller
             $html.='<a href="'.url('/').'/'.$city.'/'.$business_area.'/'.base64_encode($business['id']).'"><div class="col-sm-3 col-md-3 col-lg-3 col-bott-mar">
                                  <div class="first-cate-img">
                                     <img class="over-img" alt="" src="'.url('/').'/uploads/business/main_image/'.$business['main_image'].'">
+                                     <img class="first-cate-veri" src="'.url('/').'/assets/front/images/verified.png" alt="write_review"/>
                                  </div>
                                  <div class="first-cate-white">
                                     <div class="f1_container">
@@ -471,7 +472,7 @@ class HomeController extends Controller
                                        </div>
                                     </div>
                                     <div class="resta-name">
-                                       <h6><a href="'.url('/').'/'.$city.'/'.$business_area.'/'.base64_encode($business['id']).'">'.$business['business_name'].'</a></h6>
+                                       <h6>'.$business['business_name'].'</h6>
                                        <span></span>
                                     </div>
                                     <div class="resta-content">
@@ -582,6 +583,8 @@ class HomeController extends Controller
             $html.='<a href="'.url('/').'/'.$business_data['link'].'"><div class="col-sm-3 col-md-3 col-lg-3 col-bott-mar">
                                  <div class="first-cate-img">
                                     <img class="over-img" alt="" src="'.url('/').'/uploads/business/main_image/'.$business_data['main_image'].'">
+                                    <img class="first-cate-veri" src="'.url('/').'/assets/front/images/verified.png" alt="write_review"/>
+
                                  </div>
                                  <div class="first-cate-white">
                                        <div class="resta-name">

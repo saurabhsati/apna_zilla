@@ -120,6 +120,7 @@
 
                                  <div class="first-cate-img">
                                     <img class="over-img" alt="" src="{{url('/')}}/uploads/business/main_image/{{$business['main_image']}}">
+                                    <img class="first-cate-veri" src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>
                                  </div>
                                  <div class="first-cate-white">
                                     <div class="f1_container">
@@ -262,7 +263,7 @@
        <!-- <a class="btn btn-post" href="javascript void(0);" id="btn_history" onclick="loadScript()">View</a> -->
          <span></span>
       </div>
-      <div class="row" id="history">
+      <div id="history">
 
 </div>
 

@@ -109,9 +109,17 @@
                <input type="hidden" name="lng" id="lng" value="{{$arr_business_details['lng']}}"/>
                <div class="icons">
                   <div class="img_icons popup-v"><a data-toggle="modal" data-target="#share"><img src="{{ url('/') }}/assets/front/images/shar.png" alt="share"/>Share</a></div>
-                  <div class="img_icons"><img src="{{ url('/') }}/assets/front/images/write_review.png" alt="write_review">write review</div>
+                  <div class="img_icons" style="cursor: pointer;" onclick="showreview()"><img src="{{ url('/') }}/assets/front/images/write_review.png" alt="write_review" >write review</div>
+                   <div class="img_icons resta-rating-block11">
+                      <?php for($i=0;$i<round($arr_business_details['avg_rating']);$i++){ ?>
+                      <i class="fa fa-star star-acti"></i>
+                      <?php }?>
+                      <?php for($i=0;$i<(5-round($arr_business_details['avg_rating']));$i++){ ?>
+                      <i class="fa fa-star"></i>
+                        <?php }?>Total Rating
+                      </div>
 
-                  <div class="img_icons" onclick="showreview()" style="cursor: pointer;">
+                  <!-- <div class="img_icons" id="top_review_set" style="cursor: pointer;">
                     <div class="yr_rating-over">
                                     <input class="star required" type="radio" name="rating" value="1" id="rating" title="1 Star" />
                                     <input class="star" type="radio" name="rating" id="rating" value="2" title="2 Star" onclick="return set_rating(this);" />
@@ -120,10 +128,9 @@
                                     <input class="star" type="radio" name="rating" id="rating" value="5" title="5 Star" onclick="return set_rating(this);"/>
 
                                  </div><br/>
-                   <!--  <img src="{{ url('/') }}/assets/front/images/your-vote.png" alt="your-vote"/> -->
-                      Your Vote(<span id="dprtng">-</span>)
+                    Your Vote(<span id="dprtng">-</span>)
 
-                  </div>
+                  </div> -->
                   <div class="img_icons popup-v">
                      <a data-toggle="modal" data-target="#sms"><img src="{{ url('/') }}/assets/front/images/sms-emil.png" alt="write_review"/>Sms/Email</a>
                   </div>
@@ -168,8 +175,8 @@
                      <li>Gallery</li>
                      <div class="clearfix"></div>
                   </ul>
-                  <div class="resp-tabs-container" id="review_rating">
-                     <div>
+                  <div class="resp-tabs-container" >
+                     <div id="review_rating">
                           @if(Session::has('success'))
                           <div class="alert alert-success alert-dismissible">
                               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -199,7 +206,7 @@
                               enctype="multipart/form-data"
                               >
                               {{ csrf_field() }}
-                              <div class="review-title">
+                              <div class="review-title" id="review_set">
                                  <div class="your-rating"> Your rating </div>
                                  <input type="hidden" name="business_id" value="{{$business_id}}">
                                  <div class="yr_rating-over">
@@ -275,8 +282,8 @@
                            </div>
                            <div class="rank_name">
                               <span>Very Good</span>
-                              <div style="width: 0%;">&nbsp;</div>
-                              0%
+                              <div style="width: 20%;">&nbsp;</div>
+                              20%
                            </div>
                            <div class="rank_name">
                               <span>Good</span>
@@ -840,8 +847,17 @@ function check_review()
 
    function showreview()
    {
-    // $('#review').addClass('resp-tab-active');
-    // $('#review_rating').addClass('resp-tab-content-active');
+
+    $(".resp-tab-item").removeClass('resp-tab-active');
+    $(".resp-tab-content").removeClass('resp-tab-content-active');
+    $(".resp-tabs-container").removeClass('resp-accordion');
+    $(".gallery_view").css('style','display:none');
+    $('#review').addClass('resp-tab-active');
+    $('#review_rating').addClass('resp-tab-content-active');
+   /* var review_html=$("#top_review_set").find('.yr_rating-over').html();
+    alert(review_html);
+    $("#review_set").find('.yr_rating-over').html(review_html);*/
+
    }
 
 
