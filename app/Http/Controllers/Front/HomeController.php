@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\BusinessListingModel;
@@ -13,14 +13,13 @@ use App\Models\LocationModel;
 use App\Models\BusinessCategoryModel;
 use App\Models\PlaceModel;
 use Session;
-use Cookie;
 class HomeController extends Controller
 {
     public function __construct()
     {
 
     }
-    public function index(Request $request)
+    public function index()
     {
 
     	$page_title	='Home';
@@ -129,6 +128,9 @@ class HomeController extends Controller
                 $business_listing = $obj_business_listing->toArray();
             }
        }
+        //dd($business_listing);
+
+ 		//dd($arr_business_by_category);
 
  		 $cat_img_path = url('/').config('app.project.img_path.category');
  		return view('front.home',compact('page_title','arr_category','sub_category','category_business','arr_exp_sub_category','cat_img_path','current_city','explore_category','business_listing'));
@@ -492,5 +494,124 @@ class HomeController extends Controller
                }
          }
         echo $html;
+  }
+
+  public function get_business_history(Request $request)
+  {
+     $history=$request->input('history');
+     $url1=explode('|',$history);
+     $url=array_unique($url1);
+     $arr_business_id=array();
+     if(count($url)>0)
+     {
+        foreach ($url as $key => $value)
+         {
+            $string =  $value;
+           $explode = explode('|', $string); // split all parts
+
+            $end = '';
+            $begin = '';
+
+            if(count($explode) > 0){
+               $end = array_pop($explode); // removes the last element, and returns it
+                $explode2 = explode('/', $end);
+               if(count($explode2)>0)
+               {
+
+                      $arr_business_id[$key]['id']=base64_decode($explode2[2]);
+                      $arr_business_id[$key]['link']=$end;
+                }
+            }
+
+        }
+     }
+
+
+      $business_ids=array();
+
+      $business_cities=array();
+      if(count($arr_business_id)>0)
+      {
+        foreach ($arr_business_id as $key => $value)
+         {
+            if(!array_key_exists($value['id'],$business_ids))
+            {
+               $business_ids[$value['id']]=$value['id'];
+
+            }
+
+
+        }
+        foreach ($arr_business_id as $key => $value)
+         {
+            if(!array_key_exists($value['link'],$business_cities))
+            {
+               $business_cities[$value['link']]=$value['link'];
+            }
+
+
+        }
+
+        $obj_business_listing = BusinessListingModel::where('is_active','1')->whereIn('id', $business_ids)->with(['reviews'])->get();
+        if($obj_business_listing)
+        {
+            $business_listing = $obj_business_listing->toArray();
+        }
+
+        if(sizeof($business_listing)>0 )
+        {
+
+         foreach ($business_listing as $key => $business)
+         {
+          foreach ($arr_business_id as $key => $data)
+           {
+            if ($data['id'] == $business['id'])
+             {
+               $business_listing[$key]['link']=$data['link'];
+             }
+           }
+         }
+       }
+
+        $html='';
+        if(sizeof($business_listing)>0 )
+        {
+
+         foreach ($business_listing as $key => $business_data)
+         {
+
+
+
+            $html.='<div class="col-sm-3 col-md-3 col-lg-3 col-bott-mar">
+                                 <div class="first-cate-img">
+                                    <img class="over-img" alt="" src="'.url('/').'/uploads/business/main_image/'.$business_data['main_image'].'">
+                                 </div>
+                                 <div class="first-cate-white">
+                                    <div class="f1_container">
+
+                                    </div>
+                                    <div class="resta-name">
+                                       <h6><a href="'.url('/').'/'.$business_data['link'].'">'.$business_data['business_name'].'</a></h6>
+                                       <span></span>
+                                    </div>
+                                    <div class="resta-content">
+                                       '. $business_data['building'].' '.$business_data['street'].' '.$business_data['landmark'].' '.$business_data['area'].' '.'-'.$business_data['pincode'].'
+                                    </div>
+                                        <div class="resta-rating-block">';
+                                    for($i=0;$i<round($business_data['avg_rating']);$i++)
+                                        {
+                                       $html.='<i class="fa fa-star star-acti"></i>';
+                                        }
+                                       for($i=0;$i<(5-round($business_data['avg_rating']));$i++){
+                                      $html.='<i class="fa fa-star"></i>';
+                                       }
+                                    $html.='
+                                 </div></div>
+                    </div>';
+               }
+
+         }
+        echo $html;
+    }
   }
 }

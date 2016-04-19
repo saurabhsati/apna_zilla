@@ -25,6 +25,7 @@
                <div style="background: url('{{ url('/') }}/uploads/business/main_image/{{ $arr_business_details['main_image'] }}'); background-repeat: repeat;  background-size: 100% auto;">
                   <div class="product_detail_banner" style="background-color:rgba(0,0,0,0.7);">
                      <div class="product_title"><a href="#"><img src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>{{$arr_business_details['business_name']}}</a></div>
+
                       <div class="resta-rating-block11">
                       <?php for($i=0;$i<round($arr_business_details['avg_rating']);$i++){ ?>
                       <i class="fa fa-star star-acti"></i>
@@ -57,7 +58,12 @@
                          <div class="enquiry"><a data-toggle="modal" data-target="#enquiry"><i class="fa fa-envelope"></i> Send Enquiry By Email</a></div>
                      </div>
                   </div>
-               </div>
+               </div> <?php
+                           $slug_business=str_slug($arr_business_details['business_name']);
+                           $slug_area=str_slug($arr_business_details['area']);
+                           $business_area=$slug_business.'@'.$slug_area;
+                           ?>
+ <input type="hidden" name="history" id="history" value="{{urldecode(Request::segment(1))}}/{{$business_area}}/{{base64_encode($arr_business_details['id'])}}">
 
                <div class="modal fade" id="share" role="dialog">
                 <div class="modal-dialog">
@@ -69,14 +75,10 @@
                         <div class="soc-menu-top">
                         <ul>
                         <li>
-                         <?php
-                           $slug_business=str_slug($arr_business_details['business_name']);
-                           $slug_area=str_slug($arr_business_details['area']);
-                           $business_area=$slug_business.'@'.$slug_area;
-                           ?>
+
                        <!--  <a href="https://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.mynide.com%2Fdeals%2Fdetails%2FMQ%3D%3D&amp;t=1+Cocktail" target="_blank" style="cursor:pointer;">
                         </a> -->
-                        <a href="https://www.facebook.com/sharer.php?<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;"><img src="{{ url('/') }}/assets/front/images/facebook-so.png" alt="facebook"/>
+                       <a href="https://www.facebook.com/sharer.php?<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;"><img src="{{ url('/') }}/assets/front/images/facebook-so.png" alt="facebook"/>
                         <span class="socail_name">Facebook</span>
                         </a>
                         </li>
@@ -634,7 +636,7 @@
       </div>
     </div>
   </div>
-
+<div id="lastResults"></div>
 <script type="text/javascript">
 //var site_url="{{url('/')}}";
    // $('#submit_review').click(function(){
@@ -1110,5 +1112,23 @@ function check_review()
 
 
 </script>
+<script type="text/javascript">
+   //To Check and show previous results in **lastResults** div
+   if (localStorage.getItem("history") != null)
+   {
+       var historyTmp = localStorage.getItem("history");
+       historyTmp += '|'+$("#history").val();
+       localStorage.setItem("history",historyTmp);
+        var historyTmp = localStorage.getItem("history");
+       //console.log("if"+historyTmp);
+   }
+   else
+   {
+       var historyTmp = $("#history").val();
+       localStorage.setItem("history",historyTmp);
+        var historyTmp = localStorage.getItem("history");
+       //console.log("else"+historyTmp);
+   }
+   </script>
 @endsection
 

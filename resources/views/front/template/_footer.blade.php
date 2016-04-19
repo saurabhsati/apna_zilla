@@ -139,7 +139,21 @@
                         <input type="password" name="password"  id="password_login" data-rule-required="true" class="input_box" placeholder="Enter password"/>
                         <div id="password_login_err" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div>
                      </div>
-                     <div class="login_social">
+                      <div class="login_box">
+                     <div class="left_bar">
+                        <a class="forgt" data-toggle="modal" data-target="#forget_pwd">Forget your password?</a>
+                        <a data-toggle="modal" id="open_register" data-target="#reg_poup" onclick="set_business_list_flag()" class="sign_up">Sign Up Now</a>
+                     </div>
+                     <button type="button"  id="login_submit" onclick="login_submit_form()" class="yellow ui button">Login</button>
+                  </div>
+
+                     <div class="clr"></div>
+                  </div>
+               </div>
+               <img src="{{ url('/') }}/assets/front/images/or1.png" alt="facebook login"/>
+               <div class="clr"></div>
+               <div class="modal-footer">
+                <div class="login_social">
                         <div class="title_login"> Log in with social accounts</div>
                         <a href="javascript:void(0);" onclick="FBLogin()">
                            <img src="{{ url('/') }}/assets/front/images/fb_login.png" alt="facebook login"/>
@@ -149,20 +163,10 @@
                            <img src="{{ url('/') }}/assets/front/images/google-plus.jpg" alt="facebook login"/>
                         </a>
                      </div>
-                     <div class="clr"></div>
-                  </div>
+
                </div>
                <div class="clr"></div>
-               <div class="modal-footer">
-                  <div class="login_box">
-                     <div class="left_bar">
-                        <a class="forgt" data-toggle="modal" data-target="#forget_pwd">Forget your password?</a>
-                        <a data-toggle="modal" id="open_register" data-target="#reg_poup" onclick="set_business_list_flag()" class="sign_up">Sign Up Now</a>
-                     </div>
-                     <button type="button"  id="login_submit" onclick="login_submit_form()" class="yellow ui button">Login</button>
-                  </div>
-               </div>
-               <div class="clr"></div>
+
             </div>
          </div>
          </form>
