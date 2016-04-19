@@ -32,7 +32,7 @@
 
                      @if(sizeof($arr_deals_info)>0)
                           @foreach($arr_deals_info as $deals)
-                             <div class="col-sm-6 col-md-3 col-lg-3">
+                             <a href="{{url('/').'/deals/details/'.base64_encode($deals['id'])}}" ><div class="col-sm-6 col-md-3 col-lg-3">
                               <div class="dels">
                               <div class="deals-img"><span class="discount ribbon">{{$deals['discount_price'] }}%</span><img src="{{ url('/')}}/uploads/deal/{{$deals['deal_image']}}" alt="img" width="250" height="200" /></div>
                               <div class="deals-product">
@@ -45,7 +45,7 @@
                                       </div>
                               </div>
                               </div>
-                              </div>
+                              </div></a>
 
                           @endforeach
                           @else
@@ -59,7 +59,7 @@
                       @if(sizeof($arr_deals_max_dis_info)>0)
                           @foreach($arr_deals_max_dis_info as $max_dis_deals)
 
-                          <div class="col-sm-6 col-md-3 col-lg-3">
+                          <a href="{{url('/').'/deals/details/'.base64_encode($max_dis_deals['id'])}}"><div class="col-sm-6 col-md-3 col-lg-3">
                           <div class="dels">
                           <div class="deals-img"><span class="discount ribbon">{{$max_dis_deals['discount_price'] }}%</span><img src="{{ url('/')}}/uploads/deal/{{$max_dis_deals['deal_image']}}" alt="img" width="250" height="200" /></div>
                           <div class="deals-product">
@@ -72,7 +72,7 @@
                                   </div>
                           </div>
                           </div>
-                          </div>
+                          </div></a>
 
                       @endforeach
                       @else

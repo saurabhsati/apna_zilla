@@ -473,6 +473,8 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 	Route::get('/','Front\HomeController@index');
 	Route::post('/get_business_by_exp_categry','Front\HomeController@get_business_by_exp_categry');
+	Route::post('/get_business_history','Front\HomeController@get_business_history');
+
 	Route::post('/locate_location','Front\HomeController@locate_location');
 	Route::get('/get_category_auto','Front\HomeController@get_category_auto');
 	Route::get('/get_city_auto','Front\HomeController@get_city_auto');

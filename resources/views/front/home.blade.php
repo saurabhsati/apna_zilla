@@ -110,12 +110,14 @@
                            <div class="row" id="cattab1">
                              @if(isset($business_listing) && sizeof($business_listing)>0)
                              @foreach($business_listing as $key => $business)
-                            <div class="col-sm-3 col-md-3 col-lg-3 col-bott-mar">
-                            <?php
+                              <?php
                              $slug_business=str_slug($business['business_name']);
                              $slug_area=str_slug($business['area']);
                              $business_area=$slug_business.'@'.$slug_area;
                             ?>
+                            <a href="{{url('/')}}/{{$current_city}}/{{$business_area}}/{{base64_encode($business['id'])}}">
+                                 <div class="col-sm-3 col-md-3 col-lg-3 col-bott-mar">
+
                                  <div class="first-cate-img">
                                     <img class="over-img" alt="" src="{{url('/')}}/uploads/business/main_image/{{$business['main_image']}}">
                                  </div>
@@ -123,10 +125,10 @@
                                     <div class="f1_container">
                                        <div class="f1_card shadow">
                                           <div class="cate-addre-block-two front face"><img alt="" src="{{url('/')}}/assets/front/images/cate-address.png"> </div>
-                                       </div>                                       
+                                       </div>
                                     </div>
                                     <div class="resta-name">
-                                       <h6><a href="{{url('/')}}/{{$current_city}}/{{$business_area}}/{{base64_encode($business['id'])}}">{{$business['business_name']}}</a></h6>
+                                       <h6>{{$business['business_name']}}</h6>
                                        <span></span>
                                     </div>
                                     <div class="resta-content">
@@ -142,8 +144,10 @@
                                       <i class="fa fa-star"></i>
                                        <?php }?>
 
-                                 </div></div>
-                          </div>
+                                     </div>
+                                 </div>
+                              </div>
+                           </a>
                             @endforeach
                            @endif
                            </div>
@@ -158,22 +162,6 @@
       </div>
       <br />
    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="email-block">
    <div class="email-content">
       Be A Part Of Our Family &amp; Get Everything In Your
@@ -264,8 +252,23 @@
          </div>
       </div>
    </div>
-</div></div>
 </div>
+</div>
+<div class="container">
+ <div class="exp-category-head">
+         <h3>  Recent Search History</h3>
+
+         <button class="btn btn-view-history"type="button" name="btn_history" id="btn_history" onclick="loadScript()">View</button>
+       <!-- <a class="btn btn-post" href="javascript void(0);" id="btn_history" onclick="loadScript()">View</a> -->
+         <span></span>
+      </div>
+      <div class="row" id="history">
+
+</div>
+
+
+
+
 </div>
 </div>
 <div class="clearfix"></div>
@@ -361,6 +364,40 @@ $(document).ready(function(){
 
   });
 });
+   function loadScript()
+    {
+      if (localStorage.getItem("history") != null)
+         {
+             var historyTmp = localStorage.getItem("history");
+
+             console.log(historyTmp);
+
+             //var history = $('#history');
+             var fromData = {
+                                history:historyTmp,
+                                _token:csrf_token
+                                  };
+                              $.ajax({
+                                 url: site_url+"/get_business_history",
+                                 type: 'POST',
+                                 data: fromData,
+                                 dataType: 'html',
+                                 async: false,
+                                 success: function(responseresult)
+                                 {
+                                  $('#history').html('<div> <div class="row">'+responseresult+'</div></div>');
+
+                                 }
+                             });
+          }
+          else
+          {
+             alert();
+
+          }
+    }
+
+    //window.onload = loadScript;
 </script>
 
 

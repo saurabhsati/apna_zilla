@@ -206,7 +206,7 @@ class DealController extends Controller
         {
           foreach ($arr_deals_info as $key => $deal)
             {
-                 $html.='<div class="col-sm-6 col-md-3 col-lg-3">
+                 $html.='<a href="'.url('/').'/deals/details/'.base64_encode($deal['id']).'"><div class="col-sm-6 col-md-3 col-lg-3">
                           <div class="dels">
                           <div class="deals-img"><span class="discount ribbon">'.$deal['discount_price'].'%</span><img src="'.url('/').'/uploads/deal/'.$deal['deal_image'].'" alt="img" width="250" height="200" /></div>
                           <div class="deals-product">
@@ -219,9 +219,7 @@ class DealController extends Controller
                                   </div>
                           </div>
                           </div>
-                          </div>
-
-                 ';
+                          </div></a>';
 
 
             }
