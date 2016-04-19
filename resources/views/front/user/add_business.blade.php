@@ -7,6 +7,15 @@
     height: 100px;
     text-indent: 1px;
 }
+
+.error{
+    color: red;
+    font-size: 12px;
+    font-weight: lighter;
+    text-transform: capitalize;
+}
+
+
 </style>
  <div class="gry_container">
       <div class="container">
@@ -87,7 +96,11 @@
                     <div class="row">
                   <div class="col-lg-3  label-text" for="business_cat">Business Category </div>
                   <div class="col-sm-9 col-md-9 col-lg-9 m_l">
+<<<<<<< HEAD
+                  <select class="input_acct" name="business_cat[]" id="business_cat" data-rule-required="true" onchange="updateCategoryOptGroup(this)" multiple="" height="200px">
+=======
                   <select class="input_acct" name="business_cat[]" id="business_cat" onchange="updateCategoryOptGroup(this)" multiple="" height="100px">
+>>>>>>> 2d2f050b3701ba76f0d727ec12b91a5a98be3acb
                   <option> Select Business Categories</option>
                    @if(isset($arr_category) && sizeof($arr_category)>0)
                    @foreach($arr_category as $category)
@@ -139,10 +152,10 @@
                     <div class="row">
                      <div class="col-lg-3  label-text">Business Name :</div>
                       <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                       <input type="text" name="business_name"
+                       <input type="text" name="business_name" id="business_name" 
                               class="input_acct"
                               placeholder="Enter Business Name"
-                              required=""  aria-describedby="basic-addon1"
+                              data-rule-required="true"
                               />
                         <div class="error_msg">{{ $errors->first('business_name') }} </div>
                       </div>
@@ -249,6 +262,25 @@ function clearCategoryOptGroup()
 
   });
 }
+</script>
+
+
+<script type="text/javascript">
+$(document ).ready(function (){
+  $("#validation-form").validate({
+    // Specify the validation rules
+      rules: {
+          business_cat: "required",
+          business_name: "required",
+      },
+    // Specify the validation error messages
+      messages: {
+          business_cat: "Please Select Business Category.",
+          business_name: "Please Enter Business Name.",
+      },
+
+  });
+});
 </script>
 
 

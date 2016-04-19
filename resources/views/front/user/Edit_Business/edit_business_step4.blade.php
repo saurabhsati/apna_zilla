@@ -2,11 +2,24 @@
 
 @section('main_section')
 
+
 <!-- Timepicker css -->
 <link rel="stylesheet" type="text/css" href="{{ url('/').'/assets/bootstrap-timepicker/compiled/timepicker.css' }}" />
 
+
+  
+<style type="text/css">
+  .error{
+    color: red;
+    font-size: 12px;
+    font-weight: lighter;
+    text-transform: capitalize;
+  }
+</style>
+
 <!-- Timepicker js  -->
 <script type="text/javascript" src="{{ url('/').'/assets/bootstrap-timepicker/js/bootstrap-timepicker.js' }}"></script>
+
   <div class="gry_container">
       <div class="container">
          <div class="row">
@@ -62,11 +75,12 @@
 
               <div class="col-sm-12 col-md-12 col-lg-12">
                 <div class="box_profile">
+                    
                     <div class="user_box_sub">
                       <div class="row">
                         <div class="col-lg-2 label-text">Company Information <span>:</span></div>
                           <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                            <textarea  class="input_acct" id="company_info" name="company_info" style="width: 682px;" placeholder="Enter Company Information"  required=""  aria-describedby="basic-addon1" />{{ isset($business['company_info'])?$business['company_info']:'' }}</textarea>
+                            <textarea  class="input_acct" id="company_info" name="company_info" style="width: 682px;" placeholder="Enter Company Information" data-rule-required="true" />{{ isset($business['company_info'])?$business['company_info']:'' }}</textarea>
                             <div class="error_msg">{{ $errors->first('company_info') }} </div>
                           </div>
                        </div>
@@ -77,24 +91,22 @@
                         <div class="row">
                           <div class="col-lg-2 label-text">Establishment Year <span>:</span></div>
                             <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                              <input type="text"  class="input_acct"  id="establish_year" name="establish_year"  placeholder="Enter Establishment Year"  required=""  aria-describedby="basic-addon1" value="{{ isset($business['establish_year'])?$business['establish_year']:'' }}" />
+                              <input type="text"  class="input_acct"  id="establish_year" name="establish_year"  placeholder="Enter Establishment Year"  data-rule-required="true" data-rule-integer="true" value="{{ isset($business['establish_year'])?$business['establish_year']:'' }}" />
                                <div class="error_msg">{{ $errors->first('establish_year') }} </div>
                             </div>
                         </div>
                     </div>
 
-                      <div class="user_box_sub">
-                          <div class="row">
-                            <div class="col-lg-2 label-text">Keywords <span>:</span></div>
-                              <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                                <textarea  class="input_acct" id="keywords" name="keywords" style="width: 682px;" placeholder="Enter Keywords"
-                                required=""  aria-describedby="basic-addon1"
-                                />{{ isset($business['keywords'])?$business['keywords']:'' }}
-                                </textarea>
-                                <div class="error_msg">{{ $errors->first('keywords') }} </div>
-                              </div>
-                           </div>
-                      </div>
+                     <div class="user_box_sub">
+                      <div class="row">
+                        <div class="col-lg-2 label-text">Keywords <span>:</span></div>
+                          <div class="col-sm-12 col-md-12 col-lg-10 m_l">
+                            <textarea  class="input_acct" id="keywords" name="keywords"  style="width: 682px;" placeholder="Enter Keywords" data-rule-required="true" />{{ isset($business['keywords'])?$business['keywords']:'' }}</textarea>
+                            <div class="error_msg">{{ $errors->first('keywords') }} </div>
+                          </div>
+                       </div>
+                    </div>
+
 
                        <div class="user_box_sub">
                         <div class="row">
@@ -467,6 +479,32 @@ $(document).ready(function (){
  $('.timepicker-default').timepicker();
 });
 </script>
+
+<script type="text/javascript">
+$(document ).ready(function (){
+
+  $("#validation-form").validate({
+      
+      rules: {
+          company_info: "required",
+          establish_year: {
+                required: true,
+                maxlength: 4,
+                minlength: 4
+            },
+          keywords:"required",
+      },
+      
+      messages: {
+          company_info: "Please enter company Information.",
+          establish_year: "Please enter valid Year e.g. 2015.",
+          keywords: "Please Enter keywords.",
+      },
+
+  });
+});
+</script>
+
 
 
 @stop

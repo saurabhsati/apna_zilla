@@ -370,7 +370,7 @@ class UserController extends Controller
 
         if($status)
         {
-           Session::flash('success','Updated Successfully');
+           Session::flash('success','Profile Information Updated Successfully');
         }
         else
         {
@@ -1196,6 +1196,7 @@ class UserController extends Controller
         $arr_rules = array();
            //contact info fields
         $arr_rules['contact_person_name']='required';
+        $arr_rules['prefix_name']='required';
         $arr_rules['mobile_number']='required';
         $arr_rules['landline_number']='required';
         $arr_rules['fax_no']='required';
@@ -1210,6 +1211,7 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
         $business_data['contact_person_name']=$request->input('contact_person_name');
+        $business_data['prefix_name']=$request->input('prefix_name');
         $business_data['mobile_number']=$request->input('mobile_number');
         $business_data['landline_number']=$request->input('landline_number');
         $business_data['fax_no']=$request->input('fax_no');

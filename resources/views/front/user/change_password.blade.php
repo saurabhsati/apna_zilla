@@ -1,6 +1,18 @@
 @extends('front.template.master')
 
 @section('main_section')
+
+<style type="text/css">
+
+.error{
+  color: red;
+  font-size: 12px;
+  font-weight: lighter;
+  text-transform: capitalize;
+}
+
+</style>
+
 <div class="gry_container">
       <div class="container">
          <div class="row">
@@ -42,7 +54,7 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Current Password:</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="password" name="current_password"
+                         <input type="password" name="current_password" id="current_password" 
                                 class="input_acct" placeholder="Enter Current Password  "/>
                           <div class="error_msg"> </div>
                         </div>
@@ -53,7 +65,7 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">New Password :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="password" name="new_password"
+                         <input type="password" name="new_password" id="new_password" 
                                 class="input_acct" placeholder="Enter New Password: "/>
                         </div>
                          </div>
@@ -63,7 +75,7 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Confirm Password :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="password" name="confirm_password"
+                         <input type="password" name="confirm_password" id="confirm_password" 
                                 class="input_acct" placeholder="Confirm Password"/>
                         </div>
                          </div>
@@ -88,6 +100,30 @@
 
       </div>
 </div>
+
+<script type="text/javascript">
+  jQuery( document ).ready(function () {
+    jQuery('#validation-form').validate({
+
+      rules:{
+        current_password:'required',
+        new_password:'required',
+        confirm_password: {
+          required: true,
+          equalTo: "#new_password"
+        },
+
+      },
+      messages:{
+        current_password:"Please enter current password",
+        new_password:"Please enter new password",
+        confirm_password:"Please confirm password",
+      },
+
+    })
+  });
+
+</script>
 
 
 @stop

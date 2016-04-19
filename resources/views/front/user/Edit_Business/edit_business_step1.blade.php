@@ -9,6 +9,13 @@
     padding: 5px 10px;
 }
 .form-control{}
+
+.error{
+    color: red;
+    font-size: 12px;
+    font-weight: lighter;
+    text-transform: capitalize;
+}
 </style>
  <div class="gry_container">
       <div class="container">
@@ -91,7 +98,7 @@
                     <div class="row">
                   <div class="col-lg-3  label-text" for="business_cat">Business Category </div>
                   <div class="col-sm-9 col-md-9 col-lg-9 m_l">
-                  <select class="form-control input_acct" name="business_cat[]" id="business_cat" onchange="updateCategoryOptGroup(this)" multiple="">
+                  <select class="form-control input_acct" name="business_cat[]" id="business_cat" data-rule-required="true" onchange="updateCategoryOptGroup(this)" multiple="">
                      <option> Select Business Category</option>
                       @if(isset($arr_category) && sizeof($arr_category)>0)
                         @foreach($arr_category as $category)
@@ -128,10 +135,10 @@
                     <div class="row">
                      <div class="col-lg-3  label-text">Business Name :</div>
                       <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                       <input type="text" name="business_name"
+                       <input type="text" name="business_name" id="business_name"
                               class="input_acct"
-                              placeholder="Enter Business Name"
-                              required=""  aria-describedby="basic-addon1"
+                              placeholder="Enter Business Name" 
+                              data-rule-required="true"
                               value="{{ isset($business['business_name'])?$business['business_name']:'' }}"
                               />
                         <div class="error_msg">{{ $errors->first('business_name') }} </div>
@@ -245,4 +252,21 @@ function clearCategoryOptGroup()
 </script>
 
 
+<script type="text/javascript">
+$(document ).ready(function (){
+  $("#validation-form").validate({
+    // Specify the validation rules
+      rules: {
+          business_cat: "required",
+          business_name: "required",
+      },
+    // Specify the validation error messages
+      messages: {
+          business_cat: "Please Select Business Category.",
+          business_name: "Please Enter Business Name.",
+      },
+
+  });
+});
+</script>
 @stop

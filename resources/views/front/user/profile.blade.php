@@ -1,6 +1,17 @@
 @extends('front.template.master')
 
 @section('main_section')
+
+<style type="text/css">
+  .error{
+    color: red;
+    font-size: 12px;
+    font-weight: lighter;
+    text-transform: capitalize;
+  }
+</style>
+
+
 <div class="gry_container">
       <div class="container">
          <div class="row">
@@ -121,7 +132,9 @@
                                  onblur="validate()"
                                  value="{{ isset($user['first_name'])?$user['first_name']:'' }}"
                                  class="input_acct"
-                                 placeholder="Enter name" required/>
+                                 placeholder="Enter name" 
+                                 data-rule-required="true"
+                                 />
                                  </div></div>
 
                            <div class="error_msg" id="err_fn">  </div>
@@ -134,7 +147,7 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Middle Name :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="middle_name"
+                         <input type="text" name="middle_name"  
                          value="{{ isset($user['middle_name'])?$user['middle_name']:'' }}"
                                 class="input_acct"
                                 placeholder="Enter Middle Name"/>
@@ -146,12 +159,13 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Last Name :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="last_name"
+                         <input type="text" name="last_name" id="last_name"
                                 class="input_acct"
                                 value="{{ isset($user['last_name'])?$user['last_name']:'' }}"
                                 placeholder="Enter Last Name "
-                                onblur="validate()"
+                                data-rule-required="true"
                                 />
+                                <!-- onblur="validate()" -->
 
                                 <div class="error_msg" id="err_ln">  </div>
                         </div>
@@ -210,8 +224,8 @@
                         <div class="row">
                             <div class="col-lg-3  label-text">Gender :</div>
                                 <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                                <input type="radio" name="gender" value="male" <?php  if(isset($user['gender'])  &&  $user['gender'] ==  "male" ) { echo "checked=checked";}?> >&nbsp;&nbsp;Male&nbsp;&nbsp;</input>
-                                <input type="radio" name="gender" value="female" <?php  if(isset($user['gender'])  &&  $user['gender'] ==  "female" ) { echo "checked=checked";}?> >&nbsp;&nbsp;Female</input>
+                                <input type="radio"  name="gender" id="gender" value="male" <?php  if(isset($user['gender'])  &&  $user['gender'] ==  "male" ) { echo "checked=checked";}?> >&nbsp;&nbsp;Male&nbsp;&nbsp;</input>
+                                <input type="radio"  name="gender" id="gender" value="female" <?php  if(isset($user['gender'])  &&  $user['gender'] ==  "female" ) { echo "checked=checked";}?> >&nbsp;&nbsp;Female</input>
                                 <!-- <input type="text" name="occupation"
                                 value="{{-- isset($user['occupation'])?$user['occupation']:'' --}}"
                                 class="input_acct" placeholder="Enter Your Occupation  "/> -->
@@ -225,7 +239,8 @@
                     <div class="col-lg-3  label-text">Marital Status :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <select class="input_acct"
-                                 name="marital_status"
+                                 name="marital_status" id="marital_status"
+                                 data-rule-required="true"
                                  >
                         <!-- <option value="{{-- isset($user['marital_status']) ? $user['marital_status']:'' --}}">{{-- $user['marital_status'] --}} </option> -->
 
@@ -277,9 +292,12 @@
                         <div class="row">
                                 <div class="col-lg-3  label-text">Work Experience</div>
                                 <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                                <input type="text" name="work_experience"
+                                <input type="text" name="work_experience" id="work_experience" 
                                 value="{{ isset($user['work_experience'])?$user['work_experience']:'' }}"
-                                class="input_acct" placeholder="Enter Work Experience "/>
+                                class="input_acct" placeholder="Enter Work Experience"
+                                 data-rule-required=""
+                                 data-rule-number=""
+                                />
                                 </div>
                         </div>
                     </div>
@@ -288,9 +306,11 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Occupation :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="occupation"
+                         <input type="text" name="occupation" id="occupation" 
                                 value="{{ isset($user['occupation'])?$user['occupation']:'' }}"
-                                class="input_acct" placeholder="Enter Your Occupation  "/>
+                                class="input_acct" placeholder="Enter Your Occupation"
+                                 data-rule-required=""
+                                />
                         </div>
                          </div>
                     </div>
@@ -301,7 +321,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="email" name="email"
                                 value="{{ isset($user['email'])?$user['email']:'' }}"
-                               class="input_acct" placeholder="Enter Email ID" readonly="true" />
+                               class="input_acct" placeholder="Enter Email ID" readonly="true"  data-rule-required="true" />
                         </div>
                          </div>
                     </div>
@@ -314,7 +334,7 @@
                         <span class="input-group-addon" id="basic-addon1">+91</span>
                         <input type="text" name="mobile_no"
                                value="{{ isset($user['mobile_no'])?$user['mobile_no']:'' }}"
-                               class="form-control" placeholder="Enter Mobile No:" aria-describedby="basic-addon1" required/>
+                               class="form-control" placeholder="Enter Mobile No:" data-rule-integer="true" data-rule-required="true"/>
 
                         </div>
                         </div>
@@ -329,11 +349,12 @@
                       <input type="text" name="std_home_landline"
                              value="{{ isset($user['std_home_landline'])?$user['std_home_landline']:'' }}"
                              class="std_cont_inpt"
+                              data-rule-required=""
                              placeholder="STD">
 
-                        <input type="text" name="home_landline"
+                        <input type="text" name="home_landline"  
                                value="{{ isset($user['home_landline'])?$user['home_landline']:'' }}"
-                               class="input_acct half_2_input" placeholder="Enter home landline"/>
+                               class="input_acct half_2_input" data-rule-required=""  placeholder="Enter home landline"/>
                         </div>
                          </div>
                     </div>
@@ -343,14 +364,15 @@
                     <div class="col-lg-3  label-text">Office Landline :</div>
 
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                          <input type="text" name="std_office_landline"
+                          <input type="text" name="std_office_landline" id="std_office_landline" 
                                  value="{{ isset($user['std_office_landline'])?$user['std_office_landline']:'' }}"
                                  class="std_cont_inpt"
+                                 data-rule-required=""
                                   placeholder="STD">
 
                         <input type="text" name="office_landline"
                                value="{{ isset($user['office_landline'])?$user['office_landline']:'' }}"
-                              class="input_acct half_2_input" placeholder="Enter office landline"/>
+                              class="input_acct half_2_input" data-rule-required="" placeholder="Enter office landline"/>
 
                           <input type="text" name="extn_office_landline"
                                  value="{{ isset($user['extn_office_landline'])?$user['extn_office_landline']:'' }}"
@@ -402,7 +424,7 @@
         $("#removal_handle").hide();
     }
 
-    function validate()
+   /* function validate()
       {
 
         if(profile.first_name.value=="")
@@ -410,7 +432,7 @@
           document.getElementById('err_fn').innerHTML="This is invalid value";
         }
 
-       else if(profile.last_name.value=="")
+        else if(profile.last_name.value=="")
         {
           document.getElementById('err_ln').innerHTML="This is invalid value";
         }
@@ -420,8 +442,47 @@
           document.getElementById('err_msg').innerHTML="";
         }
     }
-
+*/
 </script>
+
+
+
+<script type="text/javascript">
+$(document ).ready(function (){
+
+  $("#validation-form").validate({
+    // Specify the validation rules
+      rules: {
+          fname: "required",
+          mobile_no: {
+                required: true,
+                maxlength: 10
+            },
+          email_id: {
+            required:true,
+            email:true
+          },
+          last_name:"required",
+          marital_status:"required",
+          work_experience:"required",
+          occupation:"required",
+ 
+      },
+    // Specify the validation error messages
+      messages: {
+          fname: "Please enter First name.",
+          last_name: "Please enter Last name.",
+          email_id: "Please enter valid email id.",
+          mobile_no: "Please enter valid Mobile number.",
+          marital_status: "Please Select marital status.",
+          work_experience: "Please enter work experience in years.",
+          occupation:"Please enter occupation."
+      },
+
+  });
+});
+</script>  
+
 
 
 @stop

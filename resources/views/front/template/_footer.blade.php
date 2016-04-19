@@ -497,9 +497,9 @@ If you need any more details on RightNext Verified, please refer to
                            <div class="heading_bor"></div>
                            <div class="menu_name contect-i">
                             <ul>
-                                 <li><a href="#"><i class="fa fa-envelope"></i>Email :  @if(isset($site_settings['site_email_address'])){{$site_settings['site_email_address']}}@endif</a></li>
-                                 <li><a href="#"><i class="fa fa-phone phone-i"></i>Phone :  @if(isset($site_settings['phone_number'])){{$site_settings['phone_number']}}@endif </a></li>
-                                 <li><a href="#"><i class="fa fa-map-marker phone-i"></i>Address :  @if(isset($site_settings['site_address'])){{$site_settings['site_address']}}@endif</a>
+                                 <li><a href="javascript:void(0);"><i class="fa fa-envelope"></i>Email :  @if(isset($site_settings['site_email_address'])){{$site_settings['site_email_address']}}@endif</a></li>
+                                 <li><a href="javascript:void(0);"><i class="fa fa-phone phone-i"></i>Phone :  @if(isset($site_settings['phone_number'])){{$site_settings['phone_number']}}@endif </a></li>
+                                 <li><a href="javascript:void(0);"><i class="fa fa-map-marker phone-i"></i>Address :  @if(isset($site_settings['site_address'])){{$site_settings['site_address']}}@endif</a>
                                  </li>
                               </ul>
                            </div>
