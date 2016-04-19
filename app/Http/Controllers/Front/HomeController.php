@@ -460,7 +460,7 @@ class HomeController extends Controller
              $slug_area=str_slug($business['area']);
              $business_area=$slug_business.'@'.$slug_area;
 
-            $html.='<div class="col-sm-3 col-md-3 col-lg-3 col-bott-mar">
+            $html.='<a href="'.url('/').'/'.$city.'/'.$business_area.'/'.base64_encode($business['id']).'"><div class="col-sm-3 col-md-3 col-lg-3 col-bott-mar">
                                  <div class="first-cate-img">
                                     <img class="over-img" alt="" src="'.url('/').'/uploads/business/main_image/'.$business['main_image'].'">
                                  </div>
@@ -468,9 +468,6 @@ class HomeController extends Controller
                                     <div class="f1_container">
                                        <div class="f1_card shadow">
                                           <div class="cate-addre-block-two front face"><img alt="" src="'.url('/').'/assets/front/images/cate-address.png"> </div>
-                                       </div>
-                                       <div class="back face center">
-                                          <div class="cate-addre-block-two front face"><img alt="" src="'.url("/").'/assets/front/images/cate-address.png"> </div>
                                        </div>
                                     </div>
                                     <div class="resta-name">
@@ -490,7 +487,7 @@ class HomeController extends Controller
                                        }
                                     $html.='
                                  </div></div>
-                    </div>';
+                    </div></a>';
                }
          }
         echo $html;
@@ -582,16 +579,13 @@ class HomeController extends Controller
 
 
 
-            $html.='<div class="col-sm-3 col-md-3 col-lg-3 col-bott-mar">
+            $html.='<a href="'.url('/').'/'.$business_data['link'].'"><div class="col-sm-3 col-md-3 col-lg-3 col-bott-mar">
                                  <div class="first-cate-img">
                                     <img class="over-img" alt="" src="'.url('/').'/uploads/business/main_image/'.$business_data['main_image'].'">
                                  </div>
                                  <div class="first-cate-white">
-                                    <div class="f1_container">
-
-                                    </div>
-                                    <div class="resta-name">
-                                       <h6><a href="'.url('/').'/'.$business_data['link'].'">'.$business_data['business_name'].'</a></h6>
+                                       <div class="resta-name">
+                                       <h6>'.$business_data['business_name'].'</h6>
                                        <span></span>
                                     </div>
                                     <div class="resta-content">
@@ -607,7 +601,7 @@ class HomeController extends Controller
                                        }
                                     $html.='
                                  </div></div>
-                    </div>';
+                    </div></a>';
                }
 
          }

@@ -355,13 +355,14 @@ body:not(.device-touch) .social-icon i {transition: all 0.3s ease 0s;}
 
 #login_poup .modal-header {background: #ddddda;text-align: center;border-radius: 3px;}
 #login_poup .login_box { padding-bottom: 10px;clear: both;margin: 0 auto;max-width: 321px;padding-top: 13px;text-align: center;width: 100%;}
-#login_poup .title_login { color: #535353;font-family: "varela_roundregular",serif;font-size: 16px;}
+#login_poup .title_login { color: #535353;font-family: "varela_roundregular",serif;font-size: 16px; margin-bottom: 15px;}
 #login_poup .label_form {color: #807f7f;margin-bottom: 6px;text-align: left;}
 .input_box {background: #f1f1f0;border: 1px solid #e3e3e3;height: 40px;margin-bottom: 7px;width: 100%; text-indent: 6px;}
 .user_box {margin-bottom: 5px;
     margin-top: 8px;
     padding-bottom: 10px;
     position: relative;}
+.login_box img{margin-top: 30px;}
 .login_social {text-align: center;}
 .login_social > img { margin-top: 20px; max-width: 100%;}
 #login_poup .close {color: #636363;opacity: 1;position: absolute;right: 9px;top: 5px;}

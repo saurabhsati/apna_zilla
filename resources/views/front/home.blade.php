@@ -110,12 +110,14 @@
                            <div class="row" id="cattab1">
                              @if(isset($business_listing) && sizeof($business_listing)>0)
                              @foreach($business_listing as $key => $business)
-                            <div class="col-sm-3 col-md-3 col-lg-3 col-bott-mar">
-                            <?php
+                              <?php
                              $slug_business=str_slug($business['business_name']);
                              $slug_area=str_slug($business['area']);
                              $business_area=$slug_business.'@'.$slug_area;
                             ?>
+                            <a href="{{url('/')}}/{{$current_city}}/{{$business_area}}/{{base64_encode($business['id'])}}">
+                                 <div class="col-sm-3 col-md-3 col-lg-3 col-bott-mar">
+
                                  <div class="first-cate-img">
                                     <img class="over-img" alt="" src="{{url('/')}}/uploads/business/main_image/{{$business['main_image']}}">
                                  </div>
@@ -126,7 +128,7 @@
                                        </div>
                                     </div>
                                     <div class="resta-name">
-                                       <h6><a href="{{url('/')}}/{{$current_city}}/{{$business_area}}/{{base64_encode($business['id'])}}">{{$business['business_name']}}</a></h6>
+                                       <h6>{{$business['business_name']}}</h6>
                                        <span></span>
                                     </div>
                                     <div class="resta-content">
@@ -142,8 +144,10 @@
                                       <i class="fa fa-star"></i>
                                        <?php }?>
 
-                                 </div></div>
-                          </div>
+                                     </div>
+                                 </div>
+                              </div>
+                           </a>
                             @endforeach
                            @endif
                            </div>

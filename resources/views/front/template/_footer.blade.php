@@ -145,12 +145,13 @@
                         <a data-toggle="modal" id="open_register" data-target="#reg_poup" onclick="set_business_list_flag()" class="sign_up">Sign Up Now</a>
                      </div>
                      <button type="button"  id="login_submit" onclick="login_submit_form()" class="yellow ui button">Login</button>
+                     <img src="{{ url('/') }}/assets/front/images/or1.png" alt="facebook login"/>
                   </div>
 
                      <div class="clr"></div>
                   </div>
                </div>
-               <img src="{{ url('/') }}/assets/front/images/or1.png" alt="facebook login"/>
+               
                <div class="clr"></div>
                <div class="modal-footer">
                 <div class="login_social">
