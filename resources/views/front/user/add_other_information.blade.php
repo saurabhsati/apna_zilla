@@ -5,8 +5,7 @@
 <!-- Timepicker css -->
 <link rel="stylesheet" type="text/css" href="{{ url('/').'/assets/bootstrap-timepicker/compiled/timepicker.css' }}" />
 
-<!-- Timepicker js  -->
-<script type="text/javascript" src="{{ url('/').'/assets/bootstrap-timepicker/js/bootstrap-timepicker.js' }}"></script>
+
   <div class="gry_container">
       <div class="container">
          <div class="row">
@@ -86,10 +85,8 @@
                           <div class="row">
                             <div class="col-lg-2 label-text">Keywords <span>:</span></div>
                               <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                                <textarea  class="input_acct" id="keywords" name="keywords" style="width: 682px;" placeholder="Enter Keywords"
-                                required=""  aria-describedby="basic-addon1"
-                                />
-                                </textarea>
+                                <textarea  class="input_acct" id="keywords" name="keywords"  style="width: 682px;"  
+                                 placeholder="Enter Keywords"  required="" aria-describedby="basic-addon1" /></textarea>
                                 <div class="error_msg">{{ $errors->first('keywords') }} </div>
                               </div>
                            </div>
@@ -135,7 +132,7 @@
                                       </div>
                                   </div>
                               </div>
-                          <!--   <hr/>
+                            <hr/>
 
                           <div class="title_acc">Opening Hours</div>
                             <div class="row" style="margin-bottom: 15px;">
@@ -145,19 +142,21 @@
                             <div class="col-lg-2 label-text">Monday<span>:</span></div>
                              <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="mon_in" id="mon_in" type="text" data-rule-required="true">
+                                       <div class="error_msg">{{ $errors->first('mon_in') }} </div>
                                   </div>
                               </div>
 
                               <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="mon_out" id="mon_out" type="text" data-rule-required="true">
+                                       <div class="error_msg">{{ $errors->first('mon_out') }} </div>
                                   </div>
                               </div>
                               </div>
@@ -168,7 +167,7 @@
                             <div class="col-lg-2 label-text">Tuesday<span>:</span></div>
                              <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="tue_in" id="tue_in" type="text" data-rule-required="true">
@@ -177,7 +176,7 @@
 
                               <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="tue_out" id="tue_out" type="text" data-rule-required="true">
@@ -191,7 +190,7 @@
                             <div class="col-lg-2 label-text">Wednesday<span>:</span></div>
                              <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="wed_in" id="wed_in" type="text" data-rule-required="true">
@@ -200,7 +199,7 @@
 
                               <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="wed_out" id="wed_out" type="text" data-rule-required="true">
@@ -214,19 +213,19 @@
                             <div class="col-lg-2 label-text">Thursday<span>:</span></div>
                              <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
-                                      <input class="form-control timepicker-default" name="thu_in" id="thu_in" type="text" data-rule-required="true">
+                                      <input class="form-control timepicker-default" name="thus_in" id="thus_in" type="text" data-rule-required="true">
                                   </div>
                               </div>
 
                               <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
-                                      <input class="form-control timepicker-default" name="thu_out" id="thu_out" type="text" data-rule-required="true">
+                                      <input class="form-control timepicker-default" name="thus_out" id="thus_out" type="text" data-rule-required="true">
                                   </div>
                               </div>
                               </div>
@@ -237,7 +236,7 @@
                             <div class="col-lg-2 label-text">Friday<span>:</span></div>
                              <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="fri_in" id="fri_in" type="text" data-rule-required="true">
@@ -246,7 +245,7 @@
 
                               <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="fri_out" id="fri_out" type="text" data-rule-required="true">
@@ -260,7 +259,7 @@
                             <div class="col-lg-2 label-text">Saturday<span>:</span></div>
                              <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="sat_in" id="sat_in" type="text" data-rule-required="true">
@@ -269,7 +268,7 @@
 
                               <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="sat_out" id="sat_out" type="text" data-rule-required="true">
@@ -283,7 +282,7 @@
                             <div class="col-lg-2 label-text ">Sunday<span>:</span></div>
                              <div class="col-sm-3 col-md-3 col-lg-3 m_l controls">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="sun_in" id="sun_in" type="text" data-rule-required="true">
@@ -292,7 +291,7 @@
 
                               <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="sun_out" id="sun_out" type="text" data-rule-required="true">
@@ -303,7 +302,7 @@
 
                         </div>
 
-                          <hr/> -->
+                          <hr/>
 
                                 <div class="button_save1">
                                   <button type="submit" class="btn btn-post" name="add_contacts" style="float: left; margin-left:125px; ">Save &amp; continue</button>
@@ -421,16 +420,13 @@ $('#remove-payment').click(function()
      html.remove();
 });
 
-
 </script>
-<!--TimePicker-->
+
+<!-- Time picker -->
+<script type="text/javascript" src="{{ url('/') }}/assets/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+
 <script type="text/javascript">
-   $('#timepicker5').timepicker({
-                template: false,
-                showInputs: false,
-                minuteStep: 5
-    });
+   $('.timepicker-default').timepicker();
 </script>
-
 
 @stop

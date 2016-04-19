@@ -124,7 +124,7 @@ $(document).ready(function(){
 
       </script>
       <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
-       <script src="{{ url('/') }}/assets/front/js/jquery.validate.min.js"></script>
+      <!--  <script src="{{ url('/') }}/assets/front/js/jquery.validate.min.js"></script> -->
 
        <!-- jquery validation -->
       <script type="text/javascript" src="{{url('/')}}/assets/jquery-validation/dist/jquery.validate.min.js"></script>

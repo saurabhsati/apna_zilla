@@ -783,6 +783,22 @@ class UserController extends Controller
         $arr_rules['keywords']          = "required";
         $arr_rules['payment_mode']          = "required";
 
+         //business times
+        $arr_rules['mon_in']='required';
+        $arr_rules['mon_out']='required';
+        $arr_rules['tue_in']='required';
+        $arr_rules['tue_out']='required';
+        $arr_rules['wed_in']='required';
+        $arr_rules['wed_out']='required';
+        $arr_rules['thus_in']='required';
+        $arr_rules['thus_out']='required';
+        $arr_rules['fri_in']='required';
+        $arr_rules['fri_out']='required';
+        $arr_rules['sat_in']='required';
+        $arr_rules['sat_out']='required';
+        $arr_rules['sun_in']='required';
+        $arr_rules['sun_out']='required';
+
         $validator = Validator::make($request->all(),$arr_rules);
 
         if($validator->fails())
@@ -819,9 +835,30 @@ class UserController extends Controller
             }
         }
 
+
+
         $location_add = BusinessListingModel::where(array('user_id'=>$user_id,'id'=>$business_id))->update($arr_data);
         if($location_add)
         {
+            $arr_time                = array();
+            $arr_time['business_id'] = $business_id;
+            $arr_time['mon_open']    = $request->input('mon_in');
+            $arr_time['mon_close']   = $request->input('mon_out');
+            $arr_time['tue_open']    = $request->input('tue_in');
+            $arr_time['tue_close']   = $request->input('tue_out');
+            $arr_time['wed_open']    = $request->input('wed_in');
+            $arr_time['wed_close']   = $request->input('wed_out');
+            $arr_time['thus_open']   = $request->input('thus_in');
+            $arr_time['thus_close']  = $request->input('thus_out');
+            $arr_time['fri_open']    = $request->input('fri_in');
+            $arr_time['fri_close']   = $request->input('fri_out');
+            $arr_time['sat_open']    = $request->input('sat_in');
+            $arr_time['sat_close']   = $request->input('sat_out');
+            $arr_time['sun_open']    = $request->input('sun_in');
+            $arr_time['sun_close']   = $request->input('sun_out');
+
+            $business_time_add = BusinessTimeModel::create($arr_time);
+
             Session::flash('success','Other Information Added Successfully');
             return redirect(url('/').'/front_users/add_services/'.base64_encode( $business_id ));
         }else {
