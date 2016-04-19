@@ -2,6 +2,16 @@
 
 @section('main_section')
 
+  <style type="text/css">
+  .error{
+    color: red;
+    font-size: 12px;
+    font-weight: lighter;
+    text-transform: capitalize;
+  }
+ </style>
+  
+  
   <div class="gry_container">
       <div class="container">
          <div class="row">
@@ -374,6 +384,23 @@ $('#remove-service').click(function()
 
 </script>
 
+
+<script type="text/javascript">
+$(document ).ready(function (){
+
+  $("#validation-form").validate({
+      
+      rules: {
+          youtube_link: "required",
+      },
+      
+      messages: {
+          youtube_link: "Please enter valid youtube link.",
+      },
+
+  });
+});
+</script>
 
 
 @stop

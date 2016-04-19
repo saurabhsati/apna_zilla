@@ -2,6 +2,15 @@
 
 @section('main_section')
 
+<style type="text/css">
+  .error{
+    color: red;
+    font-size: 12px;
+    font-weight: lighter;
+    text-transform: capitalize;
+  }
+</style>
+
   <div class="gry_container">
       <div class="container">
          <div class="row">
@@ -78,8 +87,9 @@
                                  <option value="2" >Mrs.</option>
                               </select>
                             </div>
-                          <div class="col-sm-5 col-md-5 col-lg-6"> <input type="text"  id="contact_name" name="contact_name" class="input_acct" placeholder="Enter name"></div>
-                          <div class="col-sm-5 col-md-5 col-lg-4"> <input type="text"  id="designation" name="designation" class="input_acct" placeholder="Designation"></div></div>
+                            <div class="col-sm-12 col-md-12 col-lg-10 m_l"> <input type="text"  id="contact_name" name="contact_name"  data-rule-required="true" class="input_acct" placeholder="Enter name"></div>
+                           <!--  <div class="col-sm-5 col-md-5 col-lg-4"> <input type="text"  id="designation" name="designation" class="input_acct" placeholder="Designation"></div> -->
+                          </div>
                           <div class="error_msg">{{ $errors->first('contact_name') }} </div>
                         </div>
                     </div>
@@ -101,7 +111,7 @@
                         <div class="col-sm-12 col-md-12 col-lg-10 m_l">
                           <div class="input-group">
                           <span class="input-group-addon" id="basic-addon1">+91</span>
-                          <input type="text" class="form-control"  id="mobile_no" name="mobile_no" placeholder="Enter Mobile Number"  aria-describedby="basic-addon1" required/>
+                          <input type="text" class="form-control"  id="mobile_no" name="mobile_no" placeholder="Enter Mobile Number" data-rule-required="true" />
                           </div>
                           <!-- <div class="hyper_link_more"><a href="#">Add more mobile number</a></div> -->
                           <div class="error_msg">{{ $errors->first('mobile_no') }} </div>
@@ -113,7 +123,7 @@
                       <div class="row">
                        <div class="col-lg-2 label-text">Landline No. <span>:</span></div>
                         <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                          <input type="text"  class="input_acct"  id="landline_no" name="landline_no" placeholder="Enter Landline Number"/>
+                          <input type="text"  class="input_acct"  id="landline_no" name="landline_no" data-rule-required="true" placeholder="Enter Landline Number"/>
                            <div class="error_msg">{{ $errors->first('landline_no') }} </div>
                         </div>
                      </div>
@@ -125,7 +135,7 @@
                           <div class="col-sm-12 col-md-12 col-lg-10 m_l">
                          <div class="input-group">
                         <span class="input-group-addon" id="basic-addon1">+91-22</span>
-                        <input type="text" class="form-control" id="fax_no" name="fax_no" placeholder="Enter Fax Number"  aria-describedby="basic-addon1" required/>
+                        <input type="text" class="form-control" id="fax_no" name="fax_no" data-rule-required="true" placeholder="Enter Fax Number"  />
                         </div>
                           <div class="error_msg">{{ $errors->first('fax_no') }} </div>
                         </div>
@@ -148,7 +158,7 @@
                          <div class="row">
                           <div class="col-lg-2 label-text">Toll free No. <span>:</span></div>
                           <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                          <input type="text"  class="input_acct" id="toll_free_no" name="toll_free_no" placeholder="Enter Toll free number "/>
+                          <input type="text"  class="input_acct" id="toll_free_no" name="toll_free_no" data-rule-required="true" placeholder="Enter Toll free number "/>
                           <div class="error_msg">{{ $errors->first('toll_free_no') }} </div>
                           </div>
                           </div>
@@ -159,7 +169,7 @@
                       <div class="row">
                           <div class="col-lg-2 label-text">Email Id <span>:</span></div>
                           <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                          <input type="text"  class="input_acct"  id="email" name="email" placeholder="Enter Email Id "/>
+                          <input type="text"  class="input_acct"  id="email" name="email" data-rule-required="true" data-rule-email="true" placeholder="Enter Email Id "/>
                           <div class="error_msg">{{ $errors->first('email') }} </div>
                           </div>
                          </div>
@@ -169,7 +179,7 @@
                       <div class="row">
                         <div class="col-lg-2 label-text">website <span>:</span></div>
                         <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                         <input type="text"  class="input_acct" id="website" name="website" placeholder="Enter Website"/>
+                         <input type="text"  class="input_acct" id="website" name="website" data-rule-required="true" placeholder="Enter Website"/>
                           <div class="error_msg">{{ $errors->first('website') }} </div>
                         </div>
                          </div>
@@ -250,6 +260,46 @@ jQuery(document).ready(function () {
           $('#country').html(country);
        }
     });
+  });
+});
+</script>
+
+  
+<script type="text/javascript">
+$(document ).ready(function (){
+
+  $("#validation-form").validate({
+    // Specify the validation rules
+      rules: {
+          contact_name: "required",
+          mobile_no: {
+                required: true,
+                maxlength: 10
+            },
+          email: {
+            required:true,
+            email:true
+          },
+          landline_no:"required",
+          fax_no:"required",
+          toll_free_no:"required",
+          website:{
+            required:true,
+           // url:true
+          }
+          
+      },
+    // Specify the validation error messages
+      messages: {
+          contact_name: "Please enter contact person's name.",
+          mobile_no: "Please enter valid mobile number.",
+          email: "Please enter valid email id.",
+          landline_no: "Please enter Landline number.",
+          fax_no: "Please enter fax number.",
+          toll_free_no: "Please enter toll free number.",
+          website:"Please enter valid url."
+      },
+
   });
 });
 </script>

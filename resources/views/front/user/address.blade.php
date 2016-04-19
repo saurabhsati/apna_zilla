@@ -1,6 +1,20 @@
 @extends('front.template.master')
 
 @section('main_section')
+
+<style type="text/css">
+
+.error{
+  color: red;
+  font-size: 12px;
+  font-weight: lighter;
+  text-transform: capitalize;
+}
+
+</style>  
+
+
+
 <div class="gry_container">
       <div class="container">
          <div class="row">
@@ -91,9 +105,10 @@
                          <div class="row">
                           <div class="col-lg-3  label-text">City :</div>
                           <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                           <input type="text" name="city"
+                           <input type="text" name="city" id="city" 
                            value="{{ isset($user['city'])?$user['city']:'' }}"
                            class="input_acct"
+                           data-rule-required="true"
                            placeholder="Enter City "/>
                          </div>
                        </div>
@@ -103,7 +118,7 @@
                        <div class="row">
                         <div class="col-lg-3  label-text">Area :</div>
                         <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="area"
+                         <input type="text" name="area" id="area" data-rule-required="true"
                          value="{{ isset($user['area'])?$user['area']:'' }}"
                          class="input_acct" placeholder="Enter Area "/>
                        </div>
@@ -114,7 +129,7 @@
                      <div class="row">
                       <div class="col-lg-3  label-text">Pincode :</div>
                       <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                       <input type="text" name="pincode"
+                       <input type="text" name="pincode"  id="pincode" data-rule-required="true"
                        value="{{ isset($user['pincode'])?$user['pincode']:'' }}"
                        class="input_acct" placeholder="Enter Pincode  "/>
                      </div>
@@ -125,7 +140,7 @@
                    <div class="row">
                     <div class="col-lg-3  label-text">Street Address :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                     <input type="text" name="street_address"
+                     <input type="text" name="street_address" id="street_address" data-rule-required="true"
                      value="{{ isset($user['street_address'])?$user['street_address']:'' }}"
                      class="input_acct" placeholder="Enter Street address  "/>
                    </div>
@@ -152,7 +167,25 @@
 </div>
 
 
+<script type="text/javascript">
+  jQuery( document ).ready(function () {
+    jQuery('#validation-form').validate({
+      rules:{
+        city:'required',
+        area:'required',
+        pincode:'required',
+        street_address:'required',
+      },
+      messages:{
+        city:"Please enter city",
+        area:"Please enter area",
+        pincode:"Please enter pincode",
+        street_address:"Please enter street address",
+      },
 
+    })
+  });
+</script>
 
 
 @stop

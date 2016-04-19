@@ -1,6 +1,16 @@
 @extends('front.template.master')
 
 @section('main_section')
+  
+  <style type="text/css">
+  .error{
+    color: red;
+    font-size: 12px;
+    font-weight: lighter;
+    text-transform: capitalize;
+  }
+ </style>
+  
 
   <div class="gry_container">
       <div class="container">
@@ -66,7 +76,7 @@
                     <div class="row">
                       <div class="col-lg-2 label-text">Youtube Link <span>:</span></div>
                         <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                          <input type="text"  class="input_acct"  id="youtube_link" name="youtube_link"  placeholder="Enter Youtube Link" value="{{ isset($business['youtube_link'])?$business['youtube_link']:'' }}"  aria-describedby="basic-addon1"/>
+                          <input type="text"  class="input_acct"  id="youtube_link" name="youtube_link"  placeholder="Enter Youtube Link" value="{{ isset($business['youtube_link'])?$business['youtube_link']:'' }}"  data-rule-required="true"/>
                            <div class="error_msg">{{ $errors->first('youtube_link') }} </div>
                         </div>
                     </div>
@@ -99,10 +109,6 @@
                          <div class="row">
                           <div class="col-lg-2 label-text"><a href="#" class="add_more">Add More Gallery Images </a> <span>:</span></div>
                 </div></div>
-
-
-
-
 
 
              <div class="user_box_sub add_more_image" style="display: none;">
@@ -433,6 +439,26 @@ $('#remove-service').click(function()
 });
 
 </script>
+
+
+<script type="text/javascript">
+$(document ).ready(function (){
+
+  $("#validation-form").validate({
+      
+      rules: {
+          youtube_link: "required",
+      },
+      
+      messages: {
+          youtube_link: "Please enter valid youtube link.",
+      },
+
+  });
+});
+</script>
+
+
 
 
 

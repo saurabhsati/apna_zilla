@@ -2,6 +2,16 @@
 
 @section('main_section')
 
+<style type="text/css">
+  .error{
+    color: red;
+    font-size: 12px;
+    font-weight: lighter;
+    text-transform: capitalize;
+  }
+</style>
+  
+
  <div class="gry_container">
       <div class="container">
          <div class="row">
@@ -65,7 +75,7 @@
                                 class="input_acct"
                                 placeholder="Enter Building's Name"
                                 data-rule-required="true"
-                                required="" aria-describedby="basic-addon1"/>
+                               />
                           <div class="error_msg">{{ $errors->first('building') }} </div>
                         </div>
                          </div>
@@ -78,7 +88,7 @@
                          <input type="text" name="street" id="street"
                                 class="input_acct"
                                 placeholder="Enter Street's Name"
-                                required="" aria-describedby="basic-addon1"/>
+                               data-rule-required="true"/>
 
                         </div>
                          </div>
@@ -91,7 +101,7 @@
                          <input type="text" name="landmark" id="landmark"
                                 class="input_acct"
                                 placeholder="Enter Landmark's Name"
-                                required="" aria-describedby="basic-addon1"/>
+                              data-rule-required="true"/>
                         <div class="error_msg">{{ $errors->first('landmark') }} </div>
                         </div>
                          </div>
@@ -105,7 +115,7 @@
                                 class="input_acct"
                                 placeholder="Enter Area's Name"
 
-                                required="" aria-describedby="basic-addon1" />
+                               data-rule-required="true" />
                         </div>
                          </div>
                     </div>
@@ -115,7 +125,7 @@
             <div class="row">
              <div class="col-lg-3  label-text">Country :</div>
               <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                  <select class="input_acct"  id="country" name="country" required="" aria-describedby="basic-addon1" >
+                  <select class="input_acct"  id="country" name="country" data-rule-required="true" >
                     <option value="">Select Country</option>
                     @if (isset($arr_country)&& (count($arr_country) > 0))
                       @foreach($arr_country as $country)
@@ -132,7 +142,7 @@
            <div class="row">
             <div class="col-lg-3  label-text">State :</div>
               <div class="col-sm-12 col-md-12 col-lg-9 m_l" >
-                <select class="input_acct" name="state" id="state" required="" aria-describedby="basic-addon1">
+                <select class="input_acct" name="state" id="state" data-rule-required="true">
                   <option id="show_state" value="" >--Select--</option>
                 </select>
               </div>
@@ -144,7 +154,7 @@
             <div class="row">
              <div class="col-lg-3  label-text">City :</div>
               <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-               <select class="input_acct"  name="city" id="city" required="" aria-describedby="basic-addon1" onchange="setAddress()">
+               <select class="input_acct"  name="city" id="city" data-rule-required="true" onchange="setAddress()">
                   <option value="" >--Select--</option>
                  </select>
                 </div>
@@ -155,7 +165,7 @@
               <div class="row">
                 <div class="col-lg-3  label-text">Zipcode :</div>
                   <div class="col-sm-9 col-md-9 col-lg-9 m_l">
-                    <select class="input_acct"  id="zipcode"  name="zipcode" required="" aria-describedby="basic-addon1">
+                    <select class="input_acct"  id="zipcode"  name="zipcode" data-rule-required="true" >
                       <option value="">--Select--</option>
                     </select>
                     <div class="error_msg">{{ $errors->first('zipcode') }} </div>
@@ -494,6 +504,29 @@ jQuery(document).ready(function () {
         setMapLocation(addr);
     }
 
+</script>
+
+<script type="text/javascript">
+$(document ).ready(function (){
+  $("#validation-form").validate({
+    // Specify the validation rules
+      rules: {
+          building: "required",
+          street: "required",
+          landmark: "required",
+          area: "required",
+      },
+    // Specify the validation error messages
+      messages: {
+          building: "Please enter building name.",
+          street: "Please enter street.",
+          landmark: "Please enter landmark.",
+          area: "Please enter area.",
+
+      },
+
+  });
+});
 </script>
 
 
