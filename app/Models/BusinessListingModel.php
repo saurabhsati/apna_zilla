@@ -112,6 +112,7 @@ class BusinessListingModel extends Model
     {
         return $this->hasMany('App\Models\TransactionModel','business_id','id');
     }
+     
 
 
 

@@ -45,6 +45,8 @@
               @endif
               @if(isset($business_data) && sizeof($business_data)>0)
                   @foreach($business_data as $business)
+
+                  
               <form class="form-horizontal"
                        id="validation-form"
                        method="POST"
@@ -153,8 +155,26 @@
                                   </div>
                               </div>
 
-                          <!--   <hr/>
+                            <hr/>
 
+                      <!--       mon_open" => "11:15 AM"
+    "mon_close" => "11:15 AM"
+    "tue_open" => "11:15 AM"
+    "tue_close" => "11:15 AM"
+    "wed_open" => "11:15 AM"
+    "wed_close" => "11:15 AM"
+    "thus_open" => "11:15 AM"
+    "thus_close" => "11:15 AM"
+    "fri_open" => "11:15 AM"
+    "fri_close" => "11:15 AM"
+    "sat_open" => "11:15 AM"
+    "sat_close" => "11:15 AM"
+    "sun_open" => "11:15 AM"
+    "sun_close" => "11:15 AM" -->
+
+
+
+                            
                           <div class="title_acc">Opening Hours</div>
                             <div class="row" style="margin-bottom: 15px;">
 
@@ -163,19 +183,23 @@
                             <div class="col-lg-2 label-text">Monday<span>:</span></div>
                              <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
-                                      <input class="form-control timepicker-default" name="mon_in" id="mon_in" type="text" data-rule-required="true">
+                                      <input class="form-control timepicker-default" name="mon_in" id="mon_in"  
+                                      value="{{ isset($business['business_times']['mon_open'])?$business['business_times']['mon_open']:'' }}" 
+                                      type="text" data-rule-required="true">
                                   </div>
                               </div>
 
                               <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
-                                      <input class="form-control timepicker-default" name="mon_out" id="mon_out" type="text" data-rule-required="true">
+                                      <input class="form-control timepicker-default" name="mon_out" id="mon_out"
+                                      value="{{ isset($business['business_times']['mon_close'])?$business['business_times']['mon_close']:'' }}"
+                                       type="text" data-rule-required="true">
                                   </div>
                               </div>
                               </div>
@@ -186,19 +210,23 @@
                             <div class="col-lg-2 label-text">Tuesday<span>:</span></div>
                              <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
-                                      <input class="form-control timepicker-default" name="tue_in" id="tue_in" type="text" data-rule-required="true">
+                                      <input class="form-control timepicker-default" name="tue_in" id="tue_in" type="text" 
+                                      value="{{ isset($business['business_times']['tue_open'])?$business['business_times']['tue_open']:'' }}"
+                                      data-rule-required="true">
                                   </div>
                               </div>
 
                               <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
-                                      <input class="form-control timepicker-default" name="tue_out" id="tue_out" type="text" data-rule-required="true">
+                                      <input class="form-control timepicker-default" name="tue_out" id="tue_out" type="text" 
+                                      value="{{ isset($business['business_times']['tue_close'])?$business['business_times']['tue_close']:'' }}"
+                                      data-rule-required="true">
                                   </div>
                               </div>
                               </div>
@@ -209,19 +237,23 @@
                             <div class="col-lg-2 label-text">Wednesday<span>:</span></div>
                              <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
-                                      <input class="form-control timepicker-default" name="wed_in" id="wed_in" type="text" data-rule-required="true">
+                                      <input class="form-control timepicker-default" name="wed_in" id="wed_in" type="text" 
+                                      value="{{ isset($business['business_times']['wed_open'])?$business['business_times']['wed_open']:'' }}"
+                                      data-rule-required="true">
                                   </div>
                               </div>
 
                               <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
-                                      <input class="form-control timepicker-default" name="wed_out" id="wed_out" type="text" data-rule-required="true">
+                                      <input class="form-control timepicker-default" name="wed_out" id="wed_out" type="text" 
+                                      value="{{ isset($business['business_times']['wed_close'])?$business['business_times']['wed_close']:'' }}"
+                                      data-rule-required="true">
                                   </div>
                               </div>
                               </div>
@@ -232,19 +264,23 @@
                             <div class="col-lg-2 label-text">Thursday<span>:</span></div>
                              <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
-                                      <input class="form-control timepicker-default" name="thu_in" id="thu_in" type="text" data-rule-required="true">
+                                      <input class="form-control timepicker-default" name="thu_in" id="thu_in" type="text" 
+                                      value="{{ isset($business['business_times']['thus_open'])?$business['business_times']['thus_open']:'' }}"
+                                      data-rule-required="true">
                                   </div>
                               </div>
 
                               <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
-                                      <input class="form-control timepicker-default" name="thu_out" id="thu_out" type="text" data-rule-required="true">
+                                      <input class="form-control timepicker-default" name="thu_out" id="thu_out" type="text" 
+                                      value="{{ isset($business['business_times']['thus_close'])?$business['business_times']['thus_close']:'' }}"
+                                      data-rule-required="true">
                                   </div>
                               </div>
                               </div>
@@ -255,19 +291,23 @@
                             <div class="col-lg-2 label-text">Friday<span>:</span></div>
                              <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
-                                      <input class="form-control timepicker-default" name="fri_in" id="fri_in" type="text" data-rule-required="true">
+                                      <input class="form-control timepicker-default" name="fri_in" id="fri_in" type="text" 
+                                      value="{{ isset($business['business_times']['fri_open'])?$business['business_times']['fri_open']:'' }}"
+                                      data-rule-required="true">
                                   </div>
                               </div>
 
                               <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
-                                      <input class="form-control timepicker-default" name="fri_out" id="fri_out" type="text" data-rule-required="true">
+                                      <input class="form-control timepicker-default" name="fri_out" id="fri_out" type="text"
+                                      value="{{ isset($business['business_times']['fri_close'])?$business['business_times']['fri_close']:'' }}"
+                                       data-rule-required="true">
                                   </div>
                               </div>
                               </div>
@@ -278,19 +318,23 @@
                             <div class="col-lg-2 label-text">Saturday<span>:</span></div>
                              <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
-                                      <input class="form-control timepicker-default" name="sat_in" id="sat_in" type="text" data-rule-required="true">
+                                      <input class="form-control timepicker-default" name="sat_in" id="sat_in" type="text" 
+                                        value="{{ isset($business['business_times']['sat_open'])?$business['business_times']['sat_open']:'' }}"
+                                      data-rule-required="true">
                                   </div>
                               </div>
 
                               <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
-                                      <input class="form-control timepicker-default" name="sat_out" id="sat_out" type="text" data-rule-required="true">
+                                      <input class="form-control timepicker-default" name="sat_out" id="sat_out" type="text" 
+                                      value="{{ isset($business['business_times']['sat_close'])?$business['business_times']['sat_close']:'' }}"
+                                      data-rule-required="true">
                                   </div>
                               </div>
                               </div>
@@ -301,19 +345,23 @@
                             <div class="col-lg-2 label-text ">Sunday<span>:</span></div>
                              <div class="col-sm-3 col-md-3 col-lg-3 m_l controls">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
-                                      <input class="form-control timepicker-default" name="sun_in" id="sun_in" type="text" data-rule-required="true">
+                                      <input class="form-control timepicker-default" name="sun_in" id="sun_in" type="text" 
+                                      value="{{ isset($business['business_times']['sun_open'])?$business['business_times']['sun_open']:'' }}"
+                                      data-rule-required="true">
                                   </div>
                               </div>
 
                               <div class="col-sm-3 col-md-3 col-lg-3 m_l">
                                   <div class="input-group">
-                                      <a class="input-group-addon" href="#">
+                                      <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
-                                      <input class="form-control timepicker-default" name="sun_out" id="sun_out" type="text" data-rule-required="true">
+                                      <input class="form-control timepicker-default" name="sun_out" id="sun_out" type="text" 
+                                        value="{{ isset($business['business_times']['sun_close'])?$business['business_times']['sun_close']:'' }}"
+                                      data-rule-required="true">
                                   </div>
                               </div>
                               </div>
@@ -321,7 +369,7 @@
 
                         </div>
 
-                          <hr/> -->
+                          <hr/>
 
                                 <div class="button_save1">
                                   <button type="submit" class="btn btn-post" name="add_contacts" style="float: left; margin-left:125px; ">Save &amp; continue</button>
@@ -415,11 +463,9 @@ $('#remove-payment').click(function()
 </script>
 <!--TimePicker-->
 <script type="text/javascript">
-   $('#timepicker5').timepicker({
-                template: false,
-                showInputs: false,
-                minuteStep: 5
-    });
+$(document).ready(function (){
+ $('.timepicker-default').timepicker();
+});
 </script>
 
 

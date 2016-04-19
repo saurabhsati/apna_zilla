@@ -42,7 +42,7 @@ class UserController extends Controller
 
 
 
-       /* $this->business_public_upload_img_path = url('/')."/uploads/business/business_upload_image/";
+        /*$this->business_public_upload_img_path = url('/')."/uploads/business/business_upload_image/"; 
         $this->business_base_upload_img_path = base_path()."/public/uploads/business/business_upload_image/";*/
 
  	}
@@ -783,6 +783,22 @@ class UserController extends Controller
         $arr_rules['keywords']          = "required";
         $arr_rules['payment_mode']          = "required";
 
+         //business times
+        $arr_rules['mon_in']='required';
+        $arr_rules['mon_out']='required';
+        $arr_rules['tue_in']='required';
+        $arr_rules['tue_out']='required';
+        $arr_rules['wed_in']='required';
+        $arr_rules['wed_out']='required';
+        $arr_rules['thus_in']='required';
+        $arr_rules['thus_out']='required';
+        $arr_rules['fri_in']='required';
+        $arr_rules['fri_out']='required';
+        $arr_rules['sat_in']='required';
+        $arr_rules['sat_out']='required';
+        $arr_rules['sun_in']='required';
+        $arr_rules['sun_out']='required';
+
         $validator = Validator::make($request->all(),$arr_rules);
 
         if($validator->fails())
@@ -819,9 +835,30 @@ class UserController extends Controller
             }
         }
 
+
+
         $location_add = BusinessListingModel::where(array('user_id'=>$user_id,'id'=>$business_id))->update($arr_data);
         if($location_add)
         {
+            $arr_time                = array();
+            $arr_time['business_id'] = $business_id;
+            $arr_time['mon_open']    = $request->input('mon_in');
+            $arr_time['mon_close']   = $request->input('mon_out');
+            $arr_time['tue_open']    = $request->input('tue_in');
+            $arr_time['tue_close']   = $request->input('tue_out');
+            $arr_time['wed_open']    = $request->input('wed_in');
+            $arr_time['wed_close']   = $request->input('wed_out');
+            $arr_time['thus_open']   = $request->input('thus_in');
+            $arr_time['thus_close']  = $request->input('thus_out');
+            $arr_time['fri_open']    = $request->input('fri_in');
+            $arr_time['fri_close']   = $request->input('fri_out');
+            $arr_time['sat_open']    = $request->input('sat_in');
+            $arr_time['sat_close']   = $request->input('sat_out');
+            $arr_time['sun_open']    = $request->input('sun_in');
+            $arr_time['sun_close']   = $request->input('sun_out');
+
+            $business_time_add = BusinessTimeModel::create($arr_time);
+
             Session::flash('success','Other Information Added Successfully');
             return redirect(url('/').'/front_users/add_services/'.base64_encode( $business_id ));
         }else {
@@ -838,6 +875,8 @@ class UserController extends Controller
         $arr_rules = array();
         $arr_rules['youtube_link']      = "required";
         $arr_rules['business_service']  = "required";
+
+        $destinationPath = base_path()."/public/uploads/business/business_upload_image";
 
         $validator   = Validator::make($request->all(),$arr_rules);
         if($validator->fails())
@@ -865,8 +904,6 @@ class UserController extends Controller
         $files          = $request->file('business_image');
         $file_count     = count($files);
 
-
-
         //$arr_data['user_id']          =        $user_id;
         /* $arr_data['establish_year']  =        $request->input('establish_year');
         $arr_data['keywords']           =        $request->input('keywords');*/
@@ -889,7 +926,7 @@ class UserController extends Controller
                 {
                      if($file!=null)
                      {
-                        $destinationPath    = $this->business_base_img_path;
+                        //$destinationPath    = $this->business_base_img_path;
                         $fileName           = $file->getClientOriginalName();
                         $fileExtension      = strtolower($file->getClientOriginalExtension());
                         if(in_array($fileExtension,['png','jpg','jpeg']))
@@ -1196,7 +1233,7 @@ class UserController extends Controller
     {
         $id = base64_decode($enc_id);
         $page_title ="Edit Business";
-        $business_data=BusinessListingModel::with(['payment_mode'])->where('id',$id)->get()->toArray();
+        $business_data=BusinessListingModel::with(['payment_mode','business_times'])->where('id',$id)->get()->toArray();
         return view('front.user.Edit_Business.edit_business_step4',compact('page_title','business_data','enc_id'));
     }
     public function update_business_step4(Request $request,$enc_id)
@@ -1206,6 +1243,25 @@ class UserController extends Controller
          $arr_rules['company_info']='required';
          $arr_rules['establish_year']='required';
          $arr_rules['keywords']='required';
+
+
+        //business times
+        $arr_rules['mon_in']='required';
+        $arr_rules['mon_out']='required';
+        $arr_rules['tue_in']='required';
+        $arr_rules['tue_out']='required';
+        $arr_rules['wed_in']='required';
+        $arr_rules['wed_out']='required';
+        $arr_rules['thu_in']='required';
+        $arr_rules['thu_out']='required';
+        $arr_rules['fri_in']='required';
+        $arr_rules['fri_out']='required';
+        $arr_rules['sat_in']='required';
+        $arr_rules['sat_out']='required';
+        $arr_rules['sun_in']='required';
+        $arr_rules['sun_out']='required';
+
+
          $validator=validator::make($request->all(),$arr_rules);
 
          if($validator->fails())
@@ -1238,6 +1294,38 @@ class UserController extends Controller
         $business_data_res=BusinessListingModel::where('id',$id)->update($business_data);
         if($business_data_res)
         {
+
+            $arr_time                = array();
+            $arr_time['business_id'] = $id;
+            $arr_time['mon_open']    = $request->input('mon_in');
+            $arr_time['mon_close']   = $request->input('mon_out');
+            $arr_time['tue_open']    = $request->input('tue_in');
+            $arr_time['tue_close']   = $request->input('tue_out');
+            $arr_time['wed_open']    = $request->input('wed_in');
+            $arr_time['wed_close']   = $request->input('wed_out');
+            $arr_time['thus_open']   = $request->input('thu_in');
+            $arr_time['thus_close']  = $request->input('thu_out');
+            $arr_time['fri_open']    = $request->input('fri_in');
+            $arr_time['fri_close']   = $request->input('fri_out');
+            $arr_time['sat_open']    = $request->input('sat_in');
+            $arr_time['sat_close']   = $request->input('sat_out');
+            $arr_time['sun_open']    = $request->input('sun_in');
+            $arr_time['sun_close']   = $request->input('sun_out');
+
+            $business_time_exist = BusinessTimeModel::where('business_id',$id)->first(['id','business_id']);
+
+            if($business_time_exist)
+            {
+                $arr_exist = $business_time_exist->toArray();
+                if(count($arr_exist) > 0)
+                {
+                    $business_time_update = BusinessTimeModel::where('business_id',$id)->update($arr_time);
+                } 
+            }
+            else {
+                    $business_time_add = BusinessTimeModel::create($arr_time);
+            }
+
             Session::flash('success','Business Other Information Updated Successfully');
 
         }
