@@ -754,7 +754,7 @@ class BusinessListingController extends Controller
         /* Check if array is supplied*/
         if(is_array($checked_record) && sizeof($checked_record)<=0)
         {
-            Session::flash('error','Problem Occured, While Doing Multi Action');
+            Session::flash('error','Problem Occurred, While Doing Multi Action');
             return redirect()->back();
 
         }
@@ -776,6 +776,7 @@ class BusinessListingController extends Controller
                $this->_delete($record_id);
                 Session::flash('success','Business(es) Deleted Successfully');
             }
+
 
         }
 

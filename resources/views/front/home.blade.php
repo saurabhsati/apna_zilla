@@ -393,8 +393,8 @@ $(document).ready(function(){
           }
           else
           {
-             alert();
 
+            $('#history').html('<div> <div class="row">No Recent History</div></div>');
           }
     }
 
