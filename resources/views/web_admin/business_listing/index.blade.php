@@ -146,6 +146,7 @@
                   <th style="width:25px;">Reviews</th>
                   <th style="width:25px;">Deals</th>
                   <th width="" style="text-align:center">Status</th>
+                  <th width="" style="text-align:center">Verified Status</th>
                   <th>Action</th>
                   <th>Assign Membership</th>
                    <th>Validity Status</th>
@@ -278,7 +279,18 @@
                         </a>
                         @endif
                     </td>
+                    <td width="" style="text-align:center">
+                         @if($business['is_verified']=="0")
+                        <a class="btn btn-danger" href="{{ url('/web_admin/business_listing/toggle_verifired_status/').'/'.base64_encode($business['id']).'/verified' }}">
+                            Un-Verified
+                        </a>
 
+                        @elseif($business['is_verified']=="1")
+                        <a  class="btn btn-success" href="{{ url('/web_admin/business_listing/toggle_verifired_status/').'/'.base64_encode($business['id']).'/unverified' }}">
+                           Verified
+                        </a>
+                        @endif
+                    </td>
                     <td>
                       <a href="{{ url('/web_admin/business_listing/show/').'/'.base64_encode($business['id']) }}" class="show-tooltip" title="Show">
                           <i class="fa fa-eye" ></i>

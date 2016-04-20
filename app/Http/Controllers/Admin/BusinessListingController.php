@@ -715,6 +715,24 @@ class BusinessListingController extends Controller
 
         return redirect()->back();
     }
+    public function toggle_verifired_status($enc_id,$action)
+    {
+        if($action=="verified")
+        {
+            $this->_verifired($enc_id);
+
+            Session::flash('success','Business(es) verified Successfully');
+        }
+        elseif($action=="unverified")
+        {
+            $this->_unverifired($enc_id);
+
+            Session::flash('success','Business(es) Un-Verified Successfully');
+        }
+
+
+        return redirect()->back();
+    }
     public function multi_action(Request $request)
     {
         $arr_rules = array();
@@ -781,6 +799,27 @@ class BusinessListingController extends Controller
         $Business = BusinessListingModel::where('id',$id)->first();
 
         $Business->is_active = "0";
+
+        return $Business->save();
+    }
+     protected function _verifired($enc_id)
+    {
+        $id = base64_decode($enc_id);
+
+        $Business = BusinessListingModel::where('id',$id)->first();
+
+        $Business->is_verified = "1";
+
+        return $Business->save();
+    }
+
+    protected function _unverifired($enc_id)
+    {
+        $id = base64_decode($enc_id);
+
+        $Business = BusinessListingModel::where('id',$id)->first();
+
+        $Business->is_verified = "0";
 
         return $Business->save();
     }
