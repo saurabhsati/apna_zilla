@@ -23,7 +23,7 @@
             </span>
             <li>
                 <i class="fa fa-text-width"></i>
-                <a href="{{ url('/').'/web_admin/membershipcost' }}">Mmebership Plans</a>
+                <a href="{{ url('/').'/web_admin/membershipcost' }}">Membership Plans</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>

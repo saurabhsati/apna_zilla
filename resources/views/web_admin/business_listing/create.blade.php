@@ -360,6 +360,7 @@
                            name="mobile_number"
                            id="mobile_number"
                            data-rule-required="true"
+                           data-rule-maxlength="10"
                            placeholder="Enter Mobile Number"
                            value=""
                            />
@@ -413,6 +414,7 @@
                            name="email_id"
                            id="email_id"
                            data-rule-required="true"
+                           data-rule-email="true"
                            placeholder="Enter Email Id"
                            value=""
                            />
@@ -682,6 +684,7 @@
                            data-rule-required="true"
                            data-rule-number="true"
                            data-rule-minlength="0"
+                           data-rule-maxlength="4"
                            placeholder="Enter Establish Year"
                           value=""/>
                     <span class='help-block'>{{ $errors->first('establish_year') }}</span>

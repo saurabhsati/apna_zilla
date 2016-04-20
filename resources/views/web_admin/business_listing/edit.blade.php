@@ -377,6 +377,7 @@
                            name="mobile_number"
                            id="mobile_number"
                            data-rule-required="true"
+                           data-rule-maxlength="10"
                            placeholder="Enter Mobile Number"
                            value="{{ isset($business['mobile_number'])?$business['mobile_number']:'' }}"
                            />
@@ -430,6 +431,7 @@
                            name="email_id"
                            id="email_id"
                            data-rule-required="true"
+                           data-rule-email="true"
                            placeholder="Enter Email Id"
                            value="{{ isset($business['email_id'])?$business['email_id']:'' }}"
                            />
