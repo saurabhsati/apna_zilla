@@ -43,8 +43,13 @@
        <div class="row">
          <div class="col-sm-3 col-md-3 col-lg-3">
           <div class="product_img">
+          @if($restaurants['main_image']=='default_banner.jpg')
+               <img style="height:100% !important;" src="{{ url('/') }}/assets/front/images/download.jpg" alt="list product"/>
+                @else
               <img style="height:100% !important;" src="{{ url('/') }}/uploads/business/main_image/{{ $restaurants['main_image'] }}" alt="list product"/>
-              <img class="first-cate-veri" src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>
+               @endif
+               @if($restaurants['is_verified']==1)
+              <img class="first-cate-veri" src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>@endif
         </div>
         </div>
 

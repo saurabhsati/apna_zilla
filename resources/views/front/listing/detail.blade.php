@@ -94,9 +94,6 @@
                 </div>
               </div>
 
-
-
-
                <!--   <div class="map" id="business_location_map" style="width: 100%; height: 250;">
                   </div> -->
                <?php
@@ -139,32 +136,8 @@
                   </div>
                </div>
 
-
-
-
-
-
-
-
-
-                 <!--<div class="img_icons popup-v"><a data-toggle="modal" data-target="#share"><img src="images/shar.png" alt="share"/>Share</a></div>
-                <div class="img_icons"><img src="images/write_review.png" alt="write_review"/>write review</div>
-                <div class="img_icons"><img src="images/your-vote.png" alt="your-vote"/>Your Vote(0.5)</div>
-                  <div class="img_icons"><img src="images/edit-this.png" alt="write_review"/>Edit this</div>
-                <div class="img_icons popup-v"><a data-toggle="modal" data-target="#sms"><img src="images/sms-emil.png" alt="write_review"/>Sms/Email</a></div>
-                      <div class="img_icons popup-v"><a data-toggle="modal" data-target="#verifed"><img src="images/verified.png" alt="write_review"/>verified</a></div>-->
-
-
-
-
-
-
-
-
-
             </div>
-            <!-- <div class="map" id="business_location_map" style="width: 100%; height: 250;">
-               </div> -->
+
             <div class="tours-detail-tab">
                <div id="dash_tab" style="background: #ffffff; padding: 10px 13px; border: 1px solid #eaeaea;">
                   <ul class="resp-tabs-list ">
@@ -273,8 +246,8 @@
 
                         </div>
                      </div>
-                     <div>
-                        <div class="rating_views">
+                     <div id="review_rank">
+                        <div class="rating_views" >
                            <div class="rank_name">
                               <span>Excellent</span>
                               <div style="width: 32%;">&nbsp;</div>
@@ -331,8 +304,8 @@
                         @endif
 
                      </div>
-                     <div>
-                        <div class="gallery_view">
+                     <div id="gallery">
+                        <div class="gallery_view"  >
                            <div class="gallery">
                               @if(isset($arr_business_details['image_upload_details']) && $arr_business_details['image_upload_details']!='')
                               @foreach($arr_business_details['image_upload_details'] as $business_images)
@@ -847,18 +820,12 @@ function check_review()
 
    function showreview()
    {
-
-    $(".resp-tab-item").removeClass('resp-tab-active');
-    $(".resp-tab-content").removeClass('resp-tab-content-active');
-    $(".resp-tabs-container").removeClass('resp-accordion');
-    $(".gallery_view").css('style','display:none');
-    $('#review').addClass('resp-tab-active');
-    $('#review_rating').addClass('resp-tab-content-active');
-   /* var review_html=$("#top_review_set").find('.yr_rating-over').html();
-    alert(review_html);
-    $("#review_set").find('.yr_rating-over').html(review_html);*/
-
-   }
+     $(".resp-tab-item").removeClass('resp-tab-active');
+     $('#gallery').css('display','none');
+     $('#review_rank').css('display','none');
+     $('#review').addClass('resp-tab-active');
+     $('#review_rating').addClass('resp-tab-content-active');
+    }
 
 
 
