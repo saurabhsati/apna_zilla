@@ -56,6 +56,7 @@ class PayumoneyController extends Controller
         //dd($parameter_post);
         if($price==0)
         {
+        	//print_r($request->all());exit;
 		        $arr_data['business_id']=$business_id;
 		        $arr_data['user_id']=$user_id;
 		        $arr_data['category_id']=$category_id;

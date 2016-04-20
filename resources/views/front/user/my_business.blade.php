@@ -156,7 +156,7 @@
                         <?php }
                         else
                           {?>
-                              <li><a href="#" class="lst" style="color:green;">Verified</a></li>
+                              <li><a href="#" class="lst" style="color:green;">Plan Assign</a></li>
                            <?php }?>
                         <!-- </form>
                         --> <!-- <li><a href="#" class="lst">Rate This</a></li>         -->

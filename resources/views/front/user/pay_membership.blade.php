@@ -54,13 +54,13 @@
 
                    <?php foreach($arr_membership_plan  as $key => $plan) {?>
                            <div class="col-sm-6 col-md-3 col-lg-4">
-                              <div class="package_min">
+                              <div class="package_min <?php //if($plan['title']=='Basic'){echo"packge-active";}?>" style="cursor:pointer;" value="{{ $plan['plan_id'] }}" onclick="get_plan_cost(this);">
                                  <div class="<?php if($key%2==0){ echo "package_basic_orange";}else { echo "package_basic_yellow";}?> ">{{ $plan['price'] }}<span>$</span> </div>
                                 <!--  <div class="one_tome_text">One Time Charges</div> -->
                                  <div class="package_title">
-                                    <h3> {{ $plan['title'] }}</h3>
-                                    </div>
-                                 <div class="package_text">{{ $plan['description'] }}</div>
+                                    <h3><i class="fa fa-check check-tick <?php //if($plan['title']=='Basic'){echo"check-acti";}?>" aria-hidden="true"></i> {{$plan['title']}}</h3>
+                                 </div>
+                                 <div class="package_text first-package-txt">{{ $plan['description'] }}</div>
                                  <div class="package_text">Add {{ $plan['no_normal_deals'] }} Business Deals </div>
                                  <div class="package_text">
                                     Validity {{ $plan['validity'] }} Days
@@ -68,10 +68,10 @@
                                  </div>
 
                                   <div class="package_view">
-                                  <input type="radio" class="package_view" name="mem_plan_id" id="mem_plan_id{{ $plan['plan_id'] }}" value="{{ $plan['plan_id'] }}" onclick="get_plan_cost(this);">
+<!--                                  <input type="radio" class="package_view" name="mem_plan_id" id="mem_plan_id{{ $plan['plan_id'] }}" value="{{ $plan['plan_id'] }}" onclick="get_plan_cost(this);">-->
                                  <!--  <a href="javascript void(0);"  onclick="function submit_plan();">Purchase Plan</a> -->
 
-                                  <button type="submit"  name="mem_plan_sumit"   onclick="return submit_plan();" >Purchase Plan</button>
+                                  <button class="package_view-btn" type="submit"  name="mem_plan_sumit"   <?php //if($plan['title']!='Basic'){?>onclick="return submit_plan();" <?php //}?>>Purchase Plan</button>
                                  </div>
                                  <div class="clr"></div>
                               </div>
@@ -89,74 +89,17 @@
 
 
 
-<!-- <div class="container">
- <div class="row">
- <div class="col-sm-12 col-md-12 col-lg-6">
-     <div class="row">
-      <div class="box_contact">
-      <form class="form-horizontal"
-          id="validation-form"
-          method="POST"
-          action="{{ url('/payumoney')}}"
-          >
-           <input type="hidden" name="business_id" id="business_id" value="{{$enc_business_id}}">
-           <input type="hidden" name="business_name" id="business_name" value="{{$enc_business_name}}">
-           <input type="hidden" name="user_id" id="user_id" value="{{$enc_user_id}}">
-            <input type="hidden" name="user_name" id="user_name" value="{{session('user_name')}}">
-            <input type="hidden" name="user_mail" id="user_mail" value="{{session('user_mail')}}">
-           <input type="hidden" name="category_id" id="category_id" value="{{$enc_category_id}}">
-           <input type="hidden" name="validity" id="validity" value="">
 
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="title">Select Membership Plan</label>
-                <div class="col-sm-6 col-lg-4 controls">
-                   <select class="form-control" name="plan_id" id="plan_id" onchange="return get_plan_cost();">
-                    <option value="" >Select Membership Plan</option>
-
-                   @if(isset($arr_membership_plan) && sizeof($arr_membership_plan)>0)
-                   @foreach($arr_membership_plan as $plan)
-                     <option value="{{ $plan['plan_id'] }}" >
-                      {{ $plan['title'] }}
-                    </option>
-                   @endforeach
-                    @endif
-                  </select>
-                    <span class='help-block'>{{ $errors->first('plan_id') }}</span>
-                </div>
-            </div>
-             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="price">Price<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="price"
-                           id="price"
-                           data-rule-required="true"
-                           value=""
-                           disabled=""
-                           />
-                    <span class='help-block'>{{ $errors->first('price') }}</span>
-                </div>
-            </div>
-
-
-
-
-            <div class="form-group">
-              <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
-                <input type="submit"  class="btn btn-primary" value="Pay Now">
-
-            </div>
-        </div>
-
-
-    </form>
-     </div>
-   </div>
- </div>
-</div>
-</div> -->
 </div>
 <script type="text/javascript">
+$(window).load(function(){
+      $('.package_min').on('click',function(){
+        $('.check-tick').removeClass('check-acti');
+        $('.package_min').removeClass('packge-active');
+        $(this).addClass('packge-active');
+        $(this).find(".check-tick").addClass('check-acti');
+      });
+    });
 function submit_plan()
 {
   var price = $('input[name=price]').val();
@@ -175,7 +118,7 @@ function submit_plan()
 var site_url = "{{url('/')}}";
 function get_plan_cost(ref)
 {
-
+  //alert();return false;
   var _token = $('input[name=_token]').val();
   var plan_id=$(ref).attr("value");
   var category_id=$("#category_id").val();
