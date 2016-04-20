@@ -78,8 +78,13 @@
                 <div class="row">
                         <div class="col-sm-3 col-md-3 col-lg-3">
                         <div class="product_img">
-                            <img style="height:100% !important;" src="{{ url('/') }}/uploads/business/main_image/{{ $business['main_image'] }}" alt="list product"/>
-                            <img class="first-cate-veri" src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>
+                          @if($business['main_image']=='default_banner.jpg')
+                            <img style="height:100% !important;" src="{{ url('/') }}/assets/front/images/default.jpg" alt="list product"/>
+                          @else
+                           <img style="height:100% !important;" src="{{ url('/') }}/uploads/business/main_image/{{ $business['main_image'] }}" alt="list product"/>
+                          @endif
+                           @if($business['is_verified']==1)
+                            <img class="first-cate-veri" src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>@endif
                         </div>
                      </div>
                     <div class="col-sm-9 col-md-9 col-lg-9">

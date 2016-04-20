@@ -139,7 +139,47 @@ dl, dt, dd, ol, ul, li {
 .all-cate-btn button:hover{background: #e6ab2a;}
 
 /* most category block end here */
+/*Project Package START HERE*/
+.package_min .mask{left: 0; width: 100%; background:rgba(255,255,255,0.9); position: absolute; bottom: -50px;   -webkit-transition: all 0.4s ease-in-out;
+   -moz-transition: all 0.4s ease-in-out;
+   -o-transition: all 0.4s ease-in-out;
+   -ms-transition: all 0.4s ease-in-out;
+   transition: all 0.4s ease-in-out;}
+.package_min:hover .mask{bottom:18px;}
+.one_tome_text {color: #819093;font-family: open sans;font-size: 12px;font-weight: bold;letter-spacing: 1px;text-align: center;margin: 5px 0;}
+.offer_bx {background: #abd042; border-radius: 50%;color: #fff;display: inline-block;font-family: open sans;font-size: 10px;font-weight: bold;height: 32px;letter-spacing: 0.5px;line-height: 30px;margin-left: 10px;width: 32px;}
+.package_basic_yellow {background: #e6ab2a; border: 4px solid #fff6db;border-radius: 50%;color: #fff;font-family: open sans;  font-size: 33px;font-weight: bold;height: 122px;line-height: 110px;margin: 0 auto;text-align: center;width: 122px;}
+.package_basic_yellow > span {font-size: 22px;vertical-align: sub;}
+.package_basic_orange {background: #4d9f2e;border: 4px solid #7dcf5e;border-radius: 50%;color: #fff;font-family: open sans;  font-size: 33px;font-weight: bold;height: 122px;line-height: 110px;margin: 0 auto;text-align: center;width: 122px;}
+.package_basic_orange > span {font-size: 22px;vertical-align: sub;}
+.package_basic_brown {background: #a2520b;border: 4px solid #eee0d3;border-radius: 50%;color: #fff;font-family: open sans;  font-size: 33px;font-weight: bold;height: 122px;line-height: 110px;margin: 0 auto;text-align: center;width: 122px;}
+.package_basic_brown > span {font-size: 22px;vertical-align: sub;}
+.package_basic_dark_brw {background: #533418;border: 4px solid #e0dad5;border-radius: 50%;color: #fff;font-family: open sans;  font-size: 33px;font-weight: bold;height: 122px;line-height: 110px;margin: 0 auto;text-align: center;width: 122px;}
+.package_basic_dark_brw > span {font-size: 22px;vertical-align: sub;}
+.package_min{ background-color:#fff; padding:18px; border:1px solid #c9c9c9; text-align: center;position: relative;overflow: hidden;}
+.package_min:hover{-webkit-box-shadow: 0px 0px 6px 2px rgba(175,175,175,0.87); -moz-box-shadow: 0px 0px 6px 2px rgba(175,175,175,0.87);
+box-shadow: 0px 0px 6px 2px rgba(175,175,175,0.87);}
+.sub_pages_gry .package_min {padding-top: 23px;}
+.package_img{ text-align:center;}
+.package_title h3{color:#222; font-size:22px; font-family:'Open Sans'; text-align:center; margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid #bcbcbc; margin-top: 10px;}
+.package_text {color: #545454;font-family: "open sans light",sans-serif;font-size: 14px;line-height: 20px; padding: 10px 0;text-align: center;-webkit-font-smoothing: antialiased;border-bottom: 1px solid #eee;}
+.package_price{color:#103762; font-size:24px; font-family:'Open Sans Semibold'; text-align:center; margin:20px 0;}
+.package_price span{font-size:14px; vertical-align:text-bottom; line-height:10px;}
+.pri{font-size:35px;display:inline-block;}
+.primnt{font-size:26px;display:inline-block;}
+.dor{ display:inline-block; vertical-align:top; margin-top:-9px;}
+.per_text{font-size:14px; display:inline-block;}
+.package_view {display: inline-block;margin-top: 12px;}
+.package_view a {border: 1px solid #99cc33;border-radius: 4px;color: #679b00;display: inline-block;font-size: 14px;padding:7px 20px;}
+.package_view a:hover{ background-color:#e6ab2a; color:#fff!important; border: 1px solid #e6ab2a;}
+.package_view button {border: 1px solid #99cc33;border-radius: 4px;color: #679b00;display: inline-block;font-size: 14px;padding:7px 20px;}
+.package_view button:hover{ background-color:#e6ab2a; color:#fff!important; border: 1px solid #e6ab2a;}
 
+.get_quote_btn {background: #819093;border: medium none;border-radius: 4px;color: #fff;font-family: open sans; margin-left: 10px;padding:7px 20px;vertical-align: top;  margin-top: 12px;}
+.get_quote_btn:hover{ background-color:#98cd34;color:#fff!important;}
+.free_leb{ position:absolute; margin:-5px 0px 0px -5px;}
+.inner-box{ margin-top:40px;}
+/*Project Package END HERE*/
 /* Explore Directory Category  start here */
 
 .explore-category{background: #f4f4f4; padding: 30px 0 13px;}
@@ -218,7 +258,7 @@ dl, dt, dd, ol, ul, li {
 
 .first-cate-white:hover .cate-addre-block-two{
     -webkit-animation: bounce 3s infinite; /* Chrome, Safari, Opera */
-    animation: bounce 3s infinite; 
+    animation: bounce 3s infinite;
 }
 @-webkit-keyframes bounce {
   from, 20%, 53%, 80%, to {

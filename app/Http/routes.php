@@ -209,6 +209,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::post('update/{enc_id}',				 ['as' => 'admin_business_listing_update' 	  ,'uses' 	=>'Admin\BusinessListingController@update']);
 			Route::get('create',						 ['as' => 'admin_business_listing_create' 	  ,'uses' 	=>'Admin\BusinessListingController@create']);
 			Route::get('toggle_status/{enc_id}/{action}',['as' => 'admin_business_listing_status' 	  ,'uses' 	=>'Admin\BusinessListingController@toggle_status']);
+			Route::get('toggle_verifired_status/{enc_id}/{action}',['as' => 'admin_business_listing_verifired_status' 	  ,'uses' 	=>'Admin\BusinessListingController@toggle_verifired_status']);
 			Route::post('multi_action',					 ['as' => 'admin_business_listing_multiaction','uses' 	=>'Admin\BusinessListingController@multi_action']);
 			Route::any('store',							 ['as' => 'admin_business_listing_store' 	  ,'uses' 	=>'Admin\BusinessListingController@store']);
 			Route::post('delete_gallery',				 ['as' => 'admin_business_listing_gallery_delete' 	  ,'uses' 	=>'Admin\BusinessListingController@delete_gallery']);

@@ -29,11 +29,29 @@ class MembershipPlanController extends Controller
         }
         if(sizeof($arr_cost_data)>0)
         {
-            $obj_membership_plan = MembershipModel::get();
+            $obj_membership_plan = MembershipModel::orderBy('plan_id','DESC')->get();
             if($obj_membership_plan)
             {
                 $arr_membership_plan = $obj_membership_plan->toArray();
             }
+            foreach ($arr_membership_plan as $key => $membership_plan)
+            {
+                if($membership_plan['title']=='Premium')
+                {
+                    $arr_membership_plan[$key]['price']=$arr_cost_data['premium_cost'];
+                }
+                if($membership_plan['title']=='Gold')
+                {
+                    $arr_membership_plan[$key]['price']=$arr_cost_data['gold_cost'];
+                }
+                if($membership_plan['title']=='Basic')
+                {
+                    $arr_membership_plan[$key]['price']=$arr_cost_data['basic_cost'];
+                }
+
+
+            }
+            //dd($arr_membership_plan);
             return view('front.user.pay_membership',compact('page_title','arr_membership_plan','enc_business_id','enc_user_id','enc_category_id','enc_business_name'));
 
         }
@@ -49,7 +67,7 @@ class MembershipPlanController extends Controller
     {
          $category_id=base64_decode($request->input('category_id'));
          $plan_id=$request->input('plan_id');
-
+          $arr_membership_plan=array();
         $obj_membership_plan = MembershipModel::where('plan_id',$plan_id)->first();
         if($obj_membership_plan)
         {
@@ -87,6 +105,7 @@ class MembershipPlanController extends Controller
                     $arr_response['status'] ="SUCCESS";
                     $arr_response['price'] =$price;
                     $arr_response['validity'] = $validity;
+                    $arr_response['plan_id']=$plan_id;
                 }
                 else
                 {

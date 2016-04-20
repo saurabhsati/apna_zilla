@@ -463,8 +463,11 @@ class HomeController extends Controller
             $html.='<a href="'.url('/').'/'.$city.'/'.$business_area.'/'.base64_encode($business['id']).'"><div class="col-sm-3 col-md-3 col-lg-3 col-bott-mar">
                                  <div class="first-cate-img">
                                     <img class="over-img" alt="" src="'.url('/').'/uploads/business/main_image/'.$business['main_image'].'">
-                                     <img class="first-cate-veri" src="'.url('/').'/assets/front/images/verified.png" alt="write_review"/>
-                                 </div>
+                                     ';
+                                     if($business['is_verified']==1){
+                                        $html.='<img class="first-cate-veri" src="'.url('/').'/assets/front/images/verified.png" alt="write_review"/>';
+                                    }
+                                  $html.='</div>
                                  <div class="first-cate-white">
                                     <div class="f1_container">
                                        <div class="f1_card shadow">
@@ -578,14 +581,15 @@ class HomeController extends Controller
          foreach ($business_listing as $key => $business_data)
          {
 
-
-
             $html.='<a href="'.url('/').'/'.$business_data['link'].'"><div class="col-sm-3 col-md-3 col-lg-3 col-bott-mar">
                                  <div class="first-cate-img">
-                                    <img class="over-img" alt="" src="'.url('/').'/uploads/business/main_image/'.$business_data['main_image'].'">
-                                    <img class="first-cate-veri" src="'.url('/').'/assets/front/images/verified.png" alt="write_review"/>
+                                    <img class="over-img" alt="" src="'.url('/').'/uploads/business/main_image/'.$business_data['main_image'].'">';
+                                    if($business_data['is_verified']==1)
+                                    {
+                                        $html.='<img class="first-cate-veri" src="'.url('/').'/assets/front/images/verified.png" alt="write_review"/>';
+                                    }
 
-                                 </div>
+                                $html.='</div>
                                  <div class="first-cate-white">
                                        <div class="resta-name">
                                        <h6>'.$business_data['business_name'].'</h6>

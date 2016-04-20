@@ -30,7 +30,7 @@ class PayumoneyController extends Controller
     public function index(Request $request)
     {
 
-
+    	$page_title = 'Payment';
     	$surl = url('/').'/payumoney/success';
     	$furl = url('/').'/payumoney/fail';
     	$curl = url('/').'/payumoney/cancel';
@@ -46,32 +46,61 @@ class PayumoneyController extends Controller
 		 $business_name=base64_decode($request->input('business_name'));
 
 
-		$parameter_post = array (	'key' => 'gtKFFx', 'txnid' => uniqid( 'RTN_' ), 'amount' =>$price,
-			'firstname' =>$user_name, 'email' => $user_mail,
-			'productinfo' =>  $business_name, 'surl' => $surl, 'furl' => $furl);
-		$salt ='eCwWELxi';
-		//print_r($request->all());
+
+		//print_r($request->all());exit;
 
 
+		$txnid=uniqid( 'RTN_' );
 
-		$arr_data['business_id']=$business_id;
-        $arr_data['user_id']=$user_id;
-        $arr_data['category_id']=$category_id;
-        $arr_data['membership_id']=$plan_id;
-        $arr_data['transaction_id']=$parameter_post['txnid'];
-        $arr_data['price']=$price;
-        $arr_data['transaction_status']='Pending';
-        $arr_data['start_date']=date('Y-m-d');
-        $arr_data['expire_date']=date('Y-m-d', strtotime("+".$validity."days"));
-        //dd($arr_data);
-        $transaction = TransactionModel::create($arr_data);
 
         //dd($parameter_post);
+        if($price==0)
+        {
+		        $arr_data['business_id']=$business_id;
+		        $arr_data['user_id']=$user_id;
+		        $arr_data['category_id']=$category_id;
+		        $arr_data['membership_id']=$plan_id;
+		        $arr_data['transaction_id']=$txnid;
+		        $arr_data['price']=$price;
+		        $arr_data['transaction_status']='Active';
+		        $arr_data['start_date']=date('Y-m-d');
+		        $arr_data['expire_date']=date('Y-m-d', strtotime("+".$validity."days"));
+		        //dd($arr_data);
+		        $transaction = TransactionModel::create($arr_data);
+		        if($transaction)
+	            {
+				 Session::flash('success_payment','Success ! Basic Membership Plan assign successfully ! ');
 
-		$run=$this->pay_page($parameter_post, $salt);
-		return redirect($run);
+				}
+				else
+	            {
+	                Session::flash('error_payment','Error While Assigning Basic Membership Plan  !');
 
-	 	$page_title = 'Payment';
+	            }
+        	    return redirect(url('/').'/front_users/my_business');
+        }
+        else
+        {
+	        $arr_data['business_id']=$business_id;
+	        $arr_data['user_id']=$user_id;
+	        $arr_data['category_id']=$category_id;
+	        $arr_data['membership_id']=$plan_id;
+	        $arr_data['transaction_id']=$txnid;
+	        $arr_data['price']=$price;
+	        $arr_data['transaction_status']='Pending';
+	        $arr_data['start_date']=date('Y-m-d');
+	        $arr_data['expire_date']=date('Y-m-d', strtotime("+".$validity."days"));
+	        //dd($arr_data);
+	        $transaction = TransactionModel::create($arr_data);
+	        $parameter_post = array (	'key' => 'gtKFFx', 'txnid' =>$txnid , 'amount' =>$price,
+				'firstname' =>$user_name, 'email' => $user_mail,
+				'productinfo' =>  $business_name, 'surl' => $surl, 'furl' => $furl);
+			$salt ='eCwWELxi';
+			$run=$this->pay_page($parameter_post, $salt);
+			return redirect($run);
+
+
+	  }
     }
     public function payment_success()
 	{

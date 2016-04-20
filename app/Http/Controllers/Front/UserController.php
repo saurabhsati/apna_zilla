@@ -42,7 +42,7 @@ class UserController extends Controller
 
 
 
-        /*$this->business_public_upload_img_path = url('/')."/uploads/business/business_upload_image/"; 
+        /*$this->business_public_upload_img_path = url('/')."/uploads/business/business_upload_image/";
         $this->business_base_upload_img_path = base_path()."/public/uploads/business/business_upload_image/";*/
 
  	}
@@ -451,6 +451,10 @@ class UserController extends Controller
 
     public function my_business()
     {
+        if(!Session::has('user_name'))
+        {
+            return redirect(url('/'));
+        }
         $id = session('user_id');
          $user_id = base64_decode($id);
 
@@ -1322,7 +1326,7 @@ class UserController extends Controller
                 if(count($arr_exist) > 0)
                 {
                     $business_time_update = BusinessTimeModel::where('business_id',$id)->update($arr_time);
-                } 
+                }
             }
             else {
                     $business_time_add = BusinessTimeModel::create($arr_time);
