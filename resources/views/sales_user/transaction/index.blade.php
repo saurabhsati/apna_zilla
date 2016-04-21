@@ -117,7 +117,7 @@
                 <tr>
                   <th> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
                   <th>Sr. No.</th>
-                  <th>Transaction Id</th>
+                 <!--  <th>Transaction Id</th> -->
                   <th>Transaction Status</th>
                   <th>User Name</th>
                   <th>User Email</th>
@@ -141,9 +141,9 @@
                              value="{{ base64_encode($transaction['id']) }}" />
                     </td>
                     <td>{{ $key+1 }}</td>
-                    <td>
+                  <!--   <td>
                         {{ $transaction['transaction_id'] }}
-                    </td>
+                    </td> -->
                     <td>
                         {{ $transaction['transaction_status'] }}
                     </td>

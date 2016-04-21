@@ -54,7 +54,7 @@
 
                                     <div class="row">
                                         <div class="col-lg-12 company-info">
-                                            <h4><b><u>Transaction Id</u></b> - {{ $arr_single_transaction['transaction_id'] }}</h4>
+                                            <!-- <h4><b><u>Transaction Id</u></b> - {{ $arr_single_transaction['transaction_id'] }}</h4> -->
 
                                             <br/>
                                             <p><i class="fa fa-envelope"></i>
@@ -78,7 +78,7 @@
                                             <thead>
                                                 <tr>
                                                     <th class="center">#</th>
-                                                    <th>Transaction Id</th>
+                                                  <!--   <th>Transaction Id</th> -->
                                                     <th>Membership Plan</th>
                                                      <th>Business Name</th>
                                                     <th>Category Name</th>
@@ -90,9 +90,9 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="center">1</td>
-                                                    <td>
+                                                  <!--   <td>
                                                         {{ $arr_single_transaction['transaction_id'] }}
-                                                    </td>
+                                                    </td> -->
                                                     <td>
                                                         {{ isset($arr_single_transaction['membership']) && $arr_single_transaction['membership']?
                                                         $arr_single_transaction['membership']['title']:'' }}
