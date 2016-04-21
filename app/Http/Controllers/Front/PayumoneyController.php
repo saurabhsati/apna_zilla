@@ -109,7 +109,7 @@ class PayumoneyController extends Controller
 		$arr_data['mode']=$_POST['mode'];
         $arr_data['transaction_status']=$_POST['status'];
         $transaction_id=$_POST['txnid'];
-       // dd($_POST);
+        //dd($_POST);
         $transaction = TransactionModel::where('transaction_id',$transaction_id)->update($arr_data);
         if($transaction)
         {

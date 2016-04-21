@@ -71,7 +71,7 @@
 <!--                                  <input type="radio" class="package_view" name="mem_plan_id" id="mem_plan_id{{ $plan['plan_id'] }}" value="{{ $plan['plan_id'] }}" onclick="get_plan_cost(this);">-->
                                  <!--  <a href="javascript void(0);"  onclick="function submit_plan();">Purchase Plan</a> -->
 
-                                  <button class="package_view-btn" type="submit"  name="mem_plan_sumit"   <?php //if($plan['title']!='Basic'){?>onclick="return submit_plan();" <?php //}?>>Purchase Plan</button>
+                                  <button class="package_view-btn" type="submit"  name="mem_plan_sumit"   <?php //if($plan['title']!='Basic'){?>onclick="return submit_plan();" <?php //}?>>Get Started</button>
                                  </div>
                                  <div class="clr"></div>
                               </div>

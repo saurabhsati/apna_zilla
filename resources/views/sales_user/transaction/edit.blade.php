@@ -1,4 +1,4 @@
-    @extends('web_admin.template.admin')
+@extends('sales_user.template.sales')
 
 
     @section('main_content')
@@ -18,10 +18,10 @@
                     <ul class="breadcrumb">
                         <li>
                             <i class="fa fa-home"></i>
-                            <a href="{{ url('web_admin/dashboard') }}">Dashboard</a>
+                            <a href="{{ url('sales_user/dashboard') }}">Dashboard</a>
                             <span class="divider"><i class="fa fa-angle-right"></i></span>
                             <i class="fa fa-credit-card"></i>
-                            <a href="{{ url('web_admin/transactions') }}"> Payment Transaction</a>
+                            <a href="{{ url('sales_user/transactions') }}"> Payment Transaction</a>
                             <span class="divider"><i class="fa fa-angle-right"></i></span>
                         </li>
                         <li class="active">Invoice</li>
@@ -67,7 +67,7 @@
           <form class="form-horizontal"
                 id="validation-form"
                 method="POST"
-                action="{{ url('/web_admin/transactions/update/'.base64_encode($arr_single_transaction['id'])) }}"
+                action="{{ url('/sales_user/transactions/update/'.base64_encode($arr_single_transaction['id'])) }}"
                 enctype="multipart/form-data"
                 files="true"
                 >
@@ -75,7 +75,7 @@
            {{ csrf_field() }}
 
 
-             <!-- <div class="form-group">
+           <!--   <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="transaction_id">Transaction Id <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" name="transaction_id" data-rule-required="true"

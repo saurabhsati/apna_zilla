@@ -430,6 +430,14 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 		});
 
+			/*-------------Payment Records Module------------*/
+		Route::group(['prefix'=>'transactions'], function (){
+			Route::get('/','SalesUser\TransactionController@index');
+			Route::get('view/{enc_id}','SalesUser\TransactionController@view');
+			Route::get('edit/{enc_id}','SalesUser\TransactionController@edit');
+			Route::post('update/{enc_id}','SalesUser\TransactionController@update');
+		});
+		/*-------------End--------------------------*/
 
 
 
