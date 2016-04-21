@@ -409,7 +409,7 @@
                            $business_area=$slug_business.'@'.$slug_area;
                            ?>
                         <div class="name_product"> <a href="{{url('/')}}/{{$city}}/{{$business_area}}/{{base64_encode($related_business['id'])}}" style="color: #ffffff;">{{ $related_business['business_name'] }}</a></div>
-                        <img src="{{ url('/') }}/uploads/business/main_image/{{ $related_business['main_image'] }}" alt="product img"/>
+                        <img src="{{get_resized_image_path($related_business['main_image'],$main_image_path,200,263) }}" alt="product img"/>
                      </div>
                      <div class="p_infor_detail">
                         <span class="pull-left address-icon-img"><img src="{{ url('/') }}/assets/front/images/home_map.png" alt="location"/>{{$related_business['area']}}</span>

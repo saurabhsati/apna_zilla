@@ -35,7 +35,7 @@
                              <a href="{{url('/').'/deals/details/'.base64_encode($deals['id'])}}" ><div class="col-sm-6 col-md-3 col-lg-3">
                               <div class="dels">
                               <div class="deals-img"><span class="discount ribbon">{{$deals['discount_price'] }}%</span>
-                              <img src="{{ url('/')}}/uploads/deal/{{$deals['deal_image']}}" alt="img" width="250" height="200" />
+                              <img src="{{get_resized_image_path($deals['deal_image'],$deal_image_path,200,250) }}" alt="img"  />
                               </div>
                               <div class="deals-product">
                               <div class="deals-nm"><a href="{{url('/').'/deals/details/'.base64_encode($deals['id'])}}">{{ $deals['name'] }}</a></div>
@@ -63,7 +63,9 @@
 
                           <a href="{{url('/').'/deals/details/'.base64_encode($max_dis_deals['id'])}}"><div class="col-sm-6 col-md-3 col-lg-3">
                           <div class="dels">
-                          <div class="deals-img"><span class="discount ribbon">{{$max_dis_deals['discount_price'] }}%</span><img src="{{ url('/')}}/uploads/deal/{{$max_dis_deals['deal_image']}}" alt="img" width="250" height="200" /></div>
+                          <div class="deals-img"><span class="discount ribbon">{{$max_dis_deals['discount_price'] }}%</span>
+                          <img src="{{get_resized_image_path($max_dis_deals['deal_image'],$deal_image_path,200,250) }}" alt="img"  />
+                          </div>
                           <div class="deals-product">
                           <div class="deals-nm"><a href="{{url('/').'/deals/details/'.base64_encode($max_dis_deals['id'])}}">{{ $max_dis_deals['name'] }}</a></div>
                           <div class="online-spend"></div>
@@ -90,7 +92,8 @@
 
                           <div class="col-sm-6 col-md-3 col-lg-3">
                           <div class="dels">
-                          <div class="deals-img"><span class="discount ribbon">{{$loc_deals['discount_price'] }}%</span><img src="{{ url('/')}}/uploads/deal/{{$loc_deals['deal_image']}}" alt="img" width="250" height="200" /></div>
+                          <div class="deals-img"><span class="discount ribbon">{{$loc_deals['discount_price'] }}%</span>
+                          <img src="{{get_resized_image_path($loc_deals['deal_image'],$deal_image_path,200,250) }}" alt="img"  /></div>
                           <div class="deals-product">
                           <div class="deals-nm"><a href="{{url('/').'/deals/details/'.base64_encode($loc_deals['id'])}}">{{ $loc_deals['name'] }}</a></div>
                           <div class="online-spend"></div>

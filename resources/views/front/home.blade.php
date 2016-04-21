@@ -119,7 +119,7 @@
                                  <div class="col-sm-3 col-md-3 col-lg-3 col-bott-mar">
 
                                  <div class="first-cate-img">
-                                    <img class="over-img" alt="" src="{{url('/')}}/uploads/business/main_image/{{$business['main_image']}}">
+                                    <img class="over-img" alt="" src="{{get_resized_image_path($business['main_image'],$main_image_path,205,270) }}">
                                     @if($business['is_verified']==1)<img class="first-cate-veri" src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>@endif
                                  </div>
                                  <div class="first-cate-white">

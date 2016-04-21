@@ -22,7 +22,7 @@ class DealController extends Controller
  	{
  		$page_title = "Deals and Offers";
 
-
+    $deal_image_path="uploads/deal";
 
  		$obj_deals_info = DealModel::where('is_active','1')->where('end_day', '>=', date('Y-m-d').' 00:00:00')->orderBy('created_at','DESC')->get();
 
@@ -57,12 +57,13 @@ class DealController extends Controller
       $arr_deals_loc_info = $obj_deals_default_loc->toArray();
   }
    //dd($arr_deals_max_dis_info);
- 		return view('front.deal.index',compact('page_title','arr_deals_info','arr_deals_max_dis_info','arr_deals_loc_info'));
+
+ 		return view('front.deal.index',compact('deal_image_path','page_title','arr_deals_info','arr_deals_max_dis_info','arr_deals_loc_info'));
  	}
  	public function deals_by_category($cat_slug)
  	{
         // $id = base64_decode($enc_id);
-
+        $deal_image_path="uploads/deal";
         $obj_category_info = CategoryModel::where('cat_slug',$cat_slug)->get();
         $arr_category_info=array();
         $arr_deals_max_dis_info=array();
@@ -115,11 +116,12 @@ class DealController extends Controller
 
 
         //dd($arr_deals_info);
- 		return view('front.deal.index',compact('page_title','arr_deals_info','arr_deals_max_dis_info','arr_deals_loc_info'));
+ 		return view('front.deal.index',compact('deal_image_path','page_title','arr_deals_info','arr_deals_max_dis_info','arr_deals_loc_info'));
  	}
  	public function details($enc_id)
  	{
  		$page_title = "Details";
+    $deal_image_path="uploads/deal";
  		 $id = base64_decode($enc_id);
  		 $obj_deals_info = DealModel::where('id',$id)->get();
 
@@ -146,10 +148,11 @@ class DealController extends Controller
         // Meta::setDescription($meta_desp);
         Meta::addKeyword($mete_title);
 		//dd($deals_info);
- 		return view('front.deal.detail',compact('page_title','deals_info'));
+ 		return view('front.deal.detail',compact('deal_image_path','page_title','deals_info'));
  	}
     public function fetch_location_deal(Request $request)
     {
+        $deal_image_path="uploads/deal";
         $loc_lat = $request->input('loc_lat');
         $loc_lng = $request->input('loc_lng');
         $search_under_city = $request->input('search_under_city');
@@ -208,7 +211,9 @@ class DealController extends Controller
             {
                  $html.='<a href="'.url('/').'/deals/details/'.base64_encode($deal['id']).'"><div class="col-sm-6 col-md-3 col-lg-3">
                           <div class="dels">
-                          <div class="deals-img"><span class="discount ribbon">'.$deal['discount_price'].'%</span><img src="'.url('/').'/uploads/deal/'.$deal['deal_image'].'" alt="img" width="250" height="200" /></div>
+                          <div class="deals-img"><span class="discount ribbon">'.$deal['discount_price'].'%</span><img src="'.
+                          get_resized_image_path($deal['deal_image'],$deal_image_path,200,250).
+                          '"alt="img"  /></div>
                           <div class="deals-product">
                           <div class="deals-nm"><a href="'.url('/').'/deals/details/'.base64_encode($deal['id']).'">'.$deal['name'].'</a></div>
                           <div class="online-spend"></div>

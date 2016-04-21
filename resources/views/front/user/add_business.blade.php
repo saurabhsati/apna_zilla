@@ -3,10 +3,12 @@
 @section('main_section')
 <style type="text/css">
   select.input_acct {
-    color: #999;
-    height: 100px;
+    color: #555;
+    height: 150px !important;
     text-indent: 1px;
+    padding: 5px 10px;
 }
+.form-control{}
 
 .error{
     color: red;
@@ -14,8 +16,6 @@
     font-weight: lighter;
     text-transform: capitalize;
 }
-
-
 </style>
  <div class="gry_container">
       <div class="container">
@@ -73,7 +73,8 @@
                     <div class="profile_box">
 
                     <div class="ig_profile" id="dvPreview"  >
-                      <img src="{{ url('/') }}/assets/front/images/default_banner.jpg" id="preview_profile_pic" width="80px"/>
+                      <!-- <img src="{{ url('/') }}/assets/front/images/default_banner.jpg" id="preview_profile_pic" width="80px"/> -->
+                      <img src="{{ get_resized_image_path('default_banner.jpg','assets/front/images',205,270) }}" id="preview_profile_pic" width=""/>
                     </div>
                   <div class="button_shpglst">
                     <div style="" class="fileUpload or_btn">
@@ -96,11 +97,9 @@
                     <div class="row">
                   <div class="col-lg-3  label-text" for="business_cat">Business Category </div>
                   <div class="col-sm-9 col-md-9 col-lg-9 m_l">
-<<<<<<< HEAD
+
                   <select class="input_acct" name="business_cat[]" id="business_cat" data-rule-required="true" onchange="updateCategoryOptGroup(this)" multiple="" height="200px">
-=======
-                  <select class="input_acct" name="business_cat[]" id="business_cat" onchange="updateCategoryOptGroup(this)" multiple="" height="100px">
->>>>>>> 2d2f050b3701ba76f0d727ec12b91a5a98be3acb
+
                   <option> Select Business Categories</option>
                    @if(isset($arr_category) && sizeof($arr_category)>0)
                    @foreach($arr_category as $category)
@@ -119,7 +118,7 @@
                     @endforeach
                     @endif
                   </select><a href="javascript:void(0);" onclick="clearCategoryOptGroup(this)">Clear Selected Option</a>
-                  <div class="alert alert-warning">Note: Press Ctrl To Select Multiple Category</div>
+                  <div class="alert alert-warning">Note: Press Ctrl To Select Multiple Sub-Category From Main Category</div>
                   <span class='help-block'>{{ $errors->first('business_cat') }}</span>
                   </div>
                   </div></div>
@@ -152,7 +151,7 @@
                     <div class="row">
                      <div class="col-lg-3  label-text">Business Name :</div>
                       <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                       <input type="text" name="business_name" id="business_name" 
+                       <input type="text" name="business_name" id="business_name"
                               class="input_acct"
                               placeholder="Enter Business Name"
                               data-rule-required="true"

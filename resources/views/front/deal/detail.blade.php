@@ -32,7 +32,7 @@
           <li><img alt="write_review" src="{{ url('/') }}/assets/front/images/verified.png" width="33px"/><span>{{$deals_info[0]['discount_price']}}%</span>  </li>
         </ul>
       </div>
-      <img src="{{ url('/')}}/uploads/deal/{{$deals_info[0]['deal_image']}}" height="350px" alt="deals detail" class="deals-detils"/>
+      <img src="{{get_resized_image_path($deals_info[0]['deal_image'],$deal_image_path,350,1140)}}" height="350px" alt="deals detail" class="deals-detils"/>
     </div>
 
     <div class="clr"></div>

@@ -74,7 +74,8 @@
                     <div class="profile_box">
 
                     <div class="ig_profile" id="dvPreview"  >
-                      <img src="{{ $business_public_img_path.$business['main_image']}}" id="preview_profile_pic"/>
+                     <!--  <img src="{{ $business_public_img_path.$business['main_image']}}" id="preview_profile_pic"/> -->
+                      <img src="{{ get_resized_image_path($business['main_image'],'uploads/business/main_image',205,270) }}" id="preview_profile_pic"/>
                     </div>
                   <div class="button_shpglst">
                     <div style="" class="fileUpload or_btn">
@@ -137,7 +138,7 @@
                       <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                        <input type="text" name="business_name" id="business_name"
                               class="input_acct"
-                              placeholder="Enter Business Name" 
+                              placeholder="Enter Business Name"
                               data-rule-required="true"
                               value="{{ isset($business['business_name'])?$business['business_name']:'' }}"
                               />

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
 use App\Models\BusinessListingModel;
 use App\Models\CategoryModel;
 use App\Models\CityModel;
@@ -13,6 +14,7 @@ use App\Models\LocationModel;
 use App\Models\BusinessCategoryModel;
 use App\Models\PlaceModel;
 use Session;
+use Cache;
 class HomeController extends Controller
 {
     public function __construct()
@@ -131,9 +133,9 @@ class HomeController extends Controller
         //dd($business_listing);
 
  		//dd($arr_business_by_category);
-
+           $main_image_path="uploads/business/main_image";
  		 $cat_img_path = url('/').config('app.project.img_path.category');
- 		return view('front.home',compact('page_title','arr_category','sub_category','category_business','arr_exp_sub_category','cat_img_path','current_city','explore_category','business_listing'));
+ 		return view('front.home',compact('page_title','main_image_path','arr_category','sub_category','category_business','arr_exp_sub_category','cat_img_path','current_city','explore_category','business_listing'));
     }
 
 
@@ -406,6 +408,7 @@ class HomeController extends Controller
     }
     public function get_business_by_exp_categry(Request $request)
     {
+         $main_image_path="uploads/business/main_image";
         $exp_cat=$request->input('exp_cat');
          $obj_sub_category = CategoryModel::where('parent',$exp_cat)->get();
         if($obj_sub_category)
@@ -462,7 +465,7 @@ class HomeController extends Controller
 
             $html.='<a href="'.url('/').'/'.$city.'/'.$business_area.'/'.base64_encode($business['id']).'"><div class="col-sm-3 col-md-3 col-lg-3 col-bott-mar">
                                  <div class="first-cate-img">
-                                    <img class="over-img" alt="" src="'.url('/').'/uploads/business/main_image/'.$business['main_image'].'">
+                                    <img class="over-img" alt="" src="'.get_resized_image_path($business['main_image'],$main_image_path,205,270) .'">
                                      ';
                                      if($business['is_verified']==1){
                                         $html.='<img class="first-cate-veri" src="'.url('/').'/assets/front/images/verified.png" alt="write_review"/>';
@@ -499,6 +502,7 @@ class HomeController extends Controller
 
   public function get_business_history(Request $request)
   {
+     $main_image_path="uploads/business/main_image";
      $history=$request->input('history');
      $url1=explode('|',$history);
      $url=array_unique($url1);
@@ -583,7 +587,7 @@ class HomeController extends Controller
 
             $html.='<a href="'.url('/').'/'.$business_data['link'].'"><div class="col-sm-3 col-md-3 col-lg-3 col-bott-mar">
                                  <div class="first-cate-img">
-                                    <img class="over-img" alt="" src="'.url('/').'/uploads/business/main_image/'.$business_data['main_image'].'">';
+                                    <img class="over-img" alt="" src="'.get_resized_image_path($business_data['main_image'],$main_image_path,205,270) .'">';
                                     if($business_data['is_verified']==1)
                                     {
                                         $html.='<img class="first-cate-veri" src="'.url('/').'/assets/front/images/verified.png" alt="write_review"/>';

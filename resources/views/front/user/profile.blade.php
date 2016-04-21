@@ -92,11 +92,10 @@
                 <div class="profile_box">
                     <div class="ig_profile" id="dvPreview">
 
-                    @if($user['profile_pic']=="default.jpg" || $user['profile_pic']=="")
-                      <img src="{{ url('/')."/images/front/no-profile.png" }}" width="200" height="200" id="preview_profile_pic"  />
-                    @else
-                      <img src="{{$profile_pic_public_path.'/'.$user['profile_pic'] }}" width="200" height="200" id="preview_profile_pic"  />
-                    @endif
+                   <!--  {{$profile_pic_public_path.'/'.$user['profile_pic'] }}
+                   {{ get_resized_image_path($user['profile_pic'],$profile_pic_public_path,200,200) }}-->
+                      <img src="{{ get_resized_image_path($user['profile_pic'],'uploads/users/profile_pic',200,200) }}" width="200" height="200" id="preview_profile_pic"  />
+
 
                     </div>
                         <div class="button_shpglst">
@@ -132,7 +131,7 @@
                                  onblur="validate()"
                                  value="{{ isset($user['first_name'])?$user['first_name']:'' }}"
                                  class="input_acct"
-                                 placeholder="Enter name" 
+                                 placeholder="Enter name"
                                  data-rule-required="true"
                                  />
                                  </div></div>
@@ -147,7 +146,7 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Middle Name :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="middle_name"  
+                         <input type="text" name="middle_name"
                          value="{{ isset($user['middle_name'])?$user['middle_name']:'' }}"
                                 class="input_acct"
                                 placeholder="Enter Middle Name"/>
@@ -292,7 +291,7 @@
                         <div class="row">
                                 <div class="col-lg-3  label-text">Work Experience</div>
                                 <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                                <input type="text" name="work_experience" id="work_experience" 
+                                <input type="text" name="work_experience" id="work_experience"
                                 value="{{ isset($user['work_experience'])?$user['work_experience']:'' }}"
                                 class="input_acct" placeholder="Enter Work Experience"
                                  data-rule-required=""
@@ -306,7 +305,7 @@
                            <div class="row">
                     <div class="col-lg-3  label-text">Occupation :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                         <input type="text" name="occupation" id="occupation" 
+                         <input type="text" name="occupation" id="occupation"
                                 value="{{ isset($user['occupation'])?$user['occupation']:'' }}"
                                 class="input_acct" placeholder="Enter Your Occupation"
                                  data-rule-required=""
@@ -352,7 +351,7 @@
                               data-rule-required=""
                              placeholder="STD">
 
-                        <input type="text" name="home_landline"  
+                        <input type="text" name="home_landline"
                                value="{{ isset($user['home_landline'])?$user['home_landline']:'' }}"
                                class="input_acct half_2_input" data-rule-required=""  placeholder="Enter home landline"/>
                         </div>
@@ -364,7 +363,7 @@
                     <div class="col-lg-3  label-text">Office Landline :</div>
 
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                          <input type="text" name="std_office_landline" id="std_office_landline" 
+                          <input type="text" name="std_office_landline" id="std_office_landline"
                                  value="{{ isset($user['std_office_landline'])?$user['std_office_landline']:'' }}"
                                  class="std_cont_inpt"
                                  data-rule-required=""
@@ -466,7 +465,7 @@ $(document ).ready(function (){
           marital_status:"required",
           work_experience:"required",
           occupation:"required",
- 
+
       },
     // Specify the validation error messages
       messages: {
@@ -481,7 +480,7 @@ $(document ).ready(function (){
 
   });
 });
-</script>  
+</script>
 
 
 

@@ -199,9 +199,9 @@ class CategorySearchController extends Controller
 
         Meta::setDescription($meta_desp);
         Meta::addKeyword($meta_keyword);
-
-
-      return view('front.listing.index',compact('page_title','arr_business','arr_fav_business','arr_sub_cat','parent_category','sub_category','city'));
+//dd(base_path());
+        $main_image_path="uploads/business/main_image";
+      return view('front.listing.index',compact('page_title','arr_business','arr_fav_business','arr_sub_cat','parent_category','sub_category','city','main_image_path'));
     }
 
 
@@ -374,8 +374,8 @@ class CategorySearchController extends Controller
                   $arr_fav_business = array();
                }
 
-
-        return view('front.listing.index',compact('page_title','arr_business','city','arr_sub_cat','parent_category','sub_category','loc','category_set','arr_fav_business'));
+               $main_image_path="uploads/business/main_image";
+        return view('front.listing.index',compact('main_image_path','page_title','arr_business','city','arr_sub_cat','parent_category','sub_category','loc','category_set','arr_fav_business'));
     }
     public function set_location_lat_lng(Request $request)
     {

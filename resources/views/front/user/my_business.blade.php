@@ -78,12 +78,8 @@
                 <div class="row">
                         <div class="col-sm-3 col-md-3 col-lg-3">
                         <div class="product_img">
-                          @if($business['main_image']=='default_banner.jpg')
-                            <img style="height:100% !important;" src="{{ url('/') }}/assets/front/images/default.jpg" alt="list product"/>
-                          @else
-                           <img style="height:100% !important;" src="{{ url('/') }}/uploads/business/main_image/{{ $business['main_image'] }}" alt="list product"/>
-                          @endif
-                           @if($business['is_verified']==1)
+                          <img style="height:100% !important;" src="{{ get_resized_image_path($business['main_image'],$main_image_path,205,270) }}" alt="list product"/>
+                         @if($business['is_verified']==1)
                             <img class="first-cate-veri" src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>@endif
                         </div>
                      </div>

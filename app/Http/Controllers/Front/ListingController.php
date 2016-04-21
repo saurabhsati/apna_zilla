@@ -34,7 +34,7 @@ class ListingController extends Controller
     {
         $enc_id;
         $id = base64_decode($enc_id);
-
+         $main_image_path="uploads/business/main_image";
 
 
        if($id=='')
@@ -153,7 +153,7 @@ class ListingController extends Controller
         Meta::setDescription($arr_business_details['company_info']);
         Meta::addKeyword($arr_business_details['keywords']);
       //dd($arr_business_details);
-        return view('front.listing.detail',compact('page_title','arr_business_details','parent_category','all_related_business','all_category','city','search_by'));
+        return view('front.listing.detail',compact('main_image_path','page_title','arr_business_details','parent_category','all_related_business','all_category','city','search_by'));
     }
 
 

@@ -465,29 +465,7 @@ class UserController extends Controller
         if($obj_business_info)
         {
             $arr_business_info = $obj_business_info->toArray();
-           /* if(count($arr_business_info)>0)
-            {
-                foreach ($arr_business_info as $business)
-                {
-                   $cat_id = $business['business_cat'];
-                }
 
-               $obj_cat_details = CategoryModel::where('cat_id','=',$cat_id)->get();
-
-               if($obj_cat_details)
-               {
-                  $arr_cat_details = $obj_cat_details->toArray();
-               }
-
-                if(count($arr_cat_details)>0)
-                {
-                   foreach ($arr_cat_details as $category)
-                   {
-                       $cat_title = $category['title'];
-                   }
-                }
-
-            }*/
              $obj_main_category = CategoryModel::where('parent','0')->get();
                if($obj_main_category)
                 {
@@ -499,8 +477,8 @@ class UserController extends Controller
                     $arr_sub_category = $obj_sub_category->toArray();
                 }
                 }
-
-        return view('front.user.my_business',compact('arr_business_info','arr_main_category','arr_sub_category'));
+         $main_image_path="uploads/business/main_image";
+        return view('front.user.my_business',compact('main_image_path','arr_business_info','arr_main_category','arr_sub_category'));
     }
 
 
@@ -1481,7 +1459,8 @@ class UserController extends Controller
                 $arr_fav = $obj_fav->toArray();
             }
           }
-          return view('front.user.my_favourite_businesses',compact('arr_fav'));
+          $main_image_path="uploads/business/main_image";
+          return view('front.user.my_favourite_businesses',compact('arr_fav','main_image_path'));
     }
 
 }

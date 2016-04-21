@@ -3,12 +3,12 @@
 
                 <div class="sidebar-brand">Business Information</div>
                 <div class="bor_head">&nbsp;</div>
-                <ul class="">
-                   <li class="brdr"><a href="{{-- url('/').'/front_users/add_business' --}}#">Business Information</a></li>
-                  <li class="brdr"><a href="{{-- url('/').'/front_users/add_location' --}}#">Location Information</a></li>
-                  <li class="brdr"><a href="{{-- url('/').'/front_users/add_contacts' --}}#">Contact Information</a></li>
-                  <li class="brdr"><a href="{{-- url('/').'/front_users/other_details' --}}#">Other Information</a></li>
-                  <li class="brdr"><a href="{{-- url('/').'/front_users/add_services' --}}#">Video/Pictures/Services</a></li>
+                <ul class="add_business">
+                   <li class="brdr"><a class="{{ Request::segment(2)=='add_business'? 'active':'' }} " href="javascript:void(0);">Business Information</a></li>
+                  <li class="brdr"><a class="{{ Request::segment(2)=='add_location'? 'active':'' }} "href="javascript:void(0);">Location Information</a></li>
+                  <li class="brdr"><a class="{{ Request::segment(2)=='add_contacts'? 'active':'' }} "href="javascript:void(0);">Contact Information</a></li>
+                  <li class="brdr"><a class="{{ Request::segment(2)=='other_details'? 'active':'' }} "href="javascript:void(0);">Other Information</a></li>
+                  <li class="brdr"><a class="{{ Request::segment(2)=='add_services'? 'active':'' }} "href="javascript:void(0);">Video/Pictures/Services</a></li>
                    <!--  <li class="brdr has-sub"><a href="#"><span>business keywords</span></a>
                     <ul class="make_list" style="display:none;">
                      <li><a href="#">view/remove keywords</a> </li>

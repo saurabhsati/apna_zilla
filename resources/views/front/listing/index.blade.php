@@ -143,8 +143,8 @@
           <button type="button" class="btn_drop_nw dropdown-toggle form-control" data-toggle="dropdown">
             <span data-bind="label">View</span><span class="caret"></span></button>
             <ul class="dropdown-menu main" role="menu">
-              <li><a href="#" id="list_click">List</a></li>
-              <li><a href="#" id="grid_click">Grid</a></li>
+              <li><a href="javascript:void(0);" id="list_click">List</a></li>
+              <li><a href="javascript:void(0);" id="grid_click">Grid</a></li>
 
             </ul>
           </div>
@@ -315,12 +315,9 @@
       <div class="product_list_view" >
        <div class="row">
          <div class="col-sm-3 col-md-3 col-lg-4">
-          @if($restaurants['main_image']=='default_banner.jpg')
-                            <img style="height:100% !important;" src="{{ url('/') }}/assets/front/images/default.jpg" alt="list product"/>
-                          @else
-          <div class="product_img"><img style="height: 100% !important;" class="over-img" src="{{ url('/') }}/uploads/business/main_image/{{ $restaurants['main_image'] }}" alt="list product"/>
-          @endif
-          @if($restaurants['is_verified']==1)<img class="product-like-icon" src="{{ url('/') }}/assets/front/images/verified_2.png" alt="write_review"/>@endif
+          <div class="product_img">
+          <img style="height: 100% !important;" class="over-img" src="{{ get_resized_image_path($restaurants['main_image'],$main_image_path,205,270) }}" alt="list product"/>
+                    @if($restaurants['is_verified']==1)<img class="product-like-icon" src="{{ url('/') }}/assets/front/images/verified_2.png" alt="write_review"/>@endif
           </div>
         </div>
 
@@ -530,7 +527,7 @@
 
 
                         </div>
-                       <img src="{{ url('/') }}/uploads/business/main_image/{{ $restaurants['main_image'] }}" alt="product img" >
+                       <img src="{{get_resized_image_path($restaurants['main_image'],$main_image_path,205,270) }}" alt="product img" >
                         @if($restaurants['is_verified']==1)<img class="product-like-icon" src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>@endif
                     </div>
 
