@@ -42,7 +42,9 @@
 
                           <li class="nav-item">
                               <div class="dropdown">
-                                <a class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Hi {{ucfirst(Session::get('user_name'))}}  <span class="caret"></span>
+                                <a class="dropdown-toggle profile_dropdown" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Hi {{ucfirst(Session::get('user_name'))}}
+                                <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                    <li><a href="{{ url('/').'/front_users/profile' }}">My Account</a></li>
@@ -90,3 +92,8 @@
 @if(!Auth::check())
 <script type="text/javascript" language="javascript" src="{{ url('/') }}/js/front/fb_auth.js"></script>
 @endif
+<script type="text/javascript">
+  $(document).ready(function (){
+
+  });
+</script>

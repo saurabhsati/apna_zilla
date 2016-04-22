@@ -36,8 +36,9 @@ class HomeController extends Controller
         	$current_city='Mumbai';
         }
     	$arr_category = array();
+
     	$where_arr=array('is_popular'=>1,'parent'=>0,'is_active'=>1);
-    	$obj_main_category = CategoryModel::where($where_arr)->get();
+    	$obj_main_category = CategoryModel::/*remember()->*/where($where_arr)->get();
  		if($obj_main_category)
  		{
  			$arr_category = $obj_main_category->toArray();

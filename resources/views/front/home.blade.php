@@ -396,7 +396,7 @@ $(document).ready(function(){
           else
           {
 
-            $('#history').html('<div> <div class="row">No Recent History</div></div>');
+            $('#history').html('<div> <div class="row"><h4>No Recent History<h4></div></div>');
           }
     }
 

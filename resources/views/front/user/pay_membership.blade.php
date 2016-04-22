@@ -20,7 +20,7 @@
      <ol class="breadcrumb">
        <span>You are here :</span>
        <li><a href="{{ url('/') }}">Home</a></li>
-        <li><a href="{{ url('/').'/front_users/add_business' }}">My Business</a></li>
+        <li><a href="{{ url('/').'/front_users/my_business' }}">My Business</a></li>
        <li class="active">Membership Plan</li>
      </ol>
    </div>
