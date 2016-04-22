@@ -97,8 +97,8 @@
                                    {
                                       if($sub_category['parent']==$main_category['cat_id'])
                                       {
-                                        $category_id=$sub_category['parent'];
-                                       $title=$main_category['title'];
+                                         $category_id=$sub_category['parent'];
+                                        $title=$main_category['title'];
                                       }
                                     }
                                 }

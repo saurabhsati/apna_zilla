@@ -466,12 +466,12 @@ class UserController extends Controller
         {
             $arr_business_info = $obj_business_info->toArray();
 
-             $obj_main_category = CategoryModel::where('parent','0')->get();
+             $obj_main_category = CategoryModel::where('parent','0')->remember(1440)->get();
                if($obj_main_category)
                 {
                     $arr_main_category = $obj_main_category->toArray();
                 }
-                $obj_sub_category = CategoryModel::where('parent','!=','0')->get();
+                $obj_sub_category = CategoryModel::where('parent','!=','0')->remember(1440)->get();
                 if($obj_sub_category)
                 {
                     $arr_sub_category = $obj_sub_category->toArray();

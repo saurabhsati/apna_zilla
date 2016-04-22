@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Watson\Rememberable\Rememberable;
 
 class BusinessCategoryModel extends Model
 {
 
     use SoftDeletes;
+    use Rememberable;
      protected $table='business_category';
      protected $fillable=[
                          'business_id',

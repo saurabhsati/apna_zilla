@@ -33,11 +33,12 @@ class GlobalSiteConfig
         view()->share('popular_cities', $arr_cities);
 
         $data_page='';
-        $obj_static_page=StaticPageModel::where('is_active','1')->where('page_slug','about-us')->first();
+        $obj_static_page=StaticPageModel::where('is_active','1')->where('page_slug','about-us')->remember(60)->first();
         if($obj_static_page)
         {
             $data_page=$obj_static_page->toArray();
         }
+        //dd($data_page);
         view()->share('about_us', $data_page);
 
         $deal_category='';
