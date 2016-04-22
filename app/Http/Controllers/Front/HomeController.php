@@ -82,8 +82,6 @@ class HomeController extends Controller
                 //$category_business[$cat['category_id']]='0';
 	 			$category_business['category_id']=array('0');
 	 		}
-
-
  		}
     //set first explore category business on home page
 
