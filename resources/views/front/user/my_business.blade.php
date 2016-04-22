@@ -1,7 +1,9 @@
 @extends('front.template.master')
 
 @section('main_section')
+<style>
 
+    </style>
 <div class="gry_container">
       <div class="container">
          <div class="row">
@@ -22,31 +24,7 @@
          <div class="row">
 
             <div class="col-sm-12 col-md-3 col-lg-3">
-               <!-- Categories Start -->
-                <!-- <div class="categories_sect sidebar-nav">
 
-                 <div class="sidebar-brand">Related Categories<span class="spe_mobile"><a href="#"></a></span></div>
-                 <div class="bor_head">&nbsp;</div>
-                 <ul class="spe_submobile">
-                    <li class="brdr"><a href="#">Pizza Restaurants</a></li>
-                    <li class="brdr"><a href="#">Mexican Restaurants</a></li>
-                    <li class="brdr"><a href="#">Italian Restaurants</a></li>
-                    <li class="brdr"><a href="#">Chinese Restaurants</a></li>
-                    <li class="brdr"><a href="#">Japanese Restaurants</a></li>
-                    <li class="brdr"><a href="#">Indian Restaurants</a></li>
-                    <li class="brdr"><a href="#">Thai Restaurants</a></li>
-                    <li class="brdr"><a href="#">Breakfast Restaurants </a></li>
-                    <li class="brdr"><a href="#">Seafood Restaurants</a></li>
-                    <li class="brdr"><a href="#">Fast Food Restaurants</a></li>
-                    <li class="brdr"><a href="#">Grill Restaurants</a></li>
-                    <li class="brdr"><a href="#">Sushi Restaurants</a></li>
-                    <li class="brdr"><a href="#">Greek Restaurants</a></li>
-                    <li class="brdr"><a href="#">Cafe Restaurants</a></li>
-                    <li class="brdr1"><a href="#">French Restaurants</a></li>
-                   <li class="brdr1"><a href="#">Korean Restaurants</a></li>
-               </ul>
-                <div class="clearfix"></div>
-              </div> -->
             </div>
 
              <div class="col-sm-12 col-md-12 col-lg-12">
@@ -106,11 +84,15 @@
                           }
 
                           ?>
-                        <h3> @if(isset($title))Category::{{$title}}@endif</h3>
+
                         <div class="product_title">
 
-                        <a href="#">@if($business['is_verified']==1)
-                            <img class="product-like-icon" src="{{ url('/') }}/assets/front/images/verified-green.png" alt="write_review"/>@endif {{ucwords($business['business_name'])}}</a></div>
+                        <a href="javascript:void(0);">
+                        @if($business['is_verified']==1)
+                            <img class="product-like-icon1" src="{{ url('/') }}/assets/front/images/verified-green.png" alt="write_review"/>
+                            @endif
+                            {{ucwords($business['business_name'])}}</a></div>
+                             <h4> @if(isset($title))Category::{{$title}}@endif</h4>
                         <div class="rating_star">
                          <?php
                           if(sizeof($business['reviews']))

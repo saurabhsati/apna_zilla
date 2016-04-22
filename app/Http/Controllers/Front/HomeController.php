@@ -84,11 +84,12 @@ class HomeController extends Controller
 	 		}
  		}
     //set first explore category business on home page
-
+        $first_cat_images='';
         $obj_explore_category = CategoryModel::where('is_explore_directory',1)->get();
         if($obj_explore_category)
         {
             $explore_category = $obj_explore_category->toArray();
+            $first_cat_images=$explore_category[0]['cat_img'];
         }
 
         if(sizeof( $explore_category)>0)
@@ -131,10 +132,10 @@ class HomeController extends Controller
        }
         //dd($business_listing);
 
- 		//dd($arr_business_by_category);
+ 		//dd();
            $main_image_path="uploads/business/main_image";
  		 $cat_img_path = url('/').config('app.project.img_path.category');
- 		return view('front.home',compact('page_title','main_image_path','arr_category','sub_category','category_business','arr_exp_sub_category','cat_img_path','current_city','explore_category','business_listing'));
+ 		return view('front.home',compact('page_title','first_cat_images','main_image_path','arr_category','sub_category','category_business','arr_exp_sub_category','cat_img_path','current_city','explore_category','business_listing'));
     }
 
 
@@ -409,6 +410,12 @@ class HomeController extends Controller
     {
          $main_image_path="uploads/business/main_image";
         $exp_cat=$request->input('exp_cat');
+        $obj_main_category = CategoryModel::where('cat_id',$exp_cat)->remember(1440)->get();
+        if($obj_main_category)
+        {
+            $arr_category = $obj_main_category->toArray();
+            $first_cat_images=$arr_category[0]['cat_img'];
+        }
          $obj_sub_category = CategoryModel::where('parent',$exp_cat)->get();
         if($obj_sub_category)
         {
@@ -473,9 +480,17 @@ class HomeController extends Controller
                                  <div class="first-cate-white">
                                     <div class="f1_container">
                                        <div class="f1_card shadow">
-                                          <div class="cate-addre-block-two front face"><img alt="" src="'.url('/').'/assets/front/images/cate-address.png"> </div>
+                                          <div class="cate-addre-block-two front face">
+                                          <div class="img-hm img_circle">
+                                          <img alt="" src="'.get_resized_image_path($first_cat_images,'uploads/category',16,16) .'">
+                                          </div>
+                                          <div class="img-hm1">
+                                          <img alt="" src="'.url('/').'/assets/front/images/cate-address-ica.png">
+                                          </div>
+                                          </div>
                                        </div>
                                     </div>
+
                                     <div class="resta-name">
                                        <h6>'.$business['business_name'].'</h6>
                                        <span></span>
