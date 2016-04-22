@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class FrontSliderModel extends Model
 {
-    //
+
+    use SoftDeletes;
     protected $table = 'front_slider';
 
    // public $translationModel        = 'App\Model\FrontSliderTranslationModel';

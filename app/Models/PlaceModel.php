@@ -5,8 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
 class PlaceModel extends Model
 {
+
+    use SoftDeletes;
 	protected $table="places";
     protected $fillable=[
                          'country_id',

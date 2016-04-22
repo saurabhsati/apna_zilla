@@ -317,7 +317,7 @@
          <div class="col-sm-3 col-md-3 col-lg-4">
           <div class="product_img">
           <img style="height: 100% !important;" class="over-img" src="{{ get_resized_image_path($restaurants['main_image'],$main_image_path,205,270) }}" alt="list product"/>
-                    @if($restaurants['is_verified']==1)<img class="product-like-icon" src="{{ url('/') }}/assets/front/images/verified_2.png" alt="write_review"/>@endif
+                    @if($restaurants['is_verified']==1)<img class="product-like-icon" src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>@endif
           </div>
         </div>
 
@@ -331,7 +331,7 @@
             ?>
             <a href="{{url('/')}}/{{$city}}/{{$business_area}}/{{base64_encode($restaurants['id'])}}">
             @if($restaurants['is_verified']==1)
-            <img src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>@endif
+            <img src="{{ url('/') }}/assets/front/images/verified-green.png" alt="write_review"/>@endif
                 {{ $restaurants['business_name'] }}
               </a>
 

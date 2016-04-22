@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MemberCostModel extends Model
 {
+
+    use SoftDeletes;
      protected $table = 'membership_cost_category';
 
     protected $fillable = [ 'id',

@@ -4,8 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class BusinessTimeModel extends Model
 {
+
+    use SoftDeletes;
     protected $table = 'business_times';
 
     protected $fillable = ['business_id',

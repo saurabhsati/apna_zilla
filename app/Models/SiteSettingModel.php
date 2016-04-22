@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class SiteSettingModel extends Model
 {
+
+    use SoftDeletes;
     protected $table = 'site_settings';
 
     protected $fillable = ['site_name',

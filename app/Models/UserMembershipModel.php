@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserMembershipModel extends Model
 {
+
     use SoftDeletes;
-    
+
     protected $table = "user_membership";
 
     protected $fillable = [
@@ -24,10 +25,10 @@ class UserMembershipModel extends Model
    /* public function restaurant()
     {
         return $this->belongsTo('App\Models\RestaurantModel','restaurant_id','id');
-    }                        
-    
+    }
+
     public function category()
     {
         return $this->belongsTo('App\Models\CategoryModel','category_id','id');
-    }	*/					
+    }	*/
 }

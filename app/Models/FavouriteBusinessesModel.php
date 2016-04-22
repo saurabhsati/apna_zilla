@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
+
 class FavouriteBusinessesModel extends Model
 {
-    //
+
+    use SoftDeletes;
     protected $table = 'favourite_businesses';
     protected $primaryKey = 'id';
     protected $fillable = [
@@ -15,5 +18,5 @@ class FavouriteBusinessesModel extends Model
 						      'is_favourite'
 
 						       ];
- 
+
 }

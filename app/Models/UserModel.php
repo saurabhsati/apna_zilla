@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
 class UserModel extends Model
 {
-	use SoftDeletes;
+
+    use SoftDeletes;
 
     protected $table = "users";
 
@@ -43,7 +45,7 @@ class UserModel extends Model
 
     public function favourite_businesses()
     {
-        return $this->belongsToMany('App\Models\BusinessListingModel','favourite_businesses', 
+        return $this->belongsToMany('App\Models\BusinessListingModel','favourite_businesses',
           'user_id','business_id')->where('is_favourite','1');
     }
 

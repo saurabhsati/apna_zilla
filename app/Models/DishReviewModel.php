@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
 class DishReviewModel extends Model
 {
+
     use SoftDeletes;
-    
+
     protected $table = "dish_reviews";
 
     protected $fillable = ['restaurant_id',
@@ -17,11 +19,11 @@ class DishReviewModel extends Model
     						'ratings',
     						'message'];
 
-    
+
     public function dish_info()
     {
     	return $this->belongsTo('App\Models\DishModel','dish_id','id');
-    }	
-    
-    				
+    }
+
+
 }

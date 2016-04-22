@@ -9,13 +9,13 @@ use App\Models\AttributeOptionValueModel;
 
 class AttributeModel extends Model
 {
-    //use SoftDeletes;
 
+    use SoftDeletes;
     protected $table = 'attribute';
 
 
-    protected $fillable = ['fk_category_id', 
-                            'attribute_code', 
+    protected $fillable = ['fk_category_id',
+                            'attribute_code',
     						'backend_type',
     						'frontend_input',
     						'frontend_label',

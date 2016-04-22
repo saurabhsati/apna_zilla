@@ -120,7 +120,12 @@ dl, dt, dd, ol, ul, li {
     padding-right: 30px;}
 .search_sub .has-feedback .search-txt { max-width: 59%; width: 100%;}
 /* most category block start here */
-
+.img-buss {
+    display: block;
+    float: left;
+    margin-left: 44px;
+    position: relative;
+}
 .catetory-block{background:#e7e7e7  url(../images/patt-bg.png); background-position: center center; background-repeat: repeat-y; padding: 50px 0; border-top: 1px solid #e7d09c;}
 .category-head h3{text-align: center; font-family: 'noto_sansbold'; font-size: 36px; color: #5c5c5c;}
 .category-head span{display: block; height: 5px; width: 40px; border-radius: 10px; background: #5ead40; margin: 20px auto 50px;}

@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class StaticPageModel extends Model
 {
+
+    use SoftDeletes;
     protected $table = 'static_pages';
     protected $fillable = ['static_page_id',
     						'page_slug',

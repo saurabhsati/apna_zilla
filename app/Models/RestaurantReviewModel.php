@@ -5,8 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
 class RestaurantReviewModel extends Model
 {
+
     use SoftDeletes;
 
     protected $table = 'restaurant_reviews';
@@ -20,5 +22,5 @@ class RestaurantReviewModel extends Model
     public function restaurant_deatails()
     {
     	return $this->belongsTo('App\Models\RestaurantModel','restaurant_id','id');
-    }						
+    }
 }

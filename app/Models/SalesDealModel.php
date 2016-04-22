@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
+
 class SalesDealModel extends Model
 {
-    //
-     use SoftDeletes;
+
+    use SoftDeletes;
+
 
     protected $table = 'deals';
 

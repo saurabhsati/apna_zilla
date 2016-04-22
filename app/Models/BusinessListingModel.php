@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\BusinessCategoryModel;
+
 class BusinessListingModel extends Model
 {
-    //
+
+    use SoftDeletes;
     protected $table='business';
     protected $fillable=['business_name',
                          'user_id',
@@ -112,7 +114,7 @@ class BusinessListingModel extends Model
     {
         return $this->hasMany('App\Models\TransactionModel','business_id','id');
     }
-     
+
 
 
 

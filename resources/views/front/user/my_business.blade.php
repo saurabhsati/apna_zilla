@@ -85,7 +85,9 @@
                      </div>
                     <div class="col-sm-9 col-md-9 col-lg-9">
                     <div class="product_details">
-                     <?php foreach ($business['category'] as $business_category)
+                     <?php
+                     $category_id='';
+                      foreach ($business['category'] as $business_category)
                           {
                              foreach ($arr_sub_category as $sub_category)
                               {
@@ -95,7 +97,7 @@
                                    {
                                       if($sub_category['parent']==$main_category['cat_id'])
                                       {
-                                       $category_id=$sub_category['parent'];
+                                        $category_id=$sub_category['parent'];
                                        $title=$main_category['title'];
                                       }
                                     }
@@ -104,8 +106,11 @@
                           }
 
                           ?>
-                        <h3>@if(isset($title))Category::{{$title}}@endif</h3>
-                        <div class="product_title"><a href="#">{{ucwords($business['business_name'])}}</a></div>
+                        <h3> @if(isset($title))Category::{{$title}}@endif</h3>
+                        <div class="product_title">
+
+                        <a href="#">@if($business['is_verified']==1)
+                            <img class="product-like-icon" src="{{ url('/') }}/assets/front/images/verified-green.png" alt="write_review"/>@endif {{ucwords($business['business_name'])}}</a></div>
                         <div class="rating_star">
                          <?php
                           if(sizeof($business['reviews']))
@@ -136,15 +141,10 @@
                         <ul>
                         <!-- <li><a href="#">SMS/Email</a></li>  -->
                         <li><a href="{{ url('/front_users/edit_business_step1/'.base64_encode($business['id'])) }}" >Edit</a></li>
-                         <!-- <form class="form-horizontal"
-                              id="review-form"
-                              method="GET"
-                              action="{{ url('/front_users/assign_membership').'/'.base64_encode($business['id']).'/'.base64_encode(session('user_id')).'/'.base64_encode($category_id) }}"
-                              enctype="multipart/form-data"
-                              > -->
+
                         <input type="hidden" name="business_id" id="business_id" value="{{$business['id']}}">
                         <input type="hidden" name="business_name" id="business_name" value="{{$business['business_name']}}">
-                        <input type="hidden" name="category_id" id="category_id" value="{{$category_id}}">
+                       <input type="hidden" name="category_id" id="category_id" value="{{$category_id}}">
                         <input type="hidden" name="user_id" id="user_id" value="{{base64_decode(session('user_id'))}}">
                         <?php if(!sizeof($business['membership_plan_details'])>0)
                          { ?>

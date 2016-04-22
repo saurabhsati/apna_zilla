@@ -151,7 +151,7 @@
                      <div class="clr"></div>
                   </div>
                </div>
-               
+
                <div class="clr"></div>
                <div class="modal-footer">
                 <div class="login_social">
@@ -450,7 +450,7 @@ If you need any more details on RightNext Verified, please refer to
             <div class="container">
                <div class="row">
                   <div class="col-sm-12 col-md-12 col-lg-12">
-                     <div class="row">
+                     <div class="row"><?php print_r($about_us);exit;?>
                      @if(sizeof($about_us)>0)
                         <div class="col-sm-3 col-md-3 col-lg-3">
                          <div class="footer_heading">{{$about_us['page_title']}}</div>
@@ -1262,7 +1262,7 @@ if ($("html").hasClass("no-touch")) {
 
  } //END IF no-touch for hover script & removeAttr for the links to work
 </script>
-       
+
        <script src="{{ url('/') }}/assets/front/js/bootstrap.min.js" type="text/javascript"></script>
         <!-- Listing details Tabbing End -->
         <script src="{{ url('/') }}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>

@@ -80,7 +80,8 @@ class HomeController extends Controller
 	 		}
 	 		else
 	 		{
-	 			$category_business[$cat['category_id']]='0';
+                //$category_business[$cat['category_id']]='0';
+	 			$category_business['category_id']=array('0');
 	 		}
 
 
