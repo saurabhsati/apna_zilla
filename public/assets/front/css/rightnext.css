@@ -94,6 +94,8 @@ dl, dt, dd, ol, ul, li {
 :focus { outline: none !important; }
 
 /*Header top section*/
+.img-hm1{position: relative;}
+.img-hm {left: 14px;position: absolute;top: 14px;z-index: 1;}
 .header{  }
 .header .logo{margin: 10px 0; display: block; float: left;}
 .intro-header{background: url(../images/intro-bg.jpg) no-repeat center center; background-size: cover; text-align: center;}
