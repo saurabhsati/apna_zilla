@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-//use Watson\Rememberable\Rememberable;
+use Watson\Rememberable\Rememberable;
 
 class CategoryModel extends Model
 {
 
     use SoftDeletes;
-    //use Rememberable;
+    use Rememberable;
     protected $table = "categories";
      protected $fillable = ['cat_desc',
                             'cat_slug',

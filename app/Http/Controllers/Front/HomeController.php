@@ -37,7 +37,7 @@ class HomeController extends Controller
     	$arr_category = array();
 
     	$where_arr=array('is_popular'=>1,'parent'=>0,'is_active'=>1);
-    	$obj_main_category = CategoryModel::where($where_arr)->/*remember(60)->*/get();
+    	$obj_main_category = CategoryModel::where($where_arr)->remember(60)->get();
  		if($obj_main_category)
  		{
  			$arr_category = $obj_main_category->toArray();
@@ -410,7 +410,7 @@ class HomeController extends Controller
     {
          $main_image_path="uploads/business/main_image";
         $exp_cat=$request->input('exp_cat');
-        $obj_main_category = CategoryModel::where('cat_id',$exp_cat)->/*remember(60)->*/get();
+        $obj_main_category = CategoryModel::where('cat_id',$exp_cat)->remember(60)->get();
         if($obj_main_category)
         {
             $arr_category = $obj_main_category->toArray();
