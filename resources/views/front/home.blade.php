@@ -125,7 +125,9 @@
                                  <div class="first-cate-white">
                                     <div class="f1_container">
                                        <div class="f1_card shadow">
-                                          <div class="cate-addre-block-two front face"><img alt="" src="{{url('/')}}/assets/front/images/cate-address.png"> </div>
+                                          <div class="cate-addre-block-two front face">
+                                          <div class="img-hm"><img alt="" src="{{url('/')}}/assets/front/images/plus-incc.png"></div>
+                                              <div class="img-hm1"> <img alt="" src="{{url('/')}}/assets/front/images/cate-address-ica.png"> </div></div>
                                        </div>
                                     </div>
                                     <div class="resta-name">
