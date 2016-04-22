@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Watson\Rememberable\Rememberable;
+
 
 class StaticPageModel extends Model
 {
 
     use SoftDeletes;
-    use Rememberable;
+
     protected $table = 'static_pages';
     protected $fillable = ['static_page_id',
     						'page_slug',

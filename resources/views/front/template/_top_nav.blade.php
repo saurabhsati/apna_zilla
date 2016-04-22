@@ -42,7 +42,7 @@
 
                           <li class="nav-item">
                               <div class="dropdown">
-                                <a class="dropdown-toggle profile_dropdown" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <a class="dropdown-toggle profile_dropdown" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Hi {{ucfirst(Session::get('user_name'))}}
                                 <span class="caret"></span>
                                 </a>

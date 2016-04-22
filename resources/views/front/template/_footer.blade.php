@@ -453,10 +453,10 @@ If you need any more details on RightNext Verified, please refer to
                      <div class="row"><?php //print_r($about_us);exit;?>
                      @if(sizeof($about_us)>0)
                         <div class="col-sm-3 col-md-3 col-lg-3">
-                         <div class="footer_heading">{{$about_us['page_title']}}</div>
+                         <div class="footer_heading">{{$about_us['page_title'] or ''}}</div>
                            <div class="heading_bor"></div>
                            <div class="menu_name">
-                            <?php echo substr($about_us['page_desc'],0,250).'..';?>
+                            <?php echo isset($about_us['page_desc'])?str_limit($about_us['page_desc'],250):"";?>
                             <a href="{{ url('/') }}/page/aboutus" class="{{ Request::segment(2)=='aboutus'? 'act':'' }}">View More</a>
                            </div>
                         </div>

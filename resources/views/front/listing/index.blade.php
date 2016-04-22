@@ -89,7 +89,7 @@
         </li>
 
         <li id="distance" style="cursor:pointer;" class="new_new_act1 <?php if(Session::has('distance')){echo 'open';}?>">
-         <a onclick="#" href="javascript:void(0);" class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Distance <span class="caret"></span></a>
+         <a onclick="#" href="javascript:void(0);" class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Distance <span class="caret"></span></a>
 
         <?php
         if(Session::has('search_city_title'))
