@@ -56,6 +56,8 @@
                              </div>
                           </li>
 
+
+
                         @else
 
                         <li class="nav-item"><a data-toggle="modal" data-target="#login_poup">Login/Register</a></li>

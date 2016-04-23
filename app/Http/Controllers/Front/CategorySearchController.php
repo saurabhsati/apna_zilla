@@ -17,6 +17,7 @@ use DB,Event;
 use Session;
 use URL;
 use Meta;
+use View;
 //use Request;
 
 class CategorySearchController extends Controller
@@ -50,9 +51,10 @@ class CategorySearchController extends Controller
       return view('front.category_search',compact('page_title','arr_sub_category','cat_slug','cat_id','c_city'));
     }
 
-    public function get_business($city,$cat_id)
+    public function get_business(Request $request,$city,$cat_id,$ajax_set='false')
     {
         $page_title	='Business List';
+        //echo $ajax_set;//exit;//die();
         /* Get Business By Category and City  */
         if($cat_id==0)
         {
@@ -117,26 +119,7 @@ class CategorySearchController extends Controller
                   $obj_business_listing->orderBy('visited_count','DESC');
               }
 
-              /* Get the final list of business */
-              $obj_business_listing = $obj_business_listing->paginate(10);
 
-
-
-              if($obj_business_listing)
-              {
-                $arr_business = [];
-                $arr_tmp = $obj_business_listing->toArray();
-                //dd($arr_tmp);
-                if(sizeof($arr_tmp['data'])>0)
-                {
-                  $arr_business = $arr_tmp['data'];
-                  $total_pages =  $arr_tmp['total'];
-                  $current_page = $arr_tmp['current_page'];
-                  $per_page = $arr_tmp['per_page'];
-                  $last_page = $arr_tmp['last_page'];
-                }
-
-              }
            }
         }
 
@@ -218,7 +201,75 @@ class CategorySearchController extends Controller
         Meta::addKeyword($meta_keyword);
 
        $main_image_path="uploads/business/main_image";
-      return view('front.listing.index',compact('page_title','arr_business','arr_fav_business','arr_sub_cat','parent_category','sub_category','city','main_image_path'));
+       if($ajax_set=='false')
+       {
+          $obj_business_listing = $obj_business_listing->paginate(2);
+
+
+
+              if($obj_business_listing)
+              {
+                $arr_business = [];
+                $total_pages = 0;
+                $current_page = 0;
+                $per_page = 0;
+                $last_page = 0;
+                $arr_tmp = $obj_business_listing->toArray();
+                //dd($arr_tmp);
+                if( isset($arr_tmp['data']) && sizeof($arr_tmp['data'])>0)
+                {
+                  $arr_business = $arr_tmp['data'];
+                  $total_pages =  $arr_tmp['total'];
+                  $current_page = $arr_tmp['current_page'];
+                  $per_page = $arr_tmp['per_page'];
+                  $last_page = $arr_tmp['last_page'];
+                }
+                else
+                {
+                  $arr_business = $arr_tmp;
+                }
+
+              }
+          return view('front.listing.index',compact('page_title','total_pages','current_page','per_page','arr_business','arr_fav_business','arr_sub_cat','parent_category','sub_category','city','main_image_path'));
+       }
+       else
+       {
+          $page=$request->input('page');
+          $view_set= $request->input('view_set');
+
+          $obj_business_listing = $obj_business_listing->paginate(2);
+
+          if($obj_business_listing)
+          {
+            $arr_business = [];
+            $total_pages = 0;
+            $current_page = 0;
+            $per_page = 0;
+            $last_page = 0;
+            $arr_tmp = $obj_business_listing->toArray();
+
+            if(sizeof($arr_tmp['data'])>0)
+            {
+              $arr_business = $arr_tmp['data'];
+
+              if($view_set=='list_view_is_set')
+              {
+                 $view  = View::make('front.listing._list_view_load_more_business',compact('arr_business','main_image_path','city'));
+              }
+              else
+              {
+                $view  = View::make('front.listing._grid_view_load_more_business',compact('arr_business','main_image_path','city'));
+              }
+              $arr_data['content']  = $view->render();
+              $arr_data['page']  = $arr_tmp['current_page'];
+              return response()->json($arr_data);
+            }
+
+
+          }
+
+
+       }
     }
 
 

@@ -621,8 +621,8 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::get('popular-city','Front\AllCategoryController@popular_city');
 		Route::get('all-categories','Front\AllCategoryController@index');
 		Route::get('category-{cat_slug}/{cat_id}','Front\CategorySearchController@index');
-		Route::get('all-options/ct-{cat_id}','Front\CategorySearchController@get_business');
-		Route::get('{cat_location}/ct-{cat_id}','Front\CategorySearchController@search_business_by_location');
+		Route::get('all-options/ct-{cat_id}/{ajax?}','Front\CategorySearchController@get_business');
+		Route::get('{cat_location}/ct-{cat_id}/{ajax?}','Front\CategorySearchController@search_business_by_location');
 		Route::get('{business_area}/{cat_id}','Front\ListingController@list_details');
 
 	});

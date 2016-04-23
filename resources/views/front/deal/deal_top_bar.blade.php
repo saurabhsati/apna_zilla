@@ -9,10 +9,13 @@
         <div class="row">
        <div class="col-lg-12">
             <div class="categ">
+            <?php  //print_r($deal_category); ?>
            <ul class="hidden-sm hidden-xs">
           <li><a href="{{ url('/deals') }}" class="<?php if( url('/deals')==Request::url()){echo'active';}?>">All Deals</a></li>
           @if(isset($deal_category) && sizeof($deal_category)>0)
+
             @foreach($deal_category as $key => $category)
+
                  <li><a class="<?php if($category['cat_slug']==Request::segment(2)){echo'active';}?>" href="{{ url('/deals') }}/{{$category['cat_slug']}}">{{ ucfirst($category['title'])}}</a></li>
                    @endforeach
                           @endif

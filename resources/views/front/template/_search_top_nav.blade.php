@@ -151,7 +151,8 @@
 
         $(document.body).on( 'click', '.search_buisness', function( event )
         {
-         var city_search=$("#ho").val();
+         var city_search=$("#city_search").val();
+         //alert(city_search);
          var category_search=$("#category_search").val();
            if(city_search!='')
           {

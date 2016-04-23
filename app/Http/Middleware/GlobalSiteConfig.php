@@ -70,6 +70,8 @@ class GlobalSiteConfig
         if($obj_allow_deal_category)
         {
             $deal_category = $obj_allow_deal_category->toArray();
+            return $deal_category;
+            //dd($deal_category);
         }
     }
 

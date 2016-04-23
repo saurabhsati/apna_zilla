@@ -306,14 +306,17 @@
 
 
     <!-- location popup end -->
-
-    <div id="list_view">
+    <input type="hidden" value="list_view_is_set" id="view_set" name="view_set">
+    <div id="list_view"  >
       @if(isset($arr_business) && sizeof($arr_business)>0)
 
-      @foreach($arr_business as $restaurants)
+      @foreach($arr_business as $key => $restaurants)
 
-      <div class="product_list_view" >
-       <div class="row">
+      <div class="product_list_view" id="more_business_list" @if($key==0)
+        data-members-pages="{{ $total_pages or '0' }}"
+        data-members-current-page-list="{{ $current_page or '1' }}"
+        data-members-perpage="{{ $per_page or '2' }}" @endif>
+       <div class="row" >
          <div class="col-sm-3 col-md-3 col-lg-4">
           <div class="product_img">
           <img style="height: 100% !important;" class="over-img" src="{{ get_resized_image_path($restaurants['main_image'],$main_image_path,205,270) }}" alt="list product"/>
@@ -423,27 +426,30 @@
               </div>
 
             </div>
+
           </div>
-
-        </div>
-
-
-
+            </div>
 
         @endforeach
         @else
 
       <span>No Records Available</span>
          @endif
-      </div>
 
+      </div>
+      <div id="animation_image" style="display: none; position:absolute; margin-left: 35%;">
+             <img src="{{ url('/') }}/assets/front/images/ajax-loader.gif" height="60px" width="60px">
+            </div>
       <!--Product Grid Start  -->
       <div  id="grid_view" style="display: none;">
-          <div class="row">
- @if(isset($arr_business) && sizeof($arr_business)>0)
-      @foreach($arr_business as $restaurants)
-  <div class="col-sm-6 col-md-6 col-lg-6">
-                         <div class="product_grid_view">
+        <div class="row" class="product_list_view" id="more_business_list1"
+        data-members-pages="{{ $total_pages or '0' }}"
+        data-members-current-page-grid="{{ $current_page or '1' }}"
+        data-members-perpage="{{ $per_page or '2' }}">
+         @if(isset($arr_business) && sizeof($arr_business)>0)
+          @foreach($arr_business as $restaurants)
+          <div class="col-sm-6 col-md-6 col-lg-6">
+                  <div class="product_grid_view">
                   <div class="p_images">
                      <div class="grid_product">
                        <?php
@@ -550,10 +556,6 @@
                 </div>
                 </div>
 
-
-
-
-
 @endforeach
 @else
 <span>No Records Available</span>
@@ -561,8 +563,11 @@
 </div>
 
 
-
+<div id="animation_image" style="display: none; position:absolute; margin-left: 35%;">
+    <img src="{{ url('/') }}/assets/front/images/ajax-loader.gif">
 </div>
+</div>
+
 
 <!--Product Lisiting End  -->
 
@@ -572,19 +577,18 @@
 </div>
 
 </div>
-<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
+
 
 <script type="text/javascript">
 
   var site_url = "{{ url('/') }}";
   var csrf_token = "{{ csrf_token() }}";
 
+
  $(document).ready(function()
   {
-    //search by location
-        $("#location_search").autocomplete(
-                {
+   /* search by location */
+        $("#location_search").autocomplete({
                   minLength:3,
                   source:site_url+"/get_location_auto",
                   search: function( event, ui )
@@ -614,8 +618,114 @@
 
                   });
                   }
-                });
+         });
 
+
+    /* Infinite scrolling */
+      var loading  =false; /* to prevents multipal ajax loads*/
+      var total_pages = parseInt($("#more_business_list").attr("data-members-pages"));
+      var per_page = parseInt($("#more_business_list").attr("data-members-perpage"));
+
+
+      var height=100;
+
+      $(document).scroll(function()
+      {
+        var view_set=$("#view_set").val();
+        if(view_set=='list_view_is_set')
+        {
+          var current_page = parseInt($("#more_business_list").attr("data-members-current-page-list"));
+          var next_page = parseInt(current_page)+1;
+          //var loading=loading_list;
+
+
+        }
+        else
+        {
+           var current_page = parseInt($("#more_business_list1").attr("data-members-current-page-grid"));
+           var next_page = parseInt(current_page)+1;
+           //var loading=loading_grid;
+        }
+
+
+       /*detect page scroll*/
+
+        if($(document).scrollTop() > height)  /* user scrolled to bottom of the page?*/
+        {
+          console.log(next_page);
+
+          if( (next_page <=total_pages) &&  loading==false) /* there's more data to load*/
+          {
+            loading = true; /* prevent further ajax loading */
+            $('#animation_image').show(); /* show loading image */
+            /* load data from the server using a HTTP POST request*/
+            var city_search=$("#city_search").val();
+
+            var category_search=$("#category_search").val();
+             if(city_search!='')
+            {
+              city=city_search;
+            }
+            var category_id=$("#category_id").val();
+            if(category_search=='')
+            {
+                alert("Select Category First");
+                event.preventDefault();
+                return false;
+            }
+            else
+            {
+                var token      = jQuery("input[name=_token]").val();
+                var get_url=site_url+'/'+city+'/all-options/ct-'+category_id+'/true';
+                var datastring  = { _token:token ,page:next_page,view_set:view_set};
+
+                jQuery.ajax({
+                url:get_url,
+                type:'GET',
+                data: datastring,
+                dataType: 'json',
+                success:function(data)
+                {
+                  if(view_set=='list_view_is_set')
+                  {
+                    $("#more_business_list").attr("data-members-current-page-list",data.page);
+                    $("#more_business_list:last").after(data.content); /* append received data into the element*/
+                    $('#animation_image').hide(); /*hide loading image*/
+                    var loading = false;
+                  }
+                  else
+                  {
+                    $("#more_business_list1").attr("data-members-current-page-grid",data.page);
+                    $("#more_business_list1:last").after(data.content); /* append received data into the element*/
+                    $('#animation_image').hide(); /*hide loading image*/
+                    var loading = false;
+                  }
+
+
+
+                },
+                error: function ()
+                {
+                  $('#animation_image').hide();
+                  //  console.log(arguments[2]);
+
+
+                }
+              });
+
+
+            }
+          }
+          else
+          {
+           $('#animation_image').hide();
+          }
+
+        }
+        else
+        {
+        }
+      });/* end of  $(window).scroll(function() */
 
 
 
@@ -650,10 +760,13 @@
           $('#list_click').click(function() {
             $('#grid_view').hide();
             $('#list_view').show();
+            $("#view_set").attr('value','list_view_is_set');
+
           });
           $('#grid_click').click(function() {
             $('#list_view').hide();
             $('#grid_view').show();
+            $("#view_set").attr('value','grid_view_is_set');
           });
 
 
@@ -889,6 +1002,7 @@
 
 
      // });
+
         function Send_SMS(business_id)
         {
           var site_url   = "{{ url('/') }}";

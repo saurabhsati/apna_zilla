@@ -1198,7 +1198,7 @@ var supports = (function () {
 })();
 
 
-if ($("html").hasClass("no-touch")) {
+/*if ($("html").hasClass("no-touch")) {
 
 
   $('.dropdown > a').removeAttr("data-toggle");
@@ -1260,7 +1260,7 @@ if ($("html").hasClass("no-touch")) {
         })
     })(jQuery, this);
 
- } //END IF no-touch for hover script & removeAttr for the links to work
+ }*/ //END IF no-touch for hover script & removeAttr for the links to work
 </script>
 
        <script src="{{ url('/') }}/assets/front/js/bootstrap.min.js" type="text/javascript"></script>
