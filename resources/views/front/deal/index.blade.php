@@ -1,7 +1,7 @@
 @extends('front.template.master')
 
 @section('main_section')
-
+  @include('front.deal._search_top_location')
 <!--search area end here-->
  <div class="gry_container" style="padding: 7px 0 16px;">
      @include('front.deal.deal_top_bar')
