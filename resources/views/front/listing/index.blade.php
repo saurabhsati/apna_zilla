@@ -315,7 +315,7 @@
       <div class="product_list_view" id="more_business_list" @if($key==0)
         data-members-pages="{{ $total_pages or '0' }}"
         data-members-current-page-list="{{ $current_page or '1' }}"
-        data-members-perpage="{{ $per_page or '2' }}" @endif>
+        data-members-perpage="{{ $per_page or '2' }}" @endif >
        <div class="row" >
          <div class="col-sm-3 col-md-3 col-lg-4">
           <div class="product_img">
@@ -445,7 +445,7 @@
         <div class="row" class="product_list_view" id="more_business_list1"
         data-members-pages="{{ $total_pages or '0' }}"
         data-members-current-page-grid="{{ $current_page or '1' }}"
-        data-members-perpage="{{ $per_page or '2' }}">
+        data-members-perpage="{{ $per_page or '2' }}" >
          @if(isset($arr_business) && sizeof($arr_business)>0)
           @foreach($arr_business as $restaurants)
           <div class="col-sm-6 col-md-6 col-lg-6">
@@ -567,8 +567,8 @@
     <img src="{{ url('/') }}/assets/front/images/ajax-loader.gif">
 </div>
 </div>
-
-
+<div class="clr"></div><br>
+<a class="btn btn-post" href="javascript:void(0);" id="load_more_business" >Load More</a>
 <!--Product Lisiting End  -->
 
 
@@ -626,43 +626,32 @@
       var total_pages = parseInt($("#more_business_list").attr("data-members-pages"));
       var per_page = parseInt($("#more_business_list").attr("data-members-perpage"));
 
-
-      var height=100;
-
-      $(document).scroll(function()
+      $("#load_more_business").click(function()
       {
+        //alert();return false;
         var view_set=$("#view_set").val();
         if(view_set=='list_view_is_set')
         {
           var current_page = parseInt($("#more_business_list").attr("data-members-current-page-list"));
           var next_page = parseInt(current_page)+1;
-          //var loading=loading_list;
-
-
+          var loading=false;
         }
         else
         {
            var current_page = parseInt($("#more_business_list1").attr("data-members-current-page-grid"));
            var next_page = parseInt(current_page)+1;
-           //var loading=loading_grid;
+           var loading=false;
         }
 
-
-       /*detect page scroll*/
-
-        if($(document).scrollTop() > height)  /* user scrolled to bottom of the page?*/
-        {
-          console.log(next_page);
-
-          if( (next_page <=total_pages) &&  loading==false) /* there's more data to load*/
+        if( (next_page <=total_pages) &&  loading==false) // there's more data to load
           {
-            loading = true; /* prevent further ajax loading */
-            $('#animation_image').show(); /* show loading image */
-            /* load data from the server using a HTTP POST request*/
+            loading = true;//  prevent further ajax loading
+            $('#animation_image').show();//  show loading image
+             //    load data from the server using a HTTP POST request
             var city_search=$("#city_search").val();
 
             var category_search=$("#category_search").val();
-             if(city_search!='')
+            if(city_search!='')
             {
               city=city_search;
             }
@@ -686,29 +675,36 @@
                 dataType: 'json',
                 success:function(data)
                 {
-                  if(view_set=='list_view_is_set')
+                  if(data.content.length>0)
                   {
-                    $("#more_business_list").attr("data-members-current-page-list",data.page);
-                    $("#more_business_list:last").after(data.content); /* append received data into the element*/
-                    $('#animation_image').hide(); /*hide loading image*/
-                    var loading = false;
+                   if(view_set=='list_view_is_set')
+                    {
+                      $("#more_business_list").attr("data-members-current-page-list",data.page);
+                      $("#more_business_list:last").after(data.content); // append received data into the element
+                      $('#animation_image').hide();// hide loading image
+                      var loading = false;
+
+                    }
+                    else
+                    {
+                      $("#more_business_list1").attr("data-members-current-page-grid",data.page);
+                      $("#more_business_list1").after(data.content);//  append received data into the element
+                      $('#animation_image').hide(); //hide loading image
+                      var loading = false;
+                    }
                   }
-                  else
-                  {
-                    $("#more_business_list1").attr("data-members-current-page-grid",data.page);
-                    $("#more_business_list1:last").after(data.content); /* append received data into the element*/
-                    $('#animation_image').hide(); /*hide loading image*/
-                    var loading = false;
-                  }
+
 
 
 
                 },
                 error: function ()
                 {
+                  $('#load_more_business').css('display','none');
                   $('#animation_image').hide();
                   //  console.log(arguments[2]);
 
+                  var loading = false;
 
                 }
               });
@@ -718,18 +714,16 @@
           }
           else
           {
-           $('#animation_image').hide();
+             $('#animation_image').hide();
+             var loading = false;
           }
-
-        }
-        else
-        {
-        }
-      });/* end of  $(window).scroll(function() */
 
 
 
       });
+
+
+});
 
          //droupdown//
 
@@ -761,12 +755,14 @@
             $('#grid_view').hide();
             $('#list_view').show();
             $("#view_set").attr('value','list_view_is_set');
+             $('#load_more_business').css('display','block');
 
           });
           $('#grid_click').click(function() {
             $('#list_view').hide();
             $('#grid_view').show();
             $("#view_set").attr('value','grid_view_is_set');
+             $('#load_more_business').css('display','block');
           });
 
 

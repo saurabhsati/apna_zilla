@@ -203,6 +203,7 @@ class CategorySearchController extends Controller
        $main_image_path="uploads/business/main_image";
        if($ajax_set=='false')
        {
+         // $obj_business_listing = $obj_business_listing->get();
           $obj_business_listing = $obj_business_listing->paginate(2);
 
 
@@ -242,10 +243,7 @@ class CategorySearchController extends Controller
           if($obj_business_listing)
           {
             $arr_business = [];
-            $total_pages = 0;
-            $current_page = 0;
-            $per_page = 0;
-            $last_page = 0;
+
             $arr_tmp = $obj_business_listing->toArray();
 
             if(sizeof($arr_tmp['data'])>0)
@@ -260,7 +258,14 @@ class CategorySearchController extends Controller
               {
                 $view  = View::make('front.listing._grid_view_load_more_business',compact('arr_business','main_image_path','city'));
               }
-              $arr_data['content']  = $view->render();
+              if($view!='')
+              {
+                $arr_data['content']  = $view->render();
+              }
+              else
+              {
+                $arr_data['content']  = "no_data";
+              }
               $arr_data['page']  = $arr_tmp['current_page'];
               return response()->json($arr_data);
             }
