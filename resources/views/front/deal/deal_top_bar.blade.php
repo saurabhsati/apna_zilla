@@ -19,7 +19,7 @@
               {
                   $city="Mumbai";
               }?>
-          <li><a href="{{ url('/') }}/{{$city}}/deals" class="<?php if( url('/deals')==Request::url()){echo'active';}?>">All Deals</a></li>
+          <li><a href="{{ url('/') }}/{{$city}}/deals" class="<?php if( url('/').'/'.$city.'/deals'==Request::url()){echo'active';}?>">All Deals</a></li>
           @if(isset($deal_category) && sizeof($deal_category)>0)
 
             @foreach($deal_category as $key => $category)
@@ -27,7 +27,18 @@
                  <li><a class="<?php if($category['cat_slug']==Request::segment(3)){echo'active';}?>" href="{{ url('/') }}/{{$city}}/deals/{{$category['cat_slug']}}">{{ ucfirst($category['title'])}}</a></li>
                    @endforeach
                           @endif
-
+                 <!--  <li class="dropdown w3_megamenu-fw"><a href="#" class="dropdown-toggle ser" data-hover="dropdown">More <b style="margin-left:5px;vertical-align:super;" class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                          <li class="w3_megamenu-content withdesc">
+                             <ul>
+                                 <li><a href="#"> Eyelash Extensions</a></li>
+                                  <li><a href="#"> Facial</a></li>
+                                  <li><a href="#"> Makeup Application</a></li>
+                                  <li><a href="#"> Tinting</a></li>
+                                </ul>
+                          </li>
+                        </ul>
+                        </li>   -->
 
                 </ul>
 
