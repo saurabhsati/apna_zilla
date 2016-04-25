@@ -64,9 +64,14 @@ class BusinessListingController extends Controller
         {
             $arr_sub_category = $obj_sub_category->toArray();
         }
+        $business_listing =[];
+    	$obj_business_listing = BusinessListingModel::with(['category','user_details','reviews','membership_plan_details'])->get();
+        if($obj_business_listing)
+        {
+            $business_listing = $obj_business_listing->toArray();
+        }
+        //dd($business_listing);
 
-    	$business_listing = BusinessListingModel::with(['category','user_details','reviews','membership_plan_details'])->get()->toArray();
-    	//dd($business_listing);
         return view('web_admin.business_listing.index',compact('page_title','business_listing','business_public_img_path','arr_main_category','arr_sub_category'));
     }
     public function create()

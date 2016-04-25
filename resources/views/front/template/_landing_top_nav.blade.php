@@ -29,7 +29,7 @@
                                  <li class="nav-submenu-item"><a href="#">Sub menu</a></li>
                                  </ul>
                            </li>-->
-                           <li class="nav-item"><a href="{{ url('/deals') }}">Deals</a></li>
+                           <li class="nav-item"><a href="{{ url('/') }}/{{$city}}/deals">Deals</a></li>
 
                             {{-- @if ($user = Sentinel::check()) --}}
                             @if(Session::has('user_name'))
@@ -47,7 +47,7 @@
                                 </ul>
                              </div>
                           </li>
-                            
+
                         @else
 
                         <li class="nav-item"><a data-toggle="modal" data-target="#login_poup">Login/Register</a></li>

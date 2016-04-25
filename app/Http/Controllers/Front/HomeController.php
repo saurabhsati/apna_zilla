@@ -13,8 +13,10 @@ use App\Models\CityModel;
 use App\Models\LocationModel;
 use App\Models\BusinessCategoryModel;
 use App\Models\PlaceModel;
+use App\Models\DealModel;
 use Session;
 use Cache;
+
 class HomeController extends Controller
 {
     public function __construct()
@@ -278,6 +280,7 @@ class HomeController extends Controller
                     {
                         $arr_final_list[$key]['cat_id'] = $list['cat_id'];
                         $arr_final_list[$key]['label'] = $list['title'];
+                        $arr_final_list[$key]['span'] = 'in business category';
                         $arr_final_list[$key]['data_type'] = 'list';
                     }
 
@@ -294,6 +297,9 @@ class HomeController extends Controller
                 $city=Session::get('city_id');
             }
             $ckey=sizeof($arr_final_list);
+
+
+            /* Serch text as business name */
             $obj_business_listing = BusinessListingModel::where('city',$city)
                                     ->where(function ($query) use ($search_term) {
                                     $query->where('business_name','like',"%".$search_term."%")
@@ -314,6 +320,7 @@ class HomeController extends Controller
 
                         $arr_final_list[$ckey]['business_id'] = base64_encode($business['id']);
                         $arr_final_list[$ckey]['label'] = $business['business_name'];
+                        $arr_final_list[$ckey]['span'] = 'in business profile';
                         $arr_final_list[$ckey]['city'] = $business['city'];
                         $arr_final_list[$ckey]['slug']=$slug_business.'@'.$slug_area;
                         $arr_final_list[$ckey]['data_type'] = 'detail';
@@ -323,6 +330,34 @@ class HomeController extends Controller
 
 
             }
+
+            /* Deals by search text */
+            $cckey=sizeof($arr_final_list);
+
+            $obj_deals_info = DealModel::where('is_active','1')
+                                        ->where('name','like',"%".$search_term."%")
+                                        ->orderBy('created_at','DESC')->get();
+
+            if($obj_deals_info)
+            {
+                $arr_deals_info = $obj_deals_info->toArray();
+                $arr_final_business = array();
+                if(sizeof($arr_deals_info)>0)
+                {
+                    foreach ($arr_deals_info as $key => $deal)
+                    {
+                        $arr_final_list[$cckey]['deal_id'] = base64_encode($deal['id']);
+                        $arr_final_list[$cckey]['label'] = $deal['name'];
+                        $arr_final_list[$cckey]['span'] = 'in deal';
+
+                        $arr_final_list[$cckey]['slug']=urlencode(str_replace(' ','-',($deal['name'])));
+                        $arr_final_list[$cckey]['data_type'] = 'deal_detail';
+                        $cckey++;
+                    }
+                }
+            }
+
+                                    //return response()->json($obj_business_listing);
            if(sizeof($arr_final_list)>0)
             {
                  return response()->json($arr_final_list);
@@ -394,6 +429,50 @@ class HomeController extends Controller
 
     }
 
+    public function get_deal_category_auto(Request $request)
+    {
+        if($request->has('term'))
+        {
+            $search_term='';
+            $search_term = $request->input('term');
+            $arr_obj_deal_cat =CategoryModel::where('is_active','1')->where('is_allow_to_add_deal',1) /*CityModel::where('is_active','=',1)*/
+                                            ->where(function ($query) use ($search_term) {
+                                             $query->where("title", 'like', "%".$search_term."%");
+                                                                                        })->get();
+            $arr_list_deal_cat = array();
+            if($arr_obj_deal_cat)
+            {
+                $arr_list_deal_cat = $arr_obj_deal_cat->toArray();
+
+                $arr_final_deal_list = array();
+
+                if(sizeof($arr_list_deal_cat)>0)
+                {
+                    foreach ($arr_list_deal_cat as $key => $list)
+                    {
+                        $arr_final_deal_list[$key]['id'] = $list['cat_id'];
+                        $arr_final_deal_list[$key]['label'] = $list['title'];
+                        $arr_final_deal_list[$key]['slug'] = $list['cat_slug'];
+                    }
+
+                }
+
+            }
+             if(sizeof($arr_final_deal_list)>0)
+            {
+                 return response()->json($arr_final_deal_list);
+            }
+            else
+            {
+                return response()->json(array());
+            }
+
+        }
+        else
+        {
+           return response()->json(array());
+        }
+    }
     public function set_city(Request $request)
     {
             $city_id = $request->input('city_id');

@@ -40,6 +40,10 @@
                                     $set_txt_name= ucwords(Session::get('category_serach'));
                                    }
                                 }
+                                else if($segment2=='deals')
+                                {
+                                  $set_txt_name= ucwords(urldecode(str_replace('-',' ',Request::segment(3))));
+                                }
                                 else
                                 {
                                   if(isset($category_set))
@@ -121,6 +125,7 @@
             select:function(event,ui)
             {
               $("input[name='category_search']").val(ui.item.label);
+              //$("input[name='category_search']<span>").val(ui.item.span);
               $("input[name='category_id']").val(ui.item.cat_id);
               var city_search=$("#city_search").val();
               if(city_search!='')
@@ -128,14 +133,20 @@
                 city=city_search;
               }
               var type = ui.item.data_type;
-              if(type=='list') {
+              if(type=='list')
+              {
                   var get_url=site_url+'/'+city+'/all-options/ct-'+ui.item.cat_id;
-              window.location.href = get_url;
+                  window.location.href = get_url;
+              }
+              else if(type=='deal_detail')
+              {
+                  var get_url=site_url+'/'+city+'/deals/'+ui.item.slug+'/'+ui.item.deal_id;
+                  window.location.href = get_url;
               }
               else
               {
-                var get_url=site_url+'/'+city+'/'+ui.item.slug+'/'+ui.item.business_id;
-                window.location.href = get_url;
+                  var get_url=site_url+'/'+city+'/'+ui.item.slug+'/'+ui.item.business_id;
+                  window.location.href = get_url;
               }
              },
             response: function (event, ui)
@@ -144,6 +155,10 @@
                      'position': 'absolute'
 
                   });
+
+             /*$(".ui.autocomplete", ui.item.label)
+                 .append('<span style="color:#7b7b7b"> '+ui.item.span+'</span>');*/
+
             }
           });
 

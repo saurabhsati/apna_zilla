@@ -1,7 +1,7 @@
 @extends('front.template.master')
 
 @section('main_section')
-  @include('front.deal._search_top_location')
+ @include('front.template._search_top_nav')
 <!--search area end here-->
  <div class="gry_container" style="padding: 7px 0 16px;">
      @include('front.deal.deal_top_bar')
@@ -32,18 +32,18 @@
 
                      @if(sizeof($arr_deals_info)>0)
                           @foreach($arr_deals_info as $deals)
-                             <a href="{{url('/').'/deals/details/'.base64_encode($deals['id'])}}" ><div class="col-sm-6 col-md-3 col-lg-3">
+                             <a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$deals['name']))}}/{{base64_encode($deals['id'])}}" ><div class="col-sm-6 col-md-3 col-lg-3">
                               <div class="dels">
                               <div class="deals-img"><span class="discount ribbon">{{$deals['discount_price'] }}%</span>
                               <img src="{{get_resized_image_path($deals['deal_image'],$deal_image_path,200,250) }}" alt="img"  />
                               </div>
                               <div class="deals-product">
-                              <div class="deals-nm"><a href="{{url('/').'/deals/details/'.base64_encode($deals['id'])}}">{{ $deals['name'] }}</a></div>
+                              <div class="deals-nm"><a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$deals['name']))}}/{{base64_encode($deals['id'])}}">{{ $deals['name'] }}</a></div>
                               <div class="online-spend"></div>
                                       <div class="price-box">
                                       <div class="price-new">£<?php echo round($deals['price']-(($deals['price'])*($deals['discount_price']/100)));?></div>
                                           <div class="price-old">£{{ $deals['price'] }} <!--| <span>offers 50% OFF</span>--></div>
-                                          <div class="view"><a href="{{url('/').'/deals/details/'.base64_encode($deals['id'])}}" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
+                                          <div class="view"><a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$deals['name']))}}/{{base64_encode($deals['id'])}}" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
                                       </div>
                               </div>
                               </div>
@@ -61,18 +61,19 @@
                       @if(sizeof($arr_deals_max_dis_info)>0)
                           @foreach($arr_deals_max_dis_info as $max_dis_deals)
 
-                          <a href="{{url('/').'/deals/details/'.base64_encode($max_dis_deals['id'])}}"><div class="col-sm-6 col-md-3 col-lg-3">
+                          <a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$max_dis_deals['name']))}}/{{base64_encode($max_dis_deals['id'])}}">
+                          <div class="col-sm-6 col-md-3 col-lg-3">
                           <div class="dels">
                           <div class="deals-img"><span class="discount ribbon">{{$max_dis_deals['discount_price'] }}%</span>
                           <img src="{{get_resized_image_path($max_dis_deals['deal_image'],$deal_image_path,200,250) }}" alt="img"  />
                           </div>
                           <div class="deals-product">
-                          <div class="deals-nm"><a href="{{url('/').'/deals/details/'.base64_encode($max_dis_deals['id'])}}">{{ $max_dis_deals['name'] }}</a></div>
+                          <div class="deals-nm"><a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$max_dis_deals['name']))}}/{{base64_encode($max_dis_deals['id'])}}">{{ $max_dis_deals['name'] }}</a></div>
                           <div class="online-spend"></div>
                                   <div class="price-box">
                                   <div class="price-new">£<?php echo round($max_dis_deals['price']-(($max_dis_deals['price'])*($max_dis_deals['discount_price']/100)));?></div>
                                       <div class="price-old">£{{ $max_dis_deals['price'] }} <!--| <span>offers 50% OFF</span>--></div>
-                                      <div class="view"><a href="{{url('/').'/deals/details/'.base64_encode($max_dis_deals['id'])}}" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
+                                      <div class="view"><a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$max_dis_deals['name']))}}/{{base64_encode($max_dis_deals['id'])}}" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
                                   </div>
                           </div>
                           </div>
@@ -89,22 +90,22 @@
 
                        @if(sizeof($arr_deals_loc_info)>0)
                           @foreach($arr_deals_loc_info as $loc_deals)
-
+                          <a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$loc_deals['name']))}}/{{base64_encode($loc_deals['id'])}}">
                           <div class="col-sm-6 col-md-3 col-lg-3">
                           <div class="dels">
                           <div class="deals-img"><span class="discount ribbon">{{$loc_deals['discount_price'] }}%</span>
                           <img src="{{get_resized_image_path($loc_deals['deal_image'],$deal_image_path,200,250) }}" alt="img"  /></div>
                           <div class="deals-product">
-                          <div class="deals-nm"><a href="{{url('/').'/deals/details/'.base64_encode($loc_deals['id'])}}">{{ $loc_deals['name'] }}</a></div>
+                          <div class="deals-nm"><a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$loc_deals['name']))}}/{{base64_encode($loc_deals['id'])}}">{{ $loc_deals['name'] }}</a></div>
                           <div class="online-spend"></div>
                                   <div class="price-box">
                                   <div class="price-new">£<?php echo round($loc_deals['price']-(($loc_deals['price'])*($loc_deals['discount_price']/100)));?></div>
                                       <div class="price-old">£{{ $loc_deals['price'] }} <!--| <span>offers 50% OFF</span>--></div>
-                                      <div class="view"><a href="{{url('/').'/deals/details/'.base64_encode($loc_deals['id'])}}" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
+                                      <div class="view"><a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$loc_deals['name']))}}/{{base64_encode($loc_deals['id'])}}" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
                                   </div>
                           </div>
                           </div>
-                          </div>
+                          </div></a>
 
                       @endforeach
                       @else

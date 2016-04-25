@@ -125,6 +125,11 @@
                   var get_url=site_url+'/'+city+'/all-options/ct-'+ui.item.cat_id;
               window.location.href = get_url;
               }
+              else if(type=='deal_detail')
+              {
+                  var get_url=site_url+'/'+city+'/deals/'+ui.item.slug+'/'+ui.item.deal_id;
+                  window.location.href = get_url;
+              }
               else
               {
                 var get_url=site_url+'/'+city+'/'+ui.item.slug+'/'+ui.item.business_id;

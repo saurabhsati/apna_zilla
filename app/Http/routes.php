@@ -493,7 +493,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	Route::post('/set_distance_range','Front\CategorySearchController@set_distance_range');
 	Route::post('/set_rating','Front\CategorySearchController@set_rating');
 	Route::post('/clear_rating','Front\CategorySearchController@clear_rating');
-
+	Route::get('/get_deal_category_auto','Front\HomeController@get_deal_category_auto');
 
 	Route::group(array('prefix' => '/payumoney'), function()
 	{
@@ -606,11 +606,11 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 	});
 
-	Route::group(array('prefix' => '/deals'), function()
+	Route::group(array('prefix' => '/{city}'), function()
 	{
-		Route::get('/',									['as' =>'deals_page'								,'uses' =>'Front\DealController@index']);
-		Route::get('details/{enc_id}',					['as' =>'deals_detail'								,'uses' =>'Front\DealController@details']);
-		Route::get('{enc_id}',					        ['as' =>'deals_by_category'			,'uses' =>'Front\DealController@deals_by_category']);
+		Route::get('deals/',							['as' =>'deals_page'								,'uses' =>'Front\DealController@index']);
+		Route::get('deals/{deal_slug}/{enc_id}',					['as' =>'deals_detail'								,'uses' =>'Front\DealController@details']);
+		Route::get('deals/{cat_slug}',					['as' =>'deals_by_category'			,'uses' =>'Front\DealController@deals_by_category']);
 		Route::post('fetch_location_deal',				['as' =>'deals_by_location'			,'uses' =>'Front\DealController@fetch_location_deal']);
 
 	});
