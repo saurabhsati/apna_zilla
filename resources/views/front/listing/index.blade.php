@@ -16,17 +16,8 @@
   .remo_fav i{
     color: #f9a820 !important;
   }
-
-
-
-
   </style>
 
-   <?php
-  // echo "<pre>";
-  // print_r($arr_business);
-  // exit();
-  ?>
   <div class="gry_container">
     <div class="container">
      <div class="row">

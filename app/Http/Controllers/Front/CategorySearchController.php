@@ -205,10 +205,7 @@ class CategorySearchController extends Controller
        {
          // $obj_business_listing = $obj_business_listing->get();
           $obj_business_listing = $obj_business_listing->paginate(2);
-
-
-
-              if($obj_business_listing)
+             if($obj_business_listing)
               {
                 $arr_business = [];
                 $total_pages = 0;
