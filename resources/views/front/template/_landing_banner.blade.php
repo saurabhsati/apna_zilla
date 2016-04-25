@@ -142,7 +142,12 @@
             {
 
             }
-          });
+          }).data("ui-autocomplete")._renderItem = function (ul, item) {
+             return $("<li></li>")
+                 .data("item.autocomplete", item)
+                 .append( item.label +'<span style="color:#7b7b7b"> '+item.span+'</span>')
+                 .appendTo(ul);
+                 };
     });
 
         $(document.body).on( 'click', '.search_home_buisness', function( event )
