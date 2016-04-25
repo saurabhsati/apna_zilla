@@ -97,7 +97,7 @@ class CategorySearchController extends Controller
         }
 
         /* Merge the business by city and Business by category result  and generate the complete business id's array */
-
+         $obj_business_listing=[];
         if(sizeof($key_business_city)>0 && sizeof($key_business_cat))
         {
             $result = array_intersect($key_business_city,$key_business_cat);
@@ -199,11 +199,11 @@ class CategorySearchController extends Controller
 
         Meta::setDescription($meta_desp);
         Meta::addKeyword($meta_keyword);
-
        $main_image_path="uploads/business/main_image";
-       if($ajax_set=='false')
+       if($ajax_set=='false' && sizeof($obj_business_listing)>0)
        {
          // $obj_business_listing = $obj_business_listing->get();
+
           $obj_business_listing = $obj_business_listing->paginate(2);
              if($obj_business_listing)
               {
@@ -230,7 +230,7 @@ class CategorySearchController extends Controller
               }
           return view('front.listing.index',compact('page_title','total_pages','current_page','per_page','arr_business','arr_fav_business','arr_sub_cat','parent_category','sub_category','city','main_image_path'));
        }
-       else
+       else if(sizeof($obj_business_listing)>0)
        {
           $page=$request->input('page');
           $view_set= $request->input('view_set');
@@ -271,6 +271,12 @@ class CategorySearchController extends Controller
           }
 
 
+       }
+       else
+       {
+       //dd("test");
+        $arr_business =[];
+          return view('front.listing.index',compact('page_title','total_pages','current_page','per_page','arr_business','arr_fav_business','arr_sub_cat','parent_category','sub_category','city','main_image_path'));
        }
     }
 

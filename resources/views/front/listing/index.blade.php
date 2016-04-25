@@ -559,7 +559,8 @@
 </div>
 </div>
 <div class="clr"></div><br>
-<a class="btn btn-post" href="javascript:void(0);" id="load_more_business" >Load More</a>
+@if(isset($arr_business) && sizeof($arr_business)>0)
+<a class="btn btn-post" href="javascript:void(0);" id="load_more_business" >Load More</a>@endif
 <!--Product Lisiting End  -->
 
 

@@ -35,6 +35,9 @@
                                $set_txt_name='';
                                if($segment2=='all-options')
                                {
+                                ?>
+                                <input type="hidden" value="business_module" id="module_type" name="module_type">
+                                <?php
                                  if(Session::has('category_serach'))
                                   {
                                     $set_txt_name= ucwords(Session::get('category_serach'));
@@ -42,6 +45,9 @@
                                 }
                                 else if($segment2=='deals')
                                 {
+                                  ?>
+                                <input type="hidden" value="deal_module" id="module_type" name="module_type">
+                                <?php
                                   $set_txt_name= ucwords(urldecode(str_replace('-',' ',Request::segment(3))));
                                 }
                                 else
@@ -56,6 +62,7 @@
                                   }
                                 }
                                 ?>
+
                                <input type="text"  class="search-txt" placeholder="Resturant" id="category_search" name="category_search"
                                 value="{{$set_txt_name}}" >
                                   <input type="hidden" id="category_id" name="category_id"
@@ -81,6 +88,8 @@
         var csrf_token = "{{ csrf_token() }}";
        $(document).ready(function()
         {
+          var view=$("input[name='module_type']").val();
+
            $("#city_search").autocomplete(
           {
             minLength:0,
@@ -98,7 +107,7 @@
             {
               $("input[name='get_city']").val(ui.item.label);
               $("input[name='city_id']").val(ui.item.id);
-               setSerchCity(ui.item.id,ui.item.label);
+               setSerchCity(ui.item.id,ui.item.label,view);
 
             },
             response: function (event, ui)
@@ -125,14 +134,15 @@
             select:function(event,ui)
             {
               $("input[name='category_search']").val(ui.item.label);
-              //$("input[name='category_search']<span>").val(ui.item.span);
-              $("input[name='category_id']").val(ui.item.cat_id);
+             $("input[name='category_id']").val(ui.item.cat_id);
               var city_search=$("#city_search").val();
               if(city_search!='')
               {
                 city=city_search;
               }
               var type = ui.item.data_type;
+              /*alert(type);
+              $("#module_type").attr('value',type);*/
               if(type=='list')
               {
                   var get_url=site_url+'/'+city+'/all-options/ct-'+ui.item.cat_id;
@@ -160,7 +170,12 @@
                  .append('<span style="color:#7b7b7b"> '+ui.item.span+'</span>');*/
 
             }
-          });
+          }).data("ui-autocomplete")._renderItem = function (ul, item) {
+             return $("<li></li>")
+                 .data("item.autocomplete", item)
+                 .append( item.label +'<span style="color:#7b7b7b"> '+item.span+'</span>')
+                 .appendTo(ul);
+            };
 
         });
 
@@ -187,7 +202,7 @@
           }
         });
 
-        function setSerchCity(city_id,city_title)
+        function setSerchCity(city_id,city_title,view)
         {
           var category_id=$("#category_id").val();
           var fromData = {city_id:city_id, city_title:city_title,_token:csrf_token};
@@ -200,9 +215,18 @@
 
                success: function(response)
                {
-                 if (response.status == "1") {
-                   var get_url=site_url+'/'+city_title+'/all-options/ct-'+category_id;
-                   window.location.href = get_url;
+                 if (response.status == "1")
+                  {
+                    if(view=='business_module')
+                    {
+                     var get_url=site_url+'/'+city_title+'/all-options/ct-'+category_id;
+                     window.location.href = get_url;
+                    }
+                     else if(view=='deal_module')
+                     {
+                      var get_url=site_url+'/'+city_title+'/deals';
+                     window.location.href = get_url;
+                     }
                   //window.location.href = location.href;
                  }
                  return false;
