@@ -50,6 +50,7 @@
                                 <?php
                                   $set_txt_name= ucwords(urldecode(str_replace('-',' ',Request::segment(3))));
                                 }
+
                                 else
                                 {
                                   if(isset($category_set))
@@ -63,8 +64,11 @@
                                 }
                                 ?>
 
-                               <input type="text"  class="search-txt" placeholder="Resturant" id="category_search" name="category_search"
-                                value="{{$set_txt_name}}" >
+                               <input type="text"  class="search-txt"  id="category_search" name="category_search"
+                               @if(Request::segment(2)=='all-categories')
+                                 placeholder ="<?php echo 'Search by Business Category Or Deal name ';?>"
+                                @else
+                                value="{{$set_txt_name}}" @endif >
                                   <input type="hidden" id="category_id" name="category_id"
                                   @if(Session::has('category_id'))
                                   value="{{Session::get('category_id') }}"
