@@ -360,6 +360,7 @@ class CategorySearchController extends Controller
                          $distance=Session::get('distance');
                          $search_range=(int)$distance;
                          //echo $search_range;exit;
+
                          if($obj_business_listing)
                           {
                               $obj_business_listing = $obj_business_listing->having('distance', ' < ', $search_range);
@@ -450,13 +451,17 @@ class CategorySearchController extends Controller
 
           /* Pagination on load 0r view more */
 
-          if($page=='1' && sizeof($obj_business_listing)>0 && isset($obj_business_listing))
+          if($page=='1' && count($obj_business_listing)>0 && isset($obj_business_listing))
           {
-             $total_record_count = clone $obj_business_listing;
-
-            $totalResult = $total_record_count->addSelect(DB::raw('count(*) as record_count'))->get();
-            if(isset($totalResult) && sizeof($totalResult)>0)
+              $total_record_count = clone $obj_business_listing;
+             $chk_arr=[];
+              $chk_arr=$total_record_count->get()->toArray();
+            // dd($chk_arr);
+             if(isset($chk_arr) && sizeof($chk_arr)>0)
             {
+            $totalResult = $total_record_count->addSelect(DB::raw('count(*) as record_count'))->get();
+            /*if(isset($totalResult) && sizeof($totalResult)>0)
+            {*/
                  $totalItems = 1;
 
 
