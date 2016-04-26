@@ -356,6 +356,7 @@ $(document).ready(function(){
         //$('#loc_deal').modal('hide');
          var business_search_by_location=$('#business_search_by_location').val();
          var search_under_city=$('#business_search_by_city').val();
+         var session_city="{{Session::get('city')}}";
          var loc_lat=$('#location_latitude').val();
          var loc_lng=$('#location_longitude').val();
          if(search_under_city!='')
