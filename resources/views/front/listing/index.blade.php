@@ -179,7 +179,7 @@
                   if(sizeof($cat_location)>0 && isset($cat_location[1]))
                   {
                      $loc=str_replace('-',' ',$cat_location[1]);
-
+                     $loc_slug=$cat_location[1];
                   }
               }
               else
@@ -193,8 +193,8 @@
                 value=""
                @endif/>
               <input type="hidden" class="input-searchbx " id="business_search_by_location"
-               @if(!empty($loc))
-               value="{{ucwords($loc)}}"
+               @if(!empty($loc_slug))
+               value="{{ucwords($loc_slug)}}"
                @else
                 value=""
                @endif
@@ -232,9 +232,9 @@
       </div>
 
          <!-- SEND SMS POPUP START-->
-         @if(isset($arr_business) && sizeof($arr_business)>0)
-            @foreach($arr_business as $restaurants)
-            <div class="modal fade" id="sms-{{ $restaurants['id'] }}" role="dialog">
+        @if(isset($arr_business) && sizeof($arr_business)>0 )
+        @foreach($arr_business as $restaurants)
+        <div class="modal fade" id="sms-{{ $restaurants['id'] }}" role="dialog">
           <div class="modal-dialog">
            <!-- Modal content-->
             <div class="modal-content">
@@ -579,8 +579,31 @@
 </div>
 </div>
 <div class="clr"></div><br>
-@if(isset($arr_business) && sizeof($arr_business)>0)
-<a class="btn btn-post" href="javascript:void(0);" id="load_more_business" >Load More</a>@endif
+
+@if(isset($arr_business) && sizeof($arr_business)>0 && Request::segment(2)=='all-options')
+<a class="btn btn-post" href="javascript:void(0);" id="load_more_business" >Load More</a>
+@else
+<!-- && $arr_paginate_business['to'] > 1 -->
+ @if(isset($arr_paginate_business['to'])  )
+<div style="float:right;" class="pagination">
+                                <ul class="pagination">
+                                    <?php
+                                        $arr_get_params = Input::input();
+                                    ?>
+                                    @for ($i = 1; $i <= $arr_paginate_business['last_page']; $i++)
+                                        <?php
+                                            $arr_page = ['page'=>$i];
+                                            $full_data = array_merge($arr_get_params, $arr_page);
+                                            $url_param = http_build_query($full_data);
+                                        ?>
+                                        <li class="{{ ($arr_paginate_business['current_page'] == $i) ? ' active' : '' }}">
+                                            <a href="{{ Request::url().'?'.$url_param }}">{{ $i }}</a>
+                                        </li>
+                                    @endfor
+                                </ul>
+                              </div>
+      @endif
+ @endif
 <!--Product Lisiting End  -->
 
 
@@ -617,7 +640,7 @@
 
 
                     $("input[name='location_search']").val(ui.item.label);
-                    $("#business_search_by_location").attr('value',ui.item.label);
+                    $("#business_search_by_location").attr('value',ui.item.loc_slug);
                     $("#location_search").attr('value',ui.item.loc);
                     $('#location_latitude').attr('value',ui.item.loc_lat);
                     $('#location_longitude').attr('value',ui.item.loc_lng);

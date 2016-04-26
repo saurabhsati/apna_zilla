@@ -113,3 +113,87 @@
             </div>
    @endforeach
 @endif
+
+
+ <!-- SEND SMS POPUP START-->
+        @if(isset($arr_business) && sizeof($arr_business)>0)
+        @foreach($arr_business as $restaurants)
+        <div class="modal fade" id="sms-{{ $restaurants['id'] }}" role="dialog">
+          <div class="modal-dialog">
+           <!-- Modal content-->
+            <div class="modal-content">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+             <div class="modal-body">
+             <form class="form-horizontal"
+                                    id="validation-form"
+                                    method="POST"
+                                    action="{{ url('/listing/send_sms/') }}"
+                                    enctype="multipart/form-data"
+                                    >
+                {{ csrf_field() }}
+
+
+
+                <b class="head-t">Get information by SMS/Email</b>
+                 <p class="in-li">Enter the details below and click on SEND</p>
+                  <div class="soc-menu-top">
+                      <div class="col-lg-11">
+                  <div class="user_box_sub">
+                                 <div class="row">
+                          <div class="col-lg-3  label-text">Name</div>
+                          <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                               <input type="text" placeholder="Enter Name"   id="name-{{ $restaurants['id'] }}" name="name-{{ $restaurants['id'] }}" class="input_acct">
+                                 <div class="error_msg" id="err_name-{{ $restaurants['id'] }}"></div>
+                              </div>
+                               </div>
+                          </div>
+
+
+
+                  <div class="user_box_sub">
+                                 <div class="row">
+                          <div class="col-lg-3  label-text">Mobile</div>
+                          <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                              <div class="input-group">
+                              <span id="basic-addon1" class="input-group-addon">+91</span>
+                              <input type="text" required="" aria-describedby="basic-addon1" id="sms_mobile_no-{{ $restaurants['id'] }}" name="sms_mobile_no-{{ $restaurants['id'] }}" placeholder="Mobile" class="form-control">
+
+                              </div>
+                                <div class="error_msg" id="err_sms_mobile_no-{{ $restaurants['id'] }}"></div>
+                              </div>
+                               </div>
+                          </div>
+
+
+                      <div class="user_box_sub">
+                                 <div class="row">
+                          <div class="col-lg-3  label-text">Email</div>
+                          <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                               <input type="text" placeholder="Enter Email" name="email-{{ $restaurants['id'] }}" id="email-{{ $restaurants['id'] }}" class="input_acct">
+                                <div class="error_msg" id="err_email-{{ $restaurants['id'] }}"></div>
+                              </div>
+                               </div>
+                          </div>
+                          <div class="clr"></div>
+                             <div class="user_box_sub">
+                                 <div class="row">
+                          <div class="col-lg-3  label-text">&nbsp;</div>
+                          <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                          <div class="submit-btn">
+                          <input type="hidden" id="business_id-{{ $restaurants['id'] }}" name="business_id-{{ $restaurants['id'] }}" value="{{ $restaurants['id'] }}">
+                           <button type="button" name="send_sms" id="send_sms" onclick="Send_SMS({{ $restaurants['id'] }})">Send</button>
+                            </div>
+                          </div>
+                                 </div>
+                          </div>
+                      </div>
+                  </div>
+                 <div class="clr"></div>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+          <!-- SEND SMS POPUP END -->
+         @endforeach
+        @endif

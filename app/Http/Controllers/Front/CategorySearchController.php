@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Pagination\Paginator;
+
 use App\Models\CategoryModel;
 use App\Models\BusinessListingModel;
 use App\Models\BusinessCategoryModel;
@@ -285,11 +287,10 @@ class CategorySearchController extends Controller
 
 
      /* Search by location */
-    public function search_business_by_location($city,$cat_loc,$cat_id,$ajax_set='false')
+    public function search_business_by_location(Request $request,$city,$cat_loc,$cat_id,$page='1')
     {
 
           $page_title ='Search by Location ';
-
           /* explode the category & location string */
           $cat_location=explode('@',$cat_loc);
           if(!empty($cat_location))
@@ -370,7 +371,7 @@ class CategorySearchController extends Controller
                               $obj_business_listing = $obj_business_listing->having('distance', ' < ', 100);
                           }
                         }
-                     // dd($obj_business_listing->get());
+
 
                   }
 
@@ -384,6 +385,8 @@ class CategorySearchController extends Controller
                    $obj_business_listing->orderBy('visited_count','DESC');
 
                   }
+
+
               }
           }
           /* Get Sub -Category data */
@@ -401,6 +404,8 @@ class CategorySearchController extends Controller
                     $parent_category = $obj_parent_category->toArray();
               }
           }
+
+
           /* Get Related Sub -Category data */
 
           $obj_sub_cat = CategoryModel::where('parent',$main_cat_id)->orderBy('is_popular', 'DESC')->get();
@@ -408,6 +413,8 @@ class CategorySearchController extends Controller
           {
               $arr_sub_cat = $obj_sub_cat->toArray();
           }
+
+
 
           /* If User has login see he can see their favorite  business */
           if(Session::has('user_mail'))
@@ -437,27 +444,53 @@ class CategorySearchController extends Controller
               $arr_fav_business = array();
           }
 
+
           $main_image_path="uploads/business/main_image";
+
           /* Pagination on load 0r view more */
-          if($ajax_set=='false' && sizeof($obj_business_listing)>0)
+          if($page=='1' && sizeof($obj_business_listing)>0)
           {
+            $total_record_count = clone $obj_business_listing;
+
+            $totalResult = $total_record_count->addSelect(DB::raw('count(*) as record_count'))->get();
+            $totalItems = 1;
+            if(isset($totalResult[0]))
+            {
+              $totalItems = $totalResult[0]->record_count;
+            }
+
+
+            $perPage =2;
+            $curPage = $request->input('page','1');
+
+            $itemQuery = clone $obj_business_listing;
+            $all_records = clone $obj_business_listing;
+
+
+
+            // this does the sql limit/offset needed to get the correct subset of items
+            $items = $itemQuery->forPage($curPage, $perPage)->get();
+
+
+            $this->Paginator = new Paginator($items->all(),$perPage, $curPage);
+            $arr_paginate_business =  $this->Paginator->toArray();
+            $arr_paginate_business['total']     =  $totalItems;
+            $arr_paginate_business['last_page'] =  (int)ceil($totalItems/$perPage);
+            //dd($arr_paginate_business);
+
              $obj_business_listing = $obj_business_listing->get();
-               if($obj_business_listing)
+
+               if($arr_paginate_business)
                   {
                     $arr_business = [];
-                    $total_pages = 0;
-                    $current_page = 0;
-                    $per_page = 0;
-                    $last_page = 0;
-                    $arr_tmp = $obj_business_listing->toArray();
-                    //dd($arr_tmp);
+                    $arr_tmp = $arr_paginate_business;
+                    //dd($arr_tmp['data']);
                     if( isset($arr_tmp['data']) && sizeof($arr_tmp['data'])>0)
                     {
                       $arr_business = $arr_tmp['data'];
                       $total_pages =  $arr_tmp['total'];
                       $current_page = $arr_tmp['current_page'];
                       $per_page = $arr_tmp['per_page'];
-                      $last_page = $arr_tmp['last_page'];
                     }
                     else
                     {
@@ -465,54 +498,11 @@ class CategorySearchController extends Controller
                     }
 
                   }
-              return view('front.listing.index',compact('page_title','total_pages','current_page','per_page','arr_business','arr_fav_business','arr_sub_cat','parent_category','sub_category','city','main_image_path'));
-           }
-           else if(sizeof($obj_business_listing)>0)
-           {
-              $page=$request->input('page');
-              $view_set= $request->input('view_set');
-
-              $obj_business_listing = $obj_business_listing->get();
-
-              if($obj_business_listing)
-              {
-                $arr_business = [];
-
-                $arr_tmp = $obj_business_listing->toArray();
-
-                if(sizeof($arr_tmp['data'])>0)
-                {
-                  $arr_business = $arr_tmp['data'];
-
-                  if($view_set=='list_view_is_set')
-                  {
-                     $view  = View::make('front.listing._list_view_load_more_business',compact('arr_business','main_image_path','city','loc'));
-                  }
-                  else
-                  {
-                    $view  = View::make('front.listing._grid_view_load_more_business',compact('arr_business','main_image_path','city','loc'));
-                  }
-                  if($view!='')
-                  {
-                    $arr_data['content']  = $view->render();
-                  }
-                  else
-                  {
-                    $arr_data['content']  = "no_data";
-                  }
-                  $arr_data['page']  = $arr_tmp['current_page'];
-                  return response()->json($arr_data);
-                }
-
-
-              }
-
-
+              return view('front.listing.index',compact('page_title','total_pages','current_page','per_page','arr_business','arr_fav_business','arr_sub_cat','parent_category','sub_category','city','main_image_path','arr_paginate_business'));
            }
            else
            {
-           //dd("test");
-            $arr_business =[];
+              $arr_business =[];
               return view('front.listing.index',compact('page_title','total_pages','current_page','per_page','main_image_path','page_title','arr_business','city','arr_sub_cat','parent_category','sub_category','loc','category_set','arr_fav_business'));
            }
         //return view('front.listing.index',compact('main_image_path','page_title','arr_business','city','arr_sub_cat','parent_category','sub_category','loc','category_set','arr_fav_business'));
