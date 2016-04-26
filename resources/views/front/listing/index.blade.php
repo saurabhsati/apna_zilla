@@ -113,7 +113,7 @@
                $cat_location=explode('@',urldecode(Request::segment(2)));
                 if(sizeof($cat_location)>0 && isset($cat_location[1]))
                 {
-                   $location=str_replace('-',' ',$cat_location[1]);
+                   $location=str_replace(' ','-',$cat_location[1]);
 
                 }
             }
@@ -125,10 +125,10 @@
 
            ?>
          <ul class="dropdown-menu distance_dropdown" aria-labelledby="dropdownMenu1">
-           <li><a href="#" class="<?php if(Session::has('distance')){if(Session::get('distance')==1){echo 'active';}}?>" onclick="return setdistance('<?php echo $city;?>','1','<?php echo $category_search;?>','<?php echo $location;?>');">1 km</a></li>
-           <li><a href="#" class="<?php if(Session::has('distance')){if(Session::get('distance')==2){echo 'active';}}?>"onclick="return setdistance('<?php echo $city;?>','2','<?php echo $category_search;?>','<?php echo $location;?>');">2 km</a></li>
-           <li><a href="#" class="<?php if(Session::has('distance')){if(Session::get('distance')==3){echo 'active';}}?>"onclick="return setdistance('<?php echo $city;?>','3','<?php echo $category_search;?>','<?php echo $location;?>');">3 km</a></li>
-           <li><a href="#" class="<?php if(Session::has('distance')){if(Session::get('distance')==4){echo 'active';}}?>"onclick="return setdistance('<?php echo $city;?>','4','<?php echo $category_search;?>','<?php echo $location;?>');">4 km</a></li>
+           <li><a href="javascript:void(0);" class="<?php if(Session::has('distance')){if(Session::get('distance')==1){echo 'active';}}?>" onclick="return setdistance('<?php echo $city;?>','1','<?php echo $category_search;?>','<?php echo $location;?>');">1 km</a></li>
+           <li><a href="javascript:void(0);" class="<?php if(Session::has('distance')){if(Session::get('distance')==2){echo 'active';}}?>"onclick="return setdistance('<?php echo $city;?>','2','<?php echo $category_search;?>','<?php echo $location;?>');">2 km</a></li>
+           <li><a href="javascript:void(0);" class="<?php if(Session::has('distance')){if(Session::get('distance')==3){echo 'active';}}?>"onclick="return setdistance('<?php echo $city;?>','3','<?php echo $category_search;?>','<?php echo $location;?>');">3 km</a></li>
+           <li><a href="javascript:void(0);" class="<?php if(Session::has('distance')){if(Session::get('distance')==4){echo 'active';}}?>"onclick="return setdistance('<?php echo $city;?>','4','<?php echo $category_search;?>','<?php echo $location;?>');">4 km</a></li>
 
          </ul>
 
@@ -236,7 +236,7 @@
         @foreach($arr_business as $restaurants)
         <div class="modal fade" id="sms-{{ $restaurants['id'] }}" role="dialog">
           <div class="modal-dialog">
-           <!-- Modal content-->
+<!-- Modal content-->
             <div class="modal-content">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
              <div class="modal-body">
@@ -444,7 +444,7 @@
         @endforeach
         @else
 
-      <span>No Records Available</span>
+      <span><h4>Sorry No Records Found !! </h4></span>
          @endif
 
       </div>
@@ -569,7 +569,7 @@
 
 @endforeach
 @else
-<span>No Records Available</span>
+<span><h4>Sorry ,No Records Found !!</h4></span>
 @endif
 </div>
 

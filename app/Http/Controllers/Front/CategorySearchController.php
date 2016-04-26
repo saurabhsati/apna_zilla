@@ -358,7 +358,8 @@ class CategorySearchController extends Controller
                         if(Session::has('distance'))
                         {
                          $distance=Session::get('distance');
-                         $search_range=$distance;
+                         $search_range=(int)$distance;
+                         //echo $search_range;exit;
                          if($obj_business_listing)
                           {
                               $obj_business_listing = $obj_business_listing->having('distance', ' < ', $search_range);
@@ -374,7 +375,7 @@ class CategorySearchController extends Controller
 
 
                   }
-
+                   //dd($obj_business_listing->get());
                   /* Get business records list order by review as Descending order */
                   if( Session::has('review_rating'))
                   {
@@ -448,61 +449,71 @@ class CategorySearchController extends Controller
           $main_image_path="uploads/business/main_image";
 
           /* Pagination on load 0r view more */
-          if($page=='1' && sizeof($obj_business_listing)>0)
+
+          if($page=='1' && sizeof($obj_business_listing)>0 && isset($obj_business_listing))
           {
-            $total_record_count = clone $obj_business_listing;
+             $total_record_count = clone $obj_business_listing;
 
             $totalResult = $total_record_count->addSelect(DB::raw('count(*) as record_count'))->get();
-            $totalItems = 1;
-            if(isset($totalResult[0]))
+            if(isset($totalResult) && sizeof($totalResult)>0)
             {
-              $totalItems = $totalResult[0]->record_count;
-            }
+                 $totalItems = 1;
 
 
-            $perPage =2;
-            $curPage = $request->input('page','1');
-
-            $itemQuery = clone $obj_business_listing;
-            $all_records = clone $obj_business_listing;
+                if(isset($totalResult[0]))
+                {
+                  $totalItems = $totalResult[0]->record_count;
+                }
 
 
 
-            // this does the sql limit/offset needed to get the correct subset of items
-            $items = $itemQuery->forPage($curPage, $perPage)->get();
+                $perPage =2;
+                $curPage = $request->input('page','1');
+
+                $itemQuery = clone $obj_business_listing;
+                $all_records = clone $obj_business_listing;
 
 
-            $this->Paginator = new Paginator($items->all(),$perPage, $curPage);
-            $arr_paginate_business =  $this->Paginator->toArray();
-            $arr_paginate_business['total']     =  $totalItems;
-            $arr_paginate_business['last_page'] =  (int)ceil($totalItems/$perPage);
-            //dd($arr_paginate_business);
 
-             $obj_business_listing = $obj_business_listing->get();
+                // this does the sql limit/offset needed to get the correct subset of items
+                $items = $itemQuery->forPage($curPage, $perPage)->remember(15)->get();
 
-               if($arr_paginate_business)
-                  {
-                    $arr_business = [];
-                    $arr_tmp = $arr_paginate_business;
-                    //dd($arr_tmp['data']);
-                    if( isset($arr_tmp['data']) && sizeof($arr_tmp['data'])>0)
-                    {
-                      $arr_business = $arr_tmp['data'];
-                      $total_pages =  $arr_tmp['total'];
-                      $current_page = $arr_tmp['current_page'];
-                      $per_page = $arr_tmp['per_page'];
-                    }
-                    else
-                    {
-                      $arr_business = $arr_tmp;
-                    }
 
-                  }
+                $this->Paginator = new Paginator($items->all(),$perPage, $curPage);
+                $arr_paginate_business =  $this->Paginator->toArray();
+                $arr_paginate_business['total']     =  $totalItems;
+                $arr_paginate_business['last_page'] =  (int)ceil($totalItems/$perPage);
+                //dd($arr_paginate_business);
+
+                 $obj_business_listing = $obj_business_listing->get();
+
+                   if($arr_paginate_business)
+                      {
+                        $arr_business = [];
+                        $arr_tmp = $arr_paginate_business;
+                        //dd($arr_tmp['data']);
+                        if( isset($arr_tmp['data']) && sizeof($arr_tmp['data'])>0)
+                        {
+                          $arr_business = $arr_tmp['data'];
+                          $total_pages =  $arr_tmp['total'];
+                          $current_page = $arr_tmp['current_page'];
+                          $per_page = $arr_tmp['per_page'];
+                        }
+                        else
+                        {
+                          $arr_business = $arr_tmp;
+                        }
+
+                      }
+                }
+
+
               return view('front.listing.index',compact('page_title','total_pages','current_page','per_page','arr_business','arr_fav_business','arr_sub_cat','parent_category','sub_category','city','main_image_path','arr_paginate_business'));
            }
            else
            {
               $arr_business =[];
+
               return view('front.listing.index',compact('page_title','total_pages','current_page','per_page','main_image_path','page_title','arr_business','city','arr_sub_cat','parent_category','sub_category','loc','category_set','arr_fav_business'));
            }
         //return view('front.listing.index',compact('main_image_path','page_title','arr_business','city','arr_sub_cat','parent_category','sub_category','loc','category_set','arr_fav_business'));
