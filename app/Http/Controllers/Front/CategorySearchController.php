@@ -54,7 +54,10 @@ class CategorySearchController extends Controller
     public function get_business(Request $request,$city,$cat_id,$ajax_set='false')
     {
         $page_title	='Business List';
-        //echo $ajax_set;//exit;//die();
+        Session::forget('distance');
+        Session::forget('location_latitude');
+        Session::forget('location_longitude');
+
         /* Get Business By Category and City  */
         if($cat_id==0)
         {
@@ -469,7 +472,7 @@ class CategorySearchController extends Controller
               $page=$request->input('page');
               $view_set= $request->input('view_set');
 
-              $obj_business_listing = $obj_business_listing->paginate(2);
+              $obj_business_listing = $obj_business_listing->get();
 
               if($obj_business_listing)
               {

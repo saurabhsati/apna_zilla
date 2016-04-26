@@ -381,7 +381,7 @@
                 <span>{{ $restaurants['building'] }} &nbsp; {{ $restaurants['street'] }} <br/>
                 {{ $restaurants['landmark'] }} &nbsp; {{ $restaurants['area'] }} &nbsp;{{ '-'.$restaurants['pincode'] }}<br/>
 
-               @if(Session::has('distance'))
+               @if(isset($restaurants['distance']))
                Away From {{ $restaurants['distance'] }} km distance
                 @endif
 
