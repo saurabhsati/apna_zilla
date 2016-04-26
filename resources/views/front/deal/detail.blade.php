@@ -11,8 +11,16 @@
    <ol class="breadcrumb">
      <span>You are here :</span>
      <li><a href="{{ url('/') }}">Home</a></li>
+      <?php if(Request::segment(1))
+              {
+                 $city=urldecode(Request::segment(1));
+              }
+              else
+              {
+                  $city="Mumbai";
+              }?>
      @if(sizeof($deals_info)>0)
-     <li><a href="{{ url('/deals') }}">Deals</a></li>
+     <li><a href="{{ url('/') }}/{{$city}}/deals">Deals</a></li>
      <li class="active"><?php echo substr($deals_info[0]['name'],0,120).'..';?></li>
      @endif
    </ol>

@@ -282,7 +282,7 @@ class CategorySearchController extends Controller
 
 
      /* Search by location */
-    public function search_business_by_location($city,$cat_loc,$cat_id)
+    public function search_business_by_location($city,$cat_loc,$cat_id,$ajax_set='false')
     {
 
           $page_title ='Search by Location ';
@@ -303,7 +303,7 @@ class CategorySearchController extends Controller
             $obj_business_listing_city->load(['business_details']);
             $arr_business_by_city = $obj_business_listing_city->toArray();
           }
-           $key_business_city=array();
+          $key_business_city=array();
            if(sizeof($arr_business_by_city)>0)
             {
               foreach ($arr_business_by_city[0]['business_details'] as $key => $value) {
@@ -325,68 +325,61 @@ class CategorySearchController extends Controller
                   $key_business_cat[$value['business_id']]=$value['business_id'];
                 }
             }
+             $obj_business_listing=[];
             /* Merge the business by city and Business by category result  and generate the complete business id's array */
+
             if(sizeof($key_business_city)>0 && sizeof($key_business_cat))
             {
                 $result = array_intersect($key_business_city,$key_business_cat);
-
                 $arr_business = array();
                 if(sizeof($result)>0)
                 {
-                  $obj_business_listing = BusinessListingModel::whereIn('id',$result)
-                                                  ->where(function ($query) use ($loc)
-                                                    {
-                                                     $query->orwhere("area", 'like', "%".$loc."%")
-                                                     ->orwhere("street", 'like', "%".$loc."%")
-                                                     ->orwhere("landmark", 'like', "%".$loc."%")
-                                                     ->orwhere("building", 'like', "%".$loc."%");
-                                                   })->with(['reviews']);
-
-                /* If Location lat & log has been set by session calculate the distance range and get the business under that range */
-                if(Session::has('location_latitude') && Session::has('location_longitude'))
-                {
-                    $latitude=Session::has('location_latitude') ? Session::get('location_latitude'):'51.033320760';
-                    $longitude=Session::has('location_longitude') ? Session::get('location_longitude'):'13.757242110';
+                  $obj_business_listing = BusinessListingModel::whereIn('id',$result)->with(['reviews']);
 
 
+                  /* If Location lat & log has been set by session calculate the distance range and get the business under that range */
+                  if(Session::has('location_latitude') && Session::has('location_longitude'))
+                  {
+                      $latitude=Session::has('location_latitude') ? Session::get('location_latitude'):'51.033320760';
+                      $longitude=Session::has('location_longitude') ? Session::get('location_longitude'):'13.757242110';
+                      $qutt='*,ROUND( 6379 * acos (
+                          cos ( radians('.$latitude.') )
+                          * cos( radians( `lat` ) )
+                          * cos( radians( `lng` ) - radians('.$longitude.') )
+                          + sin ( radians('.$latitude.') )
+                          * sin( radians( `lat` ) )
+                        ),2) as distance';
 
-                     $qutt='*,ROUND( 6371 * acos (
-                        cos ( radians('.$latitude.') )
-                        * cos( radians( `lat` ) )
-                        * cos( radians( `lng` ) - radians('.$longitude.') )
-                        + sin ( radians('.$latitude.') )
-                        * sin( radians( `lat` ) )
-                      ),2) as distance';
+                        $obj_business_listing = $obj_business_listing->selectRaw($qutt);
 
-                      $obj_business_listing = $obj_business_listing->selectRaw($qutt);
-                       $distance=Session::has('distance') ? Session::get('distance'):'1';
-                      //exit;
-                      $search_range=$distance;
-                      if($search_range==TRUE)
-                      {
-                          $obj_business_listing = $obj_business_listing->having('distance', '< ', $search_range);
-                      }
+                        if($obj_business_listing)
+                        {
+                            //$obj_business_listing = $obj_business_listing->having('distance', ' < ', 100);
+                        }
+                           // dd($obj_business_listing->get());
 
-                }
+                  }
 
-                /* Get business records list order by review as Descending order */
-                if( Session::has('review_rating'))
-                {
-                  $obj_business_listing->orderBy('avg_rating','DESC');
+                  /* Get business records list order by review as Descending order */
+                  if( Session::has('review_rating'))
+                  {
+                    $obj_business_listing->orderBy('avg_rating','DESC');
 
-                }else
-                {
-                 $obj_business_listing->orderBy('visited_count','DESC');
+                  }else
+                  {
+                   $obj_business_listing->orderBy('visited_count','DESC');
 
-                }
+                  }
 
-                /* Get the final list of business */
-                $obj_business_listing= $obj_business_listing->get();
-                if($obj_business_listing)
-                {
-                  $arr_business = $obj_business_listing->toArray();
+                  /* Get the final list of business */
+                  /*$obj_business_listing= $obj_business_listing->get();
+                  //dd($obj_business_listing);
+                  if($obj_business_listing)
+                  {
+                    $arr_business = $obj_business_listing->toArray();
 
-                }
+                  }*/
+                  //dd($arr_business);
               }
           }
           /* Get Sub -Category data */
@@ -441,8 +434,88 @@ class CategorySearchController extends Controller
           }
 
           $main_image_path="uploads/business/main_image";
-        return view('front.listing.index',compact('main_image_path','page_title','arr_business','city','arr_sub_cat','parent_category','sub_category','loc','category_set','arr_fav_business'));
+          /* Pagination on load 0r view more */
+          if($ajax_set=='false' && sizeof($obj_business_listing)>0)
+          {
+              /*$obj_business_listing = $obj_business_listing->get();
+              dd($obj_business_listing);*/
+              $obj_business_listing = $obj_business_listing->paginate(2);
+                 if($obj_business_listing)
+                  {
+                    $arr_business = [];
+                    $total_pages = 0;
+                    $current_page = 0;
+                    $per_page = 0;
+                    $last_page = 0;
+                    $arr_tmp = $obj_business_listing->toArray();
+                    //dd($arr_tmp);
+                    if( isset($arr_tmp['data']) && sizeof($arr_tmp['data'])>0)
+                    {
+                      $arr_business = $arr_tmp['data'];
+                      $total_pages =  $arr_tmp['total'];
+                      $current_page = $arr_tmp['current_page'];
+                      $per_page = $arr_tmp['per_page'];
+                      $last_page = $arr_tmp['last_page'];
+                    }
+                    else
+                    {
+                      $arr_business = $arr_tmp;
+                    }
+
+                  }
+              return view('front.listing.index',compact('page_title','total_pages','current_page','per_page','arr_business','arr_fav_business','arr_sub_cat','parent_category','sub_category','city','main_image_path'));
+           }
+           else if(sizeof($obj_business_listing)>0)
+           {
+              $page=$request->input('page');
+              $view_set= $request->input('view_set');
+
+              $obj_business_listing = $obj_business_listing->paginate(2);
+
+              if($obj_business_listing)
+              {
+                $arr_business = [];
+
+                $arr_tmp = $obj_business_listing->toArray();
+
+                if(sizeof($arr_tmp['data'])>0)
+                {
+                  $arr_business = $arr_tmp['data'];
+
+                  if($view_set=='list_view_is_set')
+                  {
+                     $view  = View::make('front.listing._list_view_load_more_business',compact('arr_business','main_image_path','city'));
+                  }
+                  else
+                  {
+                    $view  = View::make('front.listing._grid_view_load_more_business',compact('arr_business','main_image_path','city'));
+                  }
+                  if($view!='')
+                  {
+                    $arr_data['content']  = $view->render();
+                  }
+                  else
+                  {
+                    $arr_data['content']  = "no_data";
+                  }
+                  $arr_data['page']  = $arr_tmp['current_page'];
+                  return response()->json($arr_data);
+                }
+
+
+              }
+
+
+           }
+           else
+           {
+           //dd("test");
+            $arr_business =[];
+              return view('front.listing.index',compact('page_title','total_pages','current_page','per_page','main_image_path','page_title','arr_business','city','arr_sub_cat','parent_category','sub_category','loc','category_set','arr_fav_business'));
+           }
+        //return view('front.listing.index',compact('main_image_path','page_title','arr_business','city','arr_sub_cat','parent_category','sub_category','loc','category_set','arr_fav_business'));
     }
+
     public function set_location_lat_lng(Request $request)
     {
             $lat = $request->input('lat');
