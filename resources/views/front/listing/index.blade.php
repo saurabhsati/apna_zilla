@@ -100,23 +100,30 @@
         if($sub_category[0]['title']!='')
         {
           $category_search=str_slug($sub_category[0]['title']);
-
-           //$category_id=Session::get('category_id');
-         }
+        }
 
        }
        else
        {
-        $category_search='';
+          $category_search='';
        }
-          /*else {$category_id="";}*/
-          if(!empty($loc)){
-               $location=str_replace(' ','-',strtolower($loc));
-             }
-          else
-               { $location="";}
+       $location='';
+            if(Request::segment(2))
+            {
+               $cat_location=explode('@',urldecode(Request::segment(2)));
+                if(sizeof($cat_location)>0 && isset($cat_location[1]))
+                {
+                   $location=str_replace('-',' ',$cat_location[1]);
 
-             ?>
+                }
+            }
+            else
+            {
+                $location="Mumbai";
+            }
+
+
+           ?>
          <ul class="dropdown-menu distance_dropdown" aria-labelledby="dropdownMenu1">
            <li><a href="#" class="<?php if(Session::has('distance')){if(Session::get('distance')==1){echo 'active';}}?>" onclick="return setdistance('<?php echo $city;?>','1','<?php echo $category_search;?>','<?php echo $location;?>');">1 km</a></li>
            <li><a href="#" class="<?php if(Session::has('distance')){if(Session::get('distance')==2){echo 'active';}}?>"onclick="return setdistance('<?php echo $city;?>','2','<?php echo $category_search;?>','<?php echo $location;?>');">2 km</a></li>
@@ -166,6 +173,19 @@
             </p>
             <div class="row">
               <div class="col-lg-10">
+              <?php if(Request::segment(2))
+              {
+                 $cat_location=explode('@',urldecode(Request::segment(2)));
+                  if(sizeof($cat_location)>0 && isset($cat_location[1]))
+                  {
+                     $loc=str_replace('-',' ',$cat_location[1]);
+
+                  }
+              }
+              else
+              {
+                  $loc="Mumbai";
+              }?>
               <input type="text" class="input-searchbx " id="location_search"
               @if(!empty($loc))
                value="{{ucwords($loc)}}"
@@ -173,7 +193,7 @@
                 value=""
                @endif/>
               <input type="hidden" class="input-searchbx " id="business_search_by_location"
-                @if(!empty($loc))
+               @if(!empty($loc))
                value="{{ucwords($loc)}}"
                @else
                 value=""
@@ -326,7 +346,7 @@
             <a href="{{url('/')}}/{{$city}}/{{$business_area}}/{{base64_encode($restaurants['id'])}}">
             @if($restaurants['is_verified']==1)
             <img src="{{ url('/') }}/assets/front/images/verified-green.png" alt="write_review"/>@endif
-                {{ $restaurants['business_name'] }}
+                {{ ucwords($restaurants['business_name']) }}
               </a>
 
             </div>
@@ -362,7 +382,7 @@
                 {{ $restaurants['landmark'] }} &nbsp; {{ $restaurants['area'] }} &nbsp;{{ '-'.$restaurants['pincode'] }}<br/>
 
                @if(Session::has('distance'))
-               Away From {{Session::get('distance')}} km distance
+               Away From {{ $restaurants['distance'] }} km distance
                 @endif
 
                 </span>
@@ -597,7 +617,7 @@
 
 
                     $("input[name='location_search']").val(ui.item.label);
-                    $("#business_search_by_location").attr('value',ui.item.loc_slug);
+                    $("#business_search_by_location").attr('value',ui.item.label);
                     $("#location_search").attr('value',ui.item.loc);
                     $('#location_latitude').attr('value',ui.item.loc_lat);
                     $('#location_longitude').attr('value',ui.item.loc_lng);

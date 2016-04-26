@@ -351,12 +351,23 @@ class CategorySearchController extends Controller
                         ),2) as distance';
 
                         $obj_business_listing = $obj_business_listing->selectRaw($qutt);
-
-                        if($obj_business_listing)
+                        if(Session::has('distance'))
                         {
-                            //$obj_business_listing = $obj_business_listing->having('distance', ' < ', 100);
+                         $distance=Session::get('distance');
+                         $search_range=$distance;
+                         if($obj_business_listing)
+                          {
+                              $obj_business_listing = $obj_business_listing->having('distance', ' < ', $search_range);
+                          }
                         }
-                           // dd($obj_business_listing->get());
+                        else
+                        {
+                          if($obj_business_listing)
+                          {
+                              $obj_business_listing = $obj_business_listing->having('distance', ' < ', 100);
+                          }
+                        }
+                     // dd($obj_business_listing->get());
 
                   }
 
@@ -370,16 +381,6 @@ class CategorySearchController extends Controller
                    $obj_business_listing->orderBy('visited_count','DESC');
 
                   }
-
-                  /* Get the final list of business */
-                  /*$obj_business_listing= $obj_business_listing->get();
-                  //dd($obj_business_listing);
-                  if($obj_business_listing)
-                  {
-                    $arr_business = $obj_business_listing->toArray();
-
-                  }*/
-                  //dd($arr_business);
               }
           }
           /* Get Sub -Category data */
@@ -437,10 +438,8 @@ class CategorySearchController extends Controller
           /* Pagination on load 0r view more */
           if($ajax_set=='false' && sizeof($obj_business_listing)>0)
           {
-              /*$obj_business_listing = $obj_business_listing->get();
-              dd($obj_business_listing);*/
-              $obj_business_listing = $obj_business_listing->paginate(2);
-                 if($obj_business_listing)
+             $obj_business_listing = $obj_business_listing->get();
+               if($obj_business_listing)
                   {
                     $arr_business = [];
                     $total_pages = 0;
@@ -484,11 +483,11 @@ class CategorySearchController extends Controller
 
                   if($view_set=='list_view_is_set')
                   {
-                     $view  = View::make('front.listing._list_view_load_more_business',compact('arr_business','main_image_path','city'));
+                     $view  = View::make('front.listing._list_view_load_more_business',compact('arr_business','main_image_path','city','loc'));
                   }
                   else
                   {
-                    $view  = View::make('front.listing._grid_view_load_more_business',compact('arr_business','main_image_path','city'));
+                    $view  = View::make('front.listing._grid_view_load_more_business',compact('arr_business','main_image_path','city','loc'));
                   }
                   if($view!='')
                   {
