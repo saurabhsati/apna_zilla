@@ -214,16 +214,17 @@
             <div class="tours-detail-tab">
                <div id="dash_tab" style="background: #ffffff; padding: 10px 13px; border: 1px solid #eaeaea;">
                   <ul class="resp-tabs-list ">
-                     <li id="review">Add a Review </li>
-                     <img class="dash_line" alt="line" src="{{ url('/') }}/assets/front/images/dash_menu_line.jpg">
+
                      <li id="rating">Reviews &amp; Ratings</li>
+                     <img class="dash_line" alt="line" src="{{ url('/') }}/assets/front/images/dash_menu_line.jpg">
+                     <li id="review">Add a Review </li>
                      <img class="dash_line" alt="line" src="{{ url('/') }}/assets/front/images/dash_menu_line.jpg">
                      <li>Gallery</li>
                      <div class="clearfix"></div>
                   </ul>
                   <div class="resp-tabs-container" >
-                     <div id="review_rating">
-                          @if(Session::has('success'))
+                  <div id="review_rank">
+                  @if(Session::has('success'))
                           <div class="alert alert-success alert-dismissible">
                               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
@@ -240,6 +241,81 @@
                               {{ Session::get('error') }}
                           </div>
                         @endif
+                        <div class="rating_views" >
+                           <div class="rank_name">
+                              <span>Excellent</span>
+                              <div style="width: 32%;">&nbsp;</div>
+                              60%
+                           </div>
+                           <div class="rank_name">
+                              <span>Very Good</span>
+                              <div style="width: 20%;">&nbsp;</div>
+                              20%
+                           </div>
+                           <div class="rank_name">
+                              <span>Good</span>
+                              <div style="width: 12%;">&nbsp;</div>
+                              20%
+                           </div>
+                           <div class="rank_name">
+                              <span>Average</span>
+                              <div style="width:10%;">&nbsp;</div>
+                              15%
+                           </div>
+                           <div class="rank_name">
+                              <span>Poor</span>
+                              <div style="width: 2%;">&nbsp;</div>
+                              5%
+                           </div>
+                        </div>
+                        @if(isset($arr_business_details['reviews']) && sizeof($arr_business_details['reviews'])>0)
+                        @foreach($arr_business_details['reviews'] as $review)
+                        <div class="testimo-one">
+                           <div class="img-div-testi">
+                              <img src="{{ url('/') }}/assets/front/images/testi-user.png" alt="" />
+                           </div>
+                           <div class="testimo-content">
+                              <div class="user-name-testio">
+                                 {{$review['name']}}
+                              </div>
+                              <div class="testimo-user-mess">
+                                 {{$review['message']}}
+                              </div>
+                              <div class="acad-rating-block">
+                                 <span class="stars-block">
+                                    <?php for($i=0;$i<$review['ratings'];$i++){ ?>
+                                    <i class="fa fa-star-o stars-rat"></i>
+                                    <?php } ?>
+
+                                 </span>
+                                 <span class="label-block"><?php echo date('F Y',strtotime($review['created_at'])); ?></span>
+                                 <div class="clearfix"></div>
+                              </div>
+                           </div>
+                           <div class="clearfix"></div>
+                        </div>
+                        @endforeach
+                        @endif
+
+                     </div>
+                     <div id="review_rating">
+                          <!-- @if(Session::has('success'))
+                          <div class="alert alert-success alert-dismissible">
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+                              {{ Session::get('success') }}
+                          </div>
+                        @endif
+
+                        @if(Session::has('error'))
+                          <div class="alert alert-danger alert-dismissible">
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+                              {{ Session::get('error') }}
+                          </div>
+                        @endif -->
                         <div class="write-review-main" id="review_id">
                            <div class="write-review-head">
                               Write a Review
@@ -319,64 +395,7 @@
 
                         </div>
                      </div>
-                     <div id="review_rank">
-                        <div class="rating_views" >
-                           <div class="rank_name">
-                              <span>Excellent</span>
-                              <div style="width: 32%;">&nbsp;</div>
-                              60%
-                           </div>
-                           <div class="rank_name">
-                              <span>Very Good</span>
-                              <div style="width: 20%;">&nbsp;</div>
-                              20%
-                           </div>
-                           <div class="rank_name">
-                              <span>Good</span>
-                              <div style="width: 12%;">&nbsp;</div>
-                              20%
-                           </div>
-                           <div class="rank_name">
-                              <span>Average</span>
-                              <div style="width:10%;">&nbsp;</div>
-                              15%
-                           </div>
-                           <div class="rank_name">
-                              <span>Poor</span>
-                              <div style="width: 2%;">&nbsp;</div>
-                              5%
-                           </div>
-                        </div>
-                        @if(isset($arr_business_details['reviews']) && sizeof($arr_business_details['reviews'])>0)
-                        @foreach($arr_business_details['reviews'] as $review)
-                        <div class="testimo-one">
-                           <div class="img-div-testi">
-                              <img src="{{ url('/') }}/assets/front/images/testi-user.png" alt="" />
-                           </div>
-                           <div class="testimo-content">
-                              <div class="user-name-testio">
-                                 {{$review['name']}}
-                              </div>
-                              <div class="testimo-user-mess">
-                                 {{$review['message']}}
-                              </div>
-                              <div class="acad-rating-block">
-                                 <span class="stars-block">
-                                    <?php for($i=0;$i<$review['ratings'];$i++){ ?>
-                                    <i class="fa fa-star-o stars-rat"></i>
-                                    <?php } ?>
 
-                                 </span>
-                                 <span class="label-block"><?php echo date('F Y',strtotime($review['created_at'])); ?></span>
-                                 <div class="clearfix"></div>
-                              </div>
-                           </div>
-                           <div class="clearfix"></div>
-                        </div>
-                        @endforeach
-                        @endif
-
-                     </div>
                      <div id="gallery">
                         <div class="gallery_view"  >
                            <div class="gallery">
