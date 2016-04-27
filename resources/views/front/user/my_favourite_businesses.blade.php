@@ -106,10 +106,10 @@
 
             @endforeach
           @else
-            <span><h4>No Records Available</h4></span>
+            <span><h4>Sorry , You Have Not Added Any Favorite Business !!</h4></span>
           @endif
         @else
-        <span>No Records Available</span>
+        <span>Sorry ,You Have Not Added Any Favorite Business !!</span>
       @endif
       </div>
 

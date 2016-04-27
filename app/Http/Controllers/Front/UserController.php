@@ -211,8 +211,12 @@ class UserController extends Controller
 
     public function profile()
     {
+        if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
         $id = Session::get('user_id');
-        //dd($id);
+
         $user_id = base64_decode($id);
 
         $obj_user_info = UserModel::where('id','=',$user_id)->get();
@@ -383,7 +387,10 @@ class UserController extends Controller
     public function address()
     {
         $page_title = "Address";
-
+        if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
         $id = session('user_id');
         $user_id = base64_decode($id);
         $obj_user_info = UserModel::where('id','=',$user_id)->get();
@@ -451,7 +458,7 @@ class UserController extends Controller
 
     public function my_business()
     {
-        if(!Session::has('user_name'))
+        if(!Session::has('user_id'))
         {
             return redirect(url('/'));
         }
@@ -485,6 +492,10 @@ class UserController extends Controller
 
     public function add_business()
     {
+        if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
         //Getting all the details of the Category Table
      $obj_cat_full_details = CategoryModel::get();
      if($obj_cat_full_details)
@@ -1444,6 +1455,10 @@ class UserController extends Controller
     }
     public function my_favourite_businesses()
     {
+        if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
         if(!empty(Session::get('user_mail')))
           {
             $user_id    = UserModel::where('email',Session::get('user_mail'))->first(['id']);

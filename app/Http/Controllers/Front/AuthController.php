@@ -453,6 +453,10 @@ class AuthController extends Controller
 
     public function change_password()
     {
+        if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
         /*$obj_admin = Sentinel::getUser();
         dd($obj_admin->password);*/
         $page_title = 'Change Password';

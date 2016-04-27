@@ -150,7 +150,7 @@
 
                  @else
                     <div class="row">
-                       <strong><h4> Please Add Business </h4> </strong>
+                       <strong><h4> Sorry , You Have Not Added Your Business !! </h4> </strong>
                     </div>
                  @endif
 
