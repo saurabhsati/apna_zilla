@@ -338,7 +338,7 @@
             <!-- Modal content-->
             <div class="modal-content">
                <div class="modal-header">
-                  <button type="button" class="close" id="reg_close" data-dismiss="modal">&times;</button>
+                  <button type="button" class="close login_close" id="reg_close1" data-dismiss="modal">&times;</button>
                    <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_poup.png" alt="login logo"/></h4>
                </div>
                <div class="modal-body">
@@ -397,7 +397,7 @@
                <div class="modal-footer">
                   <div class="login_box">
                      <button type="button" id="register_acount" onclick="register_new_account()" class="yellow1 ui button">Create An Account</button>
-                     <div class="other_valida">Already have an account? <a data-toggle="modal" data-target="#login_poup">Sign in</a></div>
+                     <div class="other_valida">Already have an account? <a class="reg-popup" data-toggle="modal" data-target="#login_poup">Sign in</a></div>
                   </div>
                </div>
                <div class="clr"></div>
@@ -561,11 +561,18 @@ If you need any more details on RightNext Verified, please refer to
            jQuery(".sign_up").click(function(){
          jQuery(".login_close").click();
            });
+             
              jQuery(".forgt").click(function(){
          jQuery(".login_close").click();
            });
+             
              jQuery("#log_in_popup").click(function(){
          jQuery("#reg_close").click();
+           });
+             
+             
+              jQuery(".reg-popup").click(function(){
+         jQuery(".login_close").click();
            });
          });
 

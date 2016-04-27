@@ -458,7 +458,7 @@ body:not(.device-touch) .social-icon i {transition: all 0.3s ease 0s;}
 .ui.yellow1.buttons .button:active, .ui.yellow1.button:active {background-color: #cd9903;color: #ffffff; text-shadow: none;}
 .ui.yellow1.buttons .active.button, .ui.yellow1.buttons .active.button:active, .ui.yellow1.active.button, .ui.yellow1.button .active.button:active {
     background-color: #eaae00;color: #ffffff;text-shadow: none;}
-.other_valida > a {color: #e46305;}
+.other_valida > a {color: #e46305; cursor: pointer;}
 .other_valida {color: #929292; font-size: 13px;}
 .terms_service {color: #9b9b9b;text-align: left;padding-bottom: 6px;}
 /*registration popup end here*/
