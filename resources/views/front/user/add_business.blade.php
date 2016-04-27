@@ -24,7 +24,7 @@
                <ol class="breadcrumb">
                    <span>You are here :</span>
                   <li><a href="{{ url('/') }}">Home</a></li>
-                  <li class="active">Business Information</li>
+                  <li class="active">Add Your Business </li>
                 </ol>
              </div>
           </div>
@@ -201,7 +201,7 @@
 
     function clearPreviewImage()
     {
-        $('#preview_profile_pic').attr('src',site_url+'/images/front/avatar.jpg');
+        $('#preview_profile_pic').attr('src',site_url+'/assets/front/images/default_banner.jpg');
         $("#removal_handle").hide();
     }
 </script>

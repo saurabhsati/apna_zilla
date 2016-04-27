@@ -5,7 +5,7 @@
 <!-- Timepicker css -->
 <link rel="stylesheet" type="text/css" href="{{ url('/').'/assets/bootstrap-timepicker/compiled/timepicker.css' }}" />
 
-  
+
 <style type="text/css">
   .error{
     color: red;
@@ -14,7 +14,7 @@
     text-transform: capitalize;
   }
 </style>
-  
+
   <div class="gry_container">
       <div class="container">
          <div class="row">
@@ -22,7 +22,7 @@
                      <ol class="breadcrumb">
                          <span>You are here :</span>
                           <li><a href="{{ url('/') }}">Home</a></li>
-                          <li class="active">Other Information</li>
+                          <li class="active">Add Your Business Other Information</li>
 
                 </ol>
               </div>
@@ -94,7 +94,7 @@
                           <div class="row">
                             <div class="col-lg-2 label-text">Keywords <span>:</span></div>
                               <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                                <textarea  class="input_acct" id="keywords" name="keywords"  style="width: 682px;"  
+                                <textarea  class="input_acct" id="keywords" name="keywords"  style="width: 682px;"
                                  placeholder="Enter Keywords"  data-rule-required="true" /></textarea>
                                 <div class="error_msg">{{ $errors->first('keywords') }} </div>
                               </div>
@@ -443,7 +443,7 @@ $('#remove-payment').click(function()
 $(document ).ready(function (){
 
   $("#validation-form").validate({
-      
+
       rules: {
           company_info: "required",
           establish_year: {
@@ -453,7 +453,7 @@ $(document ).ready(function (){
             },
           keywords:"required",
       },
-      
+
       messages: {
           company_info: "Please enter company Information.",
           establish_year: "Please enter valid Year e.g. 2015.",

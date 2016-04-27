@@ -10,8 +10,8 @@
     text-transform: capitalize;
   }
  </style>
-  
-  
+
+
   <div class="gry_container">
       <div class="container">
          <div class="row">
@@ -19,7 +19,7 @@
      <ol class="breadcrumb">
          <span>You are here :</span>
           <li><a href="{{ url('/') }}">Home</a></li>
-          <li class="active">Contact Information</li>
+          <li class="active">Add Your Business Media Information</li>
 
     </ol>
              </div>
@@ -389,11 +389,11 @@ $('#remove-service').click(function()
 $(document ).ready(function (){
 
   $("#validation-form").validate({
-      
+
       rules: {
           youtube_link: "required",
       },
-      
+
       messages: {
           youtube_link: "Please enter valid youtube link.",
       },

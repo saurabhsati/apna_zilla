@@ -10,7 +10,7 @@
     text-transform: capitalize;
   }
 </style>
-  
+
 
  <div class="gry_container">
       <div class="container">
@@ -19,7 +19,7 @@
                <ol class="breadcrumb">
                    <span>You are here :</span>
                   <li><a href="{{ url('/') }}">Home</a></li>
-                  <li class="active">Business Information</li>
+                  <li class="active">Add Your Business Location Information</li>
                 </ol>
              </div>
           </div>

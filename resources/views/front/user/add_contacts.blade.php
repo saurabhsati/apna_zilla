@@ -18,7 +18,7 @@
      <ol class="breadcrumb">
          <span>You are here :</span>
           <li><a href="{{ url('/') }}">Home</a></li>
-          <li class="active">Contact Information</li>
+          <li class="active">Add Your Contact Information</li>
 
 </ol>
              </div>
@@ -264,7 +264,7 @@ jQuery(document).ready(function () {
 });
 </script>
 
-  
+
 <script type="text/javascript">
 $(document ).ready(function (){
 
@@ -287,7 +287,7 @@ $(document ).ready(function (){
             required:true,
            // url:true
           }
-          
+
       },
     // Specify the validation error messages
       messages: {
