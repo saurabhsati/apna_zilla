@@ -283,6 +283,7 @@
 <script type="text/javascript">
    $('.browse_all_cat').click(function(){
       $('ul.category_list *').removeAttr('style');
+      $('.browse_all_cat').css('display','none');
    });
 
 function get_business_by_exp_categry(ref)

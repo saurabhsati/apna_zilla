@@ -120,7 +120,7 @@
                         {{date('D')}} - {{ $arr_business_details['business_times'][$open_time] }} -
                         {{ $arr_business_details['business_times'][$close_time] }}
                         @endif
-                        <a href="javascript:void(0);" onclick="show_opening_times()">View All</a></span>
+                        <!-- <a href="javascript:void(0);" onclick="show_opening_times()">View All</a> --></span>
                         @else
                         <span>Business Time Not Available.</span>
                         @endif
