@@ -282,10 +282,14 @@
                                  {{$review['message']}}
                               </div>
                               <div class="acad-rating-block">
-                                 <span class="stars-block">
-                                    <?php for($i=0;$i<$review['ratings'];$i++){ ?>
-                                    <i class="fa fa-star-o stars-rat"></i>
+                                 <span class="stars-block resta-rating-block">
+                                    <?php for($i=0;$i<round($arr_business_details['avg_rating']);$i++){  ?>
+                                      <i class="fa fa-star star-acti"></i>
+                                    <!-- <i class="fa fa-star-o stars-rat"></i> -->
                                     <?php } ?>
+                                     <?php for($i=0;$i<(5-round($arr_business_details['avg_rating']));$i++){ ?>
+                                    <i class="fa fa-star"></i>
+                                      <?php }?>
 
                                  </span>
                                  <span class="label-block"><?php echo date('F Y',strtotime($review['created_at'])); ?></span>
@@ -402,7 +406,11 @@
                               @if(isset($arr_business_details['image_upload_details']) && $arr_business_details['image_upload_details']!='')
                               @foreach($arr_business_details['image_upload_details'] as $business_images)
                               <div class="prod_img">
-                                 <a href="{{ url('/') }}/uploads/business/business_upload_image/{{$business_images['image_name']}}" class="gal img_inner"><img src="{{ url('/') }}/uploads/business/business_upload_image/{{$business_images['image_name']}}" alt=""/></a>
+                                 <a href="{{ url('/') }}/uploads/business/business_upload_image/{{$business_images['image_name']}}" class="gal img_inner">
+
+                               <!--   <img src="{{ url('/') }}/uploads/business/business_upload_image/{{$business_images['image_name']}}" alt=""/> -->
+                                 <img src="{{ get_resized_image_path($business_images['image_name'],'uploads/business/business_upload_image',367,464) }}" alt=""/>
+                                 </a>
                               </div>
                               @endforeach
                               @else

@@ -222,7 +222,7 @@ box-shadow: 0px 0px 6px 2px rgba(175,175,175,0.87); transform: scale(1.08);}
 .resta-name h6 a:hover{color: #e6ab2a;}
 .resta-content{text-align: center; color: #7f7f7f; font-size: 14px; font-family: 'varela_roundregular'; margin: 17px 0 0;height: 43px;overflow: hidden;}
 .resta-rating-block{margin: 0 auto; max-width: 106px; width: 100%;}
-.resta-rating-block i{font-size: 17px; color: #7f7f7f; margin-right: 2px;}
+.resta-rating-block i{font-size: 17px; color: #B9B1B1; margin-right: 2px;}
 .star-acti{color: #e6ab2a !important;}
 
 .resta-rating-block11 { max-width: 228px; width: 100%;}
