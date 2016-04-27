@@ -1,7 +1,7 @@
  @if(isset($arr_business) && sizeof($arr_business)>0)
       @foreach($arr_business as $restaurants)
   <div class="col-sm-6 col-md-6 col-lg-6">
-                         <div class="product_grid_view">
+                         <div class="product_grid_view" id="more_business_list">
                   <div class="p_images">
                      <div class="grid_product">
                        <?php

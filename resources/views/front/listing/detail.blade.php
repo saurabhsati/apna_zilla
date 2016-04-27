@@ -18,13 +18,83 @@
    <hr/>
    <div class="container">
       <div class="row">
+       <div class="col-sm-12 col-md-3 col-lg-3">
+            <!-- Categories Start -->
+            <div class="categories_sect sidebar-nav">
+               <div class="sidebar-brand"><img src="{{ url('/') }}/assets/front/images/also-listed.png" alt="also listed"/>Also Listed in<span class="spe_mobile1"><a href="#"></a></span></div>
+               <div class="bor_head">&nbsp;</div>
+               <ul class="spe_submobile1">
+                  @if(isset($all_category) && sizeof($all_category)>0)
+                  @foreach($all_category as $category)
+                  @foreach($arr_business_details['also_list_category'] as $busi_in_cat)
+                  @if($category['cat_id']==$busi_in_cat['category_id'])
+                  <li class="brdr"><a href="{{ url('/') }}/{{$city}}/all-options/ct-{{$busi_in_cat['category_id']}}"><?php echo $category['title']; ?></a></li>
+                  @endif
+                  @endforeach
+                  @endforeach
+                  @endif
+               </ul>
+               <!-- /#Categoriesr End-->
+               <div class="clearfix"></div>
+            </div>
+            <div class="categories_sect sidebar-nav" id="business_times_div" >
+               <div class="sidebar-brand"><img src="{{ url('/') }}/assets/front/images/hours-of-operation.png" alt="Hours of Operation"/>Hours of Operation<span class="spe_mobile2"><a href="#"></a></span></div>
+               <div class="bor_head">&nbsp;</div>
+               <ul class="spe_submobile2">
+                  <li class="brdr"><a href="#">Monday   : {{$arr_business_details['business_times']['mon_open'] or '00:00'}} - {{$arr_business_details['business_times']['mon_close'] or '00:00'}}</a></li>
+                  <li class="brdr"><a href="#">Tuesday  : {{$arr_business_details['business_times']['tue_open'] or '00:00'}} - {{$arr_business_details['business_times']['tue_close'] or '00:00'}}</a></li>
+                  <li class="brdr"><a href="#">Wednesday: {{$arr_business_details['business_times']['wed_open'] or '00:00'}} - {{$arr_business_details['business_times']['wed_close'] or '00:00'}}</a></li>
+                  <li class="brdr"><a href="#">Thursday : {{$arr_business_details['business_times']['thus_open'] or '00:00'}} - {{$arr_business_details['business_times']['thus_close'] or '00:00'}}</a></li>
+                  <li class="brdr"><a href="#">Friday   : {{$arr_business_details['business_times']['fri_open'] or '00:00'}} - {{$arr_business_details['business_times']['fri_close'] or '00:00'}}</a></li>
+                  <li class="brdr"><a href="#">Saturday : {{$arr_business_details['business_times']['sat_open'] or '00:00'}} - {{$arr_business_details['business_times']['sat_close'] or '00:00'}}</a></li>
+                  <li class="brdr"><a href="#">Sunday   : {{$arr_business_details['business_times']['sun_open'] or '00:00'}} - {{$arr_business_details['business_times']['sun_close'] or '00:00'}}</a></li>
+               </ul>
+               <!-- /#Categoriesr End-->
+               <div class="clearfix"></div>
+            </div>
+            <div class="categories_sect sidebar-nav">
+               <div class="sidebar-brand"><img src="{{ url('/') }}/assets/front/images/services.png" alt="services"/>Services<span class="spe_mobile3"><a href="#"></a></span></div>
+               <div class="bor_head">&nbsp;</div>
+               <ul class="spe_submobile3">
+                  @if(isset($arr_business_details['service']) && sizeof($arr_business_details['service'])>0)
+                  @foreach($arr_business_details['service'] as $services)
+                  <li class="brdr">{{ $services['name'] }}</li>
+                  @endforeach
+                  @else
+                  <span class="col-sm-3 col-md-3 col-lg-12">No Service Available.</span>
+                  @endif
+               </ul>
+               <!-- /#Categoriesr End-->
+               <div class="clearfix"></div>
+            </div>
+             <div class="categories_sect sidebar-nav">
+               <div class="sidebar-brand"><img src="{{ url('/') }}/assets/front/images/money.png" alt="services"/>Modes Of Payment<span class="spe_mobile3"><a href="#"></a></span></div>
+               <div class="bor_head">&nbsp;</div>
+               <ul class="spe_submobile3">
+                  @if(isset($arr_business_details['payment_mode']) && sizeof($arr_business_details['payment_mode'])>0)
+                  @foreach($arr_business_details['payment_mode'] as $payment_mode)
+                  <li class="brdr">{{ $payment_mode['title'] }}</li>
+                  @endforeach
+                  @else
+                  <span class="col-sm-3 col-md-3 col-lg-12">No Payment Mode Available.</span>
+                  @endif
+               </ul>
+               <!-- /#Categoriesr End-->
+               <div class="clearfix"></div>
+            </div>
+         </div>
          @if(isset($arr_business_details) && sizeof($arr_business_details)>0)
          <div class="col-sm-12 col-md-9 col-lg-9">
             <div class="p_detail_view">
                <!--  <div class="product_detail_banner" style="background: url('{{ url('/') }}/assets/front/images/banner_detail.jpg') repeat scroll 0px 0px;"> -->
                <div style="background: url('{{ url('/') }}/uploads/business/main_image/{{ $arr_business_details['main_image'] }}'); background-repeat: repeat;  background-size: 100% auto;">
                   <div class="product_detail_banner" style="background-color:rgba(0,0,0,0.7);">
-                     <div class="product_title"><a href="#"><img src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>{{$arr_business_details['business_name']}}</a></div>
+                     <div class="product_title">
+                     <a href="#">
+                      @if($arr_business_details['is_verified']==1)
+                     <img src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>@endif
+                     {{$arr_business_details['business_name']}}</a>
+                     </div>
 
                       <div class="resta-rating-block12">
                       <?php for($i=0;$i<round($arr_business_details['avg_rating']);$i++){ ?>
@@ -133,6 +203,9 @@
                   </div>
                   <div class="img_icons popup-v">
                     <a data-toggle="modal" data-target="#verifed"><img src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>verified</a>
+                  </div>
+                  <div class="img_icons popup-v">
+                    <a href="javascript:void(0);" onclick="show_map()"><img src="{{ url('/') }}/assets/front/images/loct.png" alt="write_review"  />View Map</a>
                   </div>
                </div>
 
@@ -325,82 +398,18 @@
                <br />
             </div>
          </div>
-         <div class="col-sm-12 col-md-3 col-lg-3">
-            <!-- Categories Start -->
-            <div class="categories_sect sidebar-nav">
-               <div class="sidebar-brand"><img src="{{ url('/') }}/assets/front/images/also-listed.png" alt="also listed"/>Also Listed in<span class="spe_mobile1"><a href="#"></a></span></div>
-               <div class="bor_head">&nbsp;</div>
-               <ul class="spe_submobile1">
-                  @if(isset($all_category) && sizeof($all_category)>0)
-                  @foreach($all_category as $category)
-                  @foreach($arr_business_details['also_list_category'] as $busi_in_cat)
-                  @if($category['cat_id']==$busi_in_cat['category_id'])
-                  <li class="brdr"><a href="{{ url('/') }}/{{$city}}/all-options/ct-{{$busi_in_cat['category_id']}}"><?php echo $category['title']; ?></a></li>
-                  @endif
-                  @endforeach
-                  @endforeach
-                  @endif
-               </ul>
-               <!-- /#Categoriesr End-->
-               <div class="clearfix"></div>
-            </div>
-            <div class="categories_sect sidebar-nav" id="business_times_div" style="display:none ;">
-               <div class="sidebar-brand"><img src="{{ url('/') }}/assets/front/images/hours-of-operation.png" alt="Hours of Operation"/>Hours of Operation<span class="spe_mobile2"><a href="#"></a></span></div>
-               <div class="bor_head">&nbsp;</div>
-               <ul class="spe_submobile2">
-                  <li class="brdr"><a href="#">Monday   : {{$arr_business_details['business_times']['mon_open']}} - {{$arr_business_details['business_times']['mon_close']}}</a></li>
-                  <li class="brdr"><a href="#">Tuesday  : {{$arr_business_details['business_times']['tue_open']}} - {{$arr_business_details['business_times']['tue_close']}}</a></li>
-                  <li class="brdr"><a href="#">Wednesday: {{$arr_business_details['business_times']['wed_open']}} - {{$arr_business_details['business_times']['wed_close']}}</a></li>
-                  <li class="brdr"><a href="#">Thursday : {{$arr_business_details['business_times']['thus_open']}} - {{$arr_business_details['business_times']['thus_close']}}</a></li>
-                  <li class="brdr"><a href="#">Friday   : {{$arr_business_details['business_times']['fri_open']}} - {{$arr_business_details['business_times']['fri_close']}}</a></li>
-                  <li class="brdr"><a href="#">Saturday : {{$arr_business_details['business_times']['sat_open']}} - {{$arr_business_details['business_times']['sat_close']}}</a></li>
-                  <li class="brdr"><a href="#">Sunday   : {{$arr_business_details['business_times']['sun_open']}} - {{$arr_business_details['business_times']['sun_close']}}</a></li>
-               </ul>
-               <!-- /#Categoriesr End-->
-               <div class="clearfix"></div>
-            </div>
-            <div class="categories_sect sidebar-nav">
-               <div class="sidebar-brand"><img src="{{ url('/') }}/assets/front/images/services.png" alt="services"/>Services<span class="spe_mobile3"><a href="#"></a></span></div>
-               <div class="bor_head">&nbsp;</div>
-               <ul class="spe_submobile3">
-                  @if(isset($arr_business_details['service']) && sizeof($arr_business_details['service'])>0)
-                  @foreach($arr_business_details['service'] as $services)
-                  <li class="brdr">{{ $services['name'] }}</li>
-                  @endforeach
-                  @else
-                  <span class="col-sm-3 col-md-3 col-lg-12">No Service Available.</span>
-                  @endif
-               </ul>
-               <!-- /#Categoriesr End-->
-               <div class="clearfix"></div>
-            </div>
-             <div class="categories_sect sidebar-nav">
-               <div class="sidebar-brand"><img src="{{ url('/') }}/assets/front/images/money.png" alt="services"/>Modes Of Payment<span class="spe_mobile3"><a href="#"></a></span></div>
-               <div class="bor_head">&nbsp;</div>
-               <ul class="spe_submobile3">
-                  @if(isset($arr_business_details['payment_mode']) && sizeof($arr_business_details['payment_mode'])>0)
-                  @foreach($arr_business_details['payment_mode'] as $payment_mode)
-                  <li class="brdr">{{ $payment_mode['title'] }}</li>
-                  @endforeach
-                  @else
-                  <span class="col-sm-3 col-md-3 col-lg-12">No Payment Mode Available.</span>
-                  @endif
-               </ul>
-               <!-- /#Categoriesr End-->
-               <div class="clearfix"></div>
-            </div>
-         </div>
-         @else
-         <span>No Hotel/Restaurant Found</span>
+             @else
+         <span>No Business Profile Found</span>
          @endif
       </div>
       <div class="row">
-         <div class="col-sm-12 col-md-12 col-lg-12">
+      <div class="col-sm-12 col-md-3 col-lg-3"></div>
+         <div class="col-sm-12 col-md-9 col-lg-9">
             <div class="title_main">Related Listing</div>
             <div class="row">
                @if(isset($all_related_business) && sizeof($all_related_business)>0)
                @foreach($all_related_business as $related_business)
-               <div class="col-sm-3 col-md-3">
+               <div class="col-sm-4 col-md-4">
                   <div class="product_info">
                      <div class="p_images-detail">
                         <?php

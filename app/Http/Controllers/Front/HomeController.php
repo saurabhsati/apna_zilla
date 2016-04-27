@@ -39,7 +39,7 @@ class HomeController extends Controller
     	$arr_category = array();
 
     	$where_arr=array('is_popular'=>1,'parent'=>0,'is_active'=>1);
-    	$obj_main_category = CategoryModel::where($where_arr)->remember(60)->get();
+    	$obj_main_category = CategoryModel::where($where_arr)->remember(15)->get();
  		if($obj_main_category)
  		{
  			$arr_category = $obj_main_category->toArray();

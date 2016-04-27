@@ -401,8 +401,14 @@ $(document).ready(function(){
 
                              success: function(responseresult)
                              {
-
-                                $('#deal_by_location').html('<div class="">'+responseresult+'</div>');
+                                if(responseresult.length>0)
+                                {
+                                   $('#deal_by_location').html('<div class="">'+responseresult+'</div>');
+                                }
+                                else
+                                {
+                                   $('#deal_by_location').html('<div class="" style="padding-left:17px:"><span><h4 >No Deals Found</h4></span></div>');
+                                }
 
 
                                //$('.container').html('<h2>trst</h2>');

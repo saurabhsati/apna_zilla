@@ -366,7 +366,7 @@
               ?>
 
 
-              <div class="resta-rating-block11">
+              <div class="resta-rating-block11 dtls-pg">
               <?php for($i=0;$i<round($restaurants['avg_rating']);$i++){ ?>
               <i class="fa fa-star star-acti"></i>
               <?php }?>
@@ -486,7 +486,16 @@
                           $avg_review= $tot_review=0;
                         }
                         ?>
-                       <div class="rating_star"><img src="{{ url('/') }}/assets/front/images/rating-4.png" alt="rating" width="73"/>
+                       <div class="rating_star">
+                        <div class="resta-rating-block11 dtls-pg">
+                        <?php for($i=0;$i<round($restaurants['avg_rating']);$i++){ ?>
+                        <i class="fa fa-star star-acti"></i>
+                        <?php }?>
+                        <?php for($i=0;$i<(5-round($restaurants['avg_rating']));$i++){ ?>
+                        <i class="fa fa-star"></i>
+                          <?php }?>
+                          </div>
+                       <!-- <img src="{{ url('/') }}/assets/front/images/rating-4.png" alt="rating" width="73"/> -->
                         <span> &nbsp;@if(isset($tot_review)){{$tot_review}} @endif Ratings</span>
                        </div>
 

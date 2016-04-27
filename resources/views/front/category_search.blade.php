@@ -49,6 +49,7 @@
 							<hr class="nn"/>
 							 @else
 							 <li class="brdr"><a href="{{ url('/') }}/{{$c_city}}/all-options/ct-{{$sub_category['cat_id']}}">{{$sub_category['title']}}</a></li>
+							 <hr class="nn"/>
 							 @endif
 							</ul>
 						@endforeach

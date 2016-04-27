@@ -202,42 +202,48 @@ class DealController extends Controller
                 $key_business_loc[$value['id']]=$value['id'];
               }
           }
+          $busiess_result=[];
           if(sizeof($key_business_city)>0 && sizeof($key_business_loc))
           {
               $busiess_result = array_intersect($key_business_city,$key_business_loc);
 
           }
-          $obj_deals_info = DealModel::where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$busiess_result)->get();
+          $html='';
+          if(sizeof($busiess_result)>0 && isset($busiess_result))
+          {
+                $obj_deals_info = DealModel::where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$busiess_result)->get();
 
-        if($obj_deals_info)
-        {
-            $arr_deals_info = $obj_deals_info->toArray();
-        }
-        $html='';
-        if(sizeof($arr_deals_info)>0)
-        {
-          foreach ($arr_deals_info as $key => $deal)
-            {
-                 $html.='<a href="'.url('/').'/'.$search_under_city.'/deals/'.urlencode(str_replace(' ','-',$deal['name'])).'/'.base64_encode($deal['id']).'"><div class="col-sm-6 col-md-3 col-lg-3">
-                          <div class="dels">
-                          <div class="deals-img"><span class="discount ribbon">'.$deal['discount_price'].'%</span><img src="'.
-                          get_resized_image_path($deal['deal_image'],$deal_image_path,200,250).
-                          '"alt="img"  /></div>
-                          <div class="deals-product">
-                          <div class="deals-nm"><a href="'.url('/').'/'.$search_under_city.'/deals/'.urlencode(str_replace(' ','-',$deal['name'])).'/'.base64_encode($deal['id']).'">'.$deal['name'].'</a></div>
-                          <div class="online-spend"></div>
-                                  <div class="price-box">
-                                  <div class="price-new">£'.round($deal['price']-(($deal['price'])*($deal['discount_price']/100))).'</div>
-                                      <div class="price-old">£'.$deal['price'].'</div>
-                                      <div class="view"><a href="'.url('/').'/'.$search_under_city.'/deals/'.urlencode(str_replace(' ','-',$deal['name'])).'/'.base64_encode($deal['id']).'" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
+              if($obj_deals_info)
+              {
+                  $arr_deals_info = $obj_deals_info->toArray();
+              }
+
+                if(sizeof($arr_deals_info)>0)
+                {
+                  foreach ($arr_deals_info as $key => $deal)
+                    {
+                         $html.='<a href="'.url('/').'/'.$search_under_city.'/deals/'.urlencode(str_replace(' ','-',$deal['name'])).'/'.base64_encode($deal['id']).'"><div class="col-sm-6 col-md-3 col-lg-3">
+                                  <div class="dels">
+                                  <div class="deals-img"><span class="discount ribbon">'.$deal['discount_price'].'%</span><img src="'.
+                                  get_resized_image_path($deal['deal_image'],$deal_image_path,200,250).
+                                  '"alt="img"  /></div>
+                                  <div class="deals-product">
+                                  <div class="deals-nm"><a href="'.url('/').'/'.$search_under_city.'/deals/'.urlencode(str_replace(' ','-',$deal['name'])).'/'.base64_encode($deal['id']).'">'.$deal['name'].'</a></div>
+                                  <div class="online-spend"></div>
+                                          <div class="price-box">
+                                          <div class="price-new">£'.round($deal['price']-(($deal['price'])*($deal['discount_price']/100))).'</div>
+                                              <div class="price-old">£'.$deal['price'].'</div>
+                                              <div class="view"><a href="'.url('/').'/'.$search_under_city.'/deals/'.urlencode(str_replace(' ','-',$deal['name'])).'/'.base64_encode($deal['id']).'" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
+                                          </div>
                                   </div>
-                          </div>
-                          </div>
-                          </div></a>';
+                                  </div>
+                                  </div></a>';
 
 
-            }
-        }
-        echo $html;
+                    }
+                }
+
+         }
+          echo $html;
     }
 }

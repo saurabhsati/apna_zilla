@@ -81,7 +81,7 @@
                       <span>Upload Business Main Image</span>
                       <input id="fileupload" type="file" name="business_image" class="upload change_pic" onchange="loadPreviewImage(this)">
                     </div>
-                     <div class="remove_b" onclick="clearPreviewImage()"><a href="#" style=""><i class="fa fa-times"></i> Remove</a></div>
+                     <div class="remove_b" onclick="clearPreviewImage()"><a href="javascript:void(0);" style=""><i class="fa fa-times"></i> Remove</a></div>
                      <div class="clr"></div>
                      <div class="line">&nbsp;</div>
                       <div class="error_msg">{{ $errors->first('business_image') }} </div>
