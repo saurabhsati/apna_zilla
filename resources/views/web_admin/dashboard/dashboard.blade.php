@@ -1,4 +1,4 @@
-@extends('web_admin.template.admin')                
+@extends('web_admin.template.admin')
 
 
 @section('main_content')
@@ -19,8 +19,186 @@
                     </ul>
                 </div>
                 <!-- END Breadcrumb -->
+                <!-- BEGIN Tiles -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                                <div class="col-md-3">
+                                  <a href="{{ url('/web_admin/dashboard')}}">
+                                      <div class="tile tile-light-blue">
+                                          <div class="img">
+                                              <i class="fa fa-home"></i>
+                                          </div>
+                                          <div class="content">
+                                              <p class="big">&nbsp;</p>
+                                              <p class="title">Dashboard</p>
+                                          </div>
+                                      </div>
+                                  </a>
+                              </div>
+                              <div class="col-md-3">
+                                  <a href="{{ url('/web_admin/users')}}">
+                                      <div class="tile tile-light-blue">
+                                          <div class="img">
+                                              <i class="fa fa-users"></i>
+                                          </div>
+                                          <div class="content">
+                                              <p class="big">&nbsp;</p>
+                                              <p class="title">Seller Users</p>
+                                          </div>
+                                      </div>
+                                  </a>
+                              </div>
+                              <div class="col-md-3">
+                                  <a href="{{ url('/web_admin/sales_user')}}">
+                                      <div class="tile tile-light-blue">
+                                          <div class="img">
+                                              <i class="fa fa-users"></i>
+                                          </div>
+                                          <div class="content">
+                                              <p class="big">&nbsp;</p>
+                                              <p class="title">Sales Staff Persons</p>
+                                          </div>
+                                      </div>
+                                  </a>
+                              </div>
+                              <div class="col-md-3">
+                                  <a href="{{ url('/web_admin/business_listing')}}">
+                                      <div class="tile tile-light-blue">
+                                          <div class="img">
+                                              <i class="fa fa-list"></i>
+                                          </div>
+                                          <div class="content">
+                                              <p class="big">&nbsp;</p>
+                                              <p class="title">Business Listings</p>
+                                          </div>
+                                      </div>
+                                  </a>
+                              </div>
+                              <div class="col-md-3">
+                                  <a href="{{ url('/web_admin/categories')}}">
+                                      <div class="tile tile-light-blue">
+                                          <div class="img">
+                                              <i class="fa fa-bars"></i>
+                                          </div>
+                                          <div class="content">
+                                              <p class="big">&nbsp;</p>
+                                              <p class="title">Categories</p>
+                                          </div>
+                                      </div>
+                                  </a>
+                              </div>
+                               <div class="col-md-3">
+                                  <a href="{{ url('/web_admin/static_pages')}}">
+                                      <div class="tile tile-light-blue">
+                                          <div class="img">
+                                              <i class="fa fa-files-o"></i>
+                                          </div>
+                                          <div class="content">
+                                              <p class="big">&nbsp;</p>
+                                              <p class="title">CMS</p>
+                                          </div>
+                                      </div>
+                                  </a>
+                              </div>
+                               <div class="col-md-3">
+                                  <a href="{{ url('/web_admin/newsletter')}}">
+                                      <div class="tile tile-light-blue">
+                                          <div class="img">
+                                              <i class="fa fa-users"></i>
+                                          </div>
+                                          <div class="content">
+                                              <p class="big">&nbsp;</p>
+                                              <p class="title">News-Letter Subscribers</p>
+                                          </div>
+                                      </div>
+                                  </a>
+                              </div>
+                               <div class="col-md-3">
+                                  <a href="{{ url('/web_admin/faq')}}">
+                                      <div class="tile tile-light-blue">
+                                          <div class="img">
+                                              <i class="fa fa-question-circle"></i>
+                                          </div>
+                                          <div class="content">
+                                              <p class="big">&nbsp;</p>
+                                              <p class="title">FAQs</p>
+                                          </div>
+                                      </div>
+                                  </a>
+                              </div>
+                               <div class="col-md-3">
+                                  <a href="{{ url('/web_admin/membership')}}">
+                                      <div class="tile tile-light-blue">
+                                          <div class="img">
+                                              <i class="fa fa-euro"></i>
+                                          </div>
+                                          <div class="content">
+                                              <p class="big">&nbsp;</p>
+                                              <p class="title">Membership Plans</p>
+                                          </div>
+                                      </div>
+                                  </a>
+                              </div>
+                               <div class="col-md-3">
+                                  <a href="{{ url('/web_admin/membershipcost')}}">
+                                      <div class="tile tile-light-blue">
+                                          <div class="img">
+                                              <i class="fa fa-euro"></i>
+                                          </div>
+                                          <div class="content">
+                                              <p class="big">&nbsp;</p>
+                                              <p class="title">Membership Plan Costs</p>
+                                          </div>
+                                      </div>
+                                  </a>
+                              </div>
+                               <div class="col-md-3">
+                                  <a href="{{ url('/web_admin/transactions')}}">
+                                      <div class="tile tile-light-blue">
+                                          <div class="img">
+                                              <i class="fa fa-credit-card"></i>
+                                          </div>
+                                          <div class="content">
+                                              <p class="big">&nbsp;</p>
+                                              <p class="title">Payments</p>
+                                          </div>
+                                      </div>
+                                  </a>
+                              </div>
+                               <div class="col-md-3">
+                                  <a href="{{ url('/web_admin/email_template')}}">
+                                      <div class="tile tile-light-blue">
+                                          <div class="img">
+                                              <i class="fa fa-envelope"></i>
+                                          </div>
+                                          <div class="content">
+                                              <p class="big">&nbsp;</p>
+                                              <p class="title">Email Templates</p>
+                                          </div>
+                                      </div>
+                                  </a>
+                              </div>
+                               <div class="col-md-3">
+                                  <a href="{{ url('/web_admin/contact_enquiry')}}">
+                                      <div class="tile tile-light-blue">
+                                          <div class="img">
+                                              <i class="fa fa-phone"></i>
+                                          </div>
+                                          <div class="content">
+                                              <p class="big">&nbsp;</p>
+                                              <p class="title">Contact Enquiry</p>
+                                          </div>
+                                      </div>
+                                  </a>
+                              </div>
+                        </div>
+                    </div>
 
 
+
+                <!-- END Tiles -->
+                 {{--
                 <!-- BEGIN Tiles -->
                 <div class="row">
                     <div class="col-md-7">
@@ -176,7 +354,7 @@
 
                             <div class="box-content">
                                 <ul class="weekly-stats">
-                                    {{-- 
+
                                     <li>
                                         <span class="inline-sparkline">134,178,264,196,307,259,287</span>
                                         Total Registered Users: <span class="value">
@@ -202,7 +380,7 @@
                                     <li>
                                         <span class="inline-sparkline">70.34,67.41,59.45,65.43,78.42,75.92,74.29</span>
                                         Total Number Of Completed Projects: <span class="value">{{ isset($dashboard_satistics['completed_projects'])?$dashboard_satistics['completed_projects']:''}}</span>
-                                    </li> 
+                                    </li>
 
                                      <li>
                                         <span class="inline-sparkline">70.34,67.41,59.45,65.43,78.42,75.92,74.29</span>
@@ -212,13 +390,13 @@
                                         <span class="inline-sparkline">78.12,74.52,81.25,89.23,86.15,91.82,85.18</span>
                                         % New Visits: <span class="value">82.65%</span>
                                     </li>
-                                    --}}        
+
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
+ --}}
 
 
-               
-@stop                    
+@stop

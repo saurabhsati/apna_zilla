@@ -13,7 +13,7 @@
         <li class="{{ Request::segment(2)=='users'? 'active':'' }}">
             <a href="javascript:void(0)" class="dropdown-toggle">
                 <i class="fa fa-user"></i>
-                <span>Normal Users</span>
+                <span>Seller Users</span>
                 <b class="arrow fa fa-angle-right"></b>
             </a>
             <ul class="submenu">
@@ -24,7 +24,7 @@
          <li class="{{ Request::segment(2)=='sales_user'? 'active':'' }}">
             <a href="javascript:void(0)" class="dropdown-toggle">
                 <i class="fa fa-user"></i>
-                <span>Sales Person</span>
+                <span>Sales Staff Persons</span>
                 <b class="arrow fa fa-angle-right"></b>
             </a>
             <ul class="submenu">
@@ -38,7 +38,7 @@
         ">
             <a href="javascript:void(0)" class="dropdown-toggle">
                 <i class="fa fa-list"></i>
-                <span>Business Listing</span>
+                <span>Business Listings</span>
                 <b class="arrow fa fa-angle-right"></b>
             </a>
             <ul class="submenu">
@@ -93,7 +93,7 @@
          <li class="{{ Request::segment(2)=='newsletter'?'active':'' }}">
             <a href="javascript:void(0)" class="dropdown-toggle">
                 <i class="fa fa-credit-card"></i>
-                <span>News-Letter</span>
+                <span>News-Letter Subscribers</span>
                 <b class="arrow fa fa-angle-right"></b>
             </a>
             <ul class="submenu">
@@ -133,7 +133,7 @@
             <li class="{{ Request::segment(2)=='faq'? 'active':'' }}">
                 <a href="javascript:void(0)"  class="dropdown-toggle">
                     <i class="fa fa-question-circle"></i>
-                    <span>FAQ</span>
+                    <span>FAQs</span>
                     <b class="arrow fa fa-angle-right"></b>
                 </a>
                  <ul class="submenu">
@@ -154,7 +154,7 @@
              <li class="{{ Request::segment(2)=='membershipcost'? 'active':'' }}">
                 <a href="javascript:void(0)"  class="dropdown-toggle">
                     <i class="fa fa-question-circle"></i>
-                    <span>Membership Cost</span>
+                    <span>Membership Plan Costs</span>
                     <b class="arrow fa fa-angle-right"></b>
                 </a>
                  <ul class="submenu">
@@ -174,7 +174,7 @@
         <li class="<?php  if(Request::segment(2) == 'email_template'){ echo 'active'; } ?>">
                         <a href="javascript:void(0)" class="dropdown-toggle">
                             <i class="fa fa-envelope"></i>
-                            <span>Email Template</span>
+                            <span>Email Templates</span>
                             <b class="arrow fa fa-angle-right"></b>
                         </a>
 

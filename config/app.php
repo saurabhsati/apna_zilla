@@ -221,7 +221,7 @@ return [
 
 
     'project' => [
-                    'name'=>'JustDial',
+                    'name'=>'RightNext',
                     'img_path' =>[
                                 'user_profile_pic'=>'/uploads/users/profile_pic',
                                 'category' => '/uploads/category',

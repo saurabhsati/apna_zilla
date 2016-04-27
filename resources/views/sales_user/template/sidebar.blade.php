@@ -22,7 +22,7 @@
         <li class="{{ Request::segment(2)=='users'? 'active':'' }}">
             <a href="javascript:void(0)" class="dropdown-toggle">
                 <i class="fa fa-user"></i>
-                <span>Normal Users</span>
+                <span>Seller Users</span>
                 <b class="arrow fa fa-angle-right"></b>
             </a>
             <ul class="submenu">
@@ -36,7 +36,7 @@
         ">
             <a href="javascript:void(0)" class="dropdown-toggle">
                 <i class="fa fa-list"></i>
-                <span>Business Listing</span>
+                <span>Business Listings</span>
                 <b class="arrow fa fa-angle-right"></b>
             </a>
             <ul class="submenu">

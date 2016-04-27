@@ -23,6 +23,64 @@
 
                 <!-- BEGIN Tiles -->
                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                                <div class="col-md-3">
+                                  <a href="{{ url('/sales_user/dashboard')}}">
+                                      <div class="tile tile-light-blue">
+                                          <div class="img">
+                                              <i class="fa fa-home"></i>
+                                          </div>
+                                          <div class="content">
+                                              <p class="big">&nbsp;</p>
+                                              <p class="title">Dashboard</p>
+                                          </div>
+                                      </div>
+                                  </a>
+                              </div>
+                               <div class="col-md-3">
+                                  <a href="{{ url('/sales_user/users')}}">
+                                      <div class="tile tile-light-blue">
+                                          <div class="img">
+                                              <i class="fa fa-users"></i>
+                                          </div>
+                                          <div class="content">
+                                              <p class="big">&nbsp;</p>
+                                              <p class="title">Seller Users</p>
+                                          </div>
+                                      </div>
+                                  </a>
+                              </div>
+                               <div class="col-md-3">
+                                  <a href="{{ url('/sales_user/business_listing')}}">
+                                      <div class="tile tile-light-blue">
+                                          <div class="img">
+                                              <i class="fa fa-list"></i>
+                                          </div>
+                                          <div class="content">
+                                              <p class="big">&nbsp;</p>
+                                              <p class="title">Business Listings</p>
+                                          </div>
+                                      </div>
+                                  </a>
+                              </div>
+                               <div class="col-md-3">
+                                  <a href="{{ url('/sales_user/transactions')}}">
+                                      <div class="tile tile-light-blue">
+                                          <div class="img">
+                                              <i class="fa fa-credit-card"></i>
+                                          </div>
+                                          <div class="content">
+                                              <p class="big">&nbsp;</p>
+                                              <p class="title">Payments</p>
+                                          </div>
+                                      </div>
+                                  </a>
+                              </div>
+                        </div>
+                 </div>
+            </div>
+              <!--   <div class="row">
                     <div class="col-md-7">
                         <div class="row">
                             <div class="col-md-7">
@@ -143,13 +201,13 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- END Tiles -->
 
 
                 <!-- BEGIN Main Content -->
-                <div class="row">
+              <!--   <div class="row">
                     <div class="col-md-7">
                         <div class="box">
                             <div class="box-title">
@@ -217,7 +275,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
 
 
