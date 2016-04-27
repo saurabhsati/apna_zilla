@@ -117,8 +117,8 @@
                     @endif
                     @endforeach
                     @endif
-                  </select><a href="javascript:void(0);" onclick="clearCategoryOptGroup(this)">Clear Selected Option</a>
-                  <div class="alert alert-warning">Note: Press Ctrl To Select Multiple Sub-Category From Main Category</div>
+                  </select><a href="javascript:void(0);" onclick="clearCategoryOptGroup(this)">Clear Selected Category</a>
+                  <div class="alert alert-warning">Note: Press Ctrl To Select Multiple Sub-Category From Single Main Category</div>
                   <span class='help-block'>{{ $errors->first('business_cat') }}</span>
                   </div>
                   </div></div>
