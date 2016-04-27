@@ -958,23 +958,36 @@ class UserController extends Controller
 
     public function show_business_contacts_details($enc_id)
     {
+        if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
          $business_id =  base64_decode($enc_id);
          return view('front.user.add_contacts',compact('business_id'));
     }
 
     public function show_other_info_details($enc_id)
     {
+         if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
         $business_id =  base64_decode($enc_id);
         return view('front.user.add_other_information',compact('business_id'));
     }
 
     public function show_location_details($enc_id)
     {
+        if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
 
-     $obj_country_full_details = CountryModel::get();
-     if($obj_country_full_details) {
-        $arr_country = $obj_country_full_details->toArray();
-     }
+        $obj_country_full_details = CountryModel::get();
+        if($obj_country_full_details)
+        {
+         $arr_country = $obj_country_full_details->toArray();
+        }
 
        $business_id =  base64_decode($enc_id);
 
@@ -995,6 +1008,10 @@ class UserController extends Controller
 
     public function show_services_details($enc_id)
     {
+         if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
         $business_id =  base64_decode($enc_id);
         return view('front.user.add_services',compact('business_id'));
     }
@@ -1003,10 +1020,14 @@ class UserController extends Controller
 
     public function edit_business_step1($enc_id)
     {
+        if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
        $id = base64_decode($enc_id);
        $business_public_img_path = url('/')."/uploads/business/main_image/";
-      $page_title ="Edit Business";
-      $obj_category = CategoryModel::get();
+       $page_title ="Edit Business";
+       $obj_category = CategoryModel::get();
 
         if($obj_category)
         {
@@ -1088,6 +1109,10 @@ class UserController extends Controller
     }
     public function edit_business_step2($enc_id)
     {
+        if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
        $id = base64_decode($enc_id);
        $page_title ="Edit Business";
        $obj_countries_res = CountryModel::get();
@@ -1178,6 +1203,10 @@ class UserController extends Controller
     }
     public function edit_business_step3($enc_id)
     {
+         if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
         $id = base64_decode($enc_id);
         $page_title ="Edit Business";
         $business_data=BusinessListingModel::where('id',$id)->get()->toArray();
@@ -1226,6 +1255,10 @@ class UserController extends Controller
     }
     public function edit_business_step4($enc_id)
     {
+        if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
         $id = base64_decode($enc_id);
         $page_title ="Edit Business";
         $business_data=BusinessListingModel::with(['payment_mode','business_times'])->where('id',$id)->get()->toArray();
@@ -1332,6 +1365,10 @@ class UserController extends Controller
     }
      public function edit_business_step5($enc_id)
     {
+         if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
         $id = base64_decode($enc_id);
         $page_title ="Edit Business";
         $business_public_img_path=url('/')."/uploads/business/business_upload_image/";

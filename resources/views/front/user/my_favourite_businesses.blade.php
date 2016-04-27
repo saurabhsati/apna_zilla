@@ -61,7 +61,7 @@
                 @if($restaurants['is_verified']==1)
                             <img class="product-like-icon1" src="{{ url('/') }}/assets/front/images/verified-green.png" alt="write_review"/>
                             @endif
-                {{ $restaurants['business_name'] }}
+                {{ ucwords($restaurants['business_name'] )}}
               </a>
             </div>
 
