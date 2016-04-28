@@ -114,7 +114,6 @@ class ListingController extends Controller
             }
           }
       }
-       // dd($result);
         //related listing business end
 
          $obj_category = CategoryModel::where('parent','!=','0')->get();

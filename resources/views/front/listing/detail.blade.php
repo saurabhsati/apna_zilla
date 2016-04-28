@@ -283,11 +283,11 @@
                               </div>
                               <div class="acad-rating-block">
                                  <span class="stars-block resta-rating-block">
-                                    <?php for($i=0;$i<round($arr_business_details['avg_rating']);$i++){  ?>
+                                    <?php for($i=0;$i<round($review['ratings']);$i++){  ?>
                                       <i class="fa fa-star star-acti"></i>
                                     <!-- <i class="fa fa-star-o stars-rat"></i> -->
                                     <?php } ?>
-                                     <?php for($i=0;$i<(5-round($arr_business_details['avg_rating']));$i++){ ?>
+                                     <?php for($i=0;$i<(5-round($review['ratings']));$i++){ ?>
                                     <i class="fa fa-star"></i>
                                       <?php }?>
 
