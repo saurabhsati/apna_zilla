@@ -11,7 +11,7 @@
   text-transform: capitalize;
 }
 
-</style>  
+</style>
 
 
 
@@ -68,20 +68,6 @@
 
 
 
-        <?php
-        use App\Models\UserModel;
-        if( (count($arr_user_info)==0) && (session('user_mail') !="") )
-        {
-          $user_mail = session('user_mail');
-          $obj_user_info = UserModel::where('email',$user_mail)->get();
-          if($obj_user_info)
-          {
-            $arr_user_info = $obj_user_info->toArray();
-          }
-
-        }
-        ?>
-
         @if(count($arr_user_info)>0)
 
         @foreach($arr_user_info as $user)
@@ -99,20 +85,48 @@
                         </div>
                          </div>
                        </div> -->
+                        <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">State :</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                         <select class="input_acct"
+                                 name="state" id="state"
+                                 data-rule-required="true"
 
-                       <input type="hidden"  name="user_id" value="{{isset($user['id'])?$user['id']:'' }}" > </input>
-                       <div class="user_box_sub">
-                         <div class="row">
-                          <div class="col-lg-3  label-text">City :</div>
-                          <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                           <input type="text" name="city" id="city" 
-                           value="{{ isset($user['city'])?$user['city']:'' }}"
-                           class="input_acct"
-                           data-rule-required="true"
-                           placeholder="Enter City "/>
+                                 >
+                                 @if(isset($arr_state) && sizeof($arr_state)>0)
+                   @foreach($arr_state as $state)
+                <option value="{{ isset($state['id'])?$state['id']:'' }}" {{ $user['state']==$state['id']?'selected="selected"':'' }}>{{ isset($state['state_title'])?$state['state_title']:'' }}
+                </option>
+                @endforeach
+                @endif
+                        </select>
+                        </div>
                          </div>
-                       </div>
-                     </div>
+                    </div>
+                     <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">City :</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                         <select class="input_acct"
+                                 name="city" id="city"
+                                 data-rule-required="true"
+
+                                 >
+                        <!-- <option value="{{-- isset($user['marital_status']) ? $user['marital_status']:'' --}}">{{-- $user['marital_status'] --}} </option> -->
+
+                        @if(isset($arr_city) && sizeof($arr_city)>0)
+                   @foreach($arr_city as $city)
+                <option value="{{ isset($city['id'])?$city['id']:'' }}" {{ $user['city']==$city['id']?'selected="selected"':'' }}>{{ isset($city['city_title'])?$city['city_title']:'' }}
+                </option>
+                @endforeach
+                @endif
+                        </select>
+                        </div>
+                         </div>
+                    </div>
+                       <input type="hidden"  name="user_id" value="{{isset($user['id'])?$user['id']:'' }}" > </input>
+
 
                      <div class="user_box_sub">
                        <div class="row">
@@ -140,7 +154,7 @@
                    <div class="row">
                     <div class="col-lg-3  label-text">Street Address :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                     <input type="text" name="street_address" id="street_address" data-rule-required="true"
+                     <input type="text" name="street_address" id="street_address" data-rule-required=""
                      value="{{ isset($user['street_address'])?$user['street_address']:'' }}"
                      class="input_acct" placeholder="Enter Street address  "/>
                    </div>
@@ -174,13 +188,14 @@
         city:'required',
         area:'required',
         pincode:'required',
-        street_address:'required',
+        state:'required',
       },
       messages:{
-        city:"Please enter city",
+        city:"Please select city",
+        state:"Please select state",
         area:"Please enter area",
         pincode:"Please enter pincode",
-        street_address:"Please enter street address",
+
       },
 
     })

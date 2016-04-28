@@ -230,8 +230,8 @@ class UserController extends Controller
         {
              Session::put('user_mail', $users['email']);
              Session::put('user_first_name', $users['first_name']);
-             Session::put('user_middle_name', $users['middle_name']);
-             Session::put('user_last_name', $users['last_name']);
+             //Session::put('user_middle_name', $users['middle_name']);
+             //Session::put('user_last_name', $users['last_name']);
         }
 
          $profile_pic_public_path = $this->profile_pic_public_path;
@@ -245,8 +245,8 @@ class UserController extends Controller
 
         $arr_rules = array();
         $arr_rules['first_name'] = "required";
-        $arr_rules['last_name'] = "required";
-        $arr_rules['email'] = "required";
+        //$arr_rules['last_name'] = "required";
+       // $arr_rules['email'] = "required";
         $arr_rules['mobile_no'] = "required";
 
         $validator = Validator::make($request->all(),$arr_rules);
@@ -264,11 +264,17 @@ class UserController extends Controller
         $yy                       =   $request->input('yy');
         $dob                      =   $yy.'-'.$mm.'-'.$dd;
 
+        $married_date_dd                       =   $request->input('married_date_dd');
+        $married_date_mm                       =   $request->input('married_date_mm');
+        $married_date_yy                       =   $request->input('married_date_yy');
+        $married_date                      =   $married_date_yy.'-'.$married_date_mm.'-'.$married_date_dd;
+
         $title                    =   $request->input('title');
         $first_name               =   $request->input('first_name');
         $middle_name              =   $request->input('middle_name');
         $last_name                =   $request->input('last_name');
         $marital_status           =   $request->input('marital_status');
+
         $city                     =   $request->input('city');
         $area                     =   $request->input('area');
         $pincode                  =   $request->input('pincode');
@@ -350,7 +356,8 @@ class UserController extends Controller
             'dd'                =>    $dd,
             'mm'                =>    $mm,
             'yy'                =>    $yy,
-            'd_o_b'             =>     date("Y-m-d", strtotime($dob)),
+            'd_o_b'             =>    date("Y-m-d", strtotime($dob)),
+            'married_date'      =>    date('Y-m-d',strtotime($married_date)),
             'marital_status'    =>    $marital_status,
             //'city'              =>    $city,
             'gender'            =>    $gender,
@@ -391,6 +398,19 @@ class UserController extends Controller
         {
            return redirect('/');
         }
+         $arr_city = array();
+        $obj_city_res = CityModel::get();
+        if($obj_city_res != FALSE)
+        {
+            $arr_city = $obj_city_res->toArray();
+        }
+        $arr_state = array();
+        $obj_state_res = StateModel::get();
+
+        if( $obj_state_res != FALSE)
+        {
+            $arr_state = $obj_state_res->toArray();
+        }
         $id = session('user_id');
         $user_id = base64_decode($id);
         $obj_user_info = UserModel::where('id','=',$user_id)->get();
@@ -399,7 +419,7 @@ class UserController extends Controller
             $arr_user_info = $obj_user_info->toArray();
         }
 
-        return view('front.user.address',compact('page_title','arr_user_info'));
+        return view('front.user.address',compact('page_title','arr_user_info','arr_city','arr_state'));
     }
 
     public function store_address_details(Request $request)
@@ -407,9 +427,10 @@ class UserController extends Controller
 
         $arr_rules = array();
         $arr_rules['city']               = "required";
+        $arr_rules['state']               = "required";
         $arr_rules['area']               = "required";
         $arr_rules['pincode']            = "required";
-        $arr_rules['street_address']     = "required";
+        //$arr_rules['street_address']     = "required";
 
         $validator = Validator::make($request->all(),$arr_rules);
 
@@ -420,6 +441,7 @@ class UserController extends Controller
 
         $id     =  $request->input('user_id');
         $arr_data['city']     = $request->input('city');
+        $arr_data['state']     = $request->input('state');
         $arr_data['area']     = $request->input('area');
         $arr_data['pincode']     = $request->input('pincode');
         $arr_data['street_address']     = $request->input('street_address');

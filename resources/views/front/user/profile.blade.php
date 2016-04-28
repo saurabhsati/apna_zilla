@@ -162,7 +162,7 @@
                                 class="input_acct"
                                 value="{{ isset($user['last_name'])?$user['last_name']:'' }}"
                                 placeholder="Enter Last Name "
-                                data-rule-required="true"
+                                data-rule-required=""
                                 />
                                 <!-- onblur="validate()" -->
 
@@ -179,8 +179,8 @@
 
                      <div class="col-sm-3 col-md-3 col-lg-2">
                      <?php //echo $user['d_o_b'];
-                      $date_explode=explode('-',$user['d_o_b']);
-                      //print_r($date_explode) ;?>
+                       $date_explode=explode('-',$user['d_o_b']);
+                     // print_r($date_explode) ;?>
                        <select class="input_acct" name="dd">
                             @for($i=1;$i<=31;$i++)
                               <option value="<?php echo $i;?>" <?php  if(isset($date_explode[2])  &&  $date_explode[2] ==  $i ) { echo "selected=selected";}?>>{{ $i }}</option>
@@ -192,7 +192,7 @@
                            <select class="input_acct" name="mm">
                                  <option value="01" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '01' ) { echo "selected=selected";}?>>January</option>
                                  <option value="02" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '02' ) { echo "selected=selected";}?>>February</option>
-                                 <option value="03" <?php  if(isset($$date_explode[1])  &&  $date_explode[1] ==  '05' ) { echo "selected=selected";}?>>March</option>
+                                 <option value="03" <?php  if(isset($$date_explode[1])  &&  $date_explode[1] ==  '03' ) { echo "selected=selected";}?>>March</option>
                                  <option value="04" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '04' ) { echo "selected=selected";}?>>April</option>
                                  <option value="05" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '05' ) { echo "selected=selected";}?>>May</option>
                                  <option value="06" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '06' ) { echo "selected=selected";}?>>June</option>
@@ -240,6 +240,7 @@
                          <select class="input_acct"
                                  name="marital_status" id="marital_status"
                                  data-rule-required="true"
+                                 onchange="chkeck_marital_status(this);"
                                  >
                         <!-- <option value="{{-- isset($user['marital_status']) ? $user['marital_status']:'' --}}">{{-- $user['marital_status'] --}} </option> -->
 
@@ -286,7 +287,56 @@
                         </div>
                          </div>
                     </div> -->
+                    @if(isset($user['marital_status'])  &&  $user['marital_status'] =="Married" )
+                     <div  id="div_married_date" name="div_married_date">
+                         <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">Married :</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                        <div class="row">
 
+                     <div class="col-sm-3 col-md-3 col-lg-2">
+                     <?php //echo $user['d_o_b'];
+                       $date_explode=explode('-',$user['married_date']);
+                     // print_r($date_explode) ;?>
+                       <select class="input_acct" name="married_date_dd">
+                            @for($i=1;$i<=31;$i++)
+                              <option value="<?php echo $i;?>" <?php  if(isset($date_explode[2])  &&  $date_explode[2] ==  $i ) { echo "selected=selected";}?>>{{ $i }}</option>
+                            @endfor
+                        </select>
+                         </div>
+
+                             <div class="col-sm-3 col-md-3 col-lg-3">
+                           <select class="input_acct" name="married_date_mm">
+                                 <option value="01" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '01' ) { echo "selected=selected";}?>>January</option>
+                                 <option value="02" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '02' ) { echo "selected=selected";}?>>February</option>
+                                 <option value="03" <?php  if(isset($$date_explode[1])  &&  $date_explode[1] ==  '03' ) { echo "selected=selected";}?>>March</option>
+                                 <option value="04" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '04' ) { echo "selected=selected";}?>>April</option>
+                                 <option value="05" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '05' ) { echo "selected=selected";}?>>May</option>
+                                 <option value="06" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '06' ) { echo "selected=selected";}?>>June</option>
+                                 <option value="07" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '07' ) { echo "selected=selected";}?>>July</option>
+                                 <option value="08" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '08' ) { echo "selected=selected";}?>>August</option>
+                                 <option value="09" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '09' ) { echo "selected=selected";}?>>September</option>
+                                 <option value="10" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '10' ) { echo "selected=selected";}?>>October</option>
+                                 <option value="11" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '11' ) { echo "selected=selected";}?>>November</option>
+                                 <option value="12" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '12' ) { echo "selected=selected";}?>>December</option>
+                           </select>
+                            </div>
+
+                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                <select class="input_acct" name="married_date_yy">
+                                @for($j=date('Y');$j>= 1950 ;$j--)
+                                  <option value="<?php echo $j;?>" <?php  if(isset($date_explode[0])  &&  $date_explode[0] ==  $j ) { echo "selected=selected";}?> >{{ $j }}</option>
+                                @endfor
+                               </select>
+                            </div>
+
+                        </div>
+                        </div>
+                         </div>
+                    </div>
+                    </div>
+                    @endif
                     <div class="user_box_sub">
                         <div class="row">
                                 <div class="col-lg-3  label-text">Work Experience</div>
@@ -320,7 +370,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="email" name="email"
                                 value="{{ isset($user['email'])?$user['email']:'' }}"
-                               class="input_acct" placeholder="Enter Email ID" readonly="true"  data-rule-required="true" />
+                               class="input_acct" placeholder="Enter Email ID" readonly="true"  data-rule-required="" />
                         </div>
                          </div>
                     </div>
@@ -422,6 +472,18 @@
         $('#preview_profile_pic').attr('src',site_url+'/images/front/avatar.jpg');
         $("#removal_handle").hide();
     }
+      function chkeck_marital_status(ref)
+    {
+       var marital_status= $("select[name='marital_status']").val();
+       if(marital_status=='Married')
+       {
+         $("#div_married_date").css('display','block');
+       }
+       else
+       {
+        $("#div_married_date").css('display','none');
+       }
+    }
 
    /* function validate()
       {
@@ -461,10 +523,10 @@ $(document ).ready(function (){
             required:true,
             email:true
           },
-          last_name:"required",
-          marital_status:"required",
-          work_experience:"required",
-          occupation:"required",
+         /* last_name:"required",*/
+          marital_status:"required"
+        /*  work_experience:"required",
+          occupation:"required",*/
 
       },
     // Specify the validation error messages
