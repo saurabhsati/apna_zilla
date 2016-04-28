@@ -1,4 +1,4 @@
-    @extends('web_admin.template.admin')                
+    @extends('web_admin.template.admin')
 
 
     @section('main_content')
@@ -24,7 +24,7 @@
             <li>
                 <i class="fa fa-user"></i>
                 <a href="{{ url('/web_admin/sales_user') }}">Sales User</a>
-            </li>   
+            </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span>
@@ -50,7 +50,7 @@
             </div>
         </div>
         <div class="box-content">
-        
+
           @if(Session::has('success'))
             <div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -58,7 +58,7 @@
                 </button>
                 {{ Session::get('success') }}
             </div>
-          @endif  
+          @endif
 
           @if(Session::has('error'))
             <div class="alert alert-danger alert-dismissible">
@@ -73,10 +73,10 @@
             {{ csrf_field() }}
 
             <div class="col-md-10">
-            
+
 
             <div id="ajax_op_status">
-                
+
             </div>
             <div class="alert alert-danger" id="no_select" style="display:none;"></div>
             <div class="alert alert-warning" id="warning_msg" style="display:none;"></div>
@@ -84,40 +84,40 @@
           <div class="btn-toolbar pull-right clearfix">
             <!--- Add new record - - - -->
                 <div class="btn-group">
-                <a href="{{ url('/web_admin/sales_user/create')}}" class="btn btn-primary btn-add-new-records">Add Sales User</a> 
+                <a href="{{ url('/web_admin/sales_user/create')}}" class="btn btn-primary btn-add-new-records">Add Sales User</a>
                 </div>
             <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -->
             <div class="btn-group">
-                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip" 
-                    title="Multiple Unblock" 
-                    href="javascript:void(0);" 
-                    onclick="javascript : return check_multi_action('frm_manage','activate');" 
+                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
+                    title="Multiple Unblock"
+                    href="javascript:void(0);"
+                    onclick="javascript : return check_multi_action('frm_manage','activate');"
                     style="text-decoration:none;">
 
                     <i class="fa fa-unlock"></i>
-                </a> 
-                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip" 
-                   title="Multiple Block" 
-                   href="javascript:void(0);" 
-                   onclick="javascript : return check_multi_action('frm_manage','block');"  
+                </a>
+                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
+                   title="Multiple Block"
+                   href="javascript:void(0);"
+                   onclick="javascript : return check_multi_action('frm_manage','block');"
                    style="text-decoration:none;">
                     <i class="fa fa-lock"></i>
-                </a> 
-                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip" 
-                   title="Multiple Delete" 
-                   href="javascript:void(0);" 
-                   onclick="javascript : return check_multi_action('frm_manage','delete');"  
+                </a>
+                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
+                   title="Multiple Delete"
+                   href="javascript:void(0);"
+                   onclick="javascript : return check_multi_action('frm_manage','delete');"
                    style="text-decoration:none;">
                    <i class="fa fa-trash-o"></i>
                 </a>
             </div>
-            <div class="btn-group"> 
-                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip" 
-                   title="Refresh" 
+            <div class="btn-group">
+                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
+                   title="Refresh"
                    href="{{ url('/web_admin/sales_user') }}"
                    style="text-decoration:none;">
                    <i class="fa fa-repeat"></i>
-                </a> 
+                </a>
             </div>
           </div>
           <br/>
@@ -130,7 +130,7 @@
               <thead>
                 <tr>
                   <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
-                 
+
                   <th>Name</th>
                   <th>Email</th>
                   <th>Mobile No</th>
@@ -139,53 +139,53 @@
                 </tr>
               </thead>
               <tbody>
-                
+
                @if(isset($obj_user) && sizeof($obj_user)>0)
                   @foreach($obj_user as $key => $user)
                    @if(!$user->inRole('admin'))
                   <tr>
-                    <td> 
-                      <input type="checkbox" 
-                             name="checked_record[]"  
-                             value="{{ base64_encode($user->id) }}" /> 
+                    <td>
+                      <input type="checkbox"
+                             name="checked_record[]"
+                             value="{{ base64_encode($user->id) }}" />
                     </td>
 
                     <td> {{ $user->first_name." ".$user->last_name }} </td>
                     <td> {{ $user->email }} </td>
                     <td> {{ $user->mobile_no }} </td>
-                    
-                    <td width="250" style="text-align:center">
+
+                    <td >
                          @if($user->is_active=="0")
                         <a class="btn btn-danger" href="{{ url('/web_admin/users/toggle_status/').'/'.base64_encode($user->id).'/activate' }}">
                             Block
-                        </a>    
-                              
+                        </a>
+
                         @elseif($user->is_active=="1")
                         <a  class="btn btn-success" href="{{ url('/web_admin/users/toggle_status/').'/'.base64_encode($user->id).'/block' }}">
                             Active
-                        </a>   
-                        @endif 
+                        </a>
+                        @endif
                     </td>
-                    
-                    <td> 
+
+                    <td>
 
                         <a href="{{ url('/web_admin/sales_user/edit/').'/'.base64_encode($user->id) }}" class="show-tooltip" title="Edit">
                           <i class="fa fa-edit" ></i>
-                        </a>  
+                        </a>
 
-                        &nbsp;  
-                        <a href="{{ url('/web_admin/users/toggle_status/').'/'.base64_encode($user->id).'/delete' }}" 
+                        &nbsp;
+                        <a href="{{ url('/web_admin/users/toggle_status/').'/'.base64_encode($user->id).'/delete' }}"
                            onclick="javascript:return confirm_delete()" class="show-tooltip" title="Delete">
                           <i class="fa fa-trash" ></i>
-                        </a>   
+                        </a>
 
                     </td>
-                    
+
                   </tr>
                   @endif
                   @endforeach
                 @endif
-                  
+
               </tbody>
             </table>
           </div>
@@ -221,7 +221,7 @@
       {
         /* Get hidden input reference */
         var input_multi_action = jQuery('input[name="multi_action"]');
-        
+
         if(jQuery(input_multi_action).length)
         {
           /* Set Action in hidden input*/
@@ -243,6 +243,6 @@
     }
 </script>
 
-@stop                    
+@stop
 
 

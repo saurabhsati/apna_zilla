@@ -40,7 +40,6 @@ class EloquentUser extends Model implements RoleableInterface, PermissibleInterf
      * {@inheritDoc}
      */
     protected $fillable = [
-
         'profile_pic',
         'first_name',
         'middle_name',
@@ -48,6 +47,7 @@ class EloquentUser extends Model implements RoleableInterface, PermissibleInterf
         'email',
         'password',
         'permissions',
+        'married_date',
         'gender',
         'd_o_b',
         'dd',
@@ -55,6 +55,8 @@ class EloquentUser extends Model implements RoleableInterface, PermissibleInterf
         'yy',
         'role',
         'marital_status',
+        'country',
+        'state',
         'city',
         'area',
         'pincode',
