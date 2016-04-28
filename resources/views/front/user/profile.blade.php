@@ -291,7 +291,7 @@
                      <div  id="div_married_date" name="div_married_date">
                          <div class="user_box_sub">
                            <div class="row">
-                    <div class="col-lg-3  label-text">Married :</div>
+                    <div class="col-lg-3  label-text">Married Date:</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                         <div class="row">
 

@@ -201,6 +201,118 @@
     })
   });
 </script>
+<script type="text/javascript">
+ window.onload = function() {
 
+          loadStates();
+
+   };
+ var url = "{{ url('/') }}";
+    function loadStates()
+     {
+        //var selected_country = jQuery(ref).val();
+
+        jQuery.ajax({
+                        url:url+'/web_admin/common/get_states/'+1,
+                        type:'GET',
+                        data:'flag=true',
+                        dataType:'json',
+                        beforeSend:function()
+                        {
+                           // jQuery('select[name="state"]').attr('disabled','disabled');
+                        },
+                        success:function(response)
+                        {
+
+                            if(response.status=="SUCCESS")
+                            {
+                                jQuery('select[name="state"]').removeAttr('disabled');
+                                if(typeof(response.arr_state) == "object")
+                                {
+                                   //var option = '<option value="">Select</option>';
+                                   jQuery(response.arr_state).each(function(index,states)
+                                   {
+
+                                        option+='<option value="'+states.id+'">'+states.state_title+'</option>';
+                                   });
+
+                                   jQuery('select[name="state"]').html(option);
+                                }
+                            }
+                            return false;
+                        }
+        });
+     }
+     function loadCity(ref)
+     {
+        var selected_state = jQuery(ref).val();
+
+        jQuery.ajax({
+                        url:url+'/web_admin/common/get_cities/'+selected_state,
+                        type:'GET',
+                        data:'flag=true',
+                        dataType:'json',
+                        beforeSend:function()
+                        {
+                            jQuery('select[name="city"]').attr('disabled','disabled');
+                        },
+                        success:function(response)
+                        {
+
+                            if(response.status=="SUCCESS")
+                            {
+                                jQuery('select[name="city"]').removeAttr('disabled');
+                                if(typeof(response.arr_city) == "object")
+                                {
+                                   var option = '<option value="">Select</option>';
+                                   jQuery(response.arr_city).each(function(index,city)
+                                   {
+
+                                        option+='<option value="'+city.id+'">'+city.city_title+'</option>';
+                                   });
+
+                                   jQuery('select[name="city"]').html(option);
+                                }
+                            }
+                            return false;
+                        }
+        });
+     }
+      function loadpostalcode(ref)
+     {
+        var selected_city = jQuery(ref).val();
+
+        jQuery.ajax({
+                        url:url+'/web_admin/common/get_postalcode/'+selected_city,
+                        type:'GET',
+                        data:'flag=true',
+                        dataType:'json',
+                        beforeSend:function()
+                        {
+                            jQuery('select[name="pincode"]').attr('disabled','disabled');
+                        },
+                        success:function(response)
+                        {
+
+                            if(response.status=="SUCCESS")
+                            {
+                                jQuery('select[name="pincode"]').removeAttr('disabled');
+                                if(typeof(response.arr_postalcode) == "object")
+                                {
+                                   var option = '<option value="">Select</option>';
+                                   jQuery(response.arr_postalcode).each(function(index,postalcode)
+                                   {
+
+                                        option+='<option value="'+postalcode.postal_code+'">'+postalcode.postal_code+'</option>';
+                                   });
+
+                                   jQuery('select[name="pincode"]').html(option);
+                                }
+                            }
+                            return false;
+                        }
+        });
+     }
+</script>
 
 @stop
