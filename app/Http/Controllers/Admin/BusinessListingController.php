@@ -65,7 +65,7 @@ class BusinessListingController extends Controller
             $arr_sub_category = $obj_sub_category->toArray();
         }
         $business_listing =[];
-    	$obj_business_listing = BusinessListingModel::with(['category','user_details','reviews','membership_plan_details'])->get();
+    	$obj_business_listing = BusinessListingModel::with(['category','user_details','reviews','membership_plan_details'])->orderBy('created_at','DESC')->get();
         if($obj_business_listing)
         {
             $business_listing = $obj_business_listing->toArray();
@@ -135,10 +135,10 @@ class BusinessListingController extends Controller
         $arr_rules['contact_person_name']='required';
         $arr_rules['mobile_number']='required';
         $arr_rules['landline_number']='required';
-        $arr_rules['fax_no']='required';
-        $arr_rules['toll_free_number']='required';
+        //$arr_rules['fax_no']='required';
+        //$arr_rules['toll_free_number']='required';
         $arr_rules['email_id']='required';
-        $arr_rules['website']='required';
+        //$arr_rules['website']='required';
         //business times
         $arr_rules['mon_in']='required';
         $arr_rules['mon_out']='required';
@@ -159,7 +159,7 @@ class BusinessListingController extends Controller
     	$arr_rules['company_info']='required';
         $arr_rules['establish_year']='required';
     	$arr_rules['keywords']='required';
-    	$arr_rules['youtube_link']='required';
+    	//$arr_rules['youtube_link']='required';
     	$validator = Validator::make($request->all(),$arr_rules);
 
         if($validator->fails())
@@ -416,10 +416,10 @@ class BusinessListingController extends Controller
         $arr_rules['contact_person_name']='required';
         $arr_rules['mobile_number']='required';
         $arr_rules['landline_number']='required';
-        $arr_rules['fax_no']='required';
-        $arr_rules['toll_free_number']='required';
+       // $arr_rules['fax_no']='required';
+        //$arr_rules['toll_free_number']='required';
         $arr_rules['email_id']='required';
-        $arr_rules['website']='required';
+        //$arr_rules['website']='required';
 
         //business times
         $arr_rules['mon_in']='required';
@@ -441,7 +441,7 @@ class BusinessListingController extends Controller
     	$arr_rules['company_info']='required';
         $arr_rules['establish_year']='required';
     	$arr_rules['keywords']='required';
-    	$arr_rules['youtube_link']='required';
+    	//$arr_rules['youtube_link']='required';
 
 
 

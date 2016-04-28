@@ -180,6 +180,7 @@
 
                         </div>
                      </div>
+                       <div class="col-sm-6 col-lg-4 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px upto only</div>
                       <span class='help-block'>{{ $errors->first('main_image') }}</span>
                        <!--<br/>
                        <button class="btn btn-warning" onclick="return show_more_images()" id="show_more_images_button">Do you want to add slider images ? </button>  -->
@@ -222,16 +223,16 @@
                          </div>
                           <div class="form-group add_more_image" style="display: none;">
                           <div class="col-sm-5 col-md-7" style="float:right;">
-                             <a href="javascript:void(0);" id='add-image'>
+                             <a href="javascript:void(0);" id='add-image' class="show-tooltip" title="Add More images">
                                  <span class="glyphicon glyphicon-plus-sign" style="font-size: 20px;"></span>
                              </a>
                             <span style="margin-left:05px;">
-                            <a href="javascript:void(0);" id='remove-image'>
+                            <a href="javascript:void(0);" id='remove-image' class="show-tooltip" title="Remove last selected  images">
                                 <span class="glyphicon glyphicon-minus-sign" style="font-size: 20px;"></span>
                             </a>
                             </span>
                            </div>
-                              <label class="col-sm-3 col-lg-2 control-label">Add More Business Images <i class="red">*</i> </label>
+                              <label class="col-sm-3 col-lg-2 control-label">Add More Business Gallery Images <i class="red">*</i> </label>
                               <div class="col-sm-6 col-lg-4 controls">
 
                               <input type="file" name="business_image[]" id="business_image" class="pimg"   />
@@ -244,7 +245,7 @@
                              <div id="append" class="class-add"></div>
                               <div class="error_msg" id="error_business_image" ></div>
                               <div class="error_msg" id="error_business_image1" ></div>
-                             <label class="col-sm-3 col-lg-2 control-label"></label>
+                             <label class="col-sm-6 col-lg-12 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px upto only</label>
 
                               </div>
                               </div>
@@ -398,12 +399,12 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="fax_no">Fax No <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="fax_no">Fax No <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
                            name="fax_no"
                            id="fax_no"
-                           data-rule-required="true"
+                           data-rule-required=""
                            placeholder="Enter Fax No"
                            value="{{ isset($business['fax_no'])?$business['fax_no']:'' }}"
                            />
@@ -412,12 +413,12 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="toll_free_number">Toll Free Number<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="toll_free_number">Toll Free Number<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
                            name="toll_free_number"
                            id="toll_free_number"
-                           data-rule-required="true"
+                           data-rule-required=""
                            placeholder="Enter Toll Free Number"
                            value="{{ isset($business['toll_free_number'])?$business['toll_free_number']:'' }}"
                            />
@@ -439,12 +440,12 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="website">Website <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="website">Website <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
                            name="website"
                            id="website"
-                           data-rule-required="true"
+                           data-rule-required=""
                            placeholder="Enter Website"
                            value="{{ isset($business['website'])?$business['website']:'' }}"
                            />
@@ -707,7 +708,7 @@
                               </div>
            <hr/>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="company_info">Company Info<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="company_info">About Company Info<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <textarea class="form-control"
                            name="company_info"
@@ -733,7 +734,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="keywords">Keywords<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="keywords">Meta Keywords<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <textarea class="form-control"
                            name="keywords"
@@ -745,12 +746,12 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="youtube_link">Youtube Link<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="youtube_link">Youtube Link<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
                            name="youtube_link"
                            id="youtube_link"
-                           data-rule-required="true"
+                           data-rule-required=""
                            placeholder="Enter Youtube Link"
                            value="{{ isset($business['youtube_link'])?$business['youtube_link']:'' }}"
                            />

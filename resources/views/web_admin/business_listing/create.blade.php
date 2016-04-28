@@ -166,7 +166,7 @@
                 </div>
             </div> -->
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label"> Image <i class="red">*</i> </label>
+                <label class="col-sm-3 col-lg-2 control-label">Business Main Banner Image <i class="red">*</i> </label>
                 <div class="col-sm-9 col-lg-10 controls">
                    <div class="fileupload fileupload-new" data-provides="fileupload">
                       <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
@@ -175,6 +175,7 @@
                       <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                       <div>
                          <span class="btn btn-default btn-file"><span class="fileupload-new" >Select image</span>
+
                          <span class="fileupload-exists">Change</span>
                          <input type="file" class="file-input" name="main_image" id="ad_image"/></span>
                          <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
@@ -184,7 +185,9 @@
                          </span>
 
                       </div>
+
                    </div>
+                   <div class="col-sm-6 col-lg-4 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px upto only</div>
                     <span class='help-block'>{{ $errors->first('main_image') }}</span>
                      <!--<br/>
                      <button class="btn btn-warning" onclick="return show_more_images()" id="show_more_images_button">Do you want to add slider images ? </button>  -->
@@ -193,15 +196,16 @@
             <div class="form-group">
             <div class="col-sm-5 col-md-7" style="float:right;">
                <a href="javascript:void(0);" id='add-image'>
-                   <span class="glyphicon glyphicon-plus-sign" style="font-size: 20px;"></span>
+                   <span class="glyphicon glyphicon-plus-sign" style="font-size: 20px;" class="show-tooltip" title="Add More images"></span>
                </a>
               <span style="margin-left:05px;">
               <a href="javascript:void(0);" id='remove-image'>
-                  <span class="glyphicon glyphicon-minus-sign" style="font-size: 20px;"></span>
+                  <span class="glyphicon glyphicon-minus-sign" style="font-size: 20px;" class="show-tooltip" title="Remove last selected  images"></span>
               </a>
               </span>
              </div>
-                <label class="col-sm-3 col-lg-2 control-label"> Business Images <i class="red">*</i> </label>
+
+                <label class="col-sm-3 col-lg-2 control-label">Upload Business Gallery Images <i class="red">*</i> </label>
                 <div class="col-sm-6 col-lg-4 controls">
 
                 <input type="file" name="business_image[]" id="business_image" class="pimg" data-rule-required="true"  />
@@ -214,10 +218,12 @@
                <div id="append" class="class-add"></div>
                 <div class="error_msg" id="error_business_image" ></div>
                 <div class="error_msg" id="error_business_image1" ></div>
-               <label class="col-sm-3 col-lg-2 control-label"></label>
+               <label class="col-sm-6 col-lg-12 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px upto only</label>
 
                 </div>
+
                 </div>
+
 
                 <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="building">Building<i class="red">*</i></label>
@@ -381,12 +387,12 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="fax_no">Fax No <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="fax_no">Fax No <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
                            name="fax_no"
                            id="fax_no"
-                           data-rule-required="true"
+                           data-rule-required=""
                            placeholder="Enter Fax No"
                            value=""
                            />
@@ -395,12 +401,12 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="toll_free_number">Toll Free Number<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="toll_free_number">Toll Free Number<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
                            name="toll_free_number"
                            id="toll_free_number"
-                           data-rule-required="true"
+                           data-rule-required=""
                            placeholder="Enter Toll Free Number"
                            value=""
                            />
@@ -422,12 +428,12 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="website">Website <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="website">Website <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
                            name="website"
                            id="website"
-                           data-rule-required="true"
+                           data-rule-required=""
                            placeholder="Enter Website"
                            value=""
                            />
@@ -663,7 +669,7 @@
                 </div>
                 <hr/>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="company_info">Company Info<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="company_info">About Company Info<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <textarea class="form-control"
                            name="company_info"
@@ -691,7 +697,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="keywords">Keywords<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="keywords">Meta Keywords<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <textarea class="form-control"
                            name="keywords"
@@ -704,12 +710,12 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="youtube_link">Youtube Link<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="youtube_link">Youtube Link<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
                            name="youtube_link"
                            id="youtube_link"
-                           data-rule-required="true"
+                           data-rule-required=""
                            placeholder="Enter Youtube Link"
                            value=""
                            />
@@ -755,7 +761,7 @@
 
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
-                <input type="submit"  class="btn btn-primary" value="Add">
+                <input type="submit"  class="btn btn-primary" value="Submit">
 
             </div>
         </div>

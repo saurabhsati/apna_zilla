@@ -135,6 +135,7 @@
               <thead>
                 <tr>
                   <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
+                  <th style="width:25px;">Sr.No</th>
                   <th style="width:25px;">Business Image</th>
                   <th style="width:25px;">Business Name</th>
                   <th style="width:40px;">Business Category::Sub Category</th>
@@ -155,12 +156,16 @@
               <tbody>
 
                @if(isset($business_listing) && sizeof($business_listing)>0)
-                  @foreach($business_listing as $business)
+                  @foreach($business_listing as $key => $business)
                   <tr>
-                    <td>
+
+                    <td >
                       <input type="checkbox"
                              name="checked_record[]"
                              value="{{ base64_encode($business['id']) }}" />
+                    </td>
+                     <td >
+                      {{ $key+1 }}
                     </td>
                     <td>
                     <img src="{{ $business_public_img_path.'/'.$business['main_image']}}" alt=""  style="width:75px; height:50px;" />   </td>
