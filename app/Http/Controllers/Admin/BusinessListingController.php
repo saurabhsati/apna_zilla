@@ -123,9 +123,9 @@ class BusinessListingController extends Controller
 
 
         //location fields
-        $arr_rules['building']='required';
-        $arr_rules['street']='required';
-        $arr_rules['landmark']='required';
+       // $arr_rules['building']='required';
+        //$arr_rules['street']='required';
+       // $arr_rules['landmark']='required';
         $arr_rules['area']='required';
         $arr_rules['city']='required';
         $arr_rules['pincode']='required';

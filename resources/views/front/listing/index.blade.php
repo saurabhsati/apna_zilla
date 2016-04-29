@@ -12,6 +12,7 @@
 
   .remo_fav span{
     color: #f9a820 !important;
+     margin-left: 6px;
   }
   .remo_fav i{
     color: #f9a820 !important;
@@ -506,7 +507,7 @@
                     {
                       if(in_array($restaurants['id'], $arr_fav_business))
                       {
-                    ?>  <span class="remo_fav" id="{{ 'show_fav_status_grid_'.$restaurants['id'] }}" style="width: 175px;">
+                    ?>  <span class="remo_fav" id="{{ 'show_fav_status_grid_'.$restaurants['id'] }}">
                         <a href="javascript:void(0);"  onclick="add_to_favourite_grid('{{$restaurants['id']}}')"  style="border-right:0;display:inline-block;"
                           data-toggle="tooltip" title="Remove favourite"
                         ><i class="fa fa-heart"><span style="width:19px height=10px;">Remove favorite</span></i></a>
@@ -554,7 +555,7 @@
 
                         </div>
                        <img src="{{get_resized_image_path($restaurants['main_image'],$main_image_path,205,270) }}" alt="product img" >
-                        @if($restaurants['is_verified']==1)<img class="product-like-icon" src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>@endif
+                        @if($restaurants['is_verified']==1)<img class="product-like-icon in-traspn" src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>@endif
                     </div>
 
 

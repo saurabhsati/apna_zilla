@@ -94,7 +94,7 @@
                <div class="clearfix"></div>
             </div>
              <div class="categories_sect sidebar-nav">
-               <div class="sidebar-brand"><img src="{{ url('/') }}/assets/front/images/money.png" alt="services"/>About Me<span class="spe_mobile3"><a href="#"></a></span></div>
+               <div class="sidebar-brand"><img src="{{ url('/') }}/assets/front/images/info-icns.png" alt="services"/>About Me<span class="spe_mobile3"><a href="#"></a></span></div>
                <div class="bor_head">&nbsp;</div>
                <ul class="spe_submobile3">
                   @if(isset($arr_business_details['company_info']))
@@ -113,7 +113,7 @@
                <!--  <div class="product_detail_banner" style="background: url('{{ url('/') }}/assets/front/images/banner_detail.jpg') repeat scroll 0px 0px;"> -->
                <div style="background: url('{{ url('/') }}/uploads/business/main_image/{{ $arr_business_details['main_image'] }}'); background-repeat: repeat;  background-size: 100% auto;">
                   <div class="product_detail_banner" style="background-color:rgba(0,0,0,0.7);">
-                     <div class="product_title">
+                     <div class="product_title etd">
                      <a href="#">
                       @if($arr_business_details['is_verified']==1)
                      <img src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>@endif
@@ -304,6 +304,7 @@
                               {{ Session::get('error') }}
                           </div>
                         @endif
+                        
                         <div class="rating_views" >
                            <div class="rank_name">
                               <span>Excellent</span>
@@ -332,7 +333,9 @@
                            </div>
                         </div>
                         @if(isset($arr_business_details['reviews']) && sizeof($arr_business_details['reviews'])>0)
-                        @foreach($arr_business_details['reviews'] as $review)
+                       <div class="rating_views_main-dv" >
+                          @foreach($arr_business_details['reviews'] as $review)
+                     
                         <div class="testimo-one">
                            <div class="img-div-testi">
                               <img src="{{ url('/') }}/assets/front/images/testi-user.png" alt="" />
@@ -361,9 +364,10 @@
                            </div>
                            <div class="clearfix"></div>
                         </div>
+                     
                         @endforeach
                         @endif
-
+                         </div>
                      </div>
                      <div id="review_rating">
                           <!-- @if(Session::has('success'))

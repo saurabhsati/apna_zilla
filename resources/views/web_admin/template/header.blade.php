@@ -57,6 +57,9 @@
         <!-- End -->
         <!-- Datepicker css -->
         <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/bootstrap-datepicker/css/datepicker.css" />
+        <!-- Auto Complete css -->
+           <link rel="stylesheet" href="{{ url('/') }}/assets/front/css/jquery-ui.css" type="text/css"/>
+           <script src="{{ url('/') }}/assets/front/js/jquery-ui.js" type='text/javascript'></script>
 
     </head>
     <body>

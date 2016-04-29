@@ -145,6 +145,7 @@ dl, dt, dd, ol, ul, li {
 .all-cate-btn{max-width: 222px; width: 100%; margin: 0 auto; margin-top: 30px;}
 .all-cate-btn button{background: #4d9f2e; border: none; height: 44px; width: 100%; border-radius: 30px; font-family: 'varela_roundregular'; font-size: 16px; color: #ffffff;}
 .all-cate-btn button:hover{background: #e6ab2a;}
+.btns-widt{max-width: 290px !important;}
 
 /* most category block end here */
 /*Project Package START HERE*/
@@ -486,7 +487,7 @@ body:not(.device-touch) .social-icon i {transition: all 0.3s ease 0s;}
 /*listing page start here*/
 .product-like-icon1 {width: auto !important; height: auto !important; z-index: 1; transition: 0 !important;}
 .product-like-icon{
- position: absolute; right: 10px; bottom: 10px;
+ position: absolute; right: 10px; top: 10px;
     width: auto !important; height: auto !important; z-index: 1; transition: 0 !important;}
 .sidebar-nav{ -moz-border-bottom-colors: none; -moz-border-left-colors: none;-moz-border-right-colors: none; -moz-border-top-colors: none; background-color: #fff;
     border-color: #fcb339 #e1e1e1 #e1e1e1;border-image: none;border-style: solid;border-width: 3px 1px 1px;list-style: outside none none;margin: 0 0 15px;    padding: 0;top: 0;width: 100%; position: relative;}
@@ -577,13 +578,13 @@ body:not(.device-touch) .social-icon i {transition: all 0.3s ease 0s;}
 .p_images > img { width: 100%;transition: all 0.4s ease 0s;height: 260px;}
 .p_images > img:hover {
     transform: scale(1.2);}
-
+.in-traspn:hover{transform: none !important;}
 .p_images { display: block; position: relative; overflow: hidden;}
 .p_images-detail{display: block; position: relative; overflow: hidden;}
 .p_images-detail > img {height: 200px; width: 100%;}
 .p_infor_detail .pull-left { color: #6eab40; width: 90%;/* min-height: 40px;*/}
 .address-icon-img img{margin-right: 10px;}
-
+.product_title.etd img{ float: right;}
 .p_infor_detail { background: #fff ; display: inline-block;padding: 8px;width: 100%;-webkit-box-shadow: 0px 20px 17px -16px rgba(0,0,0,0.09);
 -moz-box-shadow: 0px 20px 17px -16px rgba(0,0,0,0.09);box-shadow: 0px 20px 17px -16px rgba(0,0,0,0.09);}
 .title_main { color: #3a3a3a;font-family: "noto_sansbold",sans-serif; font-size: 22px; margin-bottom: 11px;}
@@ -1219,6 +1220,7 @@ b.head-t {font-family: "open sans semibold";font-weight: normal;}
 /*details page popup end here*/
 
 /*deals detail page css start here*/
+.rating_views_main-dv{display: block; overflow-y: scroll; height: 350px;}
 .detail_bx h2 {color: #454f59; font-family: "noto_sansregular",sans-serif;font-size: 24px;margin-bottom: 5px;margin-top: 0;}
 .rate_sec li {color: #888;display: inline-block;font-family: open sans;font-size: 17px;margin-right: 10px;}
 .rate_sec span {color: #53a318;font-family: "open sans semibold";font-size: 23px;padding-left: 5px;padding-right: 5px;vertical-align: middle;}
