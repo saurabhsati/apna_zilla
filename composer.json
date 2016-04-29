@@ -13,7 +13,8 @@
         "intervention/image": "^2.3",
         "paypal/rest-api-sdk-php": "*",
         "maatwebsite/excel": "^2.1",
-        "watson/rememberable": "^1.0"
+        "watson/rememberable": "^1.0",
+        "hashids/hashids": "^1.0"
         
 	
         

@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Http\Controllers\Common;
 
 use Illuminate\Http\Request;
@@ -8,39 +8,39 @@ use Validator;
 use Session;
 use Input;
 use Auth;
- 
+
 class GeneratorController extends Controller
 {
 
   /*
-    | Constructor : creates instances of model class 
+    | Constructor : creates instances of model class
     |               & handles the admin authantication
-    | auther : Jasmeen 
+    | auther : Jasmeen
     | Date : 09/12/2015
     | @return \Illuminate\Http\Response
     */
 
     public function __construct()
     {
-        $this->locale = \App::getLocale(); 
-        $this->record_lang = "1";  // English Default 
+        $this->locale = \App::getLocale();
+        $this->record_lang = "1";  // English Default
 
         if($this->locale=="en")
         {
-            $this->record_lang = "1"; // English 
+            $this->record_lang = "1"; // English
         }
         else if($this->locale=="de")
         {
-           
-            $this->record_lang = "2"; // German 
+
+            $this->record_lang = "2"; // German
         }
     }
 
 
       /*
-    | get_states : function to generate States belongs 
+    | get_states : function to generate States belongs
     |              to specific country
-    | auther : Jasmeen 
+    | auther : Jasmeen
     | Date : 02/02/2016
     | @param :  int $country_id
     | @return \Illuminate\Http\Response
@@ -51,7 +51,7 @@ class GeneratorController extends Controller
                 $index = "1A2BC3DEF4GHI5JKLM6NOP7QRS89TUVWXYZ";
                 if ($passKey !== null)
                 {
-                    
+
 
                     for ($n = 0; $n<strlen($index); $n++)
                     {
@@ -121,6 +121,8 @@ class GeneratorController extends Controller
                 }
                 return $out;
     }
+
+
 }
- 
+
 

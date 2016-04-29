@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use App\Common\Services\GeneratePublicId;
+
 use App\Models\EmailTemplateModel;
 use App\Models\StateModel;
 use App\Models\CityModel;
@@ -23,6 +26,7 @@ class UserController extends Controller
 
         $this->profile_pic_base_path = base_path().'/public'.config('app.project.img_path.user_profile_pic');
         $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');
+        $this->objpublic = new GeneratePublicId();
     }
 
 
@@ -197,15 +201,16 @@ class UserController extends Controller
 
             $user = Sentinel::findById($status->id);
 
-        //$user = Sentinel::getUser();
+            //$user = Sentinel::getUser();
 
             $user->roles()->attach($role);
-             $enc_id=$status->id;
-            $public_id=uniqid( 'RTN_' ,false);
-           // $public_id = (new GeneratorController)->alphaID($enc_id);
+            $enc_id=$status->id;
+            //$public_id=uniqid( 'RTN_' ,false);
+
+           $public_id = $this->objpublic->generate_public_id($enc_id);
 
             $insert_public_id = UserModel::where('id', '=', $enc_id)->update(array('public_id' => $public_id));
-          if($email!='')
+           if($email!='')
             {
              $obj_email_template = EmailTemplateModel::where('id','12')->first();
             if($obj_email_template)

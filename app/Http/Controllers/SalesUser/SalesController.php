@@ -3,6 +3,9 @@ namespace App\Http\Controllers\SalesUser;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use App\Common\Services\GeneratePublicId;
+
 use App\Models\UserModel;
 use App\Models\CategoryModel;
 use App\Models\EmailTemplateModel;
@@ -24,6 +27,7 @@ class SalesController extends Controller
 
         $this->profile_pic_base_path = base_path().'/public'.config('app.project.img_path.user_profile_pic');
         $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');
+        $this->objpublic = new GeneratePublicId();
     }
 
     public function index()
@@ -178,8 +182,8 @@ class SalesController extends Controller
         {
             /* Assign Sales Users Role */
             $enc_id=$status->id;
-            $public_id=uniqid( 'RTN_' ,false);
-           // $public_id = (new GeneratorController)->alphaID($enc_id);
+            //$public_id=uniqid( 'RTN_' ,false);
+            $public_id = $this->objpublic->generate_public_id($enc_id);
 
             $insert_public_id = UserModel::where('id', '=', $enc_id)->update(array('public_id' => $public_id));
 

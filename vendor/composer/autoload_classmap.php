@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Common\\Services\\GeneratePublicId' => $baseDir . '/app/Common/Services/GeneratePublicId.php',
     'App\\Common\\Services\\PayUCookiesService' => $baseDir . '/app/Common/Services/PayUCookiesService.php',
     'App\\Common\\Services\\PayUCurlService' => $baseDir . '/app/Common/Services/PayUCurlService.php',
     'App\\Common\\Services\\PayUMiscService' => $baseDir . '/app/Common/Services/PayUMiscService.php',
@@ -717,6 +718,8 @@ return array(
     'Hamcrest\\Type\\IsString' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Type/IsString.php',
     'Hamcrest\\Util' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Util.php',
     'Hamcrest\\Xml\\HasXPath' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
+    'Hashids\\HashGenerator' => $vendorDir . '/hashids/hashids/lib/Hashids/HashGenerator.php',
+    'Hashids\\Hashids' => $vendorDir . '/hashids/hashids/lib/Hashids/Hashids.php',
     'IlluminateQueueClosure' => $vendorDir . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
     'Illuminate\\Auth\\Access\\AuthorizationException' => $vendorDir . '/laravel/framework/src/Illuminate/Auth/Access/AuthorizationException.php',
     'Illuminate\\Auth\\Access\\Gate' => $vendorDir . '/laravel/framework/src/Illuminate/Auth/Access/Gate.php',
