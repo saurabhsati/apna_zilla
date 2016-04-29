@@ -22,7 +22,6 @@ class UserController extends Controller
         $this->profile_pic_base_path = base_path().'/public'.config('app.project.img_path.user_profile_pic');
         $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');
     }
-
     public function index()
     {
         $page_title = "Manage User";

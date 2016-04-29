@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\EmailTemplateModel;
+use App\Models\StateModel;
+use App\Models\CityModel;
+use App\Models\UserModel;
 use Sentinel;
 use Session;
 use Validator;
@@ -42,7 +45,12 @@ class UserController extends Controller
  	public function create()
  	{
  		$page_title = "User: Create ";
-
+        if(Session::has('public_id')){
+           $sales_user_public_id=Session::get('public_id');
+         }else
+         {
+            return view('sales_user.account.login');
+         }
  		return view('sales_user.user.create',compact('page_title'));
  	}
 
@@ -70,23 +78,23 @@ class UserController extends Controller
          }
         $arr_rules = array();
         $arr_rules['first_name'] = "required";
-        $arr_rules['middle_name'] = "required";
-        $arr_rules['last_name'] = "required";
+        //$arr_rules['middle_name'] = "required";
+        //$arr_rules['last_name'] = "required";
         $arr_rules['gender'] = "required";
         $arr_rules['d_o_b'] = "required";
-        $arr_rules['email'] = "required|email";
+        //$arr_rules['email'] = "required|email";
         $arr_rules['password'] = "required|min:6";
         // $arr_rules['role'] ="required";
         $arr_rules['marital_status'] = "required";
         $arr_rules['city'] = "required";
         $arr_rules['area'] = "required";
-        $arr_rules['occupation'] = "required";
-        $arr_rules['work_experience'] = "required";
+        // $arr_rules['occupation'] = "required";
+        //$arr_rules['work_experience'] = "required";
 
-        $arr_rules['street_address'] = "required";
+        //$arr_rules['street_address'] = "required";
         $arr_rules['mobile_no'] = "required";
-        $arr_rules['home_landline'] = "required";
-        $arr_rules['office_landline'] = "required";
+        // $arr_rules['home_landline'] = "required";
+        // $arr_rules['office_landline'] = "required";
 
         $validator = Validator::make($request->all(),$arr_rules);
 
@@ -100,12 +108,15 @@ class UserController extends Controller
         $last_name       = $request->input('last_name');
         $gender       = $request->input('gender');
         $d_o_b       = $request->input('d_o_b');
+        $married_date       = $request->input('married_date');
         $email          = $request->input('email');
         $password   = $request->input('password');
         $marital_status       = $request->input('marital_status');
         // $role       = $request->input('role');
+        $state       = $request->input('state');
         $city       = $request->input('city');
         $area       = $request->input('area');
+        $pincode       = $request->input('pincode');
         $occupation       = $request->input('occupation');
         $work_experience       = $request->input('work_experience');
         $street_address     = $request->input('street_address');
@@ -117,9 +128,9 @@ class UserController extends Controller
         /* Duplication Check*/
         $user = Sentinel::createModel();
 
-        if($user->where('email',$email)->get()->count()>0)
+        if($user->where('mobile_no',$mobile_no)->get()->count()>0)
         {
-        	Session::flash('error','User Already Exists with this email id');
+        	Session::flash('error','User Already Exists with this mobile no');
             return redirect()->back();
         }
 
@@ -157,12 +168,16 @@ class UserController extends Controller
             'last_name' => $last_name,
             'gender' => $gender,
             'd_o_b' => date('Y-m-d',strtotime($d_o_b)),
+            'married_date' => date('Y-m-d',strtotime($married_date)),
             'email' => $email,
             'password' => $password,
             'marital_status' => $marital_status,
             'role' => "normal",
             'street_address' => $street_address,
             'city' =>$city,
+            'country'=>1,
+            'state'=>$state,
+            'pincode'=>$pincode,
             'area' => $area,
             'occupation' => $occupation,
             'work_experience' => $work_experience,
@@ -181,10 +196,17 @@ class UserController extends Controller
             $role = Sentinel::findRoleBySlug('normal');
 
             $user = Sentinel::findById($status->id);
+
         //$user = Sentinel::getUser();
 
             $user->roles()->attach($role);
+             $enc_id=$status->id;
+            $public_id=uniqid( 'RTN_' ,false);
+           // $public_id = (new GeneratorController)->alphaID($enc_id);
 
+            $insert_public_id = UserModel::where('id', '=', $enc_id)->update(array('public_id' => $public_id));
+          if($email!='')
+            {
              $obj_email_template = EmailTemplateModel::where('id','12')->first();
             if($obj_email_template)
             {
@@ -219,6 +241,11 @@ class UserController extends Controller
 
 
             }
+         }
+         else
+         {
+            Session::flash('success','User Created Successfully');
+         }
         }
         else
         {
@@ -233,6 +260,21 @@ class UserController extends Controller
  		$id = base64_decode($enc_id);
  		$page_title = "User: Edit ";
 
+         $arr_city = array();
+        $obj_city_res = CityModel::get();
+        if($obj_city_res != FALSE)
+        {
+            $arr_city = $obj_city_res->toArray();
+        }
+        $arr_state = array();
+        $obj_state_res = StateModel::get();
+
+        if( $obj_state_res != FALSE)
+        {
+            $arr_state = $obj_state_res->toArray();
+        }
+
+
  		$arr_user_data = array();
  		$obj_user = Sentinel::findById($id);
 
@@ -243,7 +285,7 @@ class UserController extends Controller
 
  		$profile_pic_public_path = $this->profile_pic_public_path;
 
-        return view('sales_user.user.edit',compact('page_title','arr_user_data','profile_pic_public_path'));
+        return view('sales_user.user.edit',compact('page_title','arr_user_data','profile_pic_public_path','arr_city','arr_state'));
 
  	}
 
@@ -253,11 +295,11 @@ class UserController extends Controller
         $arr_rules = array();
 
         $arr_rules['first_name'] = "required";
-        $arr_rules['middle_name'] = "required";
-        $arr_rules['last_name'] = "required";
-        $arr_rules['email'] = "required|email";
+        //$arr_rules['middle_name'] = "required";
+        //$arr_rules['last_name'] = "required";
+        //$arr_rules['email'] = "required|email";
         $arr_rules['password'] = "min:6";
-        $arr_rules['street_address'] = "required";
+        //$arr_rules['street_address'] = "required";
         $arr_rules['gender'] = "required";
         $arr_rules['marital_status'] = "required";
         $arr_rules['d_o_b'] = "required";
@@ -265,8 +307,8 @@ class UserController extends Controller
         $arr_rules['city'] = "required";
         $arr_rules['area'] = "required";
         $arr_rules['mobile_no'] = "required";
-        $arr_rules['home_landline'] = "required";
-        $arr_rules['office_landline'] = "required";
+        //$arr_rules['home_landline'] = "required";
+        //$arr_rules['office_landline'] = "required";
 
 
         $validator=Validator::make($request->all(),$arr_rules);
@@ -285,8 +327,11 @@ class UserController extends Controller
         $gender         = $request->input('gender');
         $marital_status      = $request->input('marital_status');
         $d_o_b      = $request->input('d_o_b');
+        $married_date      = $request->input('married_date');
         // $role       =$request->input('role');
         $city      = $request->input('city');
+        $state      = $request->input('state');
+        $pincode      = $request->input('pincode');
         $area      = $request->input('area');
         $mobile_no      = $request->input('mobile_no');
         $home_landline      = $request->input('home_landline');
@@ -295,9 +340,9 @@ class UserController extends Controller
 
         $user=Sentinel::createModel();
 
-        if($user->where('email',$email)->whereNotIn('id',[$user_id])->get()->count()>0)
+        if($user->where('mobile_no',$mobile_no)->whereNotIn('id',[$user_id])->get()->count()>0)
         {
-            Session::flash('error','User Already Exists with this email id');
+            Session::flash('error','User Already Exists with this mobile no');
             return redirect()->back();
         }
 
@@ -336,8 +381,11 @@ class UserController extends Controller
             'gender' => $gender,
             'marital_status' => $marital_status,
             'd_o_b'    => date('Y-m-d',strtotime($d_o_b)),
+            'married_date'    => date('Y-m-d',strtotime($married_date)),
             // 'role'  => $role,
             'city' => $city,
+            'state'=>$state,
+            'pincode'=>$pincode,
             'area' => $area,
             'mobile_no' => $mobile_no,
             'home_landline' => $home_landline,

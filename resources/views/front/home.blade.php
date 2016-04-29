@@ -76,7 +76,7 @@
      </ul>
      <div class="clearfix"></div>
   </div>
-  <div class="all-cate-btn browse_all_cat">
+  <div class="all-cate-btn1 browse_all_cat">
    <button> Browse All Popular Categories</button>
 </div>
 </div>

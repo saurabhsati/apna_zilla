@@ -23,182 +23,290 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
+
+                             <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-12 tile-active">
+                                        <a href="{{ url('/web_admin/dashboard')}}">
+                                        <div class="tile tile-magenta">
+                                            <div class="img img-center">
+                                                 <i class="fa fa-home"></i>
+                                            </div>
+                                            <p class="title text-center">Dashboard</p>
+                                        </div></a>
+                                        <div class="tile tile-green  ">
+                                            <p class="title">Dashboard</p>
+                                            <p>See Your Dashboard</p>
+                                            <div class="img img-bottom">
+                                                <i class="fa fa-home"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                             </div>
+                               <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-12 tile-active">
+                                        <a href="{{ url('/web_admin/users')}}">
+                                        <div class="tile tile-blue">
+                                            <div class="img img-center">
+                                                 <i class="fa fa-users"></i>
+                                            </div>
+                                            <p class="title text-center">Seller Users</p>
+                                        </div></a>
+                                        <div class="tile tile-light-magenta ">
+                                            <p class="title">Seller Users</p>
+                                            <p>See Your Seller Users</p>
+                                            <div class="img img-bottom">
+                                                <i class="fa fa-users"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                             </div>
+                               <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-12 tile-active">
+                                        <a href="{{ url('/web_admin/sales_user')}}">
+                                        <div class="tile tile-green">
+                                            <div class="img img-center">
+                                                 <i class="fa fa-list"></i>
+                                            </div>
+                                            <p class="title text-center">Sales Staff Persons</p>
+                                        </div></a>
+                                        <div class="tile tile-light-blue  ">
+                                            <p class="title">Sales Staff Persons</p>
+                                            <p>See Your Sales Staff Persons</p>
+                                            <div class="img img-bottom">
+                                                <i class="fa fa-list"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                             </div>
+                              <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-12 tile-active">
+                                        <a href="{{ url('/web_admin/business_listing')}}">
+                                        <div class="tile tile-magenta">
+                                            <div class="img img-center">
+                                                 <i class="fa fa-list"></i>
+                                            </div>
+                                            <p class="title text-center">Business Listing</p>
+                                        </div></a>
+                                        <div class="tile tile-blue  ">
+                                            <p class="title">Business Listings</p>
+                                            <p>See Your Business Listing </p>
+                                            <div class="img img-bottom">
+                                                <i class="fa fa-list"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                             </div>
+                               <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-12 tile-active">
+                                        <a href="{{ url('/web_admin/categories')}}">
+                                        <div class="tile tile-magenta">
+                                            <div class="img img-center">
+                                                 <i class="fa fa-bars"></i>
+                                            </div>
+                                            <p class="title text-center">Business Categories</p>
+                                        </div></a>
+                                        <div class="tile tile-pink  ">
+                                            <p class="title">Business Categories</p>
+                                            <p>See Your Business Categories </p>
+                                            <div class="img img-bottom">
+                                                <i class="fa fa-bars"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                             </div>
+                               <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-12 tile-active">
+                                        <a href="{{ url('/web_admin/static_pages')}}">
+                                        <div class="tile tile-pink">
+                                            <div class="img img-center">
+                                                 <i class="fa fa-files-o"></i>
+                                            </div>
+                                            <p class="title text-center">CMS</p>
+                                        </div></a>
+                                        <div class="tile tile-magenta  ">
+                                            <p class="title">CMS</p>
+                                            <p>See Your CMS </p>
+                                            <div class="img img-bottom">
+                                                <i class="fa fa-files-o"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                             </div>
+                                 <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-12 tile-active">
+                                        <a href="{{ url('/web_admin/newsletter')}}">
+                                        <div class="tile tile-magenta">
+                                            <div class="img img-center">
+                                                 <i class="fa fa-users"></i>
+                                            </div>
+                                            <p class="title text-center">News-Letter Subscribers</p>
+                                        </div></a>
+                                        <div class="tile tile-green ">
+                                            <p class="title">News-Letter Subscribers</p>
+                                            <p>See Your News-Letter Subscribers </p>
+                                            <div class="img img-bottom">
+                                                <i class="fa fa-users"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                             </div>
                                 <div class="col-md-3">
-                                  <a href="{{ url('/web_admin/dashboard')}}">
-                                      <div class="tile tile-light-blue">
-                                          <div class="img">
-                                              <i class="fa fa-home"></i>
-                                          </div>
-                                          <div class="content">
-                                              <p class="big">&nbsp;</p>
-                                              <p class="title">Dashboard</p>
-                                          </div>
-                                      </div>
-                                  </a>
-                              </div>
+                                <div class="row">
+                                    <div class="col-md-12 tile-active">
+                                        <a href="{{ url('/web_admin/faq')}}">
+                                        <div class="tile tile-green">
+                                            <div class="img img-center">
+                                                 <i class="fa fa-question-circle"></i>
+                                            </div>
+                                            <p class="title text-center">FAQs</p>
+                                        </div></a>
+                                        <div class="tile tile-blue  ">
+                                            <p class="title">FAQs</p>
+                                            <p>See Your FAQs </p>
+                                            <div class="img img-bottom">
+                                                <i class="fa fa-question-circle"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                             </div>
+                               <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-12 tile-active">
+                                        <a href="{{ url('/web_admin/membership')}}">
+                                        <div class="tile tile-pink">
+                                            <div class="img img-center">
+                                                 <i class="fa fa-euro"></i>
+                                            </div>
+                                            <p class="title text-center">Membership Plans</p>
+                                        </div></a>
+                                        <div class="tile tile-magenta ">
+                                            <p class="title">Membership Plans</p>
+                                            <p>See Your Membership Plan </p>
+                                            <div class="img img-bottom">
+                                                <i class="fa fa-euro"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                             </div>
+                                <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-12 tile-active">
+                                        <a href="{{ url('/web_admin/membershipcost')}}">
+                                        <div class="tile tile-magenta">
+                                            <div class="img img-center">
+                                                 <i class="fa fa-euro"></i>
+                                            </div>
+                                            <p class="title text-center">Membership Plan Costs</p>
+                                        </div></a>
+                                        <div class="tile tile-green ">
+                                            <p class="title">Membership Plan Costs</p>
+                                            <p>See Your Membership Plan Costs</p>
+                                            <div class="img img-bottom">
+                                                <i class="fa fa-euro"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                             </div>
                               <div class="col-md-3">
-                                  <a href="{{ url('/web_admin/users')}}">
-                                      <div class="tile tile-light-blue">
-                                          <div class="img">
-                                              <i class="fa fa-users"></i>
-                                          </div>
-                                          <div class="content">
-                                              <p class="big">&nbsp;</p>
-                                              <p class="title">Seller Users</p>
-                                          </div>
-                                      </div>
-                                  </a>
-                              </div>
+                                <div class="row">
+                                    <div class="col-md-12 tile-active">
+                                        <a href="{{ url('/web_admin/transactions')}}">
+                                        <div class="tile tile-blue">
+                                            <div class="img img-center">
+                                                 <i class="fa fa-credit-card"></i>
+                                            </div>
+                                            <p class="title text-center">Payments</p>
+                                        </div></a>
+                                        <div class="tile tile-green ">
+                                            <p class="title">Payments</p>
+                                            <p>See Your Payments</p>
+                                            <div class="img img-bottom">
+                                                <i class="fa fa-credit-card"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                             </div>
+                               <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-12 tile-active">
+                                        <a href="{{ url('/web_admin/email_template')}}">
+                                        <div class="tile tile-green">
+                                            <div class="img img-center">
+                                                 <i class="fa fa-envelope"></i>
+                                            </div>
+                                            <p class="title text-center">Email Templates</p>
+                                        </div></a>
+                                        <div class="tile tile-magenta ">
+                                            <p class="title">Email Templates</p>
+                                            <p>See Your Email Templates</p>
+                                            <div class="img img-bottom">
+                                                <i class="fa fa-envelope"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                             </div>
+
                               <div class="col-md-3">
-                                  <a href="{{ url('/web_admin/sales_user')}}">
-                                      <div class="tile tile-light-blue">
-                                          <div class="img">
-                                              <i class="fa fa-users"></i>
-                                          </div>
-                                          <div class="content">
-                                              <p class="big">&nbsp;</p>
-                                              <p class="title">Sales Staff Persons</p>
-                                          </div>
-                                      </div>
-                                  </a>
-                              </div>
-                              <div class="col-md-3">
-                                  <a href="{{ url('/web_admin/business_listing')}}">
-                                      <div class="tile tile-light-blue">
-                                          <div class="img">
-                                              <i class="fa fa-list"></i>
-                                          </div>
-                                          <div class="content">
-                                              <p class="big">&nbsp;</p>
-                                              <p class="title">Business Listings</p>
-                                          </div>
-                                      </div>
-                                  </a>
-                              </div>
-                              <div class="col-md-3">
-                                  <a href="{{ url('/web_admin/categories')}}">
-                                      <div class="tile tile-light-blue">
-                                          <div class="img">
-                                              <i class="fa fa-bars"></i>
-                                          </div>
-                                          <div class="content">
-                                              <p class="big">&nbsp;</p>
-                                              <p class="title">Categories</p>
-                                          </div>
-                                      </div>
-                                  </a>
-                              </div>
-                               <div class="col-md-3">
-                                  <a href="{{ url('/web_admin/static_pages')}}">
-                                      <div class="tile tile-light-blue">
-                                          <div class="img">
-                                              <i class="fa fa-files-o"></i>
-                                          </div>
-                                          <div class="content">
-                                              <p class="big">&nbsp;</p>
-                                              <p class="title">CMS</p>
-                                          </div>
-                                      </div>
-                                  </a>
-                              </div>
-                               <div class="col-md-3">
-                                  <a href="{{ url('/web_admin/newsletter')}}">
-                                      <div class="tile tile-light-blue">
-                                          <div class="img">
-                                              <i class="fa fa-users"></i>
-                                          </div>
-                                          <div class="content">
-                                              <p class="big">&nbsp;</p>
-                                              <p class="title">News-Letter Subscribers</p>
-                                          </div>
-                                      </div>
-                                  </a>
-                              </div>
-                               <div class="col-md-3">
-                                  <a href="{{ url('/web_admin/faq')}}">
-                                      <div class="tile tile-light-blue">
-                                          <div class="img">
-                                              <i class="fa fa-question-circle"></i>
-                                          </div>
-                                          <div class="content">
-                                              <p class="big">&nbsp;</p>
-                                              <p class="title">FAQs</p>
-                                          </div>
-                                      </div>
-                                  </a>
-                              </div>
-                               <div class="col-md-3">
-                                  <a href="{{ url('/web_admin/membership')}}">
-                                      <div class="tile tile-light-blue">
-                                          <div class="img">
-                                              <i class="fa fa-euro"></i>
-                                          </div>
-                                          <div class="content">
-                                              <p class="big">&nbsp;</p>
-                                              <p class="title">Membership Plans</p>
-                                          </div>
-                                      </div>
-                                  </a>
-                              </div>
-                               <div class="col-md-3">
-                                  <a href="{{ url('/web_admin/membershipcost')}}">
-                                      <div class="tile tile-light-blue">
-                                          <div class="img">
-                                              <i class="fa fa-euro"></i>
-                                          </div>
-                                          <div class="content">
-                                              <p class="big">&nbsp;</p>
-                                              <p class="title">Membership Plan Costs</p>
-                                          </div>
-                                      </div>
-                                  </a>
-                              </div>
-                               <div class="col-md-3">
-                                  <a href="{{ url('/web_admin/transactions')}}">
-                                      <div class="tile tile-light-blue">
-                                          <div class="img">
-                                              <i class="fa fa-credit-card"></i>
-                                          </div>
-                                          <div class="content">
-                                              <p class="big">&nbsp;</p>
-                                              <p class="title">Payments</p>
-                                          </div>
-                                      </div>
-                                  </a>
-                              </div>
-                               <div class="col-md-3">
-                                  <a href="{{ url('/web_admin/email_template')}}">
-                                      <div class="tile tile-light-blue">
-                                          <div class="img">
-                                              <i class="fa fa-envelope"></i>
-                                          </div>
-                                          <div class="content">
-                                              <p class="big">&nbsp;</p>
-                                              <p class="title">Email Templates</p>
-                                          </div>
-                                      </div>
-                                  </a>
-                              </div>
-                               <div class="col-md-3">
-                                  <a href="{{ url('/web_admin/contact_enquiry')}}">
-                                      <div class="tile tile-light-blue">
-                                          <div class="img">
-                                              <i class="fa fa-phone"></i>
-                                          </div>
-                                          <div class="content">
-                                              <p class="big">&nbsp;</p>
-                                              <p class="title">Contact Enquiry</p>
-                                          </div>
-                                      </div>
-                                  </a>
-                              </div>
+                                <div class="row">
+                                    <div class="col-md-12 tile-active">
+                                        <a href="{{ url('/web_admin/contact_enquiry')}}">
+                                        <div class="tile tile-magenta">
+                                            <div class="img img-center">
+                                                 <i class="fa fa-phone"></i>
+                                            </div>
+                                            <p class="title text-center">Contact Enquiry</p>
+                                        </div></a>
+                                        <div class="tile tile-blue">
+                                            <p class="title">Contact Enquiry</p>
+                                            <p>See Your Contact Enquiry</p>
+                                            <div class="img img-bottom">
+                                                <i class="fa fa-phone"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                             </div>
+
+
                         </div>
                     </div>
-
+                  </div>
 
 
                 <!-- END Tiles -->
-                 {{--
+
                 <!-- BEGIN Tiles -->
                 <div class="row">
                     <div class="col-md-7">
@@ -396,7 +504,7 @@
                         </div>
                     </div>
                 </div>
- --}}
+
 
 
 @stop

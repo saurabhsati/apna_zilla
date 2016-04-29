@@ -22,13 +22,10 @@
 
        <div class="container">
          <div class="row">
+              @include('front.user.profile_left')
 
-            <div class="col-sm-12 col-md-3 col-lg-3">
-
-            </div>
-
-             <div class="col-sm-12 col-md-12 col-lg-12">
-             <div class="title_head"></div>
+            <div class="col-sm-12 col-md-9 col-lg-9">
+             <div class="title_head"></div>RRRR
 
                    @if(Session::has('success_payment'))
             <div class="alert alert-success alert-dismissible">

@@ -32,9 +32,9 @@
 
  <div class="container">
   <div class="row">
-
+ @include('front.user.profile_left')
     <!-- location popup end -->
-
+<div class="col-sm-12 col-md-9 col-lg-9">
       <div id="list_view">
     @if(isset($arr_fav) && sizeof($arr_fav)>0)
       @if(sizeof($arr_fav['favourite_businesses'])>0)
@@ -113,7 +113,7 @@
       @endif
       </div>
 
-
+</div>
 <!--Product Lisiting End  -->
 
 

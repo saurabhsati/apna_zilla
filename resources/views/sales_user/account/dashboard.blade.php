@@ -25,189 +25,96 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
-                                <div class="col-md-3">
-                                  <a href="{{ url('/sales_user/dashboard')}}">
-                                      <div class="tile tile-light-blue">
-                                          <div class="img">
-                                              <i class="fa fa-home"></i>
-                                          </div>
-                                          <div class="content">
-                                              <p class="big">&nbsp;</p>
-                                              <p class="title">Dashboard</p>
-                                          </div>
-                                      </div>
-                                  </a>
-                              </div>
-                               <div class="col-md-3">
-                                  <a href="{{ url('/sales_user/users')}}">
-                                      <div class="tile tile-light-blue">
-                                          <div class="img">
-                                              <i class="fa fa-users"></i>
-                                          </div>
-                                          <div class="content">
-                                              <p class="big">&nbsp;</p>
-                                              <p class="title">Seller Users</p>
-                                          </div>
-                                      </div>
-                                  </a>
-                              </div>
-                               <div class="col-md-3">
-                                  <a href="{{ url('/sales_user/business_listing')}}">
-                                      <div class="tile tile-light-blue">
-                                          <div class="img">
-                                              <i class="fa fa-list"></i>
-                                          </div>
-                                          <div class="content">
-                                              <p class="big">&nbsp;</p>
-                                              <p class="title">Business Listings</p>
-                                          </div>
-                                      </div>
-                                  </a>
-                              </div>
-                               <div class="col-md-3">
-                                  <a href="{{ url('/sales_user/transactions')}}">
-                                      <div class="tile tile-light-blue">
-                                          <div class="img">
-                                              <i class="fa fa-credit-card"></i>
-                                          </div>
-                                          <div class="content">
-                                              <p class="big">&nbsp;</p>
-                                              <p class="title">Payments</p>
-                                          </div>
-                                      </div>
-                                  </a>
-                              </div>
+                        <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-12 tile-active">
+                                        <a href="{{ url('/sales_user/dashboard')}}">
+                                        <div class="tile tile-magenta">
+                                            <div class="img img-center">
+                                                 <i class="fa fa-home"></i>
+                                            </div>
+                                            <p class="title text-center">Dashboard</p>
+                                        </div></a>
+                                        <div class="tile tile-green  ">
+                                            <p class="title">Dashboard</p>
+                                            <p>See Your Dashboard</p>
+                                            <div class="img img-bottom">
+                                                <i class="fa fa-home"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                             </div>
+                             <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-12 tile-active">
+                                        <a href="{{ url('/sales_user/users')}}">
+                                        <div class="tile tile-blue">
+                                            <div class="img img-center">
+                                                 <i class="fa fa-users"></i>
+                                            </div>
+                                            <p class="title text-center">Seller Users</p>
+                                        </div></a>
+                                        <div class="tile tile-light-magenta ">
+                                            <p class="title">Seller Users</p>
+                                            <p>See Your Seller Users</p>
+                                            <div class="img img-bottom">
+                                                <i class="fa fa-users"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                             </div>
+                             <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-12 tile-active">
+                                        <a href="{{ url('/sales_user/business_listing')}}">
+                                        <div class="tile tile-magenta">
+                                            <div class="img img-center">
+                                                 <i class="fa fa-list"></i>
+                                            </div>
+                                            <p class="title text-center">Business Listing</p>
+                                        </div></a>
+                                        <div class="tile tile-blue  ">
+                                            <p class="title">Business Listings</p>
+                                            <p>See Your Business Listing </p>
+                                            <div class="img img-bottom">
+                                                <i class="fa fa-list"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                             </div>
+                             <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-12 tile-active">
+                                        <a href="{{ url('/sales_user/transactions')}}">
+                                        <div class="tile tile-blue">
+                                            <div class="img img-center">
+                                                 <i class="fa fa-credit-card"></i>
+                                            </div>
+                                            <p class="title text-center">Payments</p>
+                                        </div></a>
+                                        <div class="tile tile-green ">
+                                            <p class="title">Payments</p>
+                                            <p>See Your Payments</p>
+                                            <div class="img img-bottom">
+                                                <i class="fa fa-credit-card"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                             </div>
+
                         </div>
                  </div>
             </div>
-              <!--   <div class="row">
-                    <div class="col-md-7">
-                        <div class="row">
-                            <div class="col-md-7">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="tile">
-                                            <p class="title">FLATY - Responsive Admin Template</p>
-                                            <p>Based on twitter bootstrap, 9 predefined color, clean and minimal design, easy to change and etc.</p>
-                                            <div class="img img-bottom">
-                                                <i class="fa fa-desktop"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6 tile-active">
-                                        <a class="tile tile-pink" data-stop="3000" href="http://codecanyon.net/item/flaty-wp-premium-wordpress-flat-admin-template/5329999">
-                                            <div class="img img-center">
-                                                <img src="{{ url('/') }}/img/demo/wp-logo.png" />
-                                            </div>
-                                            <p class="title text-center">Visit FLATY wp</p>
-                                        </a>
-
-                                        <a class="tile tile-orange" href="http://codecanyon.net/item/flaty-wp-premium-wordpress-flat-admin-template/5329999">
-                                            <p>FLATY wp is new custom theme designed for the Wordpress admin.</p>
-                                        </a>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <a class="tile tile-red" href="http://themeforest.net/item/flaty-premium-responsive-admin-template/5247864">
-                                            <div class="img img-center">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </div>
-                                            <p class="title text-center">Buy FLATY</p>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-5">
-                                <div class="row">
-                                    <div class="col-md-12 tile-active">
-                                        <div class="tile tile-magenta">
-                                            <div class="img img-center">
-                                                <i class="fa fa-desktop"></i>
-                                            </div>
-                                            <p class="title text-center">FLATY Admin</p>
-                                        </div>
-
-                                        <div class="tile tile-blue">
-                                            <p class="title">FLATY Admin</p>
-                                            <p>FLATY is the new premium and fully responsive admin dashboard template.</p>
-                                            <div class="img img-bottom">
-                                                <i class="fa fa-desktop"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="tile tile-green">
-                                            <div class="img">
-                                                <i class="fa fa-copy"></i>
-                                            </div>
-                                            <div class="content">
-                                                <p class="big">+30</p>
-                                                <p class="title">Ready Page</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-5">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="tile tile-orange">
-                                    <div class="img">
-                                        <i class="fa fa-comments"></i>
-                                    </div>
-                                    <div class="content">
-                                        <p class="big">128</p>
-                                        <p class="title">Comments</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="tile tile-dark-blue">
-                                    <div class="img">
-                                        <i class="fa fa-download"></i>
-                                    </div>
-                                    <div class="content">
-                                        <p class="big">+160</p>
-                                        <p class="title">Downloads</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12 tile-active">
-                                <div class="tile tile-img" data-stop="3500" style="background-image: url(img/demo/gallery/5.jpg);">
-                                    <p class="title">Gallery</p>
-                                </div>
-
-                                <a class="tile tile-lime" data-stop="5000" href="gallery.html">
-                                    <p class="title">Gallery page</p>
-                                    <p>Click on this tile block to see our amazing gallery page. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                    <div class="img img-bottom">
-                                        <i class="fa fa-picture-o"></i>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-
-                <!-- END Tiles -->
-
-
-                <!-- BEGIN Main Content -->
-              <!--   <div class="row">
+            <!-- BEGIN Main Content -->
+                <div class="row">
                     <div class="col-md-7">
                         <div class="box">
                             <div class="box-title">
@@ -234,7 +141,7 @@
 
                             <div class="box-content">
                                 <ul class="weekly-stats">
-                                    {{--
+
                                     <li>
                                         <span class="inline-sparkline">134,178,264,196,307,259,287</span>
                                         Total Registered Users: <span class="value">
@@ -270,12 +177,12 @@
                                         <span class="inline-sparkline">78.12,74.52,81.25,89.23,86.15,91.82,85.18</span>
                                         % New Visits: <span class="value">82.65%</span>
                                     </li>
-                                    --}}
+
                                 </ul>
                             </div>
                         </div>
                     </div>
-                </div> -->
+                </div>
 
 
 
