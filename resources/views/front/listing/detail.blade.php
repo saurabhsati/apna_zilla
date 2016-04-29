@@ -93,6 +93,19 @@
                <!-- /#Categoriesr End-->
                <div class="clearfix"></div>
             </div>
+             <div class="categories_sect sidebar-nav">
+               <div class="sidebar-brand"><img src="{{ url('/') }}/assets/front/images/money.png" alt="services"/>About Me<span class="spe_mobile3"><a href="#"></a></span></div>
+               <div class="bor_head">&nbsp;</div>
+               <ul class="spe_submobile3">
+                  @if(isset($arr_business_details['company_info']))
+                  <span class="col-sm-3 col-md-3 col-lg-12">{{$arr_business_details['company_info']}}</span>
+                  @else
+                  <span class="col-sm-3 col-md-3 col-lg-12">No About Info Available.</span>
+                  @endif
+               </ul>
+               <!-- /#Categoriesr End-->
+               <div class="clearfix"></div>
+            </div>
          </div>
          @if(isset($arr_business_details) && sizeof($arr_business_details)>0)
          <div class="col-sm-12 col-md-9 col-lg-9">
