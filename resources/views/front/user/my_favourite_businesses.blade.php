@@ -43,7 +43,6 @@
 <div class="col-sm-12 col-md-9 col-lg-9">
       <div id="list_view">
     @if(isset($arr_fav) && sizeof($arr_fav)>0)
-      @if(sizeof($arr_fav['favourite_businesses'])>0)
         @foreach($arr_fav['favourite_businesses'] as $restaurants)
       <div class="product_list_view" >
        <div class="row">
@@ -120,9 +119,7 @@
         </div>
 
             @endforeach
-          @else
-            <span><h4>Sorry , You Have Not Added Any Favorite Business !!</h4></span>
-          @endif
+
         @else
         <span>Sorry ,You Have Not Added Any Favorite Business !!</span>
       @endif

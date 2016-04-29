@@ -1520,15 +1520,11 @@ class UserController extends Controller
         }
         if(!empty(Session::get('user_id')))
           {
-          	$id = session('user_id');
-             $user_id = base64_decode($id);
-
-
-            $user_id    = UserModel::where('mobile_no',Session::get('mobile_no'))->first(['id']);
+            $user_id    = UserModel::where('email',Session::get('user_mail'))->first(['id']);
             $u          = $user_id->id;
             $arr_fav    = array();
 
-            $obj_fav = UserModel::where('id',$u)->select('id','mobile_no')
+            $obj_fav = UserModel::where('id',$u)->select('id','email')
                               ->with('favourite_businesses.reviews')
                               ->first();
 
@@ -1537,7 +1533,6 @@ class UserController extends Controller
                 $arr_fav = $obj_fav->toArray();
             }
           }
-          //dd($arr_fav);
           $main_image_path="uploads/business/main_image";
           return view('front.user.my_favourite_businesses',compact('arr_fav','main_image_path'));
     }

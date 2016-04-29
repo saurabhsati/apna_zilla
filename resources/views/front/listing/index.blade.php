@@ -977,9 +977,9 @@
         function add_to_favourite(ref)
         {
           var business_id = ref;
-          var user_mail   = "{{ session::get('user_mail') }}";
+          var mobile_no   = "{{ session::get('mobile_no') }}";
 
-          var data        = { business_id:business_id, user_mail:user_mail ,_token:csrf_token };
+          var data        = { business_id:business_id, mobile_no:mobile_no ,_token:csrf_token };
           jQuery.ajax({
             url:site_url+'/listing/add_to_favourite',
             type:'POST',

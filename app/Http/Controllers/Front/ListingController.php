@@ -287,11 +287,11 @@ class ListingController extends Controller
 
     public function add_to_favourite(Request $request)
     {
-      $user_mail      = $request->input('user_mail');
+      $mobile_no      = $request->input('mobile_no');
       $business_id    = $request->input('business_id');
 
       $json      = array();
-      $obj_user  = UserModel::where('email',$user_mail)->first(['id']);
+      $obj_user  = UserModel::where('mobile_no',$mobile_no)->first(['id']);
 
       {
         $obj_fav = FavouriteBusinessesModel::where(array('user_id'=>$obj_user->id,'business_id'=>$business_id))->get();

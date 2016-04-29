@@ -314,6 +314,7 @@ class AuthController extends Controller
                             $user_id = base64_encode($user['id']) ;
                             Session::put('user_id', $user_id);
                             Session::put('user_email', $user['email']);
+                             Session::put('mobile_no', $user['mobile_no']);
                             Session::set('user_name', $user['first_name']);
 
                         }

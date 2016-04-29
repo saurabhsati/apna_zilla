@@ -304,7 +304,7 @@
                               {{ Session::get('error') }}
                           </div>
                         @endif
-                        
+
                         <div class="rating_views" >
                            <div class="rank_name">
                               <span>Excellent</span>
@@ -335,7 +335,7 @@
                         @if(isset($arr_business_details['reviews']) && sizeof($arr_business_details['reviews'])>0)
                        <div class="rating_views_main-dv" >
                           @foreach($arr_business_details['reviews'] as $review)
-                     
+
                         <div class="testimo-one">
                            <div class="img-div-testi">
                               <img src="{{ url('/') }}/assets/front/images/testi-user.png" alt="" />
@@ -364,7 +364,7 @@
                            </div>
                            <div class="clearfix"></div>
                         </div>
-                     
+
                         @endforeach
                         @endif
                          </div>
@@ -476,6 +476,7 @@
                                  <a href="{{ url('/') }}/uploads/business/business_upload_image/{{$business_images['image_name']}}" class="gal img_inner">
 
                                <!--   <img src="{{ url('/') }}/uploads/business/business_upload_image/{{$business_images['image_name']}}" alt=""/> -->
+
                                  <img src="{{ get_resized_image_path($business_images['image_name'],'uploads/business/business_upload_image',367,464) }}" alt=""/>
                                  </a>
                               </div>
@@ -1195,9 +1196,9 @@ function check_review()
 function add_to_favourite(ref)
         {
           var business_id = ref;
-          var user_mail   = "{{ session::get('user_mail') }}";
+          var mobile_no   = "{{ session::get('mobile_no') }}";
 
-          var data        = { business_id:business_id, user_mail:user_mail ,_token:csrf_token };
+          var data        = { business_id:business_id, mobile_no:mobile_no ,_token:csrf_token };
           jQuery.ajax({
             url:site_url+'/listing/add_to_favourite',
             type:'POST',
