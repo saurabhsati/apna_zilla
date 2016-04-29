@@ -308,7 +308,7 @@
                 <!-- END Tiles -->
 
                 <!-- BEGIN Tiles -->
-                <div class="row">
+               <!--  <div class="row">
                     <div class="col-md-7">
                         <div class="row">
                             <div class="col-md-7">
@@ -430,7 +430,7 @@
                         </div>
                     </div>
                 </div>
-
+ -->
                 <!-- END Tiles -->
 
 
