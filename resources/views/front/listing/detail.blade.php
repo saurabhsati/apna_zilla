@@ -1,6 +1,14 @@
 @extends('front.template.master')
 @section('main_section')
 @include('front.template._search_top_nav')
+<style type="text/css">
+   .remo_fav span{
+    color: #f9a820 !important;
+  }
+  .remo_fav i{
+    color: #f9a820 !important;
+  }
+</style>
 <div class="gry_container">
    <div class="container">
       <div class="row">
@@ -52,6 +60,9 @@
                <!-- /#Categoriesr End-->
                <div class="clearfix"></div>
             </div>
+
+
+
             <div class="categories_sect sidebar-nav">
                <div class="sidebar-brand"><img src="{{ url('/') }}/assets/front/images/services.png" alt="services"/>Services<span class="spe_mobile3"><a href="#"></a></span></div>
                <div class="bor_head">&nbsp;</div>
@@ -67,7 +78,7 @@
                <!-- /#Categoriesr End-->
                <div class="clearfix"></div>
             </div>
-             <div class="categories_sect sidebar-nav">
+            <div class="categories_sect sidebar-nav">
                <div class="sidebar-brand"><img src="{{ url('/') }}/assets/front/images/money.png" alt="services"/>Modes Of Payment<span class="spe_mobile3"><a href="#"></a></span></div>
                <div class="bor_head">&nbsp;</div>
                <ul class="spe_submobile3">
@@ -107,7 +118,7 @@
                      <div class="p_details"><i class="fa fa-phone"></i><span> {{$arr_business_details['landline_number']}} &nbsp; {{$arr_business_details['mobile_number']}}</span></div>
                      <div class="p_details"><i class="fa fa-map-marker"></i> <span>{{$arr_business_details['building']}} &nbsp; {{$arr_business_details['street']}},<br/> {{$arr_business_details['landmark']}},&nbsp;{{$arr_business_details['area']}},&nbsp;{{$arr_business_details['state_details']['state_title']}},&nbsp;{{$arr_business_details['country_details']['country_name']}} (<a href="javascript:void(0);" onclick="show_map()">map</a>)</span></div>
                      <input type="hidden" value=" <?php echo strip_tags($arr_business_details['building'] .', ' .$arr_business_details['street'].',<br/>' .$arr_business_details['landmark'].', '.$arr_business_details['area'].', '.$arr_business_details['state_details']['state_title'].', '.$arr_business_details['country_details']['country_name']); ?>" name="set_loc_info" id="set_loc_info">
-                     <div class="p_details lst">
+                     <div class="p_details ">
                         <i class="fa fa-clock-o"></i><span>
                         @if(isset($arr_business_details['business_times']) && $arr_business_details['business_times']!='')
                         <?php
@@ -127,6 +138,45 @@
                         <div class="add_det"><i class="fa fa-globe"></i><a href="http://{{$arr_business_details['website']}}" target="_blank"> {{$arr_business_details['website']}}</a></div>
                          <div class="enquiry"><a data-toggle="modal" data-target="#enquiry"><i class="fa fa-envelope"></i> Send Enquiry By Email</a></div>
                      </div>
+                      <div class="p_details lst" >
+                    @if(Session::has('user_mail'))
+                    <?php
+                    if(isset($arr_fav_business) && count($arr_fav_business)>0 )
+                    {
+                      if(in_array($arr_business_details['id'], $arr_fav_business))
+                      {
+                    ?>  <span class="remo_fav" id="{{ 'show_fav_status_'.$arr_business_details['id'] }}" style="width: 175px;">
+                        <a href="javascript:void(0);" class="active" onclick="add_to_favourite('{{$arr_business_details['id']}}')"  style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Remove favorite</span></a>
+                        </span>
+                    <?php
+                      }
+                      else
+                      {
+                    ?>
+                        <span id="{{'show_fav_status_'.$arr_business_details['id'] }}" style="width: 175px;">
+                        <a href="javascript:void(0);"  onclick="add_to_favourite('{{$arr_business_details['id']}}')"  style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add To favorite</span></a>
+                        </span>
+                    <?php
+                      }
+                    }
+                    else{
+                      ?>
+                         <span id="{{'show_fav_status_'.$arr_business_details['id'] }}" style="width: 175px;">
+                        <a href="javascript:void(0);"  onclick="add_to_favourite('{{$arr_business_details['id']}}')"  style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add To favorite</span></a>
+                        </span>
+                      <?php
+                    }
+                    ?>
+
+
+                    @else
+                    <span>
+                      <a href="javascript:void(0);" data-target="#login_poup" data-toggle="modal" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>
+                      </span>
+                    @endif
+
+
+                </div>
                   </div>
                </div> <?php
                            $slug_business=str_slug($arr_business_details['business_name']);
@@ -1125,7 +1175,37 @@ function check_review()
               });
           }
   }
+function add_to_favourite(ref)
+        {
+          var business_id = ref;
+          var user_mail   = "{{ session::get('user_mail') }}";
 
+          var data        = { business_id:business_id, user_mail:user_mail ,_token:csrf_token };
+          jQuery.ajax({
+            url:site_url+'/listing/add_to_favourite',
+            type:'POST',
+            dataType:'json',
+            data: data,
+            success:function(response){
+
+              if(response.status == "favorites")
+              {
+                 jQuery('#show_fav_status_'+ref+'').addClass("remo_fav");
+                var str = '<a href="javascript:void(0);"  onclick="add_to_favourite('+ref+')" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Remove favorite</span></a>';
+                jQuery('#show_fav_status_'+ref+'').html(str);
+              }
+
+              if(response.status=="un_favorites")
+              {
+                 jQuery('#show_fav_status_'+ref+'').removeClass("remo_fav");
+                 var str = '<a href="javascript:void(0);"  onclick="add_to_favourite('+ref+')" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span>Add To favorite</span></a>';
+                jQuery('#show_fav_status_'+ref+'').html(str);
+
+              }
+
+            }
+          });
+        }
 
 
 

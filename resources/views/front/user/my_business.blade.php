@@ -2,7 +2,12 @@
 
 @section('main_section')
 <style>
-
+.remo_fav span{
+    color: #f9a820 !important;
+  }
+  .remo_fav i{
+    color: #f9a820 !important;
+  }
     </style>
 <div class="gry_container">
       <div class="container">
@@ -22,10 +27,10 @@
 
        <div class="container">
          <div class="row">
-              @include('front.user.profile_left')
+              @include('front.user.my_business_left')
 
             <div class="col-sm-12 col-md-9 col-lg-9">
-             <div class="title_head"></div>RRRR
+             <div class="title_head"></div>
 
                    @if(Session::has('success_payment'))
             <div class="alert alert-success alert-dismissible">
@@ -53,7 +58,7 @@
                 <div class="row">
                         <div class="col-sm-3 col-md-3 col-lg-3">
                         <div class="product_img">
-                          <img style="height:100% !important;" src="{{ get_resized_image_path($business['main_image'],$main_image_path,205,270) }}" alt="list product"/>
+                          <img style="height:100% !important;" src="{{ get_resized_image_path($business['main_image'],$main_image_path,235,300) }}" alt="list product"/>
                          @if($business['is_verified']==1)
                             <img class="first-cate-veri" src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>@endif
                         </div>

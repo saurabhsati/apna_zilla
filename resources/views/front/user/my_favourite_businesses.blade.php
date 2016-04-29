@@ -9,6 +9,12 @@
       overflow: auto;
       position:fixed;
     }
+    .remo_fav span{
+    color: #f9a820 !important;
+  }
+  .remo_fav i{
+    color: #f9a820 !important;
+  }
   </style>
 
   <?php
@@ -32,7 +38,7 @@
 
  <div class="container">
   <div class="row">
- @include('front.user.profile_left')
+ @include('front.user.my_business_left')
     <!-- location popup end -->
 <div class="col-sm-12 col-md-9 col-lg-9">
       <div id="list_view">
@@ -43,7 +49,7 @@
        <div class="row">
          <div class="col-sm-3 col-md-3 col-lg-3">
           <div class="product_img">
-              <img style="height:100% !important;" src="{{ get_resized_image_path($restaurants['main_image'],$main_image_path,205,270) }}" alt="list product"/>
+              <img style="height:100% !important;" src="{{ get_resized_image_path($restaurants['main_image'],$main_image_path,235,300) }}" alt="list product"/>
                @if($restaurants['is_verified']==1)
               <img class="first-cate-veri" src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>@endif
         </div>
@@ -98,6 +104,15 @@
                 @endif
 
                   </span>
+                    @if(Session::has('user_mail'))
+                     <span class="remo_fav" id="{{ 'show_fav_status_'.$restaurants['id'] }}" style="width: 175px;">
+                        <a href="javascript:void(0);" class="active" onclick="add_to_favourite('{{$restaurants['id']}}')"  style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Remove favorite</span></a>
+                        </span>
+                    @else
+                    <span>
+                      <a href="javascript:void(0);" data-target="#login_poup" data-toggle="modal" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>
+                      </span>
+                    @endif
                 </div>
               </div>
             </div>
@@ -123,7 +138,42 @@
 
 </div>
 
+<script type="text/javascript">
+  var site_url = "{{ url('/') }}";
+  var csrf_token = "{{ csrf_token() }}";
+   function add_to_favourite(ref)
+        {
+          var business_id = ref;
+          var user_mail   = "{{ session::get('user_mail') }}";
 
+          var data        = { business_id:business_id, user_mail:user_mail ,_token:csrf_token };
+          jQuery.ajax({
+            url:site_url+'/listing/add_to_favourite',
+            type:'POST',
+            dataType:'json',
+            data: data,
+            success:function(response){
+
+              if(response.status == "favorites")
+              {
+                 jQuery('#show_fav_status_'+ref+'').addClass("remo_fav");
+                var str = '<a href="javascript:void(0);"  onclick="add_to_favourite('+ref+')" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Remove favorite</span></a>';
+                jQuery('#show_fav_status_'+ref+'').html(str);
+              }
+
+              if(response.status=="un_favorites")
+              {
+                 jQuery('#show_fav_status_'+ref+'').removeClass("remo_fav");
+                 var str = '<a href="javascript:void(0);"  onclick="add_to_favourite('+ref+')" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span>Add To favorite</span></a>';
+                jQuery('#show_fav_status_'+ref+'').html(str);
+                 var current_url = $(location).attr('href');
+                 window.location.href=current_url;
+              }
+
+            }
+          });
+        }
+</script>
 @endsection
 
 

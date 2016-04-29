@@ -147,12 +147,38 @@ class ListingController extends Controller
                 $parent_category = $obj_parent_category->toArray();
             }
         }
+        /* Add Favorite Icon  */
+        $arr_fav_business = array();
+        if(Session::has('user_mail'))
+        {
+              $obj_user = UserModel::where('email',Session::get('user_mail'))->first(['id']);
+              $user_id  = $obj_user->id;
 
+              $str = "";
+              $obj_favourite = FavouriteBusinessesModel::where(array('user_id'=>$user_id ,'is_favourite'=>"1" ))->get(['business_id']);
 
+              if($obj_favourite)
+              {
+                $obj_favourite->toArray();
+
+                foreach ($obj_favourite as $key => $value)
+                {
+                  array_push($arr_fav_business, $value['business_id']);
+                }
+              }
+              else
+              {
+                $arr_fav_business = array();
+              }
+        }
+        else
+        {
+            $arr_fav_business = array();
+        }
         Meta::setDescription($arr_business_details['company_info']);
         Meta::addKeyword($arr_business_details['keywords']);
-      //dd($arr_business_details);
-        return view('front.listing.detail',compact('main_image_path','page_title','arr_business_details','parent_category','all_related_business','all_category','city','search_by'));
+      //dd($arr_fav_business);
+        return view('front.listing.detail',compact('main_image_path','page_title','arr_fav_business','arr_business_details','parent_category','all_related_business','all_category','city','search_by'));
     }
 
 
