@@ -102,8 +102,9 @@
                            id="user_id"
                            data-rule-required="true"
                            placeholder="Enter User Public ID"
-                           value=""
+
                            />
+                  <input type="hidden" name="tmp_user_id" id="tmp_user_id">
 
                     <span class='help-block'>{{ $errors->first('user_id') }}</span>
                      <div class="alert alert-warning">Note: Auto Complete the User Public Id field by typing prefix RNT- </div>
@@ -123,33 +124,38 @@
                     <span class='help-block'>{{ $errors->first('business_name') }}</span>
                 </div>
             </div>
-            <div class="form-group">
-            <label class="col-sm-3 col-lg-2 control-label" for="business_cat">Business Category <i class="red">*</i></label>
+             <div class="form-group">
+              <label class="col-sm-3 col-lg-2 control-label" for="main_business_cat">Business Main Category <i class="red">*</i></label>
             <div class="col-sm-6 col-lg-4 controls">
-            <select class="form-control" name="business_cat[]" id="business_cat" onchange="updateCategoryOptGroup(this)" multiple="">
-            <option> Select Business Categories</option>
+            <select class="form-control" name="main_business_cat" id="main_business_cat" onchange="getSubCategory(this)">
+              <option> Select Business Main Categories</option>
              @if(isset($arr_category) && sizeof($arr_category)>0)
              @foreach($arr_category as $category)
-             @if($category['parent'] =='0')
-                      <optgroup label="{{ $category['title'] }}" >
-                          @foreach($arr_category as $subcategory)
-                            @if( $subcategory['parent']==$category['cat_id'])
-                              <option  name="sub_cat" id="sub_cat" value="{{ $subcategory['cat_id'] }}" >
-                             {{ $subcategory['title'] }}
-                              </option  name="sub_cat" id="sub_cat">
-                             @endif
-                             @endforeach
-
-                    </optgroup>
-              @endif
+              <option  name="sub_cat" id="sub_cat" value="{{ $category['cat_id'] }}" >
+                             {{ $category['title'] }}
+                              </option>
               @endforeach
-              @endif
-            </select><a href="javascript:void(0);" onclick="clearCategoryOptGroup(this)">Clear Selected Option</a>
-            <div class="alert alert-warning">Note: Press Ctrl To Select Multiple Category</div>
-            <span class='help-block'>{{ $errors->first('business_cat') }}</span>
+               @endif
+            </select>
             </div>
             </div>
+            <div class="form-group">
+              <label class="col-sm-3 col-lg-2 control-label" for="main_business_cat">Business  Sub Category <i class="red">*</i></label>
+            <div class="col-sm-6 col-lg-4 controls" id="sub_category_div" name="sub_category_div" style="">
+            <select class="form-control" id="example-getting-started" name="business_cat[]" multiple="multiple">
+            <option value="">Select Business Sub Category </option>
+                 <!--  <option value="cheese">Cheese</option>
+                  <option value="tomatoes">Tomatoes</option>
+                  <option value="mozarella">Mozzarella</option>
+                  <option value="mushrooms">Mushrooms</option>
+                  <option value="pepperoni">Pepperoni</option>
+                  <option value="onions">Onions</option> -->
+              </select>
+              <span class='help-block'>{{ $errors->first('business_cat') }}</span>
+                <div class="alert alert-warning">Note: Firstly Select The Business Main category From Business Main Category Drop-down , Then Click ON None Selected Button  </div>
 
+            </div>
+            </div>
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label">Business Main Banner Image <i class="red">*</i> </label>
                 <div class="col-sm-9 col-lg-10 controls">
@@ -208,9 +214,15 @@
                 </div>
 
                 </div>
+
+
+                <div class="row">
+                <div class="col-md-6 ">
+
+
                 <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="area">Area <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
+                <label class="col-sm-3 col-lg-4 control-label" for="area">Area <i class="red">*</i></label>
+                <div class="col-sm-5 col-lg-8 controls">
                     <input class="form-control"
                            name="area"
                            id="area"
@@ -221,176 +233,72 @@
                            />
                     <span class='help-block'>{{ $errors->first('area') }}</span>
                 </div>
-
-                <label class="col-md-6 col-lg-4 control-label" for="map_location">Map Location<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input type="hidden" name="lat" value="" id="lat" />
-                    <input type="hidden" name="lng" value="" id="lng"/>
-
-                    <div id="business_location_map" style="height:400px"></div>
-
-                    <label>Note: Click On the Map to Pick Nearby Custom Location </label>
-                    <a id="reset" href="#" style="display:none;">Reset Marker</a>
                 </div>
 
-            </div>
+
+
+
             <div class="geo-details">
              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="country">Country <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
+                <label class="col-sm-3 col-lg-4 control-label" for="country">Country <i class="red">*</i></label>
+                <div class="col-sm-5 col-lg-8 controls">
                 <input type="text" data-geo="country" value="" id="country" name="country" class="form-control">
                    <span class='help-block'>{{ $errors->first('country') }}</span>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="state">State <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
+                <label class="col-sm-3 col-lg-4 control-label" for="state">State <i class="red">*</i></label>
+                <div class="col-sm-5 col-lg-8 controls">
                 <input type="text" data-geo="administrative_area_level_1" value="" id="state" name="state" class="form-control">
                   <span class='help-block'>{{ $errors->first('state') }}</span>
                 </div>
             </div>
              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="city">City <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
+                <label class="col-sm-3 col-lg-4 control-label" for="city">City <i class="red">*</i></label>
+                <div class="col-sm-5 col-lg-8 controls">
                  <input type="text" data-geo="administrative_area_level_2" value="" id="city" name="city" class="form-control">
                   <span class='help-block'>{{ $errors->first('city') }}</span>
                 </div>
             </div>
 
             <div class="form-group" ><!-- style="display:none;" -->
-                <label class="col-sm-3 col-lg-2 control-label" for="lat">Lat <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
+                <label class="col-sm-3 col-lg-4 control-label" for="lat">Lat <i class="red">*</i></label>
+                <div class="col-sm-5 col-lg-8 controls">
                  <input type="text" data-geo="lat" value="" id="lat" name="lat" class="form-control">
                   <span class='help-block'>{{ $errors->first('lat') }}</span>
                 </div>
             </div>
             <div class="form-group" ><!-- style="display:none;" -->
-                <label class="col-sm-3 col-lg-2 control-label" for="lng">lng <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
+                <label class="col-sm-3 col-lg-4 control-label" for="lng">lng <i class="red">*</i></label>
+                <div class="col-sm-5 col-lg-8 controls">
                  <input type="text" data-geo="lng" value="" id="lng" name="lng" class="form-control">
                   <span class='help-block'>{{ $errors->first('lng') }}</span>
                 </div>
             </div>
             <div class="form-group" >
-                <label class="col-sm-3 col-lg-2 control-label" for="postal_code">postal code <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
+                <label class="col-sm-3 col-lg-4 control-label" for="postal_code">postal code <i class="red">*</i></label>
+                <div class="col-sm-5 col-lg-8 controls">
                  <input type="text" data-geo="postal_code" value="" id="pincode" name="pincode" class="form-control">
                   <span class='help-block'>{{ $errors->first('postal code') }}</span>
                 </div>
             </div>
+          </div>
+        </div>
 
-
-
-
-
-               <!--  <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="building">Building<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="building"
-                           id="building"
-                           data-rule-required="true"
-                           placeholder="Enter Building"
-                           value=""
-                           />
-                    <span class='help-block'>{{ $errors->first('building') }}</span>
-                </div>
-            </div>
+        <div class="col-md-6 ">
              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="street">Street <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="street"
-                           id="street"
-                           data-rule-required="true"
-                           placeholder="Enter Street"
-                           value=""
+                <label class="col-md-3 col-lg-2 control-label" for="map_location">Map Location<i class="red">*</i></label>
+                <div class="col-sm-5 col-lg-8 controls">
+                   <div id="business_location_map" style="height:400px"></div>
 
-                           />
-                    <span class='help-block'>{{ $errors->first('street') }}</span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="landmark">landmark <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="landmark"
-                           id="landmark"
-                           data-rule-required="true"
-                           placeholder="Enter Landmark"
-                           value=""
-                           />
-                    <span class='help-block'>{{ $errors->first('landmark') }}</span>
-                </div>
-            </div>
+                    <label>Note: Click On the Map to Pick Nearby Custom Location </label>
+                    <div>
+                    <a id="reset" href="#" style="display:none;">Reset Marker</a></div>
+                </div></div>
+        </div>
+        </div>
 
-
-
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="country">Country <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                <select class="form-control" name="country" id="country" onchange="loadStates(this)" >
-                <option>Select Country</option>
-                @if(isset($arr_country) && sizeof($arr_country)>0)
-                @foreach($arr_country as $country)
-                <option value="{{ isset($country['id'])?$country['id']:'' }}">{{ isset($country['country_name'])?$country['country_name']:'' }}
-                </option>
-                @endforeach
-                 @endif
-                </select>
-                   <span class='help-block'>{{ $errors->first('country') }}</span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="state">State <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                 <select class="form-control"  name="state" id="state" tabindex="1" onchange="loadCity(this)">
-                 <option>Select State</option>
-                  @if(isset($arr_state) && sizeof($arr_state)>0)
-                  @foreach($arr_state as $state)
-                  <option value="{{ isset($state['id'])?$state['id']:'' }}" >{{ isset($state['state_title'])?$state['state_title']:'' }}
-                  </option>
-                  @endforeach
-                  @endif
-                  </select>
-                  <span class='help-block'>{{ $errors->first('state') }}</span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="city">City <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                 <select class="form-control"  name="city" id="city" onchange="loadpostalcode(this)">
-                  <option>Select City</option>
-                 @if(isset($arr_city) && sizeof($arr_city)>0)
-                 @foreach($arr_city as $city)
-                  <option value="{{ isset($city['id'])?$city['id']:'' }}" >{{ isset($city['city_title'])?$city['city_title']:'' }}
-                  </option>
-                  @endforeach
-                  @endif
-                  </select>
-                  <span class='help-block'>{{ $errors->first('city') }}</span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="pincode">Zipcode <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                <select class="form-control"  name="pincode" id="pincode"  onchange="setAddress()">
-                <option>Select Zipcode</option>
-                 @if(isset($arr_zipcode) && sizeof($arr_zipcode)>0)
-                 @foreach($arr_zipcode as $zipcode)
-                 <option value="{{ isset($zipcode['id'])?$zipcode['id']:'' }}" >{{ isset($zipcode['zipcode'])?$zipcode['zipcode']:'' }}
-                 </option>
-                  @endforeach
-                  @endif
-                  </select>
-                  <span class='help-block'>{{ $errors->first('pincode') }}</span>
-                </div>
-            </div>
-
- -->
-
-            <div class="form-group">
+         <div class="form-group">
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="contact_person_name">Contact Person Name<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
@@ -419,12 +327,12 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="landline_number">Landline Number <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="landline_number">Landline Number <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
                            name="landline_number"
                            id="landline_number"
-                           data-rule-required="true"
+                           data-rule-required=""
                            placeholder="Enter Landline Number"
                            value=""
                            />
@@ -464,7 +372,7 @@
                     <input class="form-control"
                            name="email_id"
                            id="email_id"
-                           data-rule-required="true"
+                           data-rule-required=""
                            data-rule-email="true"
                            placeholder="Enter Email Id"
                            value=""
@@ -486,19 +394,7 @@
                 </div>
             </div>
 
-          <!--   <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="hours_of_operation">Hours Of Operation<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <textarea class="form-control"
-                           name="hours_of_operation"
-                           id="hours_of_operation"
-                           data-rule-required="true"
-                           placeholder="Enter Hours Of Operation"
-                           value=""
-                           ></textarea>
-                    <span class='help-block'>{{-- $errors->first('hours_of_operation') --}}</span>
-                </div>
-            </div> -->
+
 
 
 
@@ -814,8 +710,7 @@ $(document).ready(function()
 {
  var site_url="{{url('/')}}";
  var csrf_token = "{{ csrf_token() }}";
-   var user_id=$("#user_id").val();
-          $("#user_id").autocomplete(
+ $("#user_id").autocomplete(
           {
             minLength:3,
             source:site_url+"/web_admin/common/get_public_id",
@@ -830,18 +725,23 @@ $(document).ready(function()
             },
             select:function(event,ui)
             {
+               //$("input[name=user_id]").attr('value',ui.item.user_id);
               $("#user_id").attr('value',ui.item.user_id);
+              $("#tmp_user_id").attr('value',ui.item.user_id);
+
+              // $("#user_id").val(ui.item.user_id);
              },
             response: function (event, ui)
             {
 
             }
-          }).data("ui-autocomplete")._renderItem = function (ul, item) {
-             return $("<li></li>")
+            }).data("ui-autocomplete")._renderItem = function (ul, item)
+            {
+                 return $("<li></li>")
                  .data("item.autocomplete", item)
                  .append( item.label +'<span style="color:#7b7b7b"> '+item.span+'</span>')
                  .appendTo(ul);
-                 };
+           };
 
  $('#add-image').click(function()
  {
@@ -865,7 +765,7 @@ $(document).ready(function()
                  return false;
             }
             var chkimg = img_val.split(".");
-             var extension = chkimg[1];
+            var extension = chkimg[1];
 
                if(extension!='jpg' && extension!='JPG' && extension!='png' && extension!='PNG' && extension!='jpeg' && extension!='JPEG'
                  && extension!='gif' && extension!='GIF')
@@ -897,35 +797,7 @@ $('#remove-image').click(function()
      html.remove();
 });
 
-function updateCategoryOptGroup(ref)
-{
-  var arr_optgroup_ref = $(ref).find('optgroup');
-  var current_option_grp =$(ref).find("option:selected").parent('optgroup');
 
-  $.each(arr_optgroup_ref,function(index,optgroup)
-  {
-    if($(optgroup).attr('label')!=$(current_option_grp).attr('label'))
-    {
-      $(optgroup).attr('disabled','disabled');
-    }
-    else
-    {
-      $(optgroup).removeAttr('disabled');
-    }
-
-
-  });
-
-}
-function clearCategoryOptGroup()
-{
-  var arr_optgroup_ref = $('#business_cat').find('optgroup');
-    $.each(arr_optgroup_ref,function(index,optgroup)
-  {
-          $(optgroup).removeAttr('disabled');
-
-  });
-}
 $('.add_serc').click(function()
 {
     $(".add_more_service").removeAttr("style");
@@ -1010,248 +882,8 @@ $('#remove-payment').click(function()
 
 });
 </script>
-
-<script type="text/javascript">
-
-    var  map;
-    var ref_input_lat = $('#lat');
-    var ref_input_lng = $('#lng');
-
-    function setMapLocation(address)
-    {
-
-        geocoder.geocode({'address': address}, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK)
-            {
-
-                map.setCenter(results[0].geometry.location);
-
-                $(ref_input_lat).val(results[0].geometry.location.lat().toFixed(6));
-                $(ref_input_lng).val(results[0].geometry.location.lng().toFixed(6));
-
-                var latlong = "(" + results[0].geometry.location.lat().toFixed(6) + ", " +
-                        +results[0].geometry.location.lng().toFixed(6)+ ")";
-
-
-
-                marker.setPosition(results[0].geometry.location);
-                map.setZoom(16);
-                infowindow.setContent(results[0].formatted_address);
-
-                if (infowindow) {
-                    infowindow.close();
-                }
-
-                google.maps.event.addListener(marker, 'click', function() {
-                    infowindow.open(map, marker);
-                });
-
-                infowindow.open(map, marker);
-
-            } else {
-                alert("Lat and long cannot be found.");
-            }
-        });
-    }
-    function initializeMap()
-    {
-         var latlng = new google.maps.LatLng(1.10, 1.10);
-         var myOptions = {
-             zoom: 5,
-             center: latlng,
-             panControl: true,
-             scrollwheel: true,
-             scaleControl: true,
-             overviewMapControl: true,
-             disableDoubleClickZoom: false,
-             overviewMapControlOptions: {
-                 opened: true
-             },
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-         };
-         map = new google.maps.Map(document.getElementById("business_location_map"),
-             myOptions);
-         geocoder = new google.maps.Geocoder();
-         marker = new google.maps.Marker({
-             position: latlng,
-             map: map,
-             //center: countries['IN'].center,
-
-         });
-
-         map.streetViewControl = false;
-         infowindow = new google.maps.InfoWindow({
-             content: "(1.10, 1.10)"
-         });
-
-         google.maps.event.addListener(map, 'click', function(event) {
-             marker.setPosition(event.latLng);
-
-             var yeri = event.latLng;
-
-             var latlongi = "(" + yeri.lat().toFixed(6) + ", " + yeri.lng().toFixed(6) + ")";
-
-             infowindow.setContent(latlongi);
-
-             $(ref_input_lat).val(yeri.lat().toFixed(6));
-             $(ref_input_lng).val(yeri.lng().toFixed(6));
-
-         });
-
-         google.maps.event.addListener(map, 'mousewheel', function(event, delta) {
-
-             console.log(delta);
-         });
-     }
-
-    function loadScript()
-    {
-            var script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = 'https://maps.googleapis.com/maps/api/js?sensor=false&' +
-                    'callback=initializeMap';
-            document.body.appendChild(script);
-    }
-
-   // window.onload = loadScript;
-
-    /* Autcomplete Code */
-
-    function setMarkerTo(lat,lon,place)
-    {
-        var location = new google.maps.LatLng(lat,lng)
-        map.setCenter(location);
-        $(ref_input_lat).val = lat;
-        $(ref_input_lng).val = lng;
-        marker.setPosition(location);
-        map.setZoom(16);
-    }
-
-    /*function setAddress(ref)
-    {
-        var addr = $(ref).val();
-        setMapLocation(addr);
-    }*/
-
-    function setAddress()
-    {
-         var street = $('#street').val();
-         var area = $('#area').val();
-         var city = $('#city option:selected').text();
-         var state = $('#state option:selected').text();
-         var country = $('#country option:selected').text();
-        var addr = street+", "+area+", "+city+", "+state+", "+country;
-        setMapLocation(addr);
-    }
-
-</script>
 <script type="text/javascript">
  var url = "{{ url('/') }}";
-    function loadStates(ref)
-     {
-        var selected_country = jQuery(ref).val();
-
-        jQuery.ajax({
-                        url:url+'/web_admin/common/get_states/'+selected_country,
-                        type:'GET',
-                        data:'flag=true',
-                        dataType:'json',
-                        beforeSend:function()
-                        {
-                            jQuery('select[name="state"]').attr('disabled','disabled');
-                        },
-                        success:function(response)
-                        {
-
-                            if(response.status=="SUCCESS")
-                            {
-                                jQuery('select[name="state"]').removeAttr('disabled');
-                                if(typeof(response.arr_state) == "object")
-                                {
-                                   var option = '<option value="">Select</option>';
-                                   jQuery(response.arr_state).each(function(index,states)
-                                   {
-
-                                        option+='<option value="'+states.id+'">'+states.state_title+'</option>';
-                                   });
-
-                                   jQuery('select[name="state"]').html(option);
-                                }
-                            }
-                            return false;
-                        }
-        });
-     }
-     function loadCity(ref)
-     {
-        var selected_state = jQuery(ref).val();
-
-        jQuery.ajax({
-                        url:url+'/web_admin/common/get_cities/'+selected_state,
-                        type:'GET',
-                        data:'flag=true',
-                        dataType:'json',
-                        beforeSend:function()
-                        {
-                            jQuery('select[name="city"]').attr('disabled','disabled');
-                        },
-                        success:function(response)
-                        {
-
-                            if(response.status=="SUCCESS")
-                            {
-                                jQuery('select[name="city"]').removeAttr('disabled');
-                                if(typeof(response.arr_city) == "object")
-                                {
-                                   var option = '<option value="">Select</option>';
-                                   jQuery(response.arr_city).each(function(index,city)
-                                   {
-
-                                        option+='<option value="'+city.id+'">'+city.city_title+'</option>';
-                                   });
-
-                                   jQuery('select[name="city"]').html(option);
-                                }
-                            }
-                            return false;
-                        }
-        });
-     }
-      function loadpostalcode(ref)
-     {
-        var selected_city = jQuery(ref).val();
-
-        jQuery.ajax({
-                        url:url+'/web_admin/common/get_postalcode/'+selected_city,
-                        type:'GET',
-                        data:'flag=true',
-                        dataType:'json',
-                        beforeSend:function()
-                        {
-                            jQuery('select[name="pincode"]').attr('disabled','disabled');
-                        },
-                        success:function(response)
-                        {
-
-                            if(response.status=="SUCCESS")
-                            {
-                                jQuery('select[name="pincode"]').removeAttr('disabled');
-                                if(typeof(response.arr_postalcode) == "object")
-                                {
-                                   var option = '<option value="">Select</option>';
-                                   jQuery(response.arr_postalcode).each(function(index,postalcode)
-                                   {
-
-                                        option+='<option value="'+postalcode.id+'">'+postalcode.postal_code+'</option>';
-                                   });
-
-                                   jQuery('select[name="pincode"]').html(option);
-                                }
-                            }
-                            return false;
-                        }
-        });
-     }
 </script>
 
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
@@ -1282,6 +914,48 @@ $("#area").bind("geocode:dragged", function(event, latLng){
           return false;
         });
 });
+
+function getSubCategory(ref)
+{
+   var main_cat_id =$(ref).find("option:selected").val();
+   var categCheck  = $('#example-getting-started').multiselect
+                      ({
+                         includeSelectAllOption: true,
+                         enableFiltering : true
+                      });
+    jQuery.ajax({
+                        url:url+'/web_admin/common/get_subcategory/'+main_cat_id,
+                        type:'GET',
+                        data:'flag=true',
+                        dataType:'json',
+                        beforeSend:function()
+                        {
+
+                        },
+                        success:function(response)
+                        {
+
+                            if(response.status=="SUCCESS")
+                            {
+                                if(typeof(response.arr_sub_cat) == "object")
+                                {
+                                   var option = '';
+                                   jQuery(response.arr_sub_cat).each(function(index,arr_sub_cat)
+                                   {
+                                    option+='<option value="'+arr_sub_cat.cat_id+'">'+arr_sub_cat.title+'</option>';
+
+                                   });
+                                   categCheck.html(option);
+                                   categCheck.multiselect('rebuild');
+
+                                }
+                            }
+                            return false;
+                        }
+        });
+
+}
+
 </script>
 
 @stop

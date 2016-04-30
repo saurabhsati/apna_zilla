@@ -170,6 +170,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::get('get_cities/{state_id}',  ['as' => 'get_cities' ,'uses' => 'Common\CountryController@get_cities']);
 			Route::get('get_postalcode/{city_id}',  ['as' => 'get_postalcode' ,'uses' => 'Common\CountryController@get_postalcode']);
 			Route::get('get_public_id',  ['as' => 'get_public_id' ,'uses' => 'Common\CountryController@get_public_id']);
+			Route::get('get_subcategory/{main_cat_id}',  ['as' => 'get_subcategory' ,'uses' => 'Common\CountryController@get_subcategory']);
 		});
 
 		/*-------------Business Reviews Module------------*/

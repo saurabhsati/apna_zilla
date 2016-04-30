@@ -8,6 +8,7 @@ use App\Models\StateModel;
 use App\Models\CityModel;
 use App\Models\PlaceModel;
 use App\Models\UserModel;
+use App\Models\CategoryModel;
 use Validator;
 use Session;
 use Input;
@@ -98,6 +99,30 @@ class CountryController extends Controller
         return response()->json($arr_response);
     }
 
+    public function get_subcategory($main_cat_id)
+    {
+        $arr_state = array();
+        $arr_response = array();
+
+       $obj_category = CategoryModel::where('parent',$main_cat_id)->select('cat_id','title')->get();
+
+        if($obj_category != FALSE)
+        {
+            $arr_sub_cat =  $obj_category->toArray();
+        }
+
+        if(sizeof($arr_sub_cat)>0)
+        {
+            $arr_response['status'] ="SUCCESS";
+            $arr_response['arr_sub_cat'] = $arr_sub_cat;
+        }
+        else
+        {
+            $arr_response['status'] ="ERROR";
+            $arr_response['arr_sub_cat'] = array();
+        }
+        return response()->json($arr_response);
+    }
     public function get_cities($state_id)
     {
         $arr_state = array();

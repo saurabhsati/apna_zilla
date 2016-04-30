@@ -83,7 +83,7 @@ class BusinessListingController extends Controller
         {
             $arr_user = $obj_user_res->toArray();
         }
-        $obj_category = CategoryModel::get();
+        $obj_category = CategoryModel::where('parent','=',0)->select('cat_id','title')->orderBy('title','ASC')->get();
 
  		if($obj_category)
  		{
@@ -113,10 +113,12 @@ class BusinessListingController extends Controller
     }
     public function store(Request $request)
     {
+        //echo'<pre>';
+        //print_r($request->all());exit;
 
         $arr_rules	=	array();
         //business fields
-    	$arr_rules['user_id']='required';
+    	$arr_rules['tmp_user_id']='required';
         $arr_rules['business_name']='required';
         $arr_rules['business_cat']='required';
         $arr_rules['main_image']='required';
@@ -134,10 +136,10 @@ class BusinessListingController extends Controller
         //contact info fields
         $arr_rules['contact_person_name']='required';
         $arr_rules['mobile_number']='required';
-        $arr_rules['landline_number']='required';
+        //$arr_rules['landline_number']='required';
         //$arr_rules['fax_no']='required';
         //$arr_rules['toll_free_number']='required';
-        $arr_rules['email_id']='required';
+        //$arr_rules['email_id']='required';
         //$arr_rules['website']='required';
         //business times
         $arr_rules['mon_in']='required';
@@ -168,7 +170,7 @@ class BusinessListingController extends Controller
             return redirect('/web_admin/business_listing/create')->withErrors($validator)->withInput();
         }
         $form_data=$request->all();
-        $arr_data['user_id']=$form_data['user_id'];
+        $arr_data['user_id']=$form_data['tmp_user_id'];
         $arr_data['is_active']='2';
         $arr_data['business_added_by']=$form_data['business_added_by'];
         $arr_data['business_name']=$form_data['business_name'];
@@ -324,53 +326,25 @@ class BusinessListingController extends Controller
  		$business_public_img_path = $this->business_public_img_path;
         $business_base_upload_img_path =$this->business_public_upload_img_path;
  		$business_data = array();
- 		$obj_category = CategoryModel::get();
+ 		$parent_obj_category = CategoryModel::where('parent','=',0)->select('cat_id','title')->orderBy('title','ASC')->get();
 
- 		if($obj_category)
+ 		if($parent_obj_category)
  		{
- 			$arr_category = $obj_category->toArray();
+ 			$arr_parent_category = $parent_obj_category->toArray();
  		}
+        $obj_category = CategoryModel::orderBy('title','ASC')->get();
+
+        if($obj_category)
+        {
+            $arr_category = $obj_category->toArray();
+        }
  		$obj_user_res = UserModel::where('role','normal')->get();
         if( $obj_user_res != FALSE)
         {
             $arr_user = $obj_user_res->toArray();
         }
 
-        $obj_countries_res = CountryModel::get();
-        if( $obj_countries_res != FALSE)
-        {
-            $arr_country = $obj_countries_res->toArray();
-        }
 
-        $arr_city = array();
-        $obj_city_res = CityModel::get();
-        if($obj_city_res != FALSE)
-        {
-            $arr_city = $obj_city_res->toArray();
-        }
-        $arr_state = array();
-        $obj_state_res = StateModel::get();
-
-        if( $obj_countries_res != FALSE)
-        {
-            $arr_state = $obj_state_res->toArray();
-        }
-        $obj_business_arr=BusinessListingModel::where('id',$id)->get();
-        if( $obj_business_arr != FALSE)
-        {
-            $business = $obj_business_arr->toArray();
-        }
-        if( $business != FALSE)
-        {
-             $arr_place = array();
-
-            $obj_place_res = PlaceModel::where('id',$business[0]['pincode'])->get();
-
-            if( $obj_place_res != FALSE)
-            {
-                $arr_place = $obj_place_res->toArray();
-            }
-        }
         //dd($arr_place);
          $arr_upload_image = array();
         $obj_upload_image_res = BusinessImageUploadModel::where('business_id',$id)->get();
@@ -380,9 +354,9 @@ class BusinessListingController extends Controller
             $arr_upload_image = $obj_upload_image_res->toArray();
         }
 
-        $business_data=BusinessListingModel::with(['category','user_details','city_details','country_details','zipcode_details','state_details','image_upload_details','service','business_times','payment_mode'])->where('id',$id)->get()->toArray();
+        $business_data=BusinessListingModel::with(['category','user_details','image_upload_details','service','business_times','payment_mode'])->where('id',$id)->get()->toArray();
  		//dd($business_data);
-         return view('web_admin.business_listing.edit',compact('page_title','business_data','arr_user','arr_category','business_public_img_path','business_base_upload_img_path','arr_state','arr_place','arr_country','arr_city','arr_upload_image'));
+         return view('web_admin.business_listing.edit',compact('page_title','arr_parent_category','business_data','arr_user','arr_category','business_public_img_path','business_base_upload_img_path','arr_upload_image'));
 
  	}
  	public function update(Request $request,$enc_id)
@@ -391,6 +365,8 @@ class BusinessListingController extends Controller
  		$id	=base64_decode($enc_id);
         $arr_all  = array();
         $arr_all=$request->all();
+      //  echo"<pre>";
+        //print_r($arr_all);exit;
         $business_service=$arr_all['business_service'];
         $payment_mode=$arr_all['payment_mode'];
         //dd($payment_mode);
@@ -400,12 +376,12 @@ class BusinessListingController extends Controller
 
  		$arr_rules['business_name'] = "required";
  		$arr_rules['business_cat'] = "required";
- 		$arr_rules['user_id'] = "required";
+ 		$arr_rules['tmp_user_id'] = "required";
 
         //location fields
-        $arr_rules['building']='required';
-        $arr_rules['street']='required';
-        $arr_rules['landmark']='required';
+        //$arr_rules['building']='required';
+        //$arr_rules['street']='required';
+        //$arr_rules['landmark']='required';
         $arr_rules['area']='required';
         $arr_rules['city']='required';
         $arr_rules['pincode']='required';
@@ -416,10 +392,10 @@ class BusinessListingController extends Controller
         //contact info fields
         $arr_rules['contact_person_name']='required';
         $arr_rules['mobile_number']='required';
-        $arr_rules['landline_number']='required';
+        //$arr_rules['landline_number']='required';
        // $arr_rules['fax_no']='required';
         //$arr_rules['toll_free_number']='required';
-        $arr_rules['email_id']='required';
+       // $arr_rules['email_id']='required';
         //$arr_rules['website']='required';
 
         //business times
@@ -450,7 +426,7 @@ class BusinessListingController extends Controller
 
         if($validator->fails())
         {
-             //print_r( $validator->errors()->all());exit;
+             print_r( $validator->errors()->all());exit;
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -458,7 +434,7 @@ class BusinessListingController extends Controller
         $user=Sentinel::createModel();
 
         $business_data['business_name']      = $request->input('business_name');
-        $business_data['user_id']=$request->input('user_id');
+        $business_data['user_id']=$request->input('tmp_user_id');
 
         $business_category = BusinessCategoryModel::where('business_id',$id);
         $res= $business_category->delete();
