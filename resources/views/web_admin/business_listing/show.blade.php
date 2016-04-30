@@ -79,7 +79,7 @@
 
            {{ csrf_field() }}
            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="business_added_by">Business Added By<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="business_added_by">Business Added By<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
                            name="business_added_by"
@@ -93,7 +93,7 @@
                 </div>
             </div>
            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="user_id">Select User<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="user_id">Select User<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                  <input class="form-control"
                            name="user_id"
@@ -107,7 +107,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="business_name">Business Name<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="business_name">Business Name<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
                            name="business_name"
@@ -122,7 +122,7 @@
             </div>
 
              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="business_cat">Business Categories<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="business_cat">Business Categories<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                 <?php
                 $arr_selected=array();
@@ -155,7 +155,7 @@
             </div>
 
             <div class="form-group">
-                            <label class="col-sm-3 col-lg-2 control-label"> Image <i class="red">*</i> </label>
+                            <label class="col-sm-3 col-lg-2 control-label"> Image <i class="red"></i> </label>
                             <div class="col-sm-9 col-lg-10 controls">
                                <div class="fileupload fileupload-new" data-provides="fileupload">
                                   <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
@@ -169,7 +169,7 @@
                          </div>
 
                          <div class="form-group">
-                            <label class="col-sm-3 col-lg-2 control-label"> Uploded Image <i class="red">*</i> </label>
+                            <label class="col-sm-3 col-lg-2 control-label"> Uploded Image <i class="red"></i> </label>
                             <div class="col-sm-9 col-lg-10 controls">
                                <div class="fileupload fileupload-new" data-provides="fileupload">
                                  @foreach($business['image_upload_details'] as $business_data_img)
@@ -185,7 +185,7 @@
 
                          </div>
              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="building">Building<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="building">Building<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" readonly="true"
                            name="building"
@@ -198,7 +198,7 @@
                 </div>
             </div>
              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="street">Street <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="street">Street <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" readonly="true"
                            name="street"
@@ -211,7 +211,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="landmark">landmark <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="landmark">landmark <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" readonly="true"
                            name="landmark"
@@ -224,7 +224,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="area">Area <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="area">Area <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" readonly="true"
                            name="area"
@@ -237,7 +237,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="city">City <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="city">City <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                   <input class="form-control"
                            name="user_id"
@@ -250,7 +250,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="pincode">Zipcode <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="pincode">Zipcode <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                  <input class="form-control"
                            name="user_id"
@@ -263,7 +263,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="street">State <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="street">State <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                   <input class="form-control"
                            name="user_id"
@@ -276,7 +276,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="street">Country <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="street">Country <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                   <input class="form-control"
                            name="user_id"
@@ -289,7 +289,7 @@
                 </div>
             </div>
              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="contact_person_name">Contact Person Name<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="contact_person_name">Contact Person Name<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" readonly="true"
                            name="contact_person_name"
@@ -302,7 +302,7 @@
                 </div>
             </div>
              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="mobile_number">Mobile Number <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="mobile_number">Mobile Number <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" readonly="true"
                            name="mobile_number"
@@ -315,7 +315,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="landline_number">Landline Number <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="landline_number">Landline Number <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" readonly="true"
                            name="landline_number"
@@ -328,7 +328,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="fax_no">Fax No <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="fax_no">Fax No <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" readonly="true"
                            name="fax_no"
@@ -342,7 +342,7 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="toll_free_number">Toll Free Number<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="toll_free_number">Toll Free Number<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" readonly="true"
                            name="toll_free_number"
@@ -355,7 +355,7 @@
                 </div>
             </div>
               <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="email_id">Email Id <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="email_id">Email Id <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" readonly="true"
                            name="email_id"
@@ -368,7 +368,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="website">Website <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="website">Website <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" readonly="true"
                            name="website"
@@ -390,7 +390,7 @@
             </div>
 
              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" >Monday<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" >Monday<i class="red"></i></label>
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
                         <a class="input-group-addon" href="#">
@@ -412,7 +412,7 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" >Tuesday<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" >Tuesday<i class="red"></i></label>
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
                         <a class="input-group-addon" href="#">
@@ -434,7 +434,7 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" >Wednesday<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" >Wednesday<i class="red"></i></label>
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
                         <a class="input-group-addon" href="#">
@@ -456,7 +456,7 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" >Thursday<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" >Thursday<i class="red"></i></label>
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
                         <a class="input-group-addon" href="#">
@@ -478,7 +478,7 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" >Friday<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" >Friday<i class="red"></i></label>
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
                         <a class="input-group-addon" href="#">
@@ -500,7 +500,7 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" >Saturday<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" >Saturday<i class="red"></i></label>
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
                         <a class="input-group-addon" href="#">
@@ -524,7 +524,7 @@
 
             <div class="form-group">
 
-            <label class="col-sm-3 col-lg-2 control-label" >Sunday<i class="red">*</i></label>
+            <label class="col-sm-3 col-lg-2 control-label" >Sunday<i class="red"></i></label>
 
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
@@ -549,9 +549,10 @@
             <hr/>
 
              <div class="form-group">
-                            <label class="col-sm-3 col-lg-2 control-label"> Payment Modes <i class="red">*</i> </label>
+                            <label class="col-sm-3 col-lg-2 control-label"> Payment Modes <i class="red"></i> </label>
                             <div class="col-sm-9 col-lg-10 controls">
                                <div class="fileupload fileupload-new business_upload_image_" data-provides="fileupload">
+                                 @if(sizeof($business['payment_mode'])>0)
                                  @foreach($business['payment_mode'] as $payment_mode)
 
                                   <div class="fileupload-new img-thumbnail main" style="width: 300px; height: 45px;" data-payment-mode="{{ $payment_mode['title'] }}">
@@ -560,6 +561,9 @@
                                    <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 100px; line-height: 20px;"></div>
 
                                   @endforeach
+                                  @else
+                                  <label>No Business Payment Mode Available</label>
+                                  @endif
                     <div class="error" id="err_delete_service"></div>
 
                                </div>
@@ -571,7 +575,7 @@
 
 
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="company_info">Company Info<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="company_info">Company Info<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <textarea class="form-control" readonly="true"
                            name="company_info"
@@ -583,7 +587,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="keywords">Keywords<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="keywords">Keywords<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <textarea class="form-control"
                            name="keywords" readonly="true"
@@ -595,7 +599,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="youtube_link">Youtube Link<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="youtube_link">Youtube Link<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" readonly="true"
                            name="youtube_link"
@@ -609,9 +613,10 @@
             </div>
             <hr/>
             <div class="form-group">
-                            <label class="col-sm-3 col-lg-2 control-label"> Business Services  <i class="red">*</i> </label>
+                            <label class="col-sm-3 col-lg-2 control-label"> Business Services  <i class="red"></i> </label>
                             <div class="col-sm-9 col-lg-10 controls">
                                <div class="fileupload fileupload-new business_upload_image_" data-provides="fileupload">
+                               @if(sizeof($business['service'])>0)
                                  @foreach($business['service'] as $service)
 
                                   <div class="fileupload-new img-thumbnail main" style="width: 300px; height: 45px;" data-service="{{ $service['name'] }}">
@@ -620,6 +625,9 @@
                                    <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 100px; line-height: 20px;"></div>
 
                                   @endforeach
+                                  @else
+                                  <label>No Business Services Available</label>
+                                  @endif
                     <div class="error" id="err_delete_service"></div>
 
                                </div>
