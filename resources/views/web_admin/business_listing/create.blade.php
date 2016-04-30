@@ -274,7 +274,7 @@
             <div class="form-group" >
                 <label class="col-sm-3 col-lg-2 control-label" for="postal_code">postal code <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                 <input type="text" data-geo="postal_code" value="" id="postal_code" name="postal_code" class="form-control">
+                 <input type="text" data-geo="postal_code" value="" id="pincode" name="pincode" class="form-control">
                   <span class='help-block'>{{ $errors->first('postal code') }}</span>
                 </div>
             </div>

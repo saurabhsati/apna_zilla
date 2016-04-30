@@ -164,6 +164,7 @@ class BusinessListingController extends Controller
 
         if($validator->fails())
         {
+            //print_r($validator->errors()->all());exit;
             return redirect('/web_admin/business_listing/create')->withErrors($validator)->withInput();
         }
         $form_data=$request->all();
@@ -198,14 +199,14 @@ class BusinessListingController extends Controller
 
 
         //location input array
-        $arr_data['building']=$form_data['building'];
-        $arr_data['street']=$form_data['street'];
-        $arr_data['landmark']=$form_data['landmark'];
-        $arr_data['area']=$form_data['area'];
-        $arr_data['city']=$form_data['city'];
-        $arr_data['pincode']=$form_data['pincode'];
-        $arr_data['state']=$form_data['state'];
-        $arr_data['country']=$form_data['country'];
+        $arr_data['building']=$request->input('building');
+        $arr_data['street']=$request->input('street');
+        $arr_data['landmark']=$request->input('landmark');
+        $arr_data['area']=$request->input('area');
+        $arr_data['city']=$request->input('city');
+        $arr_data['pincode']=$request->input('pincode');
+        $arr_data['state']=$request->input('state');
+        $arr_data['country']=$request->input('country');
         $arr_data['lat']=$request->input('lat');
         $arr_data['lng']=$request->input('lng');
         //Contact input array

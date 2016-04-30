@@ -286,6 +286,7 @@
                      <div class="clearfix"></div>
                   </ul>
                   <div class="resp-tabs-container" >
+
                   <div id="review_rank">
                   @if(Session::has('success'))
                           <div class="alert alert-success alert-dismissible">
@@ -332,8 +333,9 @@
                               5%
                            </div>
                         </div>
-                        @if(isset($arr_business_details['reviews']) && sizeof($arr_business_details['reviews'])>0)
-                       <div class="rating_views_main-dv" >
+                       
+                       <div @if(isset($arr_business_details['reviews']) && sizeof($arr_business_details['reviews'])>0) class="rating_views_main-dv" @endif >
+                          @if(isset($arr_business_details['reviews']) && sizeof($arr_business_details['reviews'])>0)
                           @foreach($arr_business_details['reviews'] as $review)
 
                         <div class="testimo-one">
@@ -366,27 +368,14 @@
                         </div>
 
                         @endforeach
+                        @else
+                        <span style="margin-top:15px;display: block;">No Reviews Available.</span>
                         @endif
-                         </div>
+                     </div>    
                      </div>
-                     <div id="review_rating">
-                          <!-- @if(Session::has('success'))
-                          <div class="alert alert-success alert-dismissible">
-                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                              </button>
-                              {{ Session::get('success') }}
-                          </div>
-                        @endif
 
-                        @if(Session::has('error'))
-                          <div class="alert alert-danger alert-dismissible">
-                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                              </button>
-                              {{ Session::get('error') }}
-                          </div>
-                        @endif -->
+                     <div id="review_rating">
+
                         <div class="write-review-main" id="review_id">
                            <div class="write-review-head">
                               Write a Review
@@ -470,13 +459,11 @@
                      <div id="gallery">
                         <div class="gallery_view"  >
                            <div class="gallery">
-                              @if(isset($arr_business_details['image_upload_details']) && $arr_business_details['image_upload_details']!='')
+                              @if(isset($arr_business_details['image_upload_details']) && sizeof($arr_business_details['image_upload_details'])>0)
                               @foreach($arr_business_details['image_upload_details'] as $business_images)
                               <div class="prod_img">
                                  <a href="{{ url('/') }}/uploads/business/business_upload_image/{{$business_images['image_name']}}" class="gal img_inner">
-
-                               <!--   <img src="{{ url('/') }}/uploads/business/business_upload_image/{{$business_images['image_name']}}" alt=""/> -->
-
+                                  <img src="{{ url('/') }}/uploads/business/business_upload_image/{{$business_images['image_name']}}" alt=""/> 
                                  <img src="{{ get_resized_image_path($business_images['image_name'],'uploads/business/business_upload_image',367,464) }}" alt=""/>
                                  </a>
                               </div>
@@ -488,6 +475,9 @@
                            <div class="clr"></div>
                         </div>
                      </div>
+
+
+
                   </div>
                </div>
                <br />
@@ -555,9 +545,6 @@
                      @if(isset($arr_business_details) && sizeof($arr_business_details)>0)
                          <div class="label-text1">{{$arr_business_details['business_name']}}</div>
                          <input type="hidden" id="business_id" name="business_id" value="{{$arr_business_details['id']}}">
-
-
-
                   @endif
                         </div>
                          </div>
@@ -571,8 +558,6 @@
                         </div>
                          </div>
                     </div>
-
-
 
             <div class="user_box_sub">
                            <div class="row">

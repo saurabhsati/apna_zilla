@@ -46,7 +46,7 @@
         @foreach($arr_fav['favourite_businesses'] as $restaurants)
       <div class="product_list_view" >
        <div class="row">
-         <div class="col-sm-3 col-md-3 col-lg-3">
+         <div class="col-sm-4 col-md-4 col-lg-4">
           <div class="product_img">
               <img style="height:100% !important;" src="{{ get_resized_image_path($restaurants['main_image'],$main_image_path,235,300) }}" alt="list product"/>
                @if($restaurants['is_verified']==1)
@@ -54,7 +54,7 @@
         </div>
         </div>
 
-        <div class="col-sm-9 col-md-9 col-lg-9">
+        <div class="col-sm-8 col-md-8 col-lg-8">
           <div class="product_details">
             <div class="product_title">
             <?php

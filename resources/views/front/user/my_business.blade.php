@@ -56,14 +56,15 @@
 
                 <div class="product_list_view">
                 <div class="row">
-                        <div class="col-sm-3 col-md-3 col-lg-3">
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                        
                         <div class="product_img">
                           <img style="height:100% !important;" src="{{ get_resized_image_path($business['main_image'],$main_image_path,235,300) }}" alt="list product"/>
                          @if($business['is_verified']==1)
                             <img class="first-cate-veri" src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>@endif
                         </div>
                      </div>
-                    <div class="col-sm-9 col-md-9 col-lg-9">
+                    <div class="col-sm-8 col-md-8 col-lg-8">
                     <div class="product_details">
                      <?php
                      $category_id='';
@@ -119,9 +120,7 @@
                          <span class=""> Estd.in {{ $business['establish_year'] }} </span></div>
                         <div class="p_details"><i class="fa fa-phone"></i><span>  {{$business['mobile_number']}}, {{$business['landline_number']}}</span></div>
                         <div class="p_details"><i class="fa fa-map-marker"></i> <span>{{$business['building']}}, {{$business['street']}} <br/>
-                        {{$business['landmark']}}, {{$business['area']}} <br/> </span></div>
-                        <div class="p_details">
-                        <!-- <a href="#" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a> -->
+                        {{$business['landmark']}}, {{$business['area']}} <br/> </span>
                         <ul>
                         <!-- <li><a href="#">SMS/Email</a></li>  -->
                         <li><a href="{{ url('/front_users/edit_business_step1/'.base64_encode($business['id'])) }}" >Edit</a></li>
@@ -141,6 +140,10 @@
                         <!-- </form>
                         --> <!-- <li><a href="#" class="lst">Rate This</a></li>         -->
                         </ul>
+                        </div>
+                        <div class="p_details">
+                        <!-- <a href="#" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a> -->
+                        
                         </div>
                         </div>
 

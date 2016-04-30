@@ -503,7 +503,7 @@ body:not(.device-touch) .social-icon i {transition: all 0.3s ease 0s;}
 .sidebar-brand {color: #414141;font-family: "noto_sansregular",sans-serif;font-size: 20px;  padding:9px 13px;}
 .sidebar-nav li a:active{text-decoration:none !important;color:#e6ab2a;}
 .bor_head {background: #6eab40;height: 3px;margin-bottom: 13px;margin-top: 4px;width: 70px;margin-left: 18px;}
-.p_details > span {color: #989898; max-width: 88%;width: 100%;display: inline-block;vertical-align: top;}
+.p_details > span {color: #989898; max-width: 65%;width: 100%;display: inline-block;vertical-align: top;}
 .p_details i { padding-right: 10px; font-size: 18px;vertical-align: bottom;}
 .product_img{position: relative; overflow: hidden; /*height: 228px;*/}
 .product_img > img { max-width: 100%; height: auto !important;}
@@ -1228,6 +1228,37 @@ b.head-t {font-family: "open sans semibold";font-weight: normal;}
     padding: 5px;
     width: 100%;}
 
+
+.og-close::before, .og-close::after {
+    background: #888 none repeat scroll 0 0;
+    content: "";
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    transform: rotate(45deg);
+    width: 100%;
+}
+
+.og-close::after {
+    transform: rotate(-45deg);
+}
+.og-close::before, .og-close::after {
+    background: #888 none repeat scroll 0 0;
+    content: "";
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    transform: rotate(45deg);
+    width: 100%;
+}
+.og-close {
+    cursor: pointer;
+    height: 40px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 40px;
+}
 .social_icon li { border: 0 none;
     color: #888;
     display: inline-block;  padding: 8px 6px 0 0;
