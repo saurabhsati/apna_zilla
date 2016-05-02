@@ -392,6 +392,10 @@
 
 
                     }
+                    else
+                    {
+                      echo "<div >NA</div>";
+                    }
 
 
 
