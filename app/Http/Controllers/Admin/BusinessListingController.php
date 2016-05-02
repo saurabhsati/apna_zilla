@@ -356,8 +356,8 @@ class BusinessListingController extends Controller
  		$id	=base64_decode($enc_id);
         $arr_all  = array();
         $arr_all=$request->all();
-       // echo"<pre>";
-       // print_r($arr_all);exit;
+        /*echo"<pre>";
+        print_r($arr_all);exit;*/
         $business_service=$arr_all['business_service'];
         $payment_mode=$arr_all['payment_mode'];
         //dd($payment_mode);
@@ -417,7 +417,7 @@ class BusinessListingController extends Controller
 
         if($validator->fails())
         {
-             print_r( $validator->errors()->all());exit;
+             //print_r( $validator->errors()->all());exit;
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -544,7 +544,8 @@ class BusinessListingController extends Controller
         
         
 
-
+         /*  echo"<pre>";
+        print_r($business_data);exit;*/
         $business_data=BusinessListingModel::where('id',$id)->update($business_data);
 
          $files = $request->file('business_image');

@@ -133,10 +133,12 @@
                   <th width="" style="text-align:center">Business Image</th>
                   <th width="" style="text-align:center">Business Name</th>
                   <th width="" style="text-align:center">Business Public Id</th>
-                  <th width="" style="text-align:center">Main Category</th>
-                  <th width="" style="text-align:center">Sub Category</th>
                   <th width="" style="text-align:center">Seller First Name</th>
                   <th width="" style="text-align:center">Seller Public ID</th>
+
+                  <th width="" style="text-align:center">Main Category</th>
+                  <th width="" style="text-align:center">Sub Category</th>
+                  
                  <!--  <th style="width:25px;">Mobile No</th> -->
                  <!--  <th>City</th> -->
                   <th width="" style="text-align:center">Reviews</th>
@@ -165,6 +167,8 @@
                     <img src="{{ $business_public_img_path.'/'.$business['main_image']}}" alt=""   style="width:30px; height:30px;" />   </td>
                     <td> {{ $business['business_name'] }} </td>
                      <td> {{ $business['busiess_ref_public_id'] }} </td>
+                     <td> {{ $business['user_details']['first_name'] }} </td>
+                    <td> {{ $business['user_details']['public_id'] }} </td>
                   <td>
                    <?php
                     $categoty=$subcategory=array();
@@ -209,8 +213,7 @@
                   </td>
 
                  <!--    <td> {{ $business['user_details']['title'] }} </td> -->
-                    <td> {{ $business['user_details']['first_name'] }} </td>
-                    <td> {{ $business['user_details']['public_id'] }} </td>
+                    
                     <!--  <td> {{ $business['user_details']['city'] }} </td> -->
 
 
