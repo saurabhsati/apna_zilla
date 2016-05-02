@@ -92,19 +92,20 @@
                     <span class='help-block'>{{ $errors->first('business_added_by') }}</span>
                 </div>
             </div>
-           <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="user_id">Select User<i class="red">*</i></label>
+          <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="user_id">Select User Unique Public Id<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                <select class="form-control"  name="user_id" id="user_id">
-                <option value="">Select User</option>
-                 @if(isset($arr_user) && sizeof($arr_user)>0)
-                 @foreach($arr_user as $user)
-                 <option value="{{ isset($user['id'])?$user['id']:'' }}" {{ $user['id']==$business['user_id']?'selected=selected':'' }}>{{ isset($user['email'] )?$user['email']:'' }}
-                 </option>
-                  @endforeach
-                  @endif
-                  </select>
+                 <input class="form-control"
+                           name="user_id"
+                           id="user_id"
+                           data-rule-required="true"
+                           placeholder="Enter User Public ID"
+                           value="{{ isset($business['user_details']['public_id'] )?$business['user_details']['public_id']:'' }}"
+                           />
+                  <input type="hidden" name="tmp_user_id" id="tmp_user_id" value="{{ isset($business['user_details']['id'] )?$business['user_details']['id']:'' }}">
+
                     <span class='help-block'>{{ $errors->first('user_id') }}</span>
+                     <div class="alert alert-warning">Note: Auto Complete the User Public Id field by typing prefix RNT- </div>
                 </div>
             </div>
             <div class="form-group">
@@ -120,11 +121,11 @@
                     <span class='help-block'>{{ $errors->first('business_name') }}</span>
                 </div>
             </div>
-
+                 <input type="hidden" name="business_public_id" id="business_public_id" value="{{ isset($business['busiess_ref_public_id'])?$business['busiess_ref_public_id']:'' }}">
              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="business_cat">Business Category <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="business_cat_old">Selected Business Category <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                  <select class="form-control" name="business_cat[]" id="business_cat" onchange="updateCategoryOptGroup(this)" multiple="">
+                  <select class="form-control" name="business_cat_old[]" id="business_cat_old" onchange="updateCategoryOptGroup(this)" disabled="true" multiple="">
                      <option> Select Business Category</option>
                       @if(isset($arr_category) && sizeof($arr_category)>0)
                         @foreach($arr_category as $category)
@@ -153,12 +154,50 @@
                           @endif
                         @endforeach
                       @endif
-                  </select><a href="javascript:void(0);" onclick="clearCategoryOptGroup(this)">Clear Selected Option</a>
+                  </select>
                 <span class='help-block'>{{ $errors->first('business_cat') }}</span>
                 </div>
             </div>
+             <div class="form-group">
+             <label class="col-sm-3 col-lg-2 control-label" for="building">
+                           <a href="javascript:void(0);" class="add_new_subcategory">Add New Sub Category </a></label>
+            </div>
+            <div class="add_new_subcategory_div" id="add_new_subcategory_div" style="display:none;">
+            <div class="form-group ">
+              <label class="col-sm-3 col-lg-2 control-label" for="main_business_cat">Business Main Category <i class="red">*</i></label>
+            <div class="col-sm-6 col-lg-4 controls">
+            <select class="form-control" name="main_business_cat" id="main_business_cat" onchange="getSubCategory(this)">
+              <option> Select Business Main Categories</option>
+             @if(isset($arr_parent_category) && sizeof($arr_parent_category)>0)
+             @foreach($arr_parent_category as $parent_category)
+              <option  name="sub_cat" id="sub_cat" value="{{ $parent_category['cat_id'] }}" >
+                             {{ $parent_category['title'] }}
+                              </option>
+              @endforeach
+               @endif
+            </select>
+            </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 col-lg-2 control-label" for="main_business_cat">Business Sub Category <i class="red">*</i></label>
+            <div class="col-sm-6 col-lg-4 controls" id="sub_category_div" name="sub_category_div" style="">
+            <select class="form-control"  id="example-getting-started" name="business_cat[]" multiple="multiple">
+            <option value="">Select Business Sub category </option>
+                 <!--  <option value="cheese">Cheese</option>
+                  <option value="tomatoes">Tomatoes</option>
+                  <option value="mozarella">Mozzarella</option>
+                  <option value="mushrooms">Mushrooms</option>
+                  <option value="pepperoni">Pepperoni</option>
+                  <option value="onions">Onions</option> -->
+              </select>
+              <span class='help-block'>{{ $errors->first('business_cat') }}</span>
+                <div class="alert alert-warning">Note: Firstly Select The Business Main category From Business Main Category Drop-down , Then Click ON None Selected Button  </div>
+            </div>
+
+            </div>
+            </div>
            <div class="form-group">
-                            <label class="col-sm-3 col-lg-2 control-label"> Image <i class="red">*</i> </label>
+                            <label class="col-sm-3 col-lg-2 control-label">  Business Main Banner Image <i class="red">*</i> </label>
                             <div class="col-sm-9 col-lg-10 controls">
                                <div class="fileupload fileupload-new" data-provides="fileupload">
                                   <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
@@ -179,13 +218,15 @@
 
                                   </div>
                                </div>
+                                 <div class="col-sm-6 col-lg-4 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px upto only</div>
+                     
                                 <span class='help-block'>{{ $errors->first('main_image') }}</span>
                                  <!--<br/>
                                  <button class="btn btn-warning" onclick="return show_more_images()" id="show_more_images_button">Do you want to add slider images ? </button>  -->
                             </div>
                          </div>
                           <div class="form-group">
-                            <label class="col-sm-3 col-lg-2 control-label"> Uploded Image <i class="red">*</i> </label>
+                            <label class="col-sm-3 col-lg-2 control-label"> Upload Business Gallery Images <i class="red">*</i> </label>
                             <div class="col-sm-9 col-lg-10 controls">
                                <div class="fileupload fileupload-new business_upload_image_" data-provides="fileupload">
                                  @foreach($business['image_upload_details'] as $image)
@@ -227,7 +268,7 @@
                             </a>
                             </span>
                            </div>
-                              <label class="col-sm-3 col-lg-2 control-label">Add More Business Images <i class="red">*</i> </label>
+                              <label class="col-sm-3 col-lg-2 control-label">Add More Business Gallery Images <i class="red">*</i> </label>
                               <div class="col-sm-6 col-lg-4 controls">
 
                               <input type="file" name="business_image[]" id="business_image" class="pimg"   />
@@ -240,116 +281,92 @@
                              <div id="append" class="class-add"></div>
                               <div class="error_msg" id="error_business_image" ></div>
                               <div class="error_msg" id="error_business_image1" ></div>
-                             <label class="col-sm-3 col-lg-2 control-label"></label>
+                      <label class="col-sm-6 col-lg-12 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px upto only</label>
 
                               </div>
                               </div>
 
-             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="building">Building<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="building"
-                           id="building"
-                           data-rule-required="true"
-                           placeholder="Enter Building"
-                           value="{{ isset($business['building'])?$business['building']:'' }}"
-                           />
-                    <span class='help-block'>{{ $errors->first('building') }}</span>
-                </div>
-            </div>
-             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="street">Street <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="street"
-                           id="street"
-                           data-rule-required="true"
-                           placeholder="Enter Street"
-                           value="{{ isset($business['street'])?$business['street']:'' }}"
-                            />
-                    <span class='help-block'>{{ $errors->first('street') }}</span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="landmark">landmark <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="landmark"
-                           id="landmark"
-                           data-rule-required="true"
-                           placeholder="Enter Landmark"
-                           value="{{ isset($business['landmark'])?$business['landmark']:'' }}"
-                           />
-                    <span class='help-block'>{{ $errors->first('street') }}</span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="area">Area <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
+               <div class="row">
+                <div class="col-md-6 ">
+
+
+                <div class="form-group">
+                <label class="col-sm-3 col-lg-4 control-label" for="area">Area <i class="red">*</i></label>
+                <div class="col-sm-5 col-lg-8 controls">
                     <input class="form-control"
                            name="area"
                            id="area"
                            data-rule-required="true"
                            placeholder="Enter Area"
                            value="{{ isset($business['area'])?$business['area']:'' }}"
-                          onchange="setAddress()"
+
                            />
-                    <span class='help-block'>{{ $errors->first('street') }}</span>
+                    <span class='help-block'>{{ $errors->first('area') }}</span>
                 </div>
-            </div>
-              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="street">Country <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                <select class="form-control" name="country" id="country" onchange="loadStates(this)" >
-                 @if(isset($arr_country) && sizeof($arr_country)>0)
-                   @foreach($arr_country as $country)
-                <option value="{{ isset($country['id'])?$country['id']:'' }}" {{ $business['country']==$country['id']?'selected="selected"':'' }}>{{ isset($country['country_name'])?$country['country_name']:'' }}
-                </option>
-                @endforeach
-                 @endif
-                </select>
-                   <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
-            </div>
+
+
+
+
+            <div class="geo-details">
              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="street">State <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                 <select class="form-control"  name="state" id="state" tabindex="1" onchange="loadCity(this)">
-                 @if(isset($arr_state) && sizeof($arr_state)>0)
-                   @foreach($arr_state as $state)
-                <option value="{{ isset($state['id'])?$state['id']:'' }}" {{ $business['state']==$state['id']?'selected="selected"':'' }}>{{ isset($state['state_title'])?$state['state_title']:'' }}
-                </option>
-                @endforeach
-                @endif
-                </select>
-                 <span class='help-block'>{{ $errors->first('street') }}</span>
-                </div>
-            </div>
-             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="city">City <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                 <select class="form-control"  name="city" id="city" onchange="loadpostalcode(this)">
-                 @if(isset($arr_city) && sizeof($arr_city)>0)
-                   @foreach($arr_city as $city)
-                <option value="{{ isset($city['id'])?$city['id']:'' }}" {{ $business['city']==$city['id']?'selected="selected"':'' }}>{{ isset($city['city_title'])?$city['city_title']:'' }}
-                </option>
-                @endforeach
-                @endif
-                </select>
-                  <span class='help-block'>{{ $errors->first('city') }}</span>
+                <label class="col-sm-3 col-lg-4 control-label" for="country">Country <i class="red">*</i></label>
+                <div class="col-sm-5 col-lg-8 controls">
+                <input type="text" data-geo="country" value="{{ isset($business['country'])?$business['country']:'' }}" id="country" name="country" class="form-control">
+                   <span class='help-block'>{{ $errors->first('country') }}</span>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="pincode">Zipcode <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                <select class="form-control"  name="pincode" id="pincode">
-                 <option value="{{ isset($arr_place[0]['id'])?$arr_place[0]['id']:'' }}" >{{ isset($arr_place[0]['postal_code'])?$arr_place[0]['postal_code']:'' }}
-                </option>
-                </select>
-                    <span class='help-block'>{{ $errors->first('street') }}</span>
+                <label class="col-sm-3 col-lg-4 control-label" for="state">State <i class="red">*</i></label>
+                <div class="col-sm-5 col-lg-8 controls">
+                <input type="text" data-geo="administrative_area_level_1" value="{{ isset($business['state'])?$business['state']:'' }}" id="state" name="state" class="form-control">
+                  <span class='help-block'>{{ $errors->first('state') }}</span>
                 </div>
             </div>
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-4 control-label" for="city">City <i class="red">*</i></label>
+                <div class="col-sm-5 col-lg-8 controls">
+                 <input type="text" data-geo="administrative_area_level_2" value="{{ isset($business['city'])?$business['city']:'' }}" id="city" name="city" class="form-control">
+                  <span class='help-block'>{{ $errors->first('city') }}</span>
+                </div>
+            </div>
+
+            <div class="form-group" ><!-- style="display:none;" -->
+                <label class="col-sm-3 col-lg-4 control-label" for="lat">Latitude <i class="red">*</i></label>
+                <div class="col-sm-5 col-lg-8 controls">
+                 <input type="text" data-geo="lat" value="{{ isset($business['lat'])?$business['lat']:'' }}" id="lat" name="lat" class="form-control">
+                  <span class='help-block'>{{ $errors->first('lat') }}</span>
+                </div>
+            </div>
+            <div class="form-group" ><!-- style="display:none;" -->
+                <label class="col-sm-3 col-lg-4 control-label" for="lng">Longitude <i class="red">*</i></label>
+                <div class="col-sm-5 col-lg-8 controls">
+                 <input type="text" data-geo="lng" value="{{ isset($business['lng'])?$business['lng']:'' }}" id="lng" name="lng" class="form-control">
+                  <span class='help-block'>{{ $errors->first('lng') }}</span>
+                </div>
+            </div>
+            <div class="form-group" >
+                <label class="col-sm-3 col-lg-4 control-label" for="postal_code">Pin-code <i class="red">*</i></label>
+                <div class="col-sm-5 col-lg-8 controls">
+                 <input type="text" data-geo="postal_code" value="{{ isset($business['pincode'])?$business['pincode']:'' }}" id="pincode" name="pincode" class="form-control">
+                  <span class='help-block'>{{ $errors->first('postal code') }}</span>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 ">
+             <div class="form-group">
+                <label class="col-md-3 col-lg-2 control-label" for="map_location">Map Location<i class="red">*</i></label>
+                <div class="col-sm-5 col-lg-8 controls">
+                   <div id="business_location_map" style="height:400px"></div>
+
+                    <label>Note: Click On the Map to Pick Nearby Custom Location </label>
+                    <div>
+                    <a id="reset" href="#" style="display:none;">Reset Marker</a></div>
+                </div></div>
+        </div>
+        </div>
 
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="contact_person_name">Contact Person Name<i class="red">*</i></label>
@@ -378,12 +395,12 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="landline_number">Landline Number <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="landline_number">Landline Number <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
                            name="landline_number"
                            id="landline_number"
-                           data-rule-required="true"
+                           data-rule-required=""
                            placeholder="Enter Landline Number"
                            value="{{ isset($business['landline_number'])?$business['landline_number']:'' }}"
                            />
@@ -391,12 +408,12 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="fax_no">Fax No <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="fax_no">Fax No <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
                            name="fax_no"
                            id="fax_no"
-                           data-rule-required="true"
+                           data-rule-required=""
                            placeholder="Enter Fax No"
                            value="{{ isset($business['fax_no'])?$business['fax_no']:'' }}"
                            />
@@ -405,12 +422,12 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="toll_free_number">Toll Free Number<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="toll_free_number">Toll Free Number<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
                            name="toll_free_number"
                            id="toll_free_number"
-                           data-rule-required="true"
+                           data-rule-required=""
                            placeholder="Enter Toll Free Number"
                            value="{{ isset($business['toll_free_number'])?$business['toll_free_number']:'' }}"
                            />
@@ -418,12 +435,12 @@
                 </div>
             </div>
               <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="email_id">Email Id <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="email_id">Email Id <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
                            name="email_id"
                            id="email_id"
-                           data-rule-required="true"
+                           data-rule-required=""
                            placeholder="Enter Email Id"
                            value="{{ isset($business['email_id'])?$business['email_id']:'' }}"
                            />
@@ -431,12 +448,12 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="website">Website <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="website">Website <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
                            name="website"
                            id="website"
-                           data-rule-required="true"
+                           data-rule-required=""
                            placeholder="Enter Website"
                            value="{{ isset($business['website'])?$business['website']:'' }}"
                            />
@@ -445,17 +462,7 @@
             </div>
 
 
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="map_location">Map Location<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input type="hidden" name="lat" value="{{ isset($business['lat'])?$business['lat']:'' }}" id="lat" />
-                    <input type="hidden" name="lng" value="{{ isset($business['lng'])?$business['lng']:'' }}" id="lng"/>
-
-                    <div id="business_location_map" style="height:400px"></div>
-                    <label>Note: Click On the Map to Pick Nearby Custom Location </label>
-                </div>
-            </div>
-
+          
             <hr/>
 
             <div class="form-group">
@@ -723,12 +730,12 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="youtube_link">Youtube Link<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="youtube_link">Youtube Link<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
                            name="youtube_link"
                            id="youtube_link"
-                           data-rule-required="true"
+                           data-rule-required=""
                            placeholder="Enter Youtube Link"
                            value="{{ isset($business['youtube_link'])?$business['youtube_link']:'' }}"
                            />
@@ -777,7 +784,7 @@
                             </a>
                             </span>
                            </div>
-                              <label class="col-sm-3 col-lg-2 control-label">Add More Business Services <i class="red">*</i> </label>
+                              <label class="col-sm-3 col-lg-2 control-label">Add More Business Services <i class="red"></i> </label>
                               <div class="col-sm-6 col-lg-4 controls">
 
                               <input class="form-control" type="text" name="business_service[]" id="business_service" class="pimg"   />
@@ -918,35 +925,7 @@ $('.add_more').click(function()
       return false;
 });
 
-function updateCategoryOptGroup(ref)
-{
-  var arr_optgroup_ref = $(ref).find('optgroup');
-  var current_option_grp =$(ref).find("option:selected").parent('optgroup');
 
-  $.each(arr_optgroup_ref,function(index,optgroup)
-  {
-    if($(optgroup).attr('label')!=$(current_option_grp).attr('label'))
-    {
-      $(optgroup).attr('disabled','disabled');
-    }
-    else
-    {
-      $(optgroup).removeAttr('disabled');
-    }
-
-
-  });
-
-}
-function clearCategoryOptGroup()
-{
-  var arr_optgroup_ref = $('#business_cat').find('optgroup');
-    $.each(arr_optgroup_ref,function(index,optgroup)
-  {
-          $(optgroup).removeAttr('disabled');
-
-  });
-}
 $('.add_serc').click(function()
 {
       $(".add_more_service").removeAttr("style");
@@ -1035,254 +1014,152 @@ $('#remove-payment').click(function()
 </script>
 
 <script type="text/javascript">
+ var url = "{{ url('/') }}";
+ $(document).ready(function()
+{
+ var site_url="{{url('/')}}";
+ var csrf_token = "{{ csrf_token() }}";
+ var sales_user_public_id="{{Session::get('public_id')}}";
+ $("#user_id").autocomplete(
+          {
+            minLength:3,
+            source:site_url+"/web_admin/common/get_sales_user_public_id/"+sales_user_public_id,
+            search: function( event, ui )
+            {
+             /* if(category==false)
+              {
+                  alert("Select Category First");
+                  event.preventDefault();
+                  return false;
+              }*/
+            },
+            select:function(event,ui)
+            {
+               //$("input[name=user_id]").attr('value',ui.item.user_id);
+              $("#user_id").attr('value',ui.item.user_id);
+              $("#tmp_user_id").attr('value',ui.item.user_id);
 
-    var  map;
-    var ref_input_lat = $('#lat');
-    var ref_input_lng = $('#lng');
-
-    function setMapLocation(address)
-    {
-
-        geocoder.geocode({'address': address}, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK)
+              // $("#user_id").val(ui.item.user_id);
+             },
+            response: function (event, ui)
             {
 
-                map.setCenter(results[0].geometry.location);
-
-                $(ref_input_lat).val(results[0].geometry.location.lat().toFixed(6));
-                $(ref_input_lng).val(results[0].geometry.location.lng().toFixed(6));
-
-                var latlong = "(" + results[0].geometry.location.lat().toFixed(6) + ", " +
-                        +results[0].geometry.location.lng().toFixed(6)+ ")";
-
-
-
-                marker.setPosition(results[0].geometry.location);
-                map.setZoom(16);
-                infowindow.setContent(results[0].formatted_address);
-
-                if (infowindow) {
-                    infowindow.close();
-                }
-
-                google.maps.event.addListener(marker, 'click', function() {
-                    infowindow.open(map, marker);
-                });
-
-                infowindow.open(map, marker);
-
-            } else {
-                alert("Lat and long cannot be found.");
             }
+            }).data("ui-autocomplete")._renderItem = function (ul, item)
+            {
+                 return $("<li></li>")
+                 .data("item.autocomplete", item)
+                 .append( item.label +'<span style="color:#7b7b7b"> '+item.span+'</span>')
+                 .appendTo(ul);
+           };
+});
+</script>
+
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
+<script src="{{ url('/') }}/assets/front/js/jquery.geocomplete.min.js"></script>
+<script>
+
+$(function () {
+
+ var location =$("input[name=area]").val();
+
+  $("#area").geocomplete({
+    details: ".geo-details",
+    detailsAttribute: "data-geo",
+    map: "#business_location_map",
+    location: location,
+    types: ["geocode", "establishment"],
+    markerOptions: {
+            draggable: true
+          }
+  });
+
+$("#area").bind("geocode:dragged", function(event, latLng){
+          $("input[name=lat]").val(latLng.lat());
+          $("input[name=lng]").val(latLng.lng());
+          $("#reset").show();
         });
-    }
-    function initializeMap()
-    {
-         var street = $('#street').val();
-         var area = $('#area').val();
-         var city = $('#city option:selected').text();
-         var state = $('#state option:selected').text();
-         var country = $('#country option:selected').text();
-         var addr = street+", "+area+", "+city+", "+state+", "+country;
-         var latlng = new google.maps.LatLng($(ref_input_lat).val(), $(ref_input_lng).val());
-         var myOptions = {
-             zoom: 18,
-             center: latlng,
-             panControl: true,
-             scrollwheel: true,
-             scaleControl: true,
-             overviewMapControl: true,
-             disableDoubleClickZoom: false,
-             overviewMapControlOptions: {
-                 opened: true
-             },
-             mapTypeId: google.maps.MapTypeId.HYBRID
-         };
-         map = new google.maps.Map(document.getElementById("business_location_map"),
-             myOptions);
-         geocoder = new google.maps.Geocoder();
-         marker = new google.maps.Marker({
-             position: latlng,
-             map: map
-         });
-
-         map.streetViewControl = false;
-         infowindow = new google.maps.InfoWindow({
-             content: addr
-         });
-
-        /* google.maps.event.addListener(map, 'click', function(event) {
-             marker.setPosition(event.latLng);
-
-             var yeri = event.latLng;
-
-             var latlongi = "(" + yeri.lat().toFixed(6) + ", " + yeri.lng().toFixed(6) + ")";
-
-             infowindow.setContent(latlongi);
-
-             $(ref_input_lat).val(yeri.lat().toFixed(6));
-             $(ref_input_lng).val(yeri.lng().toFixed(6));
-
-         });*/
-          google.maps.event.addListener(marker, 'click', function() {
-            infowindow.open(map,marker);
-          });
-         google.maps.event.addListener(map, 'mousewheel', function(event, delta) {
-
-             console.log(delta);
-         });
 
 
-     }
+        $("#reset").click(function(){
+          $("#area").geocomplete("resetMarker");
+          $("#reset").hide();
+          return false;
+        });
+});
 
-    function loadScript()
-    {
-            var script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = 'https://maps.googleapis.com/maps/api/js?sensor=false&' +
-                    'callback=initializeMap';
-            document.body.appendChild(script);
-    }
+function getSubCategory(ref)
+{
+   var main_cat_id =$(ref).find("option:selected").val();
+   var categCheck  = $('#example-getting-started').multiselect
+                      ({
+                         includeSelectAllOption: true,
+                         enableFiltering : true
+                      });
+    jQuery.ajax({
+                        url:url+'/web_admin/common/get_subcategory/'+main_cat_id,
+                        type:'GET',
+                        data:'flag=true',
+                        dataType:'json',
+                        beforeSend:function()
+                        {
 
-    window.onload = loadScript;
+                        },
+                        success:function(response)
+                        {
+                           jQuery(response.arr_main_cat).each(function(index,arr_main_cat)
+                                   {
+                                          $("#business_public_id").attr('value',arr_main_cat.cat_ref_slug);
+                                   });
+                          var option = '';
+                            if(response.status=="SUCCESS")
+                            {
+                                if(typeof(response.arr_sub_cat) == "object")
+                                {
+                                   var option = '';
+                                   jQuery(response.arr_sub_cat).each(function(index,arr_sub_cat)
+                                   {
+                                    option+='<option value="'+arr_sub_cat.cat_id+'">'+arr_sub_cat.title+'</option>';
 
-    /* Autcomplete Code */
+                                   });
+                                   categCheck.html(option);
+                                   categCheck.multiselect('rebuild');
 
-    function setMarkerTo(lat,lon,place)
-    {
-        var location = new google.maps.LatLng(lat,lng)
-        map.setCenter(location);
-        $(ref_input_lat).val = lat;
-        $(ref_input_lng).val = lng;
-        marker.setPosition(location);
-        map.setZoom(16);
-    }
+                                }
+                            }
+                             else
+                            {
+                                //$(".multiselect-container").css("display",'none');
+                                categCheck.html('<option value=""></option>');
+                                $(".multiselect-selected-text").html("No Sub Category Available !");
+                            }
+                            return false;
+                        }
+        });
 
-    function setAddress()
-    {
-        var street = $('#street').val();
-         var area = $('#area').val();
-         var city = $('#city option:selected').text();
-         var state = $('#state option:selected').text();
-         var country = $('#country option:selected').text();
-
-        var addr = street+", "+area+", "+city+", "+state+", "+country;
-
-        setMapLocation(addr);
-    }
-
- /*   $('#street').onchange(function (){
-      setAddress()
-    });*/
-
+}
+ $('.add_new_subcategory').click(function(){
+ $(".add_new_subcategory_div").css('display','block');
+     return false;
+});
 </script>
 <script type="text/javascript">
- var url = "{{ url('/') }}";
-    function loadStates(ref)
-     {
-        var selected_country = jQuery(ref).val();
-
-        jQuery.ajax({
-                        url:url+'/web_admin/common/get_states/'+selected_country,
-                        type:'GET',
-                        data:'flag=true',
-                        dataType:'json',
-                        beforeSend:function()
-                        {
-                            jQuery('select[name="state"]').attr('disabled','disabled');
-                        },
-                        success:function(response)
-                        {
-
-                            if(response.status=="SUCCESS")
-                            {
-                                jQuery('select[name="state"]').removeAttr('disabled');
-                                if(typeof(response.arr_state) == "object")
-                                {
-                                   var option = '<option value="">Select</option>';
-                                   jQuery(response.arr_state).each(function(index,states)
-                                   {
-
-                                        option+='<option value="'+states.id+'">'+states.state_title+'</option>';
-                                   });
-
-                                   jQuery('select[name="state"]').html(option);
-                                }
-                            }
-                            return false;
-                        }
-        });
-     }
-     function loadCity(ref)
-     {
-        var selected_state = jQuery(ref).val();
-
-        jQuery.ajax({
-                        url:url+'/web_admin/common/get_cities/'+selected_state,
-                        type:'GET',
-                        data:'flag=true',
-                        dataType:'json',
-                        beforeSend:function()
-                        {
-                            jQuery('select[name="city"]').attr('disabled','disabled');
-                        },
-                        success:function(response)
-                        {
-
-                            if(response.status=="SUCCESS")
-                            {
-                                jQuery('select[name="city"]').removeAttr('disabled');
-                                if(typeof(response.arr_city) == "object")
-                                {
-                                   var option = '<option value="">Select</option>';
-                                   jQuery(response.arr_city).each(function(index,city)
-                                   {
-
-                                        option+='<option value="'+city.id+'">'+city.city_title+'</option>';
-                                   });
-
-                                   jQuery('select[name="city"]').html(option);
-                                }
-                            }
-                            return false;
-                        }
-        });
-     }
-      function loadpostalcode(ref)
-     {
-        var selected_city = jQuery(ref).val();
-
-        jQuery.ajax({
-                        url:url+'/web_admin/common/get_postalcode/'+selected_city,
-                        type:'GET',
-                        data:'flag=true',
-                        dataType:'json',
-                        beforeSend:function()
-                        {
-                            jQuery('select[name="pincode"]').attr('disabled','disabled');
-                        },
-                        success:function(response)
-                        {
-
-                            if(response.status=="SUCCESS")
-                            {
-                                jQuery('select[name="pincode"]').removeAttr('disabled');
-                                if(typeof(response.arr_postalcode) == "object")
-                                {
-                                   var option = '<option value="">Select</option>';
-                                   jQuery(response.arr_postalcode).each(function(index,postalcode)
-                                   {
-
-                                        option+='<option value="'+postalcode.id+'">'+postalcode.postal_code+'</option>';
-                                   });
-
-                                   jQuery('select[name="pincode"]').html(option);
-                                }
-                            }
-                            return false;
-                        }
-        });
-     }
+    $(document).ready(function()
+    {
+        tinymce.init({
+          selector: 'textarea',
+          height:200,
+          plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table contextmenu paste code'
+          ],
+          toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+          content_css: [
+            '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
+            '//www.tinymce.com/css/codepen.min.css'
+          ]
+        });  
+    });
 </script>
-
 @stop

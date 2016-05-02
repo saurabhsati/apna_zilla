@@ -71,6 +71,7 @@ class SalesAccountController extends Controller
         foreach($record as $sales_user)
         {
             $public_id = $sales_user['public_id'];
+            $first_name = $sales_user['first_name'];
         }
 
 
@@ -92,6 +93,7 @@ class SalesAccountController extends Controller
                         if(Sentinel::inRole($role))
                         {
                             Session::put('public_id', $public_id);
+                            Session::put('first_name', $first_name);
                             return redirect('sales_user/dashboard');
                         }
                         else

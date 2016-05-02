@@ -90,26 +90,8 @@ class BusinessListingController extends Controller
  			$arr_category = $obj_category->toArray();
  		}
 
-        $obj_countries_res = CountryModel::get();
-        if( $obj_countries_res != FALSE)
-        {
-            $arr_country = $obj_countries_res->toArray();
-        }
-
-        $arr_city = array();
-        $obj_city_res = CityModel::get();
-        if($obj_city_res != FALSE)
-        {
-            $arr_city = $obj_city_res->toArray();
-        }
-        $arr_state = array();
-        $obj_state_res = StateModel::get();
-
-        if( $obj_countries_res != FALSE)
-        {
-            $arr_state = $obj_state_res->toArray();
-        }
-        return view('web_admin.business_listing.create',compact('page_title','arr_user','arr_category','arr_country','arr_city','arr_state'));
+       
+        return view('web_admin.business_listing.create',compact('page_title','arr_user','arr_category'));
     }
     public function store(Request $request)
     {
@@ -133,6 +115,9 @@ class BusinessListingController extends Controller
         $arr_rules['pincode']='required';
         $arr_rules['state']='required';
         $arr_rules['country']='required';
+        $arr_rules['lat']='required';
+        $arr_rules['lng']='required';
+
         //contact info fields
         $arr_rules['contact_person_name']='required';
         $arr_rules['mobile_number']='required';

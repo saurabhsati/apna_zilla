@@ -262,21 +262,21 @@
             </div>
 
             <div class="form-group" ><!-- style="display:none;" -->
-                <label class="col-sm-3 col-lg-4 control-label" for="lat">Lat <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-4 control-label" for="lat">Latitude <i class="red">*</i></label>
                 <div class="col-sm-5 col-lg-8 controls">
                  <input type="text" data-geo="lat" value="" id="lat" name="lat" class="form-control">
                   <span class='help-block'>{{ $errors->first('lat') }}</span>
                 </div>
             </div>
             <div class="form-group" ><!-- style="display:none;" -->
-                <label class="col-sm-3 col-lg-4 control-label" for="lng">lng <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-4 control-label" for="lng">Longitude <i class="red">*</i></label>
                 <div class="col-sm-5 col-lg-8 controls">
                  <input type="text" data-geo="lng" value="" id="lng" name="lng" class="form-control">
                   <span class='help-block'>{{ $errors->first('lng') }}</span>
                 </div>
             </div>
             <div class="form-group" >
-                <label class="col-sm-3 col-lg-4 control-label" for="postal_code">postal code <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-4 control-label" for="postal_code">Pin-code <i class="red">*</i></label>
                 <div class="col-sm-5 col-lg-8 controls">
                  <input type="text" data-geo="postal_code" value="" id="pincode" name="pincode" class="form-control">
                   <span class='help-block'>{{ $errors->first('postal code') }}</span>
@@ -367,13 +367,13 @@
                 </div>
             </div>
               <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="email_id">Email Id <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="email_id">Email Id <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
                            name="email_id"
                            id="email_id"
                            data-rule-required=""
-                           data-rule-email="true"
+                           data-rule-email=""
                            placeholder="Enter Email Id"
                            value=""
                            />
@@ -974,6 +974,10 @@ function getSubCategory(ref)
 
 }
 
+</script>
+<script type="text/javascript">
+    tinymce.init({ selector:'textarea' });
+    //tinymce.init('#page_desc');
 </script>
 
 @stop

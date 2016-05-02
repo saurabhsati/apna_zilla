@@ -72,6 +72,57 @@ class CountryController extends Controller
         }
 
     }
+    public function get_sales_user_public_id(Request $request,$sales_user_public_id)
+    {
+        if($request->has('term'))
+        {
+            $search_term='';
+            $search_term = $request->input('term');
+            $sales_user_public_id = $sales_user_public_id;
+            /*List category by keyword*/
+            $arr_obj_list = UserModel::where('role','=','normal')
+                                           ->where('is_active','=',1)
+                                           ->where('sales_user_public_id','=',$sales_user_public_id)
+                                            ->where(function ($query) use ($search_term) {
+                                             $query->where("public_id", 'like', "%".$search_term."%");
+
+                                             })->get();
+             if($arr_obj_list != FALSE)
+                {
+
+                            $arr_list = $arr_obj_list->toArray();
+                            $arr_final_list = array();
+                            if(sizeof($arr_list)>0)
+                            {
+                                foreach ($arr_list as $key => $user)
+                                {
+                                    $arr_final_list[$key]['user_id'] = $user['id'];
+                                    $arr_final_list[$key]['label'] = $user['public_id'];
+                                    $arr_final_list[$key]['span'] = 'Refer to - '.$user['first_name'];
+
+
+                                    $key++;
+                                }
+                            }
+
+                }
+
+                if(sizeof($arr_final_list)>0)
+                {
+                     return response()->json($arr_final_list);
+                }
+                else
+                {
+                     return response()->json(array());
+                }
+
+        }
+         else
+        {
+           return response()->json(array());
+        }
+
+    }
 
     public function get_states($country_id)
     {

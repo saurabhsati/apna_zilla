@@ -54,7 +54,13 @@
         <!-- End -->
         <!-- Datepicker css -->
         <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/bootstrap-datepicker/css/datepicker.css" />
-
+        <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+        <!-- Auto Complete css -->
+           <link rel="stylesheet" href="{{ url('/') }}/assets/front/css/jquery-ui.css" type="text/css"/>
+           <script src="{{ url('/') }}/assets/front/js/jquery-ui.js" type='text/javascript'></script>
+           <!-- Multi select  -->
+           <script src="{{ url('/') }}/assets/front/js/bootstrap-multiselect.js" type='text/javascript'></script>
+          <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/front/css/bootstrap-multiselect.css" />
     </head>
     <body>
 

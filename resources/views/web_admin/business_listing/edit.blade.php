@@ -197,7 +197,7 @@
             </div>
             </div>
               <div class="form-group">
-                  <label class="col-sm-3 col-lg-2 control-label"> Image <i class="red">*</i> </label>
+                  <label class="col-sm-3 col-lg-2 control-label"> Business Main Banner Image<i class="red">*</i> </label>
                   <div class="col-sm-9 col-lg-10 controls">
                      <div class="fileupload fileupload-new" data-provides="fileupload">
                         <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
@@ -228,7 +228,7 @@
 
 
                           <div class="form-group">
-                            <label class="col-sm-3 col-lg-2 control-label"> Uploded Image <i class="red">*</i> </label>
+                            <label class="col-sm-3 col-lg-2 control-label">Upload Business Gallery Images<i class="red">*</i> </label>
                             <div class="col-sm-9 col-lg-10 controls">
                                <div class="fileupload fileupload-new business_upload_image_" data-provides="fileupload">
                                  @foreach($business['image_upload_details'] as $image)
@@ -283,7 +283,7 @@
                              <div id="append" class="class-add"></div>
                               <div class="error_msg" id="error_business_image" ></div>
                               <div class="error_msg" id="error_business_image1" ></div>
-                             <label class="col-sm-6 col-lg-12 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px upto only</label>
+                            <label class="col-sm-6 col-lg-12 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px upto only</label>
 
                               </div>
                               </div>
@@ -333,21 +333,21 @@
             </div>
 
             <div class="form-group" ><!-- style="display:none;" -->
-                <label class="col-sm-3 col-lg-4 control-label" for="lat">Lat <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-4 control-label" for="lat">Latitude <i class="red">*</i></label>
                 <div class="col-sm-5 col-lg-8 controls">
                  <input type="text" data-geo="lat" value="{{ isset($business['lat'])?$business['lat']:'' }}" id="lat" name="lat" class="form-control">
                   <span class='help-block'>{{ $errors->first('lat') }}</span>
                 </div>
             </div>
             <div class="form-group" ><!-- style="display:none;" -->
-                <label class="col-sm-3 col-lg-4 control-label" for="lng">lng <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-4 control-label" for="lng">Longitude <i class="red">*</i></label>
                 <div class="col-sm-5 col-lg-8 controls">
                  <input type="text" data-geo="lng" value="{{ isset($business['lng'])?$business['lng']:'' }}" id="lng" name="lng" class="form-control">
                   <span class='help-block'>{{ $errors->first('lng') }}</span>
                 </div>
             </div>
             <div class="form-group" >
-                <label class="col-sm-3 col-lg-4 control-label" for="postal_code">postal code <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-4 control-label" for="postal_code">Pin-code <i class="red">*</i></label>
                 <div class="col-sm-5 col-lg-8 controls">
                  <input type="text" data-geo="postal_code" value="{{ isset($business['pincode'])?$business['pincode']:'' }}" id="pincode" name="pincode" class="form-control">
                   <span class='help-block'>{{ $errors->first('postal code') }}</span>
@@ -1020,9 +1020,6 @@ $('#remove-payment').click(function()
 </script>
 
 <script type="text/javascript">
- var  map;
- var ref_input_lat = $('#lat');
- var ref_input_lng = $('#lng');
 
  $("#user_id").autocomplete(
           {
@@ -1051,92 +1048,8 @@ $('#remove-payment').click(function()
                  .appendTo(ul);
                  };
 
-
-    function initializeMap()
-    {
-        var area = $('#area').val();
-
-         var latlng = new google.maps.LatLng($(ref_input_lat).val(), $(ref_input_lng).val());
-         var myOptions = {
-             zoom: 18,
-             center: latlng,
-             panControl: true,
-             scrollwheel: true,
-             scaleControl: true,
-             overviewMapControl: true,
-             disableDoubleClickZoom: false,
-             overviewMapControlOptions: {
-                 opened: true
-             },
-             mapTypeId: google.maps.MapTypeId.HYBRID
-         };
-         map = new google.maps.Map(document.getElementById("business_location_map"),
-             myOptions);
-         geocoder = new google.maps.Geocoder();
-         marker = new google.maps.Marker({
-             position: latlng,
-             map: map
-         });
-
-         map.streetViewControl = false;
-         infowindow = new google.maps.InfoWindow({
-             content: area
-         });
-
-        /* google.maps.event.addListener(map, 'click', function(event) {
-             marker.setPosition(event.latLng);
-
-             var yeri = event.latLng;
-
-             var latlongi = "(" + yeri.lat().toFixed(6) + ", " + yeri.lng().toFixed(6) + ")";
-
-             infowindow.setContent(latlongi);
-
-             $(ref_input_lat).val(yeri.lat().toFixed(6));
-             $(ref_input_lng).val(yeri.lng().toFixed(6));
-
-         });*/
-        google.maps.event.addListener(marker, 'click', function() {
-            infowindow.open(map,marker);
-          });
-         google.maps.event.addListener(map, 'mousewheel', function(event, delta) {
-
-             console.log(delta);
-         });
-
-
-     }
-
-    function loadScript()
-    {
-            var script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = 'https://maps.googleapis.com/maps/api/js?sensor=false&' +
-                    'callback=initializeMap';
-            document.body.appendChild(script);
-    }
-
-    //window.onload = loadScript;
-
-    /* Autcomplete Code */
-
-    function setMarkerTo(lat,lon,place)
-    {
-        var location = new google.maps.LatLng(lat,lng)
-        map.setCenter(location);
-        $(ref_input_lat).val = lat;
-        $(ref_input_lng).val = lng;
-        marker.setPosition(location);
-        map.setZoom(16);
-    }
-
-
-
 </script>
-<script type="text/javascript">
- var url = "{{ url('/') }}";
 
-</script>
 
 <script type="text/javascript">
  var url = "{{ url('/') }}";
@@ -1229,4 +1142,9 @@ function getSubCategory(ref)
      return false;
 });
 </script>
+<script type="text/javascript">
+    tinymce.init({ selector:'textarea' });
+    //tinymce.init('#page_desc');
+</script>
+
 @stop
