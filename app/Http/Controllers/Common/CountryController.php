@@ -103,8 +103,12 @@ class CountryController extends Controller
     {
         $arr_state = array();
         $arr_response = array();
-
-       $obj_category = CategoryModel::where('parent',$main_cat_id)->select('cat_id','title')->get();
+        $obj_main__category = CategoryModel::where('cat_id',$main_cat_id)->select('cat_id','cat_ref_slug')->first();
+        if($obj_main__category != FALSE)
+        {
+            $arr_main_cat =  $obj_main__category->toArray();
+        }
+        $obj_category = CategoryModel::where('parent',$main_cat_id)->select('cat_id','title')->get();
 
         if($obj_category != FALSE)
         {
@@ -115,11 +119,14 @@ class CountryController extends Controller
         {
             $arr_response['status'] ="SUCCESS";
             $arr_response['arr_sub_cat'] = $arr_sub_cat;
+            $arr_response['arr_main_cat'] = $arr_main_cat;
+
         }
         else
         {
             $arr_response['status'] ="ERROR";
             $arr_response['arr_sub_cat'] = array();
+            $arr_response['arr_main_cat'] = $arr_main_cat;
         }
         return response()->json($arr_response);
     }

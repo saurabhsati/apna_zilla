@@ -124,6 +124,7 @@
                     <span class='help-block'>{{ $errors->first('business_name') }}</span>
                 </div>
             </div>
+              <input type="hidden" name="business_public_id" id="business_public_id">
              <div class="form-group">
               <label class="col-sm-3 col-lg-2 control-label" for="main_business_cat">Business Main Category <i class="red">*</i></label>
             <div class="col-sm-6 col-lg-4 controls">
@@ -144,8 +145,7 @@
             <div class="col-sm-6 col-lg-4 controls" id="sub_category_div" name="sub_category_div" style="">
             <select class="form-control" id="example-getting-started" name="business_cat[]" multiple="multiple">
             <option value="">Select Business Sub Category </option>
-                 <!--  <option value="cheese">Cheese</option>
-                  <option value="tomatoes">Tomatoes</option>
+               <!--   <option value="tomatoes">Tomatoes</option>
                   <option value="mozarella">Mozzarella</option>
                   <option value="mushrooms">Mushrooms</option>
                   <option value="pepperoni">Pepperoni</option>
@@ -923,6 +923,7 @@ function getSubCategory(ref)
                          includeSelectAllOption: true,
                          enableFiltering : true
                       });
+      categCheck.html('');
     jQuery.ajax({
                         url:url+'/web_admin/common/get_subcategory/'+main_cat_id,
                         type:'GET',
@@ -934,21 +935,36 @@ function getSubCategory(ref)
                         },
                         success:function(response)
                         {
-
+                           jQuery(response.arr_main_cat).each(function(index,arr_main_cat)
+                                   {
+                                          $("#business_public_id").attr('value',arr_main_cat.cat_ref_slug);
+                                   });
+                          var option = '';
                             if(response.status=="SUCCESS")
                             {
+                              $(".multiselect-container").css("display",'block');
                                 if(typeof(response.arr_sub_cat) == "object")
                                 {
-                                   var option = '';
+                                  // var option = '';
                                    jQuery(response.arr_sub_cat).each(function(index,arr_sub_cat)
                                    {
                                     option+='<option value="'+arr_sub_cat.cat_id+'">'+arr_sub_cat.title+'</option>';
 
                                    });
+
+                                  
                                    categCheck.html(option);
                                    categCheck.multiselect('rebuild');
 
                                 }
+                                
+                            
+
+                            }
+                            else
+                            {
+                                $(".multiselect-container").css("display",'none');
+                                $(".multiselect-selected-text").html("No Sub Category Available !");
                             }
                             return false;
                         }

@@ -171,6 +171,10 @@ class BusinessListingController extends Controller
         }
         $form_data=$request->all();
         $arr_data['user_id']=$form_data['tmp_user_id'];
+
+        $business_cat_slug=$form_data['business_public_id'];
+        $public_id = $this->objpublic->generate_public_id($enc_id);
+
         $arr_data['is_active']='2';
         $arr_data['business_added_by']=$form_data['business_added_by'];
         $arr_data['business_name']=$form_data['business_name'];

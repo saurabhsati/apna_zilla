@@ -15,6 +15,7 @@ class CategoryModel extends Model
      protected $fillable = ['cat_desc',
                             'cat_slug',
                             'title',
+                            'cat_ref_slug',
                             'cat_meta_description',
                             'cat_meta_keyword',
                             'public_id',

@@ -60,6 +60,7 @@ class CategoryController extends Controller
         $arr_rules = array();
         $arr_rules['category'] = "required";
         $arr_rules['title'] = "required";
+        $arr_rules['cat_ref_slug'] = "required";
         $arr_rules['cat_meta_keyword'] = "required";
         $arr_rules['cat_meta_description'] = "required";
 
@@ -72,6 +73,7 @@ class CategoryController extends Controller
 
         $category = $request->input('category');
         $title = $request->input('title');
+        $cat_ref_slug = $request->input('cat_ref_slug');
         $is_priceable = $request->input('is_priceable','0');
         $cat_meta_keyword = $request->input('cat_meta_keyword');
         $cat_meta_description = $request->input('cat_meta_description');
@@ -123,6 +125,7 @@ class CategoryController extends Controller
         $arr_cat['cat_img'] = $cat_img;
         $arr_cat['cat_thumb'] =$cat_img;
         $arr_cat['title'] = $title;
+        $arr_cat['cat_ref_slug'] = $cat_ref_slug;
         $arr_cat['cat_meta_keyword'] =$cat_meta_keyword;
         $arr_cat['cat_meta_description'] =$cat_meta_description;
         $arr_cat['is_popular'] =$is_popular;
@@ -184,6 +187,7 @@ class CategoryController extends Controller
         }
 
         $category = $request->input('category');
+        $cat_ref_slug = $request->input('cat_ref_slug');
         //$password   = $request->input('password',FALSE);
         $cat_meta_description = $request->input('cat_meta_description');
         $is_active = $request->input('is_active');
@@ -231,6 +235,7 @@ class CategoryController extends Controller
         /* Duplication Check*/
         $arr_data = [
             'title' => $category,
+            'cat_ref_slug' => $cat_ref_slug,
             'cat_meta_description' => $cat_meta_description,
             'is_active' => $is_active,
             'is_popular' => $is_popular,

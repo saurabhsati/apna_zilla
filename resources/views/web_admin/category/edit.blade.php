@@ -117,6 +117,13 @@
                     <span class='help-block'>{{ $errors->first('cat_meta_description') }}</span>
                 </div>
             </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="cat_ref_slug">Category Reference Name / Category Abrrivation<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input class="form-control" id="cat_ref_slug" name="cat_ref_slug" data-rule-required="true"  value="{{ $arr_data['cat_ref_slug'] }}"/>
+                    <span class='help-block'>{{ $errors->first('cat_ref_slug') }}</span>
+                </div>
+            </div>
 
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="is_active">Is Active <i class="red">*</i></label>
