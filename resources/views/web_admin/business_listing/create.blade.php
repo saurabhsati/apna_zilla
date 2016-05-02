@@ -942,9 +942,10 @@ function getSubCategory(ref)
                           var option = '';
                             if(response.status=="SUCCESS")
                             {
-                              $(".multiselect-container").css("display",'block');
+                              
                                 if(typeof(response.arr_sub_cat) == "object")
                                 {
+                                  //$(".multiselect-container").css("display",'block');
                                   // var option = '';
                                    jQuery(response.arr_sub_cat).each(function(index,arr_sub_cat)
                                    {
@@ -963,7 +964,8 @@ function getSubCategory(ref)
                             }
                             else
                             {
-                                $(".multiselect-container").css("display",'none');
+                                //$(".multiselect-container").css("display",'none');
+                                categCheck.html('<option value=""></option>');
                                 $(".multiselect-selected-text").html("No Sub Category Available !");
                             }
                             return false;

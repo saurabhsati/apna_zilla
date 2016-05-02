@@ -337,6 +337,7 @@
                     </td>
                      <td>
                       <?php
+                      $category_id='';
                          foreach ($business['category'] as $business_category)
                           {
                              foreach ($arr_sub_category as $sub_category)

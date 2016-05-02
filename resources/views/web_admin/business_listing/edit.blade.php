@@ -121,11 +121,11 @@
                     <span class='help-block'>{{ $errors->first('business_name') }}</span>
                 </div>
             </div>
-
+            <input type="hidden" name="business_public_id" id="business_public_id" value="{{ isset($business['busiess_ref_public_id'])?$business['busiess_ref_public_id']:'' }}">
              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="business_cat">Selected Business Category <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="business_cat_old">Selected Business Category <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                  <select class="form-control" name="business_cat[]" id="business_cat" onchange="updateCategoryOptGroup(this)" disabled="true" multiple="">
+                  <select class="form-control" name="business_cat_old[]" id="business_cat_old" onchange="updateCategoryOptGroup(this)" disabled="true" multiple="">
                      <option> Select Business Category</option>
                       @if(isset($arr_category) && sizeof($arr_category)>0)
                         @foreach($arr_category as $category)
@@ -1193,7 +1193,11 @@ function getSubCategory(ref)
                         },
                         success:function(response)
                         {
-
+                           jQuery(response.arr_main_cat).each(function(index,arr_main_cat)
+                                   {
+                                          $("#business_public_id").attr('value',arr_main_cat.cat_ref_slug);
+                                   });
+                          var option = '';
                             if(response.status=="SUCCESS")
                             {
                                 if(typeof(response.arr_sub_cat) == "object")
@@ -1208,6 +1212,12 @@ function getSubCategory(ref)
                                    categCheck.multiselect('rebuild');
 
                                 }
+                            }
+                             else
+                            {
+                                //$(".multiselect-container").css("display",'none');
+                                categCheck.html('<option value=""></option>');
+                                $(".multiselect-selected-text").html("No Sub Category Available !");
                             }
                             return false;
                         }

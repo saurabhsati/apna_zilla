@@ -24,7 +24,7 @@ use App\Models\MembershipModel;
 use App\Models\MemberCostModel;
 use App\Models\TransactionModel;
 use App\Models\EmailTemplateModel;
-
+use App\Common\Services\GeneratePublicId;
 use Validator;
 use Session;
 use Sentinel;
@@ -46,7 +46,7 @@ class BusinessListingController extends Controller
 
            $this->business_public_upload_img_path = url('/')."/uploads/business/business_upload_image/";
           $this->business_base_upload_img_path = base_path()."/public/uploads/business/business_upload_image/";
-
+           $this->objpublic = new GeneratePublicId();
     }
      /* Business Listing Start */
     public function index()
@@ -114,7 +114,7 @@ class BusinessListingController extends Controller
     public function store(Request $request)
     {
         //echo'<pre>';
-        //print_r($request->all());exit;
+       // print_r($request->all());exit;
 
         $arr_rules	=	array();
         //business fields
@@ -172,8 +172,6 @@ class BusinessListingController extends Controller
         $form_data=$request->all();
         $arr_data['user_id']=$form_data['tmp_user_id'];
 
-        $business_cat_slug=$form_data['business_public_id'];
-        $public_id = $this->objpublic->generate_public_id($enc_id);
 
         $arr_data['is_active']='2';
         $arr_data['business_added_by']=$form_data['business_added_by'];
@@ -233,7 +231,11 @@ class BusinessListingController extends Controller
     	$arr_data['youtube_link']=$form_data['youtube_link'];
 
         $insert_data = BusinessListingModel::create($arr_data);
+
         $business_id = $insert_data->id;
+        $business_cat_slug=$form_data['business_public_id'];
+        $public_id = $this->objpublic->generate_business_public_by_category($business_cat_slug,$business_id);
+        BusinessListingModel::where('id', '=', $business_id)->update(array('busiess_ref_public_id' => $public_id));
 
         foreach ($business_cat as $key => $value)
         {
@@ -369,8 +371,8 @@ class BusinessListingController extends Controller
  		$id	=base64_decode($enc_id);
         $arr_all  = array();
         $arr_all=$request->all();
-      //  echo"<pre>";
-        //print_r($arr_all);exit;
+       // echo"<pre>";
+       // print_r($arr_all);exit;
         $business_service=$arr_all['business_service'];
         $payment_mode=$arr_all['payment_mode'];
         //dd($payment_mode);
@@ -379,7 +381,7 @@ class BusinessListingController extends Controller
  		$arr_rules = array();
 
  		$arr_rules['business_name'] = "required";
- 		$arr_rules['business_cat'] = "required";
+ 		//$arr_rules['business_cat'] = "required";
  		$arr_rules['tmp_user_id'] = "required";
 
         //location fields
@@ -440,11 +442,12 @@ class BusinessListingController extends Controller
         $business_data['business_name']      = $request->input('business_name');
         $business_data['user_id']=$request->input('tmp_user_id');
 
-        $business_category = BusinessCategoryModel::where('business_id',$id);
-        $res= $business_category->delete();
         $business_cat=$request->input('business_cat');
-        if($business_cat)
+        if(sizeof($business_cat)>0 && $business_cat!=null )
         {
+
+            $business_category = BusinessCategoryModel::where('business_id',$id);
+            $res= $business_category->delete();
             foreach ($business_cat as $key => $value)
             {
                 $arr_cat_data['business_id']=$id;
@@ -452,6 +455,7 @@ class BusinessListingController extends Controller
                 $insert_data = BusinessCategoryModel::create($arr_cat_data);
             }
         }
+
         $payment_count = count($payment_mode);
          //exit;
         if($payment_count>0){
@@ -534,6 +538,26 @@ class BusinessListingController extends Controller
     	$business_data['keywords']=$request->input('keywords');
     	$business_data['youtube_link']=$request->input('youtube_link');
 
+         $business_cat_slug=$request->input('business_public_id');
+         $chk_business_category=[];
+         $chk_business_category=BusinessListingModel::where('id', '=', $id)->where('busiess_ref_public_id',$business_cat_slug)->first();
+         if($chk_business_category)
+         {
+              $arr_business = $chk_business_category->toArray();
+              if(sizeof($arr_business)>0)
+              {
+                $business_data['busiess_ref_public_id']= $business_cat_slug;
+              }
+          }
+          else
+          {
+             $public_id = $this->objpublic->generate_business_public_by_category($business_cat_slug,$id);
+             $business_data['busiess_ref_public_id']= $public_id;
+             //BusinessListingModel::where('id', '=', $id)->update(array('busiess_ref_public_id' => $public_id));
+           }
+           //dd($arr_business);
+        
+        
 
 
         $business_data=BusinessListingModel::where('id',$id)->update($business_data);

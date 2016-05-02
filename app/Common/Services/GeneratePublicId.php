@@ -20,7 +20,7 @@ class GeneratePublicId
 
     }
     /* Generate Business Public id*/
-	public function generate_public_id($cat_ref_slug,$in)
+	public function generate_business_public_by_category($cat_ref_slug,$in)
     {
         $hashids = new Hashids('RightNext',5,'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890');
          return  strtoupper('RNT-'.$cat_ref_slug.'-'.$hashids->encode($in));

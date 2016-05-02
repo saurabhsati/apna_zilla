@@ -42,7 +42,7 @@ class BusinessListingModel extends Model
                          'keywords',
                          'youtube_link',
                          'sales_user_public_id',
-
+                         'busiess_ref_public_id',
                          ];
     public function user_details()
     {
