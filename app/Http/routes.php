@@ -426,8 +426,9 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::post('delete_gallery',				 ['as' => 'sales_user_business_listing_gallery_delete' 	  ,'uses' 	=>'SalesUser\BusinessListingController@delete_gallery']);
 			Route::post('delete_service',				 ['as' => 'sales_user_business_listing_service_delete' 	  ,'uses' 	=>'SalesUser\BusinessListingController@delete_service']);
 			Route::post('delete_service',				 ['as' => 'sales_user_business_listing_service_delete' 	  ,'uses' 	=>'SalesUser\BusinessListingController@delete_service']);
-			Route::post('delete_payment_mode',		     ['as' => 'admin_business_listing_payment_mode_delete' 	  ,'uses' 	=>'SalesUser\BusinessListingController@delete_payment_mode']);
-
+			Route::post('delete_payment_mode',		     ['as' => 'sales_user_listing_payment_mode_delete' 	  ,'uses' 	=>'SalesUser\BusinessListingController@delete_payment_mode']);
+			Route::get('toggle_verifired_status/{enc_id}/{action}',['as' => 'sales_user_business_listing_verifired_status' 	  ,'uses' 	=>'SalesUser\BusinessListingController@toggle_verifired_status']);
+			
 			Route::get('assign_membership/{enc_id}/{user_id}/{category_id}',				 ['as' => 'sales_user_business_listing_assign_membership' 	  ,'uses' 	=>'SalesUser\BusinessListingController@assign_membership']);
 			Route::post('get_plan_cost/',				 ['as' => 'get_plan_cost' 	  ,'uses' 	=>'SalesUser\BusinessListingController@get_plan_cost']);
 			Route::post('purchase_plan/',				 ['as' => 'purchase_plan' 	  ,'uses' 	=>'SalesUser\BusinessListingController@purchase_plan']);

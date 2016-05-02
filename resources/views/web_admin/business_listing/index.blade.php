@@ -137,11 +137,12 @@
                   <th style="width:10px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
                   <th style="width:10px;">Sr.No</th>
                   <th width="" style="text-align:center">Business Image</th>
+                  <th width="" style="text-align:center">Business Public Id</th>
                   <th width="" style="text-align:center">Business Name</th>
                   <th width="" style="text-align:center">Main Category</th>
                   <th width="" style="text-align:center">Sub Category</th>
-                  <th width="" style="text-align:center">Full Name</th>
-                  <th width="" style="text-align:center">Public ID</th>
+                  <th width="" style="text-align:center">Seller First Name</th>
+                  <th width="" style="text-align:center">Seller Public ID</th>
                  <!--  <th style="width:25px;">Mobile No</th> -->
                  <!--  <th>City</th> -->
                   <th width="" style="text-align:center">Reviews</th>
@@ -169,13 +170,15 @@
                     </td>
                     <td>
                     <img src="{{ $business_public_img_path.'/'.$business['main_image']}}" alt=""  style="width:30px; height:30px;" />   </td>
-                    <td> {{ $business['business_name'] }} </td>
+                   <td> {{ $business['business_name'] }} </td>
+                    <td> {{ $business['busiess_ref_public_id'] }} </td>
 
                   <td>
                    <?php
                    $categoty=$subcategory=array();
-                 foreach ($business['category'] as $business_category) {
-                 foreach ($arr_sub_category as $sub_category) {
+                   if(isset($business['category']) && sizeof($business['category'])>0){
+                   foreach ($business['category'] as $business_category) {
+                   foreach ($arr_sub_category as $sub_category) {
                       if($business_category['category_id']==$sub_category['cat_id'])
                       {
                          foreach ($arr_main_category as $main_category) {
@@ -191,6 +194,7 @@
                        }
                      }
                    }
+                 }
                    if(sizeof($categoty)>0)
                    {
                      echo $categoty[0];

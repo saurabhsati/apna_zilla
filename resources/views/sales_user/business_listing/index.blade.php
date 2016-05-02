@@ -128,65 +128,89 @@
             <table class="table table-advance"  id="business_manage" >
               <thead>
                 <tr>
-                  <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
-                  <th style="width:25px;">Business Image</th>
-                  <th style="width:25px;">Business Name</th>
-                  <th style="width:40px;">Business Category::Sub Category</th>
-                  <!-- <th style="width:25px;">Title</th> -->
-                  <th style="width:50px;">Full Name</th>
-                  <th style="width:25px;">Email</th>
-                  <th style="width:25px;">Mobile No</th>
+                  <th style="width:10px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
+                  <th style="width:10px;">Sr.No</th>
+                  <th width="" style="text-align:center">Business Image</th>
+                  <th width="" style="text-align:center">Business Name</th>
+                  <th width="" style="text-align:center">Business Public Id</th>
+                  <th width="" style="text-align:center">Main Category</th>
+                  <th width="" style="text-align:center">Sub Category</th>
+                  <th width="" style="text-align:center">Seller First Name</th>
+                  <th width="" style="text-align:center">Seller Public ID</th>
+                 <!--  <th style="width:25px;">Mobile No</th> -->
                  <!--  <th>City</th> -->
-                  <th style="width:25px;">Reviews</th>
-                  <th style="width:25px;">Deals</th>
-                  <th width="" style="text-align:center">Status</th>
-                  <th>Action</th>
-                   <th>Assign Membership</th>
-                   <th>Validity Status</th>
+                  <th width="" style="text-align:center">Reviews</th>
+                  <th width="" style="text-align:center" >Deals</th>
+
+                  <th width="" style="text-align:center">Verified Status</th>
+                  <th width="" style="text-align:center">Action</th>
+                  <th width="" style="text-align:center">Assign Membership</th>
+                   <th width="" style="text-align:center">Validity Status</th>
                 </tr>
               </thead>
               <tbody>
 
                @if(isset($business_listing) && sizeof($business_listing)>0)
-                  @foreach($business_listing as $business)
+                  @foreach($business_listing as $key => $business)
                   <tr>
                     <td>
                       <input type="checkbox"
                              name="checked_record[]"
                              value="{{ base64_encode($business['id']) }}" />
                     </td>
+                     <td >
+                      {{ $key+1 }}
+                    </td>
                     <td>
-                    <img src="{{ $business_public_img_path.'/'.$business['main_image']}}" alt=""  style="width:75px; height:50px;" />   </td>
+                    <img src="{{ $business_public_img_path.'/'.$business['main_image']}}" alt=""   style="width:30px; height:30px;" />   </td>
                     <td> {{ $business['business_name'] }} </td>
-
+                     <td> {{ $business['busiess_ref_public_id'] }} </td>
                   <td>
                    <?php
-                 foreach ($business['category'] as $business_category) {
-                 foreach ($arr_sub_category as $sub_category) {
+                    $categoty=$subcategory=array();
+                    if(isset($business['category']) && sizeof($business['category'])>0){
+                    foreach ($business['category'] as $business_category) {
+                    foreach ($arr_sub_category as $sub_category) {
                       if($business_category['category_id']==$sub_category['cat_id'])
                       {
                          foreach ($arr_main_category as $main_category) {
 
                           if($sub_category['parent']==$main_category['cat_id'])
                           {
-                            echo $main_category['title'].' :: ';
+                             $categoty[]=$main_category['title'];
 
                           }
 
 
                           }
-                          echo $sub_category['title'].' <br/>';
+                          $subcategory[]=$sub_category['title'];
                        }
                      }
                    }
+                 }
+                 if(sizeof($categoty)>0)
+                   {
+                     echo $categoty[0];
+                   }
+
                   ?>
                   </td>
+                   <td>
+                       <?php
+                       if(sizeof($subcategory)>0)
+                       {
+                        foreach ($subcategory as $key => $value) {
 
+                           echo $value.' ,';
+                        }
+
+                       }
+                      ?>
+                  </td>
 
                  <!--    <td> {{ $business['user_details']['title'] }} </td> -->
-                    <td> {{ $business['user_details']['first_name']." ".$business['user_details']['last_name'] }} </td>
-                    <td> {{ $business['user_details']['email'] }} </td>
-                    <td> {{ $business['user_details']['mobile_no'] }} </td>
+                    <td> {{ $business['user_details']['first_name'] }} </td>
+                    <td> {{ $business['user_details']['public_id'] }} </td>
                     <!--  <td> {{ $business['user_details']['city'] }} </td> -->
 
 
@@ -253,28 +277,47 @@
                              @endif
                        <?php
                       }
+
                     }
+                     else
+                        {?>
+                         <a class="btn btn-error" href="javascript:void(0);">
+                             No Feature
+                          </a>
+                        <?php
+                        }
                        ?>
 
                     </td>
-                    <td width="" style="text-align:center">
-                         @if($business['is_active']=="0")
-                        <a class="btn btn-danger" href="{{ url('/sales_user/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/activate' }}">
-                            Block
+                     <td >
+                         @if($business['is_verified']=="0")
+                        <a class="btn btn-danger" href="{{ url('/sales_user/business_listing/toggle_verifired_status/').'/'.base64_encode($business['id']).'/verified' }}">
+                            Un-Verified
                         </a>
 
-                        @elseif($business['is_active']=="1")
-                        <a  class="btn btn-success" href="{{ url('/sales_user/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/block' }}">
-                            Active
-                        </a>
-                         @elseif($business['is_active']=="2")
-                        <a  class="btn btn-info" href="{{ url('/sales_user/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/activate' }}">
-                            Pending
+                        @elseif($business['is_verified']=="1")
+                        <a  class="btn btn-success" href="{{ url('/sales_user/business_listing/toggle_verifired_status/').'/'.base64_encode($business['id']).'/unverified' }}">
+                           Verified
                         </a>
                         @endif
                     </td>
 
                     <td>
+                     @if($business['is_active']=="0")
+                        <a  href="{{ url('/sales_user/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/activate' }}" class="show-tooltip" title="Block">
+                           <i class="fa fa-lock" ></i>
+                        </a>
+
+                        @elseif($business['is_active']=="1")
+                        <a  href="{{ url('/sales_user/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/block' }}" class="show-tooltip" title="Active">
+                            <i class="fa fa-unlock" ></i>
+                        </a>
+                         @elseif($business['is_active']=="2")
+                        <a   href="{{ url('/sales_user/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/activate' }}" class="show-tooltip" title="Pending">
+                             <i class="fa fa-unlock-alt" ></i>
+                        </a>
+                        @endif
+                        &nbsp;
                       <a href="{{ url('/sales_user/business_listing/show/').'/'.base64_encode($business['id']) }}" class="show-tooltip" title="Show">
                           <i class="fa fa-eye" ></i>
                         </a>
