@@ -202,11 +202,11 @@ class BusinessListingController extends Controller
         //Contact input array
         $arr_data['contact_person_name']=$form_data['contact_person_name'];
         $arr_data['mobile_number']=$form_data['mobile_number'];
-        $arr_data['landline_number']=$form_data['landline_number'];
-        $arr_data['fax_no']=$form_data['fax_no'];
-        $arr_data['toll_free_number']=$form_data['toll_free_number'];
-        $arr_data['email_id']=$form_data['email_id'];
-        $arr_data['website']=$form_data['website'];
+        //$arr_data['landline_number']=$form_data['landline_number'];
+        //$arr_data['fax_no']=$form_data['fax_no'];
+        //$arr_data['toll_free_number']=$form_data['toll_free_number'];
+        $arr_data['email_id']=$request->input('email_id');
+        //$arr_data['website']=$request->input('website');
 
 
         //other input array
@@ -214,7 +214,7 @@ class BusinessListingController extends Controller
     	$arr_data['company_info']=$form_data['company_info'];
         $arr_data['establish_year']=$form_data['establish_year'];
     	$arr_data['keywords']=$form_data['keywords'];
-    	$arr_data['youtube_link']=$form_data['youtube_link'];
+    	//$arr_data['youtube_link']=$form_data['youtube_link'];
 
         $insert_data = BusinessListingModel::create($arr_data);
 

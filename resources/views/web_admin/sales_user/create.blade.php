@@ -96,7 +96,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+         <!--    <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="middle_name">Middle Name<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" name="middle_name" id="middle_name" placeholder="Enter Middle Name " data-rule-required="" />
@@ -110,7 +110,7 @@
                     <input class="form-control" name="last_name" id="last_name"  placeholder="Enter Last Name" data-rule-required="" />
                     <span class='help-block'>{{ $errors->first('last_name') }}</span>
                 </div>
-            </div>
+            </div> -->
 
               <div class="form-group">
                   <label class="col-sm-3 col-lg-2 control-label">Gender</label>
@@ -226,21 +226,21 @@
                 </div>
             </div>
 
-            <div class="form-group">
+          <!--   <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="street_address">Street <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <textarea name="street_address" id="street_address" data-rule-required="" placeholder="Enter Street Address" class="form-control" ></textarea>
                     <span class='help-block'>{{ $errors->first('street_address') }}</span>
                 </div>
-            </div>
+            </div> -->
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="area">Area<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control" name="area" id="area"  placeholder="Enter Area " data-rule-required="true" />
+                    <textarea class="form-control" name="area" id="area"  placeholder="Enter Area " data-rule-required="true" ></textarea>
                     <span class='help-block'>{{ $errors->first('area') }}</span>
                 </div>
             </div>
-
+<!-- 
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="occupation">Occupation<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
@@ -273,7 +273,7 @@
                 <input class="form-control" name="office_landline" id="office_landline"  placeholder="Enter Office Landline No " data-rule-required="" />
                 <span class='help-block'>{{ $errors->first('office_landline') }}</span>
             </div>
-           </div>
+           </div> -->
 
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">

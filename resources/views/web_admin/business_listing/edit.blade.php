@@ -396,7 +396,7 @@
                     <span class='help-block'>{{ $errors->first('mobile_number') }}</span>
                 </div>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="landline_number">Landline Number <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
@@ -464,7 +464,7 @@
                 </div>
             </div>
 
-
+ -->
 
 
 
@@ -735,7 +735,7 @@
                     <span class='help-block'>{{ $errors->first('keywords') }}</span>
                 </div>
             </div>
-            <div class="form-group">
+           <!--  <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="youtube_link">Youtube Link<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
@@ -747,7 +747,7 @@
                            />
                     <span class='help-block'>{{ $errors->first('youtube_link') }}</span>
                 </div>
-            </div>
+            </div> -->
              <div class="form-group">
                             <label class="col-sm-3 col-lg-2 control-label"> Business Services  <i class="red"></i> </label>
                             <div class="col-sm-9 col-lg-10 controls">

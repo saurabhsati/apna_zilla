@@ -112,7 +112,7 @@
                     <span class='help-block'>{{ $errors->first('first_name') }}</span>
                 </div>
             </div>
-
+<!-- 
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="middle_name">Middle Name<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
@@ -138,7 +138,7 @@
                            value="{{ isset($arr_user_data['last_name'])?$arr_user_data['last_name']:'' }}"/>
                     <span class='help-block'>{{ $errors->first('last_name') }}</span>
                 </div>
-            </div>
+            </div> -->
 
 
              <div class="form-group">
@@ -289,7 +289,7 @@
                     <span class='help-block'>{{ $errors->first('area') }}</span>
                 </div>
                 </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="street_address">Street Address<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <textarea name="street_address"
@@ -300,26 +300,26 @@
                               onblur="codeAddress()">{{ isset($arr_user_data['street_address'])?$arr_user_data['street_address']:'' }}</textarea>
                     <span class='help-block'>{{ $errors->first('street_address') }}</span>
                 </div>
-            </div>
+            </div> -->
 
 
 
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="area">Area<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
+                    <textarea class="form-control"
                            name="area"
                            id="area"
                            data-rule-required="true"
                            placeholder="Enter Area"
-                           value="{{ isset($arr_user_data['area'])?$arr_user_data['area']:'' }}"/>
+                           >{{ isset($arr_user_data['area'])?$arr_user_data['area']:'' }}</textarea>
                     <span class='help-block'>{{ $errors->first('area') }}</span>
                 </div>
             </div>
 
 
 
-
+<!-- 
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="home_landline">Home Landline<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
@@ -347,7 +347,7 @@
                            />
                     <span class='help-block'>{{ $errors->first('office_landline') }}</span>
                 </div>
-            </div>
+            </div> -->
 
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
