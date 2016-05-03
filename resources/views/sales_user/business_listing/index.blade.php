@@ -276,24 +276,22 @@
                      <?php
                     if(sizeof($business['membership_plan_details']  )>0)
                     {
-                      $date1 = date('Y-m-d',strtotime($business['membership_plan_details'][0]['expire_date']));
-                       $date2 = date('Y-m-d h:m:s');
-
-                       $diff = abs(strtotime($date1) - strtotime($date2));
-
-                      $years = floor($diff / (365*60*60*24));
-                      $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
-                      $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
-                      if($days>0)
-                      {
+                       $expire_date = new \Carbon($business['membership_plan_details'][0]['expire_date']);
+                        $now = Carbon::now();
+                        $difference = ($expire_date->diff($now)->days < 1)
+                            ? 'today'
+                            : $expire_date->diffForHumans($now);
+                           
+                        if (strpos($difference, 'after') !== false || strpos($difference, 'today') !== false) 
+                        {
                       ?>
 
-                             @if($business['is_active']!="1" && $check_allow=='0')
-                                 <a class="btn btn-info" href="#">
-                                 View Deal
+                             @if( $check_allow=='0')
+                                 <a class="btn btn-info" href="javascript:void(0);">
+                                  No Feature
                                   </a>
                              @elseif($business['is_active']=="1" && $check_allow=='1')
-                                 <a class="btn btn-warning" href="{{ url('/sales_user/deals/'.base64_encode($business['id'])) }}">
+                                 <a class="btn btn-success" href="{{ url('/sales_user/deals/'.base64_encode($business['id'])) }}">
                                    View Deal
                                 </a>
                              @endif
@@ -313,18 +311,18 @@
                     </td>
                      <td width="width:52%;">
                      @if( sizeof($business['reviews'])>0)
-                     <a href="{{ url('sales_user/reviews/'.base64_encode($business['id'])) }}"> <i class="glyphicon glyphicon-star" ></i> </a>
+                     <a href="{{ url('sales_user/reviews/'.base64_encode($business['id'])) }}"> <i class="glyphicon glyphicon-star" class="show-tooltip" title="Ratings Available"></i> </a>
                       @else
-                       <a href="#"> <i class="glyphicon glyphicon-star-empty" ></i> </a>
+                       <a href="#"> <i class="glyphicon glyphicon-star-empty" class="show-tooltip" title="No Ratings Available"></i> </a>
                        @endif
                        |
                          @if($business['is_verified']=="0")
-                        <a  href="{{ url('/sales_user/business_listing/toggle_verifired_status/').'/'.base64_encode($business['id']).'/verified' }}">
+                        <a  href="{{ url('/sales_user/business_listing/toggle_verifired_status/').'/'.base64_encode($business['id']).'/verified' }}" class="show-tooltip" title="Un-Verified">
                             <i class="fa fa-thumbs-down" ></i>
                         </a>
 
                         @elseif($business['is_verified']=="1")
-                        <a   href="{{ url('/sales_user/business_listing/toggle_verifired_status/').'/'.base64_encode($business['id']).'/unverified' }}">
+                        <a   href="{{ url('/sales_user/business_listing/toggle_verifired_status/').'/'.base64_encode($business['id']).'/unverified' }}" class="show-tooltip" title="Verified">
                           <i class="fa fa-thumbs-up" ></i>
                         </a>
                         @endif

@@ -44,12 +44,12 @@ class DealController extends Controller
         if(sizeof($transaction_details)>0)
         {
 
-             $expired_date = new Carbon($transaction_details['expire_date']);
+            $expired_date = new Carbon($transaction_details['expire_date']);
             $now = Carbon::now();
             $difference = ($expired_date->diff($now)->days < 1)
                 ? 'today'
                 : $expired_date->diffForHumans($now);
-            if (strpos($difference, 'after') !== false) 
+            if (strpos($difference, 'after') !== false || strpos($difference, 'today') !== false) 
             {
                  
                 $plan_id=$transaction_details['membership_id'];

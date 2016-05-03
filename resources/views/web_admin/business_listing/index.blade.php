@@ -322,10 +322,10 @@
                     <td width="width:52%;">
                     @if( sizeof($business['reviews'])>0)
                      
-                       <a href="{{ url('web_admin/reviews/'.base64_encode($business['id'])) }}">  <i class="glyphicon glyphicon-star" ></i></a>
+                       <a href="{{ url('web_admin/reviews/'.base64_encode($business['id'])) }}">  <i class="glyphicon glyphicon-star" class="show-tooltip" title="Ratings Available"></i></a>
                       @else
                        
-                       <a href="#"> <i class="glyphicon glyphicon-star-empty" ></i> </a>
+                       <a href="#"> <i class="glyphicon glyphicon-star-empty" class="show-tooltip" title="No Ratings Available"></i> </a>
                        @endif
                     |
                          @if($business['is_verified']=="0")
