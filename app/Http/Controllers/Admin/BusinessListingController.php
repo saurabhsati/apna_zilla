@@ -29,6 +29,7 @@ use Validator;
 use Session;
 use Sentinel;
 use Mail;
+use Carbon\Carbon as Carbon;
 class BusinessListingController extends Controller
 {
     //
@@ -656,6 +657,7 @@ class BusinessListingController extends Controller
         $page_title = "Business Listing: Show ";
         $business_public_img_path = $this->business_public_img_path;
         $business_base_upload_img_path =$this->business_public_upload_img_path;
+
         $obj_main_category = CategoryModel::where('parent','0')->get();
         if($obj_main_category)
         {
@@ -666,25 +668,10 @@ class BusinessListingController extends Controller
         {
             $arr_sub_category = $obj_sub_category->toArray();
         }
-        $obj_business_arr=BusinessListingModel::where('id',$id)->get();
-        if( $obj_business_arr != FALSE)
-        {
-            $business = $obj_business_arr->toArray();
-        }
-        if( $business != FALSE)
-        {
-             $arr_place = array();
-
-            $obj_place_res = PlaceModel::where('id',$business[0]['pincode'])->get();
-
-            if( $obj_place_res != FALSE)
-            {
-                $arr_place = $obj_place_res->toArray();
-            }
-        }
+       
         $business_data = array();
-        $business_data=BusinessListingModel::with(['user_details','city_details','zipcode_details','country_details','state_details','category','service','image_upload_details','payment_mode'])->where('id',$id)->get()->toArray();
-         //dd($business_data);
+        $business_data=BusinessListingModel::with(['category','user_details','reviews','membership_plan_details','service','image_upload_details','payment_mode'])->where('id',$id)->get()->toArray();
+        // dd($business_data);
          return view('web_admin.business_listing.show',compact('page_title','business_data','business_public_img_path','business_base_upload_img_path','arr_main_category','arr_place','arr_sub_category'));
 
     }
@@ -975,7 +962,7 @@ class BusinessListingController extends Controller
             //echo "Payment Success" . "<pre>" . print_r( $_POST, true ) . "</pre>";die();
 
             $obj_email_template = EmailTemplateModel::where('id','13')->first();
-            if($obj_email_template)
+            if($obj_email_template )
             {
                 $arr_email_template = $obj_email_template->toArray();
 
@@ -992,8 +979,10 @@ class BusinessListingController extends Controller
                 $content        = str_replace("##APP_LINK##","RightNext",$content);
                  //print_r($content);exit;
                 $content = view('email.front_general',compact('content'))->render();
+                $send_mail='';
                 $content = html_entity_decode($content);
-
+                if($email!='')
+                {
                 $send_mail = Mail::send(array(),array(), function($message) use($email,$first_name,$arr_email_template,$content)
                             {
                                 $message->from($arr_email_template['template_from_mail'], $arr_email_template['template_from']);
@@ -1001,7 +990,11 @@ class BusinessListingController extends Controller
                                         ->subject($arr_email_template['template_subject'])
                                         ->setBody($content, 'text/html');
                             });
-
+                }
+                else
+                {
+                    Session::flash('success','Success ! Membership Assign Successfully! ');
+                }
                 //return $send_mail;
             if($send_mail)
             {

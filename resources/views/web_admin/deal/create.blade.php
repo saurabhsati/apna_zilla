@@ -165,7 +165,7 @@
                 <div class="col-sm-6 col-lg-3 controls">
                     <select class="form-control" name="deal_type" id="deal_type" onchange="isInstantDeal(this)" data-rule-required="true">
                             <option value="">Select Deal</option>
-                            <option value="1">Normal Deal</option>
+                            <option value="1" selected="selected">Normal Deal</option>
                            <!--  <option value="2">Instant Deal</option>
                             <option value="3">Featured Deal</option> -->
                     </select>
@@ -191,7 +191,7 @@
                         <span class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </span>
-                        <input name="end_day" id="end_day" class="form-control" type="text"  size="16" data-rule-required="true" readonly="" value="{{date('m/d/Y',strtotime($expired_date))}}" />
+                        <input name="end_day" id="end_day" class="form-control" type="text"  size="16" data-rule-required="true"  value="" />
                         <span class='help-block'>{{ $errors->first('end_day') }}</span>
                          <input type="hidden" name="expired_date" id="expired_date" value="{{date('m/d/Y',strtotime($expired_date))}}">
                     </div>
@@ -281,6 +281,10 @@
 
 
         </script>
+<script type="text/javascript">
+    tinymce.init({ selector:'textarea' });
+    //tinymce.init('#page_desc');
+</script>
 
 <script type="text/javascript">
 
@@ -313,7 +317,7 @@
         bindDynamicDealCategory();
 
         dt_start_day = $('#start_day').datepicker();
-        //dt_end_day = $('#end_day').datepicker();
+        dt_end_day = $('#end_day').datepicker();
 
         //tp_start_time = $("#start_time").timepicker();
         //tp_end_time = $("#end_time").timepicker();
@@ -323,7 +327,7 @@
 
         $(dt_start_day).on('changeDate',function(evt)
         {
-           // $(dt_end_day).datepicker('setDate',getLastDayofWeek(evt.date));
+            $(dt_end_day).datepicker('setDate',getLastDayofWeek(evt.date));
         });
 
         $(tp_start_time).on('changeTime.timepicker',checkForInstantDeal);
@@ -474,7 +478,7 @@
     {
 
         $(dt_start_day).datepicker('setDate',new Date());
-        //$(dt_end_day).datepicker('setDate',getLastDayofWeek(new Date()));
+        $(dt_end_day).datepicker('setDate',getLastDayofWeek(new Date()));
     }
 
     /* ie Sunday */

@@ -86,7 +86,7 @@
                            id="business_added_by"
                            data-rule-required="true"
                            placeholder="Enter Business Name"
-                           value="admin"
+                           value="{{ isset($business['business_added_by'])?$business['business_added_by']:'' }}"
                            readonly="true"
                            />
                     <span class='help-block'>{{ $errors->first('business_added_by') }}</span>
@@ -184,7 +184,14 @@
                             </div>
 
                          </div>
+                          <hr/>
              <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" ></label>
+                <div class="col-sm-3 col-lg-3 controls">
+                    <h4><b>Business Location Details </b></h4>
+                </div>
+            </div>
+             <!-- <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="building">Building<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" readonly="true"
@@ -222,7 +229,7 @@
                            />
                     <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
-            </div>
+            </div> -->
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="area">Area <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
@@ -286,6 +293,13 @@
                            value="{{ isset($business['country_details']['country_name'])?$business['country_details']['country_name']:'' }}"
                            />
                <span class='help-block'>{{ $errors->first('street') }}</span>
+                </div>
+            </div>
+               <hr/>
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" ></label>
+                <div class="col-sm-3 col-lg-3 controls">
+                    <h4><b>Business Contact Details </b></h4>
                 </div>
             </div>
              <div class="form-group">
@@ -571,7 +585,13 @@
                             </div>
 
                          </div>
-              <hr/>
+               <hr/>
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" ></label>
+                <div class="col-sm-3 col-lg-3 controls">
+                    <h4><b>Business Company Details </b></h4>
+                </div>
+            </div>
 
 
             <div class="form-group">
@@ -635,10 +655,123 @@
                             </div>
 
                          </div>
+          <hr/>
+          <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" ></label>
+                <div class="col-sm-3 col-lg-3 controls">
+                    <h4><b>Business Membership Details </b></h4>
+                </div>
+            </div>
+           <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="youtube_link">Assign Membership <i class="red"></i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                   <?php
+                      $category_id='';
+                         foreach ($business['category'] as $business_category)
+                          {
+                             foreach ($arr_sub_category as $sub_category)
+                              {
+                                if($business_category['category_id']==$sub_category['cat_id'])
+                                {
+                                   foreach ($arr_main_category as $main_category)
+                                   {
+                                      if($sub_category['parent']==$main_category['cat_id'])
+                                      {
+                                       $category_id=$sub_category['parent'];
+                                      }
+                                    }
+                                }
+                              }
+                          }
+                           $category_id;
+                           $business_id=$business['id'];
+                           $user_id=$business['user_details']['id'];
 
+                      if(!sizeof($business['membership_plan_details'])>0)
+                    {?>
+                      <a href="{{ url('/web_admin/business_listing/assign_membership').'/'.base64_encode($business['id']).'/'.base64_encode($user_id).'/'.base64_encode($category_id) }}" class="show-tooltip" title="Assign Membership">
+                          <i class="fa fa-euro" ></i>
+                        </a>
+                        <?php }
+                        else
+                          {?>
+                              <div style="color: Green;">Assigned</div>
+                           <?php }?>
+                </div>
+                </div>
+                <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="youtube_link">Membership Status<i class="red"></i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                   <?php
+
+                  if(sizeof($business['membership_plan_details']  )>0)
+                    {
+                     // $date1 = date('Y-m-d',strtotime($business['membership_plan_details'][0]['expire_date']));
+
+                      $expire_date = new \Carbon($business['membership_plan_details'][0]['expire_date']);
+                        $now = Carbon::now();
+                        $difference = ($expire_date->diff($now)->days < 1)
+                            ? 'today'
+                            : $expire_date->diffForHumans($now);
+                           
+                        if (strpos($difference, 'after') !== false || strpos($difference, 'today') !== false) 
+                        {
+                      
+                          if($difference=='today')
+                          {
+                           echo "<div style='color: Green;'>Active only for ".$difference;
+                          }
+                          else
+                          {
+                            echo "<div style='color: Green;'>".$difference. "  Membership plan get expired";
+                          }
+                        }
+                        else
+                        {
+                          echo "<div style='color: red;'>Expired</div>";
+                        }
+
+
+                    }
+                     else
+                    {
+                      echo "<div >NA</div>";
+                    }
+
+
+
+                     ?>
+                </div>
+            </div>
+              <hr/>
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" ></label>
+                <div class="col-sm-3 col-lg-3 controls">
+                    <h4><b>Business Reviews Details </b></h4>
+                </div>
+            </div>
+          
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="youtube_link">Business Reviews <i class="red"></i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    
+                     @if( sizeof($business['reviews'])>0)
+                      <a href="{{ url('web_admin/reviews/'.base64_encode($business['id'])) }}"> ( {{ sizeof($business['reviews']) }} ) </a>
+                      @else
+                       <a href="#"> ( {{ sizeof($business['reviews']) }} ) </a>
+                       @endif
+                </div>
+            </div>
+           <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="youtube_link"><i class="red"></i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    
+                     
+                </div>
+            </div>
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
-                <input type="hidden"  class="btn btn-primary" value="Update">
+                <a type="button"  class="btn btn-primary" href="{{ url('/web_admin/business_listing') }}" >Back</a>
 
             </div>
         </div>

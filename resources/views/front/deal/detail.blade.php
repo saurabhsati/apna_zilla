@@ -62,7 +62,7 @@
 
       <div class="buy_text">
       <span class="buy_price">£
-      <?php echo round($deals_info[0]['price']-(($deals_info[0]['price'])*($deals_info[0]['discount_price']/100)));?></span>
+      <?php echo number_format(($deals_info[0]['price']-(($deals_info[0]['price'])*($deals_info[0]['discount_price']/100))),2);?></span>
       <div class="price-old">£{{ $deals_info[0]['price'] }} <!--| <span>offers 50% OFF</span>--></div>
        <?php
                     if($deals_info[0]['end_day']!='')

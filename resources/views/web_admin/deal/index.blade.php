@@ -98,6 +98,8 @@
                  @if(isset($arr_business) && sizeof($arr_business)>0)
                     <a href="{{ url('/web_admin/deals/create/'.base64_encode($arr_business['id']))}}" class="btn btn-primary btn-add-new-records">Add Deal</a>
                   @endif
+                  @elseif($add_deal=="expired")
+                   <div style="color: Red;"> Deals Get Expired </div>
                   @else
                   <div style="color: Red;">Total Deal Count Reached</div>
                   @endif
@@ -215,19 +217,24 @@
                     </td>
                      <td>
                      <?php
-                    if($expired_date!='')
+                    if(isset($expired_date) && sizeof($expired_date)>0)
                     {
-                      $date1 = date('Y-m-d',strtotime($expired_date));
-                       $date2 = date('Y-m-d h:m:s');
-
-                       $diff = abs(strtotime($date1) - strtotime($date2));
-
-                      $years = floor($diff / (365*60*60*24));
-                      $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
-                      $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
-                      if($days>0)
+                        $expire_date = new \Carbon($expired_date);
+                       $now = Carbon::now();
+                       $difference = ($expire_date->diff($now)->days < 1)
+                            ? 'today'
+                            : $expire_date->diffForHumans($now);
+                           
+                        if (strpos($difference, 'after') !== false || strpos($difference, 'today') !== false) 
                         {
-                           echo "<div style='color: Green;'>".$days.' Days Remains To Expire</div>' ;
+                          if($difference=='today')
+                          {
+                           echo "<div style='color: Green;'>Active only for ".$difference;
+                          }
+                          else
+                          {
+                            echo "<div style='color: Green;'>".$difference."  Membership plan get expired";;
+                          }
                         }
                         else
                         {

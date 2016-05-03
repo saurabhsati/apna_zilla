@@ -14,6 +14,7 @@ use App\Models\TransactionModel;
 use App\Models\MembershipModel;
 use Validator;
 use Session;
+use Carbon\Carbon as Carbon;
 class DealController extends Controller
 {
     //
@@ -37,54 +38,75 @@ class DealController extends Controller
         {
             $transaction_details = $obj_tran_data->toArray();
         }
-         if(sizeof($transaction_details)>0)
-         {
-            $expired_date=$transaction_details['expire_date'];
-            $arr_plan=array();
-            $no_of_deals=$add_deal=0;
-            $plan_id=$transaction_details['membership_id'];
-            if($plan_id==1)
-            {
-                $no_of_deals="unlimited";
-            }
-            else
-            {
-                $obj_plan=MembershipModel::where('plan_id',$plan_id)->first();
-                if($obj_plan)
-                {
-                    $arr_plan=$obj_plan->toArray();
-                    $no_of_deals=$arr_plan['no_normal_deals'];
+        $expired_date='';
+        $arr_plan=array();
+        $no_of_deals=$add_deal=0;
+        if(sizeof($transaction_details)>0)
+        {
 
+             $expired_date = new Carbon($transaction_details['expire_date']);
+            $now = Carbon::now();
+            $difference = ($expired_date->diff($now)->days < 1)
+                ? 'today'
+                : $expired_date->diffForHumans($now);
+            if (strpos($difference, 'after') !== false) 
+            {
+                 
+                $plan_id=$transaction_details['membership_id'];
+                if($plan_id==1)
+                {
+                    $no_of_deals="unlimited";
                 }
-            }
+                else
+                {
+                    $obj_plan=MembershipModel::where('plan_id',$plan_id)->first();
+                    if($obj_plan)
+                    {
+                        $arr_plan=$obj_plan->toArray();
+                        $no_of_deals=$arr_plan['no_normal_deals'];
+
+                    }
+                }
+
+                 $obj_business = $this->BusinessListingModel->where('id',$id)->first();
+
+                if($obj_business)
+                {
+                    $arr_business = $obj_business->toArray();
+                }
+                $obj_deal=$this->DealModel->with('business_info')->where('business_id',$id)->get();
+                if($obj_deal)
+                {
+                    $arr_deal = $obj_deal->toArray();
+                    $total_deal_count=count($arr_deal);
+                }
+                if($no_of_deals=="unlimited")
+                {
+                    $add_deal=1;
+                }
+                else if($no_of_deals>$total_deal_count)
+                {
+                    $add_deal=1;
+                }
+                else
+                {
+                    $add_deal=0;
+                }
+
+             }
+             else
+             {
+                $data_arr['is_active']=0;
+                $this->DealModel->where('business_id',$id)->update($data_arr);
+                $add_deal='expired';
+             }
+
+            
          }
 
 
 
-        $obj_business = $this->BusinessListingModel->where('id',$id)->first();
-
-        if($obj_business)
-        {
-            $arr_business = $obj_business->toArray();
-        }
-        $obj_deal=$this->DealModel->with('business_info')->where('business_id',$id)->get();
-        if($obj_deal)
-        {
-            $arr_deal = $obj_deal->toArray();
-            $total_deal_count=count($arr_deal);
-        }
-        if($no_of_deals=="unlimited")
-        {
-            $add_deal=1;
-        }
-        else if($no_of_deals>$total_deal_count)
-        {
-            $add_deal=1;
-        }
-        else
-        {
-            $add_deal=0;
-        }
+       
        // dd($no_of_deals);
     	return view('web_admin.deal.index',compact('page_title','arr_business','arr_deal','deal_public_img_path','add_deal','expired_date'));
     }

@@ -839,35 +839,7 @@ $('#remove-image').click(function()
      html.remove();
 });
 
-function updateCategoryOptGroup(ref)
-{
-  var arr_optgroup_ref = $(ref).find('optgroup');
-  var current_option_grp =$(ref).find("option:selected").parent('optgroup');
 
-  $.each(arr_optgroup_ref,function(index,optgroup)
-  {
-    if($(optgroup).attr('label')!=$(current_option_grp).attr('label'))
-    {
-      $(optgroup).attr('disabled','disabled');
-    }
-    else
-    {
-      $(optgroup).removeAttr('disabled');
-    }
-
-
-  });
-
-}
-function clearCategoryOptGroup()
-{
-  var arr_optgroup_ref = $('#business_cat').find('optgroup');
-    $.each(arr_optgroup_ref,function(index,optgroup)
-  {
-          $(optgroup).removeAttr('disabled');
-
-  });
-}
  $('.add_serc').click(function()
  {
       $(".add_more_service").removeAttr("style");

@@ -41,7 +41,7 @@
                               <div class="deals-nm"><a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$deals['name']))}}/{{base64_encode($deals['id'])}}">{{ $deals['name'] }}</a></div>
                               <div class="online-spend"></div>
                                       <div class="price-box">
-                                      <div class="price-new">£<?php echo round($deals['price']-(($deals['price'])*($deals['discount_price']/100)));?></div>
+                                      <div class="price-new">£<?php echo number_format(($deals['price']-(($deals['price'])*($deals['discount_price']/100))),2);?></div>
                                           <div class="price-old">£{{ $deals['price'] }} <!--| <span>offers 50% OFF</span>--></div>
                                           <div class="view"><a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$deals['name']))}}/{{base64_encode($deals['id'])}}" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
                                       </div>
@@ -71,7 +71,7 @@
                           <div class="deals-nm"><a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$max_dis_deals['name']))}}/{{base64_encode($max_dis_deals['id'])}}">{{ $max_dis_deals['name'] }}</a></div>
                           <div class="online-spend"></div>
                                   <div class="price-box">
-                                  <div class="price-new">£<?php echo round($max_dis_deals['price']-(($max_dis_deals['price'])*($max_dis_deals['discount_price']/100)));?></div>
+                                  <div class="price-new">£<?php echo number_format(($max_dis_deals['price']-(($max_dis_deals['price'])*($max_dis_deals['discount_price']/100))),2);?></div>
                                       <div class="price-old">£{{ $max_dis_deals['price'] }} <!--| <span>offers 50% OFF</span>--></div>
                                       <div class="view"><a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$max_dis_deals['name']))}}/{{base64_encode($max_dis_deals['id'])}}" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
                                   </div>
@@ -99,7 +99,7 @@
                           <div class="deals-nm"><a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$loc_deals['name']))}}/{{base64_encode($loc_deals['id'])}}">{{ $loc_deals['name'] }}</a></div>
                           <div class="online-spend"></div>
                                   <div class="price-box">
-                                  <div class="price-new">£<?php echo round($loc_deals['price']-(($loc_deals['price'])*($loc_deals['discount_price']/100)));?></div>
+                                  <div class="price-new">£<?php echo number_format(($loc_deals['price']-(($loc_deals['price'])*($loc_deals['discount_price']/100))),2);?></div>
                                       <div class="price-old">£{{ $loc_deals['price'] }} <!--| <span>offers 50% OFF</span>--></div>
                                       <div class="view"><a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$loc_deals['name']))}}/{{base64_encode($loc_deals['id'])}}" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
                                   </div>
