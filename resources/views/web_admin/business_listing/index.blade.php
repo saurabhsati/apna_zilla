@@ -285,21 +285,19 @@
                     <?php
                     if(sizeof($business['membership_plan_details']  )>0)
                     {
-                      $date1 = date('Y-m-d',strtotime($business['membership_plan_details'][0]['expire_date']));
-                       $date2 = date('Y-m-d h:m:s');
 
-                       $diff = abs(strtotime($date1) - strtotime($date2));
-
-                      $years = floor($diff / (365*60*60*24));
-                      $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
-                      $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
-                      if($days>0)
-                      {
-                      ?>
-
-                       @if($business['is_active']!="1"  && $check_allow=='0')
-                           <a class="btn btn-success" href="#">
-                           View Deals
+                        $expire_date = new \Carbon($business['membership_plan_details'][0]['expire_date']);
+                        $now = Carbon::now();
+                        $difference = ($expire_date->diff($now)->days < 1)
+                            ? 'today'
+                            : $expire_date->diffForHumans($now);
+                           
+                        if (strpos($difference, 'after') !== false || strpos($difference, 'today') !== false) 
+                        {
+                        ?>
+                        @if($check_allow=='0')
+                           <a class="btn btn-error" href="javascript:void(0);">
+                          No Feature
                             </a>
                        @elseif($business['is_active']=="1" && $check_allow=='1')
                            <a class="btn btn-success" href="{{ url('/web_admin/deals/'.base64_encode($business['id'])) }}">

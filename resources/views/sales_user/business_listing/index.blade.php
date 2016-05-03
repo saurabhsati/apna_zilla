@@ -128,48 +128,72 @@
             <table class="table table-advance"  id="business_manage" >
               <thead>
                 <tr>
-                  <th style="width:10px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
-                  <th style="width:10px;">Sr.No</th>
-                  <th width="" style="text-align:center">Business Image</th>
-                  <th width="" style="text-align:center">Business Name</th>
-                  <th width="" style="text-align:center">Business Public Id</th>
-                  <th width="" style="text-align:center">Seller First Name</th>
-                  <th width="" style="text-align:center">Seller Public ID</th>
-
-                  <th width="" style="text-align:center">Main Category</th>
-                  <th width="" style="text-align:center">Sub Category</th>
-                  
-                 <!--  <th style="width:25px;">Mobile No</th> -->
-                 <!--  <th>City</th> -->
-                  <th width="" style="text-align:center">Reviews</th>
-                  <th width="" style="text-align:center" >Deals</th>
-
-                  <th width="" style="text-align:center">Verified Status</th>
-                  <th width="" style="text-align:center">Action</th>
-                  <th width="" style="text-align:center">Assign Membership</th>
-                   <th width="" style="text-align:center">Validity Status</th>
+                  <th style="width:1%"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
+                  <th style="width:1%;">No</th>
+                 <!--  <th width="width:10%;" style="text-align:center">Business Image</th> -->
+                  <th width="width:10%;" style="text-align:center">Business Public Id</th>
+                  <th width="width:10%;" style="text-align:center">Business Name</th>
+                  <th width="width:3%;" style="text-align:center">Seller First Name</th>
+                  <th width="width:5%;" style="text-align:center">Seller Public ID</th>
+                  <th width="width:5%;" style="text-align:center">Main Category</th>
+                  <th width="width:10%;" style="text-align:center">Sub Category</th>
+                  <th width="width:3%;" style="text-align:center" >Deals</th>
+                  <th width="width:52%;" style="text-align:center">Action</th>
                 </tr>
               </thead>
               <tbody>
 
                @if(isset($business_listing) && sizeof($business_listing)>0)
                   @foreach($business_listing as $key => $business)
+
+                  <?php
+                    $category_id='';
+                     foreach ($business['category'] as $business_category)
+                      {
+                         foreach ($arr_sub_category as $sub_category)
+                          {
+                            if($business_category['category_id']==$sub_category['cat_id'])
+                            {
+                               foreach ($arr_main_category as $main_category)
+                               {
+                                  if($sub_category['parent']==$main_category['cat_id'])
+                                  {
+                                   $category_id=$sub_category['parent'];
+                                  }
+                                }
+                            }
+                          }
+                      }
+                     $category_id;
+                     $business_id=$business['id'];
+                     $user_id=$business['user_details']['id'];
+
+                     if(!sizeof($business['membership_plan_details'])>0)
+                     {
+                       $style= " alert  alert red";
+                     }
+                     else
+                     {
+                       $style='';
+                       $style= 'style="color: Green;"';
+                     }
+                     ?>
                   <tr>
-                    <td>
+                    <td width="width:1%;">
                       <input type="checkbox"
                              name="checked_record[]"
                              value="{{ base64_encode($business['id']) }}" />
-                    </td>
+                    </td width="width:1%;">
                      <td >
                       {{ $key+1 }}
                     </td>
-                    <td>
-                    <img src="{{ $business_public_img_path.'/'.$business['main_image']}}" alt=""   style="width:30px; height:30px;" />   </td>
-                    <td> {{ $business['business_name'] }} </td>
-                     <td> {{ $business['busiess_ref_public_id'] }} </td>
-                     <td> {{ $business['user_details']['first_name'] }} </td>
-                    <td> {{ $business['user_details']['public_id'] }} </td>
-                  <td>
+                    <!-- <td>
+                    <img src="{{ $business_public_img_path.'/'.$business['main_image']}}" alt=""   style="width:30px; height:30px;" />   </td> -->
+                    <td width="width:10%;"> {{ $business['business_name'] }} </td>
+                     <td width="width:10%;"> {{ $business['busiess_ref_public_id'] }} </td>
+                     <td width="width:3%;"> {{ $business['user_details']['first_name'] }} </td>
+                    <td width="width:5%;"> {{ $business['user_details']['public_id'] }} </td>
+                  <td width="width:5%;">
                    <?php
                     $categoty=$subcategory=array();
                     if(isset($business['category']) && sizeof($business['category'])>0){
@@ -199,7 +223,7 @@
 
                   ?>
                   </td>
-                   <td>
+                   <td width="width:10%;">
                        <?php
                        if(sizeof($subcategory)>0)
                        {
@@ -217,13 +241,8 @@
                     <!--  <td> {{ $business['user_details']['city'] }} </td> -->
 
 
-                      @if( sizeof($business['reviews'])>0)
-                      <td><a href="{{ url('sales_user/reviews/'.base64_encode($business['id'])) }}"> ( {{ sizeof($business['reviews']) }} ) </a></td>
-                      @else
-                       <td><a href="#"> ( {{ sizeof($business['reviews']) }} ) </a></td>
-                       @endif
 
-                    <td>
+                    <td width="width:3%;">
 
                        <?php
                  foreach ($business['category'] as $business_category) {
@@ -292,20 +311,25 @@
                        ?>
 
                     </td>
-                     <td >
+                     <td width="width:52%;">
+                     @if( sizeof($business['reviews'])>0)
+                     <a href="{{ url('sales_user/reviews/'.base64_encode($business['id'])) }}"> <i class="glyphicon glyphicon-star" ></i> </a>
+                      @else
+                       <a href="#"> <i class="glyphicon glyphicon-star-empty" ></i> </a>
+                       @endif
+                       |
                          @if($business['is_verified']=="0")
-                        <a class="btn btn-danger" href="{{ url('/sales_user/business_listing/toggle_verifired_status/').'/'.base64_encode($business['id']).'/verified' }}">
-                            Un-Verified
+                        <a  href="{{ url('/sales_user/business_listing/toggle_verifired_status/').'/'.base64_encode($business['id']).'/verified' }}">
+                            <i class="fa fa-thumbs-down" ></i>
                         </a>
 
                         @elseif($business['is_verified']=="1")
-                        <a  class="btn btn-success" href="{{ url('/sales_user/business_listing/toggle_verifired_status/').'/'.base64_encode($business['id']).'/unverified' }}">
-                           Verified
+                        <a   href="{{ url('/sales_user/business_listing/toggle_verifired_status/').'/'.base64_encode($business['id']).'/unverified' }}">
+                          <i class="fa fa-thumbs-up" ></i>
                         </a>
                         @endif
-                    </td>
-
-                    <td>
+                        |
+                   
                      @if($business['is_active']=="0")
                         <a  href="{{ url('/sales_user/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/activate' }}" class="show-tooltip" title="Block">
                            <i class="fa fa-lock" ></i>
@@ -320,87 +344,23 @@
                              <i class="fa fa-unlock-alt" ></i>
                         </a>
                         @endif
-                        &nbsp;
+                        |
                       <a href="{{ url('/sales_user/business_listing/show/').'/'.base64_encode($business['id']) }}" class="show-tooltip" title="Show">
                           <i class="fa fa-eye" ></i>
                         </a>
-                         &nbsp;
+                        |
                         <a href="{{ url('/sales_user/business_listing/edit/').'/'.base64_encode($business['id']) }}" class="show-tooltip" title="Edit">
                           <i class="fa fa-edit" ></i>
                         </a>
 
-                        &nbsp;
+                       |
                         <a href="{{ url('/sales_user/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/delete' }}"
                            onclick="javascript:return confirm_delete()" class="show-tooltip" title="Delete">
                           <i class="fa fa-trash" ></i>
                         </a>
 
                     </td>
-                    <td>
-                      <?php
-                         foreach ($business['category'] as $business_category)
-                          {
-                             foreach ($arr_sub_category as $sub_category)
-                              {
-                                if($business_category['category_id']==$sub_category['cat_id'])
-                                {
-                                   foreach ($arr_main_category as $main_category)
-                                   {
-                                      if($sub_category['parent']==$main_category['cat_id'])
-                                      {
-                                       $category_id=$sub_category['parent'];
-                                      }
-                                    }
-                                }
-                              }
-                          }
-                            $business_id=$business['id'];
-                            $user_id=$business['user_details']['id'];
-
-                      if(!sizeof($business['membership_plan_details'])>0)
-                    {?>
-                      <a href="{{ url('/sales_user/business_listing/assign_membership').'/'.base64_encode($business['id']).'/'.base64_encode($user_id).'/'.base64_encode($category_id) }}" class="show-tooltip" title="Assign Membership">
-                          <i class="fa fa-euro" ></i>
-                        </a>
-                        <?php }
-                        else
-                          {?>
-                              <div style="color: Green;">Assigned</div>
-                           <?php }?>
-
-                    </td>
-                    <td>
-                    <?php
-                    if(sizeof($business['membership_plan_details']  )>0)
-                    {
-                      $date1 = date('Y-m-d',strtotime($business['membership_plan_details'][0]['expire_date']));
-                       $date2 = date('Y-m-d h:m:s');
-
-                       $diff = abs(strtotime($date1) - strtotime($date2));
-
-                      $years = floor($diff / (365*60*60*24));
-                      $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
-                      $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
-                      if($days>0)
-                        {
-                          echo "<div style='color: Green;'>".$days.' Days Remains To Expire</div>' ;
-                        }
-                        else
-                        {
-                          echo "<div style='color: red;'>Expired</div>";
-                        }
-
-
-                    }
-                    else
-                    {
-                      echo "<div >NA</div>";
-                    }
-
-
-
-                     ?>
-                    </td>
+                    
 
                   </tr>
                   @endforeach
