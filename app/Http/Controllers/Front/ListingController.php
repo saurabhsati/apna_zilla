@@ -60,7 +60,7 @@ class ListingController extends Controller
         $obj_business_details = BusinessListingModel::where('id',$id)->first();
         if($obj_business_details)
         {
-            $obj_business_details->load(['business_times','also_list_category','reviews','image_upload_details','payment_mode','country_details','state_details','category_details','service']);
+            $obj_business_details->load(['business_times','also_list_category','reviews','image_upload_details','payment_mode','category_details','service']);
             $arr_business_details = $obj_business_details->toArray();
         }
 

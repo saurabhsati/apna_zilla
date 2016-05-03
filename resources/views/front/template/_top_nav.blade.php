@@ -66,7 +66,7 @@
 
 
                         </ul>
-                        <?php if(empty(session::get('user_mail')))
+                        <?php if(empty(session::get('user_name')))
                         {
                           /*echo '<a data-toggle="modal" id="open_register" data-target="#reg_poup" class="btn btn-post" >List your Business </a>';*/
                           echo '<a data-toggle="modal" id="open_register" data-target="#reg_poup" class="btn btn-post" onclick="set_flag()" >List your Business </a>';

@@ -150,7 +150,7 @@
                    </div>
                  </div>
 
-                 <div class="user_box_sub">
+                 <!-- <div class="user_box_sub">
                    <div class="row">
                     <div class="col-lg-3  label-text">Street Address :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
@@ -159,7 +159,7 @@
                      class="input_acct" placeholder="Enter Street address  "/>
                    </div>
                  </div>
-               </div>
+               </div> -->
 
 
              <button type="submit" style="float: left;margin-left: 142px;;" class="yellow1 ui button">Save & Continue</button>

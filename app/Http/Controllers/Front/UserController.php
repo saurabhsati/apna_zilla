@@ -271,26 +271,26 @@ class UserController extends Controller
 
         $title                    =   $request->input('title');
         $first_name               =   $request->input('first_name');
-        $middle_name              =   $request->input('middle_name');
-        $last_name                =   $request->input('last_name');
+       /* $middle_name              =   $request->input('middle_name');
+        $last_name                =   $request->input('last_name');*/
         $marital_status           =   $request->input('marital_status');
 
         $city                     =   $request->input('city');
         $area                     =   $request->input('area');
         $pincode                  =   $request->input('pincode');
-        $occupation               =   $request->input('occupation');
+       /* $occupation               =   $request->input('occupation');*/
         $email                    =   $request->input('email');
         $mobile_no                =   $request->input('mobile_no');
-        $home_landline            =   $request->input('home_landline');
+       /* $home_landline            =   $request->input('home_landline');
         $std_home_landline        =   $request->input('std_home_landline');
         $office_landline          =   $request->input('office_landline');
         $std_office_landline      =   $request->input('std_office_landline');
-        $extn_office_landline     =   $request->input('extn_office_landline');
+        $extn_office_landline     =   $request->input('extn_office_landline');*/
 
         $gender                    =   $request->input('gender');
         $work_experience                    =   $request->input('work_experience');
 
-        $obj_user_info = UserModel::where('email','=',$email)->get();
+        $obj_user_info = UserModel::where('id',$id)->get();
 
         if($obj_user_info!=FALSE)
         {
@@ -351,8 +351,8 @@ class UserController extends Controller
             'profile_pic'       =>    $profile_pic,
             //'title'             =>    $title,
             'first_name'        =>    $first_name,
-            'middle_name'       =>    $middle_name,
-            'last_name'         =>    $last_name,
+           /* 'middle_name'       =>    $middle_name,
+            'last_name'         =>    $last_name,*/
             'dd'                =>    $dd,
             'mm'                =>    $mm,
             'yy'                =>    $yy,
@@ -362,15 +362,15 @@ class UserController extends Controller
             //'city'              =>    $city,
             'gender'            =>    $gender,
             'work_experience'   =>    $work_experience,
-            'occupation'        =>    $occupation,
+            /*'occupation'        =>    $occupation,*/
             'email'             =>    $email,
             'prefix_name'       =>    $title,
             'mobile_no'         =>    $mobile_no,
-            'home_landline'     =>    $home_landline,
+           /* 'home_landline'     =>    $home_landline,
             'std_home_landline' =>    $std_home_landline,
             'office_landline'       => $office_landline,
             'std_office_landline'   => $std_office_landline,
-            'extn_office_landline'  => $extn_office_landline
+            'extn_office_landline'  => $extn_office_landline*/
         ];
 
         //dd($credentials);

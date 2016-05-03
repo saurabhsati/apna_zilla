@@ -66,21 +66,8 @@
                            {{ csrf_field() }}
 
 
-    <?php
-        use App\Models\UserModel;
-        if( (count($arr_user_info)==0) && (session('user_mail') !="") )
-        {
-            $user_mail = session('user_mail');
-            $obj_user_info = UserModel::where('email',$user_mail)->get();
-            if($obj_user_info)
-            {
-                $arr_user_info = $obj_user_info->toArray();
-            }
+    
 
-        }
-    ?>
-
-    {{-- dd($arr_user_info) --}}
 
     @if(count($arr_user_info)>0)
 
@@ -142,7 +129,7 @@
                          </div>
                     </div>
 
-                    <div class="user_box_sub">
+                   <!--  <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">Middle Name :</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
@@ -164,13 +151,12 @@
                                 placeholder="Enter Last Name "
                                 data-rule-required=""
                                 />
-                                <!-- onblur="validate()" -->
-
+                               
                                 <div class="error_msg" id="err_ln">  </div>
                         </div>
                          </div>
                     </div>
-
+ -->
                        <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">DOB :</div>
@@ -337,7 +323,7 @@
                     </div>
                     </div>
                     @endif
-                    <div class="user_box_sub">
+                   <!--  <div class="user_box_sub">
                         <div class="row">
                                 <div class="col-lg-3  label-text">Work Experience</div>
                                 <div class="col-sm-12 col-md-12 col-lg-9 m_l">
@@ -373,7 +359,7 @@
                                class="input_acct" placeholder="Enter Email ID" readonly="true"  data-rule-required="" />
                         </div>
                          </div>
-                    </div>
+                    </div> -->
 
                       <div class="user_box_sub">
                            <div class="row">
@@ -390,7 +376,7 @@
                          </div>
                     </div>
 
-                    <div class="user_box_sub">
+                    <!-- <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">Home Landline :</div>
 
@@ -429,7 +415,7 @@
                                  placeholder="EXTN">
                         </div>
                          </div>
-                    </div>
+                    </div> -->
 
                     </div>
 

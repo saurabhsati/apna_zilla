@@ -93,19 +93,14 @@
                <!-- /#Categoriesr End-->
                <div class="clearfix"></div>
             </div>
-             <div class="categories_sect sidebar-nav">
+             <!-- <div class="categories_sect sidebar-nav">
                <div class="sidebar-brand"><img src="{{ url('/') }}/assets/front/images/info-icns.png" alt="services"/>About Me<span class="spe_mobile3"><a href="#"></a></span></div>
                <div class="bor_head">&nbsp;</div>
                <ul class="spe_submobile3">
-                  @if(isset($arr_business_details['company_info']))
-                  <span class="col-sm-3 col-md-3 col-lg-12">{{$arr_business_details['company_info']}}</span>
-                  @else
-                  <span class="col-sm-3 col-md-3 col-lg-12">No About Info Available.</span>
-                  @endif
+                 
                </ul>
-               <!-- /#Categoriesr End-->
                <div class="clearfix"></div>
-            </div>
+            </div> -->
          </div>
          @if(isset($arr_business_details) && sizeof($arr_business_details)>0)
          <div class="col-sm-12 col-md-9 col-lg-9">
@@ -129,8 +124,14 @@
                         <?php }?>
                       </div>
                      <div class="p_details"><i class="fa fa-phone"></i><span> {{$arr_business_details['landline_number']}} &nbsp; {{$arr_business_details['mobile_number']}}</span></div>
-                     <div class="p_details"><i class="fa fa-map-marker"></i> <span>{{$arr_business_details['building']}} &nbsp; {{$arr_business_details['street']}},<br/> {{$arr_business_details['landmark']}},&nbsp;{{$arr_business_details['area']}},&nbsp;{{$arr_business_details['state_details']['state_title']}},&nbsp;{{$arr_business_details['country_details']['country_name']}} (<a href="javascript:void(0);" onclick="show_map()">map</a>)</span></div>
-                     <input type="hidden" value=" <?php echo strip_tags($arr_business_details['building'] .', ' .$arr_business_details['street'].',<br/>' .$arr_business_details['landmark'].', '.$arr_business_details['area'].', '.$arr_business_details['state_details']['state_title'].', '.$arr_business_details['country_details']['country_name']); ?>" name="set_loc_info" id="set_loc_info">
+                     <div class="p_details"><i class="fa fa-map-marker"></i> <span>{{$arr_business_details['area']}} (<a href="javascript:void(0);" onclick="show_map()">map</a>)</span></div>
+                     <input type="hidden" value=" <?php echo strip_tags($arr_business_details['area']); ?>" name="set_loc_info" id="set_loc_info">
+                      <input type="hidden" 
+                           name="area"
+                           id="area"
+                           value="{{ isset($arr_business_details['area'])?$arr_business_details['area']:'' }}"
+
+                           />
                      <div class="p_details ">
                         <i class="fa fa-clock-o"></i><span>
                         @if(isset($arr_business_details['business_times']) && $arr_business_details['business_times']!='')
@@ -148,8 +149,13 @@
                         @else
                         <span>Business Time Not Available.</span>
                         @endif
+                        @if(isset($arr_business_details['website']) && !empty($arr_business_details['website']))
                         <div class="add_det"><i class="fa fa-globe"></i><a href="http://{{$arr_business_details['website']}}" target="_blank"> {{$arr_business_details['website']}}</a></div>
+                         @endif
+                          @if(isset($arr_business_details['email_id']) && !empty($arr_business_details['email_id']))
+                       
                          <div class="enquiry"><a data-toggle="modal" data-target="#enquiry"><i class="fa fa-envelope"></i> Send Enquiry By Email</a></div>
+                        @endif
                      </div>
                       <div class="p_details lst" >
                     @if(Session::has('user_mail'))
@@ -283,6 +289,9 @@
                      <li id="review">Add a Review </li>
                      <img class="dash_line" alt="line" src="{{ url('/') }}/assets/front/images/dash_menu_line.jpg">
                      <li>Gallery</li>
+                      <img class="dash_line" alt="line" src="{{ url('/') }}/assets/front/images/dash_menu_line.jpg">
+                      <li>Company Info</li>
+                       
                      <div class="clearfix"></div>
                   </ul>
                   <div class="resp-tabs-container" >
@@ -475,7 +484,16 @@
                            <div class="clr"></div>
                         </div>
                      </div>
-
+                     <div>
+                    <div class="company_info " style="text-align: justify;">
+                        @if(isset($arr_business_details['company_info']))
+                          {{strip_tags($arr_business_details['company_info'])}}
+                          @else
+                          No company Info Available.
+                          @endif
+                       </div>
+                       
+                     </div>
 
 
                   </div>
@@ -706,6 +724,7 @@
     </div>
   </div>
 <div id="lastResults"></div>
+
 <script type="text/javascript">
 //var site_url="{{url('/')}}";
    // $('#submit_review').click(function(){
@@ -1014,8 +1033,6 @@ function check_review()
 
             console.log(delta);
         });
-
-         //var addr = "<?php echo $arr_business_details['street'];?>,"+"<?php echo $arr_business_details['area'];?>,"+"<?php echo $arr_business_details['state_details']['state_title'];?>,"+"<?php echo $arr_business_details['country_details']['country_name'];?>";
 
         // setMapLocation(addr);
         //onload_address_map();//call function onload
