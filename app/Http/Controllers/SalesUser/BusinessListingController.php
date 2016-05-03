@@ -168,6 +168,7 @@ class BusinessListingController extends Controller
             return redirect('/sales_user/business_listing/create')->withErrors($validator)->withInput();
         }
         $form_data=$request->all();
+       // dd($form_data);
         $arr_data['user_id']=$form_data['tmp_user_id'];
         $arr_data['is_active']='2';
         $arr_data['business_added_by']=$form_data['business_added_by'];

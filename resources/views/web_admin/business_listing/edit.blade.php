@@ -86,7 +86,7 @@
                            id="business_added_by"
                            data-rule-required="true"
                            placeholder="Enter Business Name"
-                           value="admin"
+                           value="{{ isset($business['business_added_by'])?$business['business_added_by']:'' }}"
                            readonly="true"
                            />
                     <span class='help-block'>{{ $errors->first('business_added_by') }}</span>
