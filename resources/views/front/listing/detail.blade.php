@@ -290,7 +290,7 @@
                      <img class="dash_line" alt="line" src="{{ url('/') }}/assets/front/images/dash_menu_line.jpg">
                      <li>Gallery</li>
                       <img class="dash_line" alt="line" src="{{ url('/') }}/assets/front/images/dash_menu_line.jpg">
-                      <li>Company Info</li>
+                      <li>About </li>
                        
                      <div class="clearfix"></div>
                   </ul>
