@@ -212,7 +212,7 @@
                            id="user_id"
                            data-rule-required="true"
                            readonly="true"
-                           value="{{ isset($business['city_details']['city_title'])?$business['city_details']['city_title']:'' }}"
+                           value="{{ isset($business['city'])?$business['city']:'' }}"
                            />
                   <span class='help-block'>{{ $errors->first('city') }}</span>
                 </div>
@@ -225,7 +225,7 @@
                            id="user_id"
                            data-rule-required="true"
                            readonly="true"
-                           value="{{ isset($arr_place[0]['postal_code'])?$arr_place[0]['postal_code']:'' }}"
+                           value="{{ isset($business['pincode'])?$business['pincode']:'' }}"
                            />
                     <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
@@ -238,7 +238,7 @@
                            id="user_id"
                            data-rule-required="true"
                            readonly="true"
-                           value="{{ isset($business['state_details']['state_title'])?$business['state_details']['state_title']:'' }}"
+                           value="{{ isset($business['state'])?$business['state']:'' }}"
                            />
                  <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
@@ -251,7 +251,7 @@
                            id="user_id"
                            data-rule-required="true"
                            readonly="true"
-                           value="{{ isset($business['country_details']['country_name'])?$business['country_details']['country_name']:'' }}"
+                           value="{{ isset($business['country'])?$business['country']:'' }}"
                            />
                <span class='help-block'>{{ $errors->first('street') }}</span>
                 </div>
@@ -289,7 +289,7 @@
                     <span class='help-block'>{{ $errors->first('mobile_number') }}</span>
                 </div>
             </div>
-            <div class="form-group">
+           <!--  <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="landline_number">Landline Number <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" readonly="true"
@@ -356,7 +356,7 @@
                 </div>
             </div>
 
-
+ -->
 
 
            <hr/>
@@ -561,7 +561,7 @@
                            id="company_info"
                            data-rule-required="true"
                            placeholder="Enter Company Info"
-                           >{{ isset($business['company_info'])?$business['company_info']:'' }}</textarea>
+                           >{{ isset($business['company_info'])? strip_tags($business['company_info']):'' }}</textarea>
                     <span class='help-block'>{{ $errors->first('company_info') }}</span>
                 </div>
             </div>
@@ -573,11 +573,11 @@
                            id="keywords"
                            data-rule-required="true"
                            placeholder="Enter Keywords"
-                           >{{ isset($business['keywords'])?$business['keywords']:'' }}</textarea>
+                           >{{ isset($business['keywords'])? strip_tags($business['keywords']):'' }}</textarea>
                     <span class='help-block'>{{ $errors->first('keywords') }}</span>
                 </div>
             </div>
-            <div class="form-group">
+           <!--  <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="youtube_link">Youtube Link<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" readonly="true"
@@ -589,7 +589,7 @@
                            />
                     <span class='help-block'>{{ $errors->first('youtube_link') }}</span>
                 </div>
-            </div>
+            </div> -->
             <div class="form-group">
                             <label class="col-sm-3 col-lg-2 control-label"> Business Services  <i class="red"></i> </label>
                             <div class="col-sm-9 col-lg-10 controls">

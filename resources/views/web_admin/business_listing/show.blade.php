@@ -602,7 +602,7 @@
                            id="company_info"
                            data-rule-required="true"
                            placeholder="Enter Company Info"
-                           >{{ isset($business['company_info'])?$business['company_info']:'' }}</textarea>
+                           >{{ isset($business['company_info'])? strip_tags($business['company_info']):'' }}</textarea>
                     <span class='help-block'>{{ $errors->first('company_info') }}</span>
                 </div>
             </div>
@@ -614,7 +614,7 @@
                            id="keywords"
                            data-rule-required="true"
                            placeholder="Enter Keywords"
-                           >{{ isset($business['keywords'])?$business['keywords']:'' }}</textarea>
+                           >{{ isset($business['keywords'])? strip_tags($business['keywords']):'' }}</textarea>
                     <span class='help-block'>{{ $errors->first('keywords') }}</span>
                 </div>
             </div>
