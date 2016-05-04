@@ -37,6 +37,7 @@ class PayumoneyController extends Controller
 
     	 $user_name=($request->input('user_name'));
 		 $user_mail=($request->input('user_mail'));
+		 $phone=($request->input('phone'));
 		 $user_id=base64_decode($request->input('user_id'));
          $category_id=base64_decode($request->input('category_id'));
          $plan_id=$request->input('plan_id');
@@ -94,7 +95,7 @@ class PayumoneyController extends Controller
 	        //dd($arr_data);
 	        $transaction = TransactionModel::create($arr_data);
 	        $parameter_post = array (	'key' => 'gtKFFx', 'txnid' =>$txnid , 'amount' =>$price,
-				'firstname' =>$user_name, 'email' => $user_mail,
+				'firstname' =>$user_name, 'phone' => $phone,
 				'productinfo' =>  $business_name, 'surl' => $surl, 'furl' => $furl);
 			$salt ='eCwWELxi';
 			$run=$this->pay_page($parameter_post, $salt);
@@ -154,7 +155,8 @@ class PayumoneyController extends Controller
                  //print_r($content);exit;
                 $content = view('email.front_general',compact('content'))->render();
                 $content = html_entity_decode($content);
-                  
+                if(!empty($email))
+                {	
                 $send_mail = Mail::send(array(),array(), function($message) use($email,$first_name,$arr_email_template,$content)
                             {
                                 $message->from($arr_email_template['template_from_mail'], $arr_email_template['template_from']);
@@ -162,18 +164,24 @@ class PayumoneyController extends Controller
                                         ->subject($arr_email_template['template_subject'])
                                         ->setBody($content, 'text/html');
                             });
-
+                      if($send_mail)
+			            {
+						 Session::flash('success_payment','Success ! Payment done successfully ! ');
+						 return redirect(url('/').'/front_users/my_business');
+						}
+						else
+			            {
+			                Session::flash('error_payment','Payment done successfully But Mail Not Delivered Yet !');
+			                 return redirect(url('/').'/front_users/my_business');
+			            }
+                }
+                else
+                {
+                	Session::flash('success_payment','Success ! Payment done successfully ! ');
+						 return redirect(url('/').'/front_users/my_business');
+                }
                 //return $send_mail;
-            if($send_mail)
-            {
-			 Session::flash('success_payment','Success ! Payment done successfully ! ');
-			 return redirect(url('/').'/front_users/my_business');
-			}
-			else
-            {
-                Session::flash('error_payment','Payment done successfully But Mail Not Delivered Yet !');
-                 return redirect(url('/').'/front_users/my_business');
-            }
+          
         }
       }
 		//echo "Payment Success" . "<pre>" . print_r( $_POST, true ) . "</pre>";

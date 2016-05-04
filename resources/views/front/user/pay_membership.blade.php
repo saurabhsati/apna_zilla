@@ -40,7 +40,9 @@
            <input type="hidden" name="business_name" id="business_name" value="{{$enc_business_name}}">
            <input type="hidden" name="user_id" id="user_id" value="{{$enc_user_id}}">
             <input type="hidden" name="user_name" id="user_name" value="{{session('user_name')}}">
-            <input type="hidden" name="user_mail" id="user_mail" value="{{session('user_mail')}}">
+            <input type="hidden" name="phone" id="phone" value="{{session('mobile_no')}}">
+            <input type="hidden" name="user_mail" id="user_mail" value="@if(Session::has('user_mail')){{session('user_mail')}}@endif">
+          
            <input type="hidden" name="category_id" id="category_id" value="{{$enc_category_id}}">
 
            <input type="hidden" name="validity" id="validity" value="">

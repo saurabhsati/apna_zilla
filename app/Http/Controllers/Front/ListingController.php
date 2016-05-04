@@ -286,7 +286,7 @@ class ListingController extends Controller
           }
           else
           {
-            $result = FavouriteBusinessesModel::create(array('user_id'=>$user_id,'business_id'=>$business_id,'is_favourite'=>'1'));
+            $result = FavouriteBusinessesModel::create(array('user_id'=>$user_id  ,'business_id'=>$business_id,'is_favourite'=>'1'));
             $json['status'] = "favorites";
           }
         }
