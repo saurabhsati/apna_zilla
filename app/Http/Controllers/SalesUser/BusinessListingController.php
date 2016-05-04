@@ -1009,15 +1009,20 @@ class BusinessListingController extends Controller
                  //print_r($content);exit;
                 $content = view('email.front_general',compact('content'))->render();
                 $content = html_entity_decode($content);
-
-                $send_mail = Mail::send(array(),array(), function($message) use($email,$first_name,$arr_email_template,$content)
-                            {
-                                $message->from($arr_email_template['template_from_mail'], $arr_email_template['template_from']);
-                                $message->to($email, $first_name)
-                                        ->subject($arr_email_template['template_subject'])
-                                        ->setBody($content, 'text/html');
-                            });
-
+                if($email!='')
+                {
+                            $send_mail = Mail::send(array(),array(), function($message) use($email,$first_name,$arr_email_template,$content)
+                                {
+                                    $message->from($arr_email_template['template_from_mail'], $arr_email_template['template_from']);
+                                    $message->to($email, $first_name)
+                                            ->subject($arr_email_template['template_subject'])
+                                            ->setBody($content, 'text/html');
+                                });
+                  }
+              else
+                {
+                    Session::flash('success','Success ! Membership Assign Successfully! ');
+                }
                 //return $send_mail;
                 if($send_mail)
                 {
