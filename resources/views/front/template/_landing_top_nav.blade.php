@@ -32,7 +32,7 @@
                            <li class="nav-item"><a href="{{ url('/') }}/{{$city}}/deals">Deals</a></li>
 
                             {{-- @if ($user = Sentinel::check()) --}}
-                            @if(Session::has('user_name'))
+                            @if(Session::has('mobile_no'))
 
                              <li class="nav-item">
                               <div class="dropdown">
@@ -57,7 +57,7 @@
                         </ul>
                         <!-- <a class="btn btn-post" href="javascript:void(0);" id="list_your_business">List your Bussiness</a> -->
                       <?php
-                       if(empty(session::get('user_name')))
+                       if(empty(session::get('mobile_no')))
                         {
                            echo '<a data-toggle="modal" id="open_register" data-target="#reg_poup" class="btn btn-post" onclick="set_flag()" >List your Business </a>';
                         }

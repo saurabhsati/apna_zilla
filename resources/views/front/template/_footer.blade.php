@@ -735,14 +735,14 @@ If you need any more details on RightNext Verified, please refer to
     {
       $('#l_name_error').show();
     }
-    else if(email=="")
+    /*else if(email=="")
     {
       $('#e_error').show();
     }
     else if(!filter.test(email))
     {
       $('#email_error').show();
-    }
+    }*/
     else if(mobile=="")
     {
       $('#m_error').show();

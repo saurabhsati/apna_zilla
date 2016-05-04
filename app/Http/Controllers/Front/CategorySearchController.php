@@ -70,23 +70,7 @@ class CategorySearchController extends Controller
           $arr_business =$arr_sub_cat=$parent_category=$sub_category= array();
           return view('front.listing.index',compact('page_title','arr_business','arr_sub_cat','parent_category','sub_category','city'));
         }
-
-        /* Get Business by city selected */
-        $obj_business_listing_city = CityModel::where('city_title',$city)->get();
-        if($obj_business_listing_city)
-        {
-          $obj_business_listing_city->load(['business_details']);
-          $arr_business_by_city = $obj_business_listing_city->toArray();
-        }
-         $key_business_city=array();
-         if(sizeof($arr_business_by_city)>0)
-          {
-            foreach ($arr_business_by_city[0]['business_details'] as $key => $value) {
-              $key_business_city[$value['id']]=$value['id'];
-            }
-          }
-
-        /* Get Business by Sub-Category Selected */
+      /* Get Business by Sub-Category Selected */
         $obj_business_listing_cat = BusinessCategoryModel::where('category_id',$cat_id)->get();
         if($obj_business_listing_cat)
         {
@@ -102,17 +86,19 @@ class CategorySearchController extends Controller
         }
 
         /* Merge the business by city and Business by category result  and generate the complete business id's array */
+        ///dd($key_business_cat);
          $obj_business_listing=[];
-        if(sizeof($key_business_city)>0 && sizeof($key_business_cat))
+        if(sizeof($key_business_cat)>0)
         {
-            $result = array_intersect($key_business_city,$key_business_cat);
+            $result = $key_business_cat;
 
             $arr_business = array();
             if(sizeof($result)>0)
             {
               /* fetch business records by id's */
-              $obj_business_listing = BusinessListingModel::where('is_active','1')->whereIn('id', $result)->with(['reviews']);
+              $obj_business_listing = BusinessListingModel::where('city',$city)->where('is_active','1')->whereIn('id', $result)->with(['reviews']);
 
+              //dd($obj_business_listing->get()->toArray());
               /* Get business records list order by review as Descending order */
               if( Session::has('review_rating'))
               {
@@ -228,10 +214,11 @@ class CategorySearchController extends Controller
                 }
                 else
                 {
-                  $arr_business = $arr_tmp;
+                  $arr_business = [];
                 }
 
               }
+             // dd( $arr_business);
           return view('front.listing.index',compact('page_title','total_pages','current_page','per_page','arr_business','arr_fav_business','arr_sub_cat','parent_category','sub_category','city','main_image_path'));
        }
        else if(sizeof($obj_business_listing)>0)
@@ -300,7 +287,7 @@ class CategorySearchController extends Controller
 
 
            /* Get Business by city selected */
-          $obj_business_listing_city = CityModel::where('city_title',$city)->get();
+         /* $obj_business_listing_city = CityModel::where('city_title',$city)->get();
           if($obj_business_listing_city)
           {
             $obj_business_listing_city->load(['business_details']);
@@ -313,7 +300,7 @@ class CategorySearchController extends Controller
                 $key_business_city[$value['id']]=$value['id'];
               }
             }
-
+*/
             /* Get Business by category */
             $obj_business_listing = BusinessCategoryModel::where('category_id',$cat_id)->get();
             if($obj_business_listing)
@@ -331,9 +318,9 @@ class CategorySearchController extends Controller
              $obj_business_listing=[];
             /* Merge the business by city and Business by category result  and generate the complete business id's array */
 
-            if(sizeof($key_business_city)>0 && sizeof($key_business_cat))
+            if(sizeof($key_business_cat)>0)
             {
-                $result = array_intersect($key_business_city,$key_business_cat);
+                $result = $key_business_cat;
                 $arr_business = array();
                 if(sizeof($result)>0)
                 {

@@ -58,7 +58,7 @@ class UserController extends Controller
         $arr_rules['first_name']   =   "required";
         $arr_rules['last_name']    =   "required";
         $arr_rules['mobile']       =   "required";
-        $arr_rules['email']        =   "required|email";
+        //$arr_rules['email']        =   "required|email";
         $arr_rules['password']     =   "required|min:6|confirmed";
 
         $validator = Validator::make($request->all(),$arr_rules);
@@ -83,14 +83,15 @@ class UserController extends Controller
             /* Duplication Check*/
 
             $user = Sentinel::createModel();
-
-            if($user->where('email',$email)->get()->count()>0)
+            if($email!='')
             {
-            	$json['status'] = "EMAIL_EXIST_ERROR";
-                $json['msg']    = "Email Id Already Exists";
-                return response()->json($json);
+                if($user->where('email',$email)->get()->count()>0)
+                {
+                	$json['status'] = "EMAIL_EXIST_ERROR";
+                    $json['msg']    = "Email Id Already Exists";
+                    return response()->json($json);
+                }
             }
-
             if($user->where('mobile_no',$mobile)->get()->count()>0)
             {
                 $json['status'] = "MOBILE_EXIST_ERROR";
@@ -125,6 +126,12 @@ class UserController extends Controller
                         $role = Sentinel::findRoleBySlug('normal');
 
                         $user = Sentinel::findById($status->id);
+
+                         $enc_id=$status->id;
+                        //$public_id=uniqid( 'RTN_' ,false);
+                        $public_id = $this->objpublic->generate_public_id($enc_id);
+
+                        $insert_public_id = UserModel::where('id', '=', $enc_id)->update(array('public_id' => $public_id));
 
                         //$user = Sentinel::getUser();
 
@@ -191,9 +198,9 @@ class UserController extends Controller
                 if($active_account)
                 {
 
-                    Session::set('user_id',$user['id']);
+                   /* Session::set('user_id',$user['id']);
                     Session::set('user_name', $user['first_name']);
-                    Session::set('user_mail', $user['email']);
+                    Session::set('user_mail', $user['email']);*/
 
                     $json['status'] = "SUCCESS";
                     Session::flash('success','You Are Registered Successfully.');
