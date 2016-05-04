@@ -262,11 +262,11 @@ class ListingController extends Controller
       $user_id      = base64_decode($request->input('user_id'));
       $business_id    = $request->input('business_id');
 
-      $json      = array();
+      /*$json      = array();
       $obj_user  = UserModel::where('id',$user_id)->first(['id']);
-
+*/
       {
-        $obj_fav = FavouriteBusinessesModel::where(array('user_id'=>$obj_user->id,'business_id'=>$business_id))->get();
+        $obj_fav = FavouriteBusinessesModel::where(array('user_id'=>$user_id,'business_id'=>$business_id))->get();
         if($obj_fav)
         {
           $arr = $obj_fav->toArray();
@@ -274,19 +274,19 @@ class ListingController extends Controller
           {
             if($arr[0]['is_favourite']== '0')
             {
-              $result = FavouriteBusinessesModel::where(array('user_id'=>$obj_user->id,'business_id'=>$business_id))->update(array('is_favourite'=>'1'));
+              $result = FavouriteBusinessesModel::where(array('user_id'=>$user_id,'business_id'=>$business_id))->update(array('is_favourite'=>'1'));
                 $json['status'] = "favorites";
             }
 
             if($arr[0]['is_favourite']== '1')
             {
-              $result = FavouriteBusinessesModel::where(array('user_id'=>$obj_user->id,'business_id'=>$business_id))->update(array('is_favourite'=>'0'));
+              $result = FavouriteBusinessesModel::where(array('user_id'=>$user_id,'business_id'=>$business_id))->update(array('is_favourite'=>'0'));
               $json['status']   = "un_favorites";
             }
           }
           else
           {
-            $result = FavouriteBusinessesModel::create(array('user_id'=>$obj_user->id,'business_id'=>$business_id,'is_favourite'=>'1'));
+            $result = FavouriteBusinessesModel::create(array('user_id'=>$user_id,'business_id'=>$business_id,'is_favourite'=>'1'));
             $json['status'] = "favorites";
           }
         }

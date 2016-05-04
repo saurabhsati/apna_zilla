@@ -19,4 +19,9 @@ class FavouriteBusinessesModel extends Model
 
 						       ];
 
+	public function business()
+	{
+		 return $this->hasMany('App\Models\BusinessListingModel',
+          'id','business_id');
+	}				       
 }

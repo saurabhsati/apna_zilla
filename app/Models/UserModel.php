@@ -50,7 +50,7 @@ class UserModel extends Model
           'user_id','business_id')->where('is_favourite','1');
     }
 
-
+   
 
 
 
