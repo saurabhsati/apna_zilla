@@ -6,6 +6,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Pagination\Paginator;
 
+use App\Common\Services\GeneratePublicId;
+
 use App\Models\UserModel;
 use App\Models\BusinessListingModel;
 use App\Models\CategoryModel;
@@ -41,7 +43,7 @@ class UserController extends Controller
         $arr_except_auth_methods = array();
         $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
 
-
+         $this->objpublic = new GeneratePublicId();
 
         /*$this->business_public_upload_img_path = url('/')."/uploads/business/business_upload_image/";
         $this->business_base_upload_img_path = base_path()."/public/uploads/business/business_upload_image/";*/
@@ -698,6 +700,12 @@ class UserController extends Controller
 
         $business_add = BusinessListingModel::create($arr_data);
         $business_id=$business_add->id;
+
+         $business_cat_slug= $request->input('business_public_id');
+         $public_id = $this->objpublic->generate_business_public_by_category($business_cat_slug,$business_id);
+         BusinessListingModel::where('id', '=', $business_id)->update(array('busiess_ref_public_id' => $public_id));
+
+
           foreach ($business_cat as $key => $value)
         {
             $arr_cat_data['business_id']=$business_id;
@@ -1142,6 +1150,26 @@ class UserController extends Controller
                     $insert_data = BusinessCategoryModel::create($arr_cat_data);
                 }
             }
+
+
+             $business_cat_slug=$request->input('business_public_id');
+             $chk_business_category=[];
+             $chk_business_category=BusinessListingModel::where('id', '=', $id)->where('busiess_ref_public_id',$business_cat_slug)->first();
+             if($chk_business_category)
+             {
+                  $arr_business = $chk_business_category->toArray();
+                  if(sizeof($arr_business)>0)
+                  {
+                    $business_data['busiess_ref_public_id']= $business_cat_slug;
+                  }
+              }
+              else
+              {
+                 $public_id = $this->objpublic->generate_business_public_by_category($business_cat_slug,$id);
+                 $business_data['busiess_ref_public_id']= $public_id;
+                 //BusinessListingModel::where('id', '=', $id)->update(array('busiess_ref_public_id' => $public_id));
+               }
+
             $business_data_res=BusinessListingModel::where('id',$id)->update($business_data);
             if($business_data_res)
             {

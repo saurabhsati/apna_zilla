@@ -108,6 +108,8 @@
                       </div>
                   </div>
                   </div>
+                  <input type="hidden" name="business_public_id" id="business_public_id" value="{{ isset($business['busiess_ref_public_id'])?$business['busiess_ref_public_id']:'' }}">
+           
                   <div class="user_box_sub">
                     <div class="row">
                   <div class="col-lg-3  label-text" for="old_business_cat">Selected Business Category </div>

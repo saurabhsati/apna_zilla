@@ -105,6 +105,7 @@
                       </div>
                   </div>
                   </div>
+                  <input type="hidden" name="business_public_id" id="business_public_id">
                    <div class="user_box_sub">
                     <div class="row">
                   <div class="col-lg-3  label-text" for="main_business_cat">Business Main Category  </div>
