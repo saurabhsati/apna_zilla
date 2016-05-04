@@ -166,6 +166,9 @@
 			else if (e.keyCode==39) {
 				showNext();
 			}
+			else if (e.keyCode==27) { //esc
+				hideOverlay();
+			}
 	
 		});
 		

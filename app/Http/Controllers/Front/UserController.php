@@ -519,33 +519,17 @@ class UserController extends Controller
            return redirect('/');
         }
         //Getting all the details of the Category Table
-     $obj_cat_full_details = CategoryModel::get();
-     if($obj_cat_full_details)
-      {
-         $arr_category = $obj_cat_full_details->toArray();
-       }
+       $obj_category = CategoryModel::where('parent','=',0)->select('cat_id','title')->orderBy('title','ASC')->get();
 
-     //Getting all the details of the City Table
-     $obj_city_full_details = CityModel::get();
+        if($obj_category)
+        {
+            $arr_category = $obj_category->toArray();
+        }
 
-     if($obj_city_full_details)
-     {
-         $arr_city = $obj_city_full_details->toArray();
-      }
-     //Getting all the details of the State Table
-      $obj_state_full_details = StateModel::get();
-     if($obj_state_full_details){
-        $arr_state = $obj_state_full_details->toArray();
-     }
-     //Getting all the details of the Country Table
-     $obj_country_full_details = CountryModel::get();
-
-     if($obj_country_full_details) {
-        $arr_country = $obj_country_full_details->toArray();
-     }
+   
 
 
-        return view('front.user.add_business',compact('arr_category','arr_city','arr_state','arr_country'));
+        return view('front.user.add_business',compact('arr_category'));
     }
 
 
@@ -591,6 +575,10 @@ class UserController extends Controller
 
     public function add_business_details(Request $request)
     {
+         if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
         $arr_rules = array();
         $arr_rules['business_name'] = "required";
         $arr_rules['business_cat']      = "required";
@@ -623,19 +611,9 @@ class UserController extends Controller
 
         }
 
-        $obj_user = UserModel::where('email',Session::get('user_mail'))->first(['id']);
-        //Session::get('user_mail');
-        if($obj_user)
-        {
-            $user_id = $obj_user->id;
-        }
-        else
-        {
-            Session::flash('error','Error While Adding Business');
-            return redirect()->back();
-        }
-
+        
         $arr_data = array();
+        $user_id = base64_decode(Session::get('user_id')) ;
         $arr_data['user_id']           =        $user_id;
         $arr_data['business_name']     =        $request->input('business_name');
         $business_cat                  =        $request->input('business_cat');
@@ -676,15 +654,20 @@ class UserController extends Controller
 
     public function add_location_details(Request $request)
     {
-
+         if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
         $arr_rules = array();
-        $arr_rules['building']      = "required";
-        $arr_rules['landmark']      = "required";
+        //$arr_rules['building']      = "required";
+        //$arr_rules['landmark']      = "required";
         $arr_rules['area']          = "required";
         $arr_rules['city']          = "required";
         $arr_rules['state']         = "required";
         $arr_rules['country']       = "required";
-        $arr_rules['zipcode']       = "required";
+        $arr_rules['pincode']       = "required";
+        $arr_rules['lat']       = "required";
+        $arr_rules['lng']       = "required";
 
         $validator = Validator::make($request->all(),$arr_rules);
 
@@ -692,29 +675,19 @@ class UserController extends Controller
         {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
-        $obj_user = UserModel::where('email',Session::get('user_mail'))->first(['id']);
-        if($obj_user)
-        {
-            $user_id = $obj_user->id;
-        }
-        else
-        {
-            Session::flash('error','Error While Adding Location Information.');
-            return redirect()->back();
-        }
+        $user_id = base64_decode(Session::get('user_id')) ;
+       
 
         $arr_data = array();
         $business_id                   =        $request->input('business_id');
-        //$arr_data['user_id']         =        $user_id;
-        $arr_data['building']          =        $request->input('building');
-        $arr_data['landmark']          =        $request->input('landmark');
+        //$arr_data['building']          =        $request->input('building');
+        //$arr_data['landmark']          =        $request->input('landmark');
         $arr_data['area']              =        $request->input('area');
-        $arr_data['street']            =        $request->input('street');
+        //$arr_data['street']            =        $request->input('street');
         $arr_data['city']              =        $request->input('city');
         $arr_data['state']             =        $request->input('state');
         $arr_data['country']           =        $request->input('country');
-        $arr_data['pincode']           =        $request->input('zipcode');
+        $arr_data['pincode']           =        $request->input('pincode');
         $arr_data['lat']               =        $request->input('lat');
         $arr_data['lng']               =        $request->input('lng');
 
@@ -734,35 +707,28 @@ class UserController extends Controller
 
     public function add_contacts_details(Request $request)
     {
-
+         if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
         $arr_rules = array();
         $arr_rules['prefix_name']      = "required";
         $arr_rules['contact_name']     = "required";
         $arr_rules['mobile_no']        = "required";
-        $arr_rules['landline_no']      = "required";
+      /*  $arr_rules['landline_no']      = "required";
         $arr_rules['fax_no']           = "required";
         $arr_rules['toll_free_no']     = "required";
         $arr_rules['email']            = "required";
         $arr_rules['website']          = "required";
-
+*/
         $validator = Validator::make($request->all(),$arr_rules);
 
         if($validator->fails())
         {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
-        $obj_user = UserModel::where('email',Session::get('user_mail'))->first(['id']);
-        if($obj_user)
-        {
-            $user_id = $obj_user->id;
-        }
-        else
-        {
-            Session::flash('error','Error While Adding Contact Person\'s Information');
-            return redirect()->back();
-        }
-
+        $user_id = base64_decode(Session::get('user_id')) ;
+        
         $arr_data = array();
         $business_id                         =        $request->input('business_id');
         $arr_data['prefix_name']             =        $request->input('prefix_name');
@@ -791,7 +757,10 @@ class UserController extends Controller
 
     public function add_other_details(Request $request)
     {
-
+         if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
         $arr_rules = array();
         $arr_rules['company_info']      = "required";
         $arr_rules['establish_year']    = "required";
@@ -821,16 +790,7 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $obj_user = UserModel::where('email',Session::get('user_mail'))->first(['id']);
-        if($obj_user)
-        {
-            $user_id = $obj_user->id;
-        }
-        else
-        {
-            Session::flash('error','Error While Adding Other Information');
-            return redirect()->back();
-        }
+        $user_id = base64_decode(Session::get('user_id')) ;
 
         $arr_data = array();
         $business_id                    =        $request->input('business_id');
@@ -886,9 +846,12 @@ class UserController extends Controller
 
     public function add_services_details(Request $request)
     {
-
+        if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
         $arr_rules = array();
-        $arr_rules['youtube_link']      = "required";
+        //$arr_rules['youtube_link']      = "required";
         $arr_rules['business_service']  = "required";
 
         $destinationPath = base_path()."/public/uploads/business/business_upload_image";
@@ -899,21 +862,12 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $obj_user = UserModel::where('email',Session::get('user_mail'))->first(['id']);
-        if($obj_user)
-        {
-            $user_id = $obj_user->id;
-        }
-        else
-        {
-            Session::flash('error','Error While Adding Services Information');
-            return redirect()->back();
-        }
+        $user_id = base64_decode(Session::get('user_id')) ;
 
         $arr_data = array();
         $business_services =  array();
         $business_id                    =        $request->input('business_id');
-        $arr_data['youtube_link']       =        $request->input('youtube_link');
+       // $arr_data['youtube_link']       =        $request->input('youtube_link');
         $business_services              =        $request->input('business_service');
 
         $files          = $request->file('business_image');
@@ -1049,7 +1003,13 @@ class UserController extends Controller
        $id = base64_decode($enc_id);
        $business_public_img_path = url('/')."/uploads/business/main_image/";
        $page_title ="Edit Business";
-       $obj_category = CategoryModel::get();
+       $parent_obj_category = CategoryModel::where('parent','=',0)->select('cat_id','title')->orderBy('title','ASC')->get();
+
+        if($parent_obj_category)
+        {
+            $arr_parent_category = $parent_obj_category->toArray();
+        }
+       $obj_category = CategoryModel::orderBy('title','ASC')->get();
 
         if($obj_category)
         {
@@ -1057,11 +1017,11 @@ class UserController extends Controller
         }
         $business_data=BusinessListingModel::with(['category'])->where('id',$id)->get()->toArray();
        //dd($business_data);
-      return view('front.user.Edit_Business.edit_business_step1',compact('page_title','arr_category','business_data','enc_id','business_public_img_path'));
+      return view('front.user.Edit_Business.edit_business_step1',compact('page_title','arr_parent_category','arr_category','business_data','enc_id','business_public_img_path'));
     }
     public function update_business_step1(Request $request,$enc_id)
     {
-        if(Session::has('user_mail'))
+        if(Session::has('user_id'))
         {
             $business_base_img_upload_path = base_path()."/public/uploads/business/main_image";
             $id = base64_decode($enc_id);
@@ -1137,57 +1097,31 @@ class UserController extends Controller
         }
        $id = base64_decode($enc_id);
        $page_title ="Edit Business";
-       $obj_countries_res = CountryModel::get();
-        if( $obj_countries_res != FALSE)
-        {
-            $arr_country = $obj_countries_res->toArray();
-        }
-
-        $arr_city = array();
-        $obj_city_res = CityModel::get();
-        if($obj_city_res != FALSE)
-        {
-            $arr_city = $obj_city_res->toArray();
-        }
-        $arr_state = array();
-        $obj_state_res = StateModel::get();
-
-        if( $obj_countries_res != FALSE)
-        {
-            $arr_state = $obj_state_res->toArray();
-        }
+       
         $obj_business_arr=BusinessListingModel::where('id',$id)->get();
         if( $obj_business_arr != FALSE)
         {
-            $business = $obj_business_arr->toArray();
+            $business_data = $obj_business_arr->toArray();
         }
-        if( $business != FALSE)
-        {
-             $arr_place = array();
+        
 
-            $obj_place_res = PlaceModel::where('id',$business[0]['pincode'])->get();
-
-            if( $obj_place_res != FALSE)
-            {
-                $arr_place = $obj_place_res->toArray();
-            }
-        }
-        $business_data=BusinessListingModel::with(['city_details','country_details','zipcode_details','state_details'])->where('id',$id)->get()->toArray();
-       //dd($business_data);
-
-      return view('front.user.Edit_Business.edit_business_step2',compact('page_title','business_data','enc_id','arr_place','arr_state','arr_city','arr_country'));
+      return view('front.user.Edit_Business.edit_business_step2',compact('page_title','business_data','enc_id'));
     }
     public function update_business_step2(Request $request,$enc_id)
     {
+         if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
         $id = base64_decode($enc_id);
         $arr_rules = array();
           //location fields
-        $arr_rules['building']='required';
-        $arr_rules['street']='required';
-        $arr_rules['landmark']='required';
+        //$arr_rules['building']='required';
+        //$arr_rules['street']='required';
+        //$arr_rules['landmark']='required';
         $arr_rules['area']='required';
         $arr_rules['city']='required';
-        $arr_rules['zipcode']='required';
+        $arr_rules['pincode']='required';
         $arr_rules['state']='required';
         $arr_rules['country']='required';
         $arr_rules['lat']='required';
@@ -1200,12 +1134,12 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
         //location input array
-        $business_data['building']=$request->input('building');
-        $business_data['street']=$request->input('street');
-        $business_data['landmark']=$request->input('landmark');
+        //$business_data['building']=$request->input('building');
+        //$business_data['street']=$request->input('street');
+        //$business_data['landmark']=$request->input('landmark');
         $business_data['area']=$request->input('area');
         $business_data['city']=$request->input('city');
-        $business_data['pincode']=$request->input('zipcode');
+        $business_data['pincode']=$request->input('pincode');
         $business_data['state']=$request->input('state');
         $business_data['country']=$request->input('country');
         $business_data['lat']=$request->input('lat');
@@ -1242,11 +1176,11 @@ class UserController extends Controller
         $arr_rules['contact_person_name']='required';
         $arr_rules['prefix_name']='required';
         $arr_rules['mobile_number']='required';
-        $arr_rules['landline_number']='required';
+       /* $arr_rules['landline_number']='required';
         $arr_rules['fax_no']='required';
         $arr_rules['toll_free_number']='required';
         $arr_rules['email_id']='required';
-        $arr_rules['website']='required';
+        $arr_rules['website']='required';*/
         $validator=validator::make($request->all(),$arr_rules);
 
         if($validator->fails())
@@ -1257,11 +1191,11 @@ class UserController extends Controller
         $business_data['contact_person_name']=$request->input('contact_person_name');
         $business_data['prefix_name']=$request->input('prefix_name');
         $business_data['mobile_number']=$request->input('mobile_number');
-        $business_data['landline_number']=$request->input('landline_number');
+       /* $business_data['landline_number']=$request->input('landline_number');
         $business_data['fax_no']=$request->input('fax_no');
         $business_data['toll_free_number']=$request->input('toll_free_number');
         $business_data['email_id']=$request->input('email_id');
-        $business_data['website']=$request->input('website');
+        $business_data['website']=$request->input('website');*/
         //dd($business_data);
          $business_data_res=BusinessListingModel::where('id',$id)->update($business_data);
         if($business_data_res)
@@ -1402,7 +1336,7 @@ class UserController extends Controller
          $id = base64_decode($enc_id);
          $destinationPath = base_path()."/public/uploads/business/business_upload_image";
          $arr_rules = array();
-         $arr_rules['youtube_link']='required';
+         //$arr_rules['youtube_link']='required';
          $arr_rules['business_image']='required';
          $arr_rules['business_service']='required';
          $validator=validator::make($request->all(),$arr_rules);
@@ -1414,7 +1348,7 @@ class UserController extends Controller
          }
 
          $arr_all=$request->all();
-        //dd($arr_all);
+         $flag=1;
          $business_service=$arr_all['business_service'];
           if(sizeof($business_service))
           {
@@ -1425,6 +1359,14 @@ class UserController extends Controller
                         $arr_serv_data['business_id']=$id;
                         $arr_serv_data['name']=$value;
                         $insert_data = BusinessServiceModel::create($arr_serv_data);
+                        if($insert_data)
+                        {
+                            $flag=1;
+                        }
+                        else
+                        {
+                             $flag=0;
+                        }
                 }
 
            }
@@ -1439,6 +1381,7 @@ class UserController extends Controller
              {
                 $fileName = $file->getClientOriginalName();
                 $fileExtension  = strtolower($file->getClientOriginalExtension());
+                $flag=1;
                 if(in_array($fileExtension,['png','jpg','jpeg']))
                 {
                       $filename =sha1(uniqid().$fileName.uniqid()).'.'.$fileExtension;
@@ -1451,12 +1394,14 @@ class UserController extends Controller
                 else
                 {
                      Session::flash('error','Invalid file extension');
+                     $flag=0;
                 }
+                
             }
          }
-         $business_data['youtube_link']=$request->input('youtube_link');
-         $business_data_res=BusinessListingModel::where('id',$id)->update($business_data);
-        if($business_data_res)
+         //$business_data['youtube_link']=$request->input('youtube_link');
+         //$business_data_res=BusinessListingModel::where('id',$id)->update($business_data);
+        if($flag==1)
         {
             Session::flash('success','Business Media Information Updated Successfully');
 

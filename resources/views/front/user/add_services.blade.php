@@ -75,7 +75,7 @@
                 <div class="box_profile">
 
 
-                   <div class="user_box_sub">
+                   <!-- <div class="user_box_sub">
                     <div class="row">
                       <div class="col-lg-2 label-text">Youtube Link <span>:</span></div>
                         <div class="col-sm-12 col-md-12 col-lg-10 m_l">
@@ -83,42 +83,7 @@
                            <div class="error_msg">{{ $errors->first('youtube_link') }} </div>
                         </div>
                     </div>
-                  </div>
-
-
-                <!--     <div class="user_box_sub">
-                <div class="col-sm-5 col-md-3" style="float:right;margin-right: -133px;">
-                   <a href="javascript:void(0);" id='add-payment'>
-                       <span class="glyphicon glyphicon-plus-sign" style="font-size: 22px;"></span>
-                   </a>
-                  <span style="margin-left:05px;">
-                  <a href="javascript:void(0);" id='remove-payment'>
-                      <span class="glyphicon glyphicon-minus-sign" style="font-size: 22px;"></span>
-                  </a>
-                  </span>
-                 </div>
-                  <div class="row">
-                   <div class="col-lg-2 label-text">Payment Mode <span>:</span></div>
-                    <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                    <input type="text" name="payment_mode[]" id="payment_mode" class="input_acct"  placeholder="Enter Payment Mode" data-rule-required="true"  />
-                    <div class="error" id="error_payment_mode">{{-- $errors->first('payment_mode') --}}</div>
-                    <div class="clr"></div><br/>
-                      <div class="error" id="error_set_default"></div>
-                      <div class="clr"></div>
-
-                   <div id="append_payment" class="class-add"></div>
-
-                    <div class="error_msg" style="color: red" id="error_payment_mode" ></div>
-                    <div class="error_msg" style="color: red" id="error_payment_mode1" ></div>
-                   <label class="col-sm-3 col-lg-2 control-label"></label>
-
-                    </div>
-                    </div>
-                </div>
- -->
-
-
-
+                  </div> -->
 
              <div class="user_box_sub">
                 <div class="col-sm-5 col-md-2" style="float:right;margin-right:-50px;">

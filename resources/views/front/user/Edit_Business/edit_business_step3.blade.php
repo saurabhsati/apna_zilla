@@ -117,7 +117,7 @@
                     </div>
                   </div>
 
-                   <div class="user_box_sub">
+                  <!--  <div class="user_box_sub">
                       <div class="row">
                        <div class="col-lg-2 label-text">Landline No. <span>:</span></div>
                         <div class="col-sm-12 col-md-12 col-lg-10 m_l">
@@ -177,7 +177,7 @@
                           <div class="error_msg">{{ $errors->first('website') }} </div>
                         </div>
                          </div>
-                    </div>
+                    </div> -->
 
 
                   <div class="button_save1">

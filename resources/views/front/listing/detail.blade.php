@@ -1248,6 +1248,9 @@ function add_to_favourite(ref)
         var historyTmp = localStorage.getItem("history");
        //console.log("else"+historyTmp);
    }
+
+
+
    </script>
 @endsection
 

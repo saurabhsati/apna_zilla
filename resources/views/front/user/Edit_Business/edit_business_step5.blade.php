@@ -71,7 +71,7 @@
               <div class="col-sm-12 col-md-12 col-lg-12">
                 <div class="box_profile">
 
-
+<!-- 
                    <div class="user_box_sub">
                     <div class="row">
                       <div class="col-lg-2 label-text">Youtube Link <span>:</span></div>
@@ -80,7 +80,7 @@
                            <div class="error_msg">{{ $errors->first('youtube_link') }} </div>
                         </div>
                     </div>
-                  </div>
+                  </div> -->
                   <div class="user_box_sub">
                             <div class="col-lg-2 label-text">Uploaded Business Gallery Images<span>:</span></div>
                             <div class="col-sm-12 col-md-12 col-lg-10 m_l">

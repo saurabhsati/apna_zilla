@@ -107,7 +107,7 @@
 
                   <div class="user_box_sub">
                     <div class="row">
-                      <div class="col-lg-2 label-text">Mobile No.<span>:</span></div>
+                      <div class="col-lg-2 label-text">Mobile No <span>:</span></div>
                         <div class="col-sm-12 col-md-12 col-lg-10 m_l">
                           <div class="input-group">
                           <span class="input-group-addon" id="basic-addon1">+91</span>
@@ -119,7 +119,7 @@
                     </div>
                   </div>
 
-                   <div class="user_box_sub">
+                  <!--  <div class="user_box_sub">
                       <div class="row">
                        <div class="col-lg-2 label-text">Landline No. <span>:</span></div>
                         <div class="col-sm-12 col-md-12 col-lg-10 m_l">
@@ -144,15 +144,6 @@
 
 
 
-                  <!--   <div class="user_box_sub">
-                         <div class="row">
-                  <div class="col-lg-2 label-text">Fax No. <span>:</span></div>
-                  <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                       <input type="text"  class="input_acct" id="fax_no" name="fax_no" placeholder="Enter Fax Number"/>
-                         <div class="error_msg">please enter correct</div>
-                      </div>
-                       </div>
-                  </div> -->
 
                     <div class="user_box_sub">
                          <div class="row">
@@ -183,14 +174,12 @@
                           <div class="error_msg">{{ $errors->first('website') }} </div>
                         </div>
                          </div>
-                    </div>
+                    </div> -->
 
 
                   <div class="button_save1">
                     <button type="submit" class="btn btn-post" name="add_contacts" style="float: left; margin-left:125px; ">Save &amp; continue</button>
-                    <!-- <a class="btn btn-post pull-left" href="#">previous</a>
-                    <a class="btn btn-post" href="#">Save &amp; exit</a>
-                    <a class="btn btn-post pull-right" href="#">Next</a> -->
+                   
                  </div>
 
                </div>

@@ -50,7 +50,9 @@
 
 
       <!--category droup doun mobile effect-->
-
+      <!-- Multi select  -->
+           <script src="{{ url('/') }}/assets/front/js/bootstrap-multiselect.js" type='text/javascript'></script>
+          <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/front/css/bootstrap-multiselect.css" />
        <script>
 $(document).ready(function(){
     $(".spe_mobile").click(function(){
@@ -120,9 +122,10 @@ $(document).ready(function(){
       //   $(function(){
          // Initialize the gallery
          $('.gallery a.gal').touchTouch();
-         });
 
-      </script>
+
+    });
+ </script>
       <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
       <!--  <script src="{{ url('/') }}/assets/front/js/jquery.validate.min.js"></script> -->
 

@@ -125,7 +125,7 @@
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="business_cat_old">Selected Business Category <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                  <select class="form-control" name="business_cat_old[]" id="business_cat_old" onchange="updateCategoryOptGroup(this)" disabled="true" multiple="">
+                  <select class="form-control" name="business_cat_old[]" id="business_cat_old"  disabled="true" multiple="">
                      <option> Select Business Category</option>
                       @if(isset($arr_category) && sizeof($arr_category)>0)
                         @foreach($arr_category as $category)

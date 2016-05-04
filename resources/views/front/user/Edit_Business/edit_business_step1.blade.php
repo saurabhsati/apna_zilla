@@ -89,17 +89,30 @@
                       <div class="error_msg">{{ $errors->first('business_image') }} </div>
                   </div>
               </div>
-                   </div>
+              </div>
 
 
             <div class="col-sm-9 col-md-9 col-lg-9">
                 <div class="box_profile">
-
+                    <div class="user_box_sub">
+                    <div class="row">
+                     <div class="col-lg-3  label-text">Business Name :</div>
+                      <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                       <input type="text" name="business_name" id="business_name"
+                              class="input_acct"
+                              placeholder="Enter Business Name"
+                              data-rule-required="true"
+                              value="{{ isset($business['business_name'])?$business['business_name']:'' }}"
+                              />
+                        <div class="error_msg">{{ $errors->first('business_name') }} </div>
+                      </div>
+                  </div>
+                  </div>
                   <div class="user_box_sub">
                     <div class="row">
-                  <div class="col-lg-3  label-text" for="business_cat">Business Category </div>
+                  <div class="col-lg-3  label-text" for="old_business_cat">Selected Business Category </div>
                   <div class="col-sm-9 col-md-9 col-lg-9 m_l">
-                  <select class="form-control input_acct" name="business_cat[]" id="business_cat" data-rule-required="true" onchange="updateCategoryOptGroup(this)" multiple="">
+                  <select class="form-control input_acct" name="old_business_cat[]" id="old_business_cat" data-rule-required="true" disabled="true" multiple="">
                      <option> Select Business Category</option>
                       @if(isset($arr_category) && sizeof($arr_category)>0)
                         @foreach($arr_category as $category)
@@ -128,24 +141,55 @@
                           @endif
                         @endforeach
                       @endif
-                  </select><a href="javascript:void(0);" onclick="clearCategoryOptGroup(this)">Clear Selected Option</a>
+                  </select>
                 <span class='help-block'>{{ $errors->first('business_cat') }}</span>
                   </div>
                   </div></div>
-                 <div class="user_box_sub">
-                    <div class="row">
-                     <div class="col-lg-3  label-text">Business Name :</div>
+
+                  <div class="user_box_sub">
+                  <div class="row">
+                  <div class="col-lg-3  label-text"><a href="javascript:void(0);" class="add_new_subcategory">Add New Sub Category </a></div>
+                  </div>
+                 </div>
+            <div class="add_new_subcategory_div" id="add_new_subcategory_div" style="display:none;">
+            <div class="user_box_sub ">
+             <div class="row">
+
+             <div class="col-lg-3  label-text">Business Main Category:</div>
                       <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                       <input type="text" name="business_name" id="business_name"
-                              class="input_acct"
-                              placeholder="Enter Business Name"
-                              data-rule-required="true"
-                              value="{{ isset($business['business_name'])?$business['business_name']:'' }}"
-                              />
-                        <div class="error_msg">{{ $errors->first('business_name') }} </div>
+                        <select class="form-control" name="main_business_cat" id="main_business_cat" onchange="getSubCategory(this)">
+                          <option> Select Business Main Categories</option>
+                         @if(isset($arr_parent_category) && sizeof($arr_parent_category)>0)
+                         @foreach($arr_parent_category as $parent_category)
+                          <option  name="sub_cat" id="sub_cat" value="{{ $parent_category['cat_id'] }}" >
+                                         {{ $parent_category['title'] }}
+                                          </option>
+                          @endforeach
+                           @endif
+                        </select>
+                        <div class="error_msg">{{ $errors->first('main_business_cat') }} </div>
                       </div>
-                  </div>
-                  </div>
+             </div>
+            </div>
+           <div class="user_box_sub ">
+             <div class="row">
+
+             <div class="col-lg-3  label-text">Business Main Category:</div>
+                      <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                        <select class="form-control"  id="example-getting-started" name="business_cat[]" multiple="multiple">
+            <option value="">Select Business Sub category </option>
+               
+              </select>
+              <span class='help-block'>{{ $errors->first('business_cat') }}</span>
+                <div class="alert alert-warning">Note: Firstly Select The Business Main category From Business Main Category Drop-down , Then Click ON None Selected Button  </div>
+            </div>
+
+            </div>
+            </div>
+
+
+
+                </div>
                     </div>
                   </div>
                </div>
@@ -193,6 +237,56 @@
         $('#preview_profile_pic').attr('src',site_url+'/images/front/avatar.jpg');
         $("#removal_handle").hide();
     }
+    function getSubCategory(ref)
+{
+   var main_cat_id =$(ref).find("option:selected").val();
+   var categCheck  = $('#example-getting-started').multiselect
+                      ({
+                         includeSelectAllOption: true,
+                         enableFiltering : true
+                      });
+    jQuery.ajax({
+                        url:url+'/web_admin/common/get_subcategory/'+main_cat_id,
+                        type:'GET',
+                        data:'flag=true',
+                        dataType:'json',
+                        beforeSend:function()
+                        {
+
+                        },
+                        success:function(response)
+                        {
+                           jQuery(response.arr_main_cat).each(function(index,arr_main_cat)
+                                   {
+                                          $("#business_public_id").attr('value',arr_main_cat.cat_ref_slug);
+                                   });
+                          var option = '';
+                            if(response.status=="SUCCESS")
+                            {
+                                if(typeof(response.arr_sub_cat) == "object")
+                                {
+                                   var option = '';
+                                   jQuery(response.arr_sub_cat).each(function(index,arr_sub_cat)
+                                   {
+                                    option+='<option value="'+arr_sub_cat.cat_id+'">'+arr_sub_cat.title+'</option>';
+
+                                   });
+                                   categCheck.html(option);
+                                   categCheck.multiselect('rebuild');
+
+                                }
+                            }
+                             else
+                            {
+                                //$(".multiselect-container").css("display",'none');
+                                categCheck.html('<option value=""></option>');
+                                $(".multiselect-selected-text").html("No Sub Category Available !");
+                            }
+                            return false;
+                        }
+        });
+
+}
 </script>
 
 <script type="text/javascript">
@@ -221,39 +315,15 @@ jQuery(document).ready(function () {
     });
   });
 });
-function updateCategoryOptGroup(ref)
-{
-  var arr_optgroup_ref = $(ref).find('optgroup');
-  var current_option_grp =$(ref).find("option:selected").parent('optgroup');
 
-  $.each(arr_optgroup_ref,function(index,optgroup)
-  {
-    if($(optgroup).attr('label')!=$(current_option_grp).attr('label'))
-    {
-      $(optgroup).attr('disabled','disabled');
-    }
-    else
-    {
-      $(optgroup).removeAttr('disabled');
-    }
-
-
-  });
-
-}
-function clearCategoryOptGroup()
-{
-  var arr_optgroup_ref = $('#business_cat').find('optgroup');
-    $.each(arr_optgroup_ref,function(index,optgroup)
-  {
-          $(optgroup).removeAttr('disabled');
-
-  });
-}
 </script>
 
 
 <script type="text/javascript">
+$('.add_new_subcategory').click(function(){
+ $(".add_new_subcategory_div").css('display','block');
+     return false;
+});
 $(document ).ready(function (){
   $("#validation-form").validate({
     // Specify the validation rules
