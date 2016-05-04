@@ -119,8 +119,7 @@
                            &nbsp;@if(isset($tot_review)){{$tot_review}} @endif Ratings
                          <span class=""> Estd.in {{ $business['establish_year'] }} </span></div>
                         <div class="p_details"><i class="fa fa-phone"></i><span>  {{$business['mobile_number']}}, {{$business['landline_number']}}</span></div>
-                        <div class="p_details"><i class="fa fa-map-marker"></i> <span>{{$business['building']}}, {{$business['street']}} <br/>
-                        {{$business['landmark']}}, {{$business['area']}} <br/> </span>
+                        <div class="p_details"><i class="fa fa-map-marker"></i> <span> {{$business['area']}} <br/> </span>
                         <ul>
                         <!-- <li><a href="#">SMS/Email</a></li>  -->
                         <li><a href="{{ url('/front_users/edit_business_step1/'.base64_encode($business['id'])) }}" >Edit</a></li>

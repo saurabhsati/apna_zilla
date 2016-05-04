@@ -95,15 +95,14 @@
               <span class=""> Estd.in {{ $restaurants['establish_year'] }} </span></div>
               <div class="p_details"><i class="fa fa-phone"></i><span> {{ $restaurants['landline_number'] }} &nbsp; {{ $restaurants['mobile_number'] }}</span></div>
               <div class="p_details"><i class="fa fa-map-marker"></i>
-                <span>{{ $restaurants['building'] }} &nbsp; {{ $restaurants['street'] }} <br/>
-                {{ $restaurants['landmark'] }} &nbsp; {{ $restaurants['area'] }} &nbsp;{{ '-'.$restaurants['pincode'] }}<br/>
+                <span> {{ $restaurants['area'] }} <br/>
 
                @if(Session::has('distance'))
                Away From {{Session::get('distance')}} km distance
                 @endif
 
                   </span>
-                    @if(Session::has('user_mail'))
+                    @if(Session::has('user_id'))
                      <span class="remo_fav" id="{{ 'show_fav_status_'.$restaurants['id'] }}" style="width: 175px;">
                         <a href="javascript:void(0);" class="active" onclick="add_to_favourite('{{$restaurants['id']}}')"  style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Remove favorite</span></a>
                         </span>
@@ -141,9 +140,9 @@
    function add_to_favourite(ref)
         {
           var business_id = ref;
-          var user_mail   = "{{ session::get('user_mail') }}";
+          var user_id   = "{{ session::get('user_id') }}";
 
-          var data        = { business_id:business_id, user_mail:user_mail ,_token:csrf_token };
+          var data        = { business_id:business_id, user_id:user_id ,_token:csrf_token };
           jQuery.ajax({
             url:site_url+'/listing/add_to_favourite',
             type:'POST',
