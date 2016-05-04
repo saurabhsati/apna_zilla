@@ -1061,17 +1061,19 @@ $('#remove-payment').click(function()
 $(function () {
 
  var location =$("input[name=area]").val();
-
-  $("#area").geocomplete({
-    details: ".geo-details",
-    detailsAttribute: "data-geo",
-    map: "#business_location_map",
-    location: location,
-    types: ["geocode", "establishment"],
-    markerOptions: {
-            draggable: true
-          }
-  });
+var options = {
+                types: ['(cities)'],
+                componentRestrictions: {country: 'IN'},
+                details: ".geo-details",
+                detailsAttribute: "data-geo",
+                map: "#business_location_map",
+                location: location,
+                types: ["geocode", "establishment"],
+                markerOptions: {
+                                    draggable: true
+                               }
+              }
+  $("#area").geocomplete(options);
 
 $("#area").bind("geocode:dragged", function(event, latLng){
           $("input[name=lat]").val(latLng.lat());

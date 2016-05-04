@@ -157,7 +157,25 @@
                        <strong><h4> Sorry , You Have Not Added Your Business !! </h4> </strong>
                     </div>
                  @endif
-
+                  @if(isset($arr_paginate_business['to'])  )
+                  <div style="float:right;" class="pagination">
+                                                  <ul class="pagination">
+                                                      <?php
+                                                          $arr_get_params = Input::input();
+                                                      ?>
+                                                      @for ($i = 1; $i <= $arr_paginate_business['last_page']; $i++)
+                                                          <?php
+                                                              $arr_page = ['page'=>$i];
+                                                              $full_data = array_merge($arr_get_params, $arr_page);
+                                                              $url_param = http_build_query($full_data);
+                                                          ?>
+                                                          <li class="{{ ($arr_paginate_business['current_page'] == $i) ? ' active' : '' }}">
+                                                              <a href="{{ Request::url().'?'.$url_param }}">{{ $i }}</a>
+                                                          </li>
+                                                      @endfor
+                                                  </ul>
+                                                </div>
+                        @endif
             </div>
          </div>
        </div>

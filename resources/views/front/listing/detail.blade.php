@@ -158,7 +158,7 @@
                         @endif
                      </div>
                       <div class="p_details lst" >
-                    @if(Session::has('user_mail'))
+                    @if(Session::has('user_id'))
                     <?php
                     if(isset($arr_fav_business) && count($arr_fav_business)>0 )
                     {
@@ -1198,9 +1198,9 @@ function check_review()
 function add_to_favourite(ref)
         {
           var business_id = ref;
-          var mobile_no   = "{{ session::get('mobile_no') }}";
+          var user_id   = "{{ session::get('user_id') }}";
 
-          var data        = { business_id:business_id, mobile_no:mobile_no ,_token:csrf_token };
+          var data        = { business_id:business_id, user_id:user_id ,_token:csrf_token };
           jQuery.ajax({
             url:site_url+'/listing/add_to_favourite',
             type:'POST',

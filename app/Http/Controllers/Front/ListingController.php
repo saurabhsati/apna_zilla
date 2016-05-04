@@ -149,10 +149,10 @@ class ListingController extends Controller
         }
         /* Add Favorite Icon  */
         $arr_fav_business = array();
-        if(Session::has('user_mail'))
+        if(Session::has('user_id'))
         {
-              $obj_user = UserModel::where('email',Session::get('user_mail'))->first(['id']);
-              $user_id  = $obj_user->id;
+             $user_id  = base64_decode(Session::get('user_id'));
+             
 
               $str = "";
               $obj_favourite = FavouriteBusinessesModel::where(array('user_id'=>$user_id ,'is_favourite'=>"1" ))->get(['business_id']);
@@ -256,35 +256,7 @@ class ListingController extends Controller
         return redirect()->back();
     }
 
-    public function share_business($enc_id)
-    {
-       $id = session('user_id');
-        $user_id = base64_decode($id);
-
-        $obj_user_info = UserModel::where('id','=',$user_id)->get();
-
-        if($obj_user_info)
-        {
-            $arr_user_info = $obj_user_info->toArray();
-        }
-
-        foreach ($arr_user_info as $users)
-        {
-             Session::put('user_mail', $users['email']);
-             Session::put('user_first_name', $users['first_name']);
-             Session::put('user_middle_name', $users['middle_name']);
-             Session::put('user_last_name', $users['last_name']);
-        }
-
-        $business_id = base64_decode($enc_id);
-        $page_title = "Share Business";
-
-        return view('front.listing.share_business',compact('business_id','page_title'));
-    }
-
-
-
-
+ 
     public function add_to_favourite(Request $request)
     {
       $user_id      = base64_decode($request->input('user_id'));

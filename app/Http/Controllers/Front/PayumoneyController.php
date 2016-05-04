@@ -35,7 +35,7 @@ class PayumoneyController extends Controller
     	$furl = url('/').'/payumoney/fail';
     	$curl = url('/').'/payumoney/cancel';
 
-    	$user_name=($request->input('user_name'));
+    	 $user_name=($request->input('user_name'));
 		 $user_mail=($request->input('user_mail'));
 		 $user_id=base64_decode($request->input('user_id'));
          $category_id=base64_decode($request->input('category_id'));
@@ -154,7 +154,7 @@ class PayumoneyController extends Controller
                  //print_r($content);exit;
                 $content = view('email.front_general',compact('content'))->render();
                 $content = html_entity_decode($content);
-
+                  
                 $send_mail = Mail::send(array(),array(), function($message) use($email,$first_name,$arr_email_template,$content)
                             {
                                 $message->from($arr_email_template['template_from_mail'], $arr_email_template['template_from']);

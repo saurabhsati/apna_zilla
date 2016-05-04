@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Pagination\Paginator;
 
 use App\Models\UserModel;
 use App\Models\BusinessListingModel;
@@ -478,7 +479,7 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function my_business()
+    public function my_business(Request $request,$page='1')
     {
         if(!Session::has('user_id'))
         {
@@ -487,13 +488,13 @@ class UserController extends Controller
         $id = session('user_id');
          $user_id = base64_decode($id);
 
-        $obj_business_info = BusinessListingModel::with(['category','membership_plan_details'])->where('user_id','=',$user_id)->with('reviews')->get();
+        $obj_business_info = BusinessListingModel::with(['category','membership_plan_details'])->where('user_id','=',$user_id)->with('reviews');
 
         $arr_business_info =  array();
         $cat_title =  "";
         if($obj_business_info)
         {
-            $arr_business_info = $obj_business_info->toArray();
+            $arr_business_info = $obj_business_info->get()->toArray();
 
              $obj_main_category = CategoryModel::where('parent','0')->remember(1440)->get();
                if($obj_main_category)
@@ -505,9 +506,80 @@ class UserController extends Controller
                 {
                     $arr_sub_category = $obj_sub_category->toArray();
                 }
+        }
+        /* Pagination start*/
+        if($page=='1' && count($obj_business_info)>0 && isset($obj_business_info))
+        {
+
+            $total_record_count = clone $obj_business_info;
+            $chk_arr=[];
+            $chk_arr=$total_record_count->get()->toArray();
+            //dd($chk_arr);
+            if(isset($chk_arr) && sizeof($chk_arr)>0)
+            {
+                $totalResult = $total_record_count->addSelect(DB::raw('count(*) as record_count'))->get();
+                /*if(isset($totalResult) && sizeof($totalResult)>0)
+                {*/
+                 $totalItems = 1;
+
+
+                if(isset($totalResult[0]))
+                {
+                  $totalItems = $totalResult[0]->record_count;
                 }
-         $main_image_path="uploads/business/main_image";
-        return view('front.user.my_business',compact('main_image_path','arr_business_info','arr_main_category','arr_sub_category'));
+
+
+
+                $perPage =2;
+                $curPage = $request->input('page','1');
+
+                $itemQuery = clone $obj_business_info;
+                $all_records = clone $obj_business_info;
+
+
+
+                // this does the sql limit/offset needed to get the correct subset of items
+                $items = $itemQuery->forPage($curPage, $perPage)->remember(15)->get();
+
+
+                $this->Paginator = new Paginator($items->all(),$perPage, $curPage);
+                $arr_paginate_business =  $this->Paginator->toArray();
+                $arr_paginate_business['total']     =  $totalItems;
+                $arr_paginate_business['last_page'] =  (int)ceil($totalItems/$perPage);
+
+                $obj_business_info = $obj_business_info->get();
+
+                   if($arr_paginate_business)
+                      {
+                        $arr_business_info = [];
+                        $arr_tmp = $arr_paginate_business;
+                        //dd($arr_tmp);
+                        if( isset($arr_tmp['data']) && sizeof($arr_tmp['data'])>0)
+                        {
+                          $arr_business_info = $arr_tmp['data'];
+                          $total_pages =  $arr_tmp['total'];
+                          $current_page = $arr_tmp['current_page'];
+                          $per_page = $arr_tmp['per_page'];
+                        }
+                        else
+                        {
+                          $arr_business_info = $arr_tmp;
+                        }
+
+                      }
+            }
+
+             $main_image_path="uploads/business/main_image";
+            return view('front.user.my_business',compact('main_image_path','arr_business_info','arr_main_category','arr_sub_category','arr_paginate_business'));
+
+        }
+        else
+        {
+              $arr_business_info =[];
+              $main_image_path="uploads/business/main_image";
+              return view('front.user.my_business',compact('main_image_path','arr_business_info','arr_main_category','arr_sub_category'));
+        }
+        
     }
 
 
@@ -1457,34 +1529,121 @@ class UserController extends Controller
         }
 
     }
-    public function my_favourite_businesses()
+    public function my_favourite_businesses(Request $request,$page='1')
     {
         if(!(Session::has('user_id')))
         {
            return redirect('/');
         }
-        if(!empty(Session::get('user_id')))
+        if(Session::has('user_id'))
           {
           	$id = session('user_id');
-             $user_id = base64_decode($id);
-
-
-            $user_id    = UserModel::where('mobile_no',Session::get('mobile_no'))->first(['id']);
-            $u          = $user_id->id;
+            $user_id = base64_decode(Session::get('user_id'));
             $arr_fav    = array();
 
-            $obj_fav = UserModel::where('id',$u)->select('id','mobile_no')
+            $obj_fav = UserModel::where('id',$user_id)->select('id','mobile_no')
                               ->with('favourite_businesses.reviews')
+                              //dd($obj_fav->get()->toArray());
                               ->first();
 
             if($obj_fav)
             {
                 $arr_fav = $obj_fav->toArray();
             }
+
+
+            /* Pagination start*/
+           /* if($page=='1' && count($obj_fav)>0 && isset($obj_fav))
+            {
+
+                $total_record_count = clone $obj_fav;
+                $chk_arr=[];
+                $chk_arr=$total_record_count->get()->toArray();
+                //dd($chk_arr[0]['favourite_businesses']);
+                if(isset($chk_arr) && sizeof($chk_arr)>0)
+                {
+                    $totalResult = $total_record_count->addSelect(DB::raw('count(*) as record_count'))->get();
+                    //dd($totalResult);
+                    if(isset($totalResult) && sizeof($totalResult)>0)
+                    {
+                     $totalItems = 1;
+
+
+                    if(isset($totalResult[0]))
+                    {
+                      echo $totalItems = $totalResult[0]->record_count;
+                    }
+
+
+
+                    $perPage =2;
+                    $curPage = $request->input('page','1');
+
+                    $itemQuery = clone $obj_fav;
+                    $all_records = clone $obj_fav;
+
+
+
+                    // this does the sql limit/offset needed to get the correct subset of items
+                    $items = $itemQuery->forPage($curPage, $perPage)->get();
+
+
+                    $this->Paginator = new Paginator($items->all(),$perPage, $curPage);
+                    $arr_paginate_business =  $this->Paginator->toArray();
+                    $arr_paginate_business['total']     =  $totalItems;
+                    $arr_paginate_business['last_page'] =  (int)ceil($totalItems/$perPage);
+
+                    $obj_fav = $obj_fav->get();
+
+                       if($arr_paginate_business)
+                          {
+                            $arr_fav = [];
+                            $arr_tmp = $arr_paginate_business;
+                            //dd($arr_tmp);
+                            if( isset($arr_tmp['data']) && sizeof($arr_tmp['data'])>0)
+                            {
+                              $arr_fav = $arr_tmp['data'];
+                              $total_pages =  $arr_tmp['total'];
+                              $current_page = $arr_tmp['current_page'];
+                              $per_page = $arr_tmp['per_page'];
+                            }
+                            else
+                            {
+                              $arr_fav = $arr_tmp;
+                            }
+
+                          }
+                }
+
+
+                 $main_image_path="uploads/business/main_image";
+               return view('front.user.my_favourite_businesses',compact('arr_fav','main_image_path'));
+            }
+            else
+            {
+                  $arr_fav =[];
+                  $main_image_path="uploads/business/main_image";
+                  return view('front.user.my_favourite_businesses',compact('arr_fav','main_image_path'));
+            }*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+             $main_image_path="uploads/business/main_image";
+             return view('front.user.my_favourite_businesses',compact('arr_fav','main_image_path'));
           }
-          //dd($arr_fav);
-          $main_image_path="uploads/business/main_image";
-          return view('front.user.my_favourite_businesses',compact('arr_fav','main_image_path'));
+         
+          
     }
 
 }

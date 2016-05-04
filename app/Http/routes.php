@@ -546,7 +546,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::get('address',							['as' => 'front_users_address'        				,'uses' =>'Front\UserController@address']);
 		Route::post('store_address_details',			['as' => 'front_users_store_address_details'        ,'uses' =>'Front\UserController@store_address_details']);
 
-		Route::get('my_business',						['as' => 'front_users_business'        				,'uses' =>'Front\UserController@my_business']);
+		Route::get('my_business/{ajax?}',						['as' => 'front_users_business'        				,'uses' =>'Front\UserController@my_business']);
 
 		// for adding business.
 		Route::get('add_business',		    			['as' => 'business_add' 	        				,'uses' =>'Front\UserController@add_business']);
@@ -581,7 +581,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 		Route::post('add_services_details',		    			['as' => 'add_services_details' 	        			,'uses' =>'Front\UserController@add_services_details']);
 		//Get My favourites Businesses page.
-		Route::get('my_favourites',		    					['as' => 'my_favourite_businesses' 	        				,'uses' =>'Front\UserController@my_favourite_businesses']);
+		Route::get('my_favourites/{ajax?}',		    					['as' => 'my_favourite_businesses' 	        				,'uses' =>'Front\UserController@my_favourite_businesses']);
 
 	    Route::get('edit_business_step1/{enc_id}',		    ['as' => 'business_edit1' 	        				,'uses' =>'Front\UserController@edit_business_step1']);
 	    Route::post('update_business_step1/{enc_id}',		['as' => 'update_business_step1' 	        		,'uses' =>'Front\UserController@update_business_step1']);

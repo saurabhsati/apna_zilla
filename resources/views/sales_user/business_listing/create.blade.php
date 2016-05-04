@@ -931,16 +931,18 @@ $('#remove-payment').click(function()
 <script src="{{ url('/') }}/assets/front/js/jquery.geocomplete.min.js"></script>
 <script>
 $(function () {
-
-  $("#area").geocomplete({
-    details: ".geo-details",
-    detailsAttribute: "data-geo",
-    map: "#business_location_map",
-    types: ["geocode", "establishment"],
-    markerOptions: {
-            draggable: true
-          }
-  });
+var options = {
+                types: ['(cities)'],
+                componentRestrictions: {country: 'IN'},
+                details: ".geo-details",
+                detailsAttribute: "data-geo",
+                map: "#business_location_map",
+                types: ["geocode", "establishment"],
+                markerOptions: {
+                                    draggable: true
+                               }
+              }
+  $("#area").geocomplete(options);
 
 $("#area").bind("geocode:dragged", function(event, latLng){
           $("input[name=lat]").val(latLng.lat());

@@ -155,10 +155,9 @@ class CategorySearchController extends Controller
         }
 
         /* If User has login see he can see their favorite  business */
-        if(Session::has('user_mail'))
+        if(Session::has('user_id'))
         {
-              $obj_user = UserModel::where('email',Session::get('user_mail'))->first(['id']);
-              $user_id  = $obj_user->id;
+              $user_id  = base64_decode(Session::get('user_id'));
               $arr_fav_business = array();
               $str = "";
               $obj_favourite = FavouriteBusinessesModel::where(array('user_id'=>$user_id ,'is_favourite'=>"1" ))->get(['business_id']);
@@ -419,10 +418,10 @@ class CategorySearchController extends Controller
 
 
           /* If User has login see he can see their favorite  business */
-          if(Session::has('user_mail'))
+          if(Session::has('user_id'))
           {
-              $obj_user = UserModel::where('email',Session::get('user_mail'))->first(['id']);
-              $user_id  = $obj_user->id;
+              
+              $user_id  = base64_decode(Session::get('user_id'));
               $arr_fav_business = array();
               $str = "";
               $obj_favourite = FavouriteBusinessesModel::where(array('user_id'=>$user_id ,'is_favourite'=>"1" ))->get(['business_id']);
