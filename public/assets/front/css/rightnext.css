@@ -366,7 +366,7 @@ box-shadow: 0px 0px 6px 2px rgba(175,175,175,0.87); transform: scale(1.08);}
 .footer_heading{color:#919191; font-family: 'varela_roundregular'; font-size:20px; padding-bottom:8px; border-bottom:2px solid #3e3e3e;}
 .menu_name{margin:0px; padding:0px; font-size: 13px; color: #919191; font-family: 'varela_roundregular'; line-height: 23px;}
 .menu_name ul{margin:0px; padding:0px;}
-.menu_name ul li{list-style-type:none; color:#959595; font-size:13px; margin-bottom:9px; background:url(../images/footer_bullet.jpg) no-repeat left top;/* padding-left:14px;*/ background-position:0 7px;}
+.menu_name ul li{list-style-type:none; color:#959595; font-size:13px; margin-bottom:9px; /*background:url(../images/footer_bullet.jpg) no-repeat left top;*//* padding-left:14px;*/ background-position:0 7px;}
 .menu_name ul li a:link,.menu_name ul li a:visited{color:#959595; font-size:13px; text-decoration:none; font-family: 'varela_roundregular'; transition: all 0.5s ease 0s; display: flex;}
 .menu_name ul li a:hover{color:#4d9f2e; font-size:13px; text-decoration:none; }
 .menu_name ul li i{ padding-right:10px; font-size: 8px; margin-top: 5px;}
