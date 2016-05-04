@@ -27,7 +27,7 @@ class HomeController extends Controller
     {
 
     	$page_title	='Home';
-       if(Session::has('city'))
+        if(Session::has('city'))
         {
         	$current_city=Session::get('city');
         }
@@ -96,6 +96,7 @@ class HomeController extends Controller
 
         if(sizeof( $explore_category)>0)
         {
+            $key_sub_cat=[];
              $obj_sub_category = CategoryModel::where('parent',$explore_category[0]['cat_id'])->get();
             if($obj_sub_category)
             {
@@ -500,6 +501,7 @@ class HomeController extends Controller
         {
             $arr_sub_category = $obj_sub_category->toArray();
         }
+        $key_sub_cat=[];
         if(sizeof($arr_sub_category)>0)
         {
           foreach ($arr_sub_category as $key => $value) {

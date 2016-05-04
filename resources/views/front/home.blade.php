@@ -302,8 +302,14 @@ function get_business_by_exp_categry(ref)
                                  async: false,
                                  success: function(responseresult)
                                  {
-                                  $('#cat_tabs_result').html('<div> <div class="row">'+responseresult+'</div></div>');
-
+                                  if(responseresult.length>0)
+                                  {
+                                    $('#cat_tabs_result').html('<div> <div class="row">'+responseresult+'</div></div>');
+                                  }
+                                  else
+                                  {
+                                     $('#cat_tabs_result').html('<div ><div class="row"><span><h4 >Sorry , No Business Found !!</h4></span></div></div>');
+                                  }
                                  }
                              });
 }
