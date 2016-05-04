@@ -379,8 +379,7 @@
               <span class=""> Estd.in {{ $restaurants['establish_year'] }} </span></div>
               <div class="p_details"><i class="fa fa-phone"></i><span> {{ $restaurants['landline_number'] }} &nbsp; {{ $restaurants['mobile_number'] }}</span></div>
               <div class="p_details"><i class="fa fa-map-marker"></i>
-                <span>{{ $restaurants['building'] }} &nbsp; {{ $restaurants['street'] }} <br/>
-                {{ $restaurants['landmark'] }} &nbsp; {{ $restaurants['area'] }} &nbsp;{{ '-'.$restaurants['pincode'] }}<br/>
+                <span> {{ $restaurants['area'] }}<br/>
 
                @if(isset($restaurants['distance']))
                Away From {{ $restaurants['distance'] }} km distance
@@ -561,8 +560,7 @@
 
                 <div class="p_list_details">
                    <div class="list-product"><i class="fa fa-phone"></i><span> {{ $restaurants['landline_number'] }} &nbsp; {{ $restaurants['mobile_number'] }}</span></div>
-                       <div class="list-product"><i class="fa fa-map-marker"></i><span>{{ $restaurants['building'] }} &nbsp; {{ $restaurants['street'] }} <br/>
-                  {{ $restaurants['landmark'] }} &nbsp; {{ $restaurants['area'] }} &nbsp;{{ '-'.$restaurants['pincode'] }}</span>  </div>
+                       <div class="list-product"><i class="fa fa-map-marker"></i><span> {{ $restaurants['area'] }} </span>  </div>
 
                   <div class="p_details"><!--<a href="#" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>-->
                     <ul>
