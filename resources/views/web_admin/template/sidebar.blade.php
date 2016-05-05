@@ -1,5 +1,6 @@
 <div id="sidebar" class="navbar-collapse collapse">
     <!-- BEGIN Navlist -->
+    <?php $pagename=Request::segment(2)."/".Request::segment(3); ?>
     <ul class="nav nav-list">
 
 
@@ -45,6 +46,21 @@
                 <li style="display: block;"><a href="{{ url('/web_admin/business_listing')}}">Manage</a> </li>
             </ul>
         </li>
+         <li class="{{ Request::segment(2)=='deals_offers'? 'active':'' }}
+                    
+        ">
+            <a href="javascript:void(0)" class="dropdown-toggle">
+                <i class="fa fa-list"></i>
+                <span>Deals </span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+            <ul class="submenu">
+                <li style="display: block;" class="{{ $pagename =='deals_offers/' ? 'active':'' }}"><a href="{{ url('/web_admin/deals_offers')}}">All Deals</a> </li>
+                <li style="display: block;" class="{{ $pagename =='deals_offers/active' ? 'active':'' }}"><a href="{{ url('/web_admin/deals_offers/active')}}">Active Deals</a> </li>
+                <li style="display: block;" class="{{ $pagename =='deals_offers/expired' ? 'active':'' }}"><a href="{{ url('/web_admin/deals_offers/expired')}}">Expired Deals</a> </li>
+            </ul>
+        </li>
+
 
          <li class="{{ Request::segment(2)=='categories'? 'active':'' }}">
             <a href="javascript:void(0)" class="dropdown-toggle">

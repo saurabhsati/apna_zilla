@@ -65,7 +65,7 @@ class ListingController extends Controller
         }
 
         //related listing business start
-        $obj_business_listing_city = CityModel::where('city_title',$city)->get();
+       /* $obj_business_listing_city = CityModel::where('city_title',$city)->get();
        if($obj_business_listing_city)
        {
          $obj_business_listing_city->load(['business_details']);
@@ -77,7 +77,7 @@ class ListingController extends Controller
           foreach ($arr_business_by_city[0]['business_details'] as $key => $value) {
             $key_business_city[$value['id']]=$value['id'];
           }
-        }
+        }*/
 
         $arr_business_by_category = array();
         $obj_business_listing = BusinessCategoryModel::where('category_id',$arr_business_details['category_details']['category_id'])->limit(4)->get();
@@ -96,9 +96,9 @@ class ListingController extends Controller
             $key_business_cat[$value['business_id']]=$value['business_id'];
           }
       }
-       if(sizeof($key_business_city)>0 && sizeof($key_business_cat))
+       if( sizeof($key_business_cat)>0)
       {
-          $result = array_intersect($key_business_city,$key_business_cat);
+          $result = $key_business_cat;
           if(($key = array_search($id, $result)) !== false){
              unset($result[$key]);
              }
@@ -106,7 +106,7 @@ class ListingController extends Controller
           if(sizeof($result)>0)
           {
 
-            $obj_business_listing = BusinessListingModel::whereIn('id', $result)->with(['reviews'])->get();
+            $obj_business_listing = BusinessListingModel::where('city',$city)->whereIn('id', $result)->with(['reviews'])->get();
             if($obj_business_listing)
             {
               $all_related_business = $obj_business_listing->toArray();

@@ -31,6 +31,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		Route::post('updateprofile',				  ['as' => 'admin_update_profile',		   'uses' => 'Admin\AuthController@updateprofile']);
 
 
+
 	  /*---------------------CMS Module Start-------------------------*/
 	   Route::group(array('prefix' => '/static_pages'), function()
 		{
@@ -231,23 +232,25 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
         /* --------------------------   Business Listing End --------------------------   */
 
-		/*-------------Deals Module Start ------------*/
-	    Route::group(['prefix'=>'deals'], function()
-	    {
-
-			Route::get('/{enc_id}',							['as' => 'admin_deals_index' 	  ,'Admin\DealController@index']);
-			Route::get('create/{enc_id}',					['as' => 'admin_deals_create' 	  ,'Admin\DealController@create']);
-			Route::post('store',							['as' => 'admin_deals_store' 	  ,'Admin\DealController@store']);
-			Route::get('edit/{enc_id}',						['as' => 'admin_deals_edit' 	  ,'Admin\DealController@edit']);
-			Route::post('update/{enc_id}',					['as' => 'admin_deals_update' 	  ,'Admin\DealController@update']);
-			Route::get('delete/{enc_id}',					['as' => 'admin_deals_delete' 	  ,'Admin\DealController@delete']);
-			Route::get('toggle_status/{enc_id}/{action}',   ['as' => 'admin_deals_status' 	  ,'Admin\DealController@toggle_status']);
-			Route::post('multi_action',						['as' => 'admin_deals_multiaction','Admin\DealController@multi_action']);
-
-	   });
-	    /*-------------Deals Module End ------------*/
 
 
+ 		  Route::group(array('prefix'=>'/deals_offers'), function()
+		{
+			Route::get('/create',							    ['as' => 'admin_deals_offers_create' 	  , 'uses'=>'Admin\DealsOffersController@create']);
+			Route::get('/get_business_by_user/{user_id}',	    ['as' => 'admin_deals_offers_get_business_by_user' 	  , 'uses'=>'Admin\DealsOffersController@get_business_by_user']);
+			
+			Route::get('/{status?}',							['as' => 'admin_deals_offers_index' 	  , 'uses'=>'Admin\DealsOffersController@index']);
+			Route::post('store',							    ['as' => 'admin_deals_offers_store' 	  , 'uses'=>'Admin\DealsOffersController@store']);
+			Route::get('edit/{enc_id}',							['as' => 'admin_deals_offers_edit' 		  ,'uses' 	=> 'Admin\DealsOffersController@edit']);
+			Route::post('update/{enc_id}',						['as' => 'admin_deals_offers_update' 	  ,'uses' 	=> 'Admin\DealsOffersController@update']);
+			Route::get('delete/{enc_id}',						['as' => 'admin_deals_offers_delete' 	  ,'uses' 	=> 'Admin\DealsOffersController@delete']);
+			Route::post('multi_action',							['as' => 'admin_deals_offers_multiaction' ,'uses' 	=> 'Admin\DealsOffersController@multi_action']);
+					
+		});
+
+
+
+	  
 		/* Users Module */
 		Route::group(['prefix'=>'users'], function()
 		{
