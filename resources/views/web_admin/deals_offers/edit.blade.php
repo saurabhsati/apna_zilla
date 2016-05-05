@@ -70,7 +70,7 @@
           @endif
 
         @if(isset($deal_arr) && sizeof($deal_arr)>0)
-            <form class="form-horizontal" id="validation-form" method="POST" action="{{ url('/web_admin/deals/update/'.base64_encode($deal_arr['id'])) }}" enctype="multipart/form-data">
+            <form class="form-horizontal" id="validation-form" method="POST" action="{{ url('/web_admin/deals_offers/update/'.base64_encode($deal_arr['id'])) }}" enctype="multipart/form-data">
 
 
            {{ csrf_field() }}
@@ -88,12 +88,31 @@
                     <span class='help-block'>{{ $errors->first('business_id') }}</span>
                 </div>
             </div>
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="business_id">Business Public ID</label>
+                <div class="col-sm-6 col-lg-4 controls">
 
+                    <select class="form-control" name="busiess_ref_public_id" id="busiess_ref_public_id" data-rule-required="true" readonly>
+                       <option value="{{ isset($deal_arr['business_info']) && $deal_arr['business_info']?$deal_arr['business_info']['busiess_ref_public_id']:'' }}">
+                       {{ isset($deal_arr['business_info']) && $deal_arr['business_info']?$deal_arr['business_info']['busiess_ref_public_id']:'' }}
+                       </option>
+                    </select>
+
+                    <span class='help-block'>{{ $errors->first('busiess_ref_public_id') }}</span>
+                </div>
+            </div>
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="name">Deal Name<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" name="name" id="name" value="{{ $deal_arr['name'] }}" data-rule-required="true" />
                     <span class='help-block'>{{ $errors->first('name') }}</span>
+                </div>
+            </div>
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="title">Deal Title<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input class="form-control" name="title" id="title" value="{{ $deal_arr['title'] }}" data-rule-required="true" />
+                    <span class='help-block'>{{ $errors->first('title') }}</span>
                 </div>
             </div>
 
@@ -111,13 +130,6 @@
                     <span class='help-block'>{{ $errors->first('discount_price') }}</span>
                 </div>
             </div>
-             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="description">Description<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <textarea class="form-control" name="description" id="description" data-rule-required="true" rows="5">{{ $deal_arr['description'] }}</textarea>
-                    <span class='help-block'>{{ $errors->first('description') }}</span>
-                </div>
-            </div>
 
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="deal_image">Deal Image</label>
@@ -133,13 +145,13 @@
                            <span class="fileupload-exists">Change</span>
 
 
-                           <input type="file" name="deal_image"  id="deal_image" class="file-input" data-rule-required=""/></span>
+                           <input type="file" name="deal_main_image"  id="deal_main_image" class="file-input" data-rule-required=""/></span>
 
 
                            <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
 
 
-                            <span class='help-block'>{{ $errors->first('deal_image') }}</span>
+                            <span class='help-block'>{{ $errors->first('deal_main_image') }}</span>
 
                         </div>
                      </div>
@@ -149,15 +161,64 @@
                   </div>
                      <span id="image_err" style="color:red;margin-bottom:10px;font-size:12px;"></span>
             </div>
-            <hr/>
-
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="deal_type"></label>
-                <div class="col-sm-6 col-lg-5 controls">
-                    <h4><b>Deal Types</b></h4>
-                </div>
-            </div>
+                            <label class="col-sm-3 col-lg-2 control-label">Deal Slider Images<i class="red">*</i> </label>
+                            <div class="col-sm-9 col-lg-10 controls">
+                               <div class="fileupload fileupload-new business_upload_image_" data-provides="fileupload">
+                                 @foreach($deal_arr['deals_slider_images'] as $image)
 
+                                  <div class="fileupload-new img-thumbnail main" style="width: 200px; height: 150px;" data-image="{{ $image['image_name'] }}">
+                                     <img style="width:150px;height:122px"
+                                      src={{ $deal_base_upload_img_path.$image['image_name']}} alt="" />
+                                     <div class="caption">
+                                     <p class="pull-left">
+                                        <a href="javascript:void(0);"class="delete_image" data-image="{{ $image['image_name'] }}" onclick="javascript: return delete_gallery('<?php echo $image['id'] ;?>','<?php echo $image['image_name'];?>')">
+                                         <span class="glyphicon glyphicon-minus-sign " style="font-size: 20px;"></span></a>
+                                     </p>
+                                    </div>
+                                  </div>
+                           <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+
+                                  @endforeach
+                    <div class="error" id="err_delete_image"></div>
+
+                               </div>
+                                <span class='help-block'>{{ $errors->first('main_image') }}</span>
+                            </div>
+
+                         </div>
+                         <div class="form-group">
+                          <label class="col-sm-3 col-lg-2 control-label" for="building">
+                           <a href="" class="add_more">Add More Deal Slider Images</a></label>
+                         </div>
+                          <div class="form-group add_more_image" style="display: none;">
+                          <div class="col-sm-5 col-md-7" style="float:right;">
+                             <a href="javascript:void(0);" id='add-image' class="show-tooltip" title="Add More images">
+                                 <span class="glyphicon glyphicon-plus-sign" style="font-size: 20px;"></span>
+                             </a>
+                            <span style="margin-left:05px;">
+                            <a href="javascript:void(0);" id='remove-image' class="show-tooltip" title="Remove last selected  images">
+                                <span class="glyphicon glyphicon-minus-sign" style="font-size: 20px;"></span>
+                            </a>
+                            </span>
+                           </div>
+                              <label class="col-sm-3 col-lg-2 control-label">Add More Deal Slider Images <i class="red">*</i> </label>
+                              <div class="col-sm-6 col-lg-4 controls">
+
+                              <input type="file" name="deal_image[]" id="deal_image" class="pimg"   />
+                              <div class="error" id="error_deal_image">{{ $errors->first('deal_image') }}</div>
+
+                              <div class="clr"></div><br/>
+                                <div class="error" id="error_set_default"></div>
+                                <div class="clr"></div>
+
+                             <div id="append" class="class-add"></div>
+                              <div class="error_msg" id="error_deal_image" ></div>
+                              <div class="error_msg" id="error_deal_image1" ></div>
+                            <label class="col-sm-6 col-lg-12 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px upto only</label>
+
+                              </div>
+                              </div>
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="deal_type">Deal Type<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-3 controls">
@@ -240,13 +301,50 @@
                     </div>
                 </div>
             </div> -->
+              <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="description">Description<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <textarea class="form-control" name="description" id="description" data-rule-required="true" rows="5">{{ $deal_arr['description'] }}</textarea>
+                    <span class='help-block'>{{ $errors->first('description') }}</span>
+                </div>
+            </div>
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="things_to_remember">Things to Remember<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <textarea class="form-control" name="things_to_remember" id="things_to_remember" data-rule-required="true" rows="5">{{ $deal_arr['things_to_remember'] }}</textarea>
+                    <span class='help-block'>{{ $errors->first('things_to_remember') }}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="how_to_use">How to use the offer<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <textarea class="form-control" name="how_to_use" id="how_to_use" data-rule-required="true" rows="5">{{ $deal_arr['how_to_use'] }}</textarea>
+                    <span class='help-block'>{{ $errors->first('how_to_use') }}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="about">About<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <textarea class="form-control" name="about" id="about" data-rule-required="true" rows="5">{{ $deal_arr['about'] }}</textarea>
+                    <span class='help-block'>{{ $errors->first('about') }}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="facilities">Facilities<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <textarea class="form-control" name="facilities" id="facilities" data-rule-required="true" rows="5">{{ $deal_arr['facilities'] }}</textarea>
+                    <span class='help-block'>{{ $errors->first('facilities') }}</span>
+                </div>
+            </div>
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="cancellation_policy">Cancellation Policy<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <textarea class="form-control" name="cancellation_policy" id="cancellation_policy" data-rule-required="true" rows="5">{{ $deal_arr['cancellation_policy'] }}</textarea>
+                    <span class='help-block'>{{ $errors->first('cancellation_policy') }}</span>
+                </div>
+            </div>
 
 
-
-
-
-
-            <hr/>
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="is_active">Is Active <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-1 controls">
@@ -285,7 +383,21 @@
 
 
 <script type="text/javascript">
-
+ var site_url = "{{url('/')}}";
+function delete_gallery(id,image_name)
+{
+  var _token = $('input[name=_token]').val();
+  var dataString = { id:id, image_name:image_name, _token: _token };
+  var url_delete= site_url+'/web_admin/deals_offers/delete_gallery';
+  $.post( url_delete, dataString)
+      .done(function( data ) {
+        if(data=='done'){
+             $('#err_delete_image').html('<div style="color:green">Deals slider images deleted successfully.</div>');
+             var request_id=$('.delete_image').parents('.main').attr('data-image');
+             $('div[data-image="'+request_id+'"]').remove();
+        }
+      });
+}
         $(document).ready(function () {
             $('#validation-form').submit( function () {
                 var image =  jQuery('#deal_image').val();
@@ -303,7 +415,69 @@
 
                 return true;
              });
-        });
+
+
+
+$('#add-image').click(function()
+{
+   flag=1;
+
+            var img_val = jQuery("input[name='deal_image[]']:last").val();
+
+            var img_length = jQuery("input[name='deal_image[]']").length;
+
+            if(img_val == "")
+            {
+                  $('#error_deal_image').css('margin-left','120px');
+                  $('#error_deal_image').show();
+                  $('#error_deal_image').fadeIn(3000);
+                  document.getElementById('error_deal_image').innerHTML="The Image uploaded is required.";
+                  setTimeout(function(){
+                  $('#error_deal_image').fadeOut(4000);
+                  },3000);
+
+                 flag=0;
+                 return false;
+            }
+            var chkimg = img_val.split(".");
+             var extension = chkimg[1];
+
+               if(extension!='jpg' && extension!='JPG' && extension!='png' && extension!='PNG' && extension!='jpeg' && extension!='JPEG'
+                 && extension!='gif' && extension!='GIF')
+               {
+                 $('#error_deal_image1').css('margin-left','230px')
+                 $('#error_deal_image1').show();
+                 $('#error_deal_image1').fadeIn(3000);
+                 document.getElementById('error_deal_image1').innerHTML="The file type you are attempting to upload is not allowed.";
+                 setTimeout(function(){
+                  $('#deal_image').css('border-color','#dddfe0');
+                  $('#error_deal_image1').fadeOut(4000);
+               },3000);
+               flag=0;
+                return false;
+              }
+              var html='<div>'+
+                       '<input type="file" name="deal_image[]" id="deal_image" class="pimg" data-rule-required="true"  />'+
+                       '<div class="error" id="error_deal_image">{{ $errors->first("deal_image") }}</div>'+
+                       '</div>'+
+                       '<div class="clr"></div><br/>'+
+                       '<div class="error" id="error_set_default"></div>'+
+                       '<div class="clr"></div>';
+                  jQuery("#append").append(html);
+
+});
+
+$('#remove-image').click(function()
+{
+     var html= $("#append").find("input[name='deal_image[]']:last");
+     html.remove();
+            });
+     $('.add_more').click(function(){
+     $(".add_more_image").removeAttr("style");
+     return false;
+});
+
+ });
 
 </script>
 

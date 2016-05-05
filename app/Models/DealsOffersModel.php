@@ -11,6 +11,7 @@ class DealsOffersModel extends Model
 
     protected $table = 'deals';
     protected $fillable = ['business_id',
+                           'title',
               					   'name',
               					   'price',
                            'discount_price',
@@ -21,10 +22,21 @@ class DealsOffersModel extends Model
               					   'end_day',
                            'start_time',
                            'end_time',
-                           'parent_category_id'];
+                           'description',
+                           'things_to_remember',
+                           'how_to_use',
+                           'about',
+                           'facilities',
+                           'cancellation_policy',
+                           'parent_category_id'
+                           ];
 
     public function business_info()
     {
         return $this->belongsTo('App\Models\BusinessListingModel','business_id','id');
+    }
+       public function deals_slider_images()
+    {
+        return $this->hasMany('App\Models\DealsSliderImagesModel','deal_id','id');
     }
 }

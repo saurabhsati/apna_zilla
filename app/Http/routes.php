@@ -245,6 +245,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::post('update/{enc_id}',						['as' => 'admin_deals_offers_update' 	  ,'uses' 	=> 'Admin\DealsOffersController@update']);
 			Route::get('delete/{enc_id}',						['as' => 'admin_deals_offers_delete' 	  ,'uses' 	=> 'Admin\DealsOffersController@delete']);
 			Route::post('multi_action',							['as' => 'admin_deals_offers_multiaction' ,'uses' 	=> 'Admin\DealsOffersController@multi_action']);
+			Route::post('delete_gallery',				        ['as' => 'admin_deals_slider_delete' 	  ,'uses' 	=>'Admin\DealsOffersController@delete_gallery']);
 					
 		});
 

@@ -128,7 +128,7 @@
             </div>
             </div>
           <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="deal_image">Deal Image<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="deal_main_image">Deal Image<i class="red">*</i></label>
                   <div class="col-sm-6 col-lg-5 controls">
                      <div class="fileupload fileupload-new" data-provides="fileupload">
                         <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
@@ -140,13 +140,13 @@
                            <span class="fileupload-exists">Change</span>
 
 
-                           <input type="file" name="deal_image"  id="deal_image" class="file-input" data-rule-required="true"/></span>
+                           <input type="file" name="deal_main_image"  id="deal_main_image" class="file-input" data-rule-required="true"/></span>
 
 
                            <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
 
 
-                            <span class='help-block'>{{ $errors->first('deal_image') }}</span>
+                            <span class='help-block'>{{ $errors->first('deal_main_image') }}</span>
 
                         </div>
                      </div>
@@ -283,23 +283,46 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="description">Facilities<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="facilities">Facilities<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <textarea class="form-control" name="description" id="description" data-rule-required="true" rows="5"></textarea>
-                    <span class='help-block'>{{ $errors->first('description') }}</span>
+                    <textarea class="form-control" name="facilities" id="facilities" data-rule-required="true" rows="5"></textarea>
+                    <span class='help-block'>{{ $errors->first('facilities') }}</span>
                 </div>
             </div>
              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="description">Cancellation Policy<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="cancellation_policy">Cancellation Policy<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <textarea class="form-control" name="description" id="description" data-rule-required="true" rows="5"></textarea>
-                    <span class='help-block'>{{ $errors->first('description') }}</span>
+                    <textarea class="form-control" name="cancellation_policy" id="cancellation_policy" data-rule-required="true" rows="5"></textarea>
+                    <span class='help-block'>{{ $errors->first('cancellation_policy') }}</span>
                 </div>
             </div>
              
+<div class="row" style="display:none;">
+  <div class="col-md-6 ">
+                <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="facilities">Area<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                 <input id="geocomplete" type="text" placeholder="Type in an address" size="90" class="form-control"/></div>
+                </div>
+                <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="facilities">Selected Location<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                 <label id="result" name="result"  /></label> </div>
+                </div>
+   </div>
+ <div class="col-md-6 ">
+             <div class="form-group">
+                <label class="col-md-3 col-lg-2 control-label" for="map_location">Map Location<i class="red">*</i></label>
+                <div class="col-sm-5 col-lg-8 controls">
+                   <div id="business_location_map" style="height:400px"></div>
 
-
-           
+                    <label>Note: Click On the Map to Pick Nearby Custom Location </label>
+                    <div>
+                    <a id="reset" href="#" style="display:none;">Reset Marker</a></div>
+                </div>
+                </div>
+        </div>
+</div>
 
           <!--   <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label">Start Time<i style="color:red;">*</i></label>
@@ -753,5 +776,43 @@ $('#remove-image').click(function()
  });          
 </script>
 
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
+<script src="{{ url('/') }}/assets/front/js/jquery.geocomplete.min.js"></script>
+<script>
+      $(function(){
+        var location =$("label[name=result]").val();
+        var options = {
+                types: ['(cities)'],
+                componentRestrictions: {country: 'IN'},
+                details: ".geo-details",
+                detailsAttribute: "data-geo",
+                map: "#business_location_map",
+                types: ["geocode", "establishment"],
+                 location: location,
+                markerOptions: {
+                                    draggable: true
+                               }
+              }
+
+        $("#geocomplete").geocomplete(options)
+          .bind("geocode:result", function(event, result){
+            $("#result").append(result.formatted_address);
+           // $.log("Result: " + result.formatted_address);
+          })
+          .bind("geocode:error", function(event, status){
+            $.log("ERROR: " + status);
+          })
+          .bind("geocode:multiple", function(event, results){
+            $.log("Multiple: " + results.length + " results found");
+          });
+        
+        $("#find").click(function(){
+          $("#geocomplete").trigger("geocode");
+        });
+        
+        
+             
+      });
+    </script>
 
 @stop

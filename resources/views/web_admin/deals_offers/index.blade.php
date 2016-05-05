@@ -193,22 +193,22 @@
                    
                     <td>
                      @if($deal['is_active']=="0")
-                        <a  href="{{ url('/web_admin/deals/toggle_status/').'/'.base64_encode($deal['id']).'/activate' }}">
+                        <a  href="{{ url('/web_admin/deals_offers/toggle_status/').'/'.base64_encode($deal['id']).'/activate' }}">
                            <i class="fa fa-lock" ></i>
                         </a>
 
                         @elseif($deal['is_active']=="1")
-                        <a   href="{{ url('/web_admin/deals/toggle_status/').'/'.base64_encode($deal['id']).'/block' }}">
+                        <a   href="{{ url('/web_admin/deals_offers/toggle_status/').'/'.base64_encode($deal['id']).'/block' }}">
                            <i class="fa fa-unlock" ></i>
                         </a>
                         @endif
                         |
                        <a href="#">
-                        <a href="{{ url('/web_admin/deals/edit/').'/'.base64_encode($deal['id']) }}" class="show-tooltip" title="Edit">
+                        <a href="{{ url('/web_admin/deals_offers/edit/').'/'.base64_encode($deal['id']) }}" class="show-tooltip" title="Edit">
                           <i class="fa fa-edit" ></i>
                         </a>
                         |
-                        <a href="{{ url('/web_admin/deals/delete/').'/'.base64_encode($deal['id']) }}"
+                        <a href="{{ url('/web_admin/deals_offers/delete/').'/'.base64_encode($deal['id']) }}"
                            onclick="javascript:return confirm_delete()" class="show-tooltip" title="Delete">
                           <i class="fa fa-trash" ></i>
                         </a>
