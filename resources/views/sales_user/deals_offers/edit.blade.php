@@ -107,13 +107,16 @@
           <div class="form-group">
           <label class="col-sm-3 col-lg-2 control-label" for="sub_cat">Deal Sub Category <i class="red">*</i></label>
            <div class="col-sm-6 col-lg-4 controls">
+           <?php 
+           $arr_sub_selected=[];
+              $arr_main_selected=[];
+              ?>
            @if(isset($arr_category) && sizeof($arr_category)>0)
             @foreach($arr_category as $sub_category)
            @foreach($deal_arr['category_info'] as $selected_category)
            @if( $sub_category['parent']==$selected_category['main_cat_id'])
            <?php
-              $arr_sub_selected=[];
-              $arr_main_selected=[];
+              
               foreach($deal_arr['category_info'] as $sel_category)
                 {
                  array_push($arr_sub_selected,$sel_category['sub_cat_id']);
