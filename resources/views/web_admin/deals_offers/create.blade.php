@@ -22,7 +22,7 @@
             </span>
             <li>
                 <i class="fa fa-money"></i>
-                  <a href="{{ url('/') }}">Deal</a>
+                  <a href="{{ url('/web_admin/deals_offers/') }}">Deals</a>
                
             </li>
             <span class="divider">
@@ -307,7 +307,9 @@
                 <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="facilities">Selected Location<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                 <label id="result" name="result"  /></label> </div>
+                 <label id="result" name="result"  /></label>
+                 <label id="multi" name="multi"  /></label>
+                  </div>
                 </div>
    </div>
  <div class="col-md-6 ">
@@ -797,13 +799,15 @@ $('#remove-image').click(function()
         $("#geocomplete").geocomplete(options)
           .bind("geocode:result", function(event, result){
             $("#result").append(result.formatted_address);
+           // $("#multi").append(result.lat);
            // $.log("Result: " + result.formatted_address);
           })
           .bind("geocode:error", function(event, status){
             $.log("ERROR: " + status);
           })
           .bind("geocode:multiple", function(event, results){
-            $.log("Multiple: " + results.length + " results found");
+              $("#multi").append(results.length);
+           // $.log("Multiple: " + results.length + " results found");
           });
         
         $("#find").click(function(){
@@ -813,6 +817,9 @@ $('#remove-image').click(function()
         
              
       });
+
+   
     </script>
+
 
 @stop

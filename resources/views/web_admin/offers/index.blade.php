@@ -23,7 +23,7 @@
             </span>
             <li>
                 <i class="fa fa-money"></i>
-                <a href="{{ url('/web_admin/deals_offers/') }}">Deals Listing</a>
+                <a href="{{ url('/web_admin/deals_offers/')}}">Deals</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
@@ -45,11 +45,7 @@
             <div class="box-title">
               <h3>
                 <i class="fa fa-money"></i>
-
-                @if(isset($arr_restaurant) && sizeof($arr_restaurant)>0)
-                  {{ $arr_restaurant['name'] }}
-                @endif
-                <span class="divider">
+                   <span class="divider">
                   <i class="fa fa-angle-right"></i>
                 </span>
                 {{ isset($page_title)?$page_title:"" }}
@@ -78,7 +74,7 @@
                 {{ Session::get('error') }}
             </div>
           @endif
-          <form class="form-horizontal" id="frm_manage" method="POST" action="{{ url('/web_admin/deals_offers/multi_action') }}">
+          <form class="form-horizontal" id="frm_manage" method="POST" action="{{ url('/web_admin/offers/multi_action') }}">
 
             {{ csrf_field() }}
 
@@ -94,7 +90,7 @@
           <div class="btn-toolbar pull-right clearfix">
             <!--- Add new record - - - -->
                 <div class="btn-group">
-                   <a href="{{ url('/web_admin/deals_offers/create/')}}" class="btn btn-primary btn-add-new-records">Add Deal</a>
+                   <a href="{{ url('/web_admin/offers/create/'.base64_encode($arr_deal['id']))}}" class="btn btn-primary btn-add-new-records">Add Offers</a>
                  
                 </div>
             <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -123,12 +119,13 @@
                 </a>
             </div>
             <div class="btn-group">
-            <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
+             <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
                    title="Refresh"
-                   href="{{ url('/web_admin/deals_offers/') }}"
+                   href="{{ url('/web_admin/offers/'.base64_encode($arr_deal['id']))}}"
                    style="text-decoration:none;">
                    <i class="fa fa-repeat"></i>
                 </a>
+             
             </div>
           </div>
           <br/>
@@ -142,83 +139,61 @@
                 <tr>
                   <th> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
                   <th>Sr. No.</th>
-                  <th>Business</th>
-                  <th>Deal Image</th>
                   <th>Deal Name</th>
-                  <th>Deal Type</th>
-                  <th>Discount</th>
+                  <th>Offers Name</th>
+                  <th>Offers Title</th>
+                  <th>Discounted Price</th>
                   <th>Start Date</th>
                   <th>End Date</th>
-                   <th >Offers</th>
                   <th>Action</th>
                    
                 </tr>
               </thead>
               <tbody>
 
-                @if(isset($arr_deal) && sizeof($arr_deal)>0)
-                  @foreach($arr_deal as $key => $deal)
+                @if(isset($arr_offers) && sizeof($arr_offers)>0)
+                  @foreach($arr_offers as $key => $offers)
                   <tr>
                     <td>
                       <input type="checkbox"
                              name="checked_record[]"
-                             value="{{ base64_encode($deal['id']) }}" />
+                             value="{{ base64_encode($offers['id']) }}" />
                     </td>
                     <td>{{ $key+1 }}</td>
-                    <td>
-                          {{ $deal['business_info']['business_name'] }}
-                    </td>
-                      <td>
-                    <img src="{{ $deal_public_img_path.'/'.$deal['deal_image']}}" alt=""  style="width:75px; height:50px;" />   </td>
-                    <td>{{ $deal['name'] }}</td>
-                    <td>
-                      @if($deal['deal_type']=='1')
-                        {{ 'Normal Deal' }}
-                      @elseif($deal['deal_type']=='2')
-                        {{ 'Instant Deal' }}
-                      @elseif($deal['deal_type']=='3')
-                        {{ 'Featured Deal' }}
-                      @endif
-                    </td>
+                    <td> {{ $offers['deal_info']['name'] }}</td>
+                     <td>{{ $offers['name'] }}</td>
+                     <td>{{ $offers['title'] }}</td>
                      <td>
-                          {{ $deal['discount_price'] }}%
+                          {{ $offers['discounted_price'] }}
                     </td>
                       <td>
-                          {{ date('d-M-Y',strtotime($deal['start_day'])) }}
+                          {{ date('d-M-Y',strtotime($offers['valid_from'])) }}
                     </td>
                     <td>
-                          {{ date('d-M-Y',strtotime($deal['end_day'])) }}
+                          {{ date('d-M-Y',strtotime($offers['valid_until'])) }}
                     </td>
-                   <td>
-                     <a class="btn btn-success" href="{{ url('/web_admin/offers/'.base64_encode($deal['id'])) }}">
-                             View Offers
-                          </a>
-                    <!--  @if( sizeof($deal['offers_info'])>0)
-                           <a class="btn btn-success" href="{{ url('/web_admin/offers/'.base64_encode($deal['id'])) }}">
-                             View Offers
-                          </a>
-                     @else
-                       <a href="#" class="show-tooltip btn btn-success" title="No Offers Available"> View Offers </a>
-                     @endif -->
-                   </td>
+
                     <td>
-                     @if($deal['is_active']=="0")
-                        <a  href="{{ url('/web_admin/deals_offers/toggle_status/').'/'.base64_encode($deal['id']).'/activate' }}">
+                     @if($offers['is_active']=="0")
+                        <a  href="{{ url('/web_admin/offers/toggle_status/').'/'.base64_encode($offers['id']).'/activate' }}">
                            <i class="fa fa-lock" ></i>
                         </a>
 
-                        @elseif($deal['is_active']=="1")
-                        <a   href="{{ url('/web_admin/deals_offers/toggle_status/').'/'.base64_encode($deal['id']).'/block' }}">
+                        @elseif($offers['is_active']=="1")
+                        <a   href="{{ url('/web_admin/offers/toggle_status/').'/'.base64_encode($offers['id']).'/block' }}">
                            <i class="fa fa-unlock" ></i>
                         </a>
                         @endif
                         |
-                       <a href="#">
-                        <a href="{{ url('/web_admin/deals_offers/edit/').'/'.base64_encode($deal['id']) }}" class="show-tooltip" title="Edit">
+                       <a href="{{ url('/web_admin/offers/edit/').'/'.base64_encode($offers['id']) }}" class="show-tooltip" title="Edit">
                           <i class="fa fa-edit" ></i>
                         </a>
                         |
-                        <a href="{{ url('/web_admin/deals_offers/delete/').'/'.base64_encode($deal['id']) }}"
+                         <a href="{{ url('/web_admin/offers/show/').'/'.base64_encode($offers['id']) }}" class="show-tooltip" title="Show">
+                          <i class="fa fa-eye" ></i>
+                        </a>
+                        |
+                        <a href="{{ url('/web_admin/offers/delete/').'/'.base64_encode($offers['id']) }}"
                            onclick="javascript:return confirm_delete()" class="show-tooltip" title="Delete">
                           <i class="fa fa-trash" ></i>
                         </a>

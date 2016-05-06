@@ -47,6 +47,7 @@
             </ul>
         </li>
          <li class="{{ Request::segment(2)=='deals_offers'? 'active':'' }}
+          {{ Request::segment(2)=='offers'? 'active':'' }}
                     
         ">
             <a href="javascript:void(0)" class="dropdown-toggle">

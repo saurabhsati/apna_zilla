@@ -10,7 +10,8 @@ class DealsOffersModel extends Model
        use SoftDeletes;
 
     protected $table = 'deals';
-    protected $fillable = ['business_id',
+    protected $fillable = [
+                          'business_id',
                            'title',
               					   'name',
               					   'price',
@@ -38,5 +39,10 @@ class DealsOffersModel extends Model
        public function deals_slider_images()
     {
         return $this->hasMany('App\Models\DealsSliderImagesModel','deal_id','id');
+    }
+     public function offers_info()
+    {
+        return $this->hasMany('App\Models\OffersModel','deal_id','id');
+        //return $this->hasMany('App\Models\ReviewsModel','business_id','id');
     }
 }

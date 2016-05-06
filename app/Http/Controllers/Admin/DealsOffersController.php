@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DealsOffersModel;
 use App\Models\CategoryModel;
 use App\Models\BusinessListingModel;
-use App\Models\DealsSliderImagesModel   ;
+use App\Models\DealsSliderImagesModel;
 use Validator;
 use Session;
 
@@ -33,7 +33,7 @@ class DealsOffersController extends Controller
     	$obj_deal= $arr_deal=[];
     	if($status== 'all')
     	{
-    		$obj_deal=DealsOffersModel::with('business_info')->orderBy('created_at','DESC')->get();
+    		$obj_deal=DealsOffersModel::with(['business_info','offers_info'])->orderBy('created_at','DESC')->get();
             if($obj_deal)
              {
                 $arr_deal = $obj_deal->toArray();
@@ -41,7 +41,7 @@ class DealsOffersController extends Controller
     	}
     	else if($status== 'active')
     	{
-    		$obj_deal=DealsOffersModel::with('business_info')->where('end_day', '>=', date('Y-m-d').' 00:00:00')->orderBy('created_at','DESC')->get();
+    		$obj_deal=DealsOffersModel::with(['business_info','offers_info'])->where('end_day', '>=', date('Y-m-d').' 00:00:00')->orderBy('created_at','DESC')->get();
             if($obj_deal)
              {
                 $arr_deal = $obj_deal->toArray();
@@ -49,7 +49,7 @@ class DealsOffersController extends Controller
     	}
     	else if($status== 'expired')
     	{
-    		$obj_deal=DealsOffersModel::with('business_info')->where('end_day', '<', date('Y-m-d').' 00:00:00')->orderBy('created_at','DESC')->get();
+    		$obj_deal=DealsOffersModel::with(['business_info','offers_info'])->where('end_day', '<', date('Y-m-d').' 00:00:00')->orderBy('created_at','DESC')->get();
             if($obj_deal)
              {
                 $arr_deal = $obj_deal->toArray();
@@ -139,9 +139,9 @@ class DealsOffersController extends Controller
     	$validator=Validator::make($request->all(),$arr_rule);
     	if($validator->fails())
     	{
-             print_r($validator->errors()->all());exit;
+            // print_r($validator->errors()->all());exit;
            
-    		//return redirect()->back()->withErrors($validator)->withInput();
+    		return redirect()->back()->withErrors($validator)->withInput();
     	}
 
     	if($request->hasFile('deal_main_image'))///image loaded/Not
@@ -379,6 +379,124 @@ class DealsOffersController extends Controller
            }
         }
 
+    }
+     public function toggle_status($enc_id,$action)////$enc_id = Deal id
+    {
+        if($action=="activate")
+        {
+            $this->_activate($enc_id);
+
+            Session::flash('success','Deal(s) Activated Successfully');
+        }
+        elseif($action=="block")
+        {
+            $this->_block($enc_id);
+
+            Session::flash('success','Deal(s) Blocked Successfully');
+        }
+        elseif($action=="delete")
+        {
+            $this->_delete($enc_id);
+
+            Session::flash('success','Deal(s) Deleted Successfully');
+        }
+
+        return redirect()->back();
+    }
+
+    public function delete($enc_id)////$enc_id = Deal id
+    {
+        if($this->_delete($enc_id))
+        {
+            Session::flash('success','Deal(s) Deleted Successfully');
+        }
+        else
+        {
+            Session::flash('error','Problem Occurred While Deleting Deal(s)');
+        }
+        return redirect()->back();
+    }
+
+    protected function _activate($enc_id)////$enc_id = Deal id
+    {
+        $id = base64_decode($enc_id);
+        return DealsOffersModel::where('id',$id)->update(array('is_active'=>1));
+    }
+
+    protected function _block($enc_id)////$enc_id = Deal id
+    {
+        $id = base64_decode($enc_id);
+        return DealsOffersModel::where('id',$id)->update(array('is_active'=>0));
+    }
+
+    protected function _delete($enc_id)////$enc_id = Deal id
+    {
+        $id = base64_decode($enc_id);
+
+        $arr_deal = DealsOffersModel::select('id','deal_image')->where('id',$id)->first()->toArray();
+
+        $get_path = $this->deal_image_path.$arr_deal['deal_image'];
+
+        $unlink_deal_image = FALSE;
+        if(is_readable($get_path))
+        {
+            $unlink_deal_image = unlink($get_path);  //////////////////Unlink Deal image
+
+            if($unlink_deal_image==TRUE)
+            {
+                return DealsOffersModel::where('id',$id)->delete();//////////Soft Delete Deal
+            }
+        }
+
+    }
+
+    public function multi_action(Request $request)
+    {
+        $arr_rules = array();
+        $arr_rules['multi_action'] = "required";
+        $arr_rules['checked_record'] = "required";
+
+
+        $validator = Validator::make($request->all(),$arr_rules);
+
+        if($validator->fails())
+        {
+            Session::flash('error','Please Select Any Record(s)');
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $multi_action = $request->input('multi_action');
+        $checked_record = $request->input('checked_record');
+
+        /* Check if array is supplied*/
+        if(is_array($checked_record) && sizeof($checked_record)<=0)
+        {
+            Session::flash('error','Problem Occured, While Doing Multi Action');
+            return redirect()->back();
+
+        }
+
+        foreach ($checked_record as $key => $record_id)
+        {
+            if($multi_action=="activate")
+            {
+               $this->_activate($record_id);
+               Session::flash('success','Deal(s) Activated Successfully');
+            }
+            elseif($multi_action=="block")
+            {
+               $this->_block($record_id);
+               Session::flash('success','Deal(s) Blocked Successfully');
+            }
+            elseif($multi_action=="delete")
+            {
+               $this->_delete($record_id);
+                Session::flash('success','Deal(s) Deleted Successfully');
+            }
+
+        }
+
+        return redirect()->back();
     }
 
 }

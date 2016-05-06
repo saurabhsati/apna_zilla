@@ -22,9 +22,8 @@
             </span>
             <li>
                 <i class="fa fa-money"></i>
-                @if(isset($deal_arr['business_info']) && $deal_arr['business_info'] !='')
-                    <a href="{{ url('/').'/web_admin/deals/'.base64_encode($deal_arr['business_info']['id']) }}">Deal</a>
-                @endif
+                <a href="{{ url('/web_admin/deals_offers/') }}">Deal</a>
+               
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
