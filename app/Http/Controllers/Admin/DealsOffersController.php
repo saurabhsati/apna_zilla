@@ -156,7 +156,7 @@ class DealsOffersController extends Controller
 	    										  array('deal_main_image'=>'mimes:jpg,jpeg,png'));
 
 
-	    		if($request->file('deal_main_image')->isValid() && $image_validate->passes())
+	    		if($request->file('deal_main_image')->isValid())
 	    		{
 	    			$image_path 		=	$request->file('deal_main_image')->getClientOriginalName();
 	    			$image_extention	=	$request->file('deal_main_image')->getClientOriginalExtension();

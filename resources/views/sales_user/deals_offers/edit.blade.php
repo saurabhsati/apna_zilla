@@ -112,7 +112,8 @@
            @foreach($deal_arr['category_info'] as $selected_category)
            @if( $sub_category['parent']==$selected_category['main_cat_id'])
            <?php
-              $arr_sub_selected=$arr_main_selected=array();
+              $arr_sub_selected=[];
+              $arr_main_selected=[];
               foreach($deal_arr['category_info'] as $sel_category)
                 {
                  array_push($arr_sub_selected,$sel_category['sub_cat_id']);
