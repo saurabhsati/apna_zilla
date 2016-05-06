@@ -29,7 +29,8 @@ class DealsOffersModel extends Model
                            'about',
                            'facilities',
                            'cancellation_policy',
-                           'parent_category_id'
+                           'parent_category_id',
+                           'public_id'
                            ];
 
     public function business_info()
@@ -43,6 +44,10 @@ class DealsOffersModel extends Model
      public function offers_info()
     {
         return $this->hasMany('App\Models\OffersModel','deal_id','id');
-        //return $this->hasMany('App\Models\ReviewsModel','business_id','id');
+    }
+     public function category_info()
+    {
+        return $this->hasMany('App\Models\DealcategoryModel','deal_id','id');
+        
     }
 }

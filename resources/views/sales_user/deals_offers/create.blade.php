@@ -1,4 +1,4 @@
-    @extends('web_admin.template.admin')
+    @extends('sales_user.template.sales')
 
 
     @section('main_content')
@@ -15,14 +15,14 @@
         <ul class="breadcrumb">
             <li>
                 <i class="fa fa-home"></i>
-                <a href="{{ url('/').'/web_admin/dashboard' }}">Dashboard</a>
+                <a href="{{ url('/').'/sales_user/dashboard' }}">Dashboard</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span>
             <li>
                 <i class="fa fa-money"></i>
-                  <a href="{{ url('/web_admin/deals_offers/') }}">Deals</a>
+                  <a href="{{ url('/sales_user/deals_offers/') }}">Deals</a>
                
             </li>
             <span class="divider">
@@ -70,7 +70,7 @@
 
 
 
-          <form class="form-horizontal" id="validation-form" method="POST" action="{{ url('/web_admin/deals_offers/store') }}" enctype="multipart/form-data">
+          <form class="form-horizontal" id="validation-form" method="POST" action="{{ url('/sales_user/deals_offers/store') }}" enctype="multipart/form-data">
 
 
            {{ csrf_field() }}
@@ -94,7 +94,7 @@
               <label class="col-sm-3 col-lg-2 control-label" for="main_business_cat">Select Business   <i class="red">*</i></label>
             <div class="col-sm-6 col-lg-4 controls"  style="">
             <select class="form-control" id="business" name="business">
-            <option value="">Select Business Public Id </option>
+            <option value="">Select Business  Public ID </option>
                </select>
               <span class='help-block'>{{ $errors->first('business_cat') }}</span>
                 <div class="alert alert-warning">Note:  Select The Business Public ID</div>
@@ -656,7 +656,7 @@ $(document).ready(function()
                $("#tmp_user_id").attr('value',ui.item.user_id);
                var user_id=ui.item.user_id;
                  jQuery.ajax({
-                                        url:site_url+'/web_admin/deals_offers/get_business_by_user/'+user_id,
+                                        url:site_url+'/sales_user/deals_offers/get_business_by_user/'+user_id,
                                         type:'GET',
                                         data:'flag=true',
                                         dataType:'json',

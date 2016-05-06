@@ -1,4 +1,4 @@
-    @extends('web_admin.template.admin')
+      @extends('sales_user.template.sales')
 
 
     @section('main_content')
@@ -15,14 +15,14 @@
         <ul class="breadcrumb">
             <li>
                 <i class="fa fa-home"></i>
-                <a href="{{ url('/').'/web_admin/dashboard' }}">Dashboard</a>
+                <a href="{{ url('/').'/sales_user/dashboard' }}">Dashboard</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
             </span>
             <li>
                 <i class="fa fa-money"></i>
-                <a href="{{ url('/web_admin/deals_offers/') }}">Deal</a>
+                <a href="{{ url('/sales_user/deals_offers/') }}">Deal</a>
                
             </li>
             <span class="divider">
@@ -69,7 +69,7 @@
           @endif
 
         @if(isset($deal_arr) && sizeof($deal_arr)>0)
-            <form class="form-horizontal" id="validation-form" method="POST" action="{{ url('/web_admin/deals_offers/update/'.base64_encode($deal_arr['id'])) }}" enctype="multipart/form-data">
+            <form class="form-horizontal" id="validation-form" method="POST" action="{{ url('/sales_user/deals_offers/update/'.base64_encode($deal_arr['id'])) }}" enctype="multipart/form-data">
 
 
            {{ csrf_field() }}
