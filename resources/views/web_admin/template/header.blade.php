@@ -382,7 +382,12 @@
                                 Website Settings
                             </a>
                         </li>
-
+                         <li>
+                            <a href="{{ url('/web_admin/clear_app_cache')}}">
+                                <i class="fa fa-wrench"></i>
+                                Clear Cache
+                            </a>
+                        </li>
                         <li class="divider visible-xs"></li>
 
                         <li class="visible-xs">

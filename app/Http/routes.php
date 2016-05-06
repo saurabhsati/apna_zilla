@@ -30,7 +30,11 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		Route::get('edit_profile',					  ['as' => 'admin_edit_profile',		   'uses' => 'Admin\AuthController@profile']);
 		Route::post('updateprofile',				  ['as' => 'admin_update_profile',		   'uses' => 'Admin\AuthController@updateprofile']);
 
-
+		Route::get('clear_app_cache',function ()
+		{
+			\Artisan::call('cache:clear');
+			return redirect()->back();
+		});
 
 	  /*---------------------CMS Module Start-------------------------*/
 	   Route::group(array('prefix' => '/static_pages'), function()
@@ -405,6 +409,13 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 	Route::group(['prefix'=>'/sales_user','middleware'=>['web']], function ()
 	{
 
+
+		Route::get('clear_app_cache',function ()
+		{
+			\Artisan::call('cache:clear');
+			return redirect()->back();
+		});
+		
         Route::get('/',										['as' => 'sales_user_login'						,'uses' =>'SalesUser\SalesAccountController@login']);
 	    Route::get('login',									['as' => 'sales_user_login'             		,'uses' =>'SalesUser\SalesAccountController@login']);
 		Route::post('process_login',				  		['as' => 'sales_user_process_login'          	,'uses' =>'SalesUser\SalesAccountController@process_login']);

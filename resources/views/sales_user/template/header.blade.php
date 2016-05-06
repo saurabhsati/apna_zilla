@@ -373,7 +373,12 @@
                                 Change Password
                             </a>
                         </li>
-
+                         <li>
+                            <a href="{{ url('/sales_user/clear_app_cache')}}">
+                                <i class="fa fa-wrench"></i>
+                                Clear Cache
+                            </a>
+                        </li>
 
 
                         <li class="divider visible-xs"></li>
