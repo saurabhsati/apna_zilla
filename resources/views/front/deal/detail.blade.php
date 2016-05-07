@@ -81,8 +81,9 @@
            <li><span>{{$offers['title']}}</span>  </li>
            @endforeach
        </ul>
+       <hr/>
         @endif
-        <hr/>
+        
         @if(isset($deals_info[0]['offers_info']) && sizeof($deals_info[0]['offers_info'])>0)
          <div class="detail_link">
            <h3><b>Validity </b></h3>
@@ -95,8 +96,9 @@
            @endforeach
           
         </div>
-        @endif
         <hr/>
+        @endif
+        
         @if(isset($deals_info[0]['things_to_remember']) && !empty($deals_info[0]['things_to_remember']))
 	        <div class="detail_link">
 	       <h3><b>Things To Remember </b></h3>
@@ -160,26 +162,28 @@
 
 </div>
 <div class="col-sm-4 col-md-4 col-lg-4">
- @if(isset($deals_info[0]['offers_info']) && sizeof($deals_info[0]['offers_info'])>0)
+
  <div class="detail_bx">
        <h2>Select Offers</h2>
        <div class="categories_sect sidebar-nav ">
+        @if(isset($deals_info[0]['offers_info']) && sizeof($deals_info[0]['offers_info'])>0)
        <div class=" deal_offers_all">
         <ul class="offers_span">
         	 @foreach($deals_info[0]['offers_info'] as $key =>$offers)
           <li><span>{{$offers['title']}}</span>  </li>
           <div class="divider"></div>
            @endforeach
-          
-
          </ul>
        </div>
-        <div class="pad-dels-details">Total : 	0</div>
+       <div class="pad-dels-details">Total : 	0</div>
+       @else
+         <div class=" deal_offers_all"><ul class="offers_span"><li><span>Sorry , No Offers Avialable !!!</span></li></ul></div>
+        @endif
        </div>
        
 
 </div>
-  @endif
+  
 <div class="categories_sect sidebar-nav">
 
       <div class="buy_text">
