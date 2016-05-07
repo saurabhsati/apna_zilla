@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Models\DealModel;
+use App\Models\DealsOffersModel;
 use App\Models\CategoryModel;
 use App\Models\CityModel;
 use App\Models\BusinessListingModel;
@@ -54,13 +54,13 @@ class DealController extends Controller
         }
       }
   
-  	$obj_deals_info = DealModel::where('is_active','1')->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->orderBy('created_at','DESC')->get();
+  	$obj_deals_info = DealsOffersModel::where('is_active','1')->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->orderBy('created_at','DESC')->get();
 
  		if($obj_deals_info)
  		{
  			$arr_deals_info = $obj_deals_info->toArray();
 		}
- 		$obj_deals_max_dis_info = DealModel::where('is_active','1')->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->orderBy('discount_price','DESC')->get();
+ 		$obj_deals_max_dis_info = DealsOffersModel::where('is_active','1')->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->orderBy('discount_price','DESC')->get();
 
  		if($obj_deals_max_dis_info)
  		{
@@ -68,7 +68,7 @@ class DealController extends Controller
 		}
 
 
-   $obj_deals_default_loc = DealModel::where('is_active','1')->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->get();
+   $obj_deals_default_loc = DealsOffersModel::where('is_active','1')->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->get();
   if($obj_deals_default_loc)
   {
       $arr_deals_loc_info = $obj_deals_default_loc->toArray();
@@ -170,21 +170,21 @@ class DealController extends Controller
          
           if(sizeof($key_deal_cat)>0)
           {  
-                $obj_deals_info = DealModel::where('is_active','1')->whereIn('id',$key_deal_cat)->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->orderBy('created_at','DESC')->get();
+                $obj_deals_info = DealsOffersModel::where('is_active','1')->whereIn('id',$key_deal_cat)->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->orderBy('created_at','DESC')->get();
 
                 if($obj_deals_info)
                 {
                     $arr_deals_info = $obj_deals_info->toArray();
                 }
 
-                $obj_deals_max_dis_info = DealModel::where('is_active','1')->whereIn('id',$key_deal_cat)->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->orderBy('discount_price','DESC')->get();
+                $obj_deals_max_dis_info = DealsOffersModel::where('is_active','1')->whereIn('id',$key_deal_cat)->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->orderBy('discount_price','DESC')->get();
 
                 if($obj_deals_max_dis_info)
                 {
                     $arr_deals_max_dis_info = $obj_deals_max_dis_info->toArray();
                 }
 
-               $obj_deals_default_loc = DealModel::where('is_active','1')->whereIn('id',$key_deal_cat)->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->get();
+               $obj_deals_default_loc = DealsOffersModel::where('is_active','1')->whereIn('id',$key_deal_cat)->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->get();
               if($obj_deals_default_loc)
               {
                   $arr_deals_loc_info = $obj_deals_default_loc->toArray();
@@ -208,7 +208,7 @@ class DealController extends Controller
  		$page_title = "Details";
     $deal_image_path="uploads/deal";
  		 $id = base64_decode($enc_id);
- 		 $obj_deals_info = DealModel::where('id',$id)->get();
+ 		 $obj_deals_info = DealsOffersModel::with(['offers_info'])->where('id',$id)->get();
 
  		if($obj_deals_info)
  		{
@@ -233,6 +233,9 @@ class DealController extends Controller
         // Meta::setDescription($meta_desp);
         Meta::addKeyword($mete_title);
 		//dd($deals_info);
+
+
+
  		return view('front.deal.detail',compact('deal_image_path','page_title','deals_info'));
  	}
     public function fetch_location_deal(Request $request)
@@ -287,7 +290,7 @@ class DealController extends Controller
           $html='';
           if(sizeof($busiess_result)>0 && isset($busiess_result))
           {
-                $obj_deals_info = DealModel::where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$busiess_result)->get();
+                $obj_deals_info = DealsOffersModel::where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$busiess_result)->get();
 
               if($obj_deals_info)
               {

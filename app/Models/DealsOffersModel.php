@@ -50,4 +50,5 @@ class DealsOffersModel extends Model
         return $this->hasMany('App\Models\DealcategoryModel','deal_id','id');
         
     }
+     
 }
