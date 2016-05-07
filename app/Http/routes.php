@@ -670,6 +670,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	Route::group(array('prefix' => '/{city}'), function()
 	{
 		Route::get('deals/',								['as' =>'deals_page'								,'uses' =>'Front\DealController@index']);
+		Route::get('deals/cat-{cat_slug}/{sub_cat_slug}',	    ['as' =>'deals_by_category'			,'uses' =>'Front\DealController@deals_by_category']);
 		Route::get('deals/{deal_slug}/{enc_id}',			['as' =>'deals_detail'								,'uses' =>'Front\DealController@details']);
 		Route::get('deals/{cat_slug}',						['as' =>'deals_by_category'			,'uses' =>'Front\DealController@deals_by_category']);
 		Route::post('fetch_location_deal',					['as' =>'deals_by_location'			,'uses' =>'Front\DealController@fetch_location_deal']);

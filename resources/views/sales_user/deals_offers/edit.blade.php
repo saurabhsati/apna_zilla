@@ -108,7 +108,7 @@
           <label class="col-sm-3 col-lg-2 control-label" for="sub_cat">Deal Sub Category <i class="red">*</i></label>
            <div class="col-sm-6 col-lg-4 controls">
            <?php 
-           $arr_sub_selected=[];
+              $arr_sub_selected=[];
               $arr_main_selected=[];
               ?>
            @if(isset($arr_category) && sizeof($arr_category)>0)

@@ -29,6 +29,7 @@ class GlobalSiteConfig
         view()->share('about_us', $this->get_about_us_content());
 
         view()->share('deal_category', $this->all_deal_category());
+        view()->share('allow_deal_sub_category', $this->all_deal_sub_category());
         return $next($request);
     }
 
@@ -74,5 +75,32 @@ class GlobalSiteConfig
             //dd($deal_category);
         }
     }
+    public function all_deal_sub_category()
+    {
+        $deal_category =  $allow_deal_sub_category = [];
+
+        $obj_allow_deal_category = CategoryModel::where('is_active','1')->where('is_allow_to_add_deal',1)->get();
+        if($obj_allow_deal_category)
+        {
+            $deal_category = $obj_allow_deal_category->toArray();
+            $key_deal_main_cat=array();
+              if(sizeof($deal_category)>0)
+              {
+                  foreach ($deal_category as $key => $value) {
+                    $key_deal_main_cat[$value['cat_id']]=$value['cat_id'];
+                  }
+              }
+              if(sizeof($key_deal_main_cat)>0)
+              {
+                $obj_allow_deal_sub_category = CategoryModel::whereIn('parent',$key_deal_main_cat)->get();
+                if($obj_allow_deal_sub_category)
+                {
+                      $allow_deal_sub_category = $obj_allow_deal_sub_category->toArray();
+                }
+              }
+         }
+         return $allow_deal_sub_category;
+    }
+
 
 }

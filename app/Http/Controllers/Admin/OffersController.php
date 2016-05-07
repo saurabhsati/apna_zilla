@@ -93,7 +93,7 @@ class OffersController extends Controller
     }
     public function show($enc_id)
     {
-    	$page_title=' Edit Offers';
+    	$page_title=' Show Offers';
     	$id=base64_decode($enc_id);
     	$obj_offers=OffersModel::with('deal_info')->where('id',$id)->get();
         if($obj_offers)

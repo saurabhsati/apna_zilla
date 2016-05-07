@@ -9,6 +9,7 @@ use App\Models\DealModel;
 use App\Models\CategoryModel;
 use App\Models\CityModel;
 use App\Models\BusinessListingModel;
+use App\Models\DealcategoryModel;
 use Meta;
 
 class DealController extends Controller
@@ -26,7 +27,7 @@ class DealController extends Controller
     $deal_image_path="uploads/deal";
 
      //by city
-    $obj_business_listing_city = CityModel::where('city_title',$city)->get();
+    /*$obj_business_listing_city = CityModel::where('city_title',$city)->get();
     if($obj_business_listing_city)
     {
       $obj_business_listing_city->load(['business_details']);
@@ -38,8 +39,22 @@ class DealController extends Controller
         foreach ($arr_business_by_city[0]['business_details'] as $key => $value) {
           $key_business_city[$value['id']]=$value['id'];
         }
+      }*/
+
+      $obj_business_listing = BusinessListingModel::where('city',$city)->where('is_active','1')->get();
+      if($obj_business_listing)
+      {
+          $obj_business_listing = $obj_business_listing->toArray();
       }
- 		$obj_deals_info = DealModel::where('is_active','1')->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->orderBy('created_at','DESC')->get();
+       $key_business_city=array();
+     if(sizeof($obj_business_listing)>0)
+      {
+        foreach ($obj_business_listing as $key => $value) {
+          $key_business_city[$value['id']]=$value['id'];
+        }
+      }
+  
+  	$obj_deals_info = DealModel::where('is_active','1')->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->orderBy('created_at','DESC')->get();
 
  		if($obj_deals_info)
  		{
@@ -62,20 +77,33 @@ class DealController extends Controller
 
  		return view('front.deal.index',compact('deal_image_path','page_title','arr_deals_info','arr_deals_max_dis_info','arr_deals_loc_info','city'));
  	}
- 	public function deals_by_category($city,$cat_slug)
+ 	public function deals_by_category($city,$cat_slug,$sub_cat_slug='')
  	{
-        // $id = base64_decode($enc_id);
-       // echo $city;
-      //  echo $cat_slug;
-      //  exit;
-        $deal_image_path="uploads/deal";
-        $obj_category_info = CategoryModel::where('cat_slug',$cat_slug)->get();
+         $deal_image_path="uploads/deal";
+        if($sub_cat_slug=='')
+        {
+          $cat_explode =[];
+         // $cat_explode=$cat_slug.split('/_(.+)?/')[1];//preg_split("^([^-]*)-(.*)",$cat_slug);
+          $cat_explode=preg_split('[cat-]',$cat_slug);
+          if(sizeof($cat_explode)>0)
+          {
+           $obj_category_info = CategoryModel::where('cat_slug',$cat_explode[1])->get();
+           //dd($obj_category_info->toArray());
+          }
+
+        }
+        else
+        {
+           $obj_category_info = CategoryModel::where('cat_slug',$sub_cat_slug)->get();
+
+        }
         $arr_category_info=array();
         $arr_deals_max_dis_info=array();
         $arr_deals_info=array();
+        $arr_deals_loc_info=array();
 
         //by city
-        $obj_business_listing_city = CityModel::where('city_title',$city)->get();
+       /* $obj_business_listing_city = CityModel::where('city_title',$city)->get();
         if($obj_business_listing_city)
         {
           $obj_business_listing_city->load(['business_details']);
@@ -87,36 +115,84 @@ class DealController extends Controller
             foreach ($arr_business_by_city[0]['business_details'] as $key => $value) {
               $key_business_city[$value['id']]=$value['id'];
             }
-          }
+          }*/
+      $obj_business_listing = BusinessListingModel::where('city',$city)->where('is_active','1')->get();
+      if($obj_business_listing)
+      {
+          $obj_business_listing = $obj_business_listing->toArray();
+      }
+       $key_business_city=array();
+     if(sizeof($obj_business_listing)>0)
+      {
+        foreach ($obj_business_listing as $key => $value) {
+          $key_business_city[$value['id']]=$value['id'];
+        }
+      }
         // By category
+
+
+
+
+
 
         if($obj_category_info)
         {
             $arr_category_info = $obj_category_info->toArray();
         }
-        if( $arr_category_info)
+        if( sizeof($arr_category_info)>0)
         {
+          //dd($arr_category_info);
+          $cat_id='';
+          $cat_id=$arr_category_info[0]['cat_id'];
 
-            $obj_deals_info = DealModel::where('is_active','1')->where('parent_category_id',$arr_category_info[0]['cat_id'])->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->orderBy('created_at','DESC')->get();
-
-            if($obj_deals_info)
+          /* Get Business by Sub-Category Selected */
+           if($sub_cat_slug=='')
             {
-                $arr_deals_info = $obj_deals_info->toArray();
+              
+                 $obj_deal_listing_cat = DealcategoryModel::where('main_cat_id',$cat_id)->get();
+            }
+            else
+            {
+                  $obj_deal_listing_cat = DealcategoryModel::where('sub_cat_id',$cat_id)->get();
             }
 
-            $obj_deals_max_dis_info = DealModel::where('is_active','1')->where('parent_category_id',$arr_category_info[0]['cat_id'])->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->orderBy('discount_price','DESC')->get();
-
-            if($obj_deals_max_dis_info)
-            {
-                $arr_deals_max_dis_info = $obj_deals_max_dis_info->toArray();
-            }
-
-
-
-           $obj_deals_default_loc = DealModel::where('is_active','1')->where('parent_category_id',$arr_category_info[0]['cat_id'])->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->get();
-          if($obj_deals_default_loc)
+         if($obj_deal_listing_cat)
           {
-              $arr_deals_loc_info = $obj_deals_default_loc->toArray();
+            $arr_deal_category = $obj_deal_listing_cat->toArray();
+          }
+          $key_deal_cat=array();
+          if(sizeof($arr_deal_category)>0)
+          {
+              foreach ($arr_deal_category as $key => $value) {
+                $key_deal_cat[$value['deal_id']]=$value['deal_id'];
+              }
+          }
+         
+          if(sizeof($key_deal_cat)>0)
+          {  
+                $obj_deals_info = DealModel::where('is_active','1')->whereIn('id',$key_deal_cat)->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->orderBy('created_at','DESC')->get();
+
+                if($obj_deals_info)
+                {
+                    $arr_deals_info = $obj_deals_info->toArray();
+                }
+
+                $obj_deals_max_dis_info = DealModel::where('is_active','1')->whereIn('id',$key_deal_cat)->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->orderBy('discount_price','DESC')->get();
+
+                if($obj_deals_max_dis_info)
+                {
+                    $arr_deals_max_dis_info = $obj_deals_max_dis_info->toArray();
+                }
+
+               $obj_deals_default_loc = DealModel::where('is_active','1')->whereIn('id',$key_deal_cat)->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->get();
+              if($obj_deals_default_loc)
+              {
+                  $arr_deals_loc_info = $obj_deals_default_loc->toArray();
+              }
+          }
+          else
+          {
+            $arr_deals_info=$arr_deals_loc_info=$arr_deals_max_dis_info=[];
           }
 
 

@@ -23,11 +23,28 @@
           @if(isset($deal_category) && sizeof($deal_category)>0)
 
             @foreach($deal_category as $key => $category)
-
-                 <li><a class="<?php if($category['cat_slug']==Request::segment(3)){echo'active';}?>" href="{{ url('/') }}/{{$city}}/deals/{{$category['cat_slug']}}">{{ ucfirst($category['title'])}}</a></li>
-                   @endforeach
-                          @endif
-                 <!--  <li class="dropdown w3_megamenu-fw"><a href="#" class="dropdown-toggle ser" data-hover="dropdown">More <b style="margin-left:5px;vertical-align:super;" class="caret"></b></a>
+      
+                 <li class="dropdown w3_megamenu-fw">
+                 <a data-hover="dropdown" class="dropdown-toggle ser <?php if($category['cat_slug']==Request::segment(3)){echo'active';}?>" href="{{ url('/') }}/{{$city}}/deals/cat-{{$category['cat_slug']}}">{{ ucfirst($category['title'])}}
+                 <b style="margin-left:5px;vertical-align:super;" class="caret"> </b>
+                 </a>
+                   <ul class="dropdown-menu">
+                          <li class="w3_megamenu-content withdesc">
+                             <ul>
+                              @if(isset($allow_deal_sub_category) && sizeof($allow_deal_sub_category)>0)
+                                  @foreach($allow_deal_sub_category as $key => $sub_category)
+                                    @if($sub_category['parent']==$category['cat_id'])
+                                   <li><a href="{{ url('/') }}/{{$city}}/deals/cat-{{$category['cat_slug']}}/{{$sub_category['cat_slug']}}"> {{ ucfirst($sub_category['title'])}}</a></li>
+                                   @endif
+                                  @endforeach
+                               @endif
+                               </ul>
+                          </li>
+                        </ul>
+                 </li>
+                @endforeach
+               @endif
+                  <!-- <li class="dropdown w3_megamenu-fw"><a href="#" class="dropdown-toggle ser" data-hover="dropdown">More <b style="margin-left:5px;vertical-align:super;" class="caret"></b></a>
                         <ul class="dropdown-menu">
                           <li class="w3_megamenu-content withdesc">
                              <ul>
@@ -38,26 +55,22 @@
                                 </ul>
                           </li>
                         </ul>
-                        </li>   -->
-
+                        </li>  
+ -->
                 </ul>
 
               <ul class="hidden-md hidden-lg">
-
-              <li class="dropdown w3_megamenu-fw"><a href="#" class="dropdown-toggle ser" data-hover="dropdown">All Deals <b style="margin-left:5px;vertical-align:super;" class="caret"></b></a>
+                  <li class="dropdown w3_megamenu-fw"><a href="#" class="dropdown-toggle ser" data-hover="dropdown">All Deals <b style="margin-left:5px;vertical-align:super;" class="caret"></b></a>
                       <ul class="dropdown-menu">
                         <li class="w3_megamenu-content withdesc">
                            <ul>
-                  <li><a class="active" href="#">Restaurant</a></li>
-                <li><a href="#">Beauty/Spa</a></li>
-                <li><a href="#">Wellness</a></li>
-                <li><a href="#">Travel</a></li>
-                <li><a href="#">Health care</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Shopping</a></li>
-                <li><a href="#">Leisure Offers</a></li>
-                <li><a href="#">Tickets</a></li>
-                              </ul>
+                            @if(isset($deal_category) && sizeof($deal_category)>0)
+                              @foreach($deal_category as $key => $category)
+                               <li><a class="<?php if($category['cat_slug']==Request::segment(3)){echo'active';}?>" href="{{ url('/') }}/{{$city}}/deals/{{$category['cat_slug']}}">{{ ucfirst($category['title'])}}</a></li>
+                              @endforeach
+                            @endif
+                            
+                          </ul>
                         </li>
                       </ul>
                       </li>
