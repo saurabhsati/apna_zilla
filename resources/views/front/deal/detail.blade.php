@@ -356,7 +356,7 @@ $('.btn_buy').click(function()
        var offer_selected_quantity=current.find("#offer_hidden").attr('data-minimumpurchasequantity');
        if(offer_selected_quantity!='0')
        {
-         if(string.indexOf('-') === -1)
+         if(i==0)
          {
             string+=offer_id+'_'+offer_selected_quantity;
          }

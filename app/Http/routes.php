@@ -565,7 +565,13 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 	Route::group(array('prefix' => '/order'), function()
 	{
-		Route::get('/offerid={offers}/{enc_id}',					    		'Front\OrderController@index');
+		Route::get('/offerid={offers}/{enc_id}',		'Front\OrderController@index');
+		Route::get('/payment',						    'Front\OrderController@payment');
+		Route::get('/success',							'Front\OrderController@payment_success');
+		Route::get('/fail',								'Front\OrderController@payment_fail');
+		Route::get('/cancel',							'Front\OrderController@payment_cancle');
+
+
 		
 	});
 

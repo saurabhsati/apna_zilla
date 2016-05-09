@@ -138,7 +138,8 @@ $(document).ready(function(){
    var site_url = "{{url('/')}}";
 
    window.onload = function() {
-   var city="{{Session::get('city')}}";
+
+   var city="{{Session::get('city') or Session::get('search_city_title')  }}";
    if(city=='')
       {
           getLocation();

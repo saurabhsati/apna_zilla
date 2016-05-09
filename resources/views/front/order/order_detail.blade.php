@@ -69,29 +69,7 @@
 .select_payment_mode {
     width: 98%;
 }
-.offer-content {
-    position: absolute;
-    z-index: 999;
-    background: #fff;
-    box-shadow: 1px 4px 25px rgba(0,0,0,.4);
-    right: 12px;
-    top: 26px;
-    border-radius: 3px;
-    display: block;
-    border: solid 1px #ddd;
-    border-radius: 3px;
-    width: 350px;
-}
-.overlay-cash-back {
-    width: 350px;
-    background: rgba(0,0,0,0.58);
-    position: absolute;
-    top: 0;
-    margin: 0 auto;
-    right: 0;
-    z-index: 999;
-    display: none;
-}
+
 .nb-radio {
     display: inline-block;
     position: relative;
@@ -109,9 +87,7 @@ label {
     line-height: 1.5;
     margin-bottom: 0;
 }
-.cash-back-offer-parent {
-    display: inline-block;
-}
+
 .nb-radio input:checked+.nb-radio__bg {
     opacity: 0;
 }
@@ -186,7 +162,7 @@ span.nb-radio__text {
                              </div>
                              <div class="row">
                                 <div class="medium-12 columns ">
-                                   <div class="promo_input_wrapper"><a class="promo_input_trigger " href="#">Have a promo code ?</a></div>
+                                   <div class="promo_input_wrapper"><a class="promo_input_trigger " href="javascript:void(0);">Have a promo code ?</a></div>
                                 </div>
                                 <div id="applyCodeContainer" class="medium-12 columns promo_input_box" style="display:none;">
                                    <div class="row collapse">
@@ -222,17 +198,7 @@ span.nb-radio__text {
                                    <div class="form-group radio-group radio-group--inline">
                                       <label class="nb-radio">
                                       <input type="radio" checked="checked" id="paymentModePayU" value="PAYU" name="paymentMode"><span class="nb-radio__bg"></span><span class="nb-radio__icon icon rippler rippler-default"></span><span class="nb-radio__text">Credit/Debit/Net banking/PayUmoney</span></label>
-                                     <div class="cash-back-offer-parent">
-                                      <div class="cash-back-offer">
-                                            <a>10% cashback offer <i aria-hidden="true" class="fa fa-info-circle"></i></a>
-                                            <div class="overlay-cash-back">
-                                               <div class="offer-content">
-                                                  <div class="close-offer-content"><i aria-hidden="true" class="fa fa-times"></i></div>
-                                                  {{strip_tags($deal_arr['description'])}}
-                                               </div>
-                                            </div>
-                                         </div>
-                                      </div>
+                                    
                                    </div>
                                    <ul class="margin_zero margin-top_20px"></ul>
                                 </div>
@@ -248,6 +214,7 @@ span.nb-radio__text {
                           </div>
                        </div>
                        <div id="proceed-with-pay-btn" class="column small-12 medium-4 right">
+
                         <a type="button" class="btn btn-post center-b btn_buy" href="javascript:void(0);">Proceed to payment</a>
                        <!-- <button class="button postfix btn_orange font-size18 margin_zero margin-top_20px">Proceed to payment</button> -->
                        </div>
