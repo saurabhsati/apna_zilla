@@ -540,7 +540,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 	});
 
-	Route::get('/','Front\HomeController@index');
+	Route::get('/',										'Front\HomeController@index');
 	Route::post('/get_business_by_exp_categry',			'Front\HomeController@get_business_by_exp_categry');
 	Route::post('/get_business_history',				'Front\HomeController@get_business_history');
 
@@ -563,6 +563,11 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::post('cancel',							'Front\PayumoneyController@payment_cancle');
 	});
 
+	Route::group(array('prefix' => '/order'), function()
+	{
+		Route::get('/offerid={offers}/{enc_id}',					    		'Front\OrderController@index');
+		
+	});
 
 	/*--------------------------Front-login-section-------------------------------*/
 

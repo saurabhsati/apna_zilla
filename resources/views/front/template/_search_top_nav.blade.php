@@ -9,7 +9,7 @@
                              {{ csrf_field() }}
                               <!--<button class="form-control-map ui-widget" aria-hidden="true" type="submit"><img src="images/home_map.png" alt="" /></button>-->
                                <input type="text"
-                                 @if(Request::segment(1))
+                                 @if(Request::segment(1) && Request::segment(1)!='order')
                                 value="{{urldecode(Request::segment(1))}}"
                                 @else value="Mumbai"
                                 @endif
@@ -51,7 +51,7 @@
                                   $set_txt_name= ucwords(urldecode(str_replace('-',' ',Request::segment(3))));
                                 }
 
-                                else
+                                else 
                                 {
                                   if(isset($category_set))
                                   {
@@ -65,7 +65,7 @@
                                 ?>
 
                                <input type="text"  class="search-txt"  id="category_search" name="category_search"
-                               @if(Request::segment(2)=='all-categories')
+                               @if(Request::segment(2)=='all-categories' || Request::segment(1)=='order')
                                  placeholder ="<?php echo 'Search by Business Category Or Deal name ';?>"
                                 @else
                                 value="{{$set_txt_name}}" @endif >

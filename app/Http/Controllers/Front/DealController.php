@@ -208,7 +208,7 @@ class DealController extends Controller
  		$page_title = "Details";
     $deal_image_path="uploads/deal";
  		 $id = base64_decode($enc_id);
- 		 $obj_deals_info = DealsOffersModel::with(['offers_info'])->where('id',$id)->get();
+ 		 $obj_deals_info = DealsOffersModel::with(['offers_info','deals_slider_images'])->where('id',$id)->get();
 
  		if($obj_deals_info)
  		{

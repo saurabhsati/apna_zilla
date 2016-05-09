@@ -11,7 +11,8 @@
             <div class="categ">
             <?php  //print_r($deal_category); ?>
            <ul class="hidden-sm hidden-xs">
-              <?php if(Request::segment(1))
+              <?php 
+              if(Request::segment(1) )
               {
                  $city=urldecode(Request::segment(1));
               }

@@ -11,7 +11,7 @@
   .deal_offers_all{
  	    display: block;
     overflow-y: scroll;
-    height: 480px;
+   /* height: 480px;*/
  }
 .detail_link span {
     color: #777777;
@@ -47,8 +47,11 @@
                   $city="Mumbai";
               }?>
      @if(sizeof($deals_info)>0)
+      @foreach($deals_info as $deal)
+    
      <li><a href="{{ url('/') }}/{{$city}}/deals">Deals</a></li>
-     <li class="active"><?php echo substr($deals_info[0]['name'],0,120).'..';?></li>
+     <li class="active"><?php echo substr($deal['name'],0,120).'..';?></li>
+     @endforeach
      @endif
    </ol>
  </div>
@@ -60,34 +63,35 @@
   <div class="row">
    <div class="col-sm-8 col-md-8 col-lg-8">
      @if(sizeof($deals_info)>0)
+     @foreach($deals_info as $deal)
 
      <div class="detail_bx">
-       <h2>{{ucfirst($deals_info[0]['name'])}}</h2>
+       <h2>{{ucfirst($deal['name'])}}</h2>
        <div class="rate_sec">
         <ul>
-          <li><!-- <img alt="write_review" src="{{ url('/') }}/assets/front/images/verified.png" width="33px"/> --><span><!-- {{$deals_info[0]['discount_price']}}%  -->{{ucfirst($deals_info[0]['title'])}}</span>  </li>
+          <li><!-- <img alt="write_review" src="{{ url('/') }}/assets/front/images/verified.png" width="33px"/> --><span><!-- {{$deal['discount_price']}}%  -->{{ucfirst($deal['title'])}}</span>  </li>
         </ul>
       </div>
-      <img src="{{get_resized_image_path($deals_info[0]['deal_image'],$deal_image_path,350,1140)}}" height="350px" alt="deals detail" class="deals-detils"/>
+      <img src="{{get_resized_image_path($deal['deal_image'],$deal_image_path,350,1140)}}" height="350px" alt="deals detail" class="deals-detils"/>
     </div>
 
     <div class="clr"></div>
     <div class="pad-dels-details deal_detail_all">
       <div class="col-sm-12 col-md-12 col-lg-12">
-      @if(isset($deals_info[0]['offers_info']) && sizeof($deals_info[0]['offers_info'])>0)
+      @if(isset($deal['offers_info']) && sizeof($deal['offers_info'])>0)
 		 <ul class="detail_link">
 		   <h3><b>What you get</b></h3>
-		   @foreach($deals_info[0]['offers_info'] as $offers)
+		   @foreach($deal['offers_info'] as $offers)
            <li><span>{{$offers['title']}}</span>  </li>
            @endforeach
        </ul>
        <hr/>
         @endif
         
-        @if(isset($deals_info[0]['offers_info']) && sizeof($deals_info[0]['offers_info'])>0)
+        @if(isset($deal['offers_info']) && sizeof($deal['offers_info'])>0)
          <div class="detail_link">
            <h3><b>Validity </b></h3>
-            @foreach($deals_info[0]['offers_info'] as $offers)
+            @foreach($deal['offers_info'] as $offers)
            <div>{{$offers['title']}}
            <div class=""><span>Valid from : {{ date('d-M-Y',strtotime($offers['valid_from'])) }}</span></div>
             <div class=""><span>Valid until : {{ date('d-M-Y',strtotime($offers['valid_until'])) }}</span></div>
@@ -99,53 +103,53 @@
         <hr/>
         @endif
         
-        @if(isset($deals_info[0]['things_to_remember']) && !empty($deals_info[0]['things_to_remember']))
+        @if(isset($deal['things_to_remember']) && !empty($deal['things_to_remember']))
 	        <div class="detail_link">
 	       <h3><b>Things To Remember </b></h3>
 	       <span>
-	       {{strip_tags($deals_info[0]['things_to_remember'])}}
+	       {{strip_tags($deal['things_to_remember'])}}
 	       </span>
 	       </div>
 	        <hr/>
         @endif
-        @if(isset($deals_info[0]['how_to_use']) && !empty($deals_info[0]['how_to_use']))
+        @if(isset($deal['how_to_use']) && !empty($deal['how_to_use']))
 		      <div class="detail_link"><h3><b>How to use the offer</b></h3><span>
-		      {{strip_tags($deals_info[0]['how_to_use'])}}
+		      {{strip_tags($deal['how_to_use'])}}
 		      </span></div>
 	        <hr/>
         @endif
-        @if(isset($deals_info[0]['about']) && !empty($deals_info[0]['about']))
+        @if(isset($deal['about']) && !empty($deal['about']))
 	        <div class="detail_link">
 	        <h3><b>About </b></h3>
 	        <span>
-	        {{strip_tags($deals_info[0]['about'])}}
+	        {{strip_tags($deal['about'])}}
 	        </span>
 	        </div>
 	        <hr/>
         @endif
-        @if(isset($deals_info[0]['facilities']) && !empty($deals_info[0]['facilities']))
+        @if(isset($deal['facilities']) && !empty($deal['facilities']))
            <div class="detail_link">
             <h3><b>Facilities</b></h3>
 	        <span>
-			{{strip_tags($deals_info[0]['facilities'])}}
+			{{strip_tags($deal['facilities'])}}
 	         </span>
 	         </div>
 	        <hr/>
         @endif
-        @if(isset($deals_info[0]['cancellation_policy']) && !empty($deals_info[0]['cancellation_policy']))
+        @if(isset($deal['cancellation_policy']) && !empty($deal['cancellation_policy']))
 	        <div class="detail_link">
 	        <h3><b>Cancellation policy</b></h3>
 	        <span>
-			{{strip_tags($deals_info[0]['cancellation_policy'])}}
+			{{strip_tags($deal['cancellation_policy'])}}
 	        </span>
 	        </div>
 	        <hr/>
         @endif
-        @if(isset($deals_info[0]['description']) && !empty($deals_info[0]['description']))
+        @if(isset($deal['description']) && !empty($deal['description']))
         <div class="detail_link">
 	        <h3><b>Description</b></h3>
 	        <span>
-			{{strip_tags($deals_info[0]['description'])}}
+			{{strip_tags($deal['description'])}}
 	        </span>
 	        </div>
          @endif
@@ -166,35 +170,55 @@
  <div class="detail_bx">
        <h2>Select Offers</h2>
        <div class="categories_sect sidebar-nav ">
-        @if(isset($deals_info[0]['offers_info']) && sizeof($deals_info[0]['offers_info'])>0)
+        @if(isset($deal['offers_info']) && sizeof($deal['offers_info'])>0)
        <div class=" deal_offers_all">
-        <ul class="offers_span">
-        	 @foreach($deals_info[0]['offers_info'] as $key =>$offers)
-          <li><span>{{$offers['title']}}</span>  </li>
+        <ul class="offers_span foreach_ul">
+        	 @foreach($deal['offers_info'] as $key =>$offers)
+          <li ><span>{{$offers['title']}}</span>  <br>
+          <div>  
+	       <span >
+               <p class="price-old"><i class="fa fa-inr "></i>{{$offers['main_price']}}</p>
+	           <p class=""><i class="fa fa-inr "></i><span class="sell_price">{{$offers['discounted_price']}}</span></p>
+             <input type="hidden" name="offer_hidden" id="offer_hidden" data-dealid="{{base64_encode($deal['id'])}}"  data-dotdid="{{$offers['id']}}" data-original="{{$offers['discounted_price']}}" data-minimumpurchasequantity="0" data-maxcustomercap="{{$offers['limit']}}">
+          </span>
+		    <label for="name">Select Quantity</label>
+		     <input type="hidden" class="limit" name="limit" id="limit" value="{{$offers['limit']}}" />
+		    <div class="dec button" style="  cursor: pointer;" >-</div>
+		    <input type="text" name="qty" id="1" value="0" />
+		    <div class="inc button" style="  cursor: pointer;" >+</div>
+		</div>
+		
+	           
+	    </li>
           <div class="divider"></div>
            @endforeach
          </ul>
        </div>
-       <div class="pad-dels-details">Total : 	0</div>
+       <div class="pad-dels-details">Total :<span id="total_price">0</span>
+       <input type="hidden" id="amount" name="amount" value="">
+       </div>
+       
        @else
          <div class=" deal_offers_all"><ul class="offers_span"><li><span>Sorry , No Offers Avialable !!!</span></li></ul></div>
         @endif
+
        </div>
-       
+        <p id="offerSelectionError" style="display: none; color:#d89605;font-size: 23px; text-align: center; margin: 2px 0 0 0;" class="select-offer-notification noshow"></p>
+     
 
 </div>
   
 <div class="categories_sect sidebar-nav">
 
       <div class="buy_text">
-      <span class="buy_price">£
-      <?php echo number_format(($deals_info[0]['price']-(($deals_info[0]['price'])*($deals_info[0]['discount_price']/100))),2);?></span>
-      <div class="price-old">£{{ $deals_info[0]['price'] }} <!--| <span>offers 50% OFF</span>--></div>
+      <span class="buy_price">
+      <?php //echo number_format(($deal['price']-(($deal['price'])*($deal['discount_price']/100))),2);?></span>
+     <!--  <div class="price-old">£{{ $deal['price'] }} </div> -->
        <?php
-					 if($deals_info[0]['end_day']!='')
+					 if($deal['end_day']!='')
                     {
 
-                    	$end_date = new \Carbon($deals_info[0]['end_day']);
+                    	$end_date = new \Carbon($deal['end_day']);
                         $now = Carbon::now();
                         $difference = ($end_date->diff($now)->days < 1)
                             ? 'today'
@@ -210,7 +234,8 @@
                     }
                     ?>
       </div>
-      <button class="btn btn-post center-b">Buy Now</button>
+      <input type="hidden" value="" id="offers_ids" name="offers_ids">
+      <a type="button" class="btn btn-post center-b btn_buy" href="javascript:void(0);">Buy Now</a>
       <div class="divider"></div>
       <div class="social_icon">
        SHARE THIS DEAL
@@ -227,7 +252,7 @@
 
     <!-- /#Categoriesr End-->
     <div class="clearfix"></div>
-
+    @endforeach
     @endif
   </div>
 <!-- </div> -->
@@ -238,4 +263,126 @@
 </div>
 </div>
 </div>
+<script type="text/javascript">
+  var site_url = "{{ url('/') }}";
+	$(function() {
+
+
+		incrementVar = 0;
+$('.inc.button').click(function(){
+
+		$("#offerSelectionError").css('display','none');
+        var $this = $(this),
+
+        $input = $this.prev('input'),
+
+        $parent = $input.closest('div');
+       // alert($parent.html());
+        var limit=$(".limit").val();
+        if(limit >  parseInt($input.val(), 10))
+        {
+
+         newValue = parseInt($input.val(), 10)+1;
+
+		    $parent.find('.inc').addClass('a'+newValue);
+
+		    $input.val(newValue);
+
+		    incrementVar += newValue;
+
+		    $offerprice=$parent.find('.sell_price').html();
+
+		    var old_total = $('#total_price').html();
+
+		    $finaltotal=parseInt($offerprice, 10)+parseInt(old_total, 10);
+
+		     $('#total_price').html($finaltotal);
+		     $("#amount").attr('value',$finaltotal);
+         var offer_id=$parent.find('#offer_hidden').attr('data-dotdid');
+         var offers_quantity=$parent.find('#offer_hidden').attr('data-minimumpurchasequantity',newValue);
+         var deal_id=$parent.find('#offer_hidden').attr('data-dealid');
+        }
+	   
+	     //alert($total);
+
+});
+$('.dec.button').click(function(){
+        var $this = $(this),
+
+        $input = $this.next('input');
+
+        $parent = $input.closest('div');
+
+        if($input.val() != '0')
+        {
+	        newValue = parseInt($input.val(), 10)-1;
+
+		    $parent.find('.inc').addClass('a'+newValue);
+
+		    $input.val(newValue);
+
+		    incrementVar += newValue;
+
+		    $offerprice=$parent.find('.sell_price').html();
+
+		    var old_total = $('#total_price').html();
+
+		    $finaltotal=parseInt(old_total, 10)-parseInt($offerprice, 10);
+		   
+		    $('#total_price').html($finaltotal);
+		    $("#amount").attr('value',$finaltotal);
+         var offer_id=$parent.find('#offer_hidden').attr('data-dotdid');
+         var offers_quantity=$parent.find('#offer_hidden').attr('data-minimumpurchasequantity',newValue);
+         var offers_quantity=$parent.find('#offer_hidden').attr('data-minimumpurchasequantity',newValue);
+        }
+	    
+});
+$('.btn_buy').click(function()
+{
+	var amount=$("#amount").val();
+	if(amount=='')
+	{
+		$("#offerSelectionError").css('display','block');
+		$("#offerSelectionError").html("Please select at least one offer");
+		return false;
+	}
+	else
+	{
+    
+    var string='offerid=';
+		$(".foreach_ul").find('li').each( function(i){
+       var current = $(this);
+       var offer_id=current.find("#offer_hidden").attr('data-dotdid');
+       var offer_selected_quantity=current.find("#offer_hidden").attr('data-minimumpurchasequantity');
+       if(offer_selected_quantity!='0')
+       {
+         if(string.indexOf('-') === -1)
+         {
+            string+=offer_id+'_'+offer_selected_quantity;
+         }
+         else
+         {
+            string+='-'+offer_id+'_'+offer_selected_quantity;
+         }
+       }
+       
+
+    });
+   var deal_id=$('#offer_hidden').attr('data-dealid');
+   if(deal_id!='')
+   {
+     string+='/'+deal_id;
+   }
+   var get_url=site_url+'/order/'+string;
+  //alert(get_url);
+  //return false;
+  window.location.href = get_url;
+    //alert(string);
+  }
+});
+
+		
+
+	});
+</script>
 @endsection
