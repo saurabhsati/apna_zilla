@@ -108,9 +108,16 @@ class OrderController extends Controller
 
         }
 
-      $parameter_post = array ( 'key' => 'gtKFFx', 'txnid' =>$txnid , 'amount' =>$price,
-      'firstname' =>$user_name, 'phone' => $phone,
-      'productinfo' =>  $deal_info, 'surl' => $surl, 'furl' => $furl);
+      $parameter_post = array ( 
+                        'key' => 'gtKFFx', 
+                        'txnid' =>$txnid ,
+                        'amount' =>$price,
+                        'firstname' =>$user_name,
+                        'phone' => $phone,
+                        'productinfo' =>  $deal_info, 
+                        'surl' => $surl,
+                        'furl' => $furl
+                        );
       $salt ='eCwWELxi';
       $run=$this->pay_page($parameter_post, $salt);
       return redirect($run);

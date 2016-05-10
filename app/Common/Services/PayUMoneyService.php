@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Common\Services;
-use App\Common\Services\PayUPayUMiscServiceService;
+use App\Common\Services\PayUMiscService;
 use \Session;
 
 class PayUMoneyService
