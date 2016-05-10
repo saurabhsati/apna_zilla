@@ -59,21 +59,24 @@ class PayUMoneyService
 		if ( is_array( $params ) ) foreach ( $params as $key => $value )
 			$this->params[$key] = $value;
 
-		echo $error = $this->check_params();
+		 $error = $this->check_params();
 
 		if ( $error === true ) {
 			$this->params['hash'] = PayUMiscService::get_hash( $this->params, $this->salt );
 			$result = PayUMiscService::curl_call( $this->url . '_payment?type=merchant_txn', http_build_query( $this->params ) );
 			//dd($result);
-			$transaction_id = ($result['curl_status'] === PayUMiscService::SUCCESS) ? $result['result'] : null;
-			//die();
-			if ( empty( $transaction_id ) ) return array (
-				'status' => 0,
-				'data' => $result['error'] );
+			if(sizeof($result)>0)
+			{
+					$transaction_id = ($result['curl_status'] === PayUMiscService::SUCCESS) ? $result['result'] : null;
+					//die();
+					if ( empty( $transaction_id ) ) return array (
+						'status' => 0,
+						'data' => $result['error'] );
 
-			return array (
-				'status' => PayUMiscService::SUCCESS,
-				'data' => $this->url . '_payment_options?mihpayid=' . $transaction_id );
+					return array (
+						'status' => PayUMiscService::SUCCESS,
+						'data' => $this->url . '_payment_options?mihpayid=' . $transaction_id );
+			}
 		}
 		else {
 			return array ( 'status' => PayUMiscService::FAILURE, 'data' => $error );
