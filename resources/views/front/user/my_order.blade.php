@@ -105,8 +105,6 @@
                     </div>
                  @endif
                 {!! $arr_paginate_my_order or '' !!}
-
-
             </div>
          </div>
        </div>
