@@ -131,6 +131,11 @@ span.nb-radio__text {
  @include('front.deal.deal_top_bar')
             <div class="container">
                <div class="row">
+               <form class="form-horizontal"
+                                        id="paymoney_form"
+                                        method="POST"
+                                        action="{{ url('/') }}/order/payment"
+                                        >
                 @if(sizeof($deal_arr)>0)
   
                   <div class="col-sm-12 col-md-12 col-lg-12">
@@ -156,6 +161,13 @@ span.nb-radio__text {
                                       } 
                                     }
                                    } ?>
+                                    
+                                   <input type="hidden" value="{{$total}}" name="amount" id="amount">
+                                   <input type="hidden" value="{{$deal_arr['title']}}" name="deal_info" id="deal_info">
+                                    <input type="hidden" value="{{$deal_arr['id']}}" name="deal_id" id="deal_id">
+                                   <input type="hidden" name="user_id" id="user_id" value="{{base64_decode(session('user_id'))}}">
+                                   <input type="hidden" name="user_name" id="user_name" value="{{session('user_name')}}">
+                                   <input type="hidden" name="phone" id="phone" value="{{session('mobile_no')}}">
                                 <div class="small-6 column">
                                    <p class="text-right margin_zero font-size_15px color-darker right font-weight_semibold"><i class="fa fa-inr"></i>&nbsp;<span subtotalprice="1.0" class="sub-total-price js-price-field">{{$total}}</span></p>
                                 </div>
@@ -192,12 +204,16 @@ span.nb-radio__text {
                                    <p class="text-right margin_zero font-size_24px right green_txt"><i class="fa fa-inr"></i>&nbsp;<span finalprice="1.0" id="finalPrice">{{$total}}</span></p>
                                 </div>
                              </div>
-                             <form method="POST" action="/payment-vendor/payment.do" name="paymentSummary" id="paymentSummary"><input type="hidden" value="21457547962147" name="offers[0].offerId"><input type="hidden" value="1.0" name="offers[0].price"><input type="hidden" value="1" name="offers[0].quantity"><input type="hidden" offerid="21457547962147" value="" name="offers[0].priceAfterPromo"><input type="hidden" value="" name="offers[0].bookingRequestId"><input type="hidden" value="local" name="dealType" id="dealType"><input type="hidden" value="PAYU" name="paymentMode" id="paymentMode"><input type="hidden" value="" name="promocode" id="promocode"><input type="hidden" value="1.0" name="totalPrice" id="totalPrice"><input type="hidden" value="1.0" name="payable" id="payable"><input type="hidden" value="" name="creditsRequested" id="creditsRequested"><input type="hidden" value="false" name="shippingAddressRequired" id="creditsRequested"><input type="hidden" value="delhi-ncr" name="divisionId" id="divisionId"><input type="hidden" value="10260" name="dealId" id="dealId"></form>
+
                              <div class="row">
                                 <div id="proceed-with-pay" class="small-12 column select_payment_mode margin-bottom_25px margin-top_20px">
                                    <div class="form-group radio-group radio-group--inline">
                                       <label class="nb-radio">
-                                      <input type="radio" checked="checked" id="paymentModePayU" value="PAYU" name="paymentMode"><span class="nb-radio__bg"></span><span class="nb-radio__icon icon rippler rippler-default"></span><span class="nb-radio__text">Credit/Debit/Net banking/PayUmoney</span></label>
+                                      <input type="radio" checked="checked" id="paymentModePayU" value="PAYU" name="paymentMode">
+                                      <span class="nb-radio__bg"></span>
+                                      <span class="nb-radio__icon icon rippler rippler-default"></span>
+                                      <span class="nb-radio__text">Credit/Debit/Net banking/PayUmoney</span>
+                                      </label>
                                     
                                    </div>
                                    <ul class="margin_zero margin-top_20px"></ul>
@@ -215,7 +231,8 @@ span.nb-radio__text {
                        </div>
                        <div id="proceed-with-pay-btn" class="column small-12 medium-4 right">
 
-                        <a type="button" class="btn btn-post center-b btn_buy" href="javascript:void(0);">Proceed to payment</a>
+                        <button type="submit" class="btn btn-post center-b btn_buy" href="{{ url('/') }}/order/payment">Proceed to payment</button>
+                      
                        <!-- <button class="button postfix btn_orange font-size18 margin_zero margin-top_20px">Proceed to payment</button> -->
                        </div>
                        <div id="proceed-with-zero-pay-btn" class="column small-12 medium-3 right" style="display: none;"><button class="button postfix btn_orange font-size18 margin_zero margin-top_20px">Proceed</button></div>
@@ -234,32 +251,41 @@ span.nb-radio__text {
                                 </div>
                                 <hr>
                                 @if(sizeof($complite_arr)>0 && isset($complite_arr))
-                                @foreach($complite_arr as $key => $selected_offer)
-                                @foreach($deal_arr['offers_info'] as $deal_offer)
-                                @if($selected_offer[0]==$deal_offer['id'])
 
-                                <div totalamount="1.0" price="1.0" dealid="10260" quantity="1" offerid="21457547962147" class="row padding_10px offers">
-                                   <div class="small-12 medium-7 column">
-                                      <h4 class="font-size_14px padding-margin-zero-important color-darker" id="dealTitle0">{{$deal_offer['title']}}</h4>
-                                   </div>
-                                   <div class="small-3 medium-2 column">
-                                      <h4 class="font-size_12px font-weight_semibold padding-margin-zero-important color-darker">Qty - {{$selected_offer[1]}}</h4>
-                                   </div>
-                                   <div class="small-9 medium-3 column">
-                                      <p class="text-right margin_zero">
-                                      <span class="font-size_14px actual_price padding_zero"></span>
-                                      <span class="text-right margin_zero font-size_20px right color-darker">
-                                       <p class="price-old"><i class="fa fa-inr "></i>{{$deal_offer['main_price']}}</p>
-                                       <p class=""><i class="fa fa-inr "></i><span class="sell_price">{{$deal_offer['discounted_price']}}</span></p>
-                                      <input type="hidden" value="1.0" id="offersprice"></span></p>
-                                   </div>
-                                </div>
-                                @if($key < sizeof($complite_arr)-1)
-                                <hr>
-                                @endif
-                                 @endif
-                                 @endforeach
-                                @endforeach
+                                    @foreach($complite_arr as $key => $selected_offer)
+
+                                        @foreach($deal_arr['offers_info'] as $deal_offer)
+
+                                              @if($selected_offer[0]==$deal_offer['id'])
+
+                                                  <div totalamount="1.0" price="1.0" dealid="10260" quantity="1" offerid="21457547962147" class="row padding_10px offers">
+                                                    <input type="hidden" name="offer_ids[]" id="offer_ids" value="{{$deal_offer['id']}}">
+                                                    <input type="hidden" name="offer_quantitys[{{ $deal_offer['id'] }}]" id="offer_quantitys" value="{{$selected_offer[1]}}">
+                                                   <div class="small-12 medium-7 column">
+                                                        <h4 class="font-size_14px padding-margin-zero-important color-darker" id="dealTitle0">{{$deal_offer['title']}}</h4>
+                                                     </div>
+                                                     <div class="small-3 medium-2 column">
+                                                        <h4 class="font-size_12px font-weight_semibold padding-margin-zero-important color-darker">Qty - {{$selected_offer[1]}}</h4>
+                                                     </div>
+                                                     <div class="small-9 medium-3 column">
+                                                        <p class="text-right margin_zero">
+                                                        <span class="font-size_14px actual_price padding_zero"></span>
+                                                        <span class="text-right margin_zero font-size_20px right color-darker">
+                                                         <p class="price-old"><i class="fa fa-inr "></i>{{$deal_offer['main_price']}}</p>
+                                                         <p class=""><i class="fa fa-inr "></i><span class="sell_price">{{$deal_offer['discounted_price']}}</span></p>
+                                                        <input type="hidden" value="1.0" id="offersprice"></span></p>
+                                                     </div>
+                                                  </div>
+                                                  @if($key < sizeof($complite_arr)-1)
+                                                  <hr>
+                                                  @endif
+
+                                            @endif
+
+                                         @endforeach
+
+                                    @endforeach
+
                                 @endif
                                 
                              </div>
@@ -268,6 +294,7 @@ span.nb-radio__text {
                        <div class="clearfix"></div>
                        </div>
                     </div>
+                    </form>
                </div>
                @endif
             </div>

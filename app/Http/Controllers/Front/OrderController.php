@@ -13,6 +13,10 @@ use App\Common\Services\PayUCurlService;
 use App\Common\Services\PayUMiscService;
 use App\Common\Services\PayUMoneyService;
 use App\Common\Services\PayUPaymentService;
+
+use App\Models\DealsTransactionModel;
+use App\Models\UsersOrderModel;
+use App\Models\EmailTemplateModel;
 use Session;
 use URL;
 use Mail;
@@ -49,27 +53,137 @@ class OrderController extends Controller
      $deal_image_path="uploads/deal";
     return view('front.order.order_detail',compact('page_title','deal_arr','deal_image_path','complite_arr'));
   }
-  public function payment()
+  public function payment(Request $request)
   {
-    $page_title = 'Payment';
+      $page_title = 'Payment';
+      //dd($request->all());
+
+       
+
+
+
+
       $surl = url('/').'/order/success';
       $furl = url('/').'/order/fail';
       $curl = url('/').'/order/cancel';
 
-      $txnid=uniqid( 'RTN_' );
+      $price           = $request->input('amount');
+      $user_id         = $request->input('user_id');
+      $user_name       = $request->input('user_name');
+      $phone           = $request->input('phone');
+      $deal_info       = $request->input('deal_info');
+      $deal_id         = $request->input('deal_id');
+      $paymentMode     = $request->input('paymentMode');
+      $offer_ids       = $request->input('offer_ids'); 
+      $offer_quantitys = $request->input('offer_quantitys');
 
-       $parameter_post = array (  'key' => 'gtKFFx', 'txnid' =>$txnid , 'amount' =>10,
-        'firstname' =>'abc', 'phone' => '8457679666',
-        'productinfo' =>  'Deals & Ofers', 'surl' => $surl, 'furl' => $furl);
+       $validity   =30;
+       $txnid=uniqid( 'RTN_' );
+       $order_id=uniqid( 'RTN_ORD_' );
+
+        $arr_data['user_id']=$user_id;
+        $arr_data['transaction_id']=$txnid;
+        $arr_data['order_id']=$order_id;
+        $arr_data['deal_id']=$deal_id;
+        $arr_data['price']=$price;
+        $arr_data['transaction_status']='Pending';
+        $arr_data['mode']=$paymentMode;
+        $arr_data['start_date']=date('Y-m-d');
+        $arr_data['expire_date']=date('Y-m-d', strtotime("+".$validity."days"));
+       
+
+        //dd($arr_data);
+        $dealtransaction = DealsTransactionModel::create($arr_data);
+
+        
+
+        foreach ($offer_ids as $key => $value)
+        {
+            $arr_order_data['offer_id']   = $value;
+            $arr_order_data['deal_id']    = $deal_id;
+            $arr_order_data['order_id']   = $order_id;
+
+            $arr_order_data['order_quantity'] = $offer_quantitys[$value];
+            $insert_data = UsersOrderModel::create($arr_order_data);
+
+        }
+
+      $parameter_post = array ( 'key' => 'gtKFFx', 'txnid' =>$txnid , 'amount' =>$price,
+      'firstname' =>$user_name, 'phone' => $phone,
+      'productinfo' =>  $deal_info, 'surl' => $surl, 'furl' => $furl);
       $salt ='eCwWELxi';
       $run=$this->pay_page($parameter_post, $salt);
       return redirect($run);
   }
    public function payment_success()
   {
-        
-                  
-    echo "Payment Success" . "<pre>" . print_r( $_POST, true ) . "</pre>";
+      
+        $arr_data['mihpayid']=$_POST['mihpayid'];
+        $arr_data['mode']=$_POST['mode'];
+        $arr_data['transaction_status']=$_POST['status'];
+        $transaction_id=$_POST['txnid'];
+        //dd($_POST);
+        $transaction = DealsTransactionModel::where('transaction_id',$transaction_id)->update($arr_data);
+        if($transaction)
+        {
+
+          $obj_single_transaction=DealsTransactionModel::where('transaction_id',$_POST['txnid'])->first();
+          if($obj_single_transaction)
+          {
+            $obj_single_transaction->load(['user_records']);
+            $arr_single_transaction = $obj_single_transaction->toArray();
+          }
+          $first_name=ucfirst($arr_single_transaction['user_records']['first_name']);
+          $email=ucfirst($arr_single_transaction['user_records']['email']);
+          
+          $transaction_id=$_POST['txnid'];
+          $transaction_status=$_POST['status'];
+          //echo "Payment Success" . "<pre>" . print_r( $_POST, true ) . "</pre>";die();
+  
+          $obj_email_template = EmailTemplateModel::where('id','1')->first();
+              if($obj_email_template)
+              {
+                  $arr_email_template = $obj_email_template->toArray();
+
+                  $content      = $arr_email_template['template_html'];
+                  $content        = str_replace("##USER_FNAME##",$first_name,$content);
+                  $content        = str_replace("##TRANS_ID##",$transaction_id,$content);
+                  $content        = str_replace("##TRANS_STATUS##",$transaction_status,$content);
+                  $content        = str_replace("##APP_LINK##","RightNext",$content);
+                   //print_r($content);exit;
+                  $content = view('email.front_general',compact('content'))->render();
+                  $content = html_entity_decode($content);
+                  if(!empty($email))
+                  { 
+                  $send_mail = Mail::send(array(),array(), function($message) use($email,$first_name,$arr_email_template,$content)
+                              {
+                                  $message->from($arr_email_template['template_from_mail'], $arr_email_template['template_from']);
+                                  $message->to($email, $first_name)
+                                          ->subject($arr_email_template['template_subject'])
+                                          ->setBody($content, 'text/html');
+                              });
+                        if($send_mail)
+                    {
+                       Session::flash('success_payment','Success ! Order Place Successfully ! ');
+                       return redirect(url('/').'/front_users/my_order');
+                    }
+                      else
+                    {
+                        Session::flash('error_payment','Order place successfully But Mail Not Delivered Yet !');
+                         return redirect(url('/').'/front_users/my_order');
+                    }
+                  }
+                  else
+                  {
+                    Session::flash('success_payment','Success ! Order Place Successfully ! ');
+                    return redirect(url('/').'/front_users/my_order');
+                  }
+                  //return $send_mail;
+            
+          }
+        }  
+                   
+    //echo "Payment Success" . "<pre>" . print_r( $_POST, true ) . "</pre>";
 
   }
 

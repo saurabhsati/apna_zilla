@@ -56,11 +56,10 @@ class PayUMoneyService
 
 	public function pay ( $params = null )
 	{
-		//echo "in pay";
 		if ( is_array( $params ) ) foreach ( $params as $key => $value )
 			$this->params[$key] = $value;
 
-		$error = $this->check_params();
+		echo $error = $this->check_params();
 
 		if ( $error === true ) {
 			$this->params['hash'] = PayUMiscService::get_hash( $this->params, $this->salt );

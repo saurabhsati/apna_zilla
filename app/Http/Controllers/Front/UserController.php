@@ -21,6 +21,8 @@ use App\Models\BusinessTimeModel;
 use App\Models\BusinessImageUploadModel;
 use App\Models\BusinessCategoryModel;
 use App\Models\FavouriteBusinessesModel;
+use App\Models\UsersOrderModel;
+use App\Models\DealsTransactionModel;
 
 use App\Models\PlaceModel;
 use Session;
@@ -1539,6 +1541,33 @@ class UserController extends Controller
              return view('front.user.my_favourite_businesses',compact('arr_fav','main_image_path','arr_paginate_business'));
           }
         
+    }
+    public function my_order(Request $request,$page='1')
+    {
+         if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
+        if(Session::has('user_id'))
+        {
+            $id = session('user_id');
+            $user_id = base64_decode(Session::get('user_id'));
+            $arr_order    =$arr_paginate_my_order= array();
+            $per_page = 2;
+
+            $obj_order = DealsTransactionModel::with('user_orders','order_deal.offers_info')->where('user_id',$user_id)
+                              ->paginate($per_page);
+             if($obj_order)
+            {
+                $tmp_arr_order   = $obj_order->toArray(); 
+                $arr_paginate_my_order   = $obj_order->render();   
+                $arr_order       = $tmp_arr_order['data'];
+            }
+             //     dd($arr_order);
+            $deal_image_path="uploads/deal";
+             return view('front.user.my_order',compact('arr_order','deal_image_path','arr_paginate_my_order'));
+
+        }
     }
 
 }

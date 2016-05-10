@@ -16,6 +16,11 @@ class VerifyCsrfToken extends BaseVerifier
     	'payumoney/fail',
     	'payumoney/cancel',
     	'payumoney',
+        'order/payment',
+        'order/success',
+        'order/fail',
+        'order/cancel'
+        
 
     ];
 }

@@ -566,10 +566,10 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	Route::group(array('prefix' => '/order'), function()
 	{
 		Route::get('/offerid={offers}/{enc_id}',		'Front\OrderController@index');
-		Route::get('/payment',						    'Front\OrderController@payment');
-		Route::get('/success',							'Front\OrderController@payment_success');
-		Route::get('/fail',								'Front\OrderController@payment_fail');
-		Route::get('/cancel',							'Front\OrderController@payment_cancle');
+		Route::post('/payment',						    'Front\OrderController@payment');
+		Route::post('/success',							'Front\OrderController@payment_success');
+		Route::post('/fail',								'Front\OrderController@payment_fail');
+		Route::post('/cancel',							'Front\OrderController@payment_cancle');
 
 
 		
@@ -613,7 +613,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::get('address',							['as' => 'front_users_address'        				,'uses' =>'Front\UserController@address']);
 		Route::post('store_address_details',			['as' => 'front_users_store_address_details'        ,'uses' =>'Front\UserController@store_address_details']);
 
-		Route::get('my_business/{ajax?}',						['as' => 'front_users_business'        				,'uses' =>'Front\UserController@my_business']);
+		Route::get('my_business/{page?}',						['as' => 'front_users_business'        				,'uses' =>'Front\UserController@my_business']);
 
 		// for adding business.
 		Route::get('add_business',		    			['as' => 'business_add' 	        				,'uses' =>'Front\UserController@add_business']);
@@ -648,7 +648,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 		Route::post('add_services_details',		    	['as' => 'add_services_details' 	        		,'uses' =>'Front\UserController@add_services_details']);
 		//Get My favourites Businesses page.
-		Route::get('my_favourites/{ajax?}',		    	['as' => 'my_favourite_businesses' 	        		,'uses' =>'Front\UserController@my_favourite_businesses']);
+		Route::get('my_favourites/{page?}',		    	['as' => 'my_favourite_businesses' 	        		,'uses' =>'Front\UserController@my_favourite_businesses']);
 
 	    Route::get('edit_business_step1/{enc_id}',		    ['as' => 'business_edit1' 	        				,'uses' =>'Front\UserController@edit_business_step1']);
 	    Route::post('update_business_step1/{enc_id}',		['as' => 'update_business_step1' 	        		,'uses' =>'Front\UserController@update_business_step1']);
@@ -661,8 +661,8 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	    Route::post('delete_payment_mode',		       		['as' => 'delete_payment_mode' 	 					,'uses'=>'Front\UserController@delete_payment_mode']);
 	    Route::get('edit_business_step5/{enc_id}',		    ['as' => 'business_edit5' 	        				,'uses' =>'Front\UserController@edit_business_step5']);
 	    Route::post('update_business_step5/{enc_id}',		['as' => 'update_business_step5' 	        		,'uses' =>'Front\UserController@update_business_step5']);
-	    Route::post('delete_gallery',		       		   	['as' => 'delete_gallery' 	 					,'uses'=>'Front\UserController@delete_gallery']);
-	    Route::post('delete_service',		       			['as' => 'delete_service' 	 					,'uses'=>'Front\UserController@delete_service']);
+	    Route::post('delete_gallery',		       		   	['as' => 'delete_gallery' 	 				  		,'uses'=>'Front\UserController@delete_gallery']);
+	    Route::post('delete_service',		       			['as' => 'delete_service' 	 						,'uses'=>'Front\UserController@delete_service']);
 
 		Route::get('logout',								['as' => 'front_users_logout'     					,'uses' =>'Front\AuthController@logout']);
 		Route::get('change_password',				  		['as' => 'front_users_change_password'              ,'uses' =>'Front\AuthController@change_password']);
@@ -672,8 +672,11 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::post('otp_check', ['as' => 'front_users_otp_check'      ,'uses' =>'Front\UserController@otp_check']);
 
 
-		Route::get('assign_membership/{enc_id}/{business_name}/{user_id}/{category_id}',				 ['as' => 'assign_membership' 	  ,'uses' 	=>'Front\MembershipPlanController@assign_membership']);
-		Route::post('get_plan_cost/',				 		['as' => 'get_plan_cost' 	  ,'uses' 	=>'Front\MembershipPlanController@get_plan_cost']);
+		Route::get('assign_membership/{enc_id}/{business_name}/{user_id}/{category_id}',						 ['as' => 'assign_membership' 	  ,'uses' 	=>'Front\MembershipPlanController@assign_membership']);
+		Route::post('get_plan_cost/',				 		['as' => 'get_plan_cost' 	 					     ,'uses' 	=>'Front\MembershipPlanController@get_plan_cost']);
+
+		/* My Orders*/
+		Route::get('my_order/{page?}',								['as' => 'front_users_business'        				,'uses' =>'Front\UserController@my_order']);
 
 
 	});
@@ -681,29 +684,29 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	Route::group(array('prefix' => '/{city}'), function()
 	{
 		Route::get('deals/',								['as' =>'deals_page'								,'uses' =>'Front\DealController@index']);
-		Route::get('deals/cat-{cat_slug}/{sub_cat_slug}',	    ['as' =>'deals_by_category'			,'uses' =>'Front\DealController@deals_by_category']);
+		Route::get('deals/cat-{cat_slug}/{sub_cat_slug}',   ['as' =>'deals_by_category'							,'uses' =>'Front\DealController@deals_by_category']);
 		Route::get('deals/{deal_slug}/{enc_id}',			['as' =>'deals_detail'								,'uses' =>'Front\DealController@details']);
-		Route::get('deals/{cat_slug}',						['as' =>'deals_by_category'			,'uses' =>'Front\DealController@deals_by_category']);
-		Route::post('fetch_location_deal',					['as' =>'deals_by_location'			,'uses' =>'Front\DealController@fetch_location_deal']);
+		Route::get('deals/{cat_slug}',						['as' =>'deals_by_category'							,'uses' =>'Front\DealController@deals_by_category']);
+		Route::post('fetch_location_deal',					['as' =>'deals_by_location'							,'uses' =>'Front\DealController@fetch_location_deal']);
 
 	});
 
 	Route::post('/newsletter','Front\NewsLetterController@index');
 	Route::group(array('prefix' => '/{city}'), function ()
 	{
-		Route::get('popular-city','Front\AllCategoryController@popular_city');
-		Route::get('all-categories','Front\AllCategoryController@index');
-		Route::get('category-{cat_slug}/{cat_id}','Front\CategorySearchController@index');
-		Route::get('all-options/ct-{cat_id}/{ajax?}','Front\CategorySearchController@get_business');
-		Route::get('{cat_location}/ct-{cat_id}/{ajax?}','Front\CategorySearchController@search_business_by_location');
-		Route::get('{business_area}/{cat_id}','Front\ListingController@list_details');
+		Route::get('popular-city',								'Front\AllCategoryController@popular_city');
+		Route::get('all-categories',							'Front\AllCategoryController@index');
+		Route::get('category-{cat_slug}/{cat_id}',				'Front\CategorySearchController@index');
+		Route::get('all-options/ct-{cat_id}/{ajax?}',			'Front\CategorySearchController@get_business');
+		Route::get('{cat_location}/ct-{cat_id}/{ajax?}',		'Front\CategorySearchController@search_business_by_location');
+		Route::get('{business_area}/{cat_id}',					'Front\ListingController@list_details');
 
 	});
 
 
-	Route::post('forgot_password','Front\PasswordController@postEmail');
-	Route::get('password_reset/{code}','Front\PasswordController@getReset');
-	Route::post('process_reset_password','Front\PasswordController@postReset');
+	Route::post('forgot_password',								'Front\PasswordController@postEmail');
+	Route::get('password_reset/{code}',							'Front\PasswordController@getReset');
+	Route::post('process_reset_password',						'Front\PasswordController@postReset');
 
 
 

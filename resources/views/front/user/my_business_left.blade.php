@@ -8,6 +8,7 @@
                  <ul class="spe_submobile add_business">
                   <li class="brdr"><!-- <span class="steps">1</span> --><a class="{{ Request::segment(2)=='my_business'? 'active':'' }} " href="{{url('/front_users/my_business')}}">My Business</a></li>
                     <li class="brdr"><!-- <span class="steps">4</span> --><a class="{{ Request::segment(2)=='my_favourites'? 'active':'' }} " href="{{ url('/').'/front_users/my_favourites' }}">Favorites</a></li>
+                    <li class="brdr"><!-- <span class="steps">4</span> --><a class="{{ Request::segment(2)=='my_order'? 'active':'' }} " href="{{ url('/').'/front_users/my_order' }}">My Orders</a></li>
 
 
                </ul>
