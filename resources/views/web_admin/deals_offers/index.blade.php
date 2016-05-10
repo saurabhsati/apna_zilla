@@ -142,8 +142,8 @@
                 <tr>
                   <th> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
                   <th>Sr. No.</th>
-                  <th>Business</th>
-                  <th>Deal Image</th>
+                   <th>Deal Image</th>
+                   <th>Business Public Id</th>
                   <th>Deal Name</th>
                   <th>Deal Type</th>
                   <th>Discount</th>
@@ -165,11 +165,12 @@
                              value="{{ base64_encode($deal['id']) }}" />
                     </td>
                     <td>{{ $key+1 }}</td>
-                    <td>
-                          {{ $deal['business_info']['business_name'] }}
-                    </td>
+                   
                       <td>
                     <img src="{{ $deal_public_img_path.'/'.$deal['deal_image']}}" alt=""  style="width:75px; height:50px;" />   </td>
+                     <td>
+                          {{ $deal['business_info']['busiess_ref_public_id'] }}
+                    </td>
                     <td>{{ $deal['name'] }}</td>
                     <td>
                       @if($deal['deal_type']=='1')

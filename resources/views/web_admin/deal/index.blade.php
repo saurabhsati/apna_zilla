@@ -96,7 +96,7 @@
                 <div class="btn-group">
                   @if($add_deal=="1")
                  @if(isset($arr_business) && sizeof($arr_business)>0)
-                    <a href="{{ url('/web_admin/deals/create/'.base64_encode($arr_business['id']))}}" class="btn btn-primary btn-add-new-records">Add Deal</a>
+                    <!-- <a href="{{ url('/web_admin/deals/create/'.base64_encode($arr_business['id']))}}" class="btn btn-primary btn-add-new-records">Add Deal</a> -->
                   @endif
                   @elseif($add_deal=="expired")
                    <div style="color: Red;"> Deals Get Expired </div>
@@ -204,10 +204,10 @@
                     </td>
                     <td>
                      <a href="#">
-                        <a href="{{ url('/web_admin/deals/edit/').'/'.base64_encode($deal['id']) }}" class="show-tooltip" title="Edit">
+                       <!--  <a href="{{ url('/web_admin/deals/edit/').'/'.base64_encode($deal['id']) }}" class="show-tooltip" title="Edit">
                           <i class="fa fa-edit" ></i>
                         </a>
-
+ -->
                         &nbsp;
                         <a href="{{ url('/web_admin/deals/delete/').'/'.base64_encode($deal['id']) }}"
                            onclick="javascript:return confirm_delete()" class="show-tooltip" title="Delete">

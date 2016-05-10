@@ -252,6 +252,13 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::post('delete_gallery',				        ['as' => 'admin_deals_slider_delete' 	  ,'uses' 	=>'Admin\DealsOffersController@delete_gallery']);
 					
 		});
+	/*-------------Payment Records Module------------*/
+		Route::group(['prefix'=>'deals_offers_transactions'], function (){
+			Route::get('/',						'Admin\DealsOffersTransactionController@index');
+			Route::get('view/{enc_id}',			'Admin\DealsOffersTransactionController@view');
+			Route::get('edit/{enc_id}',			'Admin\DealsOffersTransactionController@edit');
+			Route::post('update/{enc_id}',		'Admin\DealsOffersTransactionController@update');
+		});
 
 		 Route::group(array('prefix'=>'/offers'), function()
 		{

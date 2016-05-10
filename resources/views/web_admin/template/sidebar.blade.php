@@ -61,7 +61,16 @@
                 <li style="display: block;" class="{{ $pagename =='deals_offers/expired' ? 'active':'' }}"><a href="{{ url('/web_admin/deals_offers/expired')}}">Expired Deals</a> </li>
             </ul>
         </li>
-
+         <li class="{{ Request::segment(2)=='deals_offers_transactions'?'active':'' }}">
+            <a href="javascript:void(0)" class="dropdown-toggle">
+                <i class="fa fa-credit-card"></i>
+                <span>Offers Payments</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+            <ul class="submenu">
+                <li style="display: block;"><a href="{{ url('/web_admin/deals_offers_transactions')}}">Manage</a> </li>
+            </ul>
+        </li>
 
          <li class="{{ Request::segment(2)=='categories'? 'active':'' }}">
             <a href="javascript:void(0)" class="dropdown-toggle">
@@ -181,7 +190,7 @@
              <li class="{{ Request::segment(2)=='transactions'?'active':'' }}">
             <a href="javascript:void(0)" class="dropdown-toggle">
                 <i class="fa fa-credit-card"></i>
-                <span>Payments</span>
+                <span>Membership Payments</span>
                 <b class="arrow fa fa-angle-right"></b>
             </a>
             <ul class="submenu">

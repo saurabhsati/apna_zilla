@@ -11,18 +11,18 @@ class OffersModel extends Model
 
     protected $table = 'offers';
     protected $fillable = [
-    					   'deal_id',
-                           'title',
-                           'name',
-                           'description',
-                           'is_active',
-	  					   'main_price',
-	                       'discount',
-	  					   'discounted_price',
-	  					   'limit',
-	  					   'valid_from',
-	  					   'valid_until',
-	  					  ];
+          					   'deal_id',
+                       'title',
+                       'name',
+                       'description',
+                       'is_active',
+      	  					   'main_price',
+      	               'discount',
+      	  					   'discounted_price',
+      	  					   'limit',
+      	  					   'valid_from',
+      	  					   'valid_until',
+      	  					  ];
      public function deal_info()
     {
         return $this->belongsTo('App\Models\DealsOffersModel','deal_id','id');

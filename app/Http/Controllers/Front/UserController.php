@@ -1563,7 +1563,7 @@ class UserController extends Controller
                 $arr_paginate_my_order   = $obj_order->render();   
                 $arr_order       = $tmp_arr_order['data'];
             }
-             //     dd($arr_order);
+                //  dd($arr_order);
             $deal_image_path="uploads/deal";
              return view('front.user.my_order',compact('arr_order','deal_image_path','arr_paginate_my_order'));
 

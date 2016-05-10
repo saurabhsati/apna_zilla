@@ -12,6 +12,7 @@ use App\Models\BusinessCategoryModel;
 use App\Models\CategoryModel;
 use App\Models\TransactionModel;
 use App\Models\MembershipModel;
+use App\Models\OffersModel;
 use Validator;
 use Session;
 use Carbon\Carbon as Carbon;
@@ -97,7 +98,19 @@ class DealController extends Controller
              else
              {
                 $data_arr['is_active']=0;
+                $obj_arr_deals=$this->DealModel->where('business_id',$id)->get();
+                if($obj_arr_deals)
+                {
+                    $arr_deals=$obj_arr_deals->toArray();
+                }
+                $deal_ids=[];
+                foreach ($arr_deals as $key => $value) {
+                    
+                    $deal_ids[$value['id']]=$value['id'];
+                }
                 $this->DealModel->where('business_id',$id)->update($data_arr);
+                OffersModel::whereIn('deal_id',$deal_ids)->update($data_arr);
+
                 $add_deal='expired';
              }
 
