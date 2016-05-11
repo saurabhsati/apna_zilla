@@ -152,6 +152,7 @@ class DealsOffersController extends Controller
         $arr_rule['facilities']        = 'required';
         $arr_rule['cancellation_policy']= 'required';
         $arr_rule['is_active']          = 'required';
+        $arr_rules['json_location_point'] = 'required';
 
         $validator=Validator::make($request->all(),$arr_rule);
         if($validator->fails())
@@ -210,6 +211,7 @@ class DealsOffersController extends Controller
          $data_arr['about']                 = $request->input('about');
          $data_arr['cancellation_policy']   = $request->input('cancellation_policy');
          $data_arr['is_active']             = $request->input('is_active');
+         $data_arr['json_location_point']   = $request->input('json_location_point');
          //dd($data_arr);
          $deal_add = DealsOffersModel::create($data_arr);
          $deal_id=$deal_add->id;
@@ -305,6 +307,7 @@ class DealsOffersController extends Controller
         $arr_rule['facilities']        = 'required';
         $arr_rule['cancellation_policy']= 'required';
         $arr_rule['is_active']          = 'required';
+        $arr_rules['json_location_point'] = 'required';
 
         $validator=Validator::make($request->all(),$arr_rule);
         if($validator->fails())
@@ -361,6 +364,8 @@ class DealsOffersController extends Controller
          $data_arr['about']                 = $request->input('about');
          $data_arr['cancellation_policy']   = $request->input('cancellation_policy');
          $data_arr['is_active']             = $request->input('is_active');
+         $data_arr['json_location_point']   = $request->input('json_location_point');
+
          $deal_update = DealsOffersModel::where('id',$id)->update($data_arr);
 
 

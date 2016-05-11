@@ -297,22 +297,13 @@
                 </div>
             </div>
              
-<div class="row" style="display:block;">
-  <div class="col-md-6 ">
-                <div class="form-group">
+  <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="facilities">Area<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                  <input id="geocomplete" type="text" placeholder="Type in an address" size="90" class="form-control"/></div>
                 </div>
-                <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="facilities">Selected Location<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                 <label id="result" name="result"  /></label>
-                 <label id="multi" name="multi"  /></label>
-                  </div>
-                </div>
-   </div>
- <div class="col-md-6 ">
+             
+               
              <div class="form-group">
                 <label class="col-md-3 col-lg-2 control-label" for="map_location">Map Location<i class="red">*</i></label>
                 <div class="col-sm-5 col-lg-8 controls">
@@ -320,41 +311,16 @@
 
                     <label>Note: Click On the Map to Pick Nearby Custom Location </label>
                     <div>
-                    <a id="reset" href="#" style="display:none;">Reset Marker</a></div>
+                     <label class="col-sm-6 col-lg-12 controls alert alert-warning">Note: Click On Marker to create the location</label>
+
                 </div>
                 </div>
-        </div>
-</div>
+
+    </div>
+
 <input type="hidden" name="json_location_point" value="" /> 
 
-          <!--   <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label">Start Time<i style="color:red;">*</i></label>
-                <div class="col-sm-3 col-lg-3 controls">
-                    <div class="input-group">
-                        <a class="input-group-addon" href="#">
-                            <i class="fa fa-clock-o"></i>
-                        </a>
-                        <input class="form-control " name="start_time" id="start_time"  type="text" data-rule-required="true">
-                       <span class='help-block'>{{ $errors->first('start_time') }}</span>
-                    </div>
-                </div>
-
-                <label class="col-sm-3 col-lg-2 control-label">End Time<i style="color:red;">*</i></label>
-               <div class="col-sm-3 col-lg-3 controls">
-                    <div class="input-group">
-                        <a class="input-group-addon" id="end_time_id" href="#">
-                            <i class="fa fa-clock-o"></i>
-                        </a>
-                        <input class="form-control " name="end_time" id="end_time" type="text" data-rule-required="true">
-                        <span class='help-block'>{{ $errors->first('end_time') }}</span>
-                    </div>
-                    <div class="instantDealNote" id="instantDealNote" style="display:none;">
-                        <span class="label label-important">NOTE!</span>
-                        <span>Only 2 Hour Deal</span>
-                    </div>
-                </div>
-            </div> -->
-
+         
             
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="is_active">Is Active <i class="red">*</i></label>
@@ -777,49 +743,7 @@ $('#remove-image').click(function()
            
  });          
 </script>
-
-<!--<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
-<script src="{{ url('/') }}/assets/front/js/jquery.geocomplete.min.js"></script>-->
-<script>
-      $(function(){
-       /* var location =$("label[name=result]").val();
-        var options = {
-                types: ['(cities)'],
-                componentRestrictions: {country: 'IN'},
-                details: ".geo-details",
-                detailsAttribute: "data-geo",
-                map: "#business_location_map",
-                types: ["geocode", "establishment"],
-                 location: location,
-                markerOptions: {
-                                    draggable: true
-                               }
-              }
-
-        $("#geocomplete").geocomplete(options)
-          .bind("geocode:result", function(event, result){
-            $("#result").append(result.formatted_address);
-           // $("#multi").append(result.lat);
-           // $.log("Result: " + result.formatted_address);
-          })
-          .bind("geocode:error", function(event, status){
-            $.log("ERROR: " + status);
-          })
-          .bind("geocode:multiple", function(event, results){
-              $("#multi").append(results.length);
-           // $.log("Multiple: " + results.length + " results found");
-          });
-        
-        $("#find").click(function(){
-          $("#geocomplete").trigger("geocode");
-        });
-        
-        
-             */
-      });
-
-   
-    </script>
+  
 
 <script type="text/javascript">
   var site_url = "{{ url('/') }}";

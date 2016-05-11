@@ -431,6 +431,25 @@
                     <span class='help-block'>{{ $errors->first('cancellation_policy') }}</span>
                 </div>
             </div>
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="facilities">Area<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                 <input id="geocomplete" type="text" placeholder="Type in an address" size="90" class="form-control"/></div>
+                </div>
+               
+    <div class="form-group">
+                <label class="col-md-3 col-lg-2 control-label" for="map_location">Map Location<i class="red">*</i></label>
+                <div class="col-sm-5 col-lg-8 controls">
+                   <div id="business_location_map" style="height:400px"></div>
+
+                    <label>Note: Click On the Map to Pick Nearby Custom Location </label>
+                    <div>
+                     <label class="col-sm-6 col-lg-12 controls alert alert-warning">Note: Click On Marker to Create Auto Complte Location</label>
+
+                </div>
+                </div>
+                </div>
+            <input type="hidden" name="json_location_point" value='{!! $deal_arr['json_location_point'] !!}' /> 
 
 
             <div class="form-group">
@@ -908,5 +927,340 @@ function getSubCategory(ref)
 
 </script>
 
+<script type="text/javascript">
+  var site_url = "{{ url('/') }}";
 
+  var departure_point_map = false;
+  var departure_point_autocomplete = false;
+  var departure_point_autocomplete_elem = $("#geocomplete")[0];
+  var current_marker = false;
+  var glob_arr_marker = [];
+  var existing_lat_lng = [];
+  var glob_info_window = false;
+
+  /* Departure Point Map */
+  function loadScript() 
+  {
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCccvQtzVx4aAt05YnfzJDSWEzPiVnNVsY&libraries=places&callback=initializeMap';
+      document.body.appendChild(script);
+  }
+
+  window.onload = loadScript;
+
+  function initExistingLatLng()
+  {
+    var extra_marker_latlng =false;
+    var last_index = existing_lat_lng.length-1;
+    $.each(existing_lat_lng,function(index,location)
+    {
+      var latlng = new google.maps.LatLng(location.lat, location.lng);
+
+      current_marker = createMarker(departure_point_map,latlng);
+
+      current_marker.place = location.place;
+
+      glob_arr_marker.push(current_marker);
+
+      if(index==last_index)
+      {
+        extra_marker_latlng = latlng;
+        departure_point_map.setCenter(latlng);
+        departure_point_map.setZoom(9);
+      }
+    });
+
+    current_marker = createMarker(departure_point_map,extra_marker_latlng);
+    
+  }
+
+  function initializeAutocompleteMap()
+  {
+
+    departure_point_autocomplete = new google.maps.places.Autocomplete(departure_point_autocomplete_elem);
+    departure_point_autocomplete.bindTo('bounds', departure_point_map);
+
+    departure_point_autocomplete.addListener('place_changed', function() 
+    {
+      // current_marker.setVisible(false);
+      var place = departure_point_autocomplete.getPlace();
+      if (!place.geometry) 
+      {
+        window.alert("Autocomplete's returned place contains no geometry");
+        return;
+      }
+
+      if(markerExists(place.geometry.location))
+      {
+        alert("Departure Point Already Added ");
+        $("#departure_point_input").val("");
+        return false;
+      }
+
+      // If the place has a geometry, then present it on a map.
+      if (place.geometry.viewport) 
+      {
+        departure_point_map.fitBounds(place.geometry.viewport);
+      } else {
+        departure_point_map.setCenter(place.geometry.location);
+        departure_point_map.setZoom(17);  // Why 17? Because it looks good.
+      }
+      
+      if(!current_marker)
+      {
+        current_marker = createMarker(departure_point_map,place.geometry.location);
+      }
+      
+
+      current_marker.setPosition(place.geometry.location);
+      current_marker.setVisible(true);
+
+      var address = '';
+      if (place.address_components) 
+      {
+        address = [
+          (place.address_components[0] && place.address_components[0].short_name || ''),
+          (place.address_components[1] && place.address_components[1].short_name || ''),
+          (place.address_components[2] && place.address_components[2].short_name || '')
+        ].join(' ');
+      }
+
+      
+    });
+
+  }
+  
+  function initializeMap() 
+  {
+      var latlng = new google.maps.LatLng(1.10, 1.10);
+      var myOptions = {
+          zoom: 5,
+          center: latlng,
+          panControl: true,
+          scrollwheel: true,
+          scaleControl: true,
+          overviewMapControl: true,
+          disableDoubleClickZoom: false,
+          overviewMapControlOptions: { opened: true },
+          mapTypeId: google.maps.MapTypeId.HYBRID
+      };
+
+      departure_point_map = new google.maps.Map(document.getElementById("business_location_map"),
+              myOptions);
+      geocoder = new google.maps.Geocoder();
+      departure_point_map.streetViewControl = false;
+
+      glob_info_window = new google.maps.InfoWindow({
+          content: "(1.10, 1.10)"
+      });
+
+
+      initializeAutocompleteMap();
+
+      if($('input[name="json_location_point"]').val().length>0)
+      {
+        existing_lat_lng = JSON.parse($('input[name="json_location_point"]').val());
+        initExistingLatLng();
+      }
+      else
+      {
+        current_marker = createMarker(departure_point_map,latlng);
+
+        google.maps.event.addListener(departure_point_map, 'click', function(event) 
+        {
+            current_marker.setPosition(event.latLng);
+            var yeri = event.latLng;
+            var latlongi = "(" + yeri.lat().toFixed(6) + ", " +yeri.lng().toFixed(6) + ")";
+            glob_info_window.setContent(latlongi);
+
+            // document.getElementById('lat').value = yeri.lat().toFixed(6);
+            // document.getElementById('lon').value = yeri.lng().toFixed(6);
+          
+        });
+      }
+  }
+
+  function stackCurrentLocation(close_infowindow,ref)
+  {
+    close_infowindow = close_infowindow | false;
+
+    if(close_infowindow)
+    {
+      glob_info_window.close();
+    }
+
+    var parent_div = $(ref).parent("div");
+    current_marker.place = $(parent_div).find("input[name='place']").val();
+
+    if( current_marker.place.place<=0)
+    {
+      alert("Departure Time and Place Cannot be Empty ");
+      return false;
+    }
+    
+    glob_arr_marker.push(current_marker);
+    current_marker = createMarker(departure_point_map,current_marker.position);
+
+    $("#departure_point_input").val("");
+
+    serializeDeparturePoints();
+
+  }
+
+  function createMarker(departure_point_map,position)
+  {
+    var marker = new google.maps.Marker({
+          position: position,
+          map: departure_point_map
+      });
+
+    marker.addListener('click', function() 
+    {
+      current_marker = this;
+
+    });
+
+    marker.addListener('mouseover', function() 
+    {
+      current_marker = this;
+      if(markerExists(current_marker.position)!=false)
+      {
+        data = getMarkerData(current_marker.position);
+
+        html = "<div><input type='text' name='place' value='"+data.place+"' placeholder='Enter Location / Place' class='form-control'/> <br>"+
+                  "<button type='button' onclick='updateMarkerData("+current_marker.position.lat()+","+current_marker.position.lng()+",this)' class='btn btn-danger btn-sm'>Update Info</button>&nbsp;&nbsp;"+
+                "<button type='button' onclick='removeMaker()' class='btn btn-danger btn-sm'>Remove</button></div>";
+
+        glob_info_window.setContent(html);
+        glob_info_window.open(departure_point_map,this);  
+
+      }
+      else
+      {
+        html = "<div><input type='text' name='place' value='' placeholder='Enter Location /  Place' class='form-control'/> <br>"+
+                "<button type='button' onclick='stackCurrentLocation(true,this)' class='btn btn-primary btn-sm'>Add</button></div>";
+
+        glob_info_window.setContent(html);
+        glob_info_window.open(departure_point_map,this);   
+      }
+      
+    });
+
+    return marker;
+  }
+
+  function updateMarkerData(lat,lng,ref)
+  {
+    var parent_div = $(ref).parent("div");
+
+    var place = $(parent_div).find("input[name='place']").val();     
+
+    if(departure_time.length<=0 || departure_time.place<=0)
+    {
+      alert("Departure Time and Place Cannot be Empty ");
+      return false;
+    }
+
+    marker_index = getGlobMarkerIndexByLatLng(lat,lng);
+    if(marker_index!==false)
+    {
+      glob_arr_marker[marker_index].departure_time = departure_time;
+      glob_arr_marker[marker_index].place = place;
+      glob_info_window.close();
+    }
+
+    serializeDeparturePoints();
+
+
+  }
+
+  function getGlobMarkerIndexByLatLng(lat,lng)
+  {
+    var glob_marker_index = false;
+    $.each(glob_arr_marker,function(index,marker)
+    {
+        tmp_lat = this.position.lat();
+        tmp_lng = this.position.lng();
+
+        if(tmp_lat == lat && tmp_lng == lng)
+        {
+          glob_marker_index = index
+          return false;
+        }
+    });
+    return glob_marker_index;
+  }
+
+  function getTotalGlobMarkers()
+  {
+    return glob_arr_marker.length ;
+  }
+
+  function removeMaker()
+  {
+    if(getTotalGlobMarkers()>0)
+    {
+      if(getTotalGlobMarkers()==1)
+      {
+        alert('Atleast One Departure Point is required ');
+        return false;
+      }
+
+      marker_index = getGlobMarkerIndexByLatLng(current_marker.position.lat(),current_marker.position.lng());
+
+      if(marker_index!==false)
+      {
+        glob_arr_marker.splice(marker_index,1);
+        current_marker.setMap(null);
+      }
+      serializeDeparturePoints();
+    }
+  }
+
+  function markerExists(position)
+  {
+    marker_index = getGlobMarkerIndexByLatLng(position.lat(),position.lng());
+    return (marker_index===false)?false:true;
+  }
+
+  function getMarkerData(position)
+  {
+    var return_data = false;
+
+    marker_index = getGlobMarkerIndexByLatLng(position.lat(),position.lng());
+    if(marker_index!==false)
+    {
+      return_data = glob_arr_marker[marker_index];
+    }
+    return return_data;
+  }
+
+  function serializeDeparturePoints()
+  {
+    var arr_tmp = [];
+
+    if(glob_arr_marker.length>0)
+    {
+      $.each(glob_arr_marker,function(index)
+      {
+          arr_tmp.push({lat:this.position.lat(),lng:this.position.lng(),place:this.place});
+      });
+
+      $('input[name="json_location_point"]').val(JSON.stringify(arr_tmp));
+      return true;
+    }
+    else
+    {
+      alert('Please Provide Atleast one Departure Point');
+      return false;
+    }  
+
+  }
+
+  function setExtraData()
+  {
+    return tinyMCE.triggerSave();
+  }
+  </script>
 @stop

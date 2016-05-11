@@ -432,23 +432,13 @@
                     <span class='help-block'>{{ $errors->first('cancellation_policy') }}</span>
                 </div>
             </div>
-            <div class="row" style="display:block;">
-  <div class="col-md-6 ">
-                <div class="form-group">
+           <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="facilities">Area<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                  <input id="geocomplete" type="text" placeholder="Type in an address" size="90" class="form-control"/></div>
                 </div>
-                <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="facilities">Selected Location<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                 <label id="result" name="result"  /></label>
-                 <label id="multi" name="multi"  /></label>
-                  </div>
-                </div>
-   </div>
- <div class="col-md-6 ">
-             <div class="form-group">
+               
+    <div class="form-group">
                 <label class="col-md-3 col-lg-2 control-label" for="map_location">Map Location<i class="red">*</i></label>
                 <div class="col-sm-5 col-lg-8 controls">
                    <div id="business_location_map" style="height:400px"></div>
@@ -458,8 +448,6 @@
                     <a id="reset" href="#" style="display:none;">Reset Marker</a></div>
                 </div>
                 </div>
-        </div>
-</div>
             <input type="hidden" name="json_location_point" value='{!! $deal_arr['json_location_point'] !!}' /> 
 
 
@@ -945,10 +933,7 @@ function getSubCategory(ref)
 <script type="text/javascript">
   var site_url = "{{ url('/') }}";
 
-  var is_sub_category_loaded = false;
-  var is_state_loaded = false;
-  var is_city_loaded = false;
-  var is_attraction_loaded = false;
+
 
  
 
@@ -981,7 +966,6 @@ function getSubCategory(ref)
 
       current_marker = createMarker(departure_point_map,latlng);
 
-      current_marker.departure_time = location.departure_time;
       current_marker.place = location.place;
 
       glob_arr_marker.push(current_marker);
@@ -1116,7 +1100,7 @@ function getSubCategory(ref)
     var parent_div = $(ref).parent("div");
     current_marker.place = $(parent_div).find("input[name='place']").val();
 
-    if(current_marker.departure_time.length<=0 || current_marker.place.place<=0)
+    if( current_marker.place.place<=0)
     {
       alert("Departure Time and Place Cannot be Empty ");
       return false;
@@ -1151,7 +1135,7 @@ function getSubCategory(ref)
       {
         data = getMarkerData(current_marker.position);
 
-        html = "<div><input type='text' name='place' value='"+data.place+"' placeholder='Departure Place' class='form-control'/> <br>"+
+        html = "<div><input type='text' name='place' value='"+data.place+"' placeholder='Enter Location / Place' class='form-control'/> <br>"+
                   "<button type='button' onclick='updateMarkerData("+current_marker.position.lat()+","+current_marker.position.lng()+",this)' class='btn btn-danger btn-sm'>Update Info</button>&nbsp;&nbsp;"+
                 "<button type='button' onclick='removeMaker()' class='btn btn-danger btn-sm'>Remove</button></div>";
 
@@ -1161,7 +1145,7 @@ function getSubCategory(ref)
       }
       else
       {
-        html = "<div><input type='text' name='place' value='' placeholder='Departure Place' class='form-control'/> <br>"+
+        html = "<div><input type='text' name='place' value='' placeholder='Enter Location /  Place' class='form-control'/> <br>"+
                 "<button type='button' onclick='stackCurrentLocation(true,this)' class='btn btn-primary btn-sm'>Add</button></div>";
 
         glob_info_window.setContent(html);
