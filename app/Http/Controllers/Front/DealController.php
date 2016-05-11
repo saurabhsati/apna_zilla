@@ -305,7 +305,7 @@ class DealController extends Controller
                     $arr_related_deals_info = $obj_related_deals_info->toArray();
                 }
             }
-          //dd($arr_related_deals_info);
+         // dd($deals_info );
        
       
 

@@ -258,7 +258,6 @@ class DealsOffersController extends Controller
         {
             $deal_arr = $obj_deal_arr->toArray();
         }
-        $page_title="Create Deals";
         $obj_main_category = CategoryModel::where('parent','0')->where('is_allow_to_add_deal',1)->get();
         if($obj_main_category)
         {

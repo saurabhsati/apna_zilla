@@ -116,6 +116,44 @@
 	       </div>
 	        <hr/>
         @endif
+        @if(isset($deal['json_location_point']) && !empty($deal['json_location_point']))
+        <div id="map_for_deaprture_point" style="height:400px"></div>
+                              <input type="hidden" name="json_location_point" value='{!! $deal['json_location_point'] !!}' /> 
+                              <br/>
+                                <?php 
+                                    $arr_departture_point = json_decode($deal['json_location_point'],TRUE);
+                                    $arr_tmp_departure_point  = [];
+                                ?>
+
+                                @if(sizeof($arr_departture_point)>0)
+                                    @foreach($arr_departture_point as $key =>$point)
+                                      <?php 
+                                      if(isset($point['place']))
+                                      {
+                                          $arr_tmp_departure_point[] = "markers=color:red|label:".$point['place']."|".$point['lat'].",".$point['lat']; 
+                                      }
+                                        
+                                      ?>
+                                    @endforeach
+                                @endif
+
+                                <img src="https://maps.googleapis.com/maps/api/staticmap?zoom=6&size=523x400&{{ implode(",", $arr_tmp_departure_point) }}&key=AIzaSyCccvQtzVx4aAt05YnfzJDSWEzPiVnNVsY" class="static_departure_point_map" style="display: none;"/>
+
+                                <ul>
+                                  
+                                  @if(sizeof($arr_departture_point)>0)
+                                    @foreach($arr_departture_point as $key =>$point)
+                                      <li >
+                                          <b>Location Point {{ $key+1 }}</b>: {{ isset($point['place'])?$point['place']:'NA'}}, 
+                                          <a href="javascript:void(0)" data-lat='{{ $point['lat'] }}' data-lng='{{ $point['lng'] }}' onclick="pointInMap(this)" style="padding-left: 5px;"> - See In Map</a>
+                                      </li>
+                                     
+                                    @endforeach
+                                  @endif
+                                </ul>
+                              
+                                  
+         @endif                      
         @if(isset($deal['how_to_use']) && !empty($deal['how_to_use']))
 		      <div class="detail_link"><h3><b>How to use the offer</b></h3><span>
 		      {{strip_tags($deal['how_to_use'])}}
@@ -433,5 +471,181 @@ $('.btn_buy').click(function()
 		
 
 	});
+
+
+
+/* Departure Point Map */
+  function loadScript() 
+  {
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCccvQtzVx4aAt05YnfzJDSWEzPiVnNVsY&libraries=places&callback=initializeMap';
+      document.body.appendChild(script);
+  }
+
+  window.onload = loadScript;
+
+  function initializeMap() 
+  {
+      var latlng = new google.maps.LatLng(20.5937, 78.9629);
+      var myOptions = {
+          center:latlng,
+          zoom:4,
+          panControl: true,
+          scrollwheel: true,
+          scaleControl: true,
+          overviewMapControl: true,
+          disableDoubleClickZoom: false,
+          overviewMapControlOptions: { opened: true },
+          mapTypeId: google.maps.MapTypeId.HYBRID
+      };
+
+      departure_point_map = new google.maps.Map(document.getElementById("map_for_deaprture_point"),
+              myOptions);
+      geocoder = new google.maps.Geocoder();
+      departure_point_map.streetViewControl = false;
+
+      glob_info_window = new google.maps.InfoWindow({
+          content: "(1.10, 1.10)"
+      });
+
+
+      
+
+      if($('input[name="json_location_point"]').val().length>0)
+      {
+        existing_lat_lng = JSON.parse($('input[name="json_location_point"]').val());
+        initExistingLatLng();
+      }
+      else
+      {
+        current_marker = createMarker(departure_point_map,latlng);
+
+        google.maps.event.addListener(departure_point_map, 'click', function(event) 
+        {
+            current_marker.setPosition(event.latLng);
+            var yeri = event.latLng;
+            var latlongi = "(" + yeri.lat().toFixed(6) + ", " +yeri.lng().toFixed(6) + ")";
+            glob_info_window.setContent(latlongi);
+
+            // document.getElementById('lat').value = yeri.lat().toFixed(6);
+            // document.getElementById('lon').value = yeri.lng().toFixed(6);
+          
+        });
+      }
+  }
+
+  function initExistingLatLng()
+  {
+    var last_index = existing_lat_lng.length-1;
+
+    $.each(existing_lat_lng,function(index,location)
+    {
+      var latlng = new google.maps.LatLng(location.lat, location.lng);
+
+      current_marker = createMarker(departure_point_map,latlng);
+
+      current_marker.departure_time = location.departure_time;
+      current_marker.place = location.place;
+
+      glob_arr_marker.push(current_marker);
+
+      if(index==last_index)
+      {
+        departure_point_map.setCenter(latlng);
+        departure_point_map.setZoom(17);
+      }
+    });
+  }
+
+  function createMarker(departure_point_map,position)
+  {
+    var marker = new google.maps.Marker({
+          position: position,
+          map: departure_point_map
+      });
+
+    marker.addListener('click', function() 
+    {
+      current_marker = this;
+
+    });
+
+    marker.addListener('mouseover', function() 
+    {
+      current_marker = this;
+      if(markerExists(current_marker.position)!=false)
+      {
+        data = getMarkerData(current_marker.position);
+
+        html = "<div><input type='text' name='place' value='"+data.place+"' placeholder='{{ trans('lang.placeholder_departure_place') }}' class='form-control' disabled/> <br>";
+
+        glob_info_window.setContent(html);
+        glob_info_window.open(departure_point_map,this);  
+
+      }
+      
+    });
+
+    return marker;
+  }
+
+  function getGlobMarkerIndexByLatLng(lat,lng)
+  {
+    var glob_marker_index = false;
+    $.each(glob_arr_marker,function(index,marker)
+    {
+        tmp_lat = this.position.lat();
+        tmp_lng = this.position.lng();
+
+        if(tmp_lat == lat && tmp_lng == lng)
+        {
+          glob_marker_index = index
+          return false;
+        }
+    });
+    return glob_marker_index;
+  }
+
+  function markerExists(position)
+  {
+    marker_index = getGlobMarkerIndexByLatLng(position.lat(),position.lng());
+    return (marker_index===false)?false:true;
+  }
+
+  function getMarkerData(position)
+  {
+    var return_data = false;
+
+    marker_index = getGlobMarkerIndexByLatLng(position.lat(),position.lng());
+    if(marker_index!==false)
+    {
+      return_data = glob_arr_marker[marker_index];
+    }
+    return return_data;
+  }
+
+  
+  //price calendar window open
+  function price_calendar(tour_id,package_id)
+  {
+    var calendar_url=url+'/calendar/'+tour_id+'/'+package_id;
+    window.open(calendar_url,'voucherwindow','scrollbars=1,resizable=1,width=910,height=800');
+  }
+
+
+  function pointInMap(ref)
+  {
+    var lat,lng;
+    lat = $(ref).attr("data-lat");
+    lng = $(ref).attr("data-lng");
+
+    var latlng = new google.maps.LatLng(lat,lng);
+    departure_point_map.setCenter(latlng);
+    departure_point_map.setZoom(18);
+    current_marker = createMarker(departure_point_map,latlng);
+  }
+
+
 </script>
 @endsection
