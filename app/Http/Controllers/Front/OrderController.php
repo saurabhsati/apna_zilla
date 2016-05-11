@@ -56,14 +56,7 @@ class OrderController extends Controller
   public function payment(Request $request)
   {
       $page_title = 'Payment';
-      //dd($request->all());
-
-       
-
-
-
-
-      $surl = url('/').'/order/success';
+       $surl = url('/').'/order/success';
       $furl = url('/').'/order/fail';
       $curl = url('/').'/order/cancel';
 

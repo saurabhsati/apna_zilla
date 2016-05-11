@@ -17,11 +17,7 @@ class PayUMoneyService
 
 	public function __construct($salt, $env = 'test')
 	{
-        /*$this->pay_test_url = 'https://test.payu.in/_payment';
-        $this->pay_production_url = 'https://secure.payu.in/_payment';
-        $this->pay_key = "gtKFFx";
-        $this->salt ='eCwWELxi';
-       	$this->pay_test_mode = TRUE;*/
+        
        	$this->salt = $salt;
 
 		switch ( $env ) {

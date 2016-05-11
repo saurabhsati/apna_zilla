@@ -74,7 +74,6 @@ class PayUMiscService
 		CURLOPT_SSL_VERIFYPEER => 0 ) );
 
 		$o = curl_exec( $ch );
-
 		if ( curl_errno( $ch ) ) {
 			$c_error = curl_error( $ch );
 

@@ -110,7 +110,7 @@ class PayUPaymentService
 			$result['data']();
 		}
 		else
-			{return $result['data'];}
+	    {return $result['data'];}
 	}
 
 

@@ -94,9 +94,16 @@ class PayumoneyController extends Controller
 	        $arr_data['expire_date']=date('Y-m-d', strtotime("+".$validity."days"));
 	        //dd($arr_data);
 	        $transaction = TransactionModel::create($arr_data);
-	        $parameter_post = array (	'key' => 'gtKFFx', 'txnid' =>$txnid , 'amount' =>$price,
-				'firstname' =>$user_name, 'phone' => $phone,
-				'productinfo' =>  $business_name, 'surl' => $surl, 'furl' => $furl);
+	        $parameter_post = array (	
+					        		'key' => 'gtKFFx',
+					         		'txnid' =>$txnid ,
+					         		'amount' =>$price,
+									'firstname' =>$user_name,
+									'phone' => $phone,
+									'productinfo' =>  $business_name, 
+									'surl' => $surl,
+								 	'furl' => $furl
+								 	);
 			$salt ='eCwWELxi';
 			$run=$this->pay_page($parameter_post, $salt);
 			return redirect($run);
