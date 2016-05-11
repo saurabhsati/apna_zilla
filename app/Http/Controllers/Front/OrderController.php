@@ -74,17 +74,26 @@ class OrderController extends Controller
        $txnid=uniqid( 'RTN_' );
        $order_id=uniqid( 'RTN_ORD_' );
 
-        $arr_data['user_id']=$user_id;
-        $arr_data['transaction_id']=$txnid;
-        $arr_data['order_id']=$order_id;
-        $arr_data['deal_id']=$deal_id;
-        $arr_data['price']=$price;
-        $arr_data['transaction_status']='Pending';
-        $arr_data['mode']=$paymentMode;
-        $arr_data['start_date']=date('Y-m-d');
-        $arr_data['expire_date']=date('Y-m-d', strtotime("+".$validity."days"));
+        $arr_data['user_id']            = $user_id;
+        $arr_data['transaction_id']     = $txnid;
+        $arr_data['order_id']           = $order_id;
+        $arr_data['deal_id']            = $deal_id;
+        $arr_data['price']              = $price;
+        $arr_data['transaction_status'] = 'Pending';
+        $arr_data['mode']               = $paymentMode;
+        $arr_data['start_date']         = date('Y-m-d');
+        $arr_data['expire_date']        = date('Y-m-d', strtotime("+".$validity."days"));
        
-
+        
+        $obj_deal = DealsOffersModel::where('id',$deal_id)->first();
+        if($obj_deal)
+        {
+            $arr_single_deal = $obj_deal->toArray();
+        }
+        $last_redeem_count= $arr_single_deal['redeem_count'];
+        $data_arr['redeem_count']    = $last_redeem_count+1;
+       // dd($arr_single_deal);
+        $deal_update = DealsOffersModel::where('id',$deal_id)->update($data_arr);
         //dd($arr_data);
         $dealtransaction = DealsTransactionModel::create($arr_data);
 
@@ -107,7 +116,7 @@ class OrderController extends Controller
                         'amount' =>$price,
                         'firstname' =>$user_name,
                         'phone' => $phone,
-                        'productinfo' =>  $deal_info, 
+                        'productinfo' =>  'Deals Order', 
                         'surl' => $surl,
                         'furl' => $furl
                         );
@@ -217,11 +226,7 @@ class OrderController extends Controller
     }
     else
     {
-      //$host = (isset( $_SERVER['https'] ) ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-      /*if ( isset( $_SERVER['REQUEST_URI'] ) && ! empty( $_SERVER['REQUEST_URI'] ) ) $params['surl'] = $host;
-      if ( isset( $_SERVER['REQUEST_URI'] ) && ! empty( $_SERVER['REQUEST_URI'] ) ) $params['furl'] = $host;*/
-      //dd($params['surl']);
+      
       $result = $this->pay( $params, $salt );
       $run_url=$this->payu->show_page( $result );
        return $run_url ;

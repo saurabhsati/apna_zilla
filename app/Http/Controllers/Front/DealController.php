@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers\Front;
 
-use Illuminate\Http\Request;
+/*use Illuminate\Http\Request;*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -11,6 +11,7 @@ use App\Models\CityModel;
 use App\Models\BusinessListingModel;
 use App\Models\DealcategoryModel;
 use Meta;
+use Request;
 
 class DealController extends Controller
 {
@@ -205,17 +206,46 @@ class DealController extends Controller
  	}
  	public function details($deal='deals',$deal_slug,$enc_id)
  	{
- 		$page_title = "Details";
-    $deal_image_path="uploads/deal";
+ 		 $page_title = "Details";
+     $deal_image_path="uploads/deal";
  		 $id = base64_decode($enc_id);
- 		 $obj_deals_info = DealsOffersModel::with(['offers_info','deals_slider_images'])->where('id',$id)->get();
+     $city = Request::segment(1);
 
- 		if($obj_deals_info)
- 		{
- 			$deals_info = $obj_deals_info->toArray();
-		}
 
-        $mete_title = "";
+      $obj_business_listing = BusinessListingModel::where('city',$city)->where('is_active','1')->get();
+      if($obj_business_listing)
+      {
+          $obj_business_listing = $obj_business_listing->toArray();
+      }
+       $key_business_city=array();
+     if(sizeof($obj_business_listing)>0)
+      {
+        foreach ($obj_business_listing as $key => $value) {
+          $key_business_city[$value['id']]=$value['id'];
+        }
+      }
+     
+
+
+ 		 $obj_deals_info = DealsOffersModel::with(['offers_info','deals_slider_images','category_info'])->where('id',$id)->get();
+     $main_category_ids=$sub_category_ids=[];
+         
+   		if($obj_deals_info)
+   		{
+   			$deals_info = $obj_deals_info->toArray();
+        foreach ($deals_info[0]['category_info'] as $key => $value) 
+          {
+            if(!array_key_exists( $value['main_cat_id'], $main_category_ids))
+             {
+                  $main_category_ids[$value['main_cat_id']]= $value['main_cat_id'];
+             }
+              if(!array_key_exists( $value['sub_cat_id'], $main_category_ids))
+             {
+                  $sub_category_ids[$value['sub_cat_id']]= $value['sub_cat_id'];
+             }
+          }
+  		}
+      $mete_title = "";
         if(isset($deals_info[0]['name']) && sizeof($deals_info[0]['name']))
         {
            $mete_title = $deals_info[0]['name'];
@@ -232,11 +262,54 @@ class DealController extends Controller
         Meta::setTitle($mete_title);
         // Meta::setDescription($meta_desp);
         Meta::addKeyword($mete_title);
-		//dd($deals_info);
+	     /* Releted deals*/
+          /* if(sizeof($sub_category_ids)>0 && isset($sub_category_ids))
+            {
+              
+                 $obj_deal_listing_by_sub_cat = DealcategoryModel::whereIn('sub_cat_id',$sub_category_ids)->get();
+                  if($obj_deals_info)
+                  {
+                    $deals_info_sub_cat = $obj_deals_info->toArray();
+                  }
 
+            }*/
+            if(sizeof($main_category_ids)>0 && isset($main_category_ids))
+            {
+                  $obj_deal_listing_by_main_cat = DealcategoryModel::whereIn('main_cat_id',$main_category_ids)->get();
+                  if($obj_deal_listing_by_main_cat)
+                  {
+                    $deals_info_main_cat = $obj_deal_listing_by_main_cat->toArray();
+                  }
+            }
 
+            $key_deal_cat=array();
+            if(sizeof($deals_info_main_cat)>0)
+            {
+                foreach ($deals_info_main_cat as $key => $value) {
+                  $key_deal_cat[$value['deal_id']]=$value['deal_id'];
+                }
+            }
+            if(sizeof($key_deal_cat)>0)
+             {  
+                $obj_related_deals_info = DealsOffersModel::where('is_active','1')
+                                                          ->whereIn('id',$key_deal_cat)
+                                                          ->where('id','!=',$id)
+                                                          ->where('end_day', '>=', date('Y-m-d').' 00:00:00')
+                                                          ->whereIn('business_id',$key_business_city)
+                                                          ->orderBy('created_at','DESC')
+                                                          ->limit(4)
+                                                          ->get();
 
- 		return view('front.deal.detail',compact('deal_image_path','page_title','deals_info'));
+                if($obj_related_deals_info)
+                {
+                    $arr_related_deals_info = $obj_related_deals_info->toArray();
+                }
+            }
+          //dd($arr_related_deals_info);
+       
+      
+
+ 		return view('front.deal.detail',compact('deal_image_path','page_title','deals_info','arr_related_deals_info'));
  	}
     public function fetch_location_deal(Request $request)
     {

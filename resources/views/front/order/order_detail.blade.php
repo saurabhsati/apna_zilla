@@ -209,7 +209,7 @@ span.nb-radio__text {
                                 <div id="proceed-with-pay" class="small-12 column select_payment_mode margin-bottom_25px margin-top_20px">
                                    <div class="form-group radio-group radio-group--inline">
                                       <label class="nb-radio">
-                                      <input type="radio" checked="checked" id="paymentModePayU" value="PAYU" name="paymentMode">
+                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" checked="checked" id="paymentModePayU" value="PAYU" name="paymentMode">
                                       <span class="nb-radio__bg"></span>
                                       <span class="nb-radio__icon icon rippler rippler-default"></span>
                                       <span class="nb-radio__text">Credit/Debit/Net banking/PayUmoney</span>

@@ -28,6 +28,10 @@
     font-size: 18px;
     font-weight: 600;
 }
+
+
+/* Related deals*/
+/**/
  </style>
 <div class="gry_container" style="padding: 7px 0 16px;">
  @include('front.deal.deal_top_bar')
@@ -154,7 +158,47 @@
 	        </div>
          @endif
         <div class="detail_link">
+
        </div>
+       <section class=" deals container">
+   <div class="small-12 deal_row">
+      <h3>Releted Deals</h3>
+      <div class="row">
+        @if(sizeof($arr_related_deals_info)>0 && isset($arr_related_deals_info))
+           @foreach($arr_related_deals_info as $rel_deals)
+         <div class="deal_cart medium-6 columns left font-family_open_sans_ragular" data-dealid="11453">
+            <a class="ga-click-action card" href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$rel_deals['name']))}}/{{base64_encode($rel_deals['id'])}}">
+               <div class="product_image product_black_ovelay card__img">
+               <span class="ga-data hide" dealid="11453" title="Choice of Donuts" category="FNB" brand="Mad Over Donuts" variant="21 Locations" list="Deal Detail" position="1" city="mumbai" vertical="local"></span>
+               <img class="deal loading img-sm" height="210px" width="350px" src="{{get_resized_image_path($rel_deals['deal_image'],$deal_image_path,200,250) }}" data-src="//img2.nbstatic.in/la-webp-s/5703a8ec02762b50e6f9ee28.jpg" alt="Mad Over Donuts" data-lzled="true"></div>
+               <div class="description padding-tb_9px-rl_12px">
+                  <h2 class="card__title"> {{$rel_deals['title']}}</h2>
+                  <h3 class="card__location">21 Locations</h3>
+                  <h4 class="card__description">{{strip_tags($rel_deals['description'])}}</h4>
+               </div>
+               <hr>
+               <div class="card__footer">
+                  <div class="row margin_zero green_txt card__footer__actual_price">
+                     <div class="column medium-6 right"><span class="right"><span class="actual_price text-right padding_zero text-color_999999"></span></span></div>
+                  </div>
+                  <div class="row margin_zero green_txt">
+                     <div class="column medium-6"><span class="bought text-color_999999"><span class="icon user"></span><span>{{$rel_deals['redeem_count']}} Bought </span></span></div>
+                      <span >
+                       <p class="price-old"><i class="fa fa-inr "></i>{{$rel_deals['price']}}</p>
+                     <p class=""><i class="fa fa-inr "></i><span class="sell_price"><?php echo number_format(($rel_deals['price']-(($rel_deals['price'])*($rel_deals['discount_price']/100))),2);?></span></p>
+                     </span>
+                  </div>
+               </div>
+            </a>
+         </div>
+         @endforeach
+        @else
+                          <span class="col-sm-3 col-md-3 col-lg-12">No Related Deals Available.</span>
+                          @endif
+       
+      </div>
+   </div>
+</section>
        </div>
 
 
@@ -233,6 +277,7 @@
 
                     }
                     ?>
+                    <span>{{$deal['redeem_count']}} Bought </span>
       </div>
       <input type="hidden" value="" id="offers_ids" name="offers_ids">
       @if(Session::has('user_id'))

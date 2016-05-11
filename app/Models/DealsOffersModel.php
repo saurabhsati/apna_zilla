@@ -30,7 +30,8 @@ class DealsOffersModel extends Model
                            'facilities',
                            'cancellation_policy',
                            'parent_category_id',
-                           'public_id'
+                           'public_id',
+                           'json_location_point'
                            ];
 
     public function business_info()

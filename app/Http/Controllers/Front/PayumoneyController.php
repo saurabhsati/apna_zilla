@@ -229,11 +229,7 @@ class PayumoneyController extends Controller
 		}
 		else
 		{
-			//$host = (isset( $_SERVER['https'] ) ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-			/*if ( isset( $_SERVER['REQUEST_URI'] ) && ! empty( $_SERVER['REQUEST_URI'] ) ) $params['surl'] = $host;
-			if ( isset( $_SERVER['REQUEST_URI'] ) && ! empty( $_SERVER['REQUEST_URI'] ) ) $params['furl'] = $host;*/
-			//dd($params['surl']);
+			
 			$result = $this->pay( $params, $salt );
 			$run_url=$this->payu->show_page( $result );
 			 return $run_url ;
