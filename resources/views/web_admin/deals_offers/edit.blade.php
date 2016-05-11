@@ -445,7 +445,9 @@
 
                     <label>Note: Click On the Map to Pick Nearby Custom Location </label>
                     <div>
-                    <a id="reset" href="#" style="display:none;">Reset Marker</a></div>
+                     <label class="col-sm-6 col-lg-12 controls alert alert-warning">Note: Click On Marker to Create Auto Complte Location</label>
+
+                </div>
                 </div>
                 </div>
             <input type="hidden" name="json_location_point" value='{!! $deal_arr['json_location_point'] !!}' /> 
@@ -932,10 +934,6 @@ function getSubCategory(ref)
 </script>
 <script type="text/javascript">
   var site_url = "{{ url('/') }}";
-
-
-
- 
 
   var departure_point_map = false;
   var departure_point_autocomplete = false;

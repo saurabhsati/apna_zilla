@@ -311,7 +311,7 @@
 
                     <label>Note: Click On the Map to Pick Nearby Custom Location </label>
                     <div>
-                     <label class="col-sm-6 col-lg-12 controls alert alert-warning">Note: Click On Marker to create the location</label>
+                     <label class="col-sm-6 col-lg-12 controls alert alert-warning">Note: Click On Marker to Create Auto Complte Location</label>
 
                 </div>
                 </div>
