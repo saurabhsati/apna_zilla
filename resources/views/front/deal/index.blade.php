@@ -39,6 +39,12 @@
                               </div>
                               <div class="deals-product">
                               <div class="deals-nm"><a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$deals['name']))}}/{{base64_encode($deals['id'])}}">{{ $deals['name'] }}</a></div>
+                               <?php 
+                                    $arr_departture_point = json_decode($deals['json_location_point'],TRUE);
+                                  
+                                ?>
+                              <div class="deals-nm"> @if(sizeof($arr_departture_point)>0){{ sizeof($arr_departture_point) }} @else {{ 0 }} @endif Location</div>
+                              <div class="deals-nm"> @if(!empty($deals['redeem_count'])){{ $deals['redeem_count'] }} @else {{ 0 }} @endif  Bought</div>
                               <div class="online-spend"></div>
                                       <div class="price-box">
                                       <div class="price-new">£<?php echo number_format(($deals['price']-(($deals['price'])*($deals['discount_price']/100))),2);?></div>
@@ -69,6 +75,13 @@
                           </div>
                           <div class="deals-product">
                           <div class="deals-nm"><a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$max_dis_deals['name']))}}/{{base64_encode($max_dis_deals['id'])}}">{{ $max_dis_deals['name'] }}</a></div>
+                          <?php 
+                                    $arr_departture_point = json_decode($max_dis_deals['json_location_point'],TRUE);
+                                     
+                                ?>
+                              <div class="deals-nm"> @if(sizeof($arr_departture_point)>0){{ sizeof($arr_departture_point) }} @else {{ 0 }} @endif Location</div>
+                              <div class="deals-nm"> @if(!empty($max_dis_deals['redeem_count'])){{ $max_dis_deals['redeem_count'] }} @else {{ 0 }} @endif  Bought</div>
+                             
                           <div class="online-spend"></div>
                                   <div class="price-box">
                                   <div class="price-new">£<?php echo number_format(($max_dis_deals['price']-(($max_dis_deals['price'])*($max_dis_deals['discount_price']/100))),2);?></div>
@@ -97,6 +110,13 @@
                           <img src="{{get_resized_image_path($loc_deals['deal_image'],$deal_image_path,200,250) }}" alt="img"  /></div>
                           <div class="deals-product">
                           <div class="deals-nm"><a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$loc_deals['name']))}}/{{base64_encode($loc_deals['id'])}}">{{ $loc_deals['name'] }}</a></div>
+                         <?php 
+                                    $arr_departture_point = json_decode($loc_deals['json_location_point'],TRUE);
+                                     
+                                ?>
+                              <div class="deals-nm"> @if(sizeof($arr_departture_point)>0){{ sizeof($arr_departture_point) }} @else {{ 0 }} @endif Location</div>
+                              <div class="deals-nm"> @if(!empty($loc_deals['redeem_count'])){{ $loc_deals['redeem_count'] }} @else {{ 0 }} @endif  Bought</div>
+                            
                           <div class="online-spend"></div>
                                   <div class="price-box">
                                   <div class="price-new">£<?php echo number_format(($loc_deals['price']-(($loc_deals['price'])*($loc_deals['discount_price']/100))),2);?></div>
@@ -349,7 +369,10 @@ $(document).ready(function(){
                   },
                   response: function (event, ui)
                   {
+                    $('.ui-autocomplete').css({
+                      'position': 'fixed'
 
+                  });
                   }
                 });
       $("#go_to_search").click(function(){

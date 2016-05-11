@@ -825,7 +825,7 @@ $('#remove-image').click(function()
   }
   function initializeMap() 
   {
-      var latlng = new google.maps.LatLng(1.10, 1.10);
+      var latlng = new google.maps.LatLng(20.5937, 78.9629);
       var myOptions = {
           zoom: 7,
           center: latlng,

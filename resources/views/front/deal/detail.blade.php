@@ -70,7 +70,11 @@
      @foreach($deals_info as $deal)
 
      <div class="detail_bx">
-       <h2>{{ucfirst($deal['name'])}}</h2>
+     <?php 
+                                    $arr_departture_point = json_decode($deal['json_location_point'],TRUE);
+                                     $arr_tmp_departure_point  = [];
+                                ?>
+       <h2>{{ucfirst($deal['name'])}}  {{ ',' }} @if(sizeof($arr_departture_point)>0){{ sizeof($arr_departture_point) }} @else {{ 0 }} @endif Locations</h2>
        <div class="rate_sec">
         <ul>
           <li><!-- <img alt="write_review" src="{{ url('/') }}/assets/front/images/verified.png" width="33px"/> --><span><!-- {{$deal['discount_price']}}%  -->{{ucfirst($deal['title'])}}</span>  </li>
@@ -335,9 +339,19 @@
        <!--  <li><a href="#" class="pioneer">&nbsp;</a> </li> -->
         <li><a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;" class="in">&nbsp;</a> </li>
       </ul>
+      
     </div>
-
-    <!-- /#Categoriesr End-->
+    <form method="post" action="{{url('/')}}/{{$city}}/bulk_booking_form" target="_blank" id="bulk-order-form">
+    {{ csrf_field() }}
+    <input type="hidden" name="vertical" value="local">
+    <input type="hidden" name="dealTitle" value="{{$deal['title']}}">
+    <input type="hidden" name="deal_id" value="{{$deal['id']}}">
+    <input type="hidden" name="dealUrl" id="dealUrlForBulk" value="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$deal['name']))}}/{{base64_encode($deal['id'])}}">
+    <input type="hidden" name="divisionId" id="deal-url" value="{{$city}}">
+   
+     <a type="button" class="btn btn-post center-b " href="javascript:void(0);" onclick="javascript:document.getElementById('bulk-order-form').submit()">BUYING IN BULK?</a>
+    </form>
+     <!-- /#Categoriesr End-->
     <div class="clearfix"></div>
     @endforeach
     @endif

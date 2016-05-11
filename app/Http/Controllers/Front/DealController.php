@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers\Front;
 
-/*use Illuminate\Http\Request;*/
+use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -10,8 +10,12 @@ use App\Models\CategoryModel;
 use App\Models\CityModel;
 use App\Models\BusinessListingModel;
 use App\Models\DealcategoryModel;
+use App\Models\BuyInBulkModel;
+
 use Meta;
-use Request;
+use Request as SegmentRequest;
+use Session;
+use Validator;
 
 class DealController extends Controller
 {
@@ -209,7 +213,7 @@ class DealController extends Controller
  		 $page_title = "Details";
      $deal_image_path="uploads/deal";
  		 $id = base64_decode($enc_id);
-     $city = Request::segment(1);
+     $city = SegmentRequest::segment(1);
 
 
       $obj_business_listing = BusinessListingModel::where('city',$city)->where('is_active','1')->get();
@@ -320,7 +324,7 @@ class DealController extends Controller
         $business_search_by_location = $request->input('business_search_by_location');
 
         //by city
-          $obj_business_listing_city = CityModel::where('city_title',$search_under_city)->get();
+         /* $obj_business_listing_city = CityModel::where('city_title',$search_under_city)->get();
           if($obj_business_listing_city)
           {
             $obj_business_listing_city->load(['business_details']);
@@ -332,7 +336,7 @@ class DealController extends Controller
               foreach ($arr_business_by_city[0]['business_details'] as $key => $value) {
                 $key_business_city[$value['id']]=$value['id'];
               }
-            }
+            }*/
         //by location
         $loc=str_replace('-',' ',$business_search_by_location);
 
@@ -355,9 +359,9 @@ class DealController extends Controller
               }
           }
           $busiess_result=[];
-          if(sizeof($key_business_city)>0 && sizeof($key_business_loc))
+          if( sizeof($key_business_loc))
           {
-              $busiess_result = array_intersect($key_business_city,$key_business_loc);
+              $busiess_result = $key_business_loc;//array_intersect($key_business_city,$key_business_loc);
 
           }
           $html='';
@@ -374,6 +378,18 @@ class DealController extends Controller
                 {
                   foreach ($arr_deals_info as $key => $deal)
                     {
+                       $arr_departture_point = json_decode($loc_deals['json_location_point'],TRUE);
+                       $location_count= $brought_count=0;
+                       if(sizeof($arr_departture_point)>0)
+                       {
+                          $location_count= sizeof($arr_departture_point);
+                       }
+                       if(!empty($loc_deals['redeem_count']))
+                       {
+                          $brought_count=$loc_deals['redeem_count'] ;
+                       }
+
+
                          $html.='<a href="'.url('/').'/'.$search_under_city.'/deals/'.urlencode(str_replace(' ','-',$deal['name'])).'/'.base64_encode($deal['id']).'"><div class="col-sm-6 col-md-3 col-lg-3">
                                   <div class="dels">
                                   <div class="deals-img"><span class="discount ribbon">'.$deal['discount_price'].'%</span><img src="'.
@@ -381,6 +397,10 @@ class DealController extends Controller
                                   '"alt="img"  /></div>
                                   <div class="deals-product">
                                   <div class="deals-nm"><a href="'.url('/').'/'.$search_under_city.'/deals/'.urlencode(str_replace(' ','-',$deal['name'])).'/'.base64_encode($deal['id']).'">'.$deal['name'].'</a></div>
+                                  <div class="deals-nm">  '.$location_count.'Location</div>
+                                <div class="deals-nm">  '.$brought_count.'Bought</div>
+                            
+
                                   <div class="online-spend"></div>
                                           <div class="price-box">
                                           <div class="price-new">£'.round($deal['price']-(($deal['price'])*($deal['discount_price']/100))).'</div>
@@ -398,4 +418,64 @@ class DealController extends Controller
          }
           echo $html;
     }
+
+    
+    public function bulk_booking_form(Request $request)
+    {
+      if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
+      $page_title="Booking form";
+      $form_data=$request->all();
+      $city = SegmentRequest::segment(1);
+      return view('front.bulk_booking_form.create',compact('page_title','form_data','city'));
+      
+    }
+
+     public function booking_order(Request $request)
+     {
+      if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
+        $arr_rules['deal_id']='required';
+        $arr_rules['name']='required';
+        $arr_rules['email_id']='required';
+        $arr_rules['quantity']='required';
+        $validator = Validator::make($request->all(),$arr_rules);
+
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        $arr_booking['deal_id']         = $request->input('deal_id');
+        $arr_booking['name']            = $request->input('name');
+        $arr_booking['organization']    = $request->input('organization');
+        $arr_booking['email']           = $request->input('email_id');
+        $arr_booking['phone_no']        = $request->input('phone_no');
+        $arr_booking['quantity']        = $request->input('quantity');
+
+        $dealUrl        = $request->input('deal_url');
+        $deal_city        = $request->input('city');
+        $booking_add = BuyInBulkModel::create($arr_booking);
+        if($booking_add)
+        {
+
+            Session::flash('dealUrl',$dealUrl);
+            Session::flash('deal_city',$deal_city);
+            Session::flash('success',' Great! Thanks for filling out the form! Our representative wil contact you within 1 business day to understand your requirements.');
+            return redirect(url('/').'/bulk-order/bulk-booking');
+        }
+        else 
+        {
+            Session::flash('error','Error While Bulk Booking Deal ');
+            return redirect(url('/').'/bulk-order/bulk-booking');
+        }
+
+     }
+     public function bulk_booking()
+     {
+       return view('front.bulk_booking_form.booking_success ');
+     }
 }

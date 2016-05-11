@@ -575,8 +575,9 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::get('/offerid={offers}/{enc_id}',		'Front\OrderController@index');
 		Route::post('/payment',						    'Front\OrderController@payment');
 		Route::post('/success',							'Front\OrderController@payment_success');
-		Route::post('/fail',								'Front\OrderController@payment_fail');
+		Route::post('/fail',							'Front\OrderController@payment_fail');
 		Route::post('/cancel',							'Front\OrderController@payment_cancle');
+		
 
 
 		
@@ -695,9 +696,15 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::get('deals/{deal_slug}/{enc_id}',			['as' =>'deals_detail'								,'uses' =>'Front\DealController@details']);
 		Route::get('deals/{cat_slug}',						['as' =>'deals_by_category'							,'uses' =>'Front\DealController@deals_by_category']);
 		Route::post('fetch_location_deal',					['as' =>'deals_by_location'							,'uses' =>'Front\DealController@fetch_location_deal']);
-
+		Route::post('bulk_booking_form',				    ['as' =>'deals_buy_in_bulk'							,'uses' =>'Front\DealController@bulk_booking_form']);
+		Route::post('booking_order',				        ['as' =>'deals_buy_in_bulk'							,'uses' =>'Front\DealController@booking_order']);
 	});
 
+	Route::group(array('prefix' => '/bulk-order'), function ()
+	{
+		Route::get('bulk-booking',								['as' =>'deals_buy_booking'							,'uses' =>'Front\DealController@bulk_booking']);
+		
+	});
 	Route::post('/newsletter','Front\NewsLetterController@index');
 	Route::group(array('prefix' => '/{city}'), function ()
 	{
@@ -709,7 +716,6 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::get('{business_area}/{cat_id}',					'Front\ListingController@list_details');
 
 	});
-
 
 	Route::post('forgot_password',								'Front\PasswordController@postEmail');
 	Route::get('password_reset/{code}',							'Front\PasswordController@getReset');

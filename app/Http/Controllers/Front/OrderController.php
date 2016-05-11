@@ -33,6 +33,10 @@ class OrderController extends Controller
    public function index($offers,$enc_id)
    {
    	 $id = base64_decode($enc_id);
+     if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
      $page_title ="Order Detail";
      /* Offers Ids & Quantity */
      $complite_arr=[];
@@ -55,6 +59,10 @@ class OrderController extends Controller
   }
   public function payment(Request $request)
   {
+    if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
       $page_title = 'Payment';
        $surl = url('/').'/order/success';
       $furl = url('/').'/order/fail';
@@ -126,7 +134,10 @@ class OrderController extends Controller
   }
    public function payment_success()
   {
-      
+        if(!(Session::has('user_id')))
+        {
+           return redirect('/');
+        }
         $arr_data['mihpayid']=$_POST['mihpayid'];
         $arr_data['mode']=$_POST['mode'];
         $arr_data['transaction_status']=$_POST['status'];
@@ -253,5 +264,7 @@ class OrderController extends Controller
 
     return $result;
   }
+
+  
 
 }
