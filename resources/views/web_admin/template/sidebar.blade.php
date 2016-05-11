@@ -71,6 +71,16 @@
                 <li style="display: block;"><a href="{{ url('/web_admin/deals_offers_transactions')}}">Manage</a> </li>
             </ul>
         </li>
+         <li class="{{ Request::segment(2)=='deals_bulk_request'?'active':'' }}">
+            <a href="javascript:void(0)" class="dropdown-toggle">
+                <i class="fa fa-credit-card"></i>
+                <span>Bulk Request</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+            <ul class="submenu">
+                <li style="display: block;"><a href="{{ url('/web_admin/deals_bulk_request')}}">Manage</a> </li>
+            </ul>
+        </li>
 
          <li class="{{ Request::segment(2)=='categories'? 'active':'' }}">
             <a href="javascript:void(0)" class="dropdown-toggle">

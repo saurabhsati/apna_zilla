@@ -260,6 +260,12 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::post('update/{enc_id}',		'Admin\DealsOffersTransactionController@update');
 		});
 
+		Route::group(['prefix'=>'deals_bulk_request'], function (){
+			Route::get('/',						'Admin\BuyInBulkRequestController@index');
+			Route::get('view/{enc_id}',			'Admin\BuyInBulkRequestController@view');
+			
+		});
+
 		 Route::group(array('prefix'=>'/offers'), function()
 		{
 			Route::get('/{enc_id}',							    ['as' => 'admin_offers_index' 	  , 'uses'=>'Admin\OffersController@index']);

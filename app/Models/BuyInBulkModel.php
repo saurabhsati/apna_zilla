@@ -19,5 +19,9 @@ class BuyInBulkModel extends Model
                          'quantity'
 
                          ];
+     public function order_deal()
+    {
+        return $this->belongsTo('App\Models\DealsOffersModel','deal_id','id');
+    }
 
 }
