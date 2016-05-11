@@ -378,7 +378,11 @@ class DealController extends Controller
                 {
                   foreach ($arr_deals_info as $key => $deal)
                     {
+                      $arr_departture_point=[];
+                      if(isset($loc_deals['json_location_point']))
+                      {
                        $arr_departture_point = json_decode($loc_deals['json_location_point'],TRUE);
+                       }
                        $location_count= $brought_count=0;
                        if(sizeof($arr_departture_point)>0)
                        {

@@ -40,7 +40,11 @@
                               <div class="deals-product">
                               <div class="deals-nm"><a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$deals['name']))}}/{{base64_encode($deals['id'])}}">{{ $deals['name'] }}</a></div>
                                <?php 
-                                    $arr_departture_point = json_decode($deals['json_location_point'],TRUE);
+                                $arr_departture_point=[];
+                                    if(isset($deals['json_location_point']))
+                                    {
+                                      $arr_departture_point = json_decode($deals['json_location_point'],TRUE);
+                                    }
                                   
                                 ?>
                               <div class="deals-nm"> @if(sizeof($arr_departture_point)>0){{ sizeof($arr_departture_point) }} @else {{ 0 }} @endif Location</div>
@@ -76,8 +80,11 @@
                           <div class="deals-product">
                           <div class="deals-nm"><a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$max_dis_deals['name']))}}/{{base64_encode($max_dis_deals['id'])}}">{{ $max_dis_deals['name'] }}</a></div>
                           <?php 
+                          $arr_departture_point=[];
+                                    if(isset($max_dis_deals['json_location_point']))
+                                    {
                                     $arr_departture_point = json_decode($max_dis_deals['json_location_point'],TRUE);
-                                     
+                                     }
                                 ?>
                               <div class="deals-nm"> @if(sizeof($arr_departture_point)>0){{ sizeof($arr_departture_point) }} @else {{ 0 }} @endif Location</div>
                               <div class="deals-nm"> @if(!empty($max_dis_deals['redeem_count'])){{ $max_dis_deals['redeem_count'] }} @else {{ 0 }} @endif  Bought</div>
@@ -111,8 +118,11 @@
                           <div class="deals-product">
                           <div class="deals-nm"><a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$loc_deals['name']))}}/{{base64_encode($loc_deals['id'])}}">{{ $loc_deals['name'] }}</a></div>
                          <?php 
+                         $arr_departture_point=[];
+                                    if(isset($loc_deals['json_location_point']))
+                                    {
                                     $arr_departture_point = json_decode($loc_deals['json_location_point'],TRUE);
-                                     
+                                     }
                                 ?>
                               <div class="deals-nm"> @if(sizeof($arr_departture_point)>0){{ sizeof($arr_departture_point) }} @else {{ 0 }} @endif Location</div>
                               <div class="deals-nm"> @if(!empty($loc_deals['redeem_count'])){{ $loc_deals['redeem_count'] }} @else {{ 0 }} @endif  Bought</div>
