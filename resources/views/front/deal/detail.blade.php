@@ -322,11 +322,13 @@
                     <span>{{$deal['redeem_count']}} Bought </span>
       </div>
       <input type="hidden" value="" id="offers_ids" name="offers_ids">
+    @if(isset($deal['offers_info']) && sizeof($deal['offers_info'])>0)
       @if(Session::has('user_id'))
       <a type="button" class="btn btn-post center-b btn_buy" href="javascript:void(0);">Buy Now</a>
        @else
         <a type="button" href="javascript:void(0);" data-target="#login_poup" data-toggle="modal" class="btn btn-post center-b " href="javascript:void(0);">Buy Now</a>
        @endif
+     @endif
       <div class="divider"></div>
       <div class="social_icon">
        SHARE THIS DEAL

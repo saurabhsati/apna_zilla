@@ -323,57 +323,24 @@ class DealController extends Controller
         $search_under_city = $request->input('search_under_city');
         $business_search_by_location = $request->input('business_search_by_location');
 
-        //by city
-         /* $obj_business_listing_city = CityModel::where('city_title',$search_under_city)->get();
-          if($obj_business_listing_city)
-          {
-            $obj_business_listing_city->load(['business_details']);
-            $arr_business_by_city = $obj_business_listing_city->toArray();
-          }
-           $key_business_city=array();
-           if(sizeof($arr_business_by_city)>0)
-            {
-              foreach ($arr_business_by_city[0]['business_details'] as $key => $value) {
-                $key_business_city[$value['id']]=$value['id'];
-              }
-            }*/
-        //by location
+        
         $loc=str_replace('-',' ',$business_search_by_location);
 
-        $obj_business_loc = BusinessListingModel::where(function ($query) use ($loc)
-                                                  {
-                                                   $query->orwhere("area", 'like', "%".$loc."%")
-                                                   ->orwhere("street", 'like', "%".$loc."%")
-                                                   ->orwhere("landmark", 'like', "%".$loc."%")
-                                                   ->orwhere("building", 'like', "%".$loc."%");
-                                                 })->get();
-          if($obj_business_loc)
-          {
-            $arr_business_by_loc = $obj_business_loc->toArray();
-          }
-          $key_business_loc=array();
-          if(sizeof($arr_business_by_loc)>0)
-          {
-              foreach ($arr_business_by_loc as $key => $value) {
-                $key_business_loc[$value['id']]=$value['id'];
-              }
-          }
-          $busiess_result=[];
-          if( sizeof($key_business_loc))
-          {
-              $busiess_result = $key_business_loc;//array_intersect($key_business_city,$key_business_loc);
-
-          }
+       
           $html='';
-          if(sizeof($busiess_result)>0 && isset($busiess_result))
-          {
-                $obj_deals_info = DealsOffersModel::where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$busiess_result)->get();
+           $obj_deals_info = DealsOffersModel::where(function ($query) use ($loc)
+                                                  {
+                                                   $query->where("json_location_point", 'like', "%".$loc."%");
+                                                  })->where('end_day', '>=', date('Y-m-d').' 00:00:00')->get();
 
+          if(sizeof($obj_deals_info)>0 && isset($obj_deals_info))
+          {
+               
               if($obj_deals_info)
               {
                   $arr_deals_info = $obj_deals_info->toArray();
               }
-
+              //dd($arr_deals_info);
                 if(sizeof($arr_deals_info)>0)
                 {
                   foreach ($arr_deals_info as $key => $deal)
