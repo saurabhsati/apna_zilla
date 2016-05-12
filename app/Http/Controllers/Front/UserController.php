@@ -29,6 +29,7 @@ use Session;
 use Sentinel;
 use Validator;
 use DB;
+use URL;
 
 class UserController extends Controller
 {
@@ -231,32 +232,43 @@ class UserController extends Controller
         }
          if((Session::has('previous_url')))
         {
-           // echo Session::get('previous_url');
-           return redirect(Session::get('previous_url'));
-        }
+          
+            if(Session::get('previous_url') !==url('/').'/')
+            {
+              return redirect(Session::get('previous_url'));
+            
+            }
+            else
+            {
         
-        $id = Session::get('user_id');
+                $id = Session::get('user_id');
 
-        $user_id = base64_decode($id);
+                $user_id = base64_decode($id);
 
-        $obj_user_info = UserModel::where('id','=',$user_id)->get();
+                $obj_user_info = UserModel::where('id','=',$user_id)->get();
 
-        if($obj_user_info)
-        {
-            $arr_user_info = $obj_user_info->toArray();
+                if($obj_user_info)
+                {
+                    $arr_user_info = $obj_user_info->toArray();
+                }
+
+                foreach ($arr_user_info as $users)
+                {
+                     Session::put('user_mail', $users['email']);
+                     Session::put('user_first_name', $users['first_name']);
+                     //Session::put('user_middle_name', $users['middle_name']);
+                     //Session::put('user_last_name', $users['last_name']);
+                }
+
+                 $profile_pic_public_path = $this->profile_pic_public_path;
+
+                return view('front.user.profile',compact('arr_user_info','profile_pic_public_path'));
+            }
         }
-
-        foreach ($arr_user_info as $users)
+        else
         {
-             Session::put('user_mail', $users['email']);
-             Session::put('user_first_name', $users['first_name']);
-             //Session::put('user_middle_name', $users['middle_name']);
-             //Session::put('user_last_name', $users['last_name']);
+           return redirect('/');
         }
-
-         $profile_pic_public_path = $this->profile_pic_public_path;
-
-        return view('front.user.profile',compact('arr_user_info','profile_pic_public_path'));
     }
 
 
