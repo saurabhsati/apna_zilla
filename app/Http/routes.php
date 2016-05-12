@@ -706,7 +706,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::get('deals/{deal_slug}/{enc_id}',			['as' =>'deals_detail'								,'uses' =>'Front\DealController@details']);
 		Route::get('deals/{cat_slug}',						['as' =>'deals_by_category'							,'uses' =>'Front\DealController@deals_by_category']);
 		Route::post('fetch_location_deal',					['as' =>'deals_by_location'							,'uses' =>'Front\DealController@fetch_location_deal']);
-		Route::post('bulk_booking_form',				    ['as' =>'deals_buy_in_bulk'							,'uses' =>'Front\DealController@bulk_booking_form']);
+		Route::any('bulk_booking_form',				    ['as' =>'deals_buy_in_bulk'							,'uses' =>'Front\DealController@bulk_booking_form']);
 		Route::post('booking_order',				        ['as' =>'deals_buy_in_bulk'							,'uses' =>'Front\DealController@booking_order']);
 	});
 

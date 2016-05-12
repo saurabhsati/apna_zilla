@@ -229,6 +229,12 @@ class UserController extends Controller
         {
            return redirect('/');
         }
+         if((Session::has('previous_url')))
+        {
+           // echo Session::get('previous_url');
+           return redirect(Session::get('previous_url'));
+        }
+        
         $id = Session::get('user_id');
 
         $user_id = base64_decode($id);

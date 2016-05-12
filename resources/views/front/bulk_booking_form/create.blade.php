@@ -73,10 +73,11 @@
 
                  <div class="col-sm-9 col-md-9 col-lg-9">
                 <div class="box_profile">
-
+                @if(isset($form_data)&& sizeof($form_data)>0)
                 <input type="hidden" name="deal_id" value="{{$form_data['deal_id']}}">
                 <input type="hidden" name="city" value="{{$form_data['divisionId']}}">
                 <input type="hidden" name="deal_url" value="{{$form_data['dealUrl']}}">
+                @endif
                      <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text"> Name :</div>

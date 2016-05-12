@@ -325,7 +325,7 @@
       @if(Session::has('user_id'))
       <a type="button" class="btn btn-post center-b btn_buy" href="javascript:void(0);">Buy Now</a>
        @else
-        <a type="button" href="javascript:void(0);" data-target="#login_poup" data-toggle="modal" class="btn btn-post center-b btn_buy" href="javascript:void(0);">Buy Now</a>
+        <a type="button" href="javascript:void(0);" data-target="#login_poup" data-toggle="modal" class="btn btn-post center-b " href="javascript:void(0);">Buy Now</a>
        @endif
       <div class="divider"></div>
       <div class="social_icon">
