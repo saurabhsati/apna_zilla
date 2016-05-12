@@ -161,6 +161,7 @@ return [
         Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Softon\Sms\SmsServiceProvider::class, 
         Orzcc\AutoMeta\Providers\AutoMetaServiceProvider::class,
 
     ],
@@ -212,11 +213,12 @@ return [
         'Activation' => Cartalyst\Sentinel\Laravel\Facades\Activation::class,
         'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
         'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
-        'Image' => Intervention\Image\Facades\Image::class,
+        'Debugbar'   => Barryvdh\Debugbar\Facade::class,
+        'Image'     => Intervention\Image\Facades\Image::class,
         'Excel'     => Maatwebsite\Excel\Facades\Excel::class,
-        'Meta'   => Orzcc\AutoMeta\Facades\AutoMeta::class,
-	'Carbon' => 'Carbon\Carbon',
+    	'Carbon' => Carbon\Carbon::class,
+        'Sms' => Softon\Sms\Facades\Sms::class,
+        'Meta'   => Orzcc\AutoMeta\Facades\AutoMeta::class, 
     ],
 
 

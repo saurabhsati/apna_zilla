@@ -100,10 +100,12 @@
             <div class="btn-group">
                 <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
                      title="Refresh"
-                     href="{{ url('/web_admin/deals_offers_requests/') }}"
+                     href="{{ url('/web_admin/deals_bulk_request/') }}"
                      style="text-decoration:none;">
                      <i class="fa fa-repeat"></i>
                   </a>
+                    <a href="{{ url('/web_admin/deals_bulk_request/export/csv')}}" class="btn btn-warning btn-add-new-records" title="Click to Excel Export"><i class="fa fa-file-excel-o"></i>
+</a>
             </div>
           </div>
           <br/><br/>

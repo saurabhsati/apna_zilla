@@ -49,7 +49,7 @@ class BusinessListingController extends Controller
 
     }
      /* Business Listing Start */
-    public function index()
+    public function index(Request $request)
     {
     	$page_title	='Manage Business Listing';
     	 $sales_user_public_id='';
@@ -71,9 +71,30 @@ class BusinessListingController extends Controller
         {
             $arr_sub_category = $obj_sub_category->toArray();
         }
+         $business_listing =[];
+        if($serch_name=$request->input('search_name')!='')
+        {
+
+            $obj_business_listing = BusinessListingModel::where('sales_user_public_id',$sales_user_public_id)
+                                                        ->with(['category','user_details','reviews','membership_plan_details'])
+                                                        ->where(function ($query) use ($serch_name)
+                                                          {
+                                                           $query->where("area", 'like', "%".$serch_name."%")
+                                                           ->orwhere("city", 'like', "%".$serch_name."%")
+                                                           ->orwhere("country", 'like', "%".$serch_name."%")
+                                                           ->orwhere("state", 'like', "%".$serch_name."%");
+                                                         })->orderBy('created_at','DESC')->get();
+            if($obj_business_listing)
+            {
+                $business_listing = $obj_business_listing->toArray();
+            }
+        }
+        else
+        {
 
     	$business_listing = BusinessListingModel::where('sales_user_public_id',$sales_user_public_id)->with(['category','user_details','reviews','membership_plan_details'])->get()->toArray();
-    	//dd($business_listing);
+    	}
+        //dd($business_listing);
         return view('sales_user.business_listing.index',compact('page_title','business_listing','business_public_img_path','arr_main_category','arr_sub_category'));
     }
     public function create()

@@ -104,7 +104,10 @@
                      style="text-decoration:none;">
                      <i class="fa fa-repeat"></i>
                   </a>
+                  <a href="{{ url('/web_admin/deals_offers_transactions/export/csv')}}" class="btn btn-warning btn-add-new-records" title="Click to Excel Export"><i class="fa fa-file-excel-o"></i>
+                  </a>
             </div>
+
           </div>
           <br/><br/>
           <div class="clearfix"></div>

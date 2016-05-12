@@ -93,4 +93,53 @@ class DealsOffersTransactionController extends Controller
         }
         return redirect()->back();
     }
+     public function export_excel($format="csv")//export excel file
+    {
+        if($format=="csv")
+        {
+            $arr_deal_transaction_list = array();
+            $obj_deal_transaction__list = DealsTransactionModel::with(['user_records','user_orders','order_deal.offers_info'])->get();
+            //dd($obj_business_list);
+
+            if($obj_deal_transaction__list)
+            {
+                $arr_deal_transaction_list = $obj_deal_transaction__list->toArray();
+
+                \Excel::create('DEAL_TRANSACTION_LIST-'.date('Ymd').uniqid(), function($excel) use($arr_deal_transaction_list)
+                {
+                    $excel->sheet('Deal_Transaction_List', function($sheet) use($arr_deal_transaction_list)
+                    {
+                        // $sheet->cell('A1', function($cell) {
+                        //     $cell->setValue('Generated on :'.date("d-m-Y H:i:s"));
+                        // });
+
+                        $sheet->row(3, array(
+                            'Sr.No.','Transaction ID','Transaction Status','User Name', 'Deal Name', 'Price', 'Start Date ','End Date'
+                        ));
+                       
+                        if(sizeof($arr_deal_transaction_list)>0)
+                        {
+                            $arr_tmp = array();
+                            foreach ($arr_deal_transaction_list as $key => $deal_transaction_list)
+                            {
+                                $arr_tmp[$key][] = $key+1;
+                                $arr_tmp[$key][] = $deal_transaction_list['transaction_id'];
+                                $arr_tmp[$key][] = $deal_transaction_list['transaction_status'];
+                                $arr_tmp[$key][] = $deal_transaction_list['user_records']['first_name'];
+
+                                $arr_tmp[$key][] = $deal_transaction_list['order_deal']['title'];
+                                $arr_tmp[$key][] = $deal_transaction_list['price'];
+                                $arr_tmp[$key][] = date('d-m-Y',strtotime($deal_transaction_list['start_date']));
+                                $arr_tmp[$key][] = date('d-m-Y',strtotime($deal_transaction_list['expire_date']));
+                            }
+
+                            $sheet->rows($arr_tmp);
+                        }
+
+                    });
+
+                })->export('csv');
+            }
+        }
+    }
 }

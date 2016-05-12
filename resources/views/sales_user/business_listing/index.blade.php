@@ -67,6 +67,41 @@
                 {{ Session::get('error') }}
             </div>
           @endif
+           <form class="form-horizontal" id="validation-form" name="frm_search"  action="{{ url('/sales_user/business_listing') }}" method="post">
+           
+           {{ csrf_field() }}
+            <div class="row">
+                     <div class="col-md-10">
+                <div class="box box-magenta">   
+                <div class="box-content">
+                <!-- <table class="table">
+                    <tr>
+                      <td style="border-top:none;"> -->
+                      <div class="form-group">
+                        <label class="col-sm-3 col-lg-1 control-label">Location : </label>
+                        <div class="col-sm-9 col-lg-5 controls">
+                          <input type="text"
+                             class="form-control"
+                             name="search_name"
+                             id="search_name"  
+                             data-rule-required="true" 
+                             placeholder="Search Business By Area, City ,State & Country" 
+                             value="<?php if(isset($_POST['search_name'])){echo $_POST['search_name'];} ?>" 
+                              />
+                          <div class="error" id="err_search_name" ></div>
+                        </div>
+                        <div class="col-sm-9 col-lg-3 controls">
+                          <input id="btn_cat_search" class="btn btn-primary" type="submit"  name="btn_search" value="Search">
+                        </div>
+                        </div>      
+                      <!-- </td>
+                    </tr>
+                </table>   -->    
+                </div>         
+                </div>
+            </div>
+            </div>
+            </form>
           <form class="form-horizontal" id="frm_manage" method="POST" action="{{ url('/sales_user/business_listing/multi_action') }}">
 
             {{ csrf_field() }}

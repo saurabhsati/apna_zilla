@@ -50,7 +50,7 @@ class BusinessListingController extends Controller
            $this->objpublic = new GeneratePublicId();
     }
      /* Business Listing Start */
-    public function index()
+    public function index(Request $request)
     {
     	$page_title	='Manage Business Listing';
     	$business_public_img_path = $this->business_public_img_path;
@@ -65,11 +65,33 @@ class BusinessListingController extends Controller
         {
             $arr_sub_category = $obj_sub_category->toArray();
         }
-        $business_listing =[];
-    	$obj_business_listing = BusinessListingModel::with(['category','user_details','reviews','membership_plan_details'])->orderBy('created_at','DESC')->get();
-        if($obj_business_listing)
+        //dd($request->all());
+          $business_listing =[];
+        if($serch_name=$request->input('search_name')!='')
         {
-            $business_listing = $obj_business_listing->toArray();
+
+            $obj_business_listing = BusinessListingModel::with(['category','user_details','reviews','membership_plan_details'])
+                                                        ->where(function ($query) use ($serch_name)
+                                                          {
+                                                           $query->where("area", 'like', "%".$serch_name."%")
+                                                           ->orwhere("city", 'like', "%".$serch_name."%")
+                                                           ->orwhere("country", 'like', "%".$serch_name."%")
+                                                           ->orwhere("state", 'like', "%".$serch_name."%");
+                                                         })->orderBy('created_at','DESC')->get();
+            if($obj_business_listing)
+            {
+                $business_listing = $obj_business_listing->toArray();
+            }
+        }
+        else
+        {
+
+          
+        	$obj_business_listing = BusinessListingModel::with(['category','user_details','reviews','membership_plan_details'])->orderBy('created_at','DESC')->get();
+            if($obj_business_listing)
+            {
+                $business_listing = $obj_business_listing->toArray();
+            }
         }
         //dd($business_listing);
 

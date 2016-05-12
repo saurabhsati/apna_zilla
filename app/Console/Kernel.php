@@ -13,9 +13,11 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\Inspire::class,
+        \App\Console\Commands\Inspire::class,
+         \App\Console\Commands\HappyBirthday::class,
+         \App\Console\Commands\MembershipExpired::class,
     ];
-
+  
     /**
      * Define the application's command schedule.
      *
@@ -26,5 +28,9 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('inspire')
                  ->hourly();
+        $schedule->command('sms:birthday')
+                 ->daily();
+        $schedule->command('business_membership:update_expired')
+                 ->daily();
     }
 }

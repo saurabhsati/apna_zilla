@@ -107,7 +107,7 @@ class UserController extends Controller
                 'first_name' => $first_name,
                 'last_name'  => $last_name,
                 'email'      => $email,
-                'mobile_no'  => $mobile,
+                'mobile_no'  => $mobile_no,
                 'password'   => $password,
                 'mobile_OTP' => $mobile_otp,
                 'is_active'  => '0'
@@ -171,14 +171,14 @@ class UserController extends Controller
     public function send_otp($mobile,$mobile_otp)
     {
 
-        /*$url = "http://smsway.co.in/api/sendhttp.php?authkey=70Asotxsg0Q556948f8&mobiles='".$mobile."'&message=RightNext Registration OPT = '".$mobile_otp."'&sender=SMSWAY&route=4&country=91";
+        $url = "http://smsway.co.in/api/sendhttp.php?authkey=70Asotxsg0Q556948f8&mobiles='".$mobile."'&message=RightNext Registration OPT = '".$mobile_otp."'&sender=SMSWAY&route=4&country=91";
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
         $response = curl_exec($ch);
-        curl_close($ch);*/
-        $response='1';
+        curl_close($ch);
+       // $response='1';
         return $response;
     }
 

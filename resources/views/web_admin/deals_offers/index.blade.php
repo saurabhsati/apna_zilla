@@ -95,7 +95,8 @@
             <!--- Add new record - - - -->
                 <div class="btn-group">
                    <a href="{{ url('/web_admin/deals_offers/create/')}}" class="btn btn-primary btn-add-new-records">Add Deal</a>
-                 
+                 <a href="{{ url('/web_admin/deals_offers/export/csv')}}" class="btn btn-warning btn-add-new-records" title="Click to Excel Export"><i class="fa fa-file-excel-o"></i>
+</a>
                 </div>
             <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -->
             <div class="btn-group">

@@ -540,5 +540,52 @@ class DealsOffersController extends Controller
 
         return redirect()->back();
     }
+      public function export_excel($format="csv")//export excel file
+    {
+        if($format=="csv")
+        {
+            $arr_deal_list = array();
+            $obj_deal_list = DealsOffersModel::with(['business_info','offers_info'])->get();
+            //dd($obj_business_list);
+
+            if($obj_deal_list)
+            {
+                $arr_deal_list = $obj_deal_list->toArray();
+
+                \Excel::create('DEALS_LIST-'.date('Ymd').uniqid(), function($excel) use($arr_deal_list)
+                {
+                    $excel->sheet('Deal_list', function($sheet) use($arr_deal_list)
+                    {
+                        // $sheet->cell('A1', function($cell) {
+                        //     $cell->setValue('Generated on :'.date("d-m-Y H:i:s"));
+                        // });
+
+                        $sheet->row(3, array(
+                            'Sr.No.','Business Name','Business Public Id', 'Deal Title', 'Discount', 'Start Date ','End Date'
+                        ));
+
+                        if(sizeof($arr_deal_list)>0)
+                        {
+                            $arr_tmp = array();
+                            foreach ($arr_deal_list as $key => $deal_list)
+                            {
+                                $arr_tmp[$key][] = $key+1;
+                                $arr_tmp[$key][] = $deal_list['business_info']['business_name'];
+                                $arr_tmp[$key][] = $deal_list['business_info']['busiess_ref_public_id'];
+                                $arr_tmp[$key][] = $deal_list['title'];
+                                $arr_tmp[$key][] = $deal_list['discount_price'];
+                                $arr_tmp[$key][] = date('d-m-Y',strtotime($deal_list['start_day']));
+                                $arr_tmp[$key][] = date('d-m-Y',strtotime($deal_list['end_day']));
+                            }
+
+                            $sheet->rows($arr_tmp);
+                        }
+
+                    });
+
+                })->export('csv');
+            }
+        }
+    }
 
 }

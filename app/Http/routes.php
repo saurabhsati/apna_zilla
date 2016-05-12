@@ -211,7 +211,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		/* --------------------------   Business Listing start --------------------------   */
 		Route::group(['prefix'=>'business_listing'], function()
 		{
-			Route::get('/',							 	 			['as' => 'admin_business_listing_index' 	  ,'uses' 	=>'Admin\BusinessListingController@index']);
+			Route::any('/{serch_by?}',							 	['as' => 'admin_business_listing_index' 	  ,'uses' 	=>'Admin\BusinessListingController@index']);
 			Route::get('manage',					 	 			['as' => 'admin_business_listing_manage' 	  ,'uses' 	=>'Admin\BusinessListingController@index']);
 			Route::get('show/{enc_id}',					 			['as' => 'admin_business_listing_show' 	  ,'uses' 	=>'Admin\BusinessListingController@show']);
 			Route::get('edit/{enc_id}',								['as' => 'admin_business_listing_edit' 	  ,'uses' 	=>'Admin\BusinessListingController@edit']);
@@ -250,7 +250,8 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::get('toggle_status/{enc_id}/{action}',       ['as' => 'admin_deals_offers_toggle_status'     		,'uses' =>'Admin\DealsOffersController@toggle_status']);
 			Route::post('multi_action',							['as' => 'admin_deals_offers_multiaction' ,'uses' 	=> 'Admin\DealsOffersController@multi_action']);
 			Route::post('delete_gallery',				        ['as' => 'admin_deals_slider_delete' 	  ,'uses' 	=>'Admin\DealsOffersController@delete_gallery']);
-					
+			Route::get('export/{format}',					    ['as' => 'admin_deal_offers_excel' 		  ,'uses' => 'Admin\DealsOffersController@export_excel']);
+		
 		});
 	/*-------------Payment Records Module------------*/
 		Route::group(['prefix'=>'deals_offers_transactions'], function (){
@@ -258,12 +259,15 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::get('view/{enc_id}',			'Admin\DealsOffersTransactionController@view');
 			Route::get('edit/{enc_id}',			'Admin\DealsOffersTransactionController@edit');
 			Route::post('update/{enc_id}',		'Admin\DealsOffersTransactionController@update');
+			Route::get('export/{format}',	    'Admin\DealsOffersTransactionController@export_excel');
+		
 		});
 
 		Route::group(['prefix'=>'deals_bulk_request'], function (){
 			Route::get('/',						'Admin\BuyInBulkRequestController@index');
 			Route::get('view/{enc_id}',			'Admin\BuyInBulkRequestController@view');
-			
+			Route::get('export/{format}',	    'Admin\BuyInBulkRequestController@export_excel');
+		
 		});
 
 		 Route::group(array('prefix'=>'/offers'), function()
@@ -455,7 +459,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		});
 		Route::group(['prefix'=>'business_listing'], function()
 		{
-			Route::get('/',							 	 ['as' => 'sales_user_business_listing_index' 	  ,'uses' 	=>'SalesUser\BusinessListingController@index']);
+			Route::any('/',							 	 ['as' => 'sales_user_business_listing_index' 	  ,'uses' 	=>'SalesUser\BusinessListingController@index']);
 			Route::get('show/{enc_id}',					 ['as' => 'sales_user_business_listing_show' 	  ,'uses' 	=>'SalesUser\BusinessListingController@show']);
 			Route::get('edit/{enc_id}',					 ['as' => 'sales_user_business_listing_edit' 	  ,'uses' 	=>'SalesUser\BusinessListingController@edit']);
 			Route::post('update/{enc_id}',				 ['as' => 'sales_user_business_listing_update' 	  ,'uses' 	=>'SalesUser\BusinessListingController@update']);
