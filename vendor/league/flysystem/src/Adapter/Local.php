@@ -7,7 +7,6 @@ use FilesystemIterator;
 use finfo as Finfo;
 use League\Flysystem\AdapterInterface;
 use League\Flysystem\Config;
-use League\Flysystem\Exception;
 use League\Flysystem\NotSupportedException;
 use League\Flysystem\UnreadableFileException;
 use League\Flysystem\Util;
@@ -89,16 +88,12 @@ class Local extends AbstractAdapter
      * @param string $root root directory path
      *
      * @return string real path to root
-     *
-     * @throws Exception in case the root directory can not be created
      */
     protected function ensureDirectory($root)
     {
         if ( ! is_dir($root)) {
             $umask = umask(0);
-            if ( ! mkdir($root, $this->permissionMap['dir']['public'], true)) {
-                throw new Exception(sprintf('Impossible to create the root directory "%s".', $root));
-            }
+            mkdir($root, $this->permissionMap['dir']['public'], true);
             umask($umask);
         }
 
@@ -386,9 +381,9 @@ class Local extends AbstractAdapter
     }
 
     /**
-     * @param SplFileInfo $file
+     * @param $file
      */
-    protected function deleteFileInfoObject(SplFileInfo $file)
+    protected function deleteFileInfoObject($file)
     {
         switch ($file->getType()) {
             case 'dir':

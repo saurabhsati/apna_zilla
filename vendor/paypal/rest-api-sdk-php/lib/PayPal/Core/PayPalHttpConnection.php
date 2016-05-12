@@ -77,11 +77,7 @@ class PayPalHttpConnection
 
         //Initialize Curl Options
         $ch = curl_init($this->httpConfig->getUrl());
-        $options = $this->httpConfig->getCurlOptions();
-        if(empty($options[CURLOPT_HTTPHEADER])) {
-            unset ($options[CURLOPT_HTTPHEADER]);
-        }
-        curl_setopt_array($ch, $options);
+        curl_setopt_array($ch, $this->httpConfig->getCurlOptions());
         curl_setopt($ch, CURLOPT_URL, $this->httpConfig->getUrl());
         curl_setopt($ch, CURLOPT_HEADER, true);
         curl_setopt($ch, CURLINFO_HEADER_OUT, true);

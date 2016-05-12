@@ -11,7 +11,7 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Sentinel
- * @version    2.1.0
+ * @version    2.0.9
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
  * @copyright  (c) 2011-2015, Cartalyst LLC
@@ -40,20 +40,41 @@ class EloquentUser extends Model implements RoleableInterface, PermissibleInterf
      * {@inheritDoc}
      */
     protected $fillable = [
+        'profile_pic',
+        'first_name',
+        'middle_name',
+        'last_name',
         'email',
         'password',
-        'last_name',
-        'first_name',
         'permissions',
+        'married_date',
+        'gender',
+        'd_o_b',
+        'dd',
+        'mm',
+        'yy',
+        'role',
+        'marital_status',
+        'country',
+        'state',
+        'city',
+        'area',
+        'pincode',
+        'occupation',
+        'work_experience',
+        'street_address',
         'mobile_no',
         'mobile_OTP',
-    ];
+        'home_landline',
+        'office_landline',
+        'is_active',
+        'title',
+        'std_home_landline',
+        'office_landline',
+        'std_office_landline',
+        'extn_office_landline',
+        'sales_user_public_id'
 
-    /**
-     * {@inheritDoc}
-     */
-    protected $hidden = [
-        'password',
     ];
 
     /**
@@ -71,7 +92,7 @@ class EloquentUser extends Model implements RoleableInterface, PermissibleInterf
      *
      * @var array
      */
-    protected $loginNames = ['email'];
+    protected $loginNames = ['email','mobile_no'];
 
     /**
      * The Eloquent roles model name.
@@ -416,7 +437,7 @@ class EloquentUser extends Model implements RoleableInterface, PermissibleInterf
             $this->throttle()->delete();
         }
 
-        return parent::delete();
+        parent::delete();
     }
 
     /**

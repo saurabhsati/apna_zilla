@@ -4,6 +4,10 @@ namespace PhpParser\Node\Expr;
 
 use PhpParser\Node\Expr;
 
+/**
+ * @property Expr $var  Variable
+ * @property Expr $expr Expression
+ */
 abstract class AssignOp extends Expr
 {
     /** @var Expr Variable */

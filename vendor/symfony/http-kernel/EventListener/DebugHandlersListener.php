@@ -93,9 +93,7 @@ class DebugHandlersListener implements EventSubscriberInterface
         }
         if (!$this->exceptionHandler) {
             if ($event instanceof KernelEvent) {
-                if (method_exists($event->getKernel(), 'terminateWithException')) {
-                    $this->exceptionHandler = array($event->getKernel(), 'terminateWithException');
-                }
+                $this->exceptionHandler = array($event->getKernel(), 'terminateWithException');
             } elseif ($event instanceof ConsoleEvent && $app = $event->getCommand()->getApplication()) {
                 $output = $event->getOutput();
                 if ($output instanceof ConsoleOutputInterface) {

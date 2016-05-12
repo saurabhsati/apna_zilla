@@ -280,9 +280,9 @@ class AuthController extends Controller
 
 
         $arr_creds['password']  = $request->input('password');
-
+        //dd($arr_creds);
         $user = Sentinel::authenticate($arr_creds);
-
+        
         if($user)
         {
 

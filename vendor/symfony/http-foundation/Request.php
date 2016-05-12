@@ -268,7 +268,7 @@ class Request
         // stores the Content-Type and Content-Length header values in
         // HTTP_CONTENT_TYPE and HTTP_CONTENT_LENGTH fields.
         $server = $_SERVER;
-        if ('cli-server' === PHP_SAPI) {
+        if ('cli-server' === php_sapi_name()) {
             if (array_key_exists('HTTP_CONTENT_LENGTH', $_SERVER)) {
                 $server['CONTENT_LENGTH'] = $_SERVER['HTTP_CONTENT_LENGTH'];
             }
@@ -709,7 +709,7 @@ class Request
      * Order of precedence: PATH (routing placeholders or custom attributes), GET, BODY
      *
      * @param string $key     the key
-     * @param mixed  $default the default value if the parameter key does not exist
+     * @param mixed  $default the default value
      *
      * @return mixed
      */
@@ -817,8 +817,6 @@ class Request
 
             if (!filter_var($clientIp, FILTER_VALIDATE_IP)) {
                 unset($clientIps[$key]);
-
-                continue;
             }
 
             if (IpUtils::checkIp($clientIp, self::$trustedProxies)) {
@@ -1330,9 +1328,8 @@ class Request
      */
     public function getFormat($mimeType)
     {
-        $canonicalMimeType = null;
         if (false !== $pos = strpos($mimeType, ';')) {
-            $canonicalMimeType = substr($mimeType, 0, $pos);
+            $mimeType = substr($mimeType, 0, $pos);
         }
 
         if (null === static::$formats) {
@@ -1341,9 +1338,6 @@ class Request
 
         foreach (static::$formats as $format => $mimeTypes) {
             if (in_array($mimeType, (array) $mimeTypes)) {
-                return $format;
-            }
-            if (null !== $canonicalMimeType && in_array($canonicalMimeType, (array) $mimeTypes)) {
                 return $format;
             }
         }
@@ -1370,7 +1364,7 @@ class Request
      * Here is the process to determine the format:
      *
      *  * format defined by the user (with setRequestFormat())
-     *  * _format request attribute
+     *  * _format request parameter
      *  * $default
      *
      * @param string $default The default format

@@ -11,7 +11,7 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Sentinel
- * @version    2.1.0
+ * @version    2.0.9
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
  * @copyright  (c) 2011-2015, Cartalyst LLC
@@ -87,12 +87,12 @@ class IlluminateUserRepository implements UserRepositoryInterface
         if (empty($credentials)) {
             return;
         }
-
         $instance = $this->createModel();
 
         $loginNames = $instance->getLoginNames();
 
         list($logins, $password, $credentials) = $this->parseCredentials($credentials, $loginNames);
+
 
         if (empty($logins)) {
             return;
@@ -230,7 +230,8 @@ class IlluminateUserRepository implements UserRepositoryInterface
      */
     protected function parseCredentials(array $credentials, array $loginNames)
     {
-        if (isset($credentials['password'])) {
+        if (isset($credentials['password'])) 
+        {
             $password = $credentials['password'];
 
             unset($credentials['password']);

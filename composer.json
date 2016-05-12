@@ -15,7 +15,7 @@
         "maatwebsite/excel": "^2.1",
         "watson/rememberable": "^1.0",
         "hashids/hashids": "^1.0",
-        "softon/sms": "dev-master",
+        /*"softon/sms": "dev-master",*/
         "orzcc/autometa": "dev-master" 
     },
     "require-dev": {

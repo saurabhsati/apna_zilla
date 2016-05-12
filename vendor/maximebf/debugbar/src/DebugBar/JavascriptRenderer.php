@@ -764,8 +764,6 @@ class JavascriptRenderer
      *
      * @param boolean $here Set position of HTML. True if is to current position or false for end file
      * @param boolean $initialize Whether to render the de bug bar initialization code
-     * @param bool $renderStackedData
-     * @param bool $head
      * @return string Return "{--DEBUGBAR_OB_START_REPLACE_ME--}" or return an empty string if $here == false
      */
     public function renderOnShutdown($here = true, $initialize = true, $renderStackedData = true, $head = false)
@@ -797,8 +795,6 @@ class JavascriptRenderer
      *
      * @param boolean $here Set position of HTML. True if is to current position or false for end file
      * @param boolean $initialize Whether to render the de bug bar initialization code
-     * @param bool $renderStackedData
-     * @param bool $head
      */
     public function replaceTagInBuffer($here = true, $initialize = true, $renderStackedData = true, $head = false)
     {
@@ -819,8 +815,7 @@ class JavascriptRenderer
      *
      * AJAX request should not render the initialization code.
      *
-     * @param boolean $initialize Whether or not to render the debug bar initialization code
-     * @param bool $renderStackedData Whether or not to render the stacked data
+     * @param boolean $initialize Whether to render the de bug bar initialization code
      * @return string
      */
     public function render($initialize = true, $renderStackedData = true)
@@ -950,7 +945,6 @@ class JavascriptRenderer
      *
      * @param string $requestId
      * @param array $data
-     * @param null $suffix
      * @return string
      */
     protected function getAddDatasetCode($requestId, $data, $suffix = null)

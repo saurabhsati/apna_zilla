@@ -18,7 +18,6 @@ use Symfony\Component\Console\Helper\Helper;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\SymfonyQuestionHelper;
 use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Helper\TableCell;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -214,16 +213,7 @@ class SymfonyStyle extends OutputStyle
      */
     public function table(array $headers, array $rows)
     {
-        array_walk_recursive($headers, function (&$value) {
-            if ($value instanceof TableCell) {
-                $value = new TableCell(sprintf('<info>%s</>', $value), array(
-                    'colspan' => $value->getColspan(),
-                    'rowspan' => $value->getRowspan(),
-                ));
-            } else {
-                $value = sprintf('<info>%s</>', $value);
-            }
-        });
+        $headers = array_map(function ($value) { return sprintf('<info>%s</>', $value); }, $headers);
 
         $table = new Table($this);
         $table->setHeaders($headers);

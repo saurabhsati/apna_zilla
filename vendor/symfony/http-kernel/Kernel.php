@@ -59,12 +59,12 @@ abstract class Kernel implements KernelInterface, TerminableInterface
     protected $startTime;
     protected $loadClassCache;
 
-    const VERSION = '3.0.7-DEV';
-    const VERSION_ID = 30007;
+    const VERSION = '3.0.2';
+    const VERSION_ID = 30002;
     const MAJOR_VERSION = 3;
     const MINOR_VERSION = 0;
-    const RELEASE_VERSION = 7;
-    const EXTRA_VERSION = 'DEV';
+    const RELEASE_VERSION = 2;
+    const EXTRA_VERSION = '';
 
     const END_OF_MAINTENANCE = '07/2016';
     const END_OF_LIFE = '01/2017';
@@ -629,7 +629,10 @@ abstract class Kernel implements KernelInterface, TerminableInterface
             $dumper->setProxyDumper(new ProxyDumper(md5($cache->getPath())));
         }
 
-        $content = $dumper->dump(array('class' => $class, 'base_class' => $baseClass, 'file' => $cache->getPath(), 'debug' => $this->debug));
+        $content = $dumper->dump(array('class' => $class, 'base_class' => $baseClass, 'file' => $cache->getPath()));
+        if (!$this->debug) {
+            $content = static::stripComments($content);
+        }
 
         $cache->write($content, $container->getResources());
     }

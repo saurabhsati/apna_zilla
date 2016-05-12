@@ -5,16 +5,14 @@ namespace PhpParser;
 abstract class CodeTestAbstract extends \PHPUnit_Framework_TestCase
 {
     protected function getTests($directory, $fileExtension) {
-        $directory = realpath($directory);
         $it = new \RecursiveDirectoryIterator($directory);
         $it = new \RecursiveIteratorIterator($it, \RecursiveIteratorIterator::LEAVES_ONLY);
         $it = new \RegexIterator($it, '(\.' . preg_quote($fileExtension) . '$)');
 
         $tests = array();
         foreach ($it as $file) {
-            $fileName = $file->getPathname();
+            $fileName = realpath($file->getPathname());
             $fileContents = file_get_contents($fileName);
-            $fileContents = canonicalize($fileContents);
 
             // evaluate @@{expr}@@ expressions
             $fileContents = preg_replace_callback(
@@ -26,17 +24,17 @@ abstract class CodeTestAbstract extends \PHPUnit_Framework_TestCase
             );
 
             // parse sections
-            $parts = preg_split("/\n-----(?:\n|$)/", $fileContents);
+            $parts = array_map('trim', explode('-----', $fileContents));
 
             // first part is the name
             $name = array_shift($parts) . ' (' . $fileName . ')';
-            $shortName = ltrim(str_replace($directory, '', $fileName), '/\\');
+            $shortName = basename($fileName, '.test');
 
             // multiple sections possible with always two forming a pair
             $chunks = array_chunk($parts, 2);
             foreach ($chunks as $i => $chunk) {
                 $dataSetName = $shortName . (count($chunks) > 1 ? '#' . $i : '');
-                list($expected, $mode) = $this->extractMode($chunk[1]);
+                list($expected, $mode) = $this->extractMode(canonicalize($chunk[1]));
                 $tests[$dataSetName] = array($name, $chunk[0], $expected, $mode);
             }
         }

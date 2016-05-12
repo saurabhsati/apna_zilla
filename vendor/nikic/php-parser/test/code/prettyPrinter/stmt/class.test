@@ -2,7 +2,7 @@ Class
 -----
 <?php
 
-class Foo extends Bar implements ABC, \DEF, namespace\GHI
+class Foo
 {
     var $a = 'foo';
     private $b = 'bar';
@@ -17,15 +17,8 @@ class Foo extends Bar implements ABC, \DEF, namespace\GHI
     public function foo() {}
     abstract static function bar() {}
 }
-
-trait Bar
-{
-    function test()
-    {
-    }
-}
 -----
-class Foo extends Bar implements ABC, \DEF, namespace\GHI
+class Foo
 {
     var $a = 'foo';
     private $b = 'bar';
@@ -42,12 +35,6 @@ class Foo extends Bar implements ABC, \DEF, namespace\GHI
     {
     }
     static abstract function bar()
-    {
-    }
-}
-trait Bar
-{
-    function test()
     {
     }
 }

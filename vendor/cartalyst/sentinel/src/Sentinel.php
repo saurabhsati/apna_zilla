@@ -11,7 +11,7 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Sentinel
- * @version    2.1.0
+ * @version    2.0.9
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
  * @copyright  (c) 2011-2015, Cartalyst LLC
@@ -286,9 +286,12 @@ class Sentinel
             return false;
         }
 
-        if ($credentials instanceof UserInterface) {
+        if ($credentials instanceof UserInterface) 
+        {
             $user = $credentials;
-        } else {
+        } 
+        else 
+        {
             $user = $this->users->findByCredentials($credentials);
 
             $valid = $user !== null ? $this->users->validateCredentials($user, $credentials) : false;

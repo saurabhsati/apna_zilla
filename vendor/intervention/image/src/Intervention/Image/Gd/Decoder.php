@@ -25,15 +25,18 @@ class Decoder extends \Intervention\Image\AbstractDecoder
         // define core
         switch ($info[2]) {
             case IMAGETYPE_PNG:
-                $core = @imagecreatefrompng($path);
+                $core = imagecreatefrompng($path);
+                $this->gdResourceToTruecolor($core);
                 break;
 
             case IMAGETYPE_JPEG:
-                $core = @imagecreatefromjpeg($path);
+                $core = imagecreatefromjpeg($path);
+                $this->gdResourceToTruecolor($core);
                 break;
 
             case IMAGETYPE_GIF:
-                $core = @imagecreatefromgif($path);
+                $core = imagecreatefromgif($path);
+                $this->gdResourceToTruecolor($core);
                 break;
 
             default:
@@ -41,14 +44,6 @@ class Decoder extends \Intervention\Image\AbstractDecoder
                     "Unable to read image type. GD driver is only able to decode JPG, PNG or GIF files."
                 );
         }
-
-        if ($core === false) {
-            throw new \Intervention\Image\Exception\NotReadableException(
-                "Unable to read image from file ({$path})."
-            );
-        }
-
-        $this->gdResourceToTruecolor($core);
 
         // build image
         $image = $this->initFromGdResource($core);

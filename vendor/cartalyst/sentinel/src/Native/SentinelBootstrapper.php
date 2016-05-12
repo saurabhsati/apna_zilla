@@ -11,7 +11,7 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Sentinel
- * @version    2.1.0
+ * @version    2.0.9
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
  * @copyright  (c) 2011-2015, Cartalyst LLC
@@ -55,7 +55,7 @@ class SentinelBootstrapper
     /**
      * Constructor.
      *
-     * @param  array  $config
+     * @param  arry  $config
      * @return void
      */
     public function __construct($config = null)

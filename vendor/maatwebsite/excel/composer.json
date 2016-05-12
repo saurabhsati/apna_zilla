@@ -41,15 +41,11 @@
   },
   "autoload": {
     "classmap": [
-      "src/Maatwebsite/Excel"
+      "src/Maatwebsite/Excel",
+      "tests/TestCase.php"
     ],
     "psr-0": {
       "Maatwebsite\\Excel\\": "src/"
     }
-  },
-  "autoload-dev": {
-    "classmap": [
-      "tests/TestCase.php"
-    ]
   }
 }
