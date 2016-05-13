@@ -173,18 +173,18 @@ class PayumoneyController extends Controller
                             });
                       if($send_mail)
 			            {
-						 Session::flash('success_payment','Success ! Payment done successfully ! ');
+						 Session::flash('success_payment','Success ! Membership Assign Successfully ! ');
 						 return redirect(url('/').'/front_users/my_business');
 						}
 						else
 			            {
-			                Session::flash('error_payment','Payment done successfully But Mail Not Delivered Yet !');
+			                Session::flash('error_payment','Membership Assign Successfully But Mail Not Delivered Yet !');
 			                 return redirect(url('/').'/front_users/my_business');
 			            }
                 }
                 else
                 {
-                	Session::flash('success_payment','Success ! Payment done successfully ! ');
+                	Session::flash('success_payment','Success ! Membership Assign Successfully ! ');
 						 return redirect(url('/').'/front_users/my_business');
                 }
                 //return $send_mail;

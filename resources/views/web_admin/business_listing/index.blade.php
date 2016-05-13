@@ -338,9 +338,20 @@
                            <a class="btn btn-success" href="{{ url('/web_admin/deals/'.base64_encode($business['id'])) }}">
                              View Deals
                           </a>
+                       @else
+                         <a class="btn btn-error" href="javascript:void(0);">
+                               Block Business
+                            </a>
                        @endif
 
                          <?php
+                          }
+                           else
+                          { ?>
+                           <a class="btn btn-error" href="javascript:void(0);">
+                               Plan Expired
+                            </a>
+                          <?php
                           }
                         }
                         else
