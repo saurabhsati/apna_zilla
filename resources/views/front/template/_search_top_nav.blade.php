@@ -66,7 +66,7 @@
 
                                <input type="text"  class="search-txt"  id="category_search" name="category_search"
                                @if(Request::segment(2)=='all-categories' || Request::segment(1)=='order')
-                                 placeholder ="<?php echo 'Search by Business Category Or Deal name ';?>"
+                                 placeholder ="<?php echo 'Search Any Things Like Business ,Category & Deals ';?>"
                                 @else
                                 value="{{$set_txt_name}}" @endif >
                                   <input type="hidden" id="category_id" name="category_id"

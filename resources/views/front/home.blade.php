@@ -140,7 +140,7 @@
                                        <span></span>
                                     </div>
                                     <div class="resta-content">
-                                      {{$business['building']}} &nbsp {{$business['street']}} &nbsp{{ $business['landmark']}}&nbsp{{$business['area']}}&nbsp -{{$business['pincode']}}
+                                      {{$business['area']}} 
                                     </div>
                                         <div class="resta-rating-block">
                                     <?php for($i=0;$i<round($business['avg_rating']);$i++)

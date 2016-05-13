@@ -383,10 +383,29 @@ class HomeController extends Controller
         {
             $search_term='';
             $search_term = $request->input('term');
-             $arr_obj_location = PlaceModel::where(function ($query) use ($search_term) {
+            if(Session::has('search_city_title'))
+            {
+                $current_city=Session::get('search_city_title');
+            }
+            else if(Session::has('city'))
+            {
+                $current_city=Session::get('city');
+            }
+            else
+            {
+                $current_city='Mumbai';
+            }
+            $arr_city=[];
+             $obj_city_arr=CityModel::where('city_title',$current_city)->first();
+             if($obj_city_arr)
+             {
+                $arr_city=$obj_city_arr->toArray();
+             }
+              $arr_obj_location = PlaceModel::where("city_id",$arr_city['id'])
+                                            ->where(function ($query) use ($search_term) {
                                              $query->where("place_name", 'like', "%".$search_term."%");
-                                            /* ->orwhere("admin_name1", 'like', "%".$search_term."%")
-                                             ->orwhere("admin_name2", 'like', "%".$search_term."%");*/
+                                             
+                                             /*->orwhere("admin_name2", 'like', "%".$search_term."%");*/
                                              })->get();
              $arr_list_location = array();
             if($arr_obj_location)

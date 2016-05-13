@@ -37,7 +37,7 @@
                                    />
                               <div class="has-feedback">
 
-                                 <input type="text" class="search-txt" placeholder="Resturant" id="category_search" name="category_search" value=""/>
+                                 <input type="text" class="search-txt" placeholder="Search Any Things Like Business ,Category & Deals" id="category_search" name="category_search" value=""/>
                                   <input type="hidden" id="category_id" name="category_id" value="0"/>
 
                                  <button class="form-control-feedback search_home_buisness" aria-hidden="true" type="submit"><img src="{{ url('/') }}/assets/front/images/home_search.png" alt="" /></button>
