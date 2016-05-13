@@ -94,6 +94,7 @@
                                  data-rule-required="true"
 
                                  >
+                                 <option>Select State</option>
                                  @if(isset($arr_state) && sizeof($arr_state)>0)
                    @foreach($arr_state as $state)
                 <option value="{{ isset($state['id'])?$state['id']:'' }}" {{ $user['state']==$state['id']?'selected="selected"':'' }}>{{ isset($state['state_title'])?$state['state_title']:'' }}
@@ -113,6 +114,7 @@
                                  data-rule-required="true"
 
                                  >
+                                 <option>Select City</option>
                         <!-- <option value="{{-- isset($user['marital_status']) ? $user['marital_status']:'' --}}">{{-- $user['marital_status'] --}} </option> -->
 
                         @if(isset($arr_city) && sizeof($arr_city)>0)

@@ -471,10 +471,14 @@
                               @if(isset($arr_business_details['image_upload_details']) && sizeof($arr_business_details['image_upload_details'])>0)
                               @foreach($arr_business_details['image_upload_details'] as $business_images)
                               <div class="prod_img">
-                                 <a href="{{ url('/') }}/uploads/business/business_upload_image/{{$business_images['image_name']}}" class="gal img_inner">
+                             <a href="{{ get_resized_image_path($business_images['image_name'],'uploads/business/business_upload_image',500,1000) }}" class="gal img_inner">
+                                  <img src="{{ get_resized_image_path($business_images['image_name'],'uploads/business/business_upload_image',500,1000) }}" alt=""/> 
+                                 <img src="{{ get_resized_image_path($business_images['image_name'],'uploads/business/business_upload_image',500,1000) }}" alt=""/>
+                                 </a>
+                                <!--  <a href="{{ url('/') }}/uploads/business/business_upload_image/{{$business_images['image_name']}}" class="gal img_inner">
                                   <img src="{{ url('/') }}/uploads/business/business_upload_image/{{$business_images['image_name']}}" alt=""/> 
                                  <img src="{{ get_resized_image_path($business_images['image_name'],'uploads/business/business_upload_image',367,464) }}" alt=""/>
-                                 </a>
+                                 </a> -->
                               </div>
                               @endforeach
                               @else
