@@ -129,7 +129,7 @@
                          <input type="text" name="quantity"
                          value=""
                                 class="input_acct"
-                                placeholder="Enter Quantity"/>
+                                placeholder="Enter Quantity"  min="1" max="1000"/>
                         </div>
                          </div>
                     </div>
@@ -158,7 +158,10 @@ $(document ).ready(function (){
     // Specify the validation rules
       rules: {
           name: "required",
-          quantity: "required",
+        //  quantity: "required",
+          quantity: { 
+            required:true,
+            number:true},
           email_id: {
             required:true,
             email:true
@@ -170,7 +173,7 @@ $(document ).ready(function (){
       messages: {
           name: "Please enter name.",
           email_id: "Please enter valid email id.",
-          quantity: "Please select quantity.",
+          quantity: "Please select valid quantity.",
           
       },
 
