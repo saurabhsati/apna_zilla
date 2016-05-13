@@ -76,7 +76,7 @@
                                             </div>
                                             <p class="title text-center">Sales Staff Persons</p>
                                         </div></a>
-                                        <div class="tile tile-light-blue  ">
+                                        <div class="tile tile-blue  ">
                                             <p class="title">Sales Staff Persons</p>
                                             <p>See Your Sales Staff Persons</p>
                                             <div class="img img-bottom">
@@ -91,13 +91,13 @@
                                 <div class="row">
                                     <div class="col-md-12 tile-active">
                                         <a href="{{ url('/web_admin/business_listing')}}">
-                                        <div class="tile tile-magenta">
+                                        <div class="tile tile-pink">
                                             <div class="img img-center">
                                                  <i class="fa fa-list"></i>
                                             </div>
                                             <p class="title text-center">Business Listing</p>
                                         </div></a>
-                                        <div class="tile tile-blue  ">
+                                        <div class="tile tile-green  ">
                                             <p class="title">Business Listings</p>
                                             <p>See Your Business Listing </p>
                                             <div class="img img-bottom">
@@ -108,6 +108,73 @@
                                     </div>
                                 </div>
                              </div>
+                              <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-12 tile-active">
+                                        <a href="{{ url('/web_admin/deals_offers')}}">
+                                        <div class="tile tile-pink">
+                                            <div class="img img-center">
+                                                 <i class="fa fa-list"></i>
+                                            </div>
+                                            <p class="title text-center">Deals Listing</p>
+                                        </div></a>
+                                        <div class="tile tile-blue">
+                                            <p class="title">Deals Listings</p>
+                                            <p>See Your Deals Listing </p>
+                                            <div class="img img-bottom">
+                                                <i class="fa fa-list"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                             </div>
+                              <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-12 tile-active">
+                                        <a href="{{ url('/web_admin/deals_offers_transactions')}}">
+                                        <div class="tile tile-magenta">
+                                            <div class="img img-center">
+                                                 <i class="fa fa-euro"></i>
+                                            </div>
+                                            <p class="title text-center">Deals & Offers Payment</p>
+                                        </div></a>
+                                        <div class="tile tile-pink ">
+                                            <p class="title">Deals & Offers Payment</p>
+                                            <p>See Your Deals & Offers Payment</p>
+                                            <div class="img img-bottom">
+                                                <i class="fa fa-euro"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                             </div>
+                              <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-12 tile-active">
+                                        <a href="{{ url('/web_admin/deals_bulk_request')}}">
+                                        <div class="tile tile-blue">
+                                            <div class="img img-center">
+                                                 <i class="fa fa-list"></i>
+                                            </div>
+                                            <p class="title text-center">Bulk Request</p>
+                                        </div></a>
+                                        <div class="tile tile-magenta">
+                                            <p class="title">Bulk Request</p>
+                                            <p>See Your Bulk Requestg </p>
+                                            <div class="img img-bottom">
+                                                <i class="fa fa-list"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                             </div>
+
+
+
+
                                <div class="col-md-3">
                                 <div class="row">
                                     <div class="col-md-12 tile-active">
@@ -118,7 +185,7 @@
                                             </div>
                                             <p class="title text-center">Business Categories</p>
                                         </div></a>
-                                        <div class="tile tile-pink  ">
+                                        <div class="tile tile-pink">
                                             <p class="title">Business Categories</p>
                                             <p>See Your Business Categories </p>
                                             <div class="img img-bottom">
@@ -133,7 +200,7 @@
                                 <div class="row">
                                     <div class="col-md-12 tile-active">
                                         <a href="{{ url('/web_admin/static_pages')}}">
-                                        <div class="tile tile-pink">
+                                        <div class="tile tile-magenta">
                                             <div class="img img-center">
                                                  <i class="fa fa-files-o"></i>
                                             </div>
@@ -154,7 +221,7 @@
                                 <div class="row">
                                     <div class="col-md-12 tile-active">
                                         <a href="{{ url('/web_admin/newsletter')}}">
-                                        <div class="tile tile-magenta">
+                                        <div class="tile tile-pink">
                                             <div class="img img-center">
                                                  <i class="fa fa-users"></i>
                                             </div>
@@ -175,13 +242,13 @@
                                 <div class="row">
                                     <div class="col-md-12 tile-active">
                                         <a href="{{ url('/web_admin/faq')}}">
-                                        <div class="tile tile-green">
+                                        <div class="tile tile-magenta">
                                             <div class="img img-center">
                                                  <i class="fa fa-question-circle"></i>
                                             </div>
                                             <p class="title text-center">FAQs</p>
                                         </div></a>
-                                        <div class="tile tile-blue  ">
+                                        <div class="tile tile-blue">
                                             <p class="title">FAQs</p>
                                             <p>See Your FAQs </p>
                                             <div class="img img-bottom">
@@ -217,7 +284,7 @@
                                 <div class="row">
                                     <div class="col-md-12 tile-active">
                                         <a href="{{ url('/web_admin/membershipcost')}}">
-                                        <div class="tile tile-magenta">
+                                        <div class="tile tile-pink">
                                             <div class="img img-center">
                                                  <i class="fa fa-euro"></i>
                                             </div>
@@ -244,7 +311,7 @@
                                             </div>
                                             <p class="title text-center">Payments</p>
                                         </div></a>
-                                        <div class="tile tile-green ">
+                                        <div class="tile tile-pink ">
                                             <p class="title">Payments</p>
                                             <p>See Your Payments</p>
                                             <div class="img img-bottom">
@@ -287,7 +354,7 @@
                                             </div>
                                             <p class="title text-center">Contact Enquiry</p>
                                         </div></a>
-                                        <div class="tile tile-blue">
+                                        <div class="tile tile-green">
                                             <p class="title">Contact Enquiry</p>
                                             <p>See Your Contact Enquiry</p>
                                             <div class="img img-bottom">
@@ -435,7 +502,7 @@
 
 
                 <!-- BEGIN Main Content -->
-                <div class="row">
+              <!--   <div class="row">
                     <div class="col-md-7">
                         <div class="box">
                             <div class="box-title">
@@ -503,7 +570,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
 
 
