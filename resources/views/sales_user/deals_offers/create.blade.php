@@ -600,10 +600,11 @@ $(document).ready(function()
 {
  var site_url="{{url('/')}}";
  var csrf_token = "{{ csrf_token() }}";
+ var sales_user_public_id="{{Session::get('public_id')}}";
  $("#user_id").autocomplete(
           {
             minLength:3,
-            source:site_url+"/web_admin/common/get_public_id",
+         source:site_url+"/web_admin/common/get_sales_user_public_id/"+sales_user_public_id,
             search: function( event, ui )
             {
              /* if(category==false)
