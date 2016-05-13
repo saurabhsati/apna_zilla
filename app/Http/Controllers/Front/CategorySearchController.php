@@ -445,29 +445,28 @@ class CategorySearchController extends Controller
             // dd($chk_arr);
              if(isset($chk_arr) && sizeof($chk_arr)>0)
             {
-            $totalResult = $total_record_count->addSelect(DB::raw('count(*) as record_count'))->get();
+            //$totalResult = $total_record_count->addSelect(DB::raw('count(*) as record_count'))->get();
+            // dd($totalResult);
             /*if(isset($totalResult) && sizeof($totalResult)>0)
             {*/
                  $totalItems = 1;
 
 
-                if(isset($totalResult[0]))
+                if(sizeof($chk_arr)>0)
                 {
-                  $totalItems = $totalResult[0]->record_count;
+                  $totalItems = sizeof($chk_arr);
                 }
-
+                  //dd(($chk_arr));
 
 
                 $perPage =2;
                 $curPage = $request->input('page','1');
 
                 $itemQuery = clone $obj_business_listing;
-                $all_records = clone $obj_business_listing;
-
-
+                //$all_records = clone $obj_business_listing;
 
                 // this does the sql limit/offset needed to get the correct subset of items
-                $items = $itemQuery->forPage($curPage, $perPage)->remember(15)->get();
+                $items = $itemQuery->forPage($curPage, $perPage)->get();
 
 
                 $this->Paginator = new Paginator($items->all(),$perPage, $curPage);

@@ -468,8 +468,8 @@ If you need any more details on RightNext Verified, please refer to
                            <div class="menu_name">
                               <ul>
                                  <li><a href="{{ url('/') }}/page/aboutus" class="{{ Request::segment(2)=='aboutus'? 'act':'' }}"><i class="fa fa-square"></i> About Us</a></li>
-                                 <li><a href="#"><i class="fa fa-square" class=""></i>Careers</a></li>
-                                 <li><a href="{{ url('/') }}/page/terms-of-use" class="{{ Request::segment(2)=='terms-of-use'? 'act':'' }}"><i class="fa fa-square"></i>Terms &amp; Conditions</a></li>
+                                <!--  <li><a href="#"><i class="fa fa-square" class=""></i>Careers</a></li>
+                                  --><li><a href="{{ url('/') }}/page/terms-of-use" class="{{ Request::segment(2)=='terms-of-use'? 'act':'' }}"><i class="fa fa-square"></i>Terms &amp; Conditions</a></li>
                                  <li><a href="{{ url('/') }}/page/privacy" class="{{ Request::segment(2)=='privacy'? 'act':'' }}"><i class="fa fa-square"></i>Privacy Policy </a></li>
                                  <li><a href="{{ url('/') }}/contact_us" class="{{ Request::segment(1)=='contact_us'? 'act':'' }}"><i class="fa fa-square"></i> Contact Us</a></li>
                                  <li><a href="{{ url('/') }}/faqs" class="{{ Request::segment(1)=='faqs'? 'act':'' }}"><i class="fa fa-square"></i> FAQs</a></li>

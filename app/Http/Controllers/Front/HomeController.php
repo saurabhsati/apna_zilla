@@ -596,7 +596,7 @@ class HomeController extends Controller
                                        <span></span>
                                     </div>
                                     <div class="resta-content">
-                                       '. $business['building'].' '.$business['street'].' '.$business['landmark'].' '.$business['area'].' '.'-'.$business['pincode'].'
+                                       '.$business['area'].'
                                     </div>
                                         <div class="resta-rating-block">';
                                     for($i=0;$i<round($business['avg_rating']);$i++)

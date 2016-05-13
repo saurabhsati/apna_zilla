@@ -233,6 +233,7 @@
       </div>
 
          <!-- SEND SMS POPUP START-->
+        <?php //dd($arr_business); ?>
         @if(isset($arr_business) && sizeof($arr_business)>0 )
         @foreach($arr_business as $restaurants)
         <div class="modal fade" id="sms-{{ $restaurants['id'] }}" role="dialog">
