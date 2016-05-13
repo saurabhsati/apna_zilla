@@ -661,7 +661,7 @@ $(document).ready(function()
                                             else
                                             {
                                                 //$(".multiselect-container").css("display",'none');
-                                                business.html('<option value="">No Business Availabel</option>');
+                                                jQuery('select[name="business"]').html('<option value="">No Business Availabel</option>');
                                                 //$(".multiselect-selected-text").html("No Sub Category Available !");
                                             }
                                             return false;

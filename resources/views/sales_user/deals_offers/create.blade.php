@@ -604,7 +604,7 @@ $(document).ready(function()
  $("#user_id").autocomplete(
           {
             minLength:3,
-         source:site_url+"/web_admin/common/get_sales_user_public_id/"+sales_user_public_id,
+            source:site_url+"/web_admin/common/get_sales_user_public_id/"+sales_user_public_id,
             search: function( event, ui )
             {
              /* if(category==false)
@@ -658,7 +658,7 @@ $(document).ready(function()
                                             else
                                             {
                                                 //$(".multiselect-container").css("display",'none');
-                                                business.html('<option value="">No Business Availabel</option>');
+                                                jQuery('select[name="business"]').html('<option value="">No Business Availabel</option>');
                                                 //$(".multiselect-selected-text").html("No Sub Category Available !");
                                             }
                                             return false;
