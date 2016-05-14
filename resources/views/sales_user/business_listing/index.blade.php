@@ -265,7 +265,9 @@
                        {
                         foreach ($subcategory as $key => $value) {
 
-                           echo $value.' ,';
+                          echo $value;
+                           if($key < sizeof($subcategory)-1)
+                            { echo ' , '; }
                         }
 
                        }
