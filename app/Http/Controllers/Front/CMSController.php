@@ -12,6 +12,7 @@ class CMSController extends Controller
 {
      public function __construct()
     {
+        
     }
 
    public function aboutus()
