@@ -42,6 +42,11 @@ class SentinelCheck
             }
 
         }
+        else
+        {
+            return redirect('/');
+
+        }
 
         return $next($request);
     }
