@@ -309,7 +309,7 @@
 
                     <label>Note: Click On the Map to Pick Nearby Custom Location </label>
                     <div>
-                     <label class="col-sm-6 col-lg-12 controls alert alert-warning">Note: Click On Marker to Create Auto Complte Location</label>
+                     <label class="col-sm-6 col-lg-12 controls alert alert-warning">Note: Click On Marker to After Auto Complete Location To Save The Location</label>
 
                 </div>
                 </div>
@@ -980,7 +980,7 @@ $('#remove-image').click(function()
     {
       if(getTotalGlobMarkers()==1)
       {
-        alert('Atleast One Departure Point is required ');
+        alert('Atleast One Location Point is required ');
         return false;
       }
 
