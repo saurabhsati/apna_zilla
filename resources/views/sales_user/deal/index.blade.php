@@ -98,6 +98,8 @@
                  @if(isset($arr_business) && sizeof($arr_business)>0)
                    <!--  <a href="{{ url('/sales_user/deals/create/'.base64_encode($arr_business['id']))}}" class="btn btn-primary btn-add-new-records">Add Deal</a>
                   --> @endif
+                   @elseif($add_deal=="0")
+                      <div style="color: Red;">Total Deal Count Reached</div>
                   @elseif($add_deal=="expired")
                    <div style="color: Red;"> Deals Get Expired </div>
                   @else

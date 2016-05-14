@@ -12,6 +12,7 @@ use App\Models\CategoryModel;
 use App\Models\BusinessListingModel;
 use App\Models\DealsSliderImagesModel;
 use App\Models\DealcategoryModel;
+use App\Models\MembershipModel;
 use Validator;
 use Session;
 
@@ -95,10 +96,34 @@ class DealsOffersController extends Controller
                 foreach ($business['membership_plan_details'] as $key => $membership_data) {
                     if($membership_data['expire_date'] >=date('Y-m-d').' 00:00:00')
                     {
-                        if(!array_key_exists($membership_data['business_id'],$business_ids))
-                        {
-                          $business_ids[$membership_data['business_id']]=$membership_data['business_id'];
-                        }
+                        $plan_id=$membership_data['membership_id'];
+                            if($plan_id==1)
+                            {
+                                $no_of_deals="unlimited";
+                            }
+                            else
+                            {
+                                $obj_plan=MembershipModel::where('plan_id',$plan_id)->first();
+                                if($obj_plan)
+                                {
+                                    $arr_plan=$obj_plan->toArray();
+                                    $no_of_deals=$arr_plan['no_normal_deals'];
+
+                                }
+                            }
+                             $obj_deal=DealsOffersModel::with('business_info')->where('business_id',$membership_data['business_id'])->get();
+                            if($obj_deal)
+                            {
+                                $arr_deal = $obj_deal->toArray();
+                                $total_deal_count=count($arr_deal);
+                            }
+                             if($no_of_deals=="unlimited" || $no_of_deals>$total_deal_count)
+                            {
+                                if(!array_key_exists($membership_data['business_id'],$business_ids))
+                                {
+                                  $business_ids[$membership_data['business_id']]=$membership_data['business_id'];
+                                }
+                            }   
                     }
                 }
                 

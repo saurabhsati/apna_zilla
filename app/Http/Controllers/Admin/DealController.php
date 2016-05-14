@@ -123,7 +123,7 @@ class DealController extends Controller
 
 
 
-       
+       //dd($add_deal);
        // dd($no_of_deals);
     	return view('web_admin.deal.index',compact('page_title','arr_business','arr_deal','deal_public_img_path','add_deal','expired_date'));
     }
