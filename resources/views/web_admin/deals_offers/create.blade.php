@@ -82,7 +82,7 @@
                            id="user_id"
                            data-rule-required="true"
                            placeholder="Enter User Public ID"
-
+                            value="RNT-"
                            />
                   <input type="hidden" name="tmp_user_id" id="tmp_user_id">
 
