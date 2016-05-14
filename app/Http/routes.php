@@ -211,7 +211,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		/* --------------------------   Business Listing start --------------------------   */
 		Route::group(['prefix'=>'business_listing'], function()
 		{
-			Route::any('/{serch_by?}',							 	['as' => 'admin_business_listing_index' 	  ,'uses' 	=>'Admin\BusinessListingController@index']);
+			
 			Route::get('manage',					 	 			['as' => 'admin_business_listing_manage' 	  ,'uses' 	=>'Admin\BusinessListingController@index']);
 			Route::get('show/{enc_id}',					 			['as' => 'admin_business_listing_show' 	  ,'uses' 	=>'Admin\BusinessListingController@show']);
 			Route::get('edit/{enc_id}',								['as' => 'admin_business_listing_edit' 	  ,'uses' 	=>'Admin\BusinessListingController@edit']);
@@ -228,8 +228,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 			Route::get('assign_membership/{enc_id}/{user_id}/{category_id}',				 ['as' => 'admin_business_listing_assign_membership' 	  ,'uses' 	=>'Admin\BusinessListingController@assign_membership']);
 			Route::post('get_plan_cost/',				 			['as' => 'get_plan_cost' 	  ,'uses' 	=>'Admin\BusinessListingController@get_plan_cost']);
 			Route::post('purchase_plan/',				 			['as' => 'purchase_plan' 	  ,'uses' 	=>'Admin\BusinessListingController@purchase_plan']);
-
-
+			Route::any('/{serch_by?}',							 	['as' => 'admin_business_listing_index' 	  ,'uses' 	=>'Admin\BusinessListingController@index']);
 			Route::get('export/{format}',							['as' => 'admin_cities_excel' 		  ,'uses' => 'Admin\BusinessListingController@export_excel']);
 
 		});

@@ -99,6 +99,7 @@ class BusinessListingController extends Controller
     }
     public function create()
     {
+         
     	$page_title="Create Business List";
 
     	$obj_user_res = UserModel::where('role','normal')->get();
@@ -870,8 +871,8 @@ class BusinessListingController extends Controller
     }
     public function get_plan_cost(Request $request)
     {
-         $category_id=base64_decode($request->input('category_id'));
-         $plan_id=$request->input('plan_id');
+       $category_id=base64_decode($request->input('category_id'));
+       $plan_id=$request->input('plan_id');
 
         $obj_membership_plan = MembershipModel::where('plan_id',$plan_id)->first();
         if($obj_membership_plan)
@@ -905,8 +906,7 @@ class BusinessListingController extends Controller
                         $price=$arr_cost_data['basic_cost'];
 
                     }
-                    $validity=$arr_membership_plan['validity'];
-
+                     $validity=$arr_membership_plan['validity'];
                     $arr_response['status'] ="SUCCESS";
                     $arr_response['price'] =$price;
                     $arr_response['validity'] = $validity;

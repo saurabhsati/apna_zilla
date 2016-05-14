@@ -270,6 +270,7 @@
                   </td>
                   <td width="width:10%;">
                        <?php
+                       
                        if(sizeof($subcategory)>0)
                        {
                         foreach ($subcategory as $key => $value) {

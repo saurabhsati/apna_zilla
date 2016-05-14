@@ -99,7 +99,7 @@
                 <div class="col-sm-6 col-lg-4 controls">
                  <input class="form-control"
                            name="user_id"
-                           id="user_id"
+                           id="user_id" 
                            data-rule-required="true"
                            placeholder="Enter User Public ID"
 
