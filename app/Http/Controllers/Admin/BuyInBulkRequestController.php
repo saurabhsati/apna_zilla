@@ -17,7 +17,7 @@ class BuyInBulkRequestController extends Controller
     	$page_title = 'Buy In Bulk Request :Manage';
 
     	$arr_request = array();
- 		$obj_request = BuyInBulkModel::orderBy('id','ASC')->get();
+ 		$obj_request = BuyInBulkModel::orderBy('id','DESC')->get();
 
  		if($obj_request)
  		{
