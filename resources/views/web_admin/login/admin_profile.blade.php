@@ -71,7 +71,7 @@
                              <div class="fileupload fileupload-new" data-provides="fileupload">
                                 <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
 
-                                   <img src="{{ url('/').config('app.project.img_path.user_profile_pic').'/'. $admin_arr['profile_pic'] }}" alt="" height="190px" width="190px" />
+                                   <img src="{{ url('/').config('app.project.img_path.user_profile_image').'/'. $admin_arr['profile_pic'] }}" alt="" height="190px" width="190px" />
                                 </div>
                                 <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                                 <div>

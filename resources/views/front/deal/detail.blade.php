@@ -5,8 +5,8 @@
  <style type="text/css">
  .deal_detail_all{
  	    display: block;
-    overflow-y: scroll;
-    height: 550px;
+   /* overflow-y: scroll;
+    height: 550px;*/
  }
   .deal_offers_all{
  	    display: block;
@@ -202,35 +202,33 @@
         <div class="detail_link">
 
        </div>
-       <section class=" deals container">
+       <section class=" deals container1">
+       <hr>
    <div class="small-12 deal_row">
       <h3>Releted Deals</h3>
       <div class="row">
         @if(sizeof($arr_related_deals_info)>0 && isset($arr_related_deals_info))
            @foreach($arr_related_deals_info as $rel_deals)
-         <div class="deal_cart medium-6 columns left font-family_open_sans_ragular" data-dealid="11453">
+         <div class="deal_cart medium-6 columns left font-family_open_sans_ragular col-sm-6" data-dealid="11453">
             <a class="ga-click-action card" href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$rel_deals['name']))}}/{{base64_encode($rel_deals['id'])}}">
                <div class="product_image product_black_ovelay card__img">
-               <span class="ga-data hide" dealid="11453" title="Choice of Donuts" category="FNB" brand="Mad Over Donuts" variant="21 Locations" list="Deal Detail" position="1" city="mumbai" vertical="local"></span>
+               <span class="ga-data hide" dealid="11453" title="Choice of Donuts" category="FNB" brand="Mad Over Donuts" variant="" list="Deal Detail" position="1" city="mumbai" vertical="local"></span>
                <img class="deal loading img-sm" height="210px" width="350px" src="{{get_resized_image_path($rel_deals['deal_image'],$deal_image_path,200,250) }}" data-src="//img2.nbstatic.in/la-webp-s/5703a8ec02762b50e6f9ee28.jpg" alt="Mad Over Donuts" data-lzled="true"></div>
                <div class="description padding-tb_9px-rl_12px">
                   <h2 class="card__title"> {{$rel_deals['title']}}</h2>
-                  <h3 class="card__location">21 Locations</h3>
+                  <h3 class="card__location"></h3>
                   <h4 class="card__description">{{strip_tags($rel_deals['description'])}}</h4>
-               </div>
-               <hr>
-               <div class="card__footer">
-                  <div class="row margin_zero green_txt card__footer__actual_price">
-                     <div class="column medium-6 right"><span class="right"><span class="actual_price text-right padding_zero text-color_999999"></span></span></div>
-                  </div>
-                  <div class="row margin_zero green_txt">
-                     <div class="column medium-6"><span class="bought text-color_999999"><span class="icon user"></span><span>{{$rel_deals['redeem_count']}} Bought </span></span></div>
-                      <span >
+                  <span>{{$rel_deals['redeem_count']}} Bought </span>
+                   <span >
                        <p class="price-old"><i class="fa fa-inr "></i>{{$rel_deals['price']}}</p>
                      <p class=""><i class="fa fa-inr "></i><span class="sell_price"><?php echo number_format(($rel_deals['price']-(($rel_deals['price'])*($rel_deals['discount_price']/100))),2);?></span></p>
                      </span>
-                  </div>
                </div>
+              
+               <div class="card__footer">
+                  
+               </div>
+                <hr>
             </a>
          </div>
          @endforeach
