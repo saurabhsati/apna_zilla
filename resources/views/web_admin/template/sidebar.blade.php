@@ -155,7 +155,7 @@
             </ul>
 
         </li>
-        <li class="{{ Request::segment(2)=='front_slider'?'active':'' }}">
+        {{-- <li class="{{ Request::segment(2)=='front_slider'?'active':'' }}">
             <a href="javascript:void(0)" class="dropdown-toggle">
                 <i class="fa fa-youtube-play"></i>
                 <span>Front slider</span>
@@ -164,7 +164,7 @@
             <ul class="submenu">
                 <li style="display: block;"><a href="{{ url('/web_admin/front_slider')}}">Manage</a> </li>
             </ul>
-        </li>
+        </li> --}}
 
             <li class="{{ Request::segment(2)=='faq'? 'active':'' }}">
                 <a href="javascript:void(0)"  class="dropdown-toggle">

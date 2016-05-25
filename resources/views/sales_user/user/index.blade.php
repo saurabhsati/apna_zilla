@@ -135,7 +135,7 @@
                   <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
 
                   <th>Name</th>
-                  <th>Email</th>
+                  <th>Seller Public ID</th>
                   <th>Mobile No</th>
                   <th>Status</th>
                   <th>Action</th>
