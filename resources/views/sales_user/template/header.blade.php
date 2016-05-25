@@ -127,7 +127,7 @@
             <a class="navbar-brand" href="#">
                 <small>
                     <i class="fa fa-desktop"></i>
-                    {{ config('app.project.name') }} Admin
+                    {{ config('app.project.name') }} Sales Executive 
                 </small>
             </a>
 
@@ -336,7 +336,7 @@
                     <a data-toggle="dropdown" href="#" class="user-menu dropdown-toggle">
 
                         <span class="hhh" id="user_info">
-                            Sales User
+                            Sales Executive 
                         </span>
                         <i class="fa fa-caret-down"></i>
                     </a>
