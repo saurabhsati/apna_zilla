@@ -49,13 +49,15 @@
                <div class="sidebar-brand"><img src="{{ url('/') }}/assets/front/images/hours-of-operation.png" alt="Hours of Operation"/>Hours of Operation<span class="spe_mobile2"><a href="#"></a></span></div>
                <div class="bor_head">&nbsp;</div>
                <ul class="spe_submobile2">
-                  <li class="brdr"><a href="#">Monday   : {{$arr_business_details['business_times']['mon_open'] or '00:00'}} - {{$arr_business_details['business_times']['mon_close'] or '00:00'}}</a></li>
-                  <li class="brdr"><a href="#">Tuesday  : {{$arr_business_details['business_times']['tue_open'] or '00:00'}} - {{$arr_business_details['business_times']['tue_close'] or '00:00'}}</a></li>
-                  <li class="brdr"><a href="#">Wednesday: {{$arr_business_details['business_times']['wed_open'] or '00:00'}} - {{$arr_business_details['business_times']['wed_close'] or '00:00'}}</a></li>
-                  <li class="brdr"><a href="#">Thursday : {{$arr_business_details['business_times']['thus_open'] or '00:00'}} - {{$arr_business_details['business_times']['thus_close'] or '00:00'}}</a></li>
-                  <li class="brdr"><a href="#">Friday   : {{$arr_business_details['business_times']['fri_open'] or '00:00'}} - {{$arr_business_details['business_times']['fri_close'] or '00:00'}}</a></li>
-                  <li class="brdr"><a href="#">Saturday : {{$arr_business_details['business_times']['sat_open'] or '00:00'}} - {{$arr_business_details['business_times']['sat_close'] or '00:00'}}</a></li>
-                  <li class="brdr"><a href="#">Sunday   : {{$arr_business_details['business_times']['sun_open'] or '00:00'}} - {{$arr_business_details['business_times']['sun_close'] or '00:00'}}</a></li>
+                 @foreach($arr_business_details['business_times'] as $times)
+                  <li class="brdr"><a href="#">Monday   : {{$times['mon_open'] or '00:00'}} - {{$times['mon_close'] or '00:00'}}</a></li>
+                  <li class="brdr"><a href="#">Tuesday  : {{$times['tue_open'] or '00:00'}} - {{$times['tue_close'] or '00:00'}}</a></li>
+                  <li class="brdr"><a href="#">Wednesday: {{$times['wed_open'] or '00:00'}} - {{$times['wed_close'] or '00:00'}}</a></li>
+                  <li class="brdr"><a href="#">Thursday : {{$times['thus_open'] or '00:00'}} - {{$times['thus_close'] or '00:00'}}</a></li>
+                  <li class="brdr"><a href="#">Friday   : {{$times['fri_open'] or '00:00'}} - {{$times['fri_close'] or '00:00'}}</a></li>
+                  <li class="brdr"><a href="#">Saturday : {{$times['sat_open'] or '00:00'}} - {{$times['sat_close'] or '00:00'}}</a></li>
+                  <li class="brdr"><a href="#">Sunday   : {{$times['sun_open'] or '00:00'}} - {{$times['sun_close'] or '00:00'}}</a></li>
+                   @endforeach
                </ul>
                <!-- /#Categoriesr End-->
                <div class="clearfix"></div>
