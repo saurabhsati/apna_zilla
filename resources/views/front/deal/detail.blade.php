@@ -215,9 +215,9 @@
                <span class="ga-data hide" dealid="11453" title="Choice of Donuts" category="FNB" brand="Mad Over Donuts" variant="" list="Deal Detail" position="1" city="mumbai" vertical="local"></span>
                <img class="deal loading img-sm" height="210px" width="350px" src="{{get_resized_image_path($rel_deals['deal_image'],$deal_image_path,200,250) }}" data-src="//img2.nbstatic.in/la-webp-s/5703a8ec02762b50e6f9ee28.jpg" alt="Mad Over Donuts" data-lzled="true"></div>
                <div class="description padding-tb_9px-rl_12px">
-                  <h2 class="card__title"> {{$rel_deals['title']}}</h2>
+                  <h3 class="card__title1"> {{$rel_deals['title']}}</h3>
                   <h3 class="card__location"></h3>
-                  <h4 class="card__description">{{strip_tags($rel_deals['description'])}}</h4>
+                  <h4 class="card__description">{{strip_tags(substr($rel_deals['description'],0,30))}}</h4>
                   <span>{{$rel_deals['redeem_count']}} Bought </span>
                    <span >
                        <p class="price-old"><i class="fa fa-inr "></i>{{$rel_deals['price']}}</p>
