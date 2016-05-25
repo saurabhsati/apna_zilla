@@ -54,8 +54,15 @@
             </div>
         </div>
         <div class="box-content">
-
-          @if(Session::has('success'))
+          @if(Session::has('insert_public_id') || Session::has('insert_vender_name')) 
+          <div class="alert alert-warning alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                Recently Register Vender {{ ucfirst(Session::get('insert_vender_name')) }} Having Public ID is {{ Session::get('insert_public_id') }}
+                </div>
+          @endif
+          @if(Session::has('success')) 
             <div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -102,9 +109,14 @@
                            id="user_id"
                            data-rule-required="true"
                            placeholder="Enter User Public ID"
+                           @if(Session::has('insert_public_id'))
+                             value="{{Session::get('insert_public_id')}}"
+                            @else
                             value="RNT-"
+                            @endif
+                            
                            />
-                  <input type="hidden" name="tmp_user_id" id="tmp_user_id">
+                  <input type="hidden" name="tmp_user_id" id="tmp_user_id" value="{{Session::get('insert_user_id')}}">
 
                     <span class='help-block'>{{ $errors->first('user_id') }}</span>
                      <div class="alert alert-warning">Note: Auto Complete the User Public Id field by typing prefix RNT- </div>
@@ -686,7 +698,7 @@
 
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
-                <input type="submit"  class="btn btn-primary" value="Add">
+                <input type="submit"  class="btn btn-primary" value="Submit">
 
             </div>
         </div>

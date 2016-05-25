@@ -22,7 +22,7 @@
             </span>
             <li>
                 <i class="fa fa-user"></i>
-                <a href="{{ url('/').'/sales_user/users' }}">Users</a>
+                <a href="{{ url('/').'/sales_user/users' }}">Venders</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
@@ -142,8 +142,8 @@
                         <option value="">Select...</option>
                         <option value="Married">Married</option>
                         <option value="Un Married">Un Married</option>
-                        <option value="Divorced">Divorced</option>
-                        <option value="Widowed">Widowed</option>
+                        {{-- <option value="Divorced">Divorced</option>
+                        <option value="Widowed">Widowed</option> --}}
                      </select>
                     <span class='help-block'>{{ $errors->first('marital_status') }}</span>
                   </div>
@@ -179,7 +179,7 @@
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="password">Password<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input type="password" class="form-control" name="password" id="password"  data-rule-required="true" data-rule-minlength="6"/>
+                    <input type="text" class="form-control" name="password" id="password"  data-rule-required="true" data-rule-minlength="6"/>
                     <span class='help-block'>{{ $errors->first('password') }}</span>
                 </div>
             </div>

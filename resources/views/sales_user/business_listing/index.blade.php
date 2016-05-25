@@ -168,8 +168,8 @@
                  <!--  <th width="width:10%;" style="text-align:center">Business Image</th> -->
                   <th width="width:10%;" style="text-align:center">Business Public Id</th>
                   <th width="width:10%;" style="text-align:center">Business Name</th>
-                  <th width="width:3%;" style="text-align:center">Seller First Name</th>
-                  <th width="width:5%;" style="text-align:center">Seller Public ID</th>
+                  <th width="width:3%;" style="text-align:center">Vender First Name</th>
+                  <th width="width:5%;" style="text-align:center">Vender Public ID</th>
                   <th width="width:5%;" style="text-align:center">Main Category</th>
                   <th width="width:10%;" style="text-align:center">Sub Category</th>
                   <th width="width:3%;" style="text-align:center" >Deals</th>

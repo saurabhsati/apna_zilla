@@ -75,7 +75,7 @@ class BusinessListingController extends Controller
         if($serch_name=$request->input('search_name')!='')
         {
 
-            $obj_business_listing = BusinessListingModel::where('sales_user_public_id',$sales_user_public_id)
+            $obj_business_listing = BusinessListingModel::orderBy('id','DESC')->where('sales_user_public_id',$sales_user_public_id)
                                                         ->with(['category','user_details','reviews','membership_plan_details'])
                                                         ->where(function ($query) use ($serch_name)
                                                           {
@@ -92,14 +92,14 @@ class BusinessListingController extends Controller
         else
         {
 
-    	$business_listing = BusinessListingModel::where('sales_user_public_id',$sales_user_public_id)->with(['category','user_details','reviews','membership_plan_details'])->get()->toArray();
+    	$business_listing = BusinessListingModel::orderBy('id','DESC')->where('sales_user_public_id',$sales_user_public_id)->with(['category','user_details','reviews','membership_plan_details'])->get()->toArray();
     	}
         //dd($business_listing);
         return view('sales_user.business_listing.index',compact('page_title','business_listing','business_public_img_path','arr_main_category','arr_sub_category'));
     }
     public function create()
     {
-    	$page_title="Create Business List";
+       $page_title="Create Business List";
         if(Session::has('public_id')){
           $sales_user_public_id=Session::get('public_id');
          }else
@@ -126,6 +126,7 @@ class BusinessListingController extends Controller
     }
     public function store(Request $request)
     {
+         
         $sales_user_public_id='';
         if(Session::has('public_id')){
           $sales_user_public_id=Session::get('public_id');
@@ -339,6 +340,9 @@ class BusinessListingController extends Controller
         {
         	Session::flash('error','Error Occurred While Creating Business List ');
         }
+        Session::forget('insert_public_id');
+        Session::forget('insert_vender_name');
+        Session::forget('insert_user_id');
         return redirect()->back();
 
     }
@@ -728,7 +732,7 @@ class BusinessListingController extends Controller
             }
         }
         $business_data = array();
-        $business_data=BusinessListingModel::with(['category','user_details','reviews','membership_plan_details','service','image_upload_details','payment_mode'])->where('id',$id)->get()->toArray();
+        $business_data=BusinessListingModel::with(['category','business_times','user_details','reviews','membership_plan_details','service','image_upload_details','payment_mode'])->where('id',$id)->get()->toArray();
          //dd($business_data);
          return view('sales_user.business_listing.show',compact('page_title','business_data','business_public_img_path','business_base_upload_img_path','arr_main_category','arr_sub_category','arr_place'));
 

@@ -23,7 +23,7 @@
             </span>
             <li>
                 <i class="fa fa-user"></i>
-                <a href="{{ url('/sales_user/users') }}">Users</a>
+                <a href="{{ url('/sales_user/users') }}">Venders</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
@@ -87,7 +87,7 @@
           <div class="btn-toolbar pull-right clearfix">
             <!--- Add new record - - - -->
                 <div class="btn-group">
-                <a href="{{ url('/sales_user/users/create')}}" class="btn btn-primary btn-add-new-records">Add User</a>
+                <a href="{{ url('/sales_user/users/create')}}" class="btn btn-primary btn-add-new-records">Add Vender</a>
                 </div>
             <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -->
             <div class="btn-group">
@@ -134,8 +134,8 @@
                 <tr>
                   <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
 
-                  <th>Name</th>
-                  <th>Seller Public ID</th>
+                  <th>Vender Name</th>
+                  <th>Vender Public ID</th>
                   <th>Mobile No</th>
                   <th>Status</th>
                   <th>Action</th>
@@ -153,7 +153,7 @@
                              value="{{ base64_encode($user->id) }}" />
                     </td>
 
-                    <td> {{ $user->first_name." ".$user->last_name }} </td>
+                    <td> {{ ucfirst($user->first_name." ".$user->last_name) }} </td>
                     <td> {{ $user->public_id }} </td>
                     <td> {{ $user->mobile_no }} </td>
 
