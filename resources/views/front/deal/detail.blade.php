@@ -337,7 +337,8 @@
                                    <br/>
 
                                    <div class=" add-up add-actionds add-actionds fa fa-minus dec button" style="  cursor: pointer;" ></div>
-                                    <input type="text" class="quantitydf1" name="qty" id="1" value="0" />
+                                    {{-- <input type="text" class="quantitydf1" name="qty" id="1" value="0"  /> --}}
+                                    <span type="text" class="quantitydf1" name="qty" id="1"  style="align:center;" />0</span>
                                     <div class=" add-down add-actionds add-actionds fa fa-plus inc button" style="  cursor: pointer;" ></div>
                                     </div>
 
@@ -346,7 +347,7 @@
                                  </div>
                                  </div>
                                  <div class="col-xs-6 col-sm-6 col-md-12 col-lg-6">
-                                      <div class="sml-grasy-right-g"><i class="fa fa-inr "></i>{{$offers['discounted_price']}}</div>
+                                      <div class="sml-grasy-right-g"><i class="fa fa-inr "></i> {{$offers['discounted_price']}}</div>
 
                                  </div>
                              </div>
@@ -362,8 +363,8 @@
                @if(isset($deal['offers_info']) && sizeof($deal['offers_info'])>0)
                <div class="tolt-foles">
                 <input type="hidden" id="amount" name="amount" value="">
-                <div class="sml-grasy-right-black-lft">   Total</div>
-                   <div class="sml-grasy-right-black pull-right"><i class="fa fa-inr"></i><span id="total_price">0</span></div>
+                <div class="sml-grasy-right-black-lft">   Total :</div>
+                   <div class="sml-grasy-right-black pull-right"><i class="fa fa-inr"></i><span id="total_price"> 0</span></div>
                </div>
                @endif
                <div class="buy-n-btnds">
@@ -442,19 +443,19 @@ $('.inc.button').click(function(){
 $("#offerSelectionError").css('display','none');
         var $this = $(this),
 
-        $input = $this.prev('input'),
+        $input = $this.prev('span'),
 
         $parent = $input.closest('div');
        // alert($parent.html());
         var limit=$(".limit").val();
-        if(limit >  parseInt($input.val(), 10))
+        if(limit >  parseInt($input.html(), 10))
         {
 
-         newValue = parseInt($input.val(), 10)+1;
+         newValue = parseInt($input.html(), 10)+1;
 
 		    $parent.find('.inc').addClass('a'+newValue);
 
-		    $input.val(newValue);
+		    $input.html(newValue);
 
 		    incrementVar += newValue;
 
@@ -478,17 +479,17 @@ $("#offerSelectionError").css('display','none');
 $('.dec.button').click(function(){
         var $this = $(this),
 
-        $input = $this.next('input');
+        $input = $this.next('span');
 
         $parent = $input.closest('div');
 
-        if($input.val() != '0')
+        if($input.html() != '0')
         {
-	        newValue = parseInt($input.val(), 10)-1;
+	        newValue = parseInt($input.html(), 10)-1;
 
 		    $parent.find('.inc').addClass('a'+newValue);
 
-		    $input.val(newValue);
+		    $input.html(newValue);
 
 		    incrementVar += newValue;
 
