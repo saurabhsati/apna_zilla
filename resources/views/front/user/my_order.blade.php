@@ -8,6 +8,12 @@
   .remo_fav i{
     color: #f9a820 !important;
   }
+  .right-paid span {
+    color: #7e7e7e;
+    font-size: 15px;
+    margin-right: 15px;
+   float: right;
+}
     </style>
 <div class="gry_container">
       <div class="container">
@@ -29,74 +35,49 @@
          <div class="row">
               @include('front.user.my_business_left')
 
-            <div class="col-sm-12 col-md-9 col-lg-9">
-             <div class="title_head"></div>
-
-                   @if(Session::has('success_payment'))
-            <div class="alert alert-success alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                {{ Session::get('success_payment') }}
-            </div>
-          @endif
-
-          @if(Session::has('error_payment'))
-            <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                {{ Session::get('error_payment') }}
-            </div>
-          @endif
-
-
-             @if(isset($arr_order) && (count($arr_order)>0 ))
+              <div class="col-sm-12 col-md-9 col-lg-9">
+                <div class="p_detail_view pdngk">
+                @if(isset($arr_order) && (count($arr_order)>0 ))
                 @foreach($arr_order as $deal)
-              <div class="product_list_view">
-                <div class="row">
-                        <div class="col-sm-4 col-md-4 col-lg-4">
-                        
-                        <div class="product_img">
-                          <img style="height:100% !important;" src="{{ get_resized_image_path($deal['order_deal']['deal_image'],$deal_image_path,235,300) }}" alt="list product"/>
-                       </div>
+                  <div class="row">
+                     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                         <img src="{{ get_resized_image_path($deal['order_deal']['deal_image'],$deal_image_path,235,300) }}"  class="img-responsive" alt="" />
                      </div>
-                    <div class="col-sm-8 col-md-8 col-lg-8">
-                     <div class="product_details">
-                      <div class="product_title"><h4> <b>{{ucwords($deal['order_deal']['name'])}}</b></h4>
-                      </div>
-                       <div class="product_title"><h3> {{ucwords($deal['order_deal']['title'])}}</h3>
-                      </div>
-                     </div>
-                   <?php $total=0;?>
-                      @foreach($deal['order_deal']['offers_info'] as $offers)
-                        @foreach($deal['user_orders'] as $selected_offers)
-                         @if($selected_offers['offer_id']==$offers['id'])
+                      <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                          <div class="main-oderboxs">
+                          <h4>{{ucwords($deal['order_deal']['name'])}}</h4>
+                          <div class="bor_hefgsd"></div>
+                          <?php $total=0;$final=0;?>
+                        @foreach($deal['order_deal']['offers_info'] as $offers)
+                          @foreach($deal['user_orders'] as $key => $selected_offers)
+                           @if($selected_offers['offer_id']==$offers['id'])
 
-                          <?php  $total=$total+$offers['discounted_price']*$selected_offers['order_quantity']; ?>
-                       <div  class="">
-                                                 
-                                                   <div class="">
-                                                        <h4 class="" id="dealTitle0">{{$offers['title']}}</h4>
-                                                     </div>
-                                                     <div class="">
-                                                        <h4 class="">Qty - {{$selected_offers['order_quantity']}}</h4>
-                                                     </div>
-                                                     <div class="">
-                                                        <p class="">
-                                                        <span class=""></span>
-                                                        <span class="">
-                                                         <p class="price-old"><i class="fa fa-inr "></i>{{$offers['main_price']}}</p>
-                                                         <p class=""><i class="fa fa-inr "></i><span class="sell_price">{{$offers['discounted_price']}}</span></p>
-                                                    </div>
-                                                    <div><b>Total </b>: {{$total}}</div>
-                                                  </div>
-                         @endif                         
+                            <?php  
+                                 $total=$total+$offers['discounted_price']*$selected_offers['order_quantity']; 
+                                 $final=$final+ $total;
+                            ?>
+                           <div class="<?php  if($key<=sizeof($deal['user_orders'])-1) { echo "bordersk" ;}?>"></div>
+                            <div class="main-oderboxs">
+                           {{--  <h4>KFC</h4>
+                            <div class="bor_hefgsd"></div> --}}
+                            <div class="title-ondss">{{$offers['name']}}</div>
+                            <p>{{$offers['title']}}</p>
+                            <div class="qntyg">Qty - {{$selected_offers['order_quantity']}}</div>
+                           <div class="right-kgf">
+                           <span> <i class="fa fa-inr "></i> {{$offers['main_price']}}</span>
+                           <i class="fa fa-inr right-paid"></i>{{$offers['discounted_price']}} ,  Total : <i class="fa fa-inr "></i>{{$total}}</div>
+                           </div>
+
+                            @endif                         
                         @endforeach
                       @endforeach
+                         <div class="right-paid"><span> <i class="fa fa-inr "></i>Paid : {{$final}}</span></div>
+                      </div>
+                      <div class="clearfix"></div>
+                    
+                  </div>
                 </div>
-                </div>
-                 </div>
+               <hr/>
                 @endforeach
 
                  @else
@@ -105,7 +86,38 @@
                     </div>
                  @endif
                 {!! $arr_paginate_my_order or '' !!}
-            </div>
+           </div>
+           </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+           
          </div>
        </div>
    </div>
