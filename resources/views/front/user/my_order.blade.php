@@ -36,6 +36,23 @@
               @include('front.user.my_business_left')
 
               <div class="col-sm-12 col-md-9 col-lg-9">
+                @if(Session::has('success_payment'))
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ Session::get('success_payment') }}
+                </div>
+              @endif
+
+              @if(Session::has('error_payment'))
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ Session::get('error_payment') }}
+                </div>
+              @endif
                 <div class="p_detail_view pdngk">
                 @if(isset($arr_order) && (count($arr_order)>0 ))
                 @foreach($arr_order as $deal)
@@ -47,19 +64,19 @@
                           <div class="main-oderboxs">
                           <h4>{{ucwords($deal['order_deal']['name'])}}</h4>
                           <div class="bor_hefgsd"></div>
-                          <?php $total=0;$final=0;?>
+                         <?php $final=0; ?>
                         @foreach($deal['order_deal']['offers_info'] as $offers)
+                         <?php $total=0;?>
                           @foreach($deal['user_orders'] as $key => $selected_offers)
                            @if($selected_offers['offer_id']==$offers['id'])
 
                             <?php  
+
                                  $total=$total+$offers['discounted_price']*$selected_offers['order_quantity']; 
                                  $final=$final+ $total;
                             ?>
                            <div class="<?php  if($key<=sizeof($deal['user_orders'])-1) { echo "bordersk" ;}?>"></div>
                             <div class="main-oderboxs">
-                           {{--  <h4>KFC</h4>
-                            <div class="bor_hefgsd"></div> --}}
                             <div class="title-ondss">{{$offers['name']}}</div>
                             <p>{{$offers['title']}}</p>
                             <div class="qntyg">Qty - {{$selected_offers['order_quantity']}}</div>
@@ -71,7 +88,7 @@
                             @endif                         
                         @endforeach
                       @endforeach
-                         <div class="right-paid"><span> <i class="fa fa-inr "></i>Paid : {{$final}}</span></div>
+                         <div class="right-paid"><span> <i class="fa fa-inr "></i> Paid : {{$final}}</span></div>
                       </div>
                       <div class="clearfix"></div>
                     

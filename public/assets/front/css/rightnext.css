@@ -708,7 +708,7 @@ select.input_acct {
 .sml-grasy-right-black-lft {color: #414141; font-size: 22px; text-align: left; margin-bottom: 10px; font-weight: bold; display: inline-block;}
 .quantitydf1 {background: transparent none repeat scroll 0 0;border: 1px solid #cbcbcb;margin-bottom: 5px;float: left;text-indent: 5px;text-transform: capitalize;height: 38px;text-align: center;width: 60%;}
 .quantity-wrapperds {display: block;float: left;margin-bottom: 10px;}
-.add-actionds {border-bottom: 1px solid #dbdbdb;  border-right: 1px solid #dbdbdb;border-top: 1px solid #dbdbdb;color: #414141;cursor: pointer;display: block !important;font-size: 10px !important;height: 19px;line-height: 20px !important;position: relative;text-align: center;width: 28px;}
+.add-actionds {border-bottom: 1px solid #dbdbdb;  border-right: 1px solid #dbdbdb;border-top: 1px solid #dbdbdb;color: #414141;cursor: pointer;display: inline-block !important;font-size: 10px !important;height: 19px;line-height: 20px !important;position: relative;text-align: center;width: 28px;}
 .clr-dtald{color: #777;}
 .tolt-foles{padding: 15px 10px; width: 100%;}
 .buy-n-btnds{width: 100%; margin: 0 auto 10px; text-align: center;}
@@ -777,7 +777,9 @@ select.input_acct {
 .title-onds{ color: #e6ab2a; font-size: 20px;}
 .box-gare{background-color: #f9f9f9;padding: 15px;}
 .active-cs{border-left: 2px solid #e6ab2a; background: #fff;}
-.box-gare ul li{display: block; padding: 10px; border-bottom: 1px solid #ccc;}
+.box-gare ul li {padding: 10px;}
+.inactive-cs{border-left: 2px solid #fff; background: #fff;}
+.box-gare ul li a {display: block; padding: 10px; border-bottom: 1px solid #ccc;}
 .product_detail_bannergdd {padding: 15px;}
 #flip-newsd{padding:5px;max-width: 300px;width: 100%;text-align:left;background-color:#fff;}
 #panel-newsd{max-width: 300px;width: 100%;background-color: #fff;display: none;height: 40px;margin-top: -34px;z-index: 999; position: relative;}

@@ -21,7 +21,7 @@ class DealController extends Controller
 {
  	public function __construct()
  	{
-
+    $this->deal_public_upload_img_path = "/uploads/deal/deal_slider_images/";
  	}
 
  	public function index($city='Mumbai')
@@ -212,6 +212,8 @@ class DealController extends Controller
  	{
  		 $page_title = "Details";
      $deal_image_path="uploads/deal";
+     $deal_base_upload_img_path='';
+     $deal_slider_upload_img_path =$this->deal_public_upload_img_path ;
  		 $id = base64_decode($enc_id);
      $city = SegmentRequest::segment(1);
 
@@ -313,7 +315,7 @@ class DealController extends Controller
        
       
 
- 		return view('front.deal.detail',compact('deal_image_path','page_title','deals_info','arr_related_deals_info'));
+ 		return view('front.deal.detail',compact('deal_image_path','page_title','deals_info','arr_related_deals_info','deal_slider_upload_img_path'));
  	}
     public function fetch_location_deal(Request $request)
     {

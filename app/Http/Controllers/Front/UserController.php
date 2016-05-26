@@ -1573,7 +1573,7 @@ class UserController extends Controller
             $arr_order    =$arr_paginate_my_order= array();
             $per_page = 2;
 
-            $obj_order = DealsTransactionModel::with('user_orders','order_deal.offers_info')->where('user_id',$user_id)
+            $obj_order = DealsTransactionModel::orderBy('created_at','DESC')->with('user_orders','order_deal.offers_info')->where('user_id',$user_id)
                               ->paginate($per_page);
              if($obj_order)
             {

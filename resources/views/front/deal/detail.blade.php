@@ -2,37 +2,32 @@
 
 @section('main_section')
  @include('front.template._search_top_nav')
+
+ <script src="{{ url('/') }}/assets/front/js/stickyfloat.js"></script>
+ <link href="{{ url('/') }}/assets/front/css/jquery.mCustomScrollbar.css" rel="stylesheet" />
+ <script src="{{ url('/') }}/assets/front/js/jquery.mCustomScrollbar.concat.min.js"></script>
+
  <style type="text/css">
- .deal_detail_all{
- 	    display: block;
-   /* overflow-y: scroll;
-    height: 550px;*/
- }
-  .deal_offers_all{
- 	    display: block;
-    overflow-y: scroll;
-   /* height: 480px;*/
- }
-.detail_link span {
-    color: #777777;
-    font-size: 14px;
-    line-height: normal;
-}
-.offers_span span{
-	color: #777777;
-    font-size: 14px;
-    text-align: justify;
-    /*line-height: normal;*/
-}
-.detail_link b {
-    font-size: 18px;
-    font-weight: 600;
-}
-
-
+ 
 /* Related deals*/
+.map {
+    border: 1px solid #ddd;
+    margin-top: 5px;
+    padding: 3px;
+}
 /**/
  </style>
+ <script>
+  (function($){
+      $(window).load(function(){
+          $(".content-kgfd").mCustomScrollbar({
+              scrollButtons:{
+                  enable:true
+              }
+          });
+      });
+  })(jQuery);
+            </script>
 <div class="gry_container" style="padding: 7px 0 16px;">
  @include('front.deal.deal_top_bar')
 
@@ -65,302 +60,380 @@
 
 <div class="container">
   <div class="row">
-   <div class="col-sm-8 col-md-8 col-lg-8">
-     @if(sizeof($deals_info)>0)
-     @foreach($deals_info as $deal)
 
-     <div class="detail_bx">
-     <?php 
-                                    $arr_departture_point = json_decode($deal['json_location_point'],TRUE);
-                                     $arr_tmp_departure_point  = [];
-                                ?>
-       <h2>{{ucfirst($deal['name'])}}  {{ ',' }} @if(sizeof($arr_departture_point)>0){{ sizeof($arr_departture_point) }} @else {{ 0 }} @endif Locations</h2>
-       <div class="rate_sec">
-        <ul>
-          <li><!-- <img alt="write_review" src="{{ url('/') }}/assets/front/images/verified.png" width="33px"/> --><span><!-- {{$deal['discount_price']}}%  -->{{ucfirst($deal['title'])}}</span>  </li>
-        </ul>
-      </div>
-      <img src="{{get_resized_image_path($deal['deal_image'],$deal_image_path,350,1140)}}" height="350px" alt="deals detail" class="deals-detils"/>
-    </div>
-
-    <div class="clr"></div>
-    <div class="pad-dels-details deal_detail_all">
-      <div class="col-sm-12 col-md-12 col-lg-12">
-      @if(isset($deal['offers_info']) && sizeof($deal['offers_info'])>0)
-		 <ul class="detail_link">
-		   <h3><b>What you get</b></h3>
-		   @foreach($deal['offers_info'] as $offers)
-           <li><span>{{$offers['title']}}</span>  </li>
-           @endforeach
-       </ul>
-       <hr/>
-        @endif
-        
-        @if(isset($deal['offers_info']) && sizeof($deal['offers_info'])>0)
-         <div class="detail_link">
-           <h3><b>Validity </b></h3>
-            @foreach($deal['offers_info'] as $offers)
-           <div>{{$offers['title']}}
-           <div class=""><span>Valid from : {{ date('d-M-Y',strtotime($offers['valid_from'])) }}</span></div>
-            <div class=""><span>Valid until : {{ date('d-M-Y',strtotime($offers['valid_until'])) }}</span></div>
-               <br/>
-            </div>
-           @endforeach
+ @if(sizeof($deals_info)>0)
+      @foreach($deals_info as $deal)  
+    <div class="col-sm-12 col-md-9 col-lg-9">
+        <div class="p_detail_view">
+        <?php 
+            $arr_departture_point = json_decode($deal['json_location_point'],TRUE);
+             $arr_tmp_departure_point  = [];
+        ?>
+       <div class="col-sm-12 col-md-12 col-lg-12"><h3>{{ucfirst($deal['name'])}} {{ ',' }} @if(sizeof($arr_departture_point)>0){{ sizeof($arr_departture_point) }} @else {{ 0 }} @endif Locations </h3>
+             <div class="title-onds">{{ucfirst($deal['title'])}}</div>
+             </div>
+             <div class="clearfix"></div>
           
-        </div>
-        <hr/>
-        @endif
-        
-        @if(isset($deal['things_to_remember']) && !empty($deal['things_to_remember']))
-	        <div class="detail_link">
-	       <h3><b>Things To Remember </b></h3>
-	       <span>
-	       {{strip_tags($deal['things_to_remember'])}}
-	       </span>
-	       </div>
-	        <hr/>
-        @endif
-        @if(isset($deal['json_location_point']) && !empty($deal['json_location_point']))
-        <div id="map_for_deaprture_point" style="height:400px"></div>
-                              <input type="hidden" name="json_location_point" value='{!! $deal['json_location_point'] !!}' /> 
-                              <br/>
-                                <?php 
-                                    $arr_departture_point = json_decode($deal['json_location_point'],TRUE);
-                                    $arr_tmp_departure_point  = [];
-                                ?>
+            <div class="product_detail_bannergdd">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                  <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                  <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                  <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                </ol>
 
-                                @if(sizeof($arr_departture_point)>0)
-                                    @foreach($arr_departture_point as $key =>$point)
-                                      <?php 
-                                      if(isset($point['place']))
-                                      {
-                                          $arr_tmp_departure_point[] = "markers=color:red|label:".$point['place']."|".$point['lat'].",".$point['lat']; 
-                                      }
-                                        
-                                      ?>
-                                    @endforeach
-                                @endif
-
-                                <img src="https://maps.googleapis.com/maps/api/staticmap?zoom=6&size=523x400&{{ implode(",", $arr_tmp_departure_point) }}&key=AIzaSyCccvQtzVx4aAt05YnfzJDSWEzPiVnNVsY" class="static_departure_point_map" style="display: none;"/>
-
-                                <ul>
-                                  
-                                  @if(sizeof($arr_departture_point)>0)
-                                    @foreach($arr_departture_point as $key =>$point)
-                                      <li >
-                                          <b>Location Point {{ $key+1 }}</b>: {{ isset($point['place'])?$point['place']:'NA'}}, 
-                                          <a href="javascript:void(0)" data-lat='{{ $point['lat'] }}' data-lng='{{ $point['lng'] }}' onclick="pointInMap(this)" style="padding-left: 5px;"> - See In Map</a>
-                                      </li>
-                                     
-                                    @endforeach
-                                  @endif
-                                </ul>
-                              
-                                  
-         @endif                      
-        @if(isset($deal['how_to_use']) && !empty($deal['how_to_use']))
-		      <div class="detail_link"><h3><b>How to use the offer</b></h3><span>
-		      {{strip_tags($deal['how_to_use'])}}
-		      </span></div>
-	        <hr/>
-        @endif
-        @if(isset($deal['about']) && !empty($deal['about']))
-	        <div class="detail_link">
-	        <h3><b>About </b></h3>
-	        <span>
-	        {{strip_tags($deal['about'])}}
-	        </span>
-	        </div>
-	        <hr/>
-        @endif
-        @if(isset($deal['facilities']) && !empty($deal['facilities']))
-           <div class="detail_link">
-            <h3><b>Facilities</b></h3>
-	        <span>
-			{{strip_tags($deal['facilities'])}}
-	         </span>
-	         </div>
-	        <hr/>
-        @endif
-        @if(isset($deal['cancellation_policy']) && !empty($deal['cancellation_policy']))
-	        <div class="detail_link">
-	        <h3><b>Cancellation policy</b></h3>
-	        <span>
-			{{strip_tags($deal['cancellation_policy'])}}
-	        </span>
-	        </div>
-	        <hr/>
-        @endif
-        @if(isset($deal['description']) && !empty($deal['description']))
-        <div class="detail_link">
-	        <h3><b>Description</b></h3>
-	        <span>
-			{{strip_tags($deal['description'])}}
-	        </span>
-	        </div>
-         @endif
-        <div class="detail_link">
-
-       </div>
-       <section class=" deals container1">
-       <hr>
-   <div class="small-12 deal_row">
-      <h3>Releted Deals</h3>
-      <div class="row">
-        @if(sizeof($arr_related_deals_info)>0 && isset($arr_related_deals_info))
-           @foreach($arr_related_deals_info as $rel_deals)
-         <div class="deal_cart medium-6 columns left font-family_open_sans_ragular col-sm-6" data-dealid="11453">
-            <a class="ga-click-action card" href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$rel_deals['name']))}}/{{base64_encode($rel_deals['id'])}}">
-               <div class="product_image product_black_ovelay card__img">
-               <span class="ga-data hide" dealid="11453" title="Choice of Donuts" category="FNB" brand="Mad Over Donuts" variant="" list="Deal Detail" position="1" city="mumbai" vertical="local"></span>
-               <img class="deal loading img-sm" height="210px" width="350px" src="{{get_resized_image_path($rel_deals['deal_image'],$deal_image_path,200,250) }}" data-src="//img2.nbstatic.in/la-webp-s/5703a8ec02762b50e6f9ee28.jpg" alt="Mad Over Donuts" data-lzled="true"></div>
-               <div class="description padding-tb_9px-rl_12px">
-                  <h3 class="card__title1"> {{$rel_deals['title']}}</h3>
-                  <h3 class="card__location"></h3>
-                  <h4 class="card__description">{{strip_tags(substr($rel_deals['description'],0,30))}}</h4>
-                  <span>{{$rel_deals['redeem_count']}} Bought </span>
-                   <span >
-                       <p class="price-old"><i class="fa fa-inr "></i>{{$rel_deals['price']}}</p>
-                     <p class=""><i class="fa fa-inr "></i><span class="sell_price"><?php echo number_format(($rel_deals['price']-(($rel_deals['price'])*($rel_deals['discount_price']/100))),2);?></span></p>
-                     </span>
-               </div>
-              
-               <div class="card__footer">
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                 @if(isset($deal['deals_slider_images']) && sizeof($deal['deals_slider_images'])>0)
+                   @foreach($deal['deals_slider_images'] as $key => $slider)
+                    <div class="item <?php if($key==0){echo 'active';} ?>">
+                      <img src="{{get_resized_image_path($slider['image_name'],$deal_slider_upload_img_path,500,1140)}}" alt="...">
+                    </div>
                   
-               </div>
-                <hr>
-            </a>
-         </div>
-         @endforeach
-        @else
-                          <span class="col-sm-3 col-md-3 col-lg-12">No Related Deals Available.</span>
-                          @endif
-       
-      </div>
-   </div>
-</section>
-       </div>
+                   @endforeach
+                  @endif
+                </div>
 
-
-
-  
-
-<div class="clearfix"></div>
-</div>
-
-</div>
-<div class="col-sm-4 col-md-4 col-lg-4">
-
- <div class="detail_bx">
-       <h2>Select Offers</h2>
-       <div class="categories_sect sidebar-nav ">
-        @if(isset($deal['offers_info']) && sizeof($deal['offers_info'])>0)
-       <div class=" deal_offers_all">
-        <ul class="offers_span foreach_ul">
-        	 @foreach($deal['offers_info'] as $key =>$offers)
-          <li ><span>{{$offers['title']}}</span>  <br>
-          <div>  
-	       <span >
-               <p class="price-old"><i class="fa fa-inr "></i>{{$offers['main_price']}}</p>
-	           <p class=""><i class="fa fa-inr "></i><span class="sell_price">{{$offers['discounted_price']}}</span></p>
-             <input type="hidden" name="offer_hidden" id="offer_hidden" data-dealid="{{base64_encode($deal['id'])}}"  data-dotdid="{{$offers['id']}}" data-original="{{$offers['discounted_price']}}" data-minimumpurchasequantity="0" data-maxcustomercap="{{$offers['limit']}}">
-          </span>
-		    <label for="name">Select Quantity</label>
-		     <input type="hidden" class="limit" name="limit" id="limit" value="{{$offers['limit']}}" />
-		    <div class="dec button" style="  cursor: pointer;" >-</div>
-		    <input type="text" name="qty" id="1" value="0" />
-		    <div class="inc button" style="  cursor: pointer;" >+</div>
-		</div>
-		
-	           
-	    </li>
-          <div class="divider"></div>
-           @endforeach
-         </ul>
-       </div>
-       <div class="pad-dels-details">Total :<span id="total_price">0</span>
-       <input type="hidden" id="amount" name="amount" value="">
-       </div>
-       
-       @else
-         <div class=" deal_offers_all"><ul class="offers_span"><li><span>Sorry , No Offers Avialable !!!</span></li></ul></div>
-        @endif
-
-       </div>
-        <p id="offerSelectionError" style="display: none; color:#d89605;font-size: 23px; text-align: center; margin: 2px 0 0 0;" class="select-offer-notification noshow"></p>
-     
-
-</div>
-  
-<div class="categories_sect sidebar-nav">
-
-      <div class="buy_text">
-      <span class="buy_price">
-      <?php //echo number_format(($deal['price']-(($deal['price'])*($deal['discount_price']/100))),2);?></span>
-     <!--  <div class="price-old">£{{ $deal['price'] }} </div> -->
-       <?php
-					 if($deal['end_day']!='')
-                    {
-
-                    	$end_date = new \Carbon($deal['end_day']);
-                        $now = Carbon::now();
-                        $difference = ($end_date->diff($now)->days < 1)
-                            ? 'today'
-                            : $end_date->diffForHumans($now);
+                <!-- Controls -->
+                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>
+                          
+            </div>
+            
+              <div class="cont-draetview">
+                  <div class="row">
+                      <div class="col-sm-12 col-md-7 col-lg-7">
+                       </div>
+                         <div class="col-sm-12 col-md-5 col-lg-5">
+                            <div class="matnshare">
+                             <div class="sharetsdl">Share This Deal</div>
+                         
+                         <div class="shre-dls">
                            
-                        if (strpos($difference, 'after') !== false || strpos($difference, 'today') !== false) 
-                        {
-							echo '<div class="social_icon"> Limited For '.str_replace('after','', $difference).' Only</div>' ;
-                        }
+                             <ul>
+                                 <li class="fb-icv"><a href="https://www.facebook.com/sharer.php?<?php echo URL::current(); ?>"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                 <li class="emil-icv"><a href="https://plus.google.com/share?url=<?php echo URL::current(); ?>"><i class="fa fa-google" aria-hidden="true"></i></a></li>
+                                 <li class="emil-icv"><a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=<?php echo URL::current(); ?>"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                                 <li class="twirt-icv"><a href="http://twitter.com/share?url=<?php echo URL::current(); ?>"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                             </ul>
+                            
+                         </div>
+                          </div>
+                         </div>
+                         <div class="bordersk"></div>
+                         <div class="col-sm-12 col-md-12 col-lg-12">
+                          @if(isset($deal['offers_info']) && sizeof($deal['offers_info'])>0)
+                              
+                         <h4>What you get</h4>
+                          <div class="bor_hefgsd"></div>
+                         <div class="detls-pgj">
+                             <ul>
+                                @foreach($deal['offers_info'] as $offers)
+                                 <li>
+                                 <span><i class="fa fa-circle-o" aria-hidden="true"></i></span>
+                                {{$offers['title']}}
+                                  </li>
+                                @endforeach
+                             </ul>
+                        </div>
+                        @endif
+                       @if(isset($deal['offers_info']) && sizeof($deal['offers_info'])>0)
+                         <div class="bordersk"></div>
+                          <h4>Validity</h4>
+                          <div class="bor_hefgsd"></div>
+                           @foreach($deal['offers_info'] as $offers)
+
+                             <div class="valid-txts">
+                              <div class="tickt-esslw">{{$offers['title']}}</div> 
+                                <div class="indners"> <span class="validsff">Valid from</span> <span>:</span> <span class="clr-dtald">{{ date('d-M-Y',strtotime($offers['valid_from'])) }}</span></div>
+                                <div class="indners"> <span class="validsff">Valid until</span> <span>:</span> <span class="clr-dtald">{{ date('d-M-Y',strtotime($offers['valid_until'])) }}</span></div>
+                                 {{-- <div class="tickt-esslw">Valid 7 days a week Weekdays: 10:00AM to 8:00PM Weekends: 9:30AM to 9:00PM </div> --}}
+                             </div>
+
+                              @endforeach
+                           <div class="clearfix"></div>
+                          <div class="bordersk"></div>
+                          @endif
+
+                          @if(isset($deal['things_to_remember']) && !empty($deal['things_to_remember']))
+                          <h4>Things to Remember</h4>
+                           <div class="bor_hefgsd"></div>
+                          <div class="detls-pgj">
+                             <ul>
+                            {{strip_tags($deal['things_to_remember'])}}
+                              </ul> 
+                             
+                         </div>
+                          @endif
+                      </div>
+                        
+                        
+                         </div>
+               </div>
+             <div class="bordersk"></div>
+            <div class=" col-xs-12 col-sm-12 col-md-12"><h4>Redemption locations</h4> <div class="bor_hefgsd"></div></div>
+            
+            <div class="clearfix"></div>
+            @if(isset($deal['json_location_point']) && !empty($deal['json_location_point']))
+            <div class=" col-xs-12 col-sm-12 col-md-12">
+            <div class="map" id="map_for_deaprture_point" style="height:400px"></div>
+                                  <input type="hidden" name="json_location_point" value='{!! $deal['json_location_point'] !!}' /> 
+                                  <br/>
+                                    <?php 
+                                        $arr_departture_point = json_decode($deal['json_location_point'],TRUE);
+                                        $arr_tmp_departure_point  = [];
+                                    ?>
+
+                                    @if(sizeof($arr_departture_point)>0)
+                                        @foreach($arr_departture_point as $key =>$point)
+                                          <?php 
+                                          if(isset($point['place']))
+                                          {
+                                              $arr_tmp_departure_point[] = "markers=color:red|label:".$point['place']."|".$point['lat'].",".$point['lat']; 
+                                          }
+                                            
+                                          ?>
+                                        @endforeach
+                                    @endif
+
+                                    <iframe src="https://maps.googleapis.com/maps/api/staticmap?zoom=6&size=523x400&{{ implode(",", $arr_tmp_departure_point) }}&key=AIzaSyCccvQtzVx4aAt05YnfzJDSWEzPiVnNVsY" class="static_departure_point_map" style="display: none;"/></iframe>
+                                     <div class="box-gare">
+                
+                                        <ul>
+                                        @if(sizeof($arr_departture_point)>0)
+                                           @foreach($arr_departture_point as $key =>$point)
+                                           <li class="active-cs"><span><i class="fa fa-map-marker" aria-hidden="true"></i></span>  {{ isset($point['place'])?$point['place']:'NA'}} <a href="javascript:void(0)" data-lat='{{ $point['lat'] }}' data-lng='{{ $point['lng'] }}' onclick="pointInMap(this)" style="padding-left: 5px;">See On Map</a></li>
+                                           @endforeach
+                                        @endif
+                                        </ul>
+                                    </div>
+                    </div>
+                     @endif 
 
 
 
-                    }
-                    ?>
-                    <span>{{$deal['redeem_count']}} Bought </span>
-      </div>
-      <input type="hidden" value="" id="offers_ids" name="offers_ids">
-    @if(isset($deal['offers_info']) && sizeof($deal['offers_info'])>0)
+             @if(isset($deal['how_to_use']) && !empty($deal['how_to_use']))
+               <div class="col-sm-12 col-md-12 col-lg-12">
+                   <div class="bordersk"></div>
+                          <h4>How to use the offer</h4>
+                           <div class="bor_hefgsd"></div>
+                          <div class="detls-pgj">
+                             <ul>
+                             {{strip_tags($deal['how_to_use'])}}
+                              </ul>
+                         </div>
+                   
+               </div>
+                <div class="clearfix"></div>
+                 @endif
+            @if(isset($deal['about']) && !empty($deal['about']))
+               <div class="col-sm-12 col-md-12 col-lg-12">
+                   <div class="bordersk"></div>
+                          <h4>About</h4>
+                           <div class="bor_hefgsd"></div>
+                          <div class="detls-pgj">
+                             <ul>
+                             {{strip_tags($deal['about'])}}
+                              </ul>
+                         </div>
+                   
+               </div>
+                <div class="clearfix"></div>
+           @endif
+            @if(isset($deal['facilities']) && !empty($deal['facilities']))
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                   <div class="bordersk"></div>
+                          <h4>Facilities</h4>
+                           <div class="bor_hefgsd"></div>
+                          <div class="detls-pgj">
+                             <ul>
+                             {{strip_tags($deal['facilities'])}}
+                               </ul>
+                         </div>
+                   
+               </div>
+                <div class="clearfix"></div>
+            @endif
+            @if(isset($deal['cancellation_policy']) && !empty($deal['cancellation_policy']))
+                
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                   <div class="bordersk"></div>
+                          <h4>Cancellation policy</h4>
+                           <div class="bor_hefgsd"></div>
+                          <div class="detls-pgj">
+                             <ul>
+                             {{strip_tags($deal['cancellation_policy'])}}
+                               </ul>
+                         </div>
+                   
+               </div>
+                <div class="clearfix"></div>
+            @endif
+            @if(isset($deal['description']) && !empty($deal['description']))
+              
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                   <div class="bordersk"></div>
+                          <h4>Description</h4>
+                           <div class="bor_hefgsd"></div>
+                          <div class="detls-pgj">
+                             <ul>
+                             {{strip_tags($deal['description'])}}
+                               </ul>
+                         </div>
+                   
+               </div>
+                <div class="clearfix"></div>
+              @endif      
+           <div class=" col-xs-12 col-sm-12 col-md-12">
+           <div class="title_main mrtopls">Related Listing</div> <div class="bor_hefgsd"></div></div>
+                @if(sizeof($arr_related_deals_info)>0 && isset($arr_related_deals_info))
+                @foreach($arr_related_deals_info as $rel_deals)
+                <?php $arr_departture_point = json_decode($rel_deals['json_location_point'],TRUE);
+                 $arr_tmp_departure_point  = []; ?>
+               <div class=" col-xs-12 col-sm-6 col-md-4">
+                <a  href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$rel_deals['name']))}}/{{base64_encode($rel_deals['id'])}}">
+                  <div class="product_info">
+                      <div class="p_images">
+                      <img src="{{get_resized_image_path($rel_deals['deal_image'],$deal_image_path,200,250) }}" alt="product img"/>
+                      </div>
+                      <h4>{{$rel_deals['title']}} </h4>
+                      <div class="loction"> @if(sizeof($arr_departture_point)>0){{ sizeof($arr_departture_point) }} @else {{ 0 }} @endif Locations</div> 
+                      <div class="cont-ds"> {{strip_tags(substr($rel_deals['description'],0,30))}}</div>
+                      <div class="bordersk"></div>
+                       <div class="valuesd"> <span> <i class="fa fa-inr"></i></span>    {{$rel_deals['price']}}</div>
+                       <div class="valuesdfd"> <span><i aria-hidden="true" class="fa fa-user"></i></span> <span>{{$rel_deals['redeem_count']}} Bought </span> </div>
+                       <div class="valuesdf-right"><span> <i class="fa fa-inr"></i> <?php echo number_format(($rel_deals['price']-(($rel_deals['price'])*($rel_deals['discount_price']/100))),2);?></span></div>
+                       <div class="clearfix"></div>
+                  </div></a>
+                </div>
+              @endforeach
+              @else
+                  <span class="col-sm-3 col-md-3 col-lg-12">No Related Deals Available.</span>
+              @endif
+             <div class="clearfix"></div>
+            </div>  
+                    
+                      
+             </div>
+              
+             <div class="col-sm-12 col-md-3 col-lg-3 menus">
+              <!-- Categories Start -->
+                <div class="categories_sect sidebar-nav">
+                 <div class="sidebar-brand"><img src="{{ url('/') }}/assets/front/images/select-ur-offer.png" alt="Select offers"/>Select offers<span class="spe_mobile1"><a href="#"></a></span></div>
+                 <div class="bor_head">&nbsp;</div>
+                  <div class="insta_gram content-kgfd foreach_ul" id="insta_gram">
+                 @if(isset($deal['offers_info']) && sizeof($deal['offers_info'])>0)
+                    @foreach($deal['offers_info'] as $key =>$offers)
+                        <div class="details-lst-vw sml-padng loop">
+                          <div class="p-textd"> {{$offers['title']}}</div>
+                             <div class="row">
+                                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="sml-grasy"> Select Qty</div>
+                                 </div>
+                                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                  <div class="sml-grasy-right"><i class="fa fa-inr"></i> {{$offers['main_price']}}</div>
+                                 </div>
+                                 <div class="col-xs-6 col-sm-6 col-md-12 col-lg-6">
+                                 <div class="qty_frm li">
+                                   <div class="quantity-wrapperds pull-left">
+                                   <input type="hidden" class="sell_price" value="{{$offers['discounted_price']}}">
+                                   <input type="hidden" name="offer_hidden" id="offer_hidden" data-dealid="{{base64_encode($deal['id'])}}"  data-dotdid="{{$offers['id']}}" data-original="{{$offers['discounted_price']}}" data-minimumpurchasequantity="0" data-maxcustomercap="{{$offers['limit']}}">
+                                   <input type="hidden"  class="limit" name="limit" id="limit" value="{{$offers['limit']}}" />
+                                   <br/>
 
-      @if(Session::has('user_id'))
-      <a type="button" class="btn btn-post center-b btn_buy" href="javascript:void(0);">Buy Now</a>
-       @else
-        <a type="button" href="javascript:void(0);" data-target="#login_poup" data-toggle="modal" class="btn btn-post center-b " href="javascript:void(0);">Buy Now</a>
-       @endif
-       
-     @endif
-      <div class="divider"></div>
-      <div class="social_icon">
-       SHARE THIS DEAL
-       <ul>
+                                   <div class=" add-up add-actionds add-actionds fa fa-minus dec button" style="  cursor: pointer;" ></div>
+                                    <input type="text" class="quantitydf1" name="qty" id="1" value="0" />
+                                    <div class=" add-down add-actionds add-actionds fa fa-plus inc button" style="  cursor: pointer;" ></div>
+                                    </div>
 
-        <li><a href="https://www.facebook.com/sharer.php?<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;" class="fb">&nbsp;</a> </li>
-        <li><a href="http://twitter.com/share?url=<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;" class="twitter">&nbsp; </a> </li>
-       <!--  <li><a href="#" class="instagram">&nbsp;</a> </li> -->
-        <li><a href="https://plus.google.com/share?url=<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;" class="google">&nbsp;</a> </li>
-       <!--  <li><a href="#" class="pioneer">&nbsp;</a> </li> -->
-        <li><a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=<?php echo URL::current(); ?>" target="_blank" style="cursor:pointer;" class="in">&nbsp;</a> </li>
-      </ul>
-      
-    </div>
-    <form method="post" action="{{url('/')}}/{{$city}}/bulk_booking_form" target="_blank" id="bulk-order-form">
-    {{ csrf_field() }}
-    <input type="hidden" name="vertical" value="local">
-    <input type="hidden" name="dealTitle" value="{{$deal['title']}}">
-    <input type="hidden" name="deal_id" value="{{$deal['id']}}">
-    <input type="hidden" name="dealUrl" id="dealUrlForBulk" value="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$deal['name']))}}/{{base64_encode($deal['id'])}}">
-    <input type="hidden" name="divisionId" id="deal-url" value="{{$city}}">
-   
-     <a type="button" class="btn btn-post center-b " href="javascript:void(0);" onclick="javascript:document.getElementById('bulk-order-form').submit()">BUYING IN BULK?</a>
-    </form>
-     <!-- /#Categoriesr End-->
-    <div class="clearfix"></div>
-    @endforeach
-    @endif
+                                 
+                                 <input type="hidden" name="product_id">            
+                                 </div>
+                                 </div>
+                                 <div class="col-xs-6 col-sm-6 col-md-12 col-lg-6">
+                                      <div class="sml-grasy-right-g"><i class="fa fa-inr "></i>{{$offers['discounted_price']}}</div>
+
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="clearfix"></div>
+                        @endforeach
+                        @endif
   </div>
-<!-- </div> -->
-<!-- side bar end -->
-</div>
+               <div class="tolt-foles">
+                <input type="hidden" id="amount" name="amount" value="">
+                <div class="sml-grasy-right-black-lft">   Total</div>
+                   <div class="sml-grasy-right-black pull-right"><i class="fa fa-inr"></i><span id="total_price">0</span></div>
+               </div>
+               <div class="buy-n-btnds">
+
+                   @if(isset($deal['offers_info']) && sizeof($deal['offers_info'])>0)
+
+                  @if(Session::has('user_id'))
+                  <a type="button" class=" btn_buy btn btn-post btn-post-nods" href="javascript:void(0);">Buy Now</a>
+                   @else
+                    <a type="button" href="javascript:void(0);" data-target="#login_poup" data-toggle="modal" class="btn btn-post center-b " href="javascript:void(0);">Buy Now</a>
+                   @endif
+                   
+                 @endif
+               <div class="clearfix"></div> 
+               </div>
+               
+               <!-- /#Categoriesr End-->
+               <div class="clearfix"></div>
+                    </div>
+                    
+                    <div class="categories_sect sidebar-nav">
+                        
+                    <?php
+                     if($deal['end_day']!='')
+                              {
+
+                                $end_date = new \Carbon($deal['end_day']);
+                                  $now = Carbon::now();
+                                  $difference = ($end_date->diff($now)->days < 1)
+                                      ? 'today'
+                                      : $end_date->diffForHumans($now);
+                                     
+                                  if (strpos($difference, 'after') !== false || strpos($difference, 'today') !== false) 
+                                  { ?>
+                                   <div class="limitd-tmf"> Limited For <?php echo str_replace('after','', $difference).' Only'; ?></div> 
+                                   <?php 
+                                  }
+                              }
+                         ?>
+                        <div class="limitd-btr"><span><i class="fa fa-user" aria-hidden="true"></i>
+                            </span> <span>{{$deal['redeem_count']}} Bought</span></div>
+                        
+                       <div class="buy-n-btnds">
+                        <form method="post" action="{{url('/')}}/{{$city}}/bulk_booking_form" target="_blank" id="bulk-order-form">
+                          {{ csrf_field() }}
+                          <input type="hidden" name="vertical" value="local">
+                          <input type="hidden" name="dealTitle" value="{{$deal['title']}}">
+                          <input type="hidden" name="deal_id" value="{{$deal['id']}}">
+                          <input type="hidden" name="dealUrl" id="dealUrlForBulk" value="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$deal['name']))}}/{{base64_encode($deal['id'])}}">
+                          <input type="hidden" name="divisionId" id="deal-url" value="{{$city}}">
+                         
+                           <a type="button" class="btn btn-post center-b " href="javascript:void(0);" onclick="javascript:document.getElementById('bulk-order-form').submit()">Buying in Bulk?</a>
+                          </form>
+                      <div class="clearfix"></div> 
+               </div>
+                    </div>
+                    <div class="clearfix"></div> 
+                 
+                 
+                 
+            </div>
+            @endforeach
+            @endif
 
 </div>
 </div>
@@ -373,8 +446,7 @@
 
 		incrementVar = 0;
 $('.inc.button').click(function(){
-
-		$("#offerSelectionError").css('display','none');
+$("#offerSelectionError").css('display','none');
         var $this = $(this),
 
         $input = $this.prev('input'),
@@ -393,14 +465,15 @@ $('.inc.button').click(function(){
 
 		    incrementVar += newValue;
 
-		    $offerprice=$parent.find('.sell_price').html();
+		    $offerprice=$parent.find('.sell_price').val();
 
 		    var old_total = $('#total_price').html();
+        
+		    var finaltotal=Math.floor($offerprice)+Math.floor(old_total);
+         $('#total_price').html(finaltotal);
+		     $("#amount").attr('value',finaltotal);
 
-		    $finaltotal=parseInt($offerprice, 10)+parseInt(old_total, 10);
 
-		     $('#total_price').html($finaltotal);
-		     $("#amount").attr('value',$finaltotal);
          var offer_id=$parent.find('#offer_hidden').attr('data-dotdid');
          var offers_quantity=$parent.find('#offer_hidden').attr('data-minimumpurchasequantity',newValue);
          var deal_id=$parent.find('#offer_hidden').attr('data-dealid');
@@ -426,7 +499,7 @@ $('.dec.button').click(function(){
 
 		    incrementVar += newValue;
 
-		    $offerprice=$parent.find('.sell_price').html();
+		    $offerprice=$parent.find('.sell_price').val();
 
 		    var old_total = $('#total_price').html();
 
@@ -443,6 +516,7 @@ $('.dec.button').click(function(){
 $('.btn_buy').click(function()
 {
 	var amount=$("#amount").val();
+
 	if(amount=='')
 	{
 		$("#offerSelectionError").css('display','block');
@@ -451,10 +525,12 @@ $('.btn_buy').click(function()
 	}
 	else
 	{
-    
+   
     var string='offerid=';
-		$(".foreach_ul").find('li').each( function(i){
+     
+		$(".foreach_ul").find('.loop').each( function(i){
        var current = $(this);
+       current.find("#offer_hidden").attr('data-dotdid');
        var offer_id=current.find("#offer_hidden").attr('data-dotdid');
        var offer_selected_quantity=current.find("#offer_hidden").attr('data-minimumpurchasequantity');
        if(offer_selected_quantity!='0')
@@ -471,6 +547,8 @@ $('.btn_buy').click(function()
        
 
     });
+
+
    var deal_id=$('#offer_hidden').attr('data-dealid');
    if(deal_id!='')
    {

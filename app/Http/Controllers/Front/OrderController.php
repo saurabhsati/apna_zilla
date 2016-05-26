@@ -74,7 +74,7 @@ class OrderController extends Controller
       $phone           = $request->input('phone');
       $deal_info       = $request->input('deal_info');
       $deal_id         = $request->input('deal_id');
-      $paymentMode     = $request->input('paymentMode');
+      $paymentMode     = $request->input('selector');
       $offer_ids       = $request->input('offer_ids'); 
       $offer_quantitys = $request->input('offer_quantitys');
 
