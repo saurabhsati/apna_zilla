@@ -22,7 +22,7 @@
                           else if(Session::has('city')){
                           $city=Session::get('city');
                           }else{
-                          $city='Mumbai';
+                          $city='New Delhi';
                           }?>
                            <li class="nav-item"><a href="{{ url('/') }}/{{$city}}/all-categories">Categories</a></li>
                             <!--<li class="nav-item">

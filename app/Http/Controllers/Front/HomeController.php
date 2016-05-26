@@ -33,8 +33,7 @@ class HomeController extends Controller
         }
         else
         {
-            //Session::put('city', 'Mumbai');
-        	$current_city='Mumbai';
+           $current_city='New Delhi';
         }
     	$arr_category = array();
 
@@ -189,8 +188,8 @@ class HomeController extends Controller
                         }
                         else
                         {
-                                 Session::put('city', 'Mumbai');
-                                 $obj_city = CityModel::where('city_title',"Mumbai")->first();
+                                 Session::put('city', 'New Delhi');
+                                 $obj_city = CityModel::where('city_title',"New Delhi")->first();
                                 if($obj_city)
                                 {
                                     $arr_city = $obj_city->toArray();
@@ -201,12 +200,18 @@ class HomeController extends Controller
 
                                 }
                         }
-                        echo "done";
+                        $response['status']='done';
+                        $response['city']=$city;
+                        return response()->json($response);
+                       // echo "done";
                     }
                 }
                 else
                 {
-                    echo "fail";
+                    //echo "fail";
+                     $response['status']='fail';
+                      $response['city']='';
+                     return response()->json($response);
                 }
 
 
@@ -393,7 +398,7 @@ class HomeController extends Controller
             }
             else
             {
-                $current_city='Mumbai';
+                $current_city='New Delhi';
             }
             $arr_city=[];
              $obj_city_arr=CityModel::where('city_title',$current_city)->first();
@@ -558,7 +563,7 @@ class HomeController extends Controller
           }
           else
           {
-            $city='Mumbai';
+            $city='New Delhi';
           }
         $html='';
         if(sizeof($business_listing)>0)

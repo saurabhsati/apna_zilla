@@ -304,12 +304,12 @@
                       <div class="p_images">
                       <img src="{{get_resized_image_path($rel_deals['deal_image'],$deal_image_path,200,250) }}" alt="product img"/>
                       </div>
-                      <h4>{{$rel_deals['title']}} </h4>
+                      <h4>{{substr($rel_deals['title'],0,25).'...'}} </h4>
                       <div class="loction"> @if(sizeof($arr_departture_point)>0){{ sizeof($arr_departture_point) }} @else {{ 0 }} @endif Locations</div> 
                       <div class="cont-ds"> {{strip_tags(substr($rel_deals['description'],0,30))}}</div>
                       <div class="bordersk"></div>
                        <div class="valuesd"> <span> <i class="fa fa-inr"></i></span>    {{$rel_deals['price']}}</div>
-                       <div class="valuesdfd"> <span><i aria-hidden="true" class="fa fa-user"></i></span> <span>{{$rel_deals['redeem_count']}} Bought </span> </div>
+                       <div class="valuesdfd"> <span><i aria-hidden="true" class="fa fa-user"></i></span> <span>{{$rel_deals['redeem_count']}} Boughts </span> </div>
                        <div class="valuesdf-right"><span> <i class="fa fa-inr"></i> <?php echo number_format(($rel_deals['price']-(($rel_deals['price'])*($rel_deals['discount_price']/100))),2);?></span></div>
                        <div class="clearfix"></div>
                   </div></a>
@@ -366,13 +366,19 @@
                          </div>
                          <div class="clearfix"></div>
                         @endforeach
+                        @else
+                        <div class=" sml-padng ">
+                          <h4> Sorry ,No Offers Present !! </h4>
+                       </div>
                         @endif
-  </div>
+              </div>
+               @if(isset($deal['offers_info']) && sizeof($deal['offers_info'])>0)
                <div class="tolt-foles">
                 <input type="hidden" id="amount" name="amount" value="">
                 <div class="sml-grasy-right-black-lft">   Total</div>
                    <div class="sml-grasy-right-black pull-right"><i class="fa fa-inr"></i><span id="total_price">0</span></div>
                </div>
+               @endif
                <div class="buy-n-btnds">
 
                    @if(isset($deal['offers_info']) && sizeof($deal['offers_info'])>0)
@@ -411,7 +417,7 @@
                               }
                          ?>
                         <div class="limitd-btr"><span><i class="fa fa-user" aria-hidden="true"></i>
-                            </span> <span>{{$deal['redeem_count']}} Bought</span></div>
+                            </span> <span>{{$deal['redeem_count']}} Boughts</span></div>
                         
                        <div class="buy-n-btnds">
                         <form method="post" action="{{url('/')}}/{{$city}}/bulk_booking_form" target="_blank" id="bulk-order-form">

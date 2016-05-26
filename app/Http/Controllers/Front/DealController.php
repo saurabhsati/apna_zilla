@@ -24,7 +24,7 @@ class DealController extends Controller
     $this->deal_public_upload_img_path = "/uploads/deal/deal_slider_images/";
  	}
 
- 	public function index($city='Mumbai')
+ 	public function index($city='New Delhi')
  	{
 
  		$page_title = "Deals and Offers";

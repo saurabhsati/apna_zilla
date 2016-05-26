@@ -169,10 +169,23 @@ $(document).ready(function(){
     var dataString = { lat:position.coords.latitude, lng:position.coords.longitude, _token: _token };
      var url= site_url+'/locate_location';
      $.post( url, dataString)
-         .done(function( data ) {
-         if(data=='done'){
-           window.location.reload();
-           }
+         .done(function( response )
+          {
+            console.log('Helo');
+            console.log(response);
+
+             if(response.status == "done" )
+             {
+
+              var url=document.URL;
+              var pathArray = window.location.pathname.split( '/' );
+              console.log(pathArray);
+              var old_city =(pathArray[3]);
+              var new_city = response.city;
+              var new_url = url.replace(old_city, new_city);
+              console.log(new_url);
+               window.location.href = decodeURIComponent(new_url);
+              }
          });
 
   }
