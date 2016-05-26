@@ -3,9 +3,6 @@
 @section('main_section')
  @include('front.template._search_top_nav')
 
- <script src="{{ url('/') }}/assets/front/js/stickyfloat.js"></script>
- <link href="{{ url('/') }}/assets/front/css/jquery.mCustomScrollbar.css" rel="stylesheet" />
- <script src="{{ url('/') }}/assets/front/js/jquery.mCustomScrollbar.concat.min.js"></script>
 
  <style type="text/css">
  
@@ -17,17 +14,7 @@
 }
 /**/
  </style>
- <script>
-  (function($){
-      $(window).load(function(){
-          $(".content-kgfd").mCustomScrollbar({
-              scrollButtons:{
-                  enable:true
-              }
-          });
-      });
-  })(jQuery);
-            </script>
+
 <div class="gry_container" style="padding: 7px 0 16px;">
  @include('front.deal.deal_top_bar')
 

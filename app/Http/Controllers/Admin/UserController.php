@@ -29,7 +29,7 @@ class UserController extends Controller
     }
     public function index()
     {
-        $page_title = "Manage User";
+        $page_title = "Manage Vender";
 
         $arr_user = array();
         $obj_user = Sentinel::createModel()->where('role','=','normal')->orderBy('created_at','DESC')->get();
@@ -39,7 +39,7 @@ class UserController extends Controller
 
     public function create()
     {
-        $page_title = "User: Create ";
+        $page_title = "Vender: Create ";
 
          $obj_countries_res = CountryModel::get();
         if( $obj_countries_res != FALSE)
@@ -139,7 +139,7 @@ class UserController extends Controller
 
         if($user->where('mobile_no',$mobile_no)->get()->count()>0)
         {
-            Session::flash('error','User Already Exists With This Mobile No');
+            Session::flash('error','Vender Already Exists With This Mobile No');
             return redirect()->back();
         }
 
@@ -239,11 +239,11 @@ class UserController extends Controller
                     //return $send_mail;
                 if($send_mail)
                 {
-                    Session::flash('success','User Created Successfully');
+                    Session::flash('success','Vender Created Successfully');
                 }
                 else
                 {
-                    Session::flash('success','User Created Successfully But Mail Not Delivered');
+                    Session::flash('success','Vender Created Successfully But Mail Not Delivered');
                 }
 
 
@@ -251,13 +251,13 @@ class UserController extends Controller
             }
             else
             {
-                Session::flash('success','User Created Successfully');
+                Session::flash('success','Vender Created Successfully');
             }
 
         }
         else
         {
-            Session::flash('error','Problem Occurred While Creating User ');
+            Session::flash('error','Problem Occurred While Creating Vender ');
         }
 
         return redirect()->back();
@@ -266,7 +266,7 @@ class UserController extends Controller
     public function edit($enc_id)
     {
         $id = base64_decode($enc_id);
-        $page_title = "User: Edit ";
+        $page_title = "Vender: Edit ";
         $obj_countries_res = CountryModel::get();
         if( $obj_countries_res != FALSE)
         {
@@ -357,7 +357,7 @@ class UserController extends Controller
 
         if($user->where('mobile_no',$mobile_no)->whereNotIn('id',[$user_id])->get()->count()>0)
         {
-            Session::flash('error','User Already Exists with this mobile number');
+            Session::flash('error','Vender Already Exists with this mobile number');
             return redirect()->back();
         }
 
@@ -425,11 +425,11 @@ class UserController extends Controller
 
         if($status)
         {
-            Session::flash('success','User Updated Successfully');
+            Session::flash('success','Vender Updated Successfully');
         }
         else
         {
-            Session::flash('error','Problem Occured While Updating User ');
+            Session::flash('error','Problem Occured While Updating Vender ');
         }
 
         return redirect()->back();
@@ -468,17 +468,17 @@ class UserController extends Controller
             if($multi_action=="activate")
             {
                $this->_activate($record_id);
-               Session::flash('success','User(s) Activated Successfully');
+               Session::flash('success','Vender(s) Activated Successfully');
             }
             elseif($multi_action=="block")
             {
                $this->_block($record_id);
-               Session::flash('success','User(s) Blocked Successfully');
+               Session::flash('success','Vender(s) Blocked Successfully');
             }
             elseif($multi_action=="delete")
             {
                $this->_delete($record_id);
-                Session::flash('success','User(s) Deleted Successfully');
+                Session::flash('success','Vender(s) Deleted Successfully');
             }
 
         }
@@ -492,19 +492,19 @@ class UserController extends Controller
         {
             $this->_activate($enc_id);
 
-            Session::flash('success','User(s) Activated Successfully');
+            Session::flash('success','Vender(s) Activated Successfully');
         }
         elseif($action=="block")
         {
             $this->_block($enc_id);
 
-            Session::flash('success','User(s) Blocked Successfully');
+            Session::flash('success','Vender(s) Blocked Successfully');
         }
         elseif($action=="delete")
         {
             $this->_delete($enc_id);
 
-            Session::flash('success','User(s) Deleted Successfully');
+            Session::flash('success','Vender(s) Deleted Successfully');
         }
 
         return redirect()->back();

@@ -53,6 +53,22 @@
       <!-- Multi select  -->
            <script src="{{ url('/') }}/assets/front/js/bootstrap-multiselect.js" type='text/javascript'></script>
           <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/front/css/bootstrap-multiselect.css" />
+
+ <script src="{{ url('/') }}/assets/front/js/stickyfloat.js"></script>
+ <link href="{{ url('/') }}/assets/front/css/jquery.mCustomScrollbar.css" rel="stylesheet" />
+ <script src="{{ url('/') }}/assets/front/js/jquery.mCustomScrollbar.concat.min.js"></script>
+   <script>
+                (function($){
+                    $(window).load(function(){
+                        $(".content-kgfd").mCustomScrollbar({
+                            scrollButtons:{
+                                enable:true
+                            }
+                        });
+                    });
+                })(jQuery);
+            </script>
+
        <script>
 $(document).ready(function(){
     $(".spe_mobile").click(function(){
@@ -134,6 +150,7 @@ $(document).ready(function(){
 
          <!-- Share Location  -->
 
+
 <script>
    var site_url = "{{url('/')}}";
 
@@ -180,11 +197,18 @@ $(document).ready(function(){
               var url=document.URL;
               var pathArray = window.location.pathname.split( '/' );
               console.log(pathArray);
-              var old_city =(pathArray[3]);
-              var new_city = response.city;
-              var new_url = url.replace(old_city, new_city);
-              console.log(new_url);
-               window.location.href = decodeURIComponent(new_url);
+                if(pathArray[3]!='')
+               {
+                  var old_city =(pathArray[3]);
+                  var new_city = response.city;
+                  var new_url = url.replace(old_city, new_city);
+                  console.log(new_url);
+                   window.location.href = decodeURIComponent(new_url);
+                }
+                else
+                {
+                  window.location.reload();
+                }
               }
          });
 

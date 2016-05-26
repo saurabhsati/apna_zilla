@@ -32,7 +32,7 @@ class SalesController extends Controller
 
     public function index()
     {
-        $page_title = "Manage Sales Users";
+        $page_title = "Manage Sales Executives ";
 
         $arr_user = array();
         $obj_user = Sentinel::createModel()->where('role','=','sales')->orderBy('created_at','DESC')->get();
@@ -42,7 +42,7 @@ class SalesController extends Controller
 
     public function create()
     {
-        $page_title = "Sales User: Create ";
+        $page_title = "Sales Executive: Create ";
          $arr_city = array();
         $obj_city_res = CityModel::get();
         if($obj_city_res != FALSE)
@@ -121,7 +121,7 @@ class SalesController extends Controller
 
         if($user->where('email',$email)->get()->count()>0)
         {
-            Session::flash('error','Sales User Already Exists with this email id');
+            Session::flash('error','Sales Executive Already Exists with this email id');
             return redirect()->back();
         }
 
@@ -180,7 +180,7 @@ class SalesController extends Controller
 
         if($status)
         {
-            /* Assign Sales Users Role */
+            /* Assign Sales Executive  Role */
             $enc_id=$status->id;
             //$public_id=uniqid( 'RTN_' ,false);
             $public_id = $this->objpublic->generate_public_id($enc_id);
@@ -220,11 +220,11 @@ class SalesController extends Controller
                 //return $send_mail;
             if($send_mail)
             {
-                Session::flash('success',' Sales User Created Successfully');
+                Session::flash('success',' Sales Executive Created Successfully');
             }
             else
             {
-                Session::flash('success','Sales User Created Successfully But Mail Not Delivered');
+                Session::flash('success','Sales Executive Created Successfully But Mail Not Delivered');
             }
 
 
@@ -232,7 +232,7 @@ class SalesController extends Controller
         }
         else
         {
-            Session::flash('error','Problem Occurred While Creating User ');
+            Session::flash('error','Problem Occurred While Creating Executive ');
         }
 
         return redirect()->back();
@@ -242,7 +242,7 @@ class SalesController extends Controller
     public function edit($enc_id)
     {
         $id = base64_decode($enc_id);
-        $page_title = "User: Edit ";
+        $page_title = "Sales Executive: Edit ";
         $arr_city = array();
         $obj_city_res = CityModel::get();
         if($obj_city_res != FALSE)
@@ -324,7 +324,7 @@ class SalesController extends Controller
 
         if($user->where('email',$email)->whereNotIn('id',[$user_id])->get()->count()>0)
         {
-            Session::flash('error','User Already Exists with this email id');
+            Session::flash('error','Sales Executive Already Exists with this email id');
             return redirect()->back();
         }
 
@@ -392,11 +392,11 @@ class SalesController extends Controller
 
         if($status)
         {
-            Session::flash('success','Sales User Updated Successfully');
+            Session::flash('success','Sales Executive Updated Successfully');
         }
         else
         {
-            Session::flash('error','Problem Occurred While Updating User ');
+            Session::flash('error','Problem Occurred While Updating Sales Executive ');
         }
 
         return redirect()->back();
@@ -433,17 +433,17 @@ class SalesController extends Controller
             if($multi_action=="activate")
             {
                $this->_activate($record_id);
-               Session::flash('success','Sales User(s) Activated Successfully');
+               Session::flash('success','Sales Executive(s) Activated Successfully');
             }
             elseif($multi_action=="block")
             {
                $this->_block($record_id);
-               Session::flash('success','Sales User(s) Blocked Successfully');
+               Session::flash('success','Sales Executive(s) Blocked Successfully');
             }
             elseif($multi_action=="delete")
             {
                $this->_delete($record_id);
-                Session::flash('success','Sales User(s) Deleted Successfully');
+                Session::flash('success','Sales Executive(s) Deleted Successfully');
             }
 
         }
@@ -457,19 +457,19 @@ class SalesController extends Controller
         {
             $this->_activate($enc_id);
 
-            Session::flash('success','Sales User(s) Activated Successfully');
+            Session::flash('success','Sales Executive(s) Activated Successfully');
         }
         elseif($action=="block")
         {
             $this->_block($enc_id);
 
-            Session::flash('success','Sales User(s) Blocked Successfully');
+            Session::flash('success','Sales Executive(s) Blocked Successfully');
         }
         elseif($action=="delete")
         {
             $this->_delete($enc_id);
 
-            Session::flash('success','Sales User(s) Deleted Successfully');
+            Session::flash('success','Sales Executive(s) Deleted Successfully');
         }
 
         return redirect()->back();

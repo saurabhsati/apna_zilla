@@ -24,7 +24,7 @@ class TransactionController extends Controller
     	$page_title = 'Transaction :Manage';
 
     	$arr_transaction = array();
- 		$obj_transaction = TransactionModel::orderBy('id','ASC')->get();
+ 		$obj_transaction = TransactionModel::orderBy('id','DESC')->get();
 
  		if($obj_transaction)
  		{

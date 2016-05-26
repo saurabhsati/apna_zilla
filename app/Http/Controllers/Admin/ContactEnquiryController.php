@@ -27,7 +27,12 @@ class ContactEnquiryController extends Controller
     public function index()
     {
        $page_title = "Contacted Users";
-       $arr_contact = ContactEnquiryModel::get()->toArray();
+       $obj_arr_contact = ContactEnquiryModel::orderBy('contact_us_id','DESC')->get();
+       $arr_contact=[];
+       if($obj_arr_contact)
+       {
+        $arr_contact=$obj_arr_contact->toArray();
+       }
 
      	 return view('web_admin.contact_enquiry.index',compact('page_title','arr_contact'));
     }

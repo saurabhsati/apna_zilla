@@ -23,7 +23,7 @@ class FAQController extends Controller
     public function index()
     {
     	$page_title	="Manage Faq Pages";
-    	$faq_pages = $this->FaqModel->where('parent',0)->get()->toArray();
+    	$faq_pages = $this->FaqModel->orderBy('id','DESC')->where('parent',0)->get()->toArray();
         $sub_pages = $this->FaqModel->where('parent','!=',0)->get()->toArray();
         return view('web_admin.faq.index',compact('page_title','faq_pages','sub_pages'));
     }

@@ -26,7 +26,7 @@ class CategoryController extends Controller
  		$page_title = "Category: Manage ";
 
  		$arr_category = array();
- 		$obj_category = CategoryModel::where('parent','0')->get();
+ 		$obj_category = CategoryModel::orderBy('cat_id','DESC')->where('parent','0')->get();
 
  		if($obj_category)
  		{

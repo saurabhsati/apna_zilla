@@ -22,7 +22,7 @@ class StaticPageController extends Controller
     	$page_title="Manage CMS";
     	$page_info = array();
 
-        $res = StaticPageModel::all();
+        $res = StaticPageModel::orderBy('id','DESC')->get();
 
         if($res != FALSE)
         {

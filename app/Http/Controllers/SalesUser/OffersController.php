@@ -21,7 +21,7 @@ class OffersController extends Controller
     	$page_title=' View Offers';
 
     	$id=base64_decode($enc_id);
-    	$obj_offers=OffersModel::with('deal_info')->where('deal_id',$id)->get();
+    	$obj_offers=OffersModel::orderBy('id','DESC')->with('deal_info')->where('deal_id',$id)->get();
         if($obj_offers)
         {
             $arr_offers = $obj_offers->toArray();

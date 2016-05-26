@@ -29,7 +29,7 @@ class MembershipCostController extends Controller
 
         $arr_membership_cost = array();
 
-        $obj_membership_cost = MemberCostModel::with(['category'])->get();
+        $obj_membership_cost = MemberCostModel::orderBy('id','DESC')->with(['category'])->get();
 
         if($obj_membership_cost!=FALSE)
         {

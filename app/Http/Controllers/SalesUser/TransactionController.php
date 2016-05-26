@@ -22,7 +22,7 @@ class TransactionController extends Controller
  			return view('sales_user.account.login');
          }
     	$arr_transaction = array();
- 		$obj_transaction = TransactionModel::where('sales_user_public_id',$sales_user_public_id)->orderBy('id','ASC')->get();
+ 		$obj_transaction = TransactionModel::where('sales_user_public_id',$sales_user_public_id)->orderBy('id','DESC')->get();
 
  		if($obj_transaction)
  		{

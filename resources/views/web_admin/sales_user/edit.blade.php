@@ -22,7 +22,7 @@
             </span>
             <li>
                 <i class="fa fa-user"></i>
-                <a href="{{ url('/').'/web_admin/sales_user' }}">Sales User</a>
+                <a href="{{ url('/').'/web_admin/sales_user' }}">Sales Executive</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
@@ -189,8 +189,8 @@
                         <option value="" >Select...</option>
                         <option value="Married" {{ $arr_user_data['marital_status']=='Married'?"selected ='selected'":'' }}>Married</option>
                         <option value="Un Married" {{ $arr_user_data['marital_status']=='Un Married'?"selected='selected'":'' }}>Un Married</option>
-                        <option value="Divorced" {{ $arr_user_data['marital_status']=='Divorced'?"selected ='selected'":'' }}>Divorced</option>
-                        <option value="Widowed" {{ $arr_user_data['marital_status']=='Widowed'?"selected ='selected'":'' }}>Widowed</option>
+                       {{--  <option value="Divorced" {{ $arr_user_data['marital_status']=='Divorced'?"selected ='selected'":'' }}>Divorced</option>
+                        <option value="Widowed" {{ $arr_user_data['marital_status']=='Widowed'?"selected ='selected'":'' }}>Widowed</option> --}}
                      </select>
                     <span class='help-block'>{{ $errors->first('marital_status') }}</span>
                 </div>

@@ -23,7 +23,7 @@
             </span>
             <li>
                 <i class="fa fa-user"></i>
-                <a href="{{ url('/web_admin/sales_user') }}">Sales User</a>
+                <a href="{{ url('/web_admin/sales_user') }}">Sales Executive</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
@@ -84,7 +84,7 @@
           <div class="btn-toolbar pull-right clearfix">
             <!--- Add new record - - - -->
                 <div class="btn-group">
-                <a href="{{ url('/web_admin/sales_user/create')}}" class="btn btn-primary btn-add-new-records">Add Sales User</a>
+                <a href="{{ url('/web_admin/sales_user/create')}}" class="btn btn-primary btn-add-new-records">Add Sales Executive</a>
                 </div>
             <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -->
             <div class="btn-group">
@@ -156,12 +156,12 @@
 
                     <td >
                          @if($user->is_active=="0")
-                        <a class="btn btn-danger" href="{{ url('/web_admin/users/toggle_status/').'/'.base64_encode($user->id).'/activate' }}">
+                        <a class="btn btn-danger" href="{{ url('/web_admin/sales_user/toggle_status/').'/'.base64_encode($user->id).'/activate' }}">
                             Block
                         </a>
 
                         @elseif($user->is_active=="1")
-                        <a  class="btn btn-success" href="{{ url('/web_admin/users/toggle_status/').'/'.base64_encode($user->id).'/block' }}">
+                        <a  class="btn btn-success" href="{{ url('/web_admin/sales_user/toggle_status/').'/'.base64_encode($user->id).'/block' }}">
                             Active
                         </a>
                         @endif

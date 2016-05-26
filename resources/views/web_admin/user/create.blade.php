@@ -22,7 +22,7 @@
             </span>
             <li>
                 <i class="fa fa-user"></i>
-                <a href="{{ url('/').'/web_admin/users' }}">Users</a>
+                <a href="{{ url('/').'/web_admin/users' }}">Venders</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
@@ -142,8 +142,8 @@
                         <option value="">Select...</option>
                         <option value="Married">Married</option>
                         <option value="Un Married">Un Married</option>
-                        <option value="Divorced">Divorced</option>
-                        <option value="Widowed">Widowed</option>
+                        {{-- <option value="Divorced">Divorced</option>
+                        <option value="Widowed">Widowed</option> --}}
                      </select>
                     <span class='help-block'>{{ $errors->first('marital_status') }}</span>
                   </div>

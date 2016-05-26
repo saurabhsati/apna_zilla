@@ -41,7 +41,7 @@ class UserController extends Controller
          {
  			return view('sales_user.account.login');
          }
-        $obj_user = Sentinel::createModel()->orderBy('id','DESC')->where('sales_user_public_id','=',$sales_user_public_id)->get();
+        $obj_user = Sentinel::createModel()->orderBy('created_at','DESC')->where('sales_user_public_id','=',$sales_user_public_id)->get();
 
         return view('sales_user.user.index',compact('page_title','obj_user'));
  	}

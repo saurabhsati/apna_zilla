@@ -44,7 +44,7 @@ class NewsLetterController extends Controller
     {
         $page_title = "Manage NewsLetter";
         $arr_data = array();
-        $res = NewsLetterModel::all();
+        $res = NewsLetterModel::orderBy('news_letter_id','DESC')->get();
 
         if($res != FALSE)
         {

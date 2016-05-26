@@ -23,7 +23,7 @@
             </span>
             <li>
                 <i class="fa fa-user"></i>
-                <a href="{{ url('/web_admin/users') }}">Users</a>
+                <a href="{{ url('/web_admin/users') }}">Venders</a>
             </li>
             <span class="divider">
                 <i class="fa fa-angle-right"></i>
@@ -87,7 +87,7 @@
           <div class="btn-toolbar pull-right clearfix">
             <!--- Add new record - - - -->
                 <div class="btn-group">
-                <a href="{{ url('/web_admin/users/create')}}" class="btn btn-primary btn-add-new-records">Add User</a>
+                <a href="{{ url('/web_admin/users/create')}}" class="btn btn-primary btn-add-new-records">Add Vender</a>
                 </div>
             <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -->
             <div class="btn-group">

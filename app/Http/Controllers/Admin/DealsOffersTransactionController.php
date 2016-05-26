@@ -22,7 +22,7 @@ class DealsOffersTransactionController extends Controller
     	$page_title = 'Deals & Offers Transaction :Manage';
 
     	$arr_transaction = array();
- 		$obj_transaction = DealsTransactionModel::orderBy('id','ASC')->get();
+ 		$obj_transaction = DealsTransactionModel::orderBy('id','DESC')->get();
 
  		if($obj_transaction)
  		{
