@@ -343,7 +343,7 @@ class BusinessListingController extends Controller
         Session::forget('insert_public_id');
         Session::forget('insert_vender_name');
         Session::forget('insert_user_id');
-        return redirect()->back();
+        return redirect('/sales_user/business_listing/');
 
     }
     public function edit($enc_id)

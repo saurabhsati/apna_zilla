@@ -71,6 +71,17 @@
                 <li style="display: block;"><a href="{{ url('/web_admin/deals_offers_transactions')}}">Manage</a> </li>
             </ul>
         </li>
+         <li class="<?php  if(Request::segment(2) == 'coupons'){ echo 'active'; } ?>">
+                        <a href="javascript:void(0)" class="dropdown-toggle">
+                            <i class="fa fa-barcode"></i>
+                            <span>Coupons</span>
+                            <b class="arrow fa fa-angle-right"></b>
+                        </a>
+
+                         <ul class="submenu">
+                            <li style="display: block;"><a href="{{ url('web_admin/coupons')}}">Manage </a></li>                            
+                        </ul>
+                    </li>
          <li class="{{ Request::segment(2)=='deals_bulk_request'?'active':'' }}">
             <a href="javascript:void(0)" class="dropdown-toggle">
                 <i class="fa fa-credit-card"></i>

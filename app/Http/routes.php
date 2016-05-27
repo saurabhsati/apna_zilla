@@ -283,6 +283,28 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 					
 		});
 
+		/*--------------------------     Coupon Code Realted      ---------------------------*/
+
+		Route::group(array('prefix' => '/coupons'), function()
+		{
+			Route::get('/',						['as' => 'admin_coupon_index'		,'uses' => 'Admin\CouponController@index']);
+			
+			Route::get('create/',				['as' => 'admin_coupon_create' 		,'uses' => 'Admin\CouponController@create']);
+			
+			Route::post('store/',				['as' => 'admin_coupon_store' 		,'uses' => 'Admin\CouponController@store']);
+			
+			Route::get('edit/{coupon_id}',		['as' => 'admin_coupon_edit'		,'uses' => 'Admin\CouponController@edit']);
+			
+			Route::get('show/{coupon_id}',		['as' => 'admin_coupon_show' 		,'uses' => 'Admin\CouponController@show']);
+			
+			Route::post('update/{coupon_id}',	['as' => 'admin_coupon_update' 		,'uses' => 'Admin\CouponController@update']);
+			
+			Route::get('delete/{coupon_id}',	['as' => 'admin_coupon_delete' 		,'uses' => 'Admin\CouponController@delete']);
+			
+			Route::post('multi_action',			['as' => 'admin_coupon_multiaction'	,'uses' => 'Admin\CouponController@multi_action']);
+		});
+
+
 	  
 		/* Users Module */
 		Route::group(['prefix'=>'users'], function()

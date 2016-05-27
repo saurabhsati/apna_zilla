@@ -231,6 +231,7 @@ class UserController extends Controller
                 $content        = str_replace("##USER_EMAIL##",$email,$content);
                 $content        = str_replace("##USER_PASSWORD##",$password,$content);
                 $content        = str_replace("##APP_NAME##","RightNext",$content);
+                $content        = str_replace("##USER_PUBLIC_ID##",$public_id,$content);
                 //print_r($content);exit;
                 $content = view('email.front_general',compact('content'))->render();
                 $content = html_entity_decode($content);

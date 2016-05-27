@@ -356,7 +356,7 @@ class CategorySearchController extends Controller
                         {
                           if($obj_business_listing)
                           {
-                              $obj_business_listing = $obj_business_listing->having('distance', ' < ', 100);
+                              $obj_business_listing = $obj_business_listing->having('distance', ' < ', 10);
                           }
                         }
 

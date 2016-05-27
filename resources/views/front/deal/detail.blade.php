@@ -368,7 +368,7 @@
                </div>
                @endif
                <div class="buy-n-btnds">
-
+               <span class="select-offer-notification noshow" style="display:none;color:#e6ab2a;font:14px;" id="offerSelectionError"><h4>Please select at least one offer</h4></span>
                    @if(isset($deal['offers_info']) && sizeof($deal['offers_info'])>0)
 
                   @if(Session::has('user_id'))

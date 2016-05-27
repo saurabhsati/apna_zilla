@@ -233,8 +233,8 @@
                         <option value="">--Select--</option>
                         <option value="Married" @if(isset($user['marital_status'])  &&  $user['marital_status'] =="Married" ) {{ 'selected=selected' }} @endif >Married</option>
                         <option value="Un Married" @if(isset($user['marital_status'])  &&  $user['marital_status'] =="Un Married" ) {{ 'selected=selected' }} @endif>Un Married</option>
-                        <option value="Divorced" @if(isset($user['marital_status'])  &&  $user['marital_status'] =="Divorced" ) {{ 'selected=selected' }} @endif>Divorced</option>
-                        <option value="Widowed" @if(isset($user['marital_status'])  &&  $user['marital_status'] =="Widowed" ) {{ 'selected=selected' }} @endif>Widowed</option>
+                      {{--   <option value="Divorced" @if(isset($user['marital_status'])  &&  $user['marital_status'] =="Divorced" ) {{ 'selected=selected' }} @endif>Divorced</option>
+                        <option value="Widowed" @if(isset($user['marital_status'])  &&  $user['marital_status'] =="Widowed" ) {{ 'selected=selected' }} @endif>Widowed</option> --}}
                         </select>
                         </div>
                          </div>

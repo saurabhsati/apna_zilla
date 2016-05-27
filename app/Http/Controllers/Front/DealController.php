@@ -303,7 +303,7 @@ class DealController extends Controller
                                                           ->where('end_day', '>=', date('Y-m-d').' 00:00:00')
                                                           ->whereIn('business_id',$key_business_city)
                                                           ->orderBy('created_at','DESC')
-                                                          ->limit(4)
+                                                          ->limit(3)
                                                           ->get();
 
                 if($obj_related_deals_info)

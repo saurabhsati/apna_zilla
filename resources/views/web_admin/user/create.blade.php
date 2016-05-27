@@ -179,7 +179,7 @@
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="password">Password<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input type="password" class="form-control" name="password" id="password"  data-rule-required="true" data-rule-minlength="6"/>
+                    <input type="text" class="form-control" name="password" id="password"  data-rule-required="true" data-rule-minlength="6"/>
                     <span class='help-block'>{{ $errors->first('password') }}</span>
                 </div>
             </div>
