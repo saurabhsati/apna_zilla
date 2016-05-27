@@ -22,6 +22,7 @@ class DealController extends Controller
  	public function __construct()
  	{
     $this->deal_public_upload_img_path = "/uploads/deal/deal_slider_images/";
+    $this->main_deal_public_upload_img_path = "/uploads/deal/";
  	}
 
  	public function index($city='Delhi')
@@ -29,7 +30,8 @@ class DealController extends Controller
 
  		$page_title = "Deals and Offers";
 
-    $deal_image_path="uploads/deal";
+    // $deal_image_path="uploads/deal";
+    $deal_image_path = $this->main_deal_public_upload_img_path;
 
      //by city
     /*$obj_business_listing_city = CityModel::where('city_title',$city)->get();
