@@ -196,6 +196,13 @@
 
             </div>
             </div>
+             <hr/>
+                              <div class="form-group">
+                              <label class="col-sm-3 col-lg-2 control-label" ></label>
+                              <div class="col-sm-3 col-lg-3 controls">
+                                  <h4><b>Business Gallery</b></h4>
+                              </div>
+                          </div>
            <div class="form-group">
                             <label class="col-sm-3 col-lg-2 control-label">  Business Main Banner Image <i class="red">*</i> </label>
                             <div class="col-sm-9 col-lg-10 controls">
@@ -285,7 +292,13 @@
 
                               </div>
                               </div>
-
+                 <hr/>
+                              <div class="form-group">
+                              <label class="col-sm-3 col-lg-2 control-label" ></label>
+                              <div class="col-sm-3 col-lg-3 controls">
+                                  <h4><b>Business Location</b></h4>
+                              </div>
+                          </div>              
                <div class="row">
                 <div class="col-md-6 ">
 
@@ -630,6 +643,79 @@
             </div>
             @endforeach
             <hr/>
+                              <div class="form-group">
+                              <label class="col-sm-3 col-lg-2 control-label" ></label>
+                              <div class="col-sm-3 col-lg-3 controls">
+                                  <h4><b>Business Services </b></h4>
+                              </div>
+                          </div>
+             <div class="form-group">
+                            <label class="col-sm-3 col-lg-2 control-label"> Business Services  <i class="red">*</i> </label>
+                            <div class="col-sm-9 col-lg-10 controls">
+                               <div class="fileupload fileupload-new business_upload_image_" data-provides="fileupload">
+                                 @foreach($business['service'] as $service)
+
+                                  <div class="fileupload-new img-thumbnail main" style="width: 300px; height: 62px;" data-service="{{ $service['name'] }}">
+                                     <input class="form-control" type="text" name="service" id="service" class="pimg"  value="{{ $service['name']}}" />
+                                     <div class="caption">
+                                     <p class="pull-left">
+                                        <a href="javascript:void(0);"class="delete_service" data-service="{{ $service['name'] }}" onclick="javascript: return delete_service('<?php echo $service['id'] ;?>')">
+                                         <span class="glyphicon glyphicon-minus-sign " style="font-size: 20px;"></span></a>
+                                     </p>
+                                    </div>
+                                  </div>
+                              <!--     <a href="javascript:void(0);" onclick="javascript: return delete_gallery($image['business_id'],$image['image_name'],$business['id'])">
+                                     <span class="glyphicon glyphicon-minus-sign" style="font-size: 20px;"></span></a> -->
+                                  <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+
+                                  @endforeach
+                    <div class="error" id="err_delete_service"></div>
+
+                               </div>
+                                <span class='help-block'>{{ $errors->first('main_image') }}</span>
+                            </div>
+
+                         </div>
+            <div class="form-group">
+                          <label class="col-sm-3 col-lg-2 control-label" for="building">
+                           <a href="" class="add_serc">Click Here To Add More Services</a></label>
+                         </div>
+                          <div class="form-group add_more_service" style="display: none;">
+                          <div class="col-sm-5 col-md-7" style="float:right;">
+                             <a href="javascript:void(0);" id='add-service'>
+                                 <span class="glyphicon glyphicon-plus-sign" style="font-size: 20px;"></span>
+                             </a>
+                            <span style="margin-left:05px;">
+                            <a href="javascript:void(0);" id='remove-service'>
+                                <span class="glyphicon glyphicon-minus-sign" style="font-size: 20px;"></span>
+                            </a>
+                            </span>
+                           </div>
+                              <label class="col-sm-3 col-lg-2 control-label">Add More Business Services <i class="red"></i> </label>
+                              <div class="col-sm-6 col-lg-4 controls">
+
+                              <input class="form-control" type="text" name="business_service[]" id="business_service" class="pimg"   />
+                              <div class="error" id="error_business_service">{{ $errors->first('business_service') }}</div>
+
+                              <div class="clr"></div><br/>
+                                <div class="error" id="error_set_default"></div>
+                                <div class="clr"></div>
+
+                             <div id="append_service" class="class-add"></div>
+                              <div class="error_msg" id="error_business_image" ></div>
+                              <div class="error_msg" id="error_business_image1" ></div>
+                             <label class="col-sm-3 col-lg-2 control-label"></label>
+
+                              </div>
+                              </div>
+            <hr/>
+
+                              <div class="form-group">
+                              <label class="col-sm-3 col-lg-2 control-label" ></label>
+                              <div class="col-sm-3 col-lg-3 controls">
+                                  <h4><b>Business Payment Modes</b></h4>
+                              </div>
+                          </div>
             <div class="form-group">
                             <label class="col-sm-3 col-lg-2 control-label"> Payment Mode  <i class="red">*</i> </label>
                             <div class="col-sm-9 col-lg-10 controls">
@@ -657,7 +743,7 @@
                             </div>
 
                          </div>
-                         <div class="form-group">
+                         <div class="form-group" style="display:none;">
                           <label class="col-sm-3 col-lg-2 control-label" for="building">
                            <a href="" class="add_payment_mode">Add More Payment Mode</a></label>
                          </div>
@@ -742,65 +828,7 @@
                     <span class='help-block'>{{ $errors->first('youtube_link') }}</span>
                 </div>
             </div> -->
-             <div class="form-group">
-                            <label class="col-sm-3 col-lg-2 control-label"> Business Services  <i class="red">*</i> </label>
-                            <div class="col-sm-9 col-lg-10 controls">
-                               <div class="fileupload fileupload-new business_upload_image_" data-provides="fileupload">
-                                 @foreach($business['service'] as $service)
-
-                                  <div class="fileupload-new img-thumbnail main" style="width: 300px; height: 62px;" data-service="{{ $service['name'] }}">
-                                     <input class="form-control" type="text" name="service" id="service" class="pimg"  value="{{ $service['name']}}" />
-                                     <div class="caption">
-                                     <p class="pull-left">
-                                        <a href="javascript:void(0);"class="delete_service" data-service="{{ $service['name'] }}" onclick="javascript: return delete_service('<?php echo $service['id'] ;?>')">
-                                         <span class="glyphicon glyphicon-minus-sign " style="font-size: 20px;"></span></a>
-                                     </p>
-                                    </div>
-                                  </div>
-                              <!--     <a href="javascript:void(0);" onclick="javascript: return delete_gallery($image['business_id'],$image['image_name'],$business['id'])">
-                                     <span class="glyphicon glyphicon-minus-sign" style="font-size: 20px;"></span></a> -->
-                                  <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-
-                                  @endforeach
-                    <div class="error" id="err_delete_service"></div>
-
-                               </div>
-                                <span class='help-block'>{{ $errors->first('main_image') }}</span>
-                            </div>
-
-                         </div>
-            <div class="form-group">
-                          <label class="col-sm-3 col-lg-2 control-label" for="building">
-                           <a href="" class="add_serc">Add Services</a></label>
-                         </div>
-                          <div class="form-group add_more_service" style="display: none;">
-                          <div class="col-sm-5 col-md-7" style="float:right;">
-                             <a href="javascript:void(0);" id='add-service'>
-                                 <span class="glyphicon glyphicon-plus-sign" style="font-size: 20px;"></span>
-                             </a>
-                            <span style="margin-left:05px;">
-                            <a href="javascript:void(0);" id='remove-service'>
-                                <span class="glyphicon glyphicon-minus-sign" style="font-size: 20px;"></span>
-                            </a>
-                            </span>
-                           </div>
-                              <label class="col-sm-3 col-lg-2 control-label">Add More Business Services <i class="red"></i> </label>
-                              <div class="col-sm-6 col-lg-4 controls">
-
-                              <input class="form-control" type="text" name="business_service[]" id="business_service" class="pimg"   />
-                              <div class="error" id="error_business_service">{{ $errors->first('business_service') }}</div>
-
-                              <div class="clr"></div><br/>
-                                <div class="error" id="error_set_default"></div>
-                                <div class="clr"></div>
-
-                             <div id="append_service" class="class-add"></div>
-                              <div class="error_msg" id="error_business_image" ></div>
-                              <div class="error_msg" id="error_business_image1" ></div>
-                             <label class="col-sm-3 col-lg-2 control-label"></label>
-
-                              </div>
-                              </div>
+             
 
 
 

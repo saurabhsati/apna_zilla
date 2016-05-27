@@ -196,6 +196,13 @@
 
             </div>
             </div>
+             <hr/>
+                      <div class="form-group">
+                          <label class="col-sm-3 col-lg-2 control-label" ></label>
+                          <div class="col-sm-3 col-lg-3 controls">
+                              <h4><b>Business Gallery</b></h4>
+                          </div>
+                      </div>
               <div class="form-group">
                   <label class="col-sm-3 col-lg-2 control-label"> Business Main Banner Image<i class="red">*</i> </label>
                   <div class="col-sm-9 col-lg-10 controls">
@@ -287,6 +294,13 @@
 
                               </div>
                               </div>
+                               <hr/>
+                      <div class="form-group">
+                          <label class="col-sm-3 col-lg-2 control-label" ></label>
+                          <div class="col-sm-3 col-lg-3 controls">
+                              <h4><b>Business Location</b></h4>
+                          </div>
+                      </div>
              <div class="row">
                 <div class="col-md-6 ">
 
@@ -637,17 +651,24 @@
             </div>
 
             <hr/>
-            <div class="form-group">
-                            <label class="col-sm-3 col-lg-2 control-label"> Payment Mode  <i class="red">*</i> </label>
+               <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" ></label>
+                <div class="col-sm-3 col-lg-3 controls">
+                    <h4><b>Business Services</b></h4>
+                </div>
+            </div>
+             <div class="form-group">
+                            <label class="col-sm-3 col-lg-2 control-label"> Business Services  <i class="red"></i> </label>
                             <div class="col-sm-9 col-lg-10 controls">
                                <div class="fileupload fileupload-new business_upload_image_" data-provides="fileupload">
-                                 @foreach($business['payment_mode'] as $payment_mode)
+                               @if(sizeof($business['service'])>0)
+                                 @foreach($business['service'] as $service)
 
-                                  <div class="fileupload-new img-thumbnail main" style="width: 300px; height: 62px;" data-payment-mode="{{ $payment_mode['title'] }}">
-                                     <input class="form-control" type="text" name="payment_mode" id="payment_mode" class="pimg"  value="{{ $payment_mode['title']}}" />
+                                  <div class="fileupload-new img-thumbnail main" style="width: 300px; height: 62px;" data-service="{{ $service['name'] }}">
+                                     <input class="form-control" type="text" name="service" id="service" class="pimg"  value="{{ $service['name']}}" />
                                      <div class="caption">
                                      <p class="pull-left">
-                                        <a href="javascript:void(0);"class="delete_payment_mode" data-payment-mode="{{ $payment_mode['title'] }}" onclick="javascript: return delete_payment_mode('<?php echo $payment_mode['id'] ;?>')">
+                                        <a href="javascript:void(0);"class="delete_service" data-service="{{ $service['name'] }}" onclick="javascript: return delete_service('<?php echo $service['id'] ;?>')">
                                          <span class="glyphicon glyphicon-minus-sign " style="font-size: 20px;"></span></a>
                                      </p>
                                     </div>
@@ -657,17 +678,157 @@
                                   <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
 
                                   @endforeach
-                    <div class="error" id="err_delete_payment_mode"></div>
+                                  @else
+                                  <label>No Business Services Available !!!</label>
+                                  @endif
+                    <div class="error" id="err_delete_service"></div>
 
                                </div>
                                 <span class='help-block'>{{ $errors->first('main_image') }}</span>
                             </div>
 
                          </div>
+            <div class="form-group">
+                          <label class="col-sm-3 col-lg-2 control-label" for="building">
+                           <a href="" class="add_serc">Add Services</a></label>
+                         </div>
+                          <div class="form-group add_more_service" style="display: none;">
+                          <div class="col-sm-5 col-md-7" style="float:right;">
+                             <a href="javascript:void(0);" id='add-service'>
+                                 <span class="glyphicon glyphicon-plus-sign" style="font-size: 20px;"></span>
+                             </a>
+                            <span style="margin-left:05px;">
+                            <a href="javascript:void(0);" id='remove-service'>
+                                <span class="glyphicon glyphicon-minus-sign" style="font-size: 20px;"></span>
+                            </a>
+                            </span>
+                           </div>
+                              <label class="col-sm-3 col-lg-2 control-label">Add More Business Services <i class="red">*</i> </label>
+                              <div class="col-sm-6 col-lg-4 controls">
+
+                              <input class="form-control" type="text" name="business_service[]" id="business_service" class="pimg"   />
+                              <div class="error" id="error_business_service">{{ $errors->first('business_service') }}</div>
+
+                              <div class="clr"></div><br/>
+                                <div class="error" id="error_set_default"></div>
+                                <div class="clr"></div>
+
+                             <div id="append_service" class="class-add"></div>
+                              <div class="error_msg" id="error_business_image" ></div>
+                              <div class="error_msg" id="error_business_image1" ></div>
+                             <label class="col-sm-3 col-lg-2 control-label"></label>
+
+                              </div>
+                              </div>
+                              <hr/>
+                              <div class="form-group">
+                              <label class="col-sm-3 col-lg-2 control-label" ></label>
+                              <div class="col-sm-3 col-lg-3 controls">
+                                  <h4><b>Payment Modes</b></h4>
+                              </div>
+                          </div>
+                          <?php $selected_paymnt_arr=array();?>
+                           @if(sizeof($business['payment_mode'])>0)
+                             @foreach($business['payment_mode'] as $payment_mode)
+                                <?php $selected_paymnt_arr[]=$payment_mode['title'];?>
+                                @endforeach
+                              @endif
+                          <div class="form-group">
+                            <label class="col-sm-3 col-lg-2 control-label"> Payment Mode  <i class="red">*</i> </label>
+                            <div class="col-sm-9 col-lg-10 controls">
+                               <div class="fileupload fileupload-new business_upload_image_" data-provides="fileupload">
+                               <?php $selected_paymnt_arr=array();?>
+                               @if(sizeof($business['payment_mode'])>0)
+                                 @foreach($business['payment_mode'] as $payment_mode)
+                                    <?php $selected_paymnt_arr[]=$payment_mode['title'];?>
+                                  <div class="fileupload-new img-thumbnail main" style="width: 300px; height: 62px;" data-payment-mode="{{ $payment_mode['title'] }}">
+                                     <input class="form-control" type="text" name="payment_mode" id="payment_mode" class="pimg"  value="{{ $payment_mode['title']}}" />
+                                     <div class="caption">
+                                     <p class="pull-left">
+                                        <a href="javascript:void(0);"class="delete_payment_mode" data-payment-mode="{{ $payment_mode['title'] }}" onclick="javascript: return delete_payment_mode('<?php echo $payment_mode['id'] ;?>')">
+                                         <span class="glyphicon glyphicon-minus-sign " style="font-size: 20px;"></span></a>
+                                     </p>
+                                    </div>
+                                  </div>
+                               <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+
+                                  @endforeach
+                                  @endif
+                               <div class="error" id="err_delete_payment_mode"></div>
+
+                               </div>
+                                <span class='help-block'>{{ $errors->first('main_image') }}</span>
+                            </div>
+
+                         </div>  
+                         <!--
                          <div class="form-group">
                           <label class="col-sm-3 col-lg-2 control-label" for="building">
                            <a href="" class="add_payment_mode">Add More Payment Mode</a></label>
                          </div>
+
+                          <div class="form-group add_more_payment_mode" style="display: none;">
+                          <div class="form-group">
+
+                               
+                             
+                            <div class="col-sm-3 col-lg-3 controls" style="margin-left: 51px;">
+                                  <input type="checkbox"  name="payment_mode[]" value="Cash Payment" @if(in_array('Cash Payment',$selected_paymnt_arr)) checked @endif value="Paying online" />
+                                  <label class="control-label"> Cash Payment </label>
+                                  <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                              </div>
+                             
+                                <div class="col-sm-5 col-lg-3 controls">
+                                    <input type="checkbox"  name="payment_mode[]" @if(in_array('Paying online',$selected_paymnt_arr)) checked @endif value="Paying online" />
+                                    <label class=" control-label"> Paying online  </label>
+                                    <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                                </div>
+                              </div>
+
+
+                              <div class="form-group">
+                                <div class="col-sm-3 col-lg-3 controls" style="margin-left: 51px;">
+                                 <input type="checkbox"  name="payment_mode[]" value="Paying by cheque" @if(in_array('Paying by cheque',$selected_paymnt_arr)) checked @endif/>
+                                  <label class=" control-label" > Paying by cheque  </label>
+                                  <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                                </div>
+                            
+                                <div class="col-sm-5 col-lg-3 controls">
+                                    <input type="checkbox"  name="payment_mode[]" value="Paying by credit" @if(in_array('Paying by credit',$selected_paymnt_arr)) checked @endif/>
+                                      <label class="control-label"> Paying by credit  </label>
+                                      <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                                </div>
+                              </div>
+
+                              <div class="form-group">
+                               <div class="col-sm-3 col-lg-3 controls" style="margin-left: 51px;">
+                                    <input type="checkbox"  name="payment_mode[]" value="Paying by Dabit Card" @if(in_array('Paying by Dabit Card',$selected_paymnt_arr)) checked @endif/>
+                                      <label class="control-label">Paying by Dabit Card  </label>
+                               <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                                </div>
+                             
+                               <div class="col-sm-5 col-lg-3 controls">
+                                    <input type="checkbox"  name="payment_mode[]" value="Gift cards" @if(in_array('Gift cards',$selected_paymnt_arr)) checked @endif/>
+                                     <label class="control-label"> Gift cards  </label>
+                                  <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                                </div>
+                              </div>
+
+                              <div class="form-group">
+                               <div class="col-sm-3 col-lg-3 controls" style="margin-left: 51px;">
+                                    <input type="checkbox"  name="payment_mode[]" value="Paying by Bank Transfer" @if(in_array('Paying by Bank Transfer',$selected_paymnt_arr)) checked @endif/>
+                                     <label class="control-label"> Paying by Bank Trnasfer  </label>
+                                     <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                                </div>
+                           
+                               <div class="col-sm-5 col-lg-3 controls">
+                                    <input type="checkbox"  name="payment_mode[]" value="Paying by lay-by" @if(in_array('Paying by lay-by',$selected_paymnt_arr)) checked @endif/>
+                                    <label class="control-label"> Paying by lay-by  </label>
+                                    <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                                </div>
+                              </div>
+                               </div>-->
+                            
                          <div class="form-group add_more_payment_mode" style="display: none;">
                           <div class="col-sm-5 col-md-7" style="float:right;">
                              <a href="javascript:void(0);" id='add-payment'>
@@ -748,65 +909,7 @@
                     <span class='help-block'>{{ $errors->first('youtube_link') }}</span>
                 </div>
             </div> -->
-             <div class="form-group">
-                            <label class="col-sm-3 col-lg-2 control-label"> Business Services  <i class="red"></i> </label>
-                            <div class="col-sm-9 col-lg-10 controls">
-                               <div class="fileupload fileupload-new business_upload_image_" data-provides="fileupload">
-                                 @foreach($business['service'] as $service)
 
-                                  <div class="fileupload-new img-thumbnail main" style="width: 300px; height: 62px;" data-service="{{ $service['name'] }}">
-                                     <input class="form-control" type="text" name="service" id="service" class="pimg"  value="{{ $service['name']}}" />
-                                     <div class="caption">
-                                     <p class="pull-left">
-                                        <a href="javascript:void(0);"class="delete_service" data-service="{{ $service['name'] }}" onclick="javascript: return delete_service('<?php echo $service['id'] ;?>')">
-                                         <span class="glyphicon glyphicon-minus-sign " style="font-size: 20px;"></span></a>
-                                     </p>
-                                    </div>
-                                  </div>
-                              <!--     <a href="javascript:void(0);" onclick="javascript: return delete_gallery($image['business_id'],$image['image_name'],$business['id'])">
-                                     <span class="glyphicon glyphicon-minus-sign" style="font-size: 20px;"></span></a> -->
-                                  <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-
-                                  @endforeach
-                    <div class="error" id="err_delete_service"></div>
-
-                               </div>
-                                <span class='help-block'>{{ $errors->first('main_image') }}</span>
-                            </div>
-
-                         </div>
-            <div class="form-group">
-                          <label class="col-sm-3 col-lg-2 control-label" for="building">
-                           <a href="" class="add_serc">Add Services</a></label>
-                         </div>
-                          <div class="form-group add_more_service" style="display: none;">
-                          <div class="col-sm-5 col-md-7" style="float:right;">
-                             <a href="javascript:void(0);" id='add-service'>
-                                 <span class="glyphicon glyphicon-plus-sign" style="font-size: 20px;"></span>
-                             </a>
-                            <span style="margin-left:05px;">
-                            <a href="javascript:void(0);" id='remove-service'>
-                                <span class="glyphicon glyphicon-minus-sign" style="font-size: 20px;"></span>
-                            </a>
-                            </span>
-                           </div>
-                              <label class="col-sm-3 col-lg-2 control-label">Add More Business Services <i class="red">*</i> </label>
-                              <div class="col-sm-6 col-lg-4 controls">
-
-                              <input class="form-control" type="text" name="business_service[]" id="business_service" class="pimg"   />
-                              <div class="error" id="error_business_service">{{ $errors->first('business_service') }}</div>
-
-                              <div class="clr"></div><br/>
-                                <div class="error" id="error_set_default"></div>
-                                <div class="clr"></div>
-
-                             <div id="append_service" class="class-add"></div>
-                              <div class="error_msg" id="error_business_image" ></div>
-                              <div class="error_msg" id="error_business_image1" ></div>
-                             <label class="col-sm-3 col-lg-2 control-label"></label>
-
-                              </div>
-                              </div>
 
 
 

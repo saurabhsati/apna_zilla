@@ -54,20 +54,8 @@
            <script src="{{ url('/') }}/assets/front/js/bootstrap-multiselect.js" type='text/javascript'></script>
           <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/front/css/bootstrap-multiselect.css" />
 
- <script src="{{ url('/') }}/assets/front/js/stickyfloat.js"></script>
  <link href="{{ url('/') }}/assets/front/css/jquery.mCustomScrollbar.css" rel="stylesheet" />
  <script src="{{ url('/') }}/assets/front/js/jquery.mCustomScrollbar.concat.min.js"></script>
-   <script>
-                (function($){
-                    $(window).load(function(){
-                        $(".content-kgfd").mCustomScrollbar({
-                            scrollButtons:{
-                                enable:true
-                            }
-                        });
-                    });
-                })(jQuery);
-            </script>
 
        <script>
 $(document).ready(function(){
@@ -128,7 +116,25 @@ $(document).ready(function(){
   });
  });
 </script>
+
+
 <!--category droup doun mobile effect-->
+<!--right side bar Stky Start-->
+<script src="{{ url('/') }}/assets/front/js/stickyfloat.js"></script>
+
+   <script>
+                (function($){
+                    $(window).load(function(){
+                        $(".content-kgfd").mCustomScrollbar({
+                            scrollButtons:{
+                                enable:true
+                            }
+                        });
+                    });
+                })(jQuery);
+            </script>
+<!--right side bar Stky  End-->
+
  <!--Photo Gallery-->
       <link href="{{ url('/') }}/assets/front/css/touchTouch.css" rel="stylesheet" type="text/css"/>
       <script src="{{ url('/') }}/assets/front/js/jquery.touchSwipe.min.js" type="text/javascript"></script>

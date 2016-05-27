@@ -156,6 +156,13 @@
 
             </div>
             </div>
+             <hr/>
+                      <div class="form-group">
+                          <label class="col-sm-3 col-lg-2 control-label" ></label>
+                          <div class="col-sm-3 col-lg-3 controls">
+                              <h4><b>Business Gallery </b></h4>
+                          </div>
+                      </div>
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label">Business Main Banner Image <i class="red">*</i> </label>
                 <div class="col-sm-9 col-lg-10 controls">
@@ -215,7 +222,13 @@
 
                 </div>
 
-
+                 <hr/>
+                      <div class="form-group">
+                          <label class="col-sm-3 col-lg-2 control-label" ></label>
+                          <div class="col-sm-3 col-lg-3 controls">
+                              <h4><b>Business Location</b></h4>
+                          </div>
+                      </div>
                 <div class="row">
                 <div class="col-md-6 ">
 
@@ -540,16 +553,25 @@
             </div>
 
 
-            <div class="form-group">
+            <div class="form-group" style="display:none;">
+                 <label class="col-sm-3 col-lg-2 control-label" >Sunday<i class="red">*</i></label>
+                  &nbsp &nbsp &nbsp &nbsp &nbsp
+                  <input type="radio"  name="is_sunday" value="1" onclick="sunday_status('on');"/>
+                  <label >On </label>
+                   &nbsp &nbsp &nbsp &nbsp &nbsp
+                     <input type="radio"  name="is_sunday" value="0"  onclick="sunday_status('off');"/>
+                  <label  for="is_sunday">Off </label>
+                  <br/>
+            </div>
 
-            <label class="col-sm-3 col-lg-2 control-label" >Sunday<i class="red">*</i></label>
-
+              <div class="form-group" id="sunday_section" style="display:block;">
+               <label class="col-sm-3 col-lg-2 control-label" >Sunday<i class="red">*</i></label>
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control timepicker-default" name="sun_in" id="sun_in" type="text" data-rule-required="true">
+                        <input class="form-control timepicker-default " name="sun_in" id="sun_in" type="text"  >
                     </div>
                 </div>
 
@@ -558,11 +580,52 @@
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control timepicker-default" name="sun_out" id="sun_out" type="text" data-rule-required="true">
+                        <input class="form-control timepicker-default" name="sun_out" id="sun_out" type="text" >
                     </div>
                 </div>
 
             </div>
+             <hr/>
+                      <div class="form-group">
+                          <label class="col-sm-3 col-lg-2 control-label" ></label>
+                          <div class="col-sm-3 col-lg-3 controls">
+                              <h4><b>Business Services</b></h4>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label class="col-sm-3 col-lg-2 control-label" for="building">
+                          <a href="" class="add_serc">Click Here To Add Services</a></label>
+                      </div>
+                        <div class="form-group add_more_service" style="display: none;">
+                          <div class="col-sm-5 col-md-7" style="float:right;">
+                             <a href="javascript:void(0);" id='add-service'>
+                                 <span class="glyphicon glyphicon-plus-sign" style="font-size: 20px;"></span>
+                             </a>
+                            <span style="margin-left:05px;">
+                            <a href="javascript:void(0);" id='remove-service'>
+                                <span class="glyphicon glyphicon-minus-sign" style="font-size: 20px;"></span>
+                            </a>
+                            </span>
+                           </div>
+                              <label class="col-sm-3 col-lg-2 control-label">Add More Business Services <i class="red">*</i> </label>
+                              <div class="col-sm-6 col-lg-4 controls">
+
+                              <input class="form-control" type="text" name="business_service[]" id="business_service" class="pimg"   />
+                              <div class="error" id="error_business_service">{{ $errors->first('business_service') }}</div>
+
+                              <div class="clr"></div><br/>
+                                <div class="error" id="error_set_default"></div>
+                                <div class="clr"></div>
+
+                             <div id="append_service" class="class-add"></div>
+                              <div class="error_msg" id="error_business_service" ></div>
+                              <!-- <div class="error_msg" id="error_business_image1" ></div> -->
+                             <label class="col-sm-3 col-lg-2 control-label"></label>
+
+                            </div>
+                        </div>
+
+
 
             <hr/>
             <div class="form-group">
@@ -571,7 +634,69 @@
                     <h4><b>Payment Modes</b></h4>
                 </div>
             </div>
-            <div class="form-group">
+              <div class="form-group">
+               
+                <div class="col-sm-3 col-lg-3 controls" style="margin-left: 51px;">
+                    <input type="checkbox"  name="payment_mode[]" value="Cash Payment"  />
+                     <label class="control-label"> Cash Payment </label>
+                    <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                </div>
+             
+                <div class="col-sm-5 col-lg-3 controls">
+                    <input type="checkbox"  name="payment_mode[]" value="Paying online" />
+                    <label class=" control-label"> Paying online  </label>
+                    <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                </div>
+              </div>
+
+
+              <div class="form-group">
+                <div class="col-sm-3 col-lg-3 controls" style="margin-left: 51px;">
+                 <input type="checkbox"  name="payment_mode[]" value="Paying by cheque"/>
+                  <label class=" control-label" > Paying by cheque  </label>
+                  <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                </div>
+            
+                <div class="col-sm-5 col-lg-3 controls">
+                    <input type="checkbox"  name="payment_mode[]" value="Paying by credit"/>
+                      <label class="control-label"> Paying by credit  </label>
+                      <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+               <div class="col-sm-3 col-lg-3 controls" style="margin-left: 51px;">
+                    <input type="checkbox"  name="payment_mode[]" value="Paying by Dabit Card "/>
+                      <label class="control-label">Paying by Dabit Card  </label>
+               <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                </div>
+             
+               <div class="col-sm-5 col-lg-3 controls">
+                    <input type="checkbox"  name="payment_mode[]" value="Gift cards" />
+                     <label class="control-label"> Gift cards  </label>
+                  <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+               <div class="col-sm-3 col-lg-3 controls" style="margin-left: 51px;">
+                    <input type="checkbox"  name="payment_mode[]" value="Paying by Bank Trnasfer"/>
+                     <label class="control-label"> Paying by Bank Trnasfer  </label>
+                     <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                </div>
+           
+               <div class="col-sm-5 col-lg-3 controls">
+                    <input type="checkbox"  name="payment_mode[]" value="Paying by lay-by"/>
+                    <label class="control-label"> Paying by lay-by  </label>
+                    <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                </div>
+              </div>
+              
+
+
+
+
+          {{--   <div class="form-group">
             <div class="col-sm-5 col-md-7" style="float:right;">
                <a href="javascript:void(0);" id='add-payment'>
                    <span class="glyphicon glyphicon-plus-sign" style="font-size: 20px;"></span>
@@ -598,7 +723,9 @@
                <label class="col-sm-3 col-lg-2 control-label"></label>
 
                 </div>
-                </div>
+                </div> --}}
+
+
                 <hr/>
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="company_info">About Company Info<i class="red">*</i></label>
@@ -654,39 +781,7 @@
                     <span class='help-block'>{{ $errors->first('youtube_link') }}</span>
                 </div>
             </div> -->
-
-                      <div class="form-group">
-                          <label class="col-sm-3 col-lg-2 control-label" for="building">
-                          <a href="" class="add_serc">Add Services</a></label>
-                      </div>
-                        <div class="form-group add_more_service" style="display: none;">
-                          <div class="col-sm-5 col-md-7" style="float:right;">
-                             <a href="javascript:void(0);" id='add-service'>
-                                 <span class="glyphicon glyphicon-plus-sign" style="font-size: 20px;"></span>
-                             </a>
-                            <span style="margin-left:05px;">
-                            <a href="javascript:void(0);" id='remove-service'>
-                                <span class="glyphicon glyphicon-minus-sign" style="font-size: 20px;"></span>
-                            </a>
-                            </span>
-                           </div>
-                              <label class="col-sm-3 col-lg-2 control-label">Add More Business Services <i class="red">*</i> </label>
-                              <div class="col-sm-6 col-lg-4 controls">
-
-                              <input class="form-control" type="text" name="business_service[]" id="business_service" class="pimg"   />
-                              <div class="error" id="error_business_service">{{ $errors->first('business_service') }}</div>
-
-                              <div class="clr"></div><br/>
-                                <div class="error" id="error_set_default"></div>
-                                <div class="clr"></div>
-
-                             <div id="append_service" class="class-add"></div>
-                              <div class="error_msg" id="error_business_service" ></div>
-                              <!-- <div class="error_msg" id="error_business_image1" ></div> -->
-                             <label class="col-sm-3 col-lg-2 control-label"></label>
-
-                            </div>
-                        </div>
+                      
 
 
 
@@ -706,6 +801,26 @@
 <!-- END Main Content -->
 
 <script type="text/javascript">
+function sunday_status(status)
+{
+  if(status=='on')
+  {
+    $("#sunday_section").css('display','block');
+
+    $("#sun_in").timepicker('showWidget');
+    $("#sun_out").timepicker('showWidget');
+    
+
+  }
+  else if(status=='off')
+  {
+    $("#sunday_section").css('display','none');
+    $("#sun_in").timepicker('hideWidget');
+    $("#sun_out").timepicker('hideWidget');
+  }
+}
+
+
 $(document).ready(function()
 {
  var site_url="{{url('/')}}";

@@ -167,7 +167,13 @@
 
             </div>
             </div>
-           
+            <hr/>
+              <div class="form-group">
+              <label class="col-sm-3 col-lg-2 control-label" ></label>
+              <div class="col-sm-3 col-lg-3 controls">
+                  <h4><b>Business Gallery</b></h4>
+              </div>
+          </div>
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label"> Business Main Banner Image  <i class="red">*</i> </label>
                 <div class="col-sm-9 col-lg-10 controls">
@@ -224,7 +230,13 @@
 
                 </div>
                 </div>
-
+                 <hr/>
+                              <div class="form-group">
+                              <label class="col-sm-3 col-lg-2 control-label" ></label>
+                              <div class="col-sm-3 col-lg-3 controls">
+                                  <h4><b>Business Location</b></h4>
+                              </div>
+                          </div>
                 <div class="row">
                 <div class="col-md-6 ">
 
@@ -409,7 +421,7 @@
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" ></label>
                 <div class="col-sm-3 col-lg-3 controls">
-                    <h4><b>Restaurant Opening Hours</b></h4>
+                    <h4><b>Business Opening Hours</b></h4>
                 </div>
             </div>
 
@@ -569,7 +581,72 @@
                 </div>
 
             </div>
-             <hr/>
+            <hr/>
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" ></label>
+                <div class="col-sm-3 col-lg-3 controls">
+                    <h4><b>Payment Modes</b></h4>
+                </div>
+            </div>
+              <div class="form-group">
+               
+                <div class="col-sm-3 col-lg-3 controls" style="margin-left: 51px;">
+                    <input type="checkbox"  name="payment_mode[]" value="Cash Payment"  />
+                     <label class="control-label"> Cash Payment </label>
+                    <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                </div>
+             
+                <div class="col-sm-5 col-lg-3 controls">
+                    <input type="checkbox"  name="payment_mode[]" value="Paying online" />
+                    <label class=" control-label"> Paying online  </label>
+                    <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                </div>
+              </div>
+
+
+              <div class="form-group">
+                <div class="col-sm-3 col-lg-3 controls" style="margin-left: 51px;">
+                 <input type="checkbox"  name="payment_mode[]" value="Paying by cheque"/>
+                  <label class=" control-label" > Paying by cheque  </label>
+                  <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                </div>
+            
+                <div class="col-sm-5 col-lg-3 controls">
+                    <input type="checkbox"  name="payment_mode[]" value="Paying by credit"/>
+                      <label class="control-label"> Paying by credit  </label>
+                      <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+               <div class="col-sm-3 col-lg-3 controls" style="margin-left: 51px;">
+                    <input type="checkbox"  name="payment_mode[]" value="Paying by Dabit Card "/>
+                      <label class="control-label">Paying by Dabit Card  </label>
+               <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                </div>
+             
+               <div class="col-sm-5 col-lg-3 controls">
+                    <input type="checkbox"  name="payment_mode[]" value="Gift cards" />
+                     <label class="control-label"> Gift cards  </label>
+                  <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+               <div class="col-sm-3 col-lg-3 controls" style="margin-left: 51px;">
+                    <input type="checkbox"  name="payment_mode[]" value="Paying by Bank Trnasfer"/>
+                     <label class="control-label"> Paying by Bank Trnasfer  </label>
+                     <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                </div>
+           
+               <div class="col-sm-5 col-lg-3 controls">
+                    <input type="checkbox"  name="payment_mode[]" value="Paying by lay-by"/>
+                    <label class="control-label"> Paying by lay-by  </label>
+                    <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                </div>
+              </div>
+
+             {{-- <hr/>
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" ></label>
                 <div class="col-sm-3 col-lg-3 controls">
@@ -603,7 +680,8 @@
                <label class="col-sm-3 col-lg-2 control-label"></label>
 
                 </div>
-                </div>
+                </div> --}}
+                
                 <hr/>
 
 
@@ -659,10 +737,16 @@
                     <span class='help-block'>{{ $errors->first('youtube_link') }}</span>
                 </div>
             </div> -->
-
+             <hr/>
+                              <div class="form-group">
+                              <label class="col-sm-3 col-lg-2 control-label" ></label>
+                              <div class="col-sm-3 col-lg-3 controls">
+                                  <h4><b>Business Services</b></h4>
+                              </div>
+                          </div>
             <div class="form-group">
                           <label class="col-sm-3 col-lg-2 control-label" for="building">
-                           <a href="" class="add_serc">Add Services</a></label>
+                           <a href="" class="add_serc">Click Here To Add Services</a></label>
                          </div>
                           <div class="form-group add_more_service" style="display: none;">
                           <div class="col-sm-5 col-md-7" style="float:right;">

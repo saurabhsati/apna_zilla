@@ -120,7 +120,7 @@ class BusinessListingController extends Controller
     public function store(Request $request)
     {
         //echo'<pre>';
-       // print_r($request->all());exit;
+        //print_r($request->all());exit;
 
         $arr_rules	=	array();
         //business fields
@@ -163,8 +163,8 @@ class BusinessListingController extends Controller
         $arr_rules['fri_out']='required';
         $arr_rules['sat_in']='required';
         $arr_rules['sat_out']='required';
-        $arr_rules['sun_in']='required';
-        $arr_rules['sun_out']='required';
+        //$arr_rules['sun_in']='required';
+        //$arr_rules['sun_out']='required';
         //other fields
     	//$arr_rules['hours_of_operation']='required';
     	$arr_rules['company_info']='required';
@@ -464,9 +464,9 @@ class BusinessListingController extends Controller
                 $insert_data = BusinessCategoryModel::create($arr_cat_data);
             }
         }
-
-        $payment_count = count($payment_mode);
-         //exit;
+        //dd($payment_mode);
+         $payment_count = count($payment_mode);
+        // exit;
         if($payment_count>0){
         foreach($payment_mode as $key =>$value) {
          if($value!=null)

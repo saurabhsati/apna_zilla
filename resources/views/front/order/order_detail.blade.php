@@ -47,9 +47,9 @@
                             }
                            } ?>
                             
-                           <input type="hidden" value="{{$total}}" name="amount" id="amount">
+                           <input type="hidden" value="{{session('total_deal_price')}}" name="amount" id="amount">
                            <input type="hidden" value="{{$deal_arr['title']}}" name="deal_info" id="deal_info">
-                            <input type="hidden" value="{{$deal_arr['id']}}" name="deal_id" id="deal_id">
+                            <input type="hidden" value="{{session('select_deal_id')}}" name="deal_id" id="deal_id">
                            <input type="hidden" name="user_id" id="user_id" value="{{base64_decode(session('user_id'))}}">
                            <input type="hidden" name="user_name" id="user_name" value="{{session('user_name')}}">
                            <input type="hidden" name="phone" id="phone" value="{{session('mobile_no')}}">
@@ -59,11 +59,11 @@
 
                       <div class="clearfix"></div>
                     </div>
-                    <div id="flip-newsd">Have a promo code ?</div>
+                    <div id="flip-newsd" style="cursor: pointer;">Click Here If You Have a promo code ?</div>
                     <div id="panel-newsd">
                       <div class="input-group">
-                        <input type="text" aria-describedby="basic-addon2" placeholder="Eenter Promocode " class="form-control textbodr">
-                        <span id="basic-addon2" class="input-group-addon style-aplyd"><a href="#">Apply</a></span>
+                        <input type="text" name="promocode" id="promocode" aria-describedby="basic-addon2" placeholder="Enter Promocode " class="form-control textbodr">
+                        <span id="basic-addon2" class="input-group-addon style-aplyd"><a href="javascript:void(0);"  onclick="apply_promocode();">Apply</a></span>
                       </div>
                     </div>
 
@@ -75,7 +75,7 @@
                           <div class="loctionsd">Inclusive of taxes</div>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                          <div class="sumry-tlin"><i class="fa fa-inr"></i>{{$total}}</div>
+                          <div class="sumry-tlin"><i class="fa fa-inr"></i>{{session('total_deal_price')}}</div>
                         </div>
 
                       </div>
@@ -113,7 +113,11 @@
 
                  
                  <div class="buy-n-btndsds">
-                  <button type="submit" class="btn btn-post btn-post-nods" href="{{ url('/') }}/order/payment">Proceed to payment</button>
+                   @if(Session::has('user_id'))
+                  <button type="submit" class="btn btn-post btn-post-nods" href="{{ url('/') }}/order/payment" >Proceed to payment</button>
+                    @else
+                    <button type="button" class="btn btn-post btn-post-nods" data-target="#login_poup" data-toggle="modal"  href="javascript:void(0);">Proceed to payment</button>
+                   @endif
                   {{--  <a class="btn btn-post btn-post-nods" href="#">Proceed to payment</a> --}}
                    <div class="clearfix"></div> 
                  </div>
@@ -182,6 +186,9 @@
 
 
 <script type="text/javascript">
+
+
+
   jQuery.extend( jQuery.easing,{
       def: 'easeOutQuad',
       swing: function (x, t, b, c, d) {
@@ -233,5 +240,49 @@
   });
  
 });
+
+
+  var csrf_token = "{{ csrf_token() }}";
+  function apply_promocode()
+  {
+
+   var promocode = $("#promocode").val();
+   var amount    = $("#amount").val();
+   var deal_id   = $("#deal_id").val();
+
+
+   if(amount =='' && deal_id =='')
+    {
+       window.location.reload();
+        return false;
+    }
+    else
+    {
+        var fromData = {
+                            amount:amount,
+                            deal_id:deal_id,
+                            promocode:promocode,
+                            _token:csrf_token
+                              };
+      $.ajax({
+                             url: site_url+"/order/set_order_deal_with_promocode",
+                             type: 'POST',
+                             data: fromData,
+                             dataType: 'json',
+                             async: false,
+
+                             success: function(response)
+                             {
+                               if (response.status == "1") {
+                                 
+                               }
+                               return false;
+                             }
+                         });
+  }
+
+  }
+
+
 </script>
 @endsection

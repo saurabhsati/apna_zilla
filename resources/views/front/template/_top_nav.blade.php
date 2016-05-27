@@ -40,9 +40,10 @@
                          {{--@if ($user = Sentinel::check())--}}
                          @if(Session::has('mobile_no'))
 
+<!--
                           <li class="nav-item">
                               <div class="dropdown">
-                                <a class="dropdown-toggle profile_dropdown" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="dropdown-toggle profile_dropdown" type="button" id="dropdownMenu2" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
                                 Hi {{ucfirst(Session::get('user_name'))}}
                                 <span class="caret"></span>
                                 </a>
@@ -56,7 +57,20 @@
                                 </ul>
                              </div>
                           </li>
-
+-->
+ <div class="btn-group show-on-hover">
+          <button type="button" class=" tgd btn btn-default dropdown-toggle" data-toggle="dropdown">
+            Hi {{ucfirst(Session::get('user_name'))}} <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+                <li><a href="{{ url('/').'/front_users/profile' }}">My Account</a></li>
+                 <li><a href="{{ url('/').'/front_users/my_business' }}" >My Business </a></li>
+                 <li><a href="{{ url('/').'/front_users/add_business' }}" >Add Business </a></li>
+                 <li><a href="{{ url('/').'/front_users/my_favourites' }}">My Favourites</a></li>
+                 <li><a href="{{ url('/').'/front_users/my_order' }}">My Orders</a></li>  
+                 <li><a href="{{ url('/').'/front_users/logout' }}" onclick="social_logout(this)" >Logout</a></li>
+          </ul>
+        </div>
 
 
                         @else

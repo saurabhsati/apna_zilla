@@ -604,6 +604,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	Route::group(array('prefix' => '/order'), function()
 	{
 		Route::get('/offerid={offers}/{enc_id}',		'Front\OrderController@index');
+		Route::post('/set_order_deal_with_promocode',   'Front\OrderController@set_order_deal_with_promocode');
 		Route::post('/payment',						    'Front\OrderController@payment');
 		Route::post('/success',							'Front\OrderController@payment_success');
 		Route::post('/fail',							'Front\OrderController@payment_fail');

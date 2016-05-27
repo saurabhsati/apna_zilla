@@ -47,8 +47,8 @@
                                     }
                                   
                                 ?>
-                              <div class="deals-nm"> @if(sizeof($arr_departture_point)>0){{ sizeof($arr_departture_point) }} @else {{ 0 }} @endif Location</div>
-                              <div class="deals-nm"> @if(!empty($deals['redeem_count'])){{ $deals['redeem_count'] }} @else {{ 0 }} @endif  Bought</div>
+                           <p>  @if(sizeof($arr_departture_point)>0){{ sizeof($arr_departture_point) }} @else {{ 0 }} @endif Location</p> 
+                            <p> @if(!empty($deals['redeem_count'])){{ $deals['redeem_count'] }} @else {{ 0 }} @endif  Bought</p> 
                               <div class="online-spend"></div>
                                       <div class="price-box">
                                       <div class="price-new">£<?php echo number_format(($deals['price']-(($deals['price'])*($deals['discount_price']/100))),2);?></div>
@@ -86,8 +86,8 @@
                                     $arr_departture_point = json_decode($max_dis_deals['json_location_point'],TRUE);
                                      }
                                 ?>
-                              <div class="deals-nm"> @if(sizeof($arr_departture_point)>0){{ sizeof($arr_departture_point) }} @else {{ 0 }} @endif Location</div>
-                              <div class="deals-nm"> @if(!empty($max_dis_deals['redeem_count'])){{ $max_dis_deals['redeem_count'] }} @else {{ 0 }} @endif  Bought</div>
+                      <p>     @if(sizeof($arr_departture_point)>0){{ sizeof($arr_departture_point) }} @else {{ 0 }} @endif Location</p>   
+                        <p>      @if(!empty($max_dis_deals['redeem_count'])){{ $max_dis_deals['redeem_count'] }} @else {{ 0 }} @endif  Bought</p>
                              
                           <div class="online-spend"></div>
                                   <div class="price-box">
@@ -124,8 +124,8 @@
                                     $arr_departture_point = json_decode($loc_deals['json_location_point'],TRUE);
                                      }
                                 ?>
-                              <div class="deals-nm"> @if(sizeof($arr_departture_point)>0){{ sizeof($arr_departture_point) }} @else {{ 0 }} @endif Location</div>
-                              <div class="deals-nm"> @if(!empty($loc_deals['redeem_count'])){{ $loc_deals['redeem_count'] }} @else {{ 0 }} @endif  Bought</div>
+                           <p>  @if(sizeof($arr_departture_point)>0){{ sizeof($arr_departture_point) }} @else {{ 0 }} @endif Location</p> 
+                        <p> @if(!empty($loc_deals['redeem_count'])){{ $loc_deals['redeem_count'] }} @else {{ 0 }} @endif  Bought</p>
                             
                           <div class="online-spend"></div>
                                   <div class="price-box">

@@ -371,11 +371,11 @@
                <span class="select-offer-notification noshow" style="display:none;color:#e6ab2a;font:14px;" id="offerSelectionError"><h4>Please select at least one offer</h4></span>
                    @if(isset($deal['offers_info']) && sizeof($deal['offers_info'])>0)
 
-                  @if(Session::has('user_id'))
+                 
                   <a type="button" class=" btn_buy btn btn-post btn-post-nods" href="javascript:void(0);">Buy Now</a>
-                   @else
-                    <a type="button" href="javascript:void(0);" data-target="#login_poup" data-toggle="modal" class="btn btn-post center-b " href="javascript:void(0);">Buy Now</a>
-                   @endif
+                   
+                   <!--  <a type="button" href="javascript:void(0);" data-target="#login_poup" data-toggle="modal" class="btn btn-post center-b " href="javascript:void(0);">Buy Now</a> -->
+                   
                    
                  @endif
                <div class="clearfix"></div> 

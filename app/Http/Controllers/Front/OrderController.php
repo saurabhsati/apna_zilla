@@ -17,6 +17,7 @@ use App\Common\Services\PayUPaymentService;
 use App\Models\DealsTransactionModel;
 use App\Models\UsersOrderModel;
 use App\Models\EmailTemplateModel;
+use App\Models\CouponModel;
 use Session;
 use URL;
 use Mail;
@@ -33,10 +34,10 @@ class OrderController extends Controller
    public function index($offers,$enc_id)
    {
    	 $id = base64_decode($enc_id);
-     if(!(Session::has('user_id')))
+   /*  if(!(Session::has('user_id')))
         {
            return redirect('/');
-        }
+        }*/
      $page_title ="Order Detail";
      /* Offers Ids & Quantity */
      $complite_arr=[];
@@ -55,6 +56,23 @@ class OrderController extends Controller
         $deal_arr = $obj_deal_arr->toArray();
     }
      $deal_image_path="uploads/deal";
+     $total=0;
+      if(sizeof($complite_arr)>0 && isset($complite_arr))
+       {
+        foreach($complite_arr as $key => $selected_offer)
+          {
+            foreach($deal_arr['offers_info'] as $deal_offer)
+            {
+              if($selected_offer[0]==$deal_offer['id'])
+              {
+               $total=$total+$deal_offer['discounted_price']*$selected_offer[1];
+              }
+            } 
+          }
+         }
+   Session::put('total_deal_price', $total);
+   Session::put('select_deal_id', $id);
+
     return view('front.order.order_detail',compact('page_title','deal_arr','deal_image_path','complite_arr'));
   }
   public function payment(Request $request)
@@ -263,6 +281,79 @@ class OrderController extends Controller
     unset( $payment );
 
     return $result;
+  }
+  public function set_order_deal_with_promocode(Request $request)
+  {
+     $amount=$request->input('amount');
+     $deal_id=$request->input('deal_id');
+     $promocode=$request->input('promocode');
+     $consider_amount=0;
+     $apply_discount=0;
+     $discounted_amount=0;
+           
+     if($amount==Session::get('total_deal_price'))
+     {
+        $consider_amount=$amount;
+        echo "match";
+     }
+     else
+     {
+       echo"not match";
+       $consider_amount=Session::get('total_deal_price');
+
+     }
+     echo "amount consider = ".$consider_amount;
+     $arr_coupon           = [];
+     $obj_arr_coupon       = CouponModel::where('coupon_code',$promocode)->first();
+
+     if($obj_arr_coupon != FALSE)
+     {
+       $arr_coupon=$obj_arr_coupon->toArray();
+
+     }
+     if(sizeof( $arr_coupon)>0 && isset( $arr_coupon))
+     {
+            $promo_start_date = $arr_coupon['start_date'];
+            $promo_end_date = $arr_coupon['end_date'];
+            $current_date = date('Y-m-d');
+            if(strtotime($current_date) <= strtotime($promo_end_date) && strtotime($current_date) >= strtotime($promo_start_date))
+              {
+                   $coupon_type= $arr_coupon['type'];
+                   if($coupon_type=='PERCENT')
+                   {
+                        $apply_discount=$arr_coupon['discount'];
+                   }
+                   else if($coupon_type=='AMT')
+                   {
+                         $apply_discount=$arr_coupon['discount'];
+                         if($consider_amount<$apply_discount)
+                         {
+
+                         }
+                         else
+                         {
+                            $discounted_amount=$consider_amount-$apply_discount;
+                         }
+
+                   }
+              }
+              else
+              {
+                $data['status'] = "ERROR";
+                $data['msg']  = "Promo code is not valid now";
+                echo json_encode($data);
+                exit;
+              }
+
+     }
+     else
+      {
+        $data['status'] = "ERROR";
+        $data['msg']  = "Invalid Promo Code !";
+        echo json_encode($data);
+        exit;
+      }
+
   }
 
   

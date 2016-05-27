@@ -198,7 +198,7 @@ box-shadow: 0px 0px 6px 2px rgba(175,175,175,0.87); transform: scale(1.08);}
 /*Project Package END HERE*/
 
 /* Explore Directory Category  start here */
-
+.quantitydf1{padding-top: 10px;}
 .explore-category{background: #f4f4f4; padding: 30px 0 13px;}
 .cate-content{font-size: 18px; color: #4c6474; font-family: 'varela_roundregular'; text-align: center; max-width: 680px; width: 100%; margin: 0 auto;}
 .exp-category-head h3{text-align: center; font-family: 'noto_sansbold'; font-size: 36px; color: #5c5c5c;}
@@ -1178,6 +1178,7 @@ select.input_acct {
     color: #fff;
     font-family: "varela_roundregular";
     font-size: 15px;
+    padding: 20px 0;
 }
 .categ li {
     display: inline-block;
@@ -1187,6 +1188,7 @@ select.input_acct {
     background: #fff none repeat scroll 0 0;
     padding:8px 12px;
 }
+.deals-product p{padding: 0px 0; margin: 0px;}
 .deals-img > img {
     width: 100%;
 }
@@ -1288,6 +1290,12 @@ box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);transition: all 1s ease-in-out 0s;
     font-size: 14px;
     padding: 0 !important;
 }
+
+.show-on-hover:hover > ul.dropdown-menu {
+    display: block;    
+}
+.tgd{margin-right: 10px; border: none;}
+.tgd.btn.btn-default.dropdown-toggle:hover{color: #4d9f2e; background-color: transparent;}
 .dropdown.w3_megamenu-fw .dropdown-menu {
     font-size: 12px;
     min-width: 189px;
@@ -1299,10 +1307,10 @@ box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);transition: all 1s ease-in-out 0s;
 }
 .w3_megamenu-content.withdesc {
     display: block;
-    padding: 10px !important;
+    padding: 0 10px ;
     width: 100%;
 }
-
+.dropdown-menu{  margin: 9px 0 0;}
 
 /*details page popup start here*/
 
