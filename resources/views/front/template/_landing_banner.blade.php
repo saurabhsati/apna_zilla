@@ -20,7 +20,7 @@
                                  value="{{Session::get('search_city_title')}}"
                                @elseif(Session::has('city'))
                                value="{{Session::get('city') }}"
-                                @else value="New Delhi"
+                                @else value="Delhi"
                                 @endif />
                                 <input type="hidden"
                                  id="city_id"

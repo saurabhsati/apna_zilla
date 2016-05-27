@@ -39,7 +39,7 @@ class CategorySearchController extends Controller
       }
       else
       {
-        $c_city='New Delhi';
+        $c_city='Delhi';
       }
 
       /* Get Sub-Categories under parent category */

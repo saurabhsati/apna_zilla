@@ -24,7 +24,7 @@ class DealController extends Controller
     $this->deal_public_upload_img_path = "/uploads/deal/deal_slider_images/";
  	}
 
- 	public function index($city='New Delhi')
+ 	public function index($city='Delhi')
  	{
 
  		$page_title = "Deals and Offers";
@@ -59,13 +59,13 @@ class DealController extends Controller
         }
       }
   
-  	$obj_deals_info = DealsOffersModel::where('is_active','1')->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->orderBy('created_at','DESC')->get();
+  	$obj_deals_info = DealsOffersModel::where('is_active','1')->where('end_day', '>=', date('Y-m-d').' 00:00:00')->where("json_location_point", 'like', "%".$city."%")->/*whereIn('business_id',$key_business_city)->*/orderBy('created_at','DESC')->get();
 
  		if($obj_deals_info)
  		{
  			$arr_deals_info = $obj_deals_info->toArray();
 		}
- 		$obj_deals_max_dis_info = DealsOffersModel::where('is_active','1')->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->orderBy('discount_price','DESC')->get();
+ 		$obj_deals_max_dis_info = DealsOffersModel::where('is_active','1')->where('end_day', '>=', date('Y-m-d').' 00:00:00')->where("json_location_point", 'like', "%".$city."%")->orderBy('discount_price','DESC')->get();
 
  		if($obj_deals_max_dis_info)
  		{
@@ -73,7 +73,7 @@ class DealController extends Controller
 		}
 
 
-   $obj_deals_default_loc = DealsOffersModel::where('is_active','1')->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->get();
+   $obj_deals_default_loc = DealsOffersModel::where('is_active','1')->where('end_day', '>=', date('Y-m-d').' 00:00:00')->where("json_location_point", 'like', "%".$city."%")->get();
   if($obj_deals_default_loc)
   {
       $arr_deals_loc_info = $obj_deals_default_loc->toArray();
@@ -175,21 +175,21 @@ class DealController extends Controller
          
           if(sizeof($key_deal_cat)>0)
           {  
-                $obj_deals_info = DealsOffersModel::where('is_active','1')->whereIn('id',$key_deal_cat)->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->orderBy('created_at','DESC')->get();
+                $obj_deals_info = DealsOffersModel::where('is_active','1')->whereIn('id',$key_deal_cat)->where('end_day', '>=', date('Y-m-d').' 00:00:00')->where("json_location_point", 'like', "%".$city."%")->/*whereIn('business_id',$key_business_city)->*/orderBy('created_at','DESC')->get();
 
                 if($obj_deals_info)
                 {
                     $arr_deals_info = $obj_deals_info->toArray();
                 }
 
-                $obj_deals_max_dis_info = DealsOffersModel::where('is_active','1')->whereIn('id',$key_deal_cat)->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->orderBy('discount_price','DESC')->get();
+                $obj_deals_max_dis_info = DealsOffersModel::where('is_active','1')->whereIn('id',$key_deal_cat)->where('end_day', '>=', date('Y-m-d').' 00:00:00')->where("json_location_point", 'like', "%".$city."%")->/*whereIn('business_id',$key_business_city)->*/orderBy('discount_price','DESC')->get();
 
                 if($obj_deals_max_dis_info)
                 {
                     $arr_deals_max_dis_info = $obj_deals_max_dis_info->toArray();
                 }
 
-               $obj_deals_default_loc = DealsOffersModel::where('is_active','1')->whereIn('id',$key_deal_cat)->where('end_day', '>=', date('Y-m-d').' 00:00:00')->whereIn('business_id',$key_business_city)->get();
+               $obj_deals_default_loc = DealsOffersModel::where('is_active','1')->whereIn('id',$key_deal_cat)->where('end_day', '>=', date('Y-m-d').' 00:00:00')->where("json_location_point", 'like', "%".$city."%")->/*whereIn('business_id',$key_business_city)->*/get();
               if($obj_deals_default_loc)
               {
                   $arr_deals_loc_info = $obj_deals_default_loc->toArray();

@@ -11,7 +11,7 @@
                                <input type="text"
                                  @if(Request::segment(1) && Request::segment(1)!='order')
                                 value="{{urldecode(Request::segment(1))}}"
-                                @else value="New Delhi"
+                                @else value="Delhi"
                                 @endif
                                id="city_search"
                                class="search-txt city_finder ui-autocomplete-input"

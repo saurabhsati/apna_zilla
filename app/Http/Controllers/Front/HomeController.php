@@ -33,7 +33,7 @@ class HomeController extends Controller
         }
         else
         {
-           $current_city='New Delhi';
+           $current_city='Delhi';
         }
     	$arr_category = array();
 
@@ -188,8 +188,8 @@ class HomeController extends Controller
                         }
                         else
                         {
-                                 Session::put('city', 'New Delhi');
-                                 $obj_city = CityModel::where('city_title',"New Delhi")->first();
+                                 Session::put('city', 'Delhi');
+                                 $obj_city = CityModel::where('city_title',"Delhi")->first();
                                 if($obj_city)
                                 {
                                     $arr_city = $obj_city->toArray();
@@ -398,7 +398,7 @@ class HomeController extends Controller
             }
             else
             {
-                $current_city='New Delhi';
+                $current_city='Delhi';
             }
             $arr_city=[];
              $obj_city_arr=CityModel::where('city_title',$current_city)->first();
@@ -563,7 +563,7 @@ class HomeController extends Controller
           }
           else
           {
-            $city='New Delhi';
+            $city='Delhi';
           }
         $html='';
         if(sizeof($business_listing)>0)

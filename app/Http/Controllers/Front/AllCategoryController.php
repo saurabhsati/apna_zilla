@@ -28,7 +28,7 @@ class AllCategoryController extends Controller
         }
         else
         {
-        	$current_city='New Delhi';
+        	$current_city='Delhi';
         }
         $arr_category = array();
     	$where_arr=array('parent'=>0);
