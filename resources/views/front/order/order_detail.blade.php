@@ -32,7 +32,10 @@
 
                     <div class="mainpulsumiry">
                       <div class="pull-left">Sub Total</div><br/>
-                      <p class="font-size_14px promo_status" style="display:none;color:green"></p>
+                      <p class="font-size_14px promo_status" style="display:none;"></p>
+                      @if(Session::has('promo_used'))
+                      <a href="#" id="removeCode" style="display:none;" onclick="remove_promocode();" class="remove_promo_trigger font-size_10px margin_zero info-class-color">Remove</a>@endif
+
                         <?php $total =0; 
                          if(sizeof($complite_arr)>0 && isset($complite_arr))
                          {
@@ -60,12 +63,14 @@
 
                       <div class="clearfix"></div>
                     </div>
+                    <div id="apply_promo_div">
                     <div id="flip-newsd" style="cursor: pointer;"><a href="javascript:void(0);" >Click Here If You Have a promo code ?</a></div>
                     <div id="panel-newsd">
-                      <div class="input-group">
+                      <div class="input-group" >
                         <input type="text" name="promocode" id="promocode" aria-describedby="basic-addon2" placeholder="Enter Promocode " class="form-control textbodr">
                         <span id="basic-addon2" class="input-group-addon style-aplyd"><a href="javascript:void(0);"  onclick="apply_promocode();">Apply</a></span>
                       </div>
+                    </div>
                     </div>
 
                     <div class="summry-gry">
@@ -276,12 +281,22 @@
                              success: function(response)
                              {
                              	 if(response.status =="ALLOWED")
-	                           {
-	                             $("#amount").attr('value',response.discounted_amount);
-                               $(".final_discounted_price").html(response.discounted_amount);
-                               $(".promo_status").css('display','block');
-	                             $(".promo_status").html(response.msg);
-	                           }
+  	                           {
+  	                             $("#amount").attr('value',response.discounted_amount);
+                                 $(".final_discounted_price").html(response.discounted_amount);
+                                 $(".promo_status").css('display','block');
+                                 $("#apply_promo_div").css('display','none');
+                                 $(".promo_status").css('color','green');
+  	                             $(".promo_status").html(response.msg);
+                                 $(".promo_status").append('<br/><a href="javascript:void(0);" id="removeCode"  onclick="remove_promocode();" class="remove_promo_trigger font-size_10px margin_zero info-class-color">Remove</a>');
+  	                           }
+                               else if(response.status =="ERROR")
+                               {
+                                $(".promo_status").css('display','block');
+                                $(".promo_status").css('color','red');
+                                $(".promo_status").html(response.msg);
+                               }
+
 	                          
                                return false;
                              }
@@ -289,6 +304,44 @@
   }
 
   }
+  function remove_promocode()
+  {
+     
+          var fromData = {
+                              amount:{{$total}},
+                               _token:csrf_token
+                                };
+
+                        $.ajax({
+                               url: site_url+"/order/remove_promocode",
+                               type: 'POST',
+                               data: fromData,
+                               dataType: 'json',
+                               async: false,
+
+                               success: function(response)
+                               {
+                                 if(response.status =="REMOVE")
+                                 {
+                                  console.log(response.original_amount)
+                                   $(".promo_status").css('display','block');
+                                   $("#apply_promo_div").css('display','block');
+                                   $(".promo_status").css('color','green');
+                                   $(".promo_status").html(response.msg);
+
+                                   $("#amount").attr('value',response.original_amount);
+                                   $(".final_discounted_price").html(response.original_amount);
+                                 }
+                                 else
+                                 {
+                                     $(".promo_status").css('display','block');
+                                   $(".promo_status").css('color','green');
+                                   $(".promo_status").html(response.msg);
+                                 }
+                                }
+                             });
+
+    }
 
 
 </script>
