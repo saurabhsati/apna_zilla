@@ -63,7 +63,7 @@
               <form class="form-horizontal"
                        id="validation-form"
                        method="POST"
-                      action="{{ url('/front_users/update_business_step4/'.$enc_id)}}"
+                      action="{{ url('/front_users/update_business_step4OK/'.$enc_id)}}"
                        enctype="multipart/form-data"
                        >
 

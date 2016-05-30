@@ -378,8 +378,8 @@ class DealController extends Controller
 
                                   <div class="online-spend"></div>
                                           <div class="price-box">
-                                          <div class="price-new">£'.round($deal['price']-(($deal['price'])*($deal['discount_price']/100))).'</div>
-                                              <div class="price-old">£'.$deal['price'].'</div>
+                                          <div class="price-new"><i class="fa fa-inr"></i> '.round($deal['price']-(($deal['price'])*($deal['discount_price']/100))).'</div>
+                                              <div class="price-old"><i class="fa fa-inr"></i> '.$deal['price'].'</div>
                                               <div class="view"><a href="'.url('/').'/'.$search_under_city.'/deals/'.urlencode(str_replace(' ','-',$deal['name'])).'/'.base64_encode($deal['id']).'" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
                                           </div>
                                   </div>

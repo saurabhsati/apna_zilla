@@ -1191,18 +1191,21 @@ If you need any more details on RightNext Verified, please refer to
 var supports = (function () {
     var a = document.documentElement,
         b = "ontouchstart" in window || navigator.msMaxTouchPoints;
-    if (b) {
+    if(b) 
+    {
         a.className += " touch";
         return {
-            touch: false;
-        }
-    } else {
-        a.className += " no-touch";
-        return {
-            touch: true;
+            touch:false;
         }
     }
-})();
+    else
+    {
+        a.className += " no-touch";
+        return {
+            touch:true;
+        }
+    }
+});
 
 
 if ($("html").hasClass("no-touch")) {

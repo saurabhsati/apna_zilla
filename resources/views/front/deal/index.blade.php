@@ -51,8 +51,8 @@
                             <p> @if(!empty($deals['redeem_count'])){{ $deals['redeem_count'] }} @else {{ 0 }} @endif  Bought</p> 
                               <div class="online-spend"></div>
                                       <div class="price-box">
-                                      <div class="price-new">£<?php echo number_format(($deals['price']-(($deals['price'])*($deals['discount_price']/100))),2);?></div>
-                                          <div class="price-old">£{{ $deals['price'] }} <!--| <span>offers 50% OFF</span>--></div>
+                                      <div class="price-new"><i class='fa fa-inr'></i>  <?php echo number_format(($deals['price']-(($deals['price'])*($deals['discount_price']/100))),2);?></div> 
+                                          <div class="price-old"><i class='fa fa-inr'></i>  {{ $deals['price'] }} <!--| <span>offers 50% OFF</span>--></div>
                                           <div class="view"><a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$deals['name']))}}/{{base64_encode($deals['id'])}}" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
                                       </div>
                               </div>
@@ -91,8 +91,8 @@
                              
                           <div class="online-spend"></div>
                                   <div class="price-box">
-                                  <div class="price-new">£<?php echo number_format(($max_dis_deals['price']-(($max_dis_deals['price'])*($max_dis_deals['discount_price']/100))),2);?></div>
-                                      <div class="price-old">£{{ $max_dis_deals['price'] }} <!--| <span>offers 50% OFF</span>--></div>
+                                  <div class="price-new"><i class='fa fa-inr'></i>  <?php echo number_format(($max_dis_deals['price']-(($max_dis_deals['price'])*($max_dis_deals['discount_price']/100))),2);?></div>
+                                      <div class="price-old"><i class='fa fa-inr'></i>  {{ $max_dis_deals['price'] }} <!--| <span>offers 50% OFF</span>--></div>
                                       <div class="view"><a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$max_dis_deals['name']))}}/{{base64_encode($max_dis_deals['id'])}}" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
                                   </div>
                           </div>
@@ -129,8 +129,8 @@
                             
                           <div class="online-spend"></div>
                                   <div class="price-box">
-                                  <div class="price-new">£<?php echo number_format(($loc_deals['price']-(($loc_deals['price'])*($loc_deals['discount_price']/100))),2);?></div>
-                                      <div class="price-old">£{{ $loc_deals['price'] }} <!--| <span>offers 50% OFF</span>--></div>
+                                  <div class="price-new"><i class='fa fa-inr'></i> <?php echo number_format(($loc_deals['price']-(($loc_deals['price'])*($loc_deals['discount_price']/100))),2);?></div>
+                                      <div class="price-old"><i class='fa fa-inr'></i> {{ $loc_deals['price'] }} <!--| <span>offers 50% OFF</span>--></div>
                                       <div class="view"><a href="{{url('/')}}/{{$city}}/deals/{{urlencode(str_replace(' ','-',$loc_deals['name']))}}/{{base64_encode($loc_deals['id'])}}" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a></div>
                                   </div>
                           </div>
