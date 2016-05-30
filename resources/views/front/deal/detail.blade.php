@@ -30,7 +30,7 @@
               }
               else
               {
-                  $city="Mumbai";
+                  $city="Delhi";
               }?>
      @if(sizeof($deals_info)>0)
       @foreach($deals_info as $deal)

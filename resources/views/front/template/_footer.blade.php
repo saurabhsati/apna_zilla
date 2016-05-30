@@ -866,8 +866,6 @@ If you need any more details on RightNext Verified, please refer to
 
           $('#m_error').hide();
           $('#mobile_no_error').hide();
-
-
       });
     $('#password').keyup(function()
       {
@@ -1014,21 +1012,21 @@ If you need any more details on RightNext Verified, please refer to
                   {
                     $('#otp_no').val('');
                     $('#mobile_no_otp').val('');
-                     $('#otp_succ_div').show();
+                    $('#otp_succ_div').show();
                     $('#otp_succ_div').html("SMS Send Successfully");
 
                   }
                   else if(response.status == "ERROR")
                   {
-                      $('#otp_err_div').show();
-                      $('#otp_mobile_err_div').hide();
-                      $('#otp_succ_div').hide();
+                    $('#otp_err_div').show();
+                    $('#otp_mobile_err_div').hide();
+                    $('#otp_succ_div').hide();
                   }
                   else if(response.status == "MOBILE_ERROR")
                   {
-                      $('#otp_mobile_err_div').show();
-                      $('#otp_err_div').hide();
-                      $('#otp_succ_div').hide();
+                    $('#otp_mobile_err_div').show();
+                    $('#otp_err_div').hide();
+                    $('#otp_succ_div').hide();
                   }
 
                }
@@ -1043,8 +1041,6 @@ If you need any more details on RightNext Verified, please refer to
 
 <!-- BY nayan For login -->
 <script type="text/javascript">
-
-
 
   function login_submit_form()
   {
@@ -1109,7 +1105,6 @@ If you need any more details on RightNext Verified, please refer to
   }
 </script>
 
-<!-- <script type="text/javascript" src="{{--url('/')--}}/assets/jquery-validation/dist/jquery.validate.min.js"></script> -->
 <script type="text/javascript">
   $(document).ready(function(){
 
@@ -1195,14 +1190,14 @@ var supports = (function () {
     {
         a.className += " touch";
         return {
-            touch:false;
+            touch:false
         }
     }
     else
     {
         a.className += " no-touch";
         return {
-            touch:true;
+            touch:true
         }
     }
 });
@@ -1272,65 +1267,13 @@ if ($("html").hasClass("no-touch")) {
 
  } //END IF no-touch for hover script & removeAttr for the links to work
 </script>
- <script type="text/javascript">
-		jQuery.extend( jQuery.easing,{
-			def: 'easeOutQuad',
-			swing: function (x, t, b, c, d) {
-				//alert(jQuery.easing.default);
-				return jQuery.easing[jQuery.easing.def](x, t, b, c, d);
-			},
-			easeInQuad: function (x, t, b, c, d) {
-				return c*(t/=d)*t + b;
-			},
-			easeOutQuad: function (x, t, b, c, d) {
-				return -c *(t/=d)*(t-2) + b;
-			},
-			easeInOutQuad: function (x, t, b, c, d) {
-				if ((t/=d/2) < 1) return c/2*t*t + b;
-				return -c/2 * ((--t)*(t-2) - 1) + b;
-			},
-			easeOutElastic: function (x, t, b, c, d) {
-				var s=1.70158;var p=0;var a=c;
-				if (t==0) return b;  if ((t/=d)==1) return b+c;  if (!p) p=d*.3;
-				if (a < Math.abs(c)) { a=c; var s=p/4; }
-				else var s = p/(2*Math.PI) * Math.asin (c/a);
-				return a*Math.pow(2,-10*t) * Math.sin( (t*d-s)*(2*Math.PI)/p ) + c + b;
-			},
-			easeInOutElastic: function (x, t, b, c, d) {
-				var s=1.70158;var p=0;var a=c;
-				if (t==0) return b;  if ((t/=d/2)==2) return b+c;  if (!p) p=d*(.3*1.5);
-				if (a < Math.abs(c)) { a=c; var s=p/4; }
-				else var s = p/(2*Math.PI) * Math.asin (c/a);
-				if (t < 1) return -.5*(a*Math.pow(2,10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )) + b;
-				return a*Math.pow(2,-10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )*.5 + c + b;
-			},
-			easeInBack: function (x, t, b, c, d, s) {
-				if (s == undefined) s = 1.70158;
-				return c*(t/=d)*t*((s+1)*t - s) + b;
-			},
-			easeOutBack: function (x, t, b, c, d, s) {
-				if (s == undefined) s = 1.70158;
-				return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
-			},
-			easeInOutBack: function (x, t, b, c, d, s) {
-				if (s == undefined) s = 1.70158; 
-				if ((t/=d/2) < 1) return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b;
-				return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b;
-			}
-		});
-		
-		// init the pluging and bind it to the #menu element
-		$('.menus').stickyfloat();
-		
-		
-	
-</script>
+
       
-       <script src="{{ url('/') }}/assets/front/js/bootstrap.min.js" type="text/javascript"></script>
-        <!-- Listing details Tabbing End -->
-        <script src="{{ url('/') }}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>
-        <link href="{{ url('/') }}/assets/front/css/easy-responsive-tabs.css" rel="stylesheet" type="text/css" />
-        <script src="{{ url('/') }}/assets/front/js/jquery-ui.js" type='text/javascript'></script>
+ <script src="{{ url('/') }}/assets/front/js/bootstrap.min.js" type="text/javascript"></script>
+  <!-- Listing details Tabbing End -->
+  <script src="{{ url('/') }}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>
+  <link href="{{ url('/') }}/assets/front/css/easy-responsive-tabs.css" rel="stylesheet" type="text/css" />
+  <script src="{{ url('/') }}/assets/front/js/jquery-ui.js" type='text/javascript'></script>
 
    </body>
 </html>

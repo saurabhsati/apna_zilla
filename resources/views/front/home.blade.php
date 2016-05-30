@@ -127,7 +127,7 @@
                                        <div class="f1_card shadow">
                                           <div class="cate-addre-block-two front face">
                                           <div class="img-hm img_circle">
-                                          <img alt="" src="{{get_resized_image_path($first_cat_images,'uploads/category',16,16) }}"><!-- <img alt="" src="{{url('/')}}/assets/front/images/plus-incc.png"> -->
+                                          <img alt="" src="{{get_resized_image_path($first_cat_images,'uploads/category',16,16) }}">
                                           </div>
                                           <div class="img-hm1">
                                           <img alt="" src="{{url('/')}}/assets/front/images/cate-address-ica.png">

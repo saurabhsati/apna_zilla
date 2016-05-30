@@ -200,9 +200,11 @@ $(document).ready(function(){
              if(response.status == "done" )
              {
 
-              var url=document.URL;
+              /*var url=document.URL;
               var pathArray = window.location.pathname.split( '/' );
               console.log(pathArray);
+              if( pathArray[4]=='deals' || pathArray[4]=="all-categories"  )
+              {
                 if(pathArray[3]!='')
                {
                   var old_city =(pathArray[3]);
@@ -216,6 +218,12 @@ $(document).ready(function(){
                   window.location.reload();
                 }
               }
+              else
+              {
+                 window.location.reload();
+              }*/
+               window.location.href=site_url;
+            }
          });
 
   }
