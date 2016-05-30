@@ -693,7 +693,7 @@ class BusinessListingController extends Controller
         }
        
         $business_data = array();
-        $business_data=BusinessListingModel::with(['category','user_details','reviews','membership_plan_details','service','image_upload_details','payment_mode'])->where('id',$id)->get()->toArray();
+        $business_data=BusinessListingModel::with(['category','user_details','reviews','membership_plan_details','business_times','service','image_upload_details','payment_mode'])->where('id',$id)->get()->toArray();
         // dd($business_data);
          return view('web_admin.business_listing.show',compact('page_title','business_data','business_public_img_path','business_base_upload_img_path','arr_main_category','arr_place','arr_sub_category'));
 

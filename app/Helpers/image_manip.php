@@ -6,7 +6,7 @@
  */
 function get_resized_image_path($image_file = FALSE,$dir=FALSE,$height=250,$width=250,$fallback_text="Default Image")
 {
-    ini_set('memory_limit', '600M' );//THIS MEMORY LIMIT FOR RESOLOTION 10000 * 10000 Approx
+    ini_set('memory_limit', '700M' );//THIS MEMORY LIMIT FOR RESOLOTION 10000 * 10000 Approx
     
     $CACHE_DIR = 'resize_cache/';
 

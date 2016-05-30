@@ -189,7 +189,7 @@
                             
                           <div class="title_acc">Opening Hours</div>
                             <div class="row" style="margin-bottom: 15px;">
-
+                          @foreach($business['business_times'] as $time)   
                            <div class="user_box_sub">
                             <div class="row" style=" margin-left: 10px;">
                             <div class="col-lg-2 label-text">Monday<span>:</span></div>
@@ -199,7 +199,7 @@
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="mon_in" id="mon_in"  
-                                      value="{{ isset($business['business_times']['mon_open'])?$business['business_times']['mon_open']:'' }}" 
+                                      value="{{ isset($time['mon_open'])?$time['mon_open']:'' }}" 
                                       type="text" data-rule-required="true">
                                   </div>
                               </div>
@@ -210,7 +210,7 @@
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="mon_out" id="mon_out"
-                                      value="{{ isset($business['business_times']['mon_close'])?$business['business_times']['mon_close']:'' }}"
+                                      value="{{ isset($time['mon_close'])?$time['mon_close']:'' }}"
                                        type="text" data-rule-required="true">
                                   </div>
                               </div>
@@ -226,7 +226,7 @@
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="tue_in" id="tue_in" type="text" 
-                                      value="{{ isset($business['business_times']['tue_open'])?$business['business_times']['tue_open']:'' }}"
+                                      value="{{ isset($time['tue_open'])?$time['tue_open']:'' }}"
                                       data-rule-required="true">
                                   </div>
                               </div>
@@ -237,7 +237,7 @@
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="tue_out" id="tue_out" type="text" 
-                                      value="{{ isset($business['business_times']['tue_close'])?$business['business_times']['tue_close']:'' }}"
+                                      value="{{ isset($time['tue_close'])?$time['tue_close']:'' }}"
                                       data-rule-required="true">
                                   </div>
                               </div>
@@ -253,7 +253,7 @@
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="wed_in" id="wed_in" type="text" 
-                                      value="{{ isset($business['business_times']['wed_open'])?$business['business_times']['wed_open']:'' }}"
+                                      value="{{ isset($time['wed_open'])?$time['wed_open']:'' }}"
                                       data-rule-required="true">
                                   </div>
                               </div>
@@ -264,7 +264,7 @@
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="wed_out" id="wed_out" type="text" 
-                                      value="{{ isset($business['business_times']['wed_close'])?$business['business_times']['wed_close']:'' }}"
+                                      value="{{ isset($time['wed_close'])?$time['wed_close']:'' }}"
                                       data-rule-required="true">
                                   </div>
                               </div>
@@ -280,7 +280,7 @@
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="thu_in" id="thu_in" type="text" 
-                                      value="{{ isset($business['business_times']['thus_open'])?$business['business_times']['thus_open']:'' }}"
+                                      value="{{ isset($time['thus_open'])?$time['thus_open']:'' }}"
                                       data-rule-required="true">
                                   </div>
                               </div>
@@ -291,7 +291,7 @@
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="thu_out" id="thu_out" type="text" 
-                                      value="{{ isset($business['business_times']['thus_close'])?$business['business_times']['thus_close']:'' }}"
+                                      value="{{ isset($time['thus_close'])?$time['thus_close']:'' }}"
                                       data-rule-required="true">
                                   </div>
                               </div>
@@ -307,7 +307,7 @@
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="fri_in" id="fri_in" type="text" 
-                                      value="{{ isset($business['business_times']['fri_open'])?$business['business_times']['fri_open']:'' }}"
+                                      value="{{ isset($time['fri_open'])?$time['fri_open']:'' }}"
                                       data-rule-required="true">
                                   </div>
                               </div>
@@ -318,7 +318,7 @@
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="fri_out" id="fri_out" type="text"
-                                      value="{{ isset($business['business_times']['fri_close'])?$business['business_times']['fri_close']:'' }}"
+                                      value="{{ isset($time['fri_close'])?$time['fri_close']:'' }}"
                                        data-rule-required="true">
                                   </div>
                               </div>
@@ -334,7 +334,7 @@
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="sat_in" id="sat_in" type="text" 
-                                        value="{{ isset($business['business_times']['sat_open'])?$business['business_times']['sat_open']:'' }}"
+                                        value="{{ isset($time['sat_open'])?$time['sat_open']:'' }}"
                                       data-rule-required="true">
                                   </div>
                               </div>
@@ -345,7 +345,7 @@
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="sat_out" id="sat_out" type="text" 
-                                      value="{{ isset($business['business_times']['sat_close'])?$business['business_times']['sat_close']:'' }}"
+                                      value="{{ isset($time['sat_close'])?$time['sat_close']:'' }}"
                                       data-rule-required="true">
                                   </div>
                               </div>
@@ -361,7 +361,7 @@
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="sun_in" id="sun_in" type="text" 
-                                      value="{{ isset($business['business_times']['sun_open'])?$business['business_times']['sun_open']:'' }}"
+                                      value="{{ isset($time['sun_open'])?$time['sun_open']:'' }}"
                                       data-rule-required="true">
                                   </div>
                               </div>
@@ -372,7 +372,7 @@
                                           <i class="fa fa-clock-o"></i>
                                       </a>
                                       <input class="form-control timepicker-default" name="sun_out" id="sun_out" type="text" 
-                                        value="{{ isset($business['business_times']['sun_close'])?$business['business_times']['sun_close']:'' }}"
+                                        value="{{ isset($time['sun_close'])?$time['sun_close']:'' }}"
                                       data-rule-required="true">
                                   </div>
                               </div>
@@ -380,7 +380,7 @@
                           </div>
 
                         </div>
-
+                           @endforeach
                           <hr/>
 
                                 <div class="button_save1">
