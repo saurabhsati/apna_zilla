@@ -34,6 +34,9 @@ class HomeController extends Controller
         else
         {
            $current_city='Delhi';
+           Session::put('share_lat',28.6538);
+           Session::put('share_lng',77.229);
+            
         }
     	$arr_category = array();
 
@@ -150,6 +153,10 @@ class HomeController extends Controller
     {
     	 $lat=$request->input('lat');
     	 $lng=$request->input('lng');
+
+         Session::put('share_lat',$lat);
+         Session::put('share_lng',$lng);
+
     	 $url = sprintf("https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s", $lat, $lng);
 
 		    $content = file_get_contents($url); // get json content

@@ -31,7 +31,8 @@
                   <div class="p_detail_view pdngk">
 
                     <div class="mainpulsumiry">
-                      <div class="pull-left">Sub Total</div>
+                      <div class="pull-left">Sub Total</div><br/>
+                      <p class="font-size_14px promo_status" style="display:none;color:green"></p>
                         <?php $total =0; 
                          if(sizeof($complite_arr)>0 && isset($complite_arr))
                          {
@@ -75,7 +76,7 @@
                           <div class="loctionsd">Inclusive of taxes</div>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                          <div class="sumry-tlin"><i class="fa fa-inr"></i>{{session('total_deal_price')}}</div>
+                          <div class="sumry-tlin"><i class="fa fa-inr"></i><span class="final_discounted_price">{{session('total_deal_price')}}</span></div>
                         </div>
 
                       </div>
@@ -93,7 +94,7 @@
                               <label for="f-option">Credit/Debit/Net banking/PayUmoney</label>
                               
                               <div class="check"></div>
-                              <div class="dpslt"><a href="#"> 10% Cashback on American Express cards <i aria-hidden="true" class="fa fa-info-circle"></i></a></div>
+                              {{-- <div class="dpslt"><a href="#"> 10% Cashback on American Express cards <i aria-hidden="true" class="fa fa-info-circle"></i></a></div> --}}
                             </div>
 
 
@@ -259,11 +260,12 @@
     else
     {
         var fromData = {
-                            amount:amount,
+                            amount:{{$total}},
                             deal_id:deal_id,
                             promocode:promocode,
                             _token:csrf_token
                               };
+
       $.ajax({
                              url: site_url+"/order/set_order_deal_with_promocode",
                              type: 'POST',
@@ -273,9 +275,14 @@
 
                              success: function(response)
                              {
-                               if (response.status == "1") {
-                                 
-                               }
+                             	 if(response.status =="ALLOWED")
+	                           {
+	                             $("#amount").attr('value',response.discounted_amount);
+                               $(".final_discounted_price").html(response.discounted_amount);
+                               $(".promo_status").css('display','block');
+	                             $(".promo_status").html(response.msg);
+	                           }
+	                          
                                return false;
                              }
                          });

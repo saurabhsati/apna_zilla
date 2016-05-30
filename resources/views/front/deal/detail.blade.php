@@ -195,7 +195,7 @@
                                         @endforeach
                                     @endif
 
-                                    <iframe src="https://maps.googleapis.com/maps/api/staticmap?zoom=6&size=523x400&{{ implode(",", $arr_tmp_departure_point) }}&key=AIzaSyCccvQtzVx4aAt05YnfzJDSWEzPiVnNVsY" class="static_departure_point_map" style="display: none;"/></iframe>
+                                    <img src="https://maps.googleapis.com/maps/api/staticmap?zoom=6&size=523x400&{{ implode(",", $arr_tmp_departure_point) }}&key=AIzaSyCccvQtzVx4aAt05YnfzJDSWEzPiVnNVsY" class="static_departure_point_map" style="display: none;"/>
                                      <div class="box-gare">
                 
                                         <ul>
@@ -589,7 +589,7 @@ $('.btn_buy').click(function()
           overviewMapControl: true,
           disableDoubleClickZoom: false,
           overviewMapControlOptions: { opened: true },
-          mapTypeId: google.maps.MapTypeId.HYBRID
+          mapTypeId: google.maps.MapTypeId.ROADMAP
       };
 
       departure_point_map = new google.maps.Map(document.getElementById("map_for_deaprture_point"),
@@ -630,7 +630,7 @@ $('.btn_buy').click(function()
   function initExistingLatLng()
   {
     var last_index = existing_lat_lng.length-1;
-
+    var glob_arr_marker = [];
     $.each(existing_lat_lng,function(index,location)
     {
       var latlng = new google.maps.LatLng(location.lat, location.lng);

@@ -21,6 +21,7 @@ use App\Models\CouponModel;
 use Session;
 use URL;
 use Mail;
+
 class OrderController extends Controller
 {
   private $payu;
@@ -70,8 +71,35 @@ class OrderController extends Controller
             } 
           }
          }
-   Session::put('total_deal_price', $total);
-   Session::put('select_deal_id', $id);
+        
+         // dd(Session::all());exit;
+         if(Session::has('promo_used'))
+         {
+         	$coupon_type    = Session::get('coupon_type');
+			    $apply_discount = Session::get('apply_discount');
+
+         	if($coupon_type=='PERCENT')
+           {
+                $discounted_amount = ( $total) - ( $total * ($apply_discount / 100));
+           }
+           else if($coupon_type =='AMT')
+           {
+                
+                 	 $discounted_amount = $total-$apply_discount;
+ 			      }
+           Session::put('total_deal_price', $discounted_amount);
+
+         }
+         else
+         {
+         	//echo ">>";exit;
+         	Session::put('total_deal_price', $total);
+         }
+
+
+
+
+         Session::put('select_deal_id', $id);
 
     return view('front.order.order_detail',compact('page_title','deal_arr','deal_image_path','complite_arr'));
   }
@@ -290,20 +318,17 @@ class OrderController extends Controller
      $consider_amount=0;
      $apply_discount=0;
      $discounted_amount=0;
-           
-     if($amount==Session::get('total_deal_price'))
+    
+     $consider_amount=$amount;  
+     /*if($amount==Session::get('total_deal_price'))
      {
         $consider_amount=$amount;
-        echo "match";
      }
      else
      {
-       echo"not match";
-       $consider_amount=Session::get('total_deal_price');
-
-     }
-     echo "amount consider = ".$consider_amount;
-     $arr_coupon           = [];
+        $consider_amount=Session::get('total_deal_price');
+     }*/
+      $arr_coupon           = [];
      $obj_arr_coupon       = CouponModel::where('coupon_code',$promocode)->first();
 
      if($obj_arr_coupon != FALSE)
@@ -321,28 +346,49 @@ class OrderController extends Controller
                    $coupon_type= $arr_coupon['type'];
                    if($coupon_type=='PERCENT')
                    {
-                        $apply_discount=$arr_coupon['discount'];
+                        $apply_discount = $arr_coupon['discount'];
+                        $discounted_amount = ( $consider_amount) - ( $consider_amount * ($apply_discount / 100));
                    }
-                   else if($coupon_type=='AMT')
+                   else if($coupon_type =='AMT')
                    {
                          $apply_discount=$arr_coupon['discount'];
-                         if($consider_amount<$apply_discount)
+                         if($consider_amount > $apply_discount)
                          {
-
+                         	 $discounted_amount = $consider_amount-$apply_discount;
+		 					
                          }
                          else
                          {
-                            $discounted_amount=$consider_amount-$apply_discount;
+                           	$data['status'] = "ERROR";
+              	 						$data['msg'] 	= "Cart Total Is Less Than Promocode Discount Amount";
+              	 						echo json_encode($data);
+              	 						exit;
+                            
                          }
 
                    }
+        				   $data['status']            = "ALLOWED";
+        				   $data['msg']               = "Promo code applied successfully";
+        				   $data['coupon_type']       = $coupon_type;
+        				   $data['apply_discount']    = $apply_discount;
+        				   $data['discounted_amount'] = $discounted_amount;
+
+        				   Session::put('total_deal_price',$discounted_amount);
+        				   Session::put('coupon_type',$coupon_type);
+        				   Session::put('apply_discount',$apply_discount);
+        				   Session::put('promo_used',true);
+        				  	// dd(Session::all());
+        				   // echo json_encode($data);
+        				   return response()->json($data);
+                   
               }
               else
               {
                 $data['status'] = "ERROR";
                 $data['msg']  = "Promo code is not valid now";
-                echo json_encode($data);
-                exit;
+                // echo json_encode($data);
+                // exit;
+                return response()->json($data);
               }
 
      }
@@ -350,8 +396,9 @@ class OrderController extends Controller
       {
         $data['status'] = "ERROR";
         $data['msg']  = "Invalid Promo Code !";
-        echo json_encode($data);
-        exit;
+        // echo json_encode($data);
+        // exit;
+        return response()->json($data);
       }
 
   }

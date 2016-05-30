@@ -54,8 +54,7 @@
            <script src="{{ url('/') }}/assets/front/js/bootstrap-multiselect.js" type='text/javascript'></script>
           <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/front/css/bootstrap-multiselect.css" />
 
- <link href="{{ url('/') }}/assets/front/css/jquery.mCustomScrollbar.css" rel="stylesheet" />
- <script src="{{ url('/') }}/assets/front/js/jquery.mCustomScrollbar.concat.min.js"></script>
+ 
 
        <script>
 $(document).ready(function(){
@@ -120,8 +119,9 @@ $(document).ready(function(){
 
 <!--category droup doun mobile effect-->
 <!--right side bar Stky Start-->
-<script src="{{ url('/') }}/assets/front/js/stickyfloat.js"></script>
 
+<link href="{{ url('/') }}/assets/front/css/jquery.mCustomScrollbar.css" rel="stylesheet" />
+ <script src="{{ url('/') }}/assets/front/js/jquery.mCustomScrollbar.concat.min.js"></script>
    <script>
                 (function($){
                     $(window).load(function(){
@@ -194,7 +194,6 @@ $(document).ready(function(){
      $.post( url, dataString)
          .done(function( response )
           {
-            console.log('Helo');
             console.log(response);
 
              if(response.status == "done" )
