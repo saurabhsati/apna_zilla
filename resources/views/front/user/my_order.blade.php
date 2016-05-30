@@ -14,6 +14,12 @@
     margin-right: 15px;
    float: right;
 }
+.left-paid span {
+    color: #7e7e7e;
+    font-size: 15px;
+    margin-right: 15px;
+   float: left;
+}
     </style>
 <div class="gry_container">
       <div class="container">
@@ -88,6 +94,7 @@
                             @endif                         
                         @endforeach
                       @endforeach
+                      <div class="left-paid title-ondss"><span>  Payment Status : {{ ucfirst($deal['transaction_status'])}}</span></div>
                          <div class="right-paid"><span> <i class="fa fa-inr "></i> Paid : {{$final}}</span></div>
                       </div>
                       <div class="clearfix"></div>

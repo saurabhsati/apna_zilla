@@ -1191,7 +1191,7 @@ If you need any more details on RightNext Verified, please refer to
 var supports = (function () {
     var a = document.documentElement,
         b = "ontouchstart" in window || navigator.msMaxTouchPoints;
-    if(b) 
+    /*if(b) 
     {
         a.className += " touch";
         return {
@@ -1204,7 +1204,7 @@ var supports = (function () {
         return {
             touch:true;
         }
-    }
+    }*/
 });
 
 

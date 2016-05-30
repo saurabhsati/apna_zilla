@@ -59,7 +59,7 @@
 
                       <div class="clearfix"></div>
                     </div>
-                    <div id="flip-newsd" style="cursor: pointer;">Click Here If You Have a promo code ?</div>
+                    <div id="flip-newsd" style="cursor: pointer;"><a href="javascript:void(0);" >Click Here If You Have a promo code ?</a></div>
                     <div id="panel-newsd">
                       <div class="input-group">
                         <input type="text" name="promocode" id="promocode" aria-describedby="basic-addon2" placeholder="Enter Promocode " class="form-control textbodr">
