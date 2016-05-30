@@ -65,9 +65,13 @@
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators">
-                  <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                  <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                  <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                  @if(isset($deal['deals_slider_images']) && sizeof($deal['deals_slider_images'])>0)
+                   @foreach($deal['deals_slider_images'] as $key => $slider)
+                  <li data-target="#carousel-example-generic" data-slide-to="<?php echo $key;?>" class="<?php if($key==0){echo 'active';} ?>"></li>
+                   @endforeach
+                  @endif
+                 {{--  <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                  <li data-target="#carousel-example-generic" data-slide-to="2"></li> --}}
                 </ol>
 
                 <!-- Wrapper for slides -->
