@@ -553,10 +553,10 @@
             </div>
 
 
-            <div class="form-group" style="display:none;">
+            <div class="form-group" style="display:block;">
                  <label class="col-sm-3 col-lg-2 control-label" >Sunday<i class="red">*</i></label>
                   &nbsp &nbsp &nbsp &nbsp &nbsp
-                  <input type="radio"  name="is_sunday" value="1" onclick="sunday_status('on');"/>
+                  <input type="radio"  name="is_sunday" value="1" onclick="sunday_status('on');" checked="" />
                   <label >On </label>
                    &nbsp &nbsp &nbsp &nbsp &nbsp
                      <input type="radio"  name="is_sunday" value="0"  onclick="sunday_status('off');"/>
@@ -565,13 +565,13 @@
             </div>
 
               <div class="form-group" id="sunday_section" style="display:block;">
-               <label class="col-sm-3 col-lg-2 control-label" >Sunday<i class="red">*</i></label>
+               <label class="col-sm-3 col-lg-2 control-label" ></label>
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control timepicker-default " name="sun_in" id="sun_in" type="text"  >
+                        <input class="form-control  " name="sun_in" id="sun_in" type="text"  >
                     </div>
                 </div>
 
@@ -580,7 +580,7 @@
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control timepicker-default" name="sun_out" id="sun_out" type="text" >
+                        <input class="form-control " name="sun_out" id="sun_out" type="text" >
                     </div>
                 </div>
 
@@ -807,15 +807,13 @@ function sunday_status(status)
   {
     $("#sunday_section").css('display','block');
 
-    $("#sun_in").timepicker('showWidget');
-    $("#sun_out").timepicker('showWidget');
-    
-
-  }
+    $("#sun_in").timepicker();
+    $("#sun_out").timepicker();
+   }
   else if(status=='off')
   {
     $("#sunday_section").css('display','none');
-    $("#sun_in").timepicker('hideWidget');
+    $("#sun_in").css('hideWidget');
     $("#sun_out").timepicker('hideWidget');
   }
 }

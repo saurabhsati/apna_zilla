@@ -384,7 +384,7 @@
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control timepicker-default" readonly="true" name="mon_out" id="mon_out" type="text" data-rule-required="true" value="{{ isset($time['mon_close'])?$time['mon_close']:'' }}">
+                        <input class="form-control " readonly="true" name="mon_out" id="mon_out" type="text" data-rule-required="true" value="{{ isset($time['mon_close'])?$time['mon_close']:'' }}">
                     </div>
                 </div>
 
@@ -397,7 +397,7 @@
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control timepicker-default" readonly="true" name="tue_in" id="tue_in" type="text" data-rule-required="true" value="{{ isset($time['tue_open'])?$time['tue_open']:'' }}">
+                        <input class="form-control " readonly="true" name="tue_in" id="tue_in" type="text" data-rule-required="true" value="{{ isset($time['tue_open'])?$time['tue_open']:'' }}">
                     </div>
                 </div>
 
@@ -406,7 +406,7 @@
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control timepicker-default" readonly="true" name="tue_out" id="tue_out" type="text" data-rule-required="true" value="{{ isset($time['tue_close'])?$time['tue_close']:'' }}">
+                        <input class="form-control " readonly="true" name="tue_out" id="tue_out" type="text" data-rule-required="true" value="{{ isset($time['tue_close'])?$time['tue_close']:'' }}">
                     </div>
                 </div>
 
@@ -419,7 +419,7 @@
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control timepicker-default" readonly="true" name="wed_in" id="wed_in" type="text" data-rule-required="true" value="{{ isset($time['wed_open'])?$time['wed_open']:'' }}">
+                        <input class="form-control " readonly="true" name="wed_in" id="wed_in" type="text" data-rule-required="true" value="{{ isset($time['wed_open'])?$time['wed_open']:'' }}">
                     </div>
                 </div>
 
@@ -428,7 +428,7 @@
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control timepicker-default" readonly="true" name="wed_out" id="wed_out" type="text" data-rule-required="true" value="{{ isset($time['wed_close'])?$time['wed_close']:'' }}">
+                        <input class="form-control " readonly="true" name="wed_out" id="wed_out" type="text" data-rule-required="true" value="{{ isset($time['wed_close'])?$time['wed_close']:'' }}">
                     </div>
                 </div>
 
@@ -441,7 +441,7 @@
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control timepicker-default" readonly="true" name="thus_in" id="thus_in" type="text" data-rule-required="true" value="{{ isset($time['thus_open'])?$time['thus_open']:'' }}">
+                        <input class="form-control " readonly="true" name="thus_in" id="thus_in" type="text" data-rule-required="true" value="{{ isset($time['thus_open'])?$time['thus_open']:'' }}">
                     </div>
                 </div>
 
@@ -450,7 +450,7 @@
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control timepicker-default" readonly="true" name="thus_out" id="thus_out" type="text" data-rule-required="true" value="{{ isset($time['thus_close'])?$time['thus_close']:'' }}">
+                        <input class="form-control " readonly="true" name="thus_out" id="thus_out" type="text" data-rule-required="true" value="{{ isset($time['thus_close'])?$time['thus_close']:'' }}">
                     </div>
                 </div>
 
@@ -463,7 +463,7 @@
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control timepicker-default" readonly="true" name="fri_in" id="fri_in" type="text" data-rule-required="true" value="{{ isset($time['fri_open'])?$time['fri_open']:'' }}">
+                        <input class="form-control " readonly="true" name="fri_in" id="fri_in" type="text" data-rule-required="true" value="{{ isset($time['fri_open'])?$time['fri_open']:'' }}">
                     </div>
                 </div>
 
@@ -472,7 +472,7 @@
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control timepicker-default" readonly="true" name="fri_out" id="fri_out" type="text" data-rule-required="true" value="{{ isset($time['fri_close'])?$time['fri_close']:'' }}">
+                        <input class="form-control " readonly="true" name="fri_out" id="fri_out" type="text" data-rule-required="true" value="{{ isset($time['fri_close'])?$time['fri_close']:'' }}">
                     </div>
                 </div>
 
@@ -485,7 +485,7 @@
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control timepicker-default" readonly="true" name="sat_in" id="sat_in" type="text" data-rule-required="true" value="{{ isset($time['sat_open'])?$time['sat_open']:'' }}">
+                        <input class="form-control " readonly="true" name="sat_in" id="sat_in" type="text" data-rule-required="true" value="{{ isset($time['sat_open'])?$time['sat_open']:'' }}">
                     </div>
                 </div>
 
@@ -494,7 +494,7 @@
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control timepicker-default" readonly="true" name="sat_out" id="sat_out" type="text" data-rule-required="true" value="{{ isset($time['sat_close'])?$time['sat_close']:'' }}">
+                        <input class="form-control " readonly="true" name="sat_out" id="sat_out" type="text" data-rule-required="true" value="{{ isset($time['sat_close'])?$time['sat_close']:'' }}">
                     </div>
                 </div>
 
@@ -504,13 +504,17 @@
             <div class="form-group">
 
             <label class="col-sm-3 col-lg-2 control-label" >Sunday<i class="red"></i></label>
-
+             @if(empty($time['sun_open']) && empty($time['sun_open'])) 
+                        <label class="col-sm-3 col-lg-3 controls">Off</label>
+                        @else
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control timepicker-default" readonly="true" name="sun_in" id="sun_in" type="text" data-rule-required="true" value="{{ isset($time['sun_open'])?$time['sun_open']:'' }}">
+                        <input class="form-control " readonly="true" name="sun_in" id="sun_in" type="text" data-rule-required="true" value="{{ isset($time['sun_open'])?$time['sun_open']:'' }}">
+                        
+                       
                     </div>
                 </div>
 
@@ -519,10 +523,10 @@
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control timepicker-default" readonly="true" name="sun_out" id="sun_out" type="text" data-rule-required="true" value="{{ isset($time['sun_close'])?$time['sun_close']:'' }}">
+                        <input class="form-control " readonly="true" name="sun_out" id="sun_out" type="text" data-rule-required="true" value="{{ isset($time['sun_close'])?$time['sun_close']:'00:00' }}">
                     </div>
                 </div>
-
+                 @endif
             </div>
             @endforeach
             <hr/>

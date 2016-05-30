@@ -120,9 +120,9 @@ class BusinessListingController extends Controller
     public function store(Request $request)
     {
         //echo'<pre>';
-        //print_r($request->all());exit;
-
+      
         $arr_rules	=	array();
+         $form_data=$request->all();
         //business fields
     	$arr_rules['tmp_user_id']='required';
         $arr_rules['business_name']='required';
@@ -163,8 +163,13 @@ class BusinessListingController extends Controller
         $arr_rules['fri_out']='required';
         $arr_rules['sat_in']='required';
         $arr_rules['sat_out']='required';
-        //$arr_rules['sun_in']='required';
-        //$arr_rules['sun_out']='required';
+
+        if($form_data['is_sunday']=='1')
+        { 
+            $arr_rules['sun_in']='required';
+            $arr_rules['sun_out']='required';
+        }  
+        
         //other fields
     	//$arr_rules['hours_of_operation']='required';
     	$arr_rules['company_info']='required';
@@ -178,7 +183,7 @@ class BusinessListingController extends Controller
             //print_r($validator->errors()->all());exit;
             return redirect('/web_admin/business_listing/create')->withErrors($validator)->withInput();
         }
-        $form_data=$request->all();
+       
         $arr_data['user_id']=$form_data['tmp_user_id'];
 
 
@@ -312,8 +317,14 @@ class BusinessListingController extends Controller
             $arr_time['fri_close']   = $request->input('fri_out');
             $arr_time['sat_open']    = $request->input('sat_in');
             $arr_time['sat_close']   = $request->input('sat_out');
-            $arr_time['sun_open']    = $request->input('sun_in');
-            $arr_time['sun_close']   = $request->input('sun_out');
+
+            if($form_data['is_sunday']=='1')
+            { 
+                $arr_time['sun_open']    = $request->input('sun_in');
+                $arr_time['sun_close']   = $request->input('sun_out');
+
+            } 
+            
 
             $business_time_add = BusinessTimeModel::create($arr_time);
 
@@ -380,6 +391,7 @@ class BusinessListingController extends Controller
  		$id	=base64_decode($enc_id);
         $arr_all  = array();
         $arr_all=$request->all();
+
         /*echo"<pre>";
         print_r($arr_all);exit;*/
         $business_service=$arr_all['business_service'];
@@ -399,7 +411,7 @@ class BusinessListingController extends Controller
         //$arr_rules['landmark']='required';
         $arr_rules['area']='required';
         $arr_rules['city']='required';
-        $arr_rules['pincode']='required';
+        //$arr_rules['pincode']='required';
         $arr_rules['state']='required';
         $arr_rules['country']='required';
         $arr_rules['lat']='required';
@@ -426,8 +438,11 @@ class BusinessListingController extends Controller
         $arr_rules['fri_out']='required';
         $arr_rules['sat_in']='required';
         $arr_rules['sat_out']='required';
-        $arr_rules['sun_in']='required';
-        $arr_rules['sun_out']='required';
+        if($arr_all['is_sunday']=='1')
+        { 
+            $arr_rules['sun_in']='required';
+            $arr_rules['sun_out']='required';
+        } 
 
         //$arr_rules['hours_of_operation']='required';
     	$arr_rules['company_info']='required';
@@ -441,7 +456,7 @@ class BusinessListingController extends Controller
 
         if($validator->fails())
         {
-             //print_r( $validator->errors()->all());exit;
+            // print_r( $validator->errors()->all());exit;
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -616,9 +631,18 @@ class BusinessListingController extends Controller
             $arr_time['fri_close']   = $request->input('fri_out');
             $arr_time['sat_open']    = $request->input('sat_in');
             $arr_time['sat_close']   = $request->input('sat_out');
-            $arr_time['sun_open']    = $request->input('sun_in');
-            $arr_time['sun_close']   = $request->input('sun_out');
-
+            if($arr_all['is_sunday']=='1')
+            { 
+                 $arr_time['sun_open']    = $request->input('sun_in');
+                 $arr_time['sun_close']   = $request->input('sun_out');
+            }
+            else
+            {
+                $arr_time['sun_open']="";
+                $arr_time['sun_close']="";
+            } 
+           
+           // dd($arr_time);
             $business_time_update = BusinessTimeModel::where('business_id',$id)->update($arr_time);
 
             Session::flash('success','Business Updated successfully');

@@ -355,6 +355,23 @@
                           <div class="user_box_sub">
                             <div class="row" style=" margin-left: 10px;">
                             <div class="col-lg-2 label-text ">Sunday<span>:</span></div>
+
+                             <div class="col-sm-3 col-md-3 col-lg-3 m_l controls">
+                                    &nbsp &nbsp &nbsp &nbsp &nbsp
+                                    <input type="radio"  name="is_sunday" value="1" onclick="sunday_status('on');" @if(($time['sun_open']!='') && ($time['sun_open']!='')) checked="true"  @endif/>
+                                    <label >On </label>
+                                     &nbsp &nbsp &nbsp &nbsp &nbsp
+                                       <input type="radio"  name="is_sunday" value="0"  onclick="sunday_status('off');" @if( empty($time['sun_open']) && empty($time['sun_open'])) checked="true"  @endif/>
+                                    <label  for="is_sunday">Off </label>
+                              </div>
+                              </div>
+                              </div>
+                            
+
+
+                              <div class="user_box_sub" id="sunday_section"  @if(empty($time['sun_open']) && empty($time['sun_open'])) style="display:none;" @endif>
+                            <div class="row" style=" margin-left: 10px;">
+                            <div class="col-lg-2 label-text "><span></span></div>
                              <div class="col-sm-3 col-md-3 col-lg-3 m_l controls">
                                   <div class="input-group">
                                       <a class="input-group-addon" href="javascript:void(0);">
@@ -405,6 +422,23 @@
 
 <script type="text/javascript">
     var site_url = "{{url('/')}}";
+function sunday_status(status)
+{
+  if(status=='on')
+  {
+    $("#sunday_section").css('display','block');
+
+    $("#sun_in").timepicker();
+    $("#sun_out").timepicker();
+   }
+  else if(status=='off')
+  {
+    $("#sunday_section").css('display','none');
+    $("#sun_in").css('hideWidget');
+    $("#sun_out").timepicker('hideWidget');
+  }
+}
+
 </script>
 
 <script type="text/javascript">

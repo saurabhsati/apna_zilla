@@ -540,7 +540,9 @@
             <div class="form-group">
 
             <label class="col-sm-3 col-lg-2 control-label" >Sunday<i class="red"></i></label>
-
+                @if(empty($time['sun_open']) && empty($time['sun_open'])) 
+                <label class="col-sm-3 col-lg-3 controls">Off</label>
+                @else
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
                         <a class="input-group-addon" href="#">
@@ -558,7 +560,7 @@
                         <input class="form-control timepicker-default" readonly="true" name="sun_out" id="sun_out" type="text" data-rule-required="true" value="{{ isset($time['sun_close'])?$time['sun_close']:'' }}">
                     </div>
                 </div>
-
+            @endif
             </div>
              @endforeach
             <hr/>

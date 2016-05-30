@@ -361,7 +361,7 @@
                 </div>
             </div>
             <div class="form-group" >
-                <label class="col-sm-3 col-lg-4 control-label" for="postal_code">Pin-code <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-4 control-label" for="postal_code">Pin-code <i class="red"></i></label>
                 <div class="col-sm-5 col-lg-8 controls">
                  <input type="text" data-geo="postal_code" value="{{ isset($business['pincode'])?$business['pincode']:'' }}" id="pincode" name="pincode" class="form-control">
                   <span class='help-block'>{{ $errors->first('postal code') }}</span>
@@ -623,10 +623,19 @@
 
             </div>
 
+            <div class="form-group"  style="display:block;">
+                 <label class="col-sm-3 col-lg-2 control-label" >Sunday<i class="red">*</i></label>
+                  &nbsp &nbsp &nbsp &nbsp &nbsp
+                  <input type="radio"  name="is_sunday" value="1" onclick="sunday_status('on');" @if(($time['sun_open']!='') && ($time['sun_open']!='')) checked="true"  @endif/>
+                  <label >On </label>
+                   &nbsp &nbsp &nbsp &nbsp &nbsp
+                     <input type="radio"  name="is_sunday" value="0"  onclick="sunday_status('off');" @if( empty($time['sun_open']) && empty($time['sun_open'])) checked="true"  @endif/>
+                  <label  for="is_sunday">Off </label>
+                  <br/>
+            </div>
+            <div class="form-group" id="sunday_section"  @if(empty($time['sun_open']) && empty($time['sun_open'])) style="display:none;" @endif >
 
-            <div class="form-group">
-
-            <label class="col-sm-3 col-lg-2 control-label" >Sunday<i class="red">*</i></label>
+            <label class="col-sm-3 col-lg-2 control-label" ></label>
 
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
@@ -929,7 +938,22 @@
 <script type="text/javascript">
     var site_url = "{{url('/')}}";
 
+function sunday_status(status)
+{
+  if(status=='on')
+  {
+    $("#sunday_section").css('display','block');
 
+    $("#sun_in").timepicker();
+    $("#sun_out").timepicker();
+   }
+  else if(status=='off')
+  {
+    $("#sunday_section").css('display','none');
+    $("#sun_in").css('hideWidget');
+    $("#sun_out").timepicker('hideWidget');
+  }
+}
 function delete_gallery(id,image_name)
 {
   var _token = $('input[name=_token]').val();
