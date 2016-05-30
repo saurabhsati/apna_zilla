@@ -94,7 +94,16 @@
                             @endif                         
                         @endforeach
                       @endforeach
-                      <div class="left-paid title-ondss"><span>  Payment Status : {{ ucfirst($deal['transaction_status'])}}</span></div>
+                      <div class="left-paid title-ondss"><span>
+                      @if($deal['transaction_status']=='success')
+                       <img alt="" src="{{url('/')}}/assets/front/images/success.png" width="24px"> 
+                        Payment Status : {{ ucfirst($deal['transaction_status'])}}
+                       @else
+                        <img alt="" src="{{url('/')}}/assets/front/images/pending.png" width="24px"> 
+                        Payment Status : {{ ucfirst($deal['transaction_status'])}}
+                       @endif
+                       </span>
+                       </div>
                          <div class="right-paid"><span> <i class="fa fa-inr "></i> Paid : {{$final}}</span></div>
                       </div>
                       <div class="clearfix"></div>
