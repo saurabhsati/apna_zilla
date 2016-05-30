@@ -97,7 +97,7 @@
                     </span>
                 </div>
                   <div class="row">
-                    <div class="col-lg-2 label-text">Business Images<span>:</span></div>
+                    <div class="col-lg-2 label-text">Business Media Upload Images<span>:</span></div>
                        <div class="col-sm-12 col-md-12 col-lg-10 m_l">
                         <input type="file" name="business_image[]" id="business_image" class="input_acct" data-rule-required="true"  />
                         <div class="error" id="error_business_image">{{ $errors->first('business_image') }}</div>

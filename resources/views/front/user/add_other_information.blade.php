@@ -286,15 +286,38 @@
                               </div>
                           </div>
 
+
+
+
+
                           <div class="user_box_sub">
                             <div class="row" style=" margin-left: 10px;">
                             <div class="col-lg-2 label-text ">Sunday<span>:</span></div>
+
+                             <div class="col-sm-3 col-md-3 col-lg-3 m_l controls">
+                                    &nbsp &nbsp &nbsp &nbsp &nbsp
+                                    <input type="radio"  name="is_sunday" value="1" onclick="sunday_status('on');"  checked="true" />
+                                    <label >On </label>
+                                     &nbsp &nbsp &nbsp &nbsp &nbsp
+                                       <input type="radio"  name="is_sunday" value="0"  onclick="sunday_status('off');"  checked="true"  />
+                                    <label  for="is_sunday">Off </label>
+                              </div>
+                              </div>
+                              </div>
+                            
+
+
+                              <div class="user_box_sub" id="sunday_section"   style="display:block;" >
+                            <div class="row" style=" margin-left: 10px;">
+                            <div class="col-lg-2 label-text "><span></span></div>
                              <div class="col-sm-3 col-md-3 col-lg-3 m_l controls">
                                   <div class="input-group">
                                       <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
-                                      <input class="form-control timepicker-default" name="sun_in" id="sun_in" type="text" data-rule-required="true">
+                                      <input class="form-control timepicker-default" name="sun_in" id="sun_in" type="text" 
+                                      value=""
+                                      data-rule-required="true">
                                   </div>
                               </div>
 
@@ -303,11 +326,14 @@
                                       <a class="input-group-addon" href="javascript:void(0);">
                                           <i class="fa fa-clock-o"></i>
                                       </a>
-                                      <input class="form-control timepicker-default" name="sun_out" id="sun_out" type="text" data-rule-required="true">
+                                      <input class="form-control timepicker-default" name="sun_out" id="sun_out" type="text" 
+                                        value=""
+                                      data-rule-required="true">
                                   </div>
                               </div>
                               </div>
                           </div>
+
 
                         </div>
 
@@ -332,7 +358,22 @@
 
 
 <script type="text/javascript">
+function sunday_status(status)
+{
+  if(status=='on')
+  {
+    $("#sunday_section").css('display','block');
 
+    $("#sun_in").timepicker();
+    $("#sun_out").timepicker();
+   }
+  else if(status=='off')
+  {
+    $("#sunday_section").css('display','none');
+    $("#sun_in").css('hideWidget');
+    $("#sun_out").timepicker('hideWidget');
+  }
+}
     var site_url = "{{url('/')}}";
 
     function loadPreviewImage(ref)

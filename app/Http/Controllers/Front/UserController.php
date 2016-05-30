@@ -814,6 +814,8 @@ class UserController extends Controller
 
     public function add_other_details(Request $request)
     {
+        //dd($request->all());
+        $form_data=$request->all();
          if(!(Session::has('user_id')))
         {
            return redirect('/');
@@ -837,8 +839,11 @@ class UserController extends Controller
         $arr_rules['fri_out']='required';
         $arr_rules['sat_in']='required';
         $arr_rules['sat_out']='required';
-        $arr_rules['sun_in']='required';
-        $arr_rules['sun_out']='required';
+        if($form_data['is_sunday']=='1')
+        { 
+            $arr_rules['sun_in']='required';
+            $arr_rules['sun_out']='required';
+        } 
 
         $validator = Validator::make($request->all(),$arr_rules);
 
@@ -886,8 +891,12 @@ class UserController extends Controller
             $arr_time['fri_close']   = $request->input('fri_out');
             $arr_time['sat_open']    = $request->input('sat_in');
             $arr_time['sat_close']   = $request->input('sat_out');
-            $arr_time['sun_open']    = $request->input('sun_in');
-            $arr_time['sun_close']   = $request->input('sun_out');
+            if($form_data['is_sunday']=='1')
+            { 
+                $arr_time['sun_open']    = $request->input('sun_in');
+                $arr_time['sun_close']   = $request->input('sun_out');
+
+            } 
 
             $business_time_add = BusinessTimeModel::create($arr_time);
 
