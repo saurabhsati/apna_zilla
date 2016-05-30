@@ -26,7 +26,7 @@
                 <i class="fa fa-angle-right"></i>
             </span>
             <li>
-                <i class="fa fa-user"></i>
+                <i class="fa fa-list"></i>
                 <a href="{{ url('/web_admin/business_listing') }}">Business  Listing</a>
             </li>
             <span class="divider">
@@ -45,7 +45,7 @@
           <div class="box">
             <div class="box-title">
               <h3>
-                <i class="fa fa-user"></i>
+                <i class="fa fa-list"></i>
                 {{ isset($page_title)?$page_title:"" }}
             </h3>
             <div class="box-tool">

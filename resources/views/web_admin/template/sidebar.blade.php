@@ -190,7 +190,7 @@
 
                <li class="{{ Request::segment(2)=='membership'? 'active':'' }}">
                 <a href="javascript:void(0)"  class="dropdown-toggle">
-                    <i class="fa fa-euro"></i>
+                    <i class="fa fa-inr"></i>
                     <span>Membership Plans</span>
                     <b class="arrow fa fa-angle-right"></b>
                 </a>
@@ -200,7 +200,7 @@
             </li>
              <li class="{{ Request::segment(2)=='membershipcost'? 'active':'' }}">
                 <a href="javascript:void(0)"  class="dropdown-toggle">
-                    <i class="fa fa-euro"></i>
+                    <i class="fa fa-inr"></i>
                     <span>Membership Plan Costs</span>
                     <b class="arrow fa fa-angle-right"></b>
                 </a>
