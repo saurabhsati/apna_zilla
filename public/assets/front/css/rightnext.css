@@ -796,6 +796,8 @@ select.input_acct {
 .qntyg{display: inline-block; font-size: 15px; color: #5c5c5c;}
 .right-kgf{display: inline-block; color: #f9a820; float: right;font-size: 16px;}
 .right-kgf span{font-size: 15px; color: #7e7e7e; text-decoration: line-through; margin-right: 15px; }
+.right-kgf1{display: inline-block; color: #f9a820; float: right;font-size: 16px;}
+.right-kgf1 span{font-size: 15px; color: #7e7e7e;  margin-right: 15px; }
 .main-oderboxs{display: block; margin-bottom: 25px;}
 .bordersksa{height: 1px; background-color: #e9e9e9;margin: 15px 0;}
 .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus{color: #fff; background-color: #f9a820 !important; border: 1px solid #f9a820;}
