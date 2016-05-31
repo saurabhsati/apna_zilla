@@ -11,20 +11,13 @@ We do not give estimated times for completion on `Accepted` Proposals.
 
 ---
 
-### v1.1.2 - 2015-06-24
-
-`UPDATED`
-
-- License to 3-clause BSD.
-- Some other minor tweaks.
-
-### v1.1.1 - 2015-02-04
+#### v1.1.1 - 2015-02-04
 
 `UPDATED`
 
 - Added the ability to set custom messages and custom attributes on the Validator class.
 
-### v1.1.0 - 2015-01-23
+#### v1.1.0 - 2015-01-23
 
 `ADDED`
 
@@ -35,14 +28,7 @@ We do not give estimated times for completion on `Accepted` Proposals.
 - `MailerTrait` Common methods and properties for sending emails.
 - `ValidatorTrait` Common methods and properties for doing validation.
 
-### v1.0.1 - 2015-06-24
-
-`UPDATED`
-
-- License to 3-clause BSD.
-- Some other minor tweaks.
-
-### v1.0.0 - 2014-08-07
+#### v1.0.0 - 2014-08-07
 
 `INIT`
 
