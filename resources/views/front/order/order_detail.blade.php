@@ -59,7 +59,11 @@
                            <input type="hidden" name="phone" id="phone" value="{{session('mobile_no')}}">
 
 
-                      <div class="pull-right"><i class="fa fa-inr"></i>{{$total}}</div>
+                      <div class="pull-right"><i class="fa fa-inr"></i> {{$total}}</div><br/>
+                      <div id="amount_substract_div" style="display:none;">
+                        <div class="pull-right">Discount Type <span id="discount_type"></span></div><br/>
+                        <div class="pull-right">  - <span id="amount_substract"></span></div><br/>
+                        </div>
 
                       <div class="clearfix"></div>
                     </div>
@@ -81,7 +85,7 @@
                           <div class="loctionsd">Inclusive of taxes</div>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                          <div class="sumry-tlin"><i class="fa fa-inr"></i><span class="final_discounted_price">{{session('total_deal_price')}}</span></div>
+                          <div class="sumry-tlin"><i class="fa fa-inr"></i> <span class="final_discounted_price">{{session('total_deal_price')}}</span></div>
                         </div>
 
                       </div>
@@ -284,7 +288,21 @@
   	                           {
   	                             $("#amount").attr('value',response.discounted_amount);
                                  $(".final_discounted_price").html(response.discounted_amount);
-                                 $(".promo_status").css('display','block');
+                                 var coupon_type=response.coupon_type;
+                                 var apply_discount=response.apply_discount;
+                                 $("#amount_substract_div").css('display','block');
+                                 if(coupon_type=='PERCENT')
+                                 {
+                                   $("#discount_type").html("%");
+                                   $("#amount_substract").html(apply_discount+'%');
+
+                                 }
+                                 else if(coupon_type =='AMT')
+                                 {
+                                  $("#discount_type").html("Amount");
+                                  $("#amount_substract").html('<i class="fa fa-inr"></i> '+apply_discount);
+                                 }
+                                $(".promo_status").css('display','block');
                                  $("#apply_promo_div").css('display','none');
                                  $(".promo_status").css('color','green');
   	                             $(".promo_status").html(response.msg);
@@ -326,6 +344,7 @@
                                   console.log(response.original_amount)
                                    $(".promo_status").css('display','block');
                                    $("#apply_promo_div").css('display','block');
+                                   $("#amount_substract_div").css('display','none');
                                    $(".promo_status").css('color','green');
                                    $(".promo_status").html(response.msg);
 
