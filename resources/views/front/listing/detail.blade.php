@@ -73,8 +73,12 @@
                    @if(isset($times['sat_close'])){{ $times['sat_close']}}  @else {{'00:00'}} @endif
                    </a></li>
 
-                  <li class="brdr"><a href="#">Sunday   : @if(isset($times['sun_open'])){{ $times['sun_open']}}  @else {{'00:00'}} @endif - 
-                  @if(isset($times['sun_close'])){{ $times['sun_close']}}  @else {{'Off'}} @endif
+                  <li class="brdr"><a href="#">Sunday   : @if(isset($times['sun_open'])){{ $times['sun_open']}}  
+                  @elseif(empty($times['sun_open'])){{'OFF'}}
+                  @else {{'00:00'}} @endif - 
+                  @if(isset($times['sun_close'])){{ $times['sun_close']}} 
+                    @elseif(empty($times['sun_close'])){{'OFF'}}
+                     @else {{'Off'}} @endif
                   </a></li>
                    @endforeach
                    @else

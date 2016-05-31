@@ -650,7 +650,7 @@
 
                       if(!sizeof($business['membership_plan_details'])>0)
                     {?>
-                      <a href="{{ url('/web_admin/business_listing/assign_membership').'/'.base64_encode($business['id']).'/'.base64_encode($user_id).'/'.base64_encode($category_id) }}" class="show-tooltip" title="Assign Membership">
+                      <a href="{{ url('/sales_user/business_listing/assign_membership').'/'.base64_encode($business['id']).'/'.base64_encode($user_id).'/'.base64_encode($category_id) }}" class="show-tooltip" title="Assign Membership">
                           <i class="fa fa-" > Click Here to Assign</i>
                         </a>
                         <?php }

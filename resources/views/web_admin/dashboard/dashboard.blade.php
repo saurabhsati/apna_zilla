@@ -53,11 +53,11 @@
                                             <div class="img img-center">
                                                  <i class="fa fa-users"></i>
                                             </div>
-                                            <p class="title text-center">Seller Users</p>
+                                            <p class="title text-center">Venders</p>
                                         </div></a>
                                         <div class="tile tile-light-magenta ">
-                                            <p class="title">Seller Users</p>
-                                            <p>See Your Seller Users</p>
+                                            <p class="title">Venders</p>
+                                            <p>See Your Venders</p>
                                             <div class="img img-bottom">
                                                 <i class="fa fa-users"></i>
                                             </div>
@@ -74,11 +74,11 @@
                                             <div class="img img-center">
                                                  <i class="fa fa-list"></i>
                                             </div>
-                                            <p class="title text-center">Sales Staff Persons</p>
+                                            <p class="title text-center">Sales Executives</p>
                                         </div></a>
                                         <div class="tile tile-blue  ">
-                                            <p class="title">Sales Staff Persons</p>
-                                            <p>See Your Sales Staff Persons</p>
+                                            <p class="title">Sales Executives</p>
+                                            <p>See Your Sales Executives</p>
                                             <div class="img img-bottom">
                                                 <i class="fa fa-list"></i>
                                             </div>

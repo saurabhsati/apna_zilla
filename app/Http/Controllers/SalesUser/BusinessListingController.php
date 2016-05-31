@@ -1053,6 +1053,7 @@ class BusinessListingController extends Controller
                  //print_r($content);exit;
                 $content = view('email.front_general',compact('content'))->render();
                 $content = html_entity_decode($content);
+                $send_mail ='';
                 if($email!='')
                 {
                             $send_mail = Mail::send(array(),array(), function($message) use($email,$first_name,$arr_email_template,$content)
