@@ -1188,8 +1188,8 @@ $(function () {
     tinyMCE.triggerSave();
  }); 
 
- var location =$("input[name=area]").val();
-var options = {
+var location = $("input[name=area]").val();
+var options  = {
                 types: ['(cities)'],
                 componentRestrictions: {country: 'IN'},
                 details: ".geo-details",
@@ -1201,7 +1201,7 @@ var options = {
                                     draggable: true
                                }
               }
-  $("#area").geocomplete(options);
+$("#area").geocomplete(options);
 
 $("#area").bind("geocode:dragged", function(event, latLng){
           $("input[name=lat]").val(latLng.lat());
@@ -1226,44 +1226,44 @@ function getSubCategory(ref)
                          enableFiltering : true
                       });
     jQuery.ajax({
-                        url:url+'/web_admin/common/get_subcategory/'+main_cat_id,
-                        type:'GET',
-                        data:'flag=true',
-                        dataType:'json',
-                        beforeSend:function()
+                    url:url+'/web_admin/common/get_subcategory/'+main_cat_id,
+                    type:'GET',
+                    data:'flag=true',
+                    dataType:'json',
+                    beforeSend:function()
+                    {
+
+                    },
+                    success:function(response)
+                    {
+                       jQuery(response.arr_main_cat).each(function(index,arr_main_cat)
+                               {
+                                      $("#business_public_id").attr('value',arr_main_cat.cat_ref_slug);
+                               });
+                      var option = '';
+                        if(response.status=="SUCCESS")
                         {
-
-                        },
-                        success:function(response)
-                        {
-                           jQuery(response.arr_main_cat).each(function(index,arr_main_cat)
-                                   {
-                                          $("#business_public_id").attr('value',arr_main_cat.cat_ref_slug);
-                                   });
-                          var option = '';
-                            if(response.status=="SUCCESS")
+                            if(typeof(response.arr_sub_cat) == "object")
                             {
-                                if(typeof(response.arr_sub_cat) == "object")
-                                {
-                                   var option = '';
-                                   jQuery(response.arr_sub_cat).each(function(index,arr_sub_cat)
-                                   {
-                                    option+='<option value="'+arr_sub_cat.cat_id+'">'+arr_sub_cat.title+'</option>';
+                               var option = '';
+                               jQuery(response.arr_sub_cat).each(function(index,arr_sub_cat)
+                               {
+                                option+='<option value="'+arr_sub_cat.cat_id+'">'+arr_sub_cat.title+'</option>';
 
-                                   });
-                                   categCheck.html(option);
-                                   categCheck.multiselect('rebuild');
+                               });
+                               categCheck.html(option);
+                               categCheck.multiselect('rebuild');
 
-                                }
                             }
-                             else
-                            {
-                                //$(".multiselect-container").css("display",'none');
-                                categCheck.html('<option value=""></option>');
-                                $(".multiselect-selected-text").html("No Sub Category Available !");
-                            }
-                            return false;
                         }
+                         else
+                        {
+                            //$(".multiselect-container").css("display",'none');
+                            categCheck.html('<option value=""></option>');
+                            $(".multiselect-selected-text").html("No Sub Category Available !");
+                        }
+                        return false;
+                    }
         });
 
 }
