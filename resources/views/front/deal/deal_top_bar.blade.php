@@ -2,6 +2,7 @@
  .categ li .active{
     color: #f9a820 !important;
   }
+   
 </style>
 <div class="gry_container" style="padding: 7px 0 16px;">
 <div class="black-strip">
@@ -67,7 +68,9 @@
                            <ul>
                             @if(isset($deal_category) && sizeof($deal_category)>0)
                               @foreach($deal_category as $key => $category)
-                               <li><a class="<?php if($category['cat_slug']==Request::segment(3)){echo'active';}?>" href="{{ url('/') }}/{{$city}}/deals/{{$category['cat_slug']}}">{{ ucfirst($category['title'])}}</a></li>
+                               <?php $category_url='';
+                                  $category_url=url('/').'/'.$city.'/deals/cat-'.$category['cat_slug']; ?>
+                               <li><a class="<?php if('cat-'.$category['cat_slug']==Request::segment(3)){echo'active';}?>" href="<?php echo $category_url; ?>">{{ ucfirst($category['title'])}}</a></li>
                               @endforeach
                             @endif
                             
