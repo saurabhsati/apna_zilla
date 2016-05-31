@@ -299,7 +299,7 @@
                                     <input type="radio"  name="is_sunday" value="1" onclick="sunday_status('on');"  checked="true" />
                                     <label >On </label>
                                      &nbsp &nbsp &nbsp &nbsp &nbsp
-                                       <input type="radio"  name="is_sunday" value="0"  onclick="sunday_status('off');"  checked="true"  />
+                                       <input type="radio"  name="is_sunday" value="0"  onclick="sunday_status('off');"    />
                                     <label  for="is_sunday">Off </label>
                               </div>
                               </div>

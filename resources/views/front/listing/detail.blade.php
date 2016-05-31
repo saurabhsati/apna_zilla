@@ -49,15 +49,41 @@
                <div class="sidebar-brand"><img src="{{ url('/') }}/assets/front/images/hours-of-operation.png" alt="Hours of Operation"/>Hours of Operation<span class="spe_mobile2"><a href="#"></a></span></div>
                <div class="bor_head">&nbsp;</div>
                <ul class="spe_submobile2">
+               @if(isset($arr_business_details['business_times']) && sizeof($arr_business_details['business_times'])>0)
                  @foreach($arr_business_details['business_times'] as $times)
-                  <li class="brdr"><a href="#">Monday   : {{$times['mon_open'] or '00:00'}} - {{$times['mon_close'] or '00:00'}}</a></li>
-                  <li class="brdr"><a href="#">Tuesday  : {{$times['tue_open'] or '00:00'}} - {{$times['tue_close'] or '00:00'}}</a></li>
-                  <li class="brdr"><a href="#">Wednesday: {{$times['wed_open'] or '00:00'}} - {{$times['wed_close'] or '00:00'}}</a></li>
-                  <li class="brdr"><a href="#">Thursday : {{$times['thus_open'] or '00:00'}} - {{$times['thus_close'] or '00:00'}}</a></li>
-                  <li class="brdr"><a href="#">Friday   : {{$times['fri_open'] or '00:00'}} - {{$times['fri_close'] or '00:00'}}</a></li>
-                  <li class="brdr"><a href="#">Saturday : {{$times['sat_open'] or '00:00'}} - {{$times['sat_close'] or '00:00'}}</a></li>
-                  <li class="brdr"><a href="#">Sunday   : {{$times['sun_open'] or '00:00'}} - {{$times['sun_close'] or '00:00'}}</a></li>
+                  <li class="brdr"><a href="#">Monday   :  @if(isset($times['mon_open'])) {{ $times['mon_open']}} @else {{'00:00'}} @endif - 
+                     @if(isset($times['mon_close'])) {{ $times['mon_close']}} @else {{'00:00'}} @endif</a></li> 
+
+                  <li class="brdr"><a href="#">Tuesday  : @if(isset($times['tue_open'])){{ $times['tue_open']}} @else {{'00:00'}} @endif -
+                   @if(isset($times['tue_close'])) {{ $times['tue_close']}} @else {{'00:00'}} @endif</a></li> 
+
+                  <li class="brdr"><a href="#">Wednesday: @if(isset($times['wed_open'])){{ $times['wed_open']}} @else {{'00:00'}} @endif - 
+                  @if(isset($times['wed_close'])){{ $times['wed_close']}}  @else {{'00:00'}} @endif
+                  </a></li>
+
+                  <li class="brdr"><a href="#">Thursday : @if(isset($times['thus_open'])){{$times['thus_open']}}  @else {{'00:00'}} @endif -
+                    @if(isset($times['thus_close'])){{ $times['thus_close']}}  @else {{'00:00'}} @endif
+                   </a></li>
+
+                  <li class="brdr"><a href="#">Friday   : @if(isset($times['fri_open'])){{ $times['fri_open']}}  @else {{'00:00'}} @endif -
+                   @if(isset($times['fri_close'])){{ $times['fri_close']}}  @else {{'00:00'}} @endif
+                   </a></li>
+
+                  <li class="brdr"><a href="#">Saturday : @if(isset($times['sat_open'])){{ $times['sat_open']}}  @else {{'00:00'}} @endif -
+                   @if(isset($times['sat_close'])){{ $times['sat_close']}}  @else {{'00:00'}} @endif
+                   </a></li>
+
+                  <li class="brdr"><a href="#">Sunday   : @if(isset($times['sun_open'])){{ $times['sun_open']}}  
+                  @elseif(empty($times['sun_open'])){{'OFF'}}
+                  @else {{'00:00'}} @endif - 
+                  @if(isset($times['sun_close'])){{ $times['sun_close']}} 
+                    @elseif(empty($times['sun_close'])){{'OFF'}}
+                     @else {{'Off'}} @endif
+                  </a></li>
                    @endforeach
+                   @else
+                  <span class="col-sm-3 col-md-3 col-lg-12">No Business Time Available.</span>
+                  @endif
                </ul>
                <!-- /#Categoriesr End-->
                <div class="clearfix"></div>
@@ -136,20 +162,27 @@
                            />
                      <div class="p_details ">
                         <i class="fa fa-clock-o"></i><span>
-                        @if(isset($arr_business_details['business_times']) && $arr_business_details['business_times']!='')
+                        <?php //print_r($arr_business_details['business_times']); ?>
+                        @if(isset($arr_business_details['business_times']) && sizeof($arr_business_details['business_times'])>0)
+                         @foreach($arr_business_details['business_times'] as $time)
                         <?php
                            $current_day = strtolower(date("D"));
                            $open_time = $current_day.'_open';
                            $close_time = $current_day.'_close';
                            ?>
-                        @if(array_key_exists($open_time, $arr_business_details['business_times']) &&
-                        array_key_exists($close_time, $arr_business_details['business_times']) )
-                        {{date('D')}} - {{ $arr_business_details['business_times'][$open_time] }} -
-                        {{ $arr_business_details['business_times'][$close_time] }}
-                        @endif
+
+                              @if(array_key_exists($open_time, $time) &&
+                              array_key_exists($close_time, $time) )
+
+                              {{date('D')}} - {{ $time[$open_time] }} -
+                              {{ $time[$close_time] }}
+
+                              @endif
                         <!-- <a href="javascript:void(0);" onclick="show_opening_times()">View All</a> --></span>
+                        @endforeach
                         @else
                         <span>Business Time Not Available.</span>
+
                         @endif
                         @if(isset($arr_business_details['website']) && !empty($arr_business_details['website']))
                         <div class="add_det"><i class="fa fa-globe"></i><a href="http://{{$arr_business_details['website']}}" target="_blank"> {{$arr_business_details['website']}}</a></div>
@@ -157,7 +190,9 @@
                           @if(isset($arr_business_details['email_id']) && !empty($arr_business_details['email_id']))
                        
                          <div class="enquiry"><a data-toggle="modal" data-target="#enquiry"><i class="fa fa-envelope"></i> Send Enquiry By Email</a></div>
+                         
                         @endif
+
                      </div>
                       <div class="p_details lst" >
                     @if(Session::has('user_id'))

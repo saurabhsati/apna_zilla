@@ -54,11 +54,11 @@
                                             <div class="img img-center">
                                                  <i class="fa fa-users"></i>
                                             </div>
-                                            <p class="title text-center">Seller Users</p>
+                                            <p class="title text-center">Venders</p>
                                         </div></a>
                                         <div class="tile tile-light-magenta ">
-                                            <p class="title">Seller Users</p>
-                                            <p>See Your Seller Users</p>
+                                            <p class="title">Venders </p>
+                                            <p>See Your Venders</p>
                                             <div class="img img-bottom">
                                                 <i class="fa fa-users"></i>
                                             </div>
