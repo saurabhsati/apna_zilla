@@ -768,7 +768,7 @@
                             </div>
 
                          </div>  
-                         <!--
+                         
                          <div class="form-group">
                           <label class="col-sm-3 col-lg-2 control-label" for="building">
                            <a href="" class="add_payment_mode">Add More Payment Mode</a></label>
@@ -779,7 +779,7 @@
 
                                
                              
-                            <div class="col-sm-3 col-lg-3 controls" style="margin-left: 51px;">
+                            <!-- <div class="col-sm-3 col-lg-3 controls" style="margin-left: 51px;">
                                   <input type="checkbox"  name="payment_mode[]" value="Cash Payment" @if(in_array('Cash Payment',$selected_paymnt_arr)) checked @endif value="Paying online" />
                                   <label class="control-label"> Cash Payment </label>
                                   <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
@@ -818,7 +818,7 @@
                                     <input type="checkbox"  name="payment_mode[]" value="Gift cards" @if(in_array('Gift cards',$selected_paymnt_arr)) checked @endif/>
                                      <label class="control-label"> Gift cards  </label>
                                   <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
-                                </div>
+                                </div> 
                               </div>
 
                               <div class="form-group">
@@ -833,8 +833,8 @@
                                     <label class="control-label"> Paying by lay-by  </label>
                                     <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                                 </div>
-                              </div>
-                               </div>-->
+                              </div> -->
+                               </div>
                             
                          <div class="form-group add_more_payment_mode" style="display: none;">
                           <div class="col-sm-5 col-md-7" style="float:right;">
