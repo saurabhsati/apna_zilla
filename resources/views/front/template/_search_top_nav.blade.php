@@ -48,7 +48,16 @@
                                   ?>
                                 <input type="hidden" value="deal_module" id="module_type" name="module_type">
                                 <?php
-                                  $set_txt_name= ucwords(urldecode(str_replace('-',' ',Request::segment(3))));
+                                 $set_txt_name=array();
+                                 $set_txt_name= explode('-',Request::segment(3));
+                                 if(isset($set_txt_name) && $set_txt_name[0]=='cat')
+                                 {
+                                    $set_txt_name= ucwords($set_txt_name[1]);
+                                 }
+                                 else
+                                 {
+                                    $set_txt_name= ucwords(urldecode(str_replace('-',' ',Request::segment(3))));
+                                 }
                                 }
 
                                 else 

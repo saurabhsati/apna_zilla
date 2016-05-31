@@ -13,6 +13,7 @@
     font-size: 15px;
     margin-right: 15px;
    float: right;
+   color: 
 }
 .left-paid span {
     color: #7e7e7e;
@@ -81,14 +82,25 @@
                                  $total=$total+$offers['discounted_price']*$selected_offers['order_quantity']; 
                                  $final=$final+ $total;
                             ?>
+                           
                            <div class="<?php  if($key<=sizeof($deal['user_orders'])-1) { echo "bordersk" ;}?>"></div>
                             <div class="main-oderboxs">
-                            <div class="title-ondss">{{$offers['name']}}</div>
-                            <p>{{$offers['title']}}</p>
-                            <div class="qntyg">Qty - {{$selected_offers['order_quantity']}}</div>
-                           <div class="right-kgf">
+                            <div class="title-ondss">{{ucfirst($offers['name'])}}</div>
+                            <p>{{ucfirst($offers['title'])}}</p>
+
+                            <div class="qntyg"> Regular Price    :</div>
+                             <div class="right-kgf">
                            <span> <i class="fa fa-inr "></i> {{$offers['main_price']}}</span>
-                           <i class="fa fa-inr right-paid"></i>{{$offers['discounted_price']}} ,  Total : <i class="fa fa-inr "></i>{{$total}}</div>
+                           </div>
+                           <br/>
+                           <div class="qntyg">Per Unit Price    :</div>
+                             <div class="right-kgf1">
+                           <span> <i class="fa fa-inr "></i> {{$offers['discounted_price']}}</span>
+                           </div>
+                           <br/>
+                            <div class="qntyg"> Selected Qty      :{{$selected_offers['order_quantity']}}</div>
+                           <div class="right-kgf1">
+                          <span>  Total : <i class="fa fa-inr "></i> {{$total}}</span></div>
                            </div>
 
                             @endif                         
@@ -104,7 +116,7 @@
                        @endif
                        </span>
                        </div>
-                         <div class="right-paid"><span> <i class="fa fa-inr "></i> Paid : {{$final}}</span></div>
+                         <div class="right-paid " ><span style="color: #f9a820;" > <i class="fa fa-inr "></i> Paid : {{$final}}</span></div>
                       </div>
                       <div class="clearfix"></div>
                     

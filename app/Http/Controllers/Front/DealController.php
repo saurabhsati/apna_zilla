@@ -349,19 +349,21 @@ class DealController extends Controller
                 {
                   foreach ($arr_deals_info as $key => $deal)
                     {
+
+
                       $arr_departture_point=[];
-                      if(isset($loc_deals['json_location_point']))
+                      if(isset($deal['json_location_point']))
                       {
-                       $arr_departture_point = json_decode($loc_deals['json_location_point'],TRUE);
+                       $arr_departture_point = json_decode($deal['json_location_point'],TRUE);
                        }
                        $location_count= $brought_count=0;
                        if(sizeof($arr_departture_point)>0)
                        {
                           $location_count= sizeof($arr_departture_point);
                        }
-                       if(!empty($loc_deals['redeem_count']))
+                       if(!empty($deal['redeem_count']))
                        {
-                          $brought_count=$loc_deals['redeem_count'] ;
+                          $brought_count=$deal['redeem_count'] ;
                        }
 
 
@@ -372,8 +374,8 @@ class DealController extends Controller
                                   '"alt="img"  /></div>
                                   <div class="deals-product">
                                   <div class="deals-nm"><a href="'.url('/').'/'.$search_under_city.'/deals/'.urlencode(str_replace(' ','-',$deal['name'])).'/'.base64_encode($deal['id']).'">'.$deal['name'].'</a></div>
-                                  <div class="deals-nm">  '.$location_count.'Location</div>
-                                <div class="deals-nm">  '.$brought_count.'Bought</div>
+                                  <p> '. $location_count.' Location<p> 
+                                  <p> '. $brought_count.' Bought<p> 
                             
 
                                   <div class="online-spend"></div>

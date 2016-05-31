@@ -32,6 +32,10 @@ class HomeController extends Controller
         {
         	$current_city=Session::get('city');
         }
+        else if(Session::has('search_city_title'))
+        {
+            $current_city=Session::get('search_city_title');
+        }
         else
         {
            $current_city='Delhi';

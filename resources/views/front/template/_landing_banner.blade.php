@@ -88,10 +88,11 @@
               $("input[name='get_city']").val(ui.item.label);
               $("input[name='city_id']").val(ui.item.id);
               setSerchCity(ui.item.id,ui.item.label);
+              window.location.reload();
             },
             response: function (event, ui)
             {
-
+              
             }
           });
 

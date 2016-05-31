@@ -2,6 +2,7 @@
  .categ li .active{
     color: #f9a820 !important;
   }
+   
 </style>
 <div class="gry_container" style="padding: 7px 0 16px;">
 <div class="black-strip">
@@ -20,22 +21,22 @@
               {
                   $city="Mumbai";
               }?>
-          <li><a href="{{ url('/') }}/{{$city}}/deals" class="<?php if( url('/').'/'.$city.'/deals'==Request::url()){echo'active';}?>">All Deals</a></li>
+          <li><a href="{{ url('/') }}/{{$city}}/deals" class="<?php if( url('/').'/'.$city.'/deals'==Request::url()){echo'active';}?>">All Deals</a>
+          </li>
           @if(isset($deal_category) && sizeof($deal_category)>0)
 
             @foreach($deal_category as $key => $category)
-      
-                 <li class="dropdown w3_megamenu-fw">
-                 <a data-hover="dropdown" class="dropdown-toggle ser <?php if($category['cat_slug']==Request::segment(3)){echo'active';}?>" href="{{ url('/') }}/{{$city}}/deals/cat-{{$category['cat_slug']}}">{{ ucfirst($category['title'])}}
-                 <b style="margin-left:5px;vertical-align:super;" class="caret"> </b>
-                 </a>
+            <?php $category_url='';
+             $category_url=url('/').'/'.$city.'/deals/cat-'.$category['cat_slug']; ?>
+                  <li class="dropdown w3_megamenu-fw ">
+                <a data-hover="dropdown" class="dropdown-toggle ser <?php if('cat-'.$category['cat_slug']==Request::segment(3)){echo'active';}?>" href="<?php echo $category_url;?>" onclick="run_url('<?php echo $category_url;?>');"> {{ ucfirst($category['title'])}}<b style="margin-left:5px;vertical-align:super;" class="caret" > </b></a>
                    <ul class="dropdown-menu">
                           <li class="w3_megamenu-content withdesc">
                              <ul>
                               @if(isset($allow_deal_sub_category) && sizeof($allow_deal_sub_category)>0)
                                   @foreach($allow_deal_sub_category as $key => $sub_category)
                                     @if($sub_category['parent']==$category['cat_id'])
-                                   <li><a href="{{ url('/') }}/{{$city}}/deals/cat-{{$category['cat_slug']}}/{{$sub_category['cat_slug']}}"> {{ ucfirst($sub_category['title'])}}</a></li>
+                                   <li><a href="{{ url('/') }}/{{$city}}/deals/cat-{{$category['cat_slug']}}/{{$sub_category['cat_slug']}}" class="<?php if($sub_category['cat_slug']==Request::segment(4)){echo'active';}?>"> {{ ucfirst($sub_category['title'])}}</a></li>
                                    @endif
                                   @endforeach
                                @endif
@@ -67,7 +68,9 @@
                            <ul>
                             @if(isset($deal_category) && sizeof($deal_category)>0)
                               @foreach($deal_category as $key => $category)
-                               <li><a class="<?php if($category['cat_slug']==Request::segment(3)){echo'active';}?>" href="{{ url('/') }}/{{$city}}/deals/{{$category['cat_slug']}}">{{ ucfirst($category['title'])}}</a></li>
+                               <?php $category_url='';
+                                  $category_url=url('/').'/'.$city.'/deals/cat-'.$category['cat_slug']; ?>
+                               <li><a class="<?php if('cat-'.$category['cat_slug']==Request::segment(3)){echo'active';}?>" href="<?php echo $category_url; ?>">{{ ucfirst($category['title'])}}</a></li>
                               @endforeach
                             @endif
                             
@@ -83,3 +86,9 @@
 
         </div>
    </div>
+   <script type="text/javascript">
+   function run_url(url)
+   {
+     window.location.href=url;
+   }
+   </script>

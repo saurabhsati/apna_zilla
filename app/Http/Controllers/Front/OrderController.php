@@ -312,24 +312,18 @@ class OrderController extends Controller
   }
   public function set_order_deal_with_promocode(Request $request)
   {
-     $amount=$request->input('amount');
-     $deal_id=$request->input('deal_id');
-     $promocode=$request->input('promocode');
-     $consider_amount=0;
-     $apply_discount=0;
-     $discounted_amount=0;
+     $amount            = $request->input('amount');
+     $deal_id           = $request->input('deal_id');
+     $promocode         = $request->input('promocode');
+     $consider_amount   = 0;
+     $apply_discount    = 0;
+     $discounted_amount = 0;
     
-     $consider_amount=$amount;  
-     /*if($amount==Session::get('total_deal_price'))
-     {
-        $consider_amount=$amount;
-     }
-     else
-     {
-        $consider_amount=Session::get('total_deal_price');
-     }*/
+     $consider_amount   = $amount;
+    
       $arr_coupon           = [];
-     $obj_arr_coupon       = CouponModel::where('coupon_code',$promocode)->first();
+      $coupon_type          = '';
+      $obj_arr_coupon       = CouponModel::where('coupon_code',$promocode)->first();
 
      if($obj_arr_coupon != FALSE)
      {
@@ -338,20 +332,20 @@ class OrderController extends Controller
      }
      if(sizeof( $arr_coupon)>0 && isset( $arr_coupon))
      {
-            $promo_start_date = $arr_coupon['start_date'];
-            $promo_end_date = $arr_coupon['end_date'];
-            $current_date = date('Y-m-d');
+            $promo_start_date             = $arr_coupon['start_date'];
+            $promo_end_date               = $arr_coupon['end_date'];
+            $current_date                 = date('Y-m-d');
             if(strtotime($current_date) <= strtotime($promo_end_date) && strtotime($current_date) >= strtotime($promo_start_date))
               {
                    $coupon_type= $arr_coupon['type'];
                    if($coupon_type=='PERCENT')
                    {
-                        $apply_discount = $arr_coupon['discount'];
+                        $apply_discount    = $arr_coupon['discount'];
                         $discounted_amount = ( $consider_amount) - ( $consider_amount * ($apply_discount / 100));
                    }
                    else if($coupon_type =='AMT')
                    {
-                         $apply_discount=$arr_coupon['discount'];
+                         $apply_discount = $arr_coupon['discount'];
                          if($consider_amount > $apply_discount)
                          {
                          	 $discounted_amount = $consider_amount-$apply_discount;
@@ -359,8 +353,8 @@ class OrderController extends Controller
                          }
                          else
                          {
-                           	$data['status'] = "ERROR";
-              	 						$data['msg'] 	= "Cart Total Is Less Than Promocode Discount Amount";
+                            $data['status'] = "ERROR";
+                            $data['msg']    = "Cart Total Is Less Than Promocode Discount Amount";
               	 						echo json_encode($data);
               	 						exit;
                             
@@ -401,6 +395,32 @@ class OrderController extends Controller
         return response()->json($data);
       }
 
+  }
+  public function remove_promocode(Request $request)
+  {
+     $amount            = $request->input('amount');
+     if(Session::has('promo_used'))
+     {
+       
+         $data['status']            = "REMOVE";
+         $data['msg']               = "Promo code removed successfully";
+         $data['original_amount']   = $amount;
+         Session::forget('total_deal_price');
+         Session::forget('coupon_type');
+         Session::forget('apply_discount');
+         Session::forget('promo_used');
+         return response()->json($data);
+
+     }
+      else
+      {
+        $data['status'] = "ERROR";
+        $data['msg']  = "Promo code is not remove now";
+        // echo json_encode($data);
+        // exit;
+        return response()->json($data);
+      }
+     
   }
 
   
