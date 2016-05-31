@@ -71,14 +71,14 @@
            
            {{ csrf_field() }}
             <div class="row">
-                     <div class="col-md-10">
+                     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                 <div class="box box-magenta">   
                 <div class="box-content">
                 <!-- <table class="table">
                     <tr>
                       <td style="border-top:none;"> -->
                       <div class="form-group">
-                        <label class="col-sm-3 col-lg-1 control-label">Location : </label>
+                        <label class="col-sm-3 col-lg-2 control-label">Location : </label>
                         <div class="col-sm-9 col-lg-5 controls">
                           <input type="text"
                              class="form-control"
@@ -100,22 +100,12 @@
                 </div>         
                 </div>
             </div>
-            </div>
             </form>
-          <form class="form-horizontal" id="frm_manage" method="POST" action="{{ url('/sales_user/business_listing/multi_action') }}">
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+             <form class="form-horizontal" id="frm_manage" method="POST" action="{{ url('/sales_user/business_listing/multi_action') }}">
 
             {{ csrf_field() }}
-
-            <div class="col-md-10">
-
-
-            <div id="ajax_op_status">
-
-            </div>
-            <div class="alert alert-danger" id="no_select" style="display:none;"></div>
-            <div class="alert alert-warning" id="warning_msg" style="display:none;"></div>
-          </div>
-          <div class="btn-toolbar pull-right clearfix">
+                        <div class="btn-toolbar pull-right clearfix mrg-tps">
             <!--- Add new record - - - -->
                 <div class="btn-group">
                 <a href="{{ url('/sales_user/business_listing/create')}}" class="btn btn-primary btn-add-new-records">Add business</a>
@@ -154,6 +144,22 @@
                 </a>
             </div>
           </div>
+
+            </div>
+            </div>
+           
+         
+
+            <div class="col-md-10">
+
+
+            <div id="ajax_op_status">
+
+            </div>
+            <div class="alert alert-danger" id="no_select" style="display:none;"></div>
+            <div class="alert alert-warning" id="warning_msg" style="display:none;"></div>
+          </div>
+
           <br/>
           <div class="clearfix"></div>
           <div class="table-responsive" style="border:0">
