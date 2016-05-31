@@ -25,8 +25,9 @@ class HomeController extends Controller
     }
     public function index()
     {
-
-    	$page_title	='Home';
+        
+        $page_title	='Home';
+        
         if(Session::has('city'))
         {
         	$current_city=Session::get('city');
@@ -246,6 +247,7 @@ class HomeController extends Controller
                     {
                         $arr_final_city_list[$key]['id'] = $list['id'];
                         $arr_final_city_list[$key]['label'] = $list['city_title'];
+
                     }
 
                 }
@@ -511,8 +513,8 @@ class HomeController extends Controller
             $city_title = $request->input('city_title');
             Session::forget('location_latitude');
             Session::forget('location_longitude');
-            Session::put('search_city_id',$city_id);
-            Session::put('search_city_title',$city_title);
+            Session::put('search_city_id', $city_id);
+            Session::put('search_city_title', $city_title);
 
             $result['status'] ="1";
             return response()->json($result);

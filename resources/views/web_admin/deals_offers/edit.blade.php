@@ -513,6 +513,7 @@ function delete_gallery(id,image_name)
 }
         $(document).ready(function () {
             $('#validation-form').submit( function () {
+              tinyMCE.triggerSave();
                 var image =  jQuery('#deal_image').val();
                 if(image != "")
                 {

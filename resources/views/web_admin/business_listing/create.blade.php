@@ -821,6 +821,10 @@ function sunday_status(status)
 
 $(document).ready(function()
 {
+
+ $('#validation-form').submit(function(){
+    tinyMCE.triggerSave();
+ }); 
  var site_url="{{url('/')}}";
  var csrf_token = "{{ csrf_token() }}";
  $("#user_id").autocomplete(

@@ -117,7 +117,7 @@
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="description">Description<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <textarea class="form-control" name="description" id="description" data-rule-required="true" rows="5"></textarea>
+                    <textarea class="form-control" name="description" id="description" rows="5" data-rule-required="true"></textarea>
                     <span class='help-block'>{{ $errors->first('description') }}</span>
                 </div>
             </div>
@@ -261,6 +261,7 @@
 
          $(document).ready(function () {
             $('#validation-form').submit( function () {
+                tinyMCE.triggerSave();
                 var image =  jQuery('#deal_image').val();
                 if(image != "")
                 {

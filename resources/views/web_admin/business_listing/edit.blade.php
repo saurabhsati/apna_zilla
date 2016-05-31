@@ -1184,6 +1184,9 @@ $('#remove-payment').click(function()
 <script src="{{ url('/') }}/assets/front/js/jquery.geocomplete.min.js"></script>
 <script>
 $(function () {
+   $('#validation-form').submit(function(){
+    tinyMCE.triggerSave();
+ }); 
 
  var location =$("input[name=area]").val();
 var options = {
