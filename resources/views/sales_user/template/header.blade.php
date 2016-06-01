@@ -61,6 +61,8 @@
            <!-- Multi select  -->
            <script src="{{ url('/') }}/assets/front/js/bootstrap-multiselect.js" type='text/javascript'></script>
           <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/front/css/bootstrap-multiselect.css" />
+          <script type="text/javascript" src="{{ url('/') }}/assets/fusioncharts/js/fusioncharts.js"></script>
+<script type="text/javascript" src="{{ url('/') }}/assets/fusioncharts/js/themes/fusioncharts.theme.fint.js"></script>
     </head>
     <body>
 

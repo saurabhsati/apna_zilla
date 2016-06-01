@@ -21,8 +21,8 @@ use Sentinel;
 use Session;
 use Validator;
 use Hash;
+use DB;
 
-use Khill\Lavacharts\Lavacharts as Lava;
 
 
 
@@ -93,30 +93,30 @@ class SalesAccountController extends Controller
               $membership_transaction_count = sizeof($obj_transaction->toArray());
         }
 
-          $lava = new Lava; // See note below for Laravel
+        $users = DB::table('users')
+              ->select(DB::raw('MONTH(created_at) as month, YEAR(created_at) as year,DAY(created_at) as day, COUNT(id) as user_count'))
+              ->where('role','=','normal')
+              ->where('sales_user_public_id','=',$sales_user_public_id)
+              ->groupBy(DB::raw('YEAR(created_at), MONTH(created_at)'))
+              ->get();
+        $users_array = json_decode(json_encode($users), True);
 
-        $population = $lava->DataTable();
+        //dd($users_array);
+        $businesses = DB::table('business')
+              ->select(DB::raw('MONTH(created_at) as month, YEAR(created_at) as year, COUNT(id) as business_count'))
+              ->where('sales_user_public_id','=',$sales_user_public_id)
+              ->groupBy(DB::raw('YEAR(created_at), MONTH(created_at)'))
+              ->get();
+        $businesses_array = json_decode(json_encode($businesses), True);
 
-        $population->addDateColumn('Year')
-                   ->addNumberColumn('Number of People')
-                   ->addRow(['2006', 623452])
-                   ->addRow(['2007', 685034])
-                   ->addRow(['2008', 716845])
-                   ->addRow(['2009', 757254])
-                   ->addRow(['2010', 778034])
-                   ->addRow(['2011', 792353])
-                   ->addRow(['2012', 839657])
-                   ->addRow(['2013', 842367])
-                   ->addRow(['2014', 873490]);
+        $deals = DB::table('deals')
+              ->select(DB::raw('MONTH(created_at) as month, YEAR(created_at) as year, COUNT(id) as deal_count'))
+              ->where('public_id',$sales_user_public_id)
+              ->groupBy(DB::raw('YEAR(created_at), MONTH(created_at)'))
+              ->get();
 
-        $lava->AreaChart('Population', $population, [
-            'title' => 'Population Growth',
-            'legend' => [
-                'position' => 'in'
-            ]
-        ]);
-
- 		return view('sales_user.account.dashboard',compact('page_title','vender_count','business_listing_count','deals_count','membership_transaction_count','lava'));
+        $deals_array = json_decode(json_encode($deals), True);
+	return view('sales_user.account.dashboard',compact('page_title','vender_count','business_listing_count','deals_count','membership_transaction_count','users_array','businesses_array','deals_array'));
 
  	}
 
@@ -206,6 +206,7 @@ class SalesAccountController extends Controller
         $arr_rules = array();
         $arr_rules['office_landline']   = 'required';
         $arr_rules['street_address']    = 'required';
+        $arr_rules['first_name']    = 'required';
 
         $validator = Validator::make($request->all(),$arr_rules);
 
@@ -243,8 +244,9 @@ class SalesAccountController extends Controller
         $profile_pic    =$profile_pic;
         $office_landline      = $request->input('office_landline');
         $street_address = $request->input('street_address');
+        $first_name = $request->input('first_name');
         $update_arr =array();
-        $update_arr=array('profile_pic'=>$profile_pic,'office_landline'=>$office_landline,'street_address'=>$street_address);
+        $update_arr=array('profile_pic'=>$profile_pic,'office_landline'=>$office_landline,'street_address'=>$street_address,'first_name'=>$first_name);
         $update_profile = Sentinel::update($obj_sales_user,$update_arr);
 
         if($update_profile)

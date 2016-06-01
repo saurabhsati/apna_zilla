@@ -8,7 +8,8 @@ use App\Models\BusinessListingModel;
 use App\Models\DealsOffersModel;
 use Session;
 use Sentinel;
-
+use DB;
+use Khill\Lavacharts\Lavacharts as Lava;
 
 class DashboardController extends Controller
 {
@@ -32,8 +33,10 @@ class DashboardController extends Controller
  		}
 
  		$obj_sales_executive = Sentinel::createModel()->where('role','=','sales')->get();
+    $all_sales_executive=[];
  		if($obj_sales_executive!=FALSE)
  		{
+      $all_sales_executive=$obj_sales_executive->toArray();
  			$sales_executive_count=	sizeof($obj_sales_executive->toArray());
  		}
 
@@ -48,14 +51,136 @@ class DashboardController extends Controller
          {
             $deals_count = sizeof($obj_deal->toArray());
          }
+      
+            $users = DB::table('users')
+              ->select(DB::raw('MONTH(created_at) as month, YEAR(created_at) as year, COUNT(id) as user_count'))
+              ->where('role','=','normal')
+              ->groupBy(DB::raw('YEAR(created_at), MONTH(created_at)'))
+              ->get();
+
+               $users_array = json_decode(json_encode($users), True);
+
+           $sales_executive = DB::table('users')
+            ->select(DB::raw('MONTH(created_at) as month, YEAR(created_at) as year, COUNT(id) as executive_count'))
+            ->where('role','=','sales')
+            ->groupBy(DB::raw('YEAR(created_at), MONTH(created_at)'))
+            ->get();
+
+           $sales_executive_array = json_decode(json_encode($sales_executive), True);
+           //123456789
+          
+           $businesses = DB::table('business')
+              ->select(DB::raw('MONTH(created_at) as month, YEAR(created_at) as year, COUNT(id) as business_count'))
+              ->groupBy(DB::raw('YEAR(created_at), MONTH(created_at)'))
+              ->get();
+
+               $businesses_array = json_decode(json_encode($businesses), True);
+
+           $deals = DB::table('deals')
+              ->select(DB::raw('MONTH(created_at) as month, YEAR(created_at) as year, COUNT(id) as deal_count'))
+              ->groupBy(DB::raw('YEAR(created_at), MONTH(created_at)'))
+              ->get();
+
+            $deals_array = json_decode(json_encode($deals), True);
+             
+
+            
 
 
-
-         
-			
-
-
-		return view('web_admin.dashboard.dashboard',compact('page_title','page_title','vender_count','sales_executive_count','business_listing_count','deals_count','data'));
+		return view('web_admin.dashboard.dashboard',compact('page_title','page_title','vender_count','sales_executive_count','business_listing_count','deals_count','users_array','sales_executive_array','businesses_array','deals_array','all_sales_executive'));
  	}	
 
+  public function view_sales_activity(Request $request)
+  {
+     $from_date=$request->input('from_date',true);
+     $to_date=$request->input('to_date',true);
+     $sales_user_public_id=$request->input('sales_user_public_id',true);
+     list($month,$day,$year)=explode('/',$from_date);
+     $from=$year."-".$month."-".$day;
+     list($month,$day,$year)=explode('/',$to_date);
+      $to=$year."-".$month."-".$day;
+     $business_listing =[];
+     $obj_business_listing = BusinessListingModel::where('sales_user_public_id',$sales_user_public_id)
+         ->whereBetween('created_at',array($from.' 00:00:00',$to.' 00:00:00'))
+         ->get();
+       //  dd($obj_business_listing);
+        if($obj_business_listing)
+        {
+            $business_listing = $obj_business_listing->toArray();
+        }
+    
+     $str='';
+      $str.="<table class='table table-bordered'>
+              <thead>
+                <tr>
+                 <th>Business Id</th>
+                  <th>Business Name</th>
+                  <th>City</th>
+                  <th>State</th>
+                  <th>Created Date</th>
+                 </tr>
+              </thead>
+              <tbody>";
+                if(sizeof($business_listing)>0)
+                 {
+                  foreach($business_listing as $business)
+                   {
+                    
+                     $str.="<tr> <td>". $business['busiess_ref_public_id']."</td>
+                       <td>". ucfirst($business['business_name'])."</td>
+                       <td>". $business['city']."</td>
+                       <td>". $business['state']."</td>
+                       <td>". date('d M Y',strtotime($business['created_at']))."</td>
+                      </tr> ";              
+                   }
+                       $str.="<tr><td colspan='6'><div id='pagging' style='padding-top:10px;' class='paginate'></div></td></tr>";
+                } 
+                else 
+                { 
+                  $str.="<tr><td colspan='6'><strong>You don't have any application available.</strong></td></tr>";
+                
+                 }
+              $str.="</tbody>
+            </table>";
+      /*$str.='<script type="text/javascript">
+      FusionCharts.ready(function () {
+      var revenueChart = new FusionCharts({
+          "type": "column3d",
+          "renderAt": "view_job_chart",
+          "width": "900",
+          "height": "300",
+          "dataFormat": "json",
+          "dataSource": {
+             "chart": {
+                "caption": "Job Application Posted",
+                "xAxisName": "Month",
+                "yAxisName": "No of Application posted",
+                "theme": "fint"
+             },
+             "data": [';
+                 
+                      $i=0;
+                      if(sizeof($business_listing)>0 && isset($business_listing))
+                      foreach($business_listing as $row)
+                      { 
+                          $i++;   
+     
+                         $str.='{
+                             "label": "'.ucfirst($row['post_month']).'",
+                             "value": "'.ucfirst($row['job_count']).'"
+                          },';
+                 }
+                      if($i<count($res))
+                          echo",";
+              
+             $str.=' ]
+          }
+
+      });
+      revenueChart.render();
+  });
+   </script>';*/
+   echo $str;
+   }
+  
 }

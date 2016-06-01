@@ -444,207 +444,329 @@
                     </div>
                   </div>
 
+                      <div class="row">
+                          <div class="col-md-12">
+                            <div class="box">
+                              <div class="box-title">
+                                <h3><i class="fa fa-bar-chart-o"></i>Activity Reports For Sales Executive </h3>
+                                <div class="box-tool"> <a data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a> <a data-action="close" href="#"><i class="fa fa-times"></i></a> </div>
+                              </div>
+                              <div class="box-content" >
+                              <table>
+                              <tr>
+                               <td><label class="control-label">From Date:</label></td>
+                               <td><input class="form-control" type="text" id="from_date" class="span1" name="from_date"></td>&nbsp&nbsp&nbsp
+                               <td><label class="control-label">To Date:</label></td>
+                               <td><input class="form-control" type="text" id="to_date" class="span1" name="to_date"></td>&nbsp&nbsp&nbsp
+                               <td><label class="control-label">Select Sales Executive:</label></td>
+                               <td>
+                               <select class="form-control" name="sales_user_public_id" id="sales_user_public_id">
+                                     <option>Select Sales Executive</option>
+                                     @if(isset($all_sales_executive) && sizeof($all_sales_executive)>0)
+                                          @foreach($all_sales_executive as $sales_executive)
+                                              <option value="{{$sales_executive['public_id']}}">{{ $sales_executive['public_id']}}</option>
+                                          @endforeach
+                                      @endif
+                               </select>
+                              </td>&nbsp&nbsp&nbsp
+                               <td><input type="button" class="btn btn-primary" id="btn_view" name="btn_view" value="Filter" onclick="javascript:return view_sales_activity()"></td>
+                               <td><input type="button" class="btn btn-primary" id="btn_reset" name="btn_reset" value="Reset" onclick="javascript:return clear_sales_activity()"></td>
+                               <div id="view_sales_executive_activity_chart">
+                               </div>
+                              <tr>
+                                </table>
+                                <div id="response_result">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+          </div>
 
-                <!-- END Tiles -->
 
-                <!-- BEGIN Tiles -->
-               <!--  <div class="row">
-                    <div class="col-md-7">
+                   <div class="row">
+     <div class="col-md-12">
+         <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                 <div class="box-content" id="reg_chart"></div>  
+                            </div>
+                        </div>
+                         <script type="text/javascript">
+                            FusionCharts.ready(function () {
+                            var revenueChart = new FusionCharts({
+                                "type": "column3d",
+                                "renderAt": "reg_chart",
+                                "width": "650",
+                                "height": "330",
+                                "dataFormat": "json",
+                                "dataSource": {
+                                   "chart": {
+                                      "caption": "Venders",
+                                      "xAxisName": "Month",
+                                      "yAxisName": "No of Venders Register",
+                                      "theme": "fint"
+                                   },
+                                   "data": [
+                                        <?php
+                                            $i=0;
+                                            if(sizeof($users_array)>0)
+                                            foreach($users_array as $row)
+                                            {   
+                                                $mons = array(1 => "Jan", 2 => "Feb", 3 => "Mar", 4 => "Apr", 5 => "May", 6 => "Jun", 7 => "Jul", 8 => "Aug", 9 => "Sep", 10 => "Oct", 11 => "Nov", 12 => "Dec");
+
+                                                
+                                                $month_name = $mons[$row['month']];
+                                                $month_label = '';
+                                                $month_label=$month_name;
+                                                $i++;   
+                                        ?>
+                                                {
+                                                   "label": "<?php echo $month_label;?>",
+                                                   "value": "<?php echo $row['user_count'];?>"
+                                                },
+                                        <?php }
+                                            if($i<count($users_array))
+                                                echo",";
+                                       ?>
+                                    ]
+                                }
+
+                            });
+                            revenueChart.render();
+                        });
+                        </script>
+                       <div class="col-md-6">
                         <div class="row">
-                            <div class="col-md-7">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="tile">
-                                            <p class="title">FLATY - Responsive Admin Template</p>
-                                            <p>Based on twitter bootstrap, 9 predefined color, clean and minimal design, easy to change and etc.</p>
-                                            <div class="img img-bottom">
-                                                <i class="fa fa-desktop"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6 tile-active">
-                                        <a class="tile tile-pink" data-stop="3000" href="http://codecanyon.net/item/flaty-wp-premium-wordpress-flat-admin-template/5329999">
-                                            <div class="img img-center">
-                                                <img src="{{ url('/') }}/img/demo/wp-logo.png" />
-                                            </div>
-                                            <p class="title text-center">Visit FLATY wp</p>
-                                        </a>
-
-                                        <a class="tile tile-orange" href="http://codecanyon.net/item/flaty-wp-premium-wordpress-flat-admin-template/5329999">
-                                            <p>FLATY wp is new custom theme designed for the Wordpress admin.</p>
-                                        </a>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <a class="tile tile-red" href="http://themeforest.net/item/flaty-premium-responsive-admin-template/5247864">
-                                            <div class="img img-center">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </div>
-                                            <p class="title text-center">Buy FLATY</p>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-5">
-                                <div class="row">
-                                    <div class="col-md-12 tile-active">
-                                        <div class="tile tile-magenta">
-                                            <div class="img img-center">
-                                                <i class="fa fa-desktop"></i>
-                                            </div>
-                                            <p class="title text-center">FLATY Admin</p>
-                                        </div>
-
-                                        <div class="tile tile-blue">
-                                            <p class="title">FLATY Admin</p>
-                                            <p>FLATY is the new premium and fully responsive admin dashboard template.</p>
-                                            <div class="img img-bottom">
-                                                <i class="fa fa-desktop"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="tile tile-green">
-                                            <div class="img">
-                                                <i class="fa fa-copy"></i>
-                                            </div>
-                                            <div class="content">
-                                                <p class="big">+30</p>
-                                                <p class="title">Ready Page</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="box-content" id="sales_executive_chart">
+                              </div>
                         </div>
-                    </div>
+                      </div>
+                    <script type="text/javascript">
+                        FusionCharts.ready(function () {
+                        var revenueChart = new FusionCharts({
+                            "type": "column3d",
+                            "renderAt": "sales_executive_chart",
+                            "width": "650",
+                            "height": "330",
+                            "dataFormat": "json",
+                            "dataSource": {
+                               "chart": {
+                                  "caption": " Sales Executives ",
+                                  "xAxisName": "Month",
+                                  "yAxisName": "Monthly Sales Executives Register",
+                                  "theme": "fint"
+                               },
+                               "data": [
+                                    <?php
+                                        $i=0;
+                                        if(sizeof($sales_executive_array)>0)
+                                        foreach($sales_executive_array as $row)
+                                        { 
+                                            $i++;   
 
-                    <div class="col-md-5">
+                                            $mons = array(1 => "Jan", 2 => "Feb", 3 => "Mar", 4 => "Apr", 5 => "May", 6 => "Jun", 7 => "Jul", 8 => "Aug", 9 => "Sep", 10 => "Oct", 11 => "Nov", 12 => "Dec");
+
+                                            
+                                            $month_name = $mons[$row['month']];
+                                            $month_label = '';
+                                            $month_label=$month_name;
+                                           // $month_label = date('M', strtotime('11-2016'/*$row['month']*/));
+                                    ?>
+                                            {
+                                               "label": "<?php echo $month_label;?>",
+                                               "value": "<?php echo $row['executive_count'];?>"
+                                            },
+                                    <?php }
+                                        if($i<count($sales_executive_array))
+                                            echo",";
+                                   ?>
+                                ]
+                            }
+
+                        });
+                        revenueChart.render();
+                    });
+                    </script>
+         </div>
+    </div>
+</div>
+
+<hr>
+<div class="row">
+     <div class="col-md-12">
+         <div class="row">
+                         <div class="col-md-6">
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="tile tile-orange">
-                                    <div class="img">
-                                        <i class="fa fa-comments"></i>
-                                    </div>
-                                    <div class="content">
-                                        <p class="big">128</p>
-                                        <p class="title">Comments</p>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="box-content" id="business_chart">
+                              </div>
+                        </div>
+                      </div>
+                    <script type="text/javascript">
+                        FusionCharts.ready(function () {
+                        var revenueChart = new FusionCharts({
+                            "type": "column3d",
+                            "renderAt": "business_chart",
+                            "width": "650",
+                            "height": "330",
+                            "dataFormat": "json",
+                            "dataSource": {
+                               "chart": {
+                                  "caption": " Business Listing ",
+                                  "xAxisName": "Month",
+                                  "yAxisName": "Monthly Business Register",
+                                  "theme": "fint"
+                               },
+                               "data": [
+                                    <?php
+                                        $i=0;
+                                        if(sizeof($businesses_array)>0)
+                                        foreach($businesses_array as $row)
+                                        { 
+                                            $i++;   
 
-                            <div class="col-md-6">
-                                <div class="tile tile-dark-blue">
-                                    <div class="img">
-                                        <i class="fa fa-download"></i>
-                                    </div>
-                                    <div class="content">
-                                        <p class="big">+160</p>
-                                        <p class="title">Downloads</p>
-                                    </div>
-                                </div>
+                                            $mons = array(1 => "Jan", 2 => "Feb", 3 => "Mar", 4 => "Apr", 5 => "May", 6 => "Jun", 7 => "Jul", 8 => "Aug", 9 => "Sep", 10 => "Oct", 11 => "Nov", 12 => "Dec");
+
+                                            
+                                            $month_name = $mons[$row['month']];
+                                            $month_label = '';
+                                            $month_label=$month_name;
+                                           // $month_label = date('M', strtotime('11-2016'/*$row['month']*/));
+                                    ?>
+                                            {
+                                               "label": "<?php echo $month_label;?>",
+                                               "value": "<?php echo $row['business_count'];?>"
+                                            },
+                                    <?php }
+                                        if($i<count($businesses_array))
+                                            echo",";
+                                   ?>
+                                ]
+                            }
+
+                        });
+                        revenueChart.render();
+                    });
+                    </script>
+                        <div class="col-md-6">
+                            <div class="row">
+                                 <div class="box-content" id="deal_chart"></div>  
                             </div>
                         </div>
+                         <script type="text/javascript">
+                            FusionCharts.ready(function () {
+                            var revenueChart = new FusionCharts({
+                                "type": "column3d",
+                                "renderAt": "deal_chart",
+                                "width": "650",
+                                "height": "330",
+                                "dataFormat": "json",
+                                "dataSource": {
+                                   "chart": {
+                                      "caption": "Deals ",
+                                      "xAxisName": "Month",
+                                      "yAxisName": "No of Deals",
+                                      "theme": "fint"
+                                   },
+                                   "data": [
+                                        <?php
+                                            $i=0;
+                                            if(sizeof($deals_array)>0)
+                                            foreach($deals_array as $row)
+                                            {   
+                                                $mons = array(1 => "Jan", 2 => "Feb", 3 => "Mar", 4 => "Apr", 5 => "May", 6 => "Jun", 7 => "Jul", 8 => "Aug", 9 => "Sep", 10 => "Oct", 11 => "Nov", 12 => "Dec");
 
-                        <div class="row">
-                            <div class="col-md-12 tile-active">
-                                <div class="tile tile-img" data-stop="3500" style="background-image: url(img/demo/gallery/5.jpg);">
-                                    <p class="title">Gallery</p>
-                                </div>
+                                                
+                                                $month_name = $mons[$row['month']];
+                                                $month_label = '';
+                                                $month_label=$month_name;
+                                                $i++;   
+                                        ?>
+                                                {
+                                                   "label": "<?php echo $month_label;?>",
+                                                   "value": "<?php echo $row['deal_count'];?>"
+                                                },
+                                        <?php }
+                                            if($i<count($deals_array))
+                                                echo",";
+                                       ?>
+                                    ]
+                                }
 
-                                <a class="tile tile-lime" data-stop="5000" href="gallery.html">
-                                    <p class="title">Gallery page</p>
-                                    <p>Click on this tile block to see our amazing gallery page. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                    <div class="img img-bottom">
-                                        <i class="fa fa-picture-o"></i>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
- -->
-                <!-- END Tiles -->
+                            });
+                            revenueChart.render();
+                        });
+                        </script>
+                       
+         </div>
+    </div>
+</div>
+                  <div id="pop_div"></div>
+                  <?php //echo $lava->render('LineChart', 'Temps', 'pop_div'); ?>
+ <script type="text/javascript">
+ $(function(){
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    $('#from_date').datepicker({
+      onRender: function(date) {
+        //return date.valueOf() < now.valueOf() ? 'disabled' : '';
+      }
+    }).on('changeDate', function(ev) 
+    {
+      $('#from_date').datepicker('hide');
+    }).data('datepicker');
 
+    $('#to_date').datepicker({
+      onRender: function(date) {
+        //return date.valueOf() < now.valueOf() ? 'disabled' : '';
+      }
+    }).on('changeDate', function(ev) 
+    {
+      $('#to_date').datepicker('hide');
+    }).data('datepicker');
+});
+ </script>                 
+<script type="text/javascript">
+ var site_url="{{url('/')}}";
+ var csrf_token = "{{ csrf_token() }}";
+function view_sales_activity(url)
+{   
+    var from_date = $('#from_date').val();
+    var to_date = $('#to_date').val();
+    var sales_user_public_id = $('#sales_user_public_id').val();
+   
+    if(from_date!="" && to_date!="")
+    {
+     var fromData = {
+                            from_date:from_date,
+                            to_date:to_date,
+                            sales_user_public_id:sales_user_public_id,
+                            _token:csrf_token
+                              };
 
-                <!-- BEGIN Main Content -->
-               <div class="row">
-                    <div class="col-md-7">
-                        <div class="box">
-                            <div class="box-title">
-                                <h3><i class="fa fa-bar-chart-o"></i> Visitors Chart</h3>
-                                <div class="box-tool">
-                                    <a data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>
-                                    <a data-action="close" href="#"><i class="fa fa-times"></i></a>
-                                </div>
-                            </div>
-                            <div class="box-content">
-                                <div id="visitors-chart" style="margin-top:20px; position:relative; height: 290px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="box">
-                            <div class="box-title">
-                                <h3><i class="fa fa-bar-chart-o"></i> Users And Projects Statistics</h3>
-                                <div class="box-tool">
-                                    <a data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>
-                                    <a data-action="close" href="#"><i class="fa fa-times"></i></a>
-                                </div>
-                            </div>
+                     $.ajax({
+                             url:site_url+'/web_admin/view_sales_activity',
+                             type: 'POST',
+                             data: fromData,
+                            /* dataType: 'json',*/
+                             async: false,
 
-                            <div class="box-content">
-                                <ul class="weekly-stats">
-
-                                    <li>
-                                        <span class="inline-sparkline">134,178,264,196,307,259,287</span>
-                                        Total Registered Users: <span class="value">
-                                                                {{ isset($dashboard_satistics['total_users'])?$dashboard_satistics['total_users']:''}}
-                                                                </span>
-                                    </li>
-                                    <li>
-                                        <span class="inline-sparkline">89,124,197,138,235,169,186</span>
-                                        Total Registered Companies: <span class="value">{{ isset($dashboard_satistics['number_of_companies'])?$dashboard_satistics['number_of_companies']:''}}</span>
-                                    </li>
-                                    <li>
-                                        <span class="inline-sparkline">625,517,586,638,669,698,763</span>
-                                        Total Registered Catalysts: <span class="value">{{ isset($dashboard_satistics['number_of_catalysts'])?$dashboard_satistics['number_of_catalysts']:''}}</span>
-                                    </li>
-                                    <li>
-                                        <span class="inline-sparkline">1.34,2.98,0.76,1.29,1.86,1.68,1.92</span>
-                                        Total Number Of Posted Projects: <span class="value">{{ isset($dashboard_satistics['posted_projects'])?$dashboard_satistics['posted_projects']:''}}</span>
-                                    </li>
-                                    <li>
-                                        <span class="inline-sparkline">2.34,2.67,1.47,1.97,2.25,2.47,1.27</span>
-                                        Total Number Of Ongoing Projects: <span class="value">{{ isset($dashboard_satistics['ongoing_projetcs'])?$dashboard_satistics['ongoing_projetcs']:''}}</span>
-                                    </li>
-                                    <li>
-                                        <span class="inline-sparkline">70.34,67.41,59.45,65.43,78.42,75.92,74.29</span>
-                                        Total Number Of Completed Projects: <span class="value">{{ isset($dashboard_satistics['completed_projects'])?$dashboard_satistics['completed_projects']:''}}</span>
-                                    </li>
-
-                                     <li>
-                                        <span class="inline-sparkline">70.34,67.41,59.45,65.43,78.42,75.92,74.29</span>
-                                        Total Number Of Countries: <span class="value">0</span>
-                                    </li>
-                                    <li>
-                                        <span class="inline-sparkline">78.12,74.52,81.25,89.23,86.15,91.82,85.18</span>
-                                        % New Visits: <span class="value">82.65%</span>
-                                    </li>
-
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
+                             success: function(response)
+                             {
+                                $("#response_result").html(response);
+                             }
+                         });
+    }
+}
+function clear_sales_activity()
+{   
+     var current_url= window.location.href;
+      var url_parts = current_url.split("#")
+      var final_url = url_parts[0];
+      window.location.href=final_url;
+    
+}
+</script>                 
+            
               
 
 @stop

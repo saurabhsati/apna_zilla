@@ -184,78 +184,172 @@
             </div>
             <div id="pop_div"></div>
      
-        <?php echo $lava->render('AreaChart', 'Population', 'pop_div'); ?>
-            <!-- BEGIN Main Content -->
-                <!-- <div class="row">
-                    <div class="col-md-7">
-                        <div class="box">
-                            <div class="box-title">
-                                <h3><i class="fa fa-bar-chart-o"></i> Visitors Chart</h3>
-                                <div class="box-tool">
-                                    <a data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>
-                                    <a data-action="close" href="#"><i class="fa fa-times"></i></a>
-                                </div>
-                            </div>
-                            <div class="box-content">
-                                <div id="visitors-chart" style="margin-top:20px; position:relative; height: 290px;"></div>
+         
+
+ <div class="row">
+     <div class="col-md-12">
+         <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                 <div class="box-content" id="reg_chart"></div>  
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="box">
-                            <div class="box-title">
-                                <h3><i class="fa fa-bar-chart-o"></i> Users And Projects Statistics</h3>
-                                <div class="box-tool">
-                                    <a data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>
-                                    <a data-action="close" href="#"><i class="fa fa-times"></i></a>
-                                </div>
-                            </div>
+                         <script type="text/javascript">
+                            FusionCharts.ready(function () {
+                            var revenueChart = new FusionCharts({
+                                "type": "column3d",
+                                "renderAt": "reg_chart",
+                                "width": "650",
+                                "height": "330",
+                                "dataFormat": "json",
+                                "dataSource": {
+                                   "chart": {
+                                      "caption": "Venders",
+                                      "xAxisName": "Month",
+                                      "yAxisName": "No of Venders",
+                                      "theme": "fint"
+                                   },
+                                   "data": [
+                                        <?php
+                                            $i=0;
+                                            if(sizeof($users_array)>0)
+                                            foreach($users_array as $row)
+                                            {   
+                                                $mons = array(1 => "Jan", 2 => "Feb", 3 => "Mar", 4 => "Apr", 5 => "May", 6 => "Jun", 7 => "Jul", 8 => "Aug", 9 => "Sep", 10 => "Oct", 11 => "Nov", 12 => "Dec");
 
-                            <div class="box-content">
-                                <ul class="weekly-stats">
+                                                
+                                                $month_name = $mons[$row['month']];
+                                                $month_label = '';
+                                                $month_label=$month_name;
+                                                $i++;   
+                                        ?>
+                                                {
+                                                   "label": "<?php echo $month_label;?>",
+                                                   "value": "<?php echo $row['user_count'];?>"
+                                                },
+                                        <?php }
+                                            if($i<count($users_array))
+                                                echo",";
+                                       ?>
+                                    ]
+                                }
 
-                                    <li>
-                                        <span class="inline-sparkline">134,178,264,196,307,259,287</span>
-                                        Total Registered Users: <span class="value">
-                                                                {{ isset($dashboard_satistics['total_users'])?$dashboard_satistics['total_users']:''}}
-                                                                </span>
-                                    </li>
-                                    <li>
-                                        <span class="inline-sparkline">89,124,197,138,235,169,186</span>
-                                        Total Registered Companies: <span class="value">{{ isset($dashboard_satistics['number_of_companies'])?$dashboard_satistics['number_of_companies']:''}}</span>
-                                    </li>
-                                    <li>
-                                        <span class="inline-sparkline">625,517,586,638,669,698,763</span>
-                                        Total Registered Catalysts: <span class="value">{{ isset($dashboard_satistics['number_of_catalysts'])?$dashboard_satistics['number_of_catalysts']:''}}</span>
-                                    </li>
-                                    <li>
-                                        <span class="inline-sparkline">1.34,2.98,0.76,1.29,1.86,1.68,1.92</span>
-                                        Total Number Of Posted Projects: <span class="value">{{ isset($dashboard_satistics['posted_projects'])?$dashboard_satistics['posted_projects']:''}}</span>
-                                    </li>
-                                    <li>
-                                        <span class="inline-sparkline">2.34,2.67,1.47,1.97,2.25,2.47,1.27</span>
-                                        Total Number Of Ongoing Projects: <span class="value">{{ isset($dashboard_satistics['ongoing_projetcs'])?$dashboard_satistics['ongoing_projetcs']:''}}</span>
-                                    </li>
-                                    <li>
-                                        <span class="inline-sparkline">70.34,67.41,59.45,65.43,78.42,75.92,74.29</span>
-                                        Total Number Of Completed Projects: <span class="value">{{ isset($dashboard_satistics['completed_projects'])?$dashboard_satistics['completed_projects']:''}}</span>
-                                    </li>
+                            });
+                            revenueChart.render();
+                        });
+                        </script>
+                       <div class="col-md-6">
+                        <div class="row">
+                            <div class="box-content" id="business_chart">
+                              </div>
+                        </div>
+                      </div>
+                    <script type="text/javascript">
+                        FusionCharts.ready(function () {
+                        var revenueChart = new FusionCharts({
+                            "type": "column3d",
+                            "renderAt": "business_chart",
+                            "width": "650",
+                            "height": "330",
+                            "dataFormat": "json",
+                            "dataSource": {
+                               "chart": {
+                                  "caption": " Business Listing ",
+                                  "xAxisName": "Month",
+                                  "yAxisName": "Monthly Business Register",
+                                  "theme": "fint"
+                               },
+                               "data": [
+                                    <?php
+                                        $i=0;
+                                        if(sizeof($businesses_array)>0)
+                                        foreach($businesses_array as $row)
+                                        { 
+                                            $i++;   
 
-                                     <li>
-                                        <span class="inline-sparkline">70.34,67.41,59.45,65.43,78.42,75.92,74.29</span>
-                                        Total Number Of Countries: <span class="value">0</span>
-                                    </li>
-                                    <li>
-                                        <span class="inline-sparkline">78.12,74.52,81.25,89.23,86.15,91.82,85.18</span>
-                                        % New Visits: <span class="value">82.65%</span>
-                                    </li>
+                                            $mons = array(1 => "Jan", 2 => "Feb", 3 => "Mar", 4 => "Apr", 5 => "May", 6 => "Jun", 7 => "Jul", 8 => "Aug", 9 => "Sep", 10 => "Oct", 11 => "Nov", 12 => "Dec");
 
-                                </ul>
+                                            
+                                            $month_name = $mons[$row['month']];
+                                            $month_label = '';
+                                            $month_label=$month_name;
+                                           // $month_label = date('M', strtotime('11-2016'/*$row['month']*/));
+                                    ?>
+                                            {
+                                               "label": "<?php echo $month_label;?>",
+                                               "value": "<?php echo $row['business_count'];?>"
+                                            },
+                                    <?php }
+                                        if($i<count($businesses_array))
+                                            echo",";
+                                   ?>
+                                ]
+                            }
+
+                        });
+                        revenueChart.render();
+                    });
+                    </script>
+         </div>
+    </div>
+</div>
+
+<hr>
+<div class="row">
+     <div class="col-md-12">
+         <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                 <div class="box-content" id="deal_chart"></div>  
                             </div>
                         </div>
-                    </div>
-                </div>
- -->
+                         <script type="text/javascript">
+                            FusionCharts.ready(function () {
+                            var revenueChart = new FusionCharts({
+                                "type": "column3d",
+                                "renderAt": "deal_chart",
+                                "width": "650",
+                                "height": "330",
+                                "dataFormat": "json",
+                                "dataSource": {
+                                   "chart": {
+                                      "caption": "Deals ",
+                                      "xAxisName": "Month",
+                                      "yAxisName": "No of Deals",
+                                      "theme": "fint"
+                                   },
+                                   "data": [
+                                        <?php
+                                            $i=0;
+                                            if(sizeof($deals_array)>0)
+                                            foreach($deals_array as $row)
+                                            {   
+                                                $mons = array(1 => "Jan", 2 => "Feb", 3 => "Mar", 4 => "Apr", 5 => "May", 6 => "Jun", 7 => "Jul", 8 => "Aug", 9 => "Sep", 10 => "Oct", 11 => "Nov", 12 => "Dec");
 
+                                                
+                                                $month_name = $mons[$row['month']];
+                                                $month_label = '';
+                                                $month_label=$month_name;
+                                                $i++;   
+                                        ?>
+                                                {
+                                                   "label": "<?php echo $month_label;?>",
+                                                   "value": "<?php echo $row['deal_count'];?>"
+                                                },
+                                        <?php }
+                                            if($i<count($deals_array))
+                                                echo",";
+                                       ?>
+                                    ]
+                                }
+
+                            });
+                            revenueChart.render();
+                        });
+                        </script>
+                       
+         </div>
+    </div>
+</div>
 
 @stop
