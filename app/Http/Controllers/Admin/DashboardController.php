@@ -9,6 +9,7 @@ use App\Models\DealsOffersModel;
 use Session;
 use Sentinel;
 
+
 class DashboardController extends Controller
 {
  	public function __construct()
@@ -47,7 +48,14 @@ class DashboardController extends Controller
          {
             $deals_count = sizeof($obj_deal->toArray());
          }
- 		return view('web_admin.dashboard.dashboard',compact('page_title','page_title','vender_count','sales_executive_count','business_listing_count','deals_count'));
+
+
+
+         
+			
+
+
+		return view('web_admin.dashboard.dashboard',compact('page_title','page_title','vender_count','sales_executive_count','business_listing_count','deals_count','data'));
  	}	
 
 }

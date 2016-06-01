@@ -163,7 +163,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
       /*  Softon\Sms\SmsServiceProvider::class, */
         Orzcc\AutoMeta\Providers\AutoMetaServiceProvider::class,
-
+        
     ],
 
     /*
@@ -219,6 +219,7 @@ return [
     	'Carbon' => Carbon\Carbon::class,
         /*'Sms' => Softon\Sms\Facades\Sms::class,*/
         'Meta'   => Orzcc\AutoMeta\Facades\AutoMeta::class, 
+
     ],
 
 
