@@ -249,7 +249,7 @@ hr.margin-0  {margin: 0;}
     height: 100%;
     padding-left: 10px;
 }
-
+.mrg-tps{margin-top: 10px;}
 .flaty-nav > li {
     line-height: 40px;
     max-height: 40px;

@@ -20,7 +20,79 @@
                 </div>
                 <!-- END Breadcrumb -->
                 <!-- BEGIN Tiles -->
+                 
+                                
                 <div class="row">
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-12 ">
+                             <div class="tile tile-pink">
+                                <div class="img">
+                                    <i class="fa fa-users"></i>
+                                </div>
+                                <div class="content">
+                                    <p class="big">{{ $vender_count }}</p>
+                                    <p class="title"> Venders</p>
+                                </div>
+                            </div>
+                           
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-12 ">
+                             <div class="tile tile-orange">
+                                <div class="img">
+                                    <i class="fa fa-users"></i>
+                                </div>
+                                <div class="content">
+                                    <p class="big">{{ $sales_executive_count }}</p>
+                                    <p class="title"> Sales Executives</p>
+                                </div>
+                            </div>
+                           
+
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-12 ">
+                             <div class="tile tile-blue">
+                                <div class="img">
+                                    <i class="fa fa-list"></i>
+                                </div>
+                                <div class="content">
+                                    <p class="big">{{ $business_listing_count }}</p>
+                                    <p class="title"> Business Listings</p>
+                                </div>
+                            </div>
+                           
+
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-12 ">
+                             <div class="tile tile-magenta">
+                                <div class="img">
+                                    <i class="fa fa-bars"></i>
+                                </div>
+                                <div class="content">
+                                    <p class="big">{{ $deals_count}}</p>
+                                    <p class="title"> Deals</p>
+                                </div>
+                            </div>
+                           
+
+                        </div>
+                    </div>
+                </div>
+                 
+
                     <div class="col-md-12">
                         <div class="row">
 
@@ -72,7 +144,7 @@
                                         <a href="{{ url('/web_admin/sales_user')}}">
                                         <div class="tile tile-green">
                                             <div class="img img-center">
-                                                 <i class="fa fa-list"></i>
+                                                 <i class="fa fa-users"></i>
                                             </div>
                                             <p class="title text-center">Sales Executives</p>
                                         </div></a>
@@ -366,6 +438,7 @@
                                 </div>
                              </div>
 
+                          
 
                         </div>
                     </div>

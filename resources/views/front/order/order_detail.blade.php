@@ -31,7 +31,11 @@
                   <div class="p_detail_view pdngk">
 
                     <div class="mainpulsumiry">
-                      <div class="pull-left">Sub Total</div><br/>
+
+<div class="row">
+    
+    <div class="col-sm-12 col-md-6 col-lg-6">
+         <div class="pull-left">Sub Total</div><br/>
                       <p class="font-size_14px promo_status" style="display:none;"></p>
                       @if(Session::has('promo_used'))
                       <a href="#" id="removeCode" style="display:none;" onclick="remove_promocode();" class="remove_promo_trigger font-size_10px margin_zero info-class-color">Remove</a>@endif
@@ -59,11 +63,19 @@
                            <input type="hidden" name="phone" id="phone" value="{{session('mobile_no')}}">
 
 
-                      <div class="pull-right"><i class="fa fa-inr"></i> {{$total}}</div><br/>
+        
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="pull-right"><i class="fa fa-inr"></i> {{$total}}</div><br/>
                       <div id="amount_substract_div" style="display:none;">
                         <div class="pull-right">Discount Type <span id="discount_type"></span></div><br/>
                         <div class="pull-right">  - <span id="amount_substract"></span></div><br/>
                         </div>
+    </div>
+</div>
+
+                     
+                      
 
                       <div class="clearfix"></div>
                     </div>

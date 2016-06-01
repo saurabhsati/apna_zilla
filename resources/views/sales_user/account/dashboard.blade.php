@@ -26,6 +26,75 @@
                     <div class="col-md-12">
                         <div class="row">
                         <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-12 ">
+                             <div class="tile tile-pink">
+                                <div class="img">
+                                    <i class="fa fa-users"></i>
+                                </div>
+                                <div class="content">
+                                    <p class="big">{{ $vender_count }}</p>
+                                    <p class="title"> Venders</p>
+                                </div>
+                            </div>
+                           
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-12 ">
+                             <div class="tile tile-blue">
+                                <div class="img">
+                                    <i class="fa fa-list"></i>
+                                </div>
+                                <div class="content">
+                                    <p class="big">{{ $business_listing_count }}</p>
+                                    <p class="title"> Business Listings</p>
+                                </div>
+                            </div>
+                           
+
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-12 ">
+                             <div class="tile tile-green">
+                                <div class="img">
+                                    <i class="fa fa-bars"></i>
+                                </div>
+                                <div class="content">
+                                    <p class="big">{{ $deals_count}}</p>
+                                    <p class="title"> Deals</p>
+                                </div>
+                            </div>
+                           
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-12 ">
+                             <div class="tile tile-orange">
+                                <div class="img">
+                                    <i class="fa fa-bars"></i>
+                                </div>
+                                <div class="content">
+                                    <p class="big">{{ $membership_transaction_count}}</p>
+                                    <p class="title"> Membership Transactions </p>
+                                </div>
+                            </div>
+                           
+
+                        </div>
+                    </div>
+                </div>
+                
+                        <div class="col-md-3">
                                 <div class="row">
                                     <div class="col-md-12 tile-active">
                                         <a href="{{ url('/sales_user/dashboard')}}">
@@ -50,7 +119,7 @@
                                 <div class="row">
                                     <div class="col-md-12 tile-active">
                                         <a href="{{ url('/sales_user/users')}}">
-                                        <div class="tile tile-blue">
+                                        <div class="tile tile-orange">
                                             <div class="img img-center">
                                                  <i class="fa fa-users"></i>
                                             </div>
