@@ -22,6 +22,10 @@ use Session;
 use Validator;
 use Hash;
 
+use Khill\Lavacharts\Lavacharts as Lava;
+
+
+
 class SalesAccountController extends Controller
 {
  	public function __construct()
@@ -51,6 +55,8 @@ class SalesAccountController extends Controller
  	public function index()
  	{
  		$page_title = "Sales User Dashboard";
+
+        
          if(Session::has('public_id'))
          {
           $sales_user_public_id=Session::get('public_id');
@@ -86,7 +92,32 @@ class SalesAccountController extends Controller
         {
               $membership_transaction_count = sizeof($obj_transaction->toArray());
         }
- 		return view('sales_user.account.dashboard',compact('page_title','vender_count','business_listing_count','deals_count','membership_transaction_count'));
+
+          $lava = new Lava; // See note below for Laravel
+
+        $population = $lava->DataTable();
+
+        $population->addDateColumn('Year')
+                   ->addNumberColumn('Number of People')
+                   ->addRow(['2006', 623452])
+                   ->addRow(['2007', 685034])
+                   ->addRow(['2008', 716845])
+                   ->addRow(['2009', 757254])
+                   ->addRow(['2010', 778034])
+                   ->addRow(['2011', 792353])
+                   ->addRow(['2012', 839657])
+                   ->addRow(['2013', 842367])
+                   ->addRow(['2014', 873490]);
+
+        $lava->AreaChart('Population', $population, [
+            'title' => 'Population Growth',
+            'legend' => [
+                'position' => 'in'
+            ]
+        ]);
+
+ 		return view('sales_user.account.dashboard',compact('page_title','vender_count','business_listing_count','deals_count','membership_transaction_count','lava'));
+
  	}
 
     public function login()

@@ -175,6 +175,25 @@ class Builder extends \Illuminate\Database\Query\Builder
     }
 
     /**
+     * Flush the cache for the current model or a given tag name
+     *
+     * @param  mixed  $cacheTags
+     * @return boolean
+     */
+    public function flushCache($cacheTags = null)
+    {
+        if ( ! method_exists(Cache::getStore(), 'tags')) {
+            return false;
+        }
+
+        $cacheTags = $cacheTags ?: $this->cacheTags;
+
+        Cache::tags($cacheTags)->flush();
+
+        return true;
+    }
+
+    /**
      * Get the Closure callback used when caching queries.
      *
      * @param  array  $columns

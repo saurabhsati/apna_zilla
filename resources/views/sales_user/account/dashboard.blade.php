@@ -182,6 +182,9 @@
                         </div>
                  </div>
             </div>
+            <div id="pop_div"></div>
+     
+        <?php echo $lava->render('AreaChart', 'Population', 'pop_div'); ?>
             <!-- BEGIN Main Content -->
                 <!-- <div class="row">
                     <div class="col-md-7">
