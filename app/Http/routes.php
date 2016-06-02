@@ -765,7 +765,8 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 Route::group(['prefix'=>'api','middleware'=>'api'],function()
 {
 
-
+	Route::get('login',							['as' => 'front_users_profile'        				,'uses' =>'Api\UserController@login']);
+		
 
 });
 

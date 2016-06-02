@@ -238,8 +238,7 @@
                     <img src="{{ $business_public_img_path.'/'.$business['main_image']}}" alt=""  style="width:30px; height:30px;" />   </td> -->
                      <td width="width:10%;"> {{ $business['busiess_ref_public_id'] }} </td>
                    <td width="width:10%;"> {{ $business['business_name'] }} </td>
-                      
-     <td width="width:3%;"> {{ $business['user_details']['first_name']}} </td>
+                    <td width="width:3%;"> {{ $business['user_details']['first_name']}} </td>
                     <td width="width:5%;"> {{ $business['user_details']['public_id'] }} </td>
 
 

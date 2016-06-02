@@ -28,6 +28,63 @@
 
                 <div class="col-sm-12 col-md-12 col-lg-12">
                 <h3>Order summary</h3>
+                 
+                 <div class="p_detail_view pdngk">
+                   <div class="table-responsive">
+                     <table class="table table-condensed">
+                       <thead>
+                         <tr colspan="3">
+                          <div class="row">
+                           <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                             <img src="{{get_resized_image_path($deal_arr['deal_image'],$deal_image_path,200,234)}}" class="img-responsive mers" alt="" />
+                           </div>
+                           <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                             <div class="font-cldman">
+                             <h4>{{$deal_arr['name']}}</h4>
+                             <h5>{{$deal_arr['title']}}</h5>
+                             <p>{{strip_tags($deal_arr['description'])}}</p>
+                             </div>
+                           </div>
+                         </div>
+                       </tr>
+                       
+                     </thead>
+                     <tbody>
+                       @if(sizeof($complite_arr)>0 && isset($complite_arr))
+                        @foreach($complite_arr as $key => $selected_offer)
+                         @foreach($deal_arr['offers_info'] as $deal_offer)
+                           @if($selected_offer[0]==$deal_offer['id'])
+                           <tr>
+                              <input type="hidden" name="offer_ids[]" id="offer_ids" value="{{$deal_offer['id']}}">
+                               <input type="hidden" name="offer_quantitys[{{ $deal_offer['id'] }}]" id="offer_quantitys" 
+                               value="{{$selected_offer[1]}}">
+                             <td class="wosfd-one">{{$deal_offer['title']}}</td>
+                             <td class="wosfd">Qty - {{$selected_offer[1]}}</td>
+                             <td class="wosfd text-right">
+                             <div class="left-gldf"> 
+                             <i class="fa fa-inr"></i>&nbsp;{{$deal_offer['main_price']}} 
+                             </div>
+                             <div class="left-gldf-jh">
+                              <i class="fa fa-inr"></i>&nbsp;{{$deal_offer['discounted_price']}}
+                              </div>
+                              </td>
+                           </tr>
+                             @endif
+                           @endforeach
+                         @endforeach
+                        @endif
+
+                       @if($key < sizeof($complite_arr)-1)
+                          <tr><td colspan="3"   class="borderskds"></td></tr>
+                      @endif
+                   
+
+                     </tbody>
+                   </table>
+                 </div>
+                </div>
+                </div>
+                 
                   <div class="p_detail_view pdngk">
 
                     <div class="mainpulsumiry">
@@ -143,57 +200,7 @@
                   {{--  <a class="btn btn-post btn-post-nods" href="#">Proceed to payment</a> --}}
                    <div class="clearfix"></div> 
                  </div>
-                 <div class="p_detail_view pdngk">
-                   <div class="table-responsive">
-                     <table class="table table-condensed">
-                       <thead>
-                         <th colspan="3">
-                          <div class="row">
-                           <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                             <img src="{{get_resized_image_path($deal_arr['deal_image'],$deal_image_path,200,234)}}" class="img-responsive mers" alt="" />
-                           </div>
-                           <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                             <h4>{{$deal_arr['name']}}</h4>
-                             <h5>{{$deal_arr['title']}}</h5>
-                           </div>
-                         </div>
-                       </th>
-
-                     </thead>
-                     <tbody>
-                       @if(sizeof($complite_arr)>0 && isset($complite_arr))
-                        @foreach($complite_arr as $key => $selected_offer)
-                         @foreach($deal_arr['offers_info'] as $deal_offer)
-                           @if($selected_offer[0]==$deal_offer['id'])
-                           <tr>
-                              <input type="hidden" name="offer_ids[]" id="offer_ids" value="{{$deal_offer['id']}}">
-                               <input type="hidden" name="offer_quantitys[{{ $deal_offer['id'] }}]" id="offer_quantitys" 
-                               value="{{$selected_offer[1]}}">
-                             <td class="wosfd-one">{{$deal_offer['title']}}</td>
-                             <td class="wosfd">Qty - {{$selected_offer[1]}}</td>
-                             <td class="wosfd text-right">
-                             <div class="left-gldf"> 
-                             <i class="fa fa-inr"></i>&nbsp;{{$deal_offer['main_price']}} 
-                             </div>
-                             <div class="left-gldf-jh">
-                              <i class="fa fa-inr"></i>&nbsp;{{$deal_offer['discounted_price']}}
-                              </div>
-                              </td>
-                           </tr>
-                             @endif
-                           @endforeach
-                         @endforeach
-                        @endif
-
-                       @if($key < sizeof($complite_arr)-1)
-                          <tr><td colspan="3"   class="borderskds"></td></tr>
-                      @endif
-                   
-
-                     </tbody>
-                   </table>
-                 </div>
-                </div>
+                 
 
                 </div>
 

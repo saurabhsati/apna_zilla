@@ -99,8 +99,71 @@ class DashboardController extends Controller
      $from=$year."-".$month."-".$day;
      list($month,$day,$year)=explode('/',$to_date);
       $to=$year."-".$month."-".$day;
+
+      $format="csv";
+
+
+       if($format=="csv")
+        {
+            $arr_business_list = array();
+            $obj_business_list = BusinessListingModel::with(['user_details','category_details.category_business','get_sub_category.category_list.parent_category'])->
+            where('sales_user_public_id',$sales_user_public_id)
+            ->whereBetween('created_at',array($from.' 00:00:00',$to.' 00:00:00'))
+            ->get();
+            //dd($obj_business_list);
+
+            if($obj_business_list)
+            {
+                $arr_business_list = $obj_business_list->toArray();
+
+              /*  \Excel::create('BUSINESS_LIST-'.date('Ymd').uniqid(), function($excel) use($arr_business_list)
+                {
+                    $excel->sheet('Business_list', function($sheet) use($arr_business_list)
+                    {
+                        // $sheet->cell('A1', function($cell) {
+                        //     $cell->setValue('Generated on :'.date("d-m-Y H:i:s"));
+                        // });
+
+                        $sheet->row(3, array(
+                            'Sr.No.','Business Name','Business Category :: Sub-Category', 'Full Name', 'Email', 'mobile No.'
+                        ));
+
+                        if(sizeof($arr_business_list)>0)
+                        {
+                            $arr_tmp = array();
+                            foreach ($arr_business_list as $key => $business_list)
+                            {
+                                $arr_tmp[$key][] = $key+1;
+                                $arr_tmp[$key][] = $business_list['business_name'];
+
+                                $cat_subcat_title = '';
+                                foreach($business_list['get_sub_category'] as $cat_subcat)
+                                {
+                                    $cat_subcat_title.=  $cat_subcat['category_list']['parent_category']['title'].' :: '.$cat_subcat['category_list']['title'];
+                                    $cat_subcat_title.= ', ';
+                                }
+                                $arr_tmp[$key][] = $cat_subcat_title;
+
+                                $arr_tmp[$key][] = $business_list['user_details']['first_name'].' '.$business_list['user_details']['last_name'];
+                                $arr_tmp[$key][] = $business_list['user_details']['email'];
+                                $arr_tmp[$key][] = $business_list['user_details']['mobile_no'];
+                            }
+
+                            $sheet->rows($arr_tmp);
+                        }
+
+                    });
+
+                })->export('csv');*/
+            }
+           
+        }
+
+
+
+
      $business_listing =[];
-     $obj_business_listing = BusinessListingModel::where('sales_user_public_id',$sales_user_public_id)
+     $obj_business_listing = BusinessListingModel::with(['user_details','category_details.category_business','get_sub_category.category_list.parent_category'])->where('sales_user_public_id',$sales_user_public_id)
          ->whereBetween('created_at',array($from.' 00:00:00',$to.' 00:00:00'))
          ->get();
        //  dd($obj_business_listing);
@@ -115,29 +178,42 @@ class DashboardController extends Controller
                 <tr>
                  <th>Business Id</th>
                   <th>Business Name</th>
+                  <th>Vendor Name</th>
+                  <th>Business Category :: SubCategory</th>
+                  <th>Phone Number</th>
                   <th>City</th>
-                  <th>State</th>
                   <th>Created Date</th>
                  </tr>
               </thead>
               <tbody>";
                 if(sizeof($business_listing)>0)
                  {
-                  foreach($business_listing as $business)
+                  foreach($business_listing as $key => $business)
                    {
+
+                      $cat_subcat_title = '';
+                      foreach($business['get_sub_category'] as $cat_subcat)
+                      {
+                          $cat_subcat_title.=  $cat_subcat['category_list']['parent_category']['title'].' :: '.$cat_subcat['category_list']['title'];
+                          $cat_subcat_title.= ', ';
+                      }
+                      //$arr_tmp[$key][] = $cat_subcat_title;
                     
                      $str.="<tr> <td>". $business['busiess_ref_public_id']."</td>
                        <td>". ucfirst($business['business_name'])."</td>
+                       <td>". ucfirst($business['user_details']['first_name'])."</td>
+
+                       <td>". $cat_subcat_title."</td>
+                        <td>".$business['user_details']['mobile_no']."</td>
                        <td>". $business['city']."</td>
-                       <td>". $business['state']."</td>
                        <td>". date('d M Y',strtotime($business['created_at']))."</td>
                       </tr> ";              
                    }
-                       $str.="<tr><td colspan='6'><div id='pagging' style='padding-top:10px;' class='paginate'></div></td></tr>";
+                       $str.="<tr><td colspan='7'><div id='pagging' style='padding-top:10px;' class='paginate'></div></td></tr>";
                 } 
                 else 
                 { 
-                  $str.="<tr><td colspan='6'><strong>You don't have any application available.</strong></td></tr>";
+                  $str.="<tr><td colspan='7'><strong>You don't have any application available.</strong></td></tr>";
                 
                  }
               $str.="</tbody>
@@ -182,5 +258,7 @@ class DashboardController extends Controller
    </script>';*/
    echo $str;
    }
+
+
   
 }
