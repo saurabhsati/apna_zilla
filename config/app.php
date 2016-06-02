@@ -163,7 +163,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
       /*  Softon\Sms\SmsServiceProvider::class, */
         Orzcc\AutoMeta\Providers\AutoMetaServiceProvider::class,
-        Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
+       
 
     ],
 

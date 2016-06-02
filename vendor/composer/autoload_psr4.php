@@ -32,7 +32,6 @@ return array(
     'Orzcc\\AutoMeta\\' => array($vendorDir . '/orzcc/autometa/src/AutoMeta'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'League\\Flysystem\\' => array($vendorDir . '/league/flysystem/src'),
-    'Khill\\Lavacharts\\' => array($vendorDir . '/khill/lavacharts/src'),
     'Intervention\\Image\\' => array($vendorDir . '/intervention/image/src/Intervention/Image'),
     'Illuminate\\' => array($vendorDir . '/laravel/framework/src/Illuminate'),
     'Hashids\\' => array($vendorDir . '/hashids/hashids/lib/Hashids'),
