@@ -190,7 +190,8 @@ class AuthController extends Controller
                  }
  		$arr_rules 						= array();
  		$arr_rules['office_landline']		= 'required';
- 		$arr_rules['street_address'] 	= 'required';
+        $arr_rules['street_address']    = 'required';
+ 		//$arr_rules['first_name'] 	= 'required';
 
  		$validator = Validator::make($request->all(),$arr_rules);
 
@@ -227,9 +228,10 @@ class AuthController extends Controller
         }
         $profile_pic 	=$profile_pic;
  		$office_landline 	  = $request->input('office_landline');
- 		$street_address = $request->input('street_address');
+        $street_address = $request->input('street_address');
+ 		$first_name = $request->input('first_name');
  		$update_arr	=array();
- 		$update_arr=array('profile_pic'=>$profile_pic,'office_landline'=>$office_landline,'street_address'=>$street_address);
+ 		$update_arr=array('profile_pic'=>$profile_pic,'office_landline'=>$office_landline,'street_address'=>$street_address,'first_name'=>$first_name);
  		$update_profile = Sentinel::update($obj_admin,$update_arr);
  			if($update_profile)
  			{

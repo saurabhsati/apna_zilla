@@ -437,6 +437,116 @@
 </div>
 </div>
 </div>
+
+
+<script type="text/javascript">
+         $(document).ready(function () {
+             $('#dash_tab').easyResponsiveTabs({
+                 type: 'default', //Types: default, vertical, accordion
+                 width: 'auto', //auto or any width like 600px
+                 fit: true,   // 100% fit in a container
+                 closed: 'accordion', // Start closed if in accordion view
+                 activate: function(event) { // Callback function if tab is switched
+                     var $tab = $(this);
+                     var $info = $('#tabInfo');
+                     var $name = $('span', $info);
+
+                     $name.text($tab.text());
+
+                     $info.show();
+                 }
+             });
+
+             $('#verticalTab').easyResponsiveTabs({
+                 type: 'vertical',
+                 width: 'auto',
+                 fit: true
+             });
+         });
+
+      </script>
+       <script type="text/javascript">
+var supports = (function () {
+    var a = document.documentElement,
+        b = "ontouchstart" in window || navigator.msMaxTouchPoints;
+    if (b) {
+        a.className += " touch";
+        return {
+            touch: true
+        }
+    } else {
+        a.className += " no-touch";
+        return {
+            touch: false
+        }
+    }
+})();
+
+
+if ($("html").hasClass("no-touch")) {
+
+
+  $('.dropdown > a').removeAttr("data-toggle");
+
+
+    (function (e, t, n) {
+        if ("ontouchstart" in document) return;
+        var r = e();
+        e.fn.dropdownHover = function (n) {
+            r = r.add(this.parent());
+            return this.each(function () {
+                var i = e(this),
+                    s = i.parent(),
+                    o = {
+                        delay: 0,
+                        instantlyCloseOthers: !0
+                    }, u = {
+                        delay: e(this).data("delay"),
+                        instantlyCloseOthers: e(this).data("close-others")
+                    }, a = e.extend(!0, {}, o, n, u),
+                    f;
+                s.hover(function (n) {
+                    if (!s.hasClass("open") && !i.is(n.target)) return !0;
+                    a.instantlyCloseOthers === !0 && r.removeClass("open");
+                    t.clearTimeout(f);
+                    s.addClass("open");
+                    s.trigger(e.Event("show.bs.dropdown"))
+                }, function () {
+                    f = t.setTimeout(function () {
+                        s.removeClass("open");
+                        s.trigger("hide.bs.dropdown")
+                    }, 1)
+                });
+                i.hover(function () {
+                    a.instantlyCloseOthers === !0 && r.removeClass("open");
+                    t.clearTimeout(f);
+                    s.addClass("open");
+                    s.trigger(e.Event("show.bs.dropdown"))
+                });
+                s.find(".dropdown-submenu").each(function () {
+                    var n = e(this),
+                        r;
+                    n.hover(function () {
+                        t.clearTimeout(r);
+                        n.children(".dropdown-menu").show();
+                        n.siblings().children(".dropdown-menu").hide()
+                    }, function () {
+                        var e = n.children(".dropdown-menu");
+                        r = t.setTimeout(function () {
+                            e.hide()
+                        }, a.delay)
+                    })
+                })
+            })
+        };
+        e(document).ready(function () {
+
+            e('[data-hover="dropdown"]').dropdownHover()
+        })
+    })(jQuery, this);
+
+ } //END IF no-touch for hover script & removeAttr for the links to work
+</script>
 <script type="text/javascript">
   var site_url = "{{ url('/') }}";
 	$(function() {

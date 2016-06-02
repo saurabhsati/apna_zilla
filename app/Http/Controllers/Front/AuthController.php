@@ -521,13 +521,14 @@ class AuthController extends Controller
 
         $email = $request->input('recover_email');
         $user = Sentinel::findByCredentials(['email' => $email]);
-
         if($user)
         {
 
 
             $reminder = Reminder::create($user);
 
+
+       
             $email_status = $this->forget_password_send_mail($email,$reminder->code);
             if($email_status)
             {
@@ -545,12 +546,10 @@ class AuthController extends Controller
         }
         exit;
     }
-     private function forget_password_send_mail($email, $reminder_code)
+    private function forget_password_send_mail($email, $reminder_code)
     {
         // Retrieve Email Template
-
         $user = $this->get_user_details($email);
-
         if($user)
         {
             $obj_email_template = EmailTemplate::where('id','11')->first();
@@ -594,7 +593,7 @@ class AuthController extends Controller
         $reminder_code = base64_decode($enc_reminder_code);
 
         $user = Sentinel::findById($user_id);
-
+        //dd($user);
         if(!$user)
         {
             Session::flash('error','Invalid User Request');
@@ -603,6 +602,7 @@ class AuthController extends Controller
 
         if(Reminder::exists($user))
         {
+           // echo ">>";exit;
             return view('front.reset_password',compact('enc_id','enc_reminder_code'));
         }
         else
@@ -624,6 +624,8 @@ class AuthController extends Controller
     }
      public function reset_password(Request $request)
     {
+       // dd($request->all());
+
         $arr_rules = array();
         $arr_rules['password'] = "required|confirmed";
         $arr_rules['enc_id'] = "required";
@@ -643,25 +645,26 @@ class AuthController extends Controller
 
         $user_id = base64_decode($enc_id);
         $reminder_code = base64_decode($enc_reminder_code);
-
         $user = Sentinel::findById($user_id);
 
         if(!$user)
         {
             Session::flash('error','Invalid User Request');
-            return redirect()->back();
+            return redirect(url('/'));
         }
 
         if ($reminder = Reminder::complete($user, $reminder_code, $password))
         {
+            //echo "Password Reset Successfully";
             Session::flash('success','Password Reset Successfully');
-            return redirect()->back();
+            return redirect(url('/'));
         }
         else
         {
             // Reminder not found or not completed.
+
             Session::flash('error','Reset Password Link Expired');
-            return redirect()->back();
+           return redirect(url('/'));
         }
 
     }

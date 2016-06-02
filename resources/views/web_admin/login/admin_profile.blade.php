@@ -87,6 +87,18 @@
                              <span>Attached image img-thumbnail is supported in Latest Firefox, Chrome, Opera, Safari and Internet Explorer 10 only</span>
                           </div>
                         </div>
+                         <div class="form-group">
+                            <label class="col-sm-3 col-lg-2 control-label">First Name</label>
+                            <div class="col-sm-9 col-lg-5 controls">
+                                <input type="text"
+                                 value="{{ $admin_arr['first_name'] }}"
+                                 class="form-control"
+                                 name="first_name"
+                                 id="first_name"
+                                 data-rule-required="true"  />
+                                <div class="error" id="error_admin_username" >{{ $errors->first('first_name') }}</div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="col-sm-3 col-lg-2 control-label">Email</label>
                             <div class="col-sm-9 col-lg-5 controls">

@@ -168,6 +168,7 @@
                        $date_explode=explode('-',$user['d_o_b']);
                      // print_r($date_explode) ;?>
                        <select class="input_acct" name="dd">
+                       <option value="">Day</option>
                             @for($i=1;$i<=31;$i++)
                               <option value="<?php echo $i;?>" <?php  if(isset($date_explode[2])  &&  $date_explode[2] ==  $i ) { echo "selected=selected";}?>>{{ $i }}</option>
                             @endfor
@@ -176,6 +177,7 @@
 
                              <div class="col-sm-3 col-md-3 col-lg-3">
                            <select class="input_acct" name="mm">
+                           <option value="">Month</option>
                                  <option value="01" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '01' ) { echo "selected=selected";}?>>January</option>
                                  <option value="02" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '02' ) { echo "selected=selected";}?>>February</option>
                                  <option value="03" <?php  if(isset($$date_explode[1])  &&  $date_explode[1] ==  '03' ) { echo "selected=selected";}?>>March</option>
@@ -193,6 +195,7 @@
 
                             <div class="col-sm-3 col-md-3 col-lg-3">
                                 <select class="input_acct" name="yy">
+                                <option value="">Year</option>
                                 @for($j=date('Y');$j>= 1950 ;$j--)
                                   <option value="<?php echo $j;?>" <?php  if(isset($date_explode[0])  &&  $date_explode[0] ==  $j ) { echo "selected=selected";}?> >{{ $j }}</option>
                                 @endfor
@@ -274,7 +277,7 @@
                          </div>
                     </div> -->
                     @if(isset($user['marital_status'])  &&  $user['marital_status'] =="Married" )
-                     <div  id="div_married_date" name="div_married_date">
+                     <div  id="div_married_date" name="div_married_date" >
                          <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">Married Date:</div>
@@ -286,6 +289,8 @@
                        $date_explode=explode('-',$user['married_date']);
                      // print_r($date_explode) ;?>
                        <select class="input_acct" name="married_date_dd">
+                        <option value="">Select Day</option>
+                                 
                             @for($i=1;$i<=31;$i++)
                               <option value="<?php echo $i;?>" <?php  if(isset($date_explode[2])  &&  $date_explode[2] ==  $i ) { echo "selected=selected";}?>>{{ $i }}</option>
                             @endfor
@@ -294,6 +299,7 @@
 
                              <div class="col-sm-3 col-md-3 col-lg-3">
                            <select class="input_acct" name="married_date_mm">
+                                 <option value="">Select Month</option>
                                  <option value="01" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '01' ) { echo "selected=selected";}?>>January</option>
                                  <option value="02" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '02' ) { echo "selected=selected";}?>>February</option>
                                  <option value="03" <?php  if(isset($$date_explode[1])  &&  $date_explode[1] ==  '03' ) { echo "selected=selected";}?>>March</option>
@@ -311,6 +317,8 @@
 
                             <div class="col-sm-3 col-md-3 col-lg-3">
                                 <select class="input_acct" name="married_date_yy">
+                                 <option value="">Select Year</option>
+                                 
                                 @for($j=date('Y');$j>= 1950 ;$j--)
                                   <option value="<?php echo $j;?>" <?php  if(isset($date_explode[0])  &&  $date_explode[0] ==  $j ) { echo "selected=selected";}?> >{{ $j }}</option>
                                 @endfor
@@ -461,6 +469,7 @@
       function chkeck_marital_status(ref)
     {
        var marital_status= $("select[name='marital_status']").val();
+       console.log(marital_status);
        if(marital_status=='Married')
        {
          $("#div_married_date").css('display','block');

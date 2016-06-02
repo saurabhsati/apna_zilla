@@ -452,7 +452,7 @@
                                 <div class="box-tool"> <a data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a> <a data-action="close" href="#"><i class="fa fa-times"></i></a> </div>
                               </div>
                               <div class="box-content" >
-                              <table>
+                              <table class="class_table_activity">
                               <tr>
                                <td><label class="control-label">From Date:</label></td>
                                <td><input class="form-control" type="text" id="from_date" class="span1" name="from_date"></td>&nbsp&nbsp&nbsp

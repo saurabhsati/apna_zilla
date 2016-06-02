@@ -47,14 +47,15 @@ class EloquentUser extends Model implements RoleableInterface, PermissibleInterf
         'permissions',
         'office_landline',
         'first_name',
-        'street_address'
+        'street_address',
+        'mobile_no'
     ];
 
     /**
      * {@inheritDoc}
      */
     protected $hidden = [
-        'password',
+        //'password',
     ];
 
     /**
@@ -72,7 +73,7 @@ class EloquentUser extends Model implements RoleableInterface, PermissibleInterf
      *
      * @var array
      */
-    protected $loginNames = ['email'];
+    protected $loginNames = ['email','mobile_no'];
 
     /**
      * The Eloquent roles model name.

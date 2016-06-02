@@ -3553,6 +3553,9 @@ a.tile:hover {
     float: left;
 }
   
+ .box-content table td{
+padding: 0 10px;
+  }
 .chosen-container-single .chosen-single {
     box-shadow: none !important;
     background-image: none !important;

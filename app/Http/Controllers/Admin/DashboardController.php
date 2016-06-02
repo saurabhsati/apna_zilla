@@ -213,7 +213,7 @@ class DashboardController extends Controller
                 } 
                 else 
                 { 
-                  $str.="<tr><td colspan='7'><strong>You don't have any application available.</strong></td></tr>";
+                  $str.="<tr><td colspan='7'><strong>He Don't Have Any Business Records Available.</strong></td></tr>";
                 
                  }
               $str.="</tbody>

@@ -79,23 +79,23 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $arr_rules = array();
-        $arr_rules['first_name'] = "required";
-        // $arr_rules['middle_name'] = "required";
-        //$arr_rules['last_name'] = "required";
-        $arr_rules['gender'] = "required";
-        $arr_rules['d_o_b'] = "required";
-       //$arr_rules['email'] = "required|email";
-        $arr_rules['password'] = "required|min:6";
-        // $arr_rules['role'] ="required";
-        $arr_rules['marital_status'] = "required";
-       // $arr_rules['country'] = "required";
-        $arr_rules['state'] = "required";
-        $arr_rules['city'] = "required";
-        $arr_rules['pincode'] = "required";
-        $arr_rules['area'] = "required";
-        // $arr_rules['occupation'] = "required";
-        // $arr_rules['work_experience'] = "required";
+       $arr_rules                       = array();
+       $arr_rules['first_name']         = "required";
+       // $arr_rules['middle_name']     = "required";
+       //$arr_rules['last_name']        = "required";
+       $arr_rules['gender']             = "required";
+       $arr_rules['d_o_b']              = "required";
+       //$arr_rules['email']            = "required|email";
+       $arr_rules['password']           = "required|min:6";
+       // $arr_rules['role']            = "required";
+       $arr_rules['marital_status']     = "required";
+       // $arr_rules['country']         = "required";
+       $arr_rules['state']              = "required";
+       $arr_rules['city']               = "required";
+       $arr_rules['pincode']            = "required";
+       $arr_rules['area']               = "required";
+       // $arr_rules['occupation']      = "required";
+       // $arr_rules['work_experience'] = "required";
 
         //$arr_rules['street_address'] = "required";
         $arr_rules['mobile_no'] = "required";
@@ -109,30 +109,30 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $first_name       = $request->input('first_name');
-        $middle_name       = $request->input('middle_name');
-        $last_name       = $request->input('last_name');
-        $gender       = $request->input('gender');
-        $d_o_b       = $request->input('d_o_b');
-        $marital_status       = $request->input('marital_status');
-        $married_date       = $request->input('married_date');
+        $first_name     = $request->input('first_name');
+        $middle_name    = $request->input('middle_name');
+        $last_name      = $request->input('last_name');
+        $gender         = $request->input('gender');
+        $d_o_b          = $request->input('d_o_b');
+        $marital_status = $request->input('marital_status');
+        $married_date   = $request->input('married_date');
 
         $email          = $request->input('email');
         $password   = $request->input('password');
 
-        // $role       = $request->input('role');
-        // $country       = $request->input('country');
-        $state       = $request->input('state');
+        // $role    = $request->input('role');
+        // $country = $request->input('country');
+        $state      = $request->input('state');
         $city       = $request->input('city');
         $area       = $request->input('area');
-        $pincode       = $request->input('pincode');
+        $pincode    = $request->input('pincode');
 
-        $occupation       = $request->input('occupation');
-        $work_experience       = $request->input('work_experience');
-        $street_address     = $request->input('street_address');
-        $mobile_no     = $request->input('mobile_no');
-        $home_landline     = $request->input('home_landline');
-        $office_landline     = $request->input('office_landline');
+        $occupation      = $request->input('occupation');
+        $work_experience = $request->input('work_experience');
+        $street_address  = $request->input('street_address');
+        $mobile_no       = $request->input('mobile_no');
+        $home_landline   = $request->input('home_landline');
+        $office_landline = $request->input('office_landline');
 
         /* Duplication Check*/
         $user = Sentinel::createModel();
@@ -172,29 +172,29 @@ class UserController extends Controller
         }
 
          $status = Sentinel::registerAndActivate([
-            'first_name' => $first_name,
-            'middle_name' => $middle_name,
-            'last_name' => $last_name,
-            'gender' => $gender,
-            'd_o_b' => date('Y-m-d',strtotime($d_o_b)),
-            'email' => $email,
-            'password' => $password,
-            'marital_status' => $marital_status,
-            'married_date' => date('Y-m-d',strtotime($married_date)),
-            'role' => "normal",
-            'state'=>$state,
-            'country'=>1,
-            'street_address' => $street_address,
-            'city' =>$city,
-            'area' => $area,
-            'pincode'=>$pincode,
-            'occupation' => $occupation,
+            'first_name'      => $first_name,
+            'middle_name'     => $middle_name,
+            'last_name'       => $last_name,
+            'gender'          => $gender,
+            'd_o_b'           => date('Y-m-d',strtotime($d_o_b)),
+            'email'           => $email,
+            'password'        => $password,
+            'marital_status'  => $marital_status,
+            'married_date'    => date('Y-m-d',strtotime($married_date)),
+            'role'            => "normal",
+            'state'           => $state,
+            'country'         => 1,
+            'street_address'  => $street_address,
+            'city'            => $city,
+            'area'            => $area,
+            'pincode'         => $pincode,
+            'occupation'      => $occupation,
             'work_experience' => $work_experience,
-            'mobile_no' => $mobile_no,
-            'home_landline' => $home_landline,
+            'mobile_no'       => $mobile_no,
+            'home_landline'   => $home_landline,
             'office_landline' => $office_landline,
-            'is_active' => '1',
-            'profile_pic'=>$profile_pic
+            'is_active'       => '1',
+            'profile_pic'     => $profile_pic
         ]);
 
         if($status)
@@ -306,21 +306,21 @@ class UserController extends Controller
         $user_id = base64_decode($enc_id);
         $arr_rules = array();
 
-        $arr_rules['first_name'] = "required";
-        //$arr_rules['middle_name'] = "required";
-        //$arr_rules['last_name'] = "required";
-        // $arr_rules['email'] = "required|email";
-        $arr_rules['mobile_no'] = "required";
-        $arr_rules['password'] = "min:6";
+        $arr_rules['first_name']       = "required";
+        //$arr_rules['middle_name']    = "required";
+        //$arr_rules['last_name']      = "required";
+        // $arr_rules['email']         = "required|email";
+        $arr_rules['mobile_no']        = "required";
+        $arr_rules['password']         = "min:6";
         //$arr_rules['street_address'] = "required";
-        $arr_rules['gender'] = "required";
+        $arr_rules['gender']           = "required";
         //$arr_rules['marital_status'] = "required";
-        $arr_rules['d_o_b'] = "required";
-        // $arr_rules['role'] = "required";
-        $arr_rules['state'] = "required";
-        $arr_rules['city'] = "required";
-        $arr_rules['pincode'] = "required";
-        $arr_rules['area'] = "required";
+        $arr_rules['d_o_b']            = "required";
+        // $arr_rules['role']          = "required";
+        $arr_rules['state']            = "required";
+        $arr_rules['city']             = "required";
+        $arr_rules['pincode']          = "required";
+        $arr_rules['area']             = "required";
 
         //$arr_rules['home_landline'] = "required";
         // $arr_rules['office_landline'] = "required";
@@ -333,25 +333,25 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $first_name = $request->input('first_name');
-        $middle_name = $request->input('middle_name');
-        $last_name = $request->input('last_name');
-        $email      = $request->input('email');
-        $password   = $request->input('password',FALSE);
-        $street_address      = $request->input('street_address');
-        $gender         = $request->input('gender');
-        $marital_status      = $request->input('marital_status');
-        $married_date      = $request->input('married_date');
-        $d_o_b      = $request->input('d_o_b');
-        // $role       =$request->input('role');
-        //$country      = $request->input('country');
-        $state      = $request->input('state');
-        $pincode      = $request->input('pincode');
-        $city      = $request->input('city');
-        $area      = $request->input('area');
-        $mobile_no      = $request->input('mobile_no');
-        $home_landline      = $request->input('home_landline');
-        $office_landline      = $request->input('office_landline');
+        $first_name      = $request->input('first_name');
+        $middle_name     = $request->input('middle_name');
+        $last_name       = $request->input('last_name');
+        $email           = $request->input('email');
+        $password        = $request->input('password',FALSE);
+        $street_address  = $request->input('street_address');
+        $gender          = $request->input('gender');
+        $marital_status  = $request->input('marital_status');
+        $married_date    = $request->input('married_date');
+        $d_o_b           = $request->input('d_o_b');
+        // $role         = $request->input('role');
+        //$country       = $request->input('country');
+        $state           = $request->input('state');
+        $pincode         = $request->input('pincode');
+        $city            = $request->input('city');
+        $area            = $request->input('area');
+        $mobile_no       = $request->input('mobile_no');
+        $home_landline   = $request->input('home_landline');
+        $office_landline = $request->input('office_landline');
 
 
         $user=Sentinel::createModel();
@@ -389,23 +389,23 @@ class UserController extends Controller
         }
 
         $arr_data = [
-            'first_name' => $first_name,
-            'middle_name' => $middle_name,
-            'last_name' => $last_name,
-            'email' => $email,
-            'street_address' => $street_address,
-            'gender' => $gender,
-            'marital_status' => $marital_status,
-            'married_date' => date('Y-m-d',strtotime($married_date)),
-            'd_o_b'    => date('Y-m-d',strtotime($d_o_b)),
-            // 'role'  => $role,
-            'city' => $city,
-            'country'=>1,
-            'state'=>$state,
-            'pincode'=>$pincode,
-            'area' => $area,
-            'mobile_no' => $mobile_no,
-            'home_landline' => $home_landline,
+            'first_name'      => $first_name,
+            'middle_name'     => $middle_name,
+            'last_name'       => $last_name,
+            'email'           => $email,
+            'street_address'  => $street_address,
+            'gender'          => $gender,
+            'marital_status'  => $marital_status,
+            'married_date'    => date('Y-m-d',strtotime($married_date)),
+            'd_o_b'           => date('Y-m-d',strtotime($d_o_b)),
+            // 'role'         => $role,
+            'city'            => $city,
+            'country'         => 1,
+            'state'           => $state,
+            'pincode'         => $pincode,
+            'area'            => $area,
+            'mobile_no'       => $mobile_no,
+            'home_landline'   => $home_landline,
             'office_landline' => $office_landline,
 
         ];
