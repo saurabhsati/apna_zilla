@@ -164,8 +164,6 @@ return [
       /*  Softon\Sms\SmsServiceProvider::class, */
         Orzcc\AutoMeta\Providers\AutoMetaServiceProvider::class,
 
-        Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
-
 
     ],
 
