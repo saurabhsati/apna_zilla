@@ -88,6 +88,18 @@
                           </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-3 col-lg-2 control-label">Name</label>
+                            <div class="col-sm-9 col-lg-5 controls">
+                                <input type="text"
+                                value="{{ $sales_user_arr['first_name'] }}"
+                                class="form-control"
+                                name="first_name"
+                                id="first_name"
+                                data-rule-required="true" />
+                                <div class="error" id="error_mobile_no" >{{ $errors->first('first_name') }}</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-3 col-lg-2 control-label">Email</label>
                             <div class="col-sm-9 col-lg-5 controls">
                                 <input type="text"
@@ -100,7 +112,8 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        
+                          <div class="form-group">
                             <label class="col-sm-3 col-lg-2 control-label">Phone</label>
                             <div class="col-sm-9 col-lg-5 controls">
                                 <input type="text"
