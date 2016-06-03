@@ -227,7 +227,7 @@ class UserController extends Controller
             else
 	        {
 	            $json['status']  = 'ERROR';
-	            $json['message'] = 'Invalid Mobile Number !';
+	            $json['message'] = 'Error Occure In Registration !';
 	            return response()->json($json);
 	        }
 			

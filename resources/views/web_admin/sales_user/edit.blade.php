@@ -237,7 +237,7 @@
                     <input class="form-control"
                            name="mobile_no"
                            id="mobile_no"
-                           data-rule-required="true"
+                           data-rule-required="true" data-rule-number="true"   data-rule-minlength="10" maxlength="10" 
                            placeholder="Enter Mobile No"
                            value="{{ isset($arr_user_data['mobile_no'])?$arr_user_data['mobile_no']:'' }}"
                            />

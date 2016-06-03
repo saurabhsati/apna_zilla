@@ -230,7 +230,7 @@
                            name="mobile_no"
                            id="mobile_no"
                            data-rule-required="true"
-                           placeholder="Enter Mobile No"
+                           placeholder="Enter Mobile No" data-rule-number="true"   data-rule-minlength="10" maxlength="10" 
                            value="{{ isset($arr_user_data['mobile_no'])?$arr_user_data['mobile_no']:'' }}"
                            />
                     <span class='help-block'>{{ $errors->first('mobile_no') }}</span>

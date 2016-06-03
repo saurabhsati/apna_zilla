@@ -172,7 +172,7 @@
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="mobile_no">Mobile No<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control" name="mobile_no" id="mobile_no"  placeholder="Enter Mobile No " data-rule-required="true" />
+                    <input class="form-control" name="mobile_no" id="mobile_no"  placeholder="Enter Mobile No " data-rule-required="true" data-rule-number="true"   data-rule-minlength="10" maxlength="10" />
                     <span class='help-block'>{{ $errors->first('mobile_no') }}</span>
                 </div>
             </div>
