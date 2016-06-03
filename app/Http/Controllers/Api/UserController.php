@@ -389,7 +389,7 @@ class UserController extends Controller
     public function recover_password(Request $request)
     {
             $email = $request->input('email');
-
+            dd($email);
         	$data = array();
 	        $data['email']  = $email;     
 	        $data['new_password']  =  base64_encode(rand());
@@ -413,8 +413,8 @@ class UserController extends Controller
 	                                        ->subject($subject);
 	                                        //->setBody($content, 'text/html');
 	                            });
-
-	                
+	                dd($send_mail);
+	                 
 	            }
 	             if($send_mail)
 	            {
