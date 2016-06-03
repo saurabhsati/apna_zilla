@@ -214,4 +214,143 @@ class VenderController extends Controller
         return response()->json($json);
  	}
 
+ 	public function edit(Request $request)
+ 	{
+		$id             = $request->input('id');
+		$first_name     = $request->input('first_name');
+		$gender         = $request->input('gender');
+		$d_o_b          = $request->input('d_o_b');
+		$marital_status = $request->input('marital_status');
+		$married_date   = $request->input('married_date');
+		$email          = $request->input('email');
+		$mobile_no      = $request->input('mobile_no');
+		$password       = $request->input('password');
+		$state          = $request->input('state');
+		$city           = $request->input('city');
+		$pincode        = $request->input('pincode');
+		$area           = $request->input('area');
+
+		$obj_user       = Sentinel::createModel();
+		$arr_data       = array();
+
+		$result = $obj_user::where('id',$id)->first();
+		if($result)
+		{
+			$arr_result 					 = $result->toArray();
+			$arr_data['id'] 	    		 = $arr_result['id'];
+			$arr_data['email'] 		 		 = $arr_result['email'];
+			$arr_data['mobile_no'] 			 = $arr_result['mobile_no'];
+			$arr_data['first_name']  		 = $arr_result['first_name'];
+			$arr_data['profile_pic'] 		 = url('/uploads/users/profile_pic').'/'.$arr_result['profile_pic'];
+			$arr_data['d_o_b']              = $arr_result['d_o_b'];
+	  		$arr_data['gender'] 	         = $arr_result['gender'];
+	  		$arr_data['marital_status'] 	 = $arr_result['marital_status'];
+	  		$arr_data['married_date'] 	     = $arr_result['married_date'];
+	  		$arr_data['state'] 	     		 = $arr_result['state'];
+	  		$arr_data['city'] 	    		 = $arr_result['city'];
+	  		$arr_data['pincode'] 	 	     = $arr_result['pincode'];
+	  		$arr_data['area'] 	    		 = $arr_result['area'];
+		  	
+
+
+			$json['data'] 	 = $arr_data;
+			$json['status']	 = "SUCCESS";
+			$json['message'] = 'Information get available.';	
+    	  
+        }
+		else
+		{
+			$json['status']	  = "ERROR";
+            $json['message']  = 'Information not available.';	
+		}
+
+		return response()->json($json);	
+ 	}
+ 	public function update(Request $request)
+ 	{
+		$id             = $request->input('id');
+		$first_name     = $request->input('first_name');
+		$gender         = $request->input('gender');
+		$d_o_b          = $request->input('d_o_b');
+		$marital_status = $request->input('marital_status');
+		$married_date   = $request->input('married_date');
+		$email          = $request->input('email');
+		$mobile_no      = $request->input('mobile_no');
+		$password       = $request->input('password');
+		$state          = $request->input('state');
+		$city           = $request->input('city');
+		$pincode        = $request->input('pincode');
+		$area           = $request->input('area');
+
+		$profile_pic = FALSE;
+        if ($request->hasFile('profile_pic'))
+        {
+            $cv_valiator = Validator::make(array('profile_pic'=>$request->file('profile_pic')),array(
+                                                'profile_pic' => 'mimes:jpg,jpeg,png'
+                                            ));
+
+            if($request->file('profile_pic')->isValid())
+            {
+
+                $cv_path = $request->file('profile_pic')->getClientOriginalName();
+                $image_extension = $request->file('profile_pic')->getClientOriginalExtension();
+                $image_name = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
+                $request->file('profile_pic')->move(
+                    $this->profile_pic_base_path, $image_name
+                );
+
+                $profile_pic = $image_name;
+            }
+            else
+            {
+                $json['status']	  = "ERROR";
+                $json['message']  = 'Invalid Image Format.';
+            }
+
+        }
+
+        $arr_data = [
+		            'first_name' => $first_name,
+		            'email' => $email,
+		            'gender' => $gender,
+		            'marital_status' => $marital_status,
+		            'd_o_b'    => date('Y-m-d',strtotime($d_o_b)),
+		            'married_date'    => date('Y-m-d',strtotime($married_date)),
+		            'city' => $city,
+		            'state'=>$state,
+		            'pincode'=>$pincode,
+		            'area' => $area,
+		            'mobile_no' => $mobile_no
+		          ];
+
+        if($password!=FALSE)
+        {
+            $arr_data['password'] = $password;
+        }
+
+        if($profile_pic!=FALSE)
+        {
+            $arr_data['profile_pic'] = $profile_pic;
+        }
+
+        $user = Sentinel::findById($id);
+
+        $status = Sentinel::update($user,$arr_data);
+
+        if($status)
+        {
+
+			$json['data'] 	 = $arr_data;
+			$json['status']	 = "SUCCESS";
+			$json['message'] = 'Vender Details Updates Successfully !.';	
+    	  
+        }
+		else
+		{
+			$json['status']	  = "ERROR";
+            $json['message']  = 'Information not available.';	
+		}
+
+		return response()->json($json);	
+ 	}
 }
