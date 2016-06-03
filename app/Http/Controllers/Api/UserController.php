@@ -56,11 +56,20 @@ class UserController extends Controller
         	 $arr_creds['email'] = $email_or_mobile;
         }
         $arr_creds['password']  = $request->input('password');
+      
+
         $user = Sentinel::stateless($arr_creds);
 		if($user)
 		{
-			$json['data'] 	 = $user;
-			$json['status']  = 'SUCCESS';
+            $user_info               = $user->toArray();
+            
+            $profile_image           = url('/uploads/users/profile_pic').'/'.$user_info['profile_pic'];
+            $arr_data                = $user_info;
+            $arr_data['profile_pic'] = $profile_image;
+
+
+            $json['data']            = $arr_data;
+            $json['status']  = 'SUCCESS';
 			$json['message'] = 'Login successfully !';
 		}
 		else
