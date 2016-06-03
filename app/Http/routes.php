@@ -764,15 +764,22 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 Route::group(['prefix'=>'api','middleware'=>'api'],function()
 {
+
 	Route::post('register',					        ['as' => 'front_users_register'        				,'uses' =>'Api\UserController@register']);
 	Route::post('login',							['as' => 'front_users_profile'        				,'uses' =>'Api\UserController@login']);
 	Route::post('change_password',					['as' => 'front_users_change_password'        		,'uses' =>'Api\UserController@change_password']);
+	
 	Route::get('edit',					            ['as' => 'front_users_edit'        				    ,'uses' =>'Api\UserController@edit']);
 	Route::post('update',					        ['as' => 'front_users_profile_update'        	    ,'uses' =>'Api\UserController@update']);
+	
 	Route::post('recover_password',					['as' => 'front_users_recover_password'        		,'uses' =>'Api\UserController@recover_password']);
 	Route::get('validate_reset_password_link',      ['as' => 'front_users_validate_reset_password_link' ,'uses' => 'Api\UserController@validate_reset_password_link']);
-    Route::post('reset_password', ['as' => 'front_users_validate_reset_password_link' ,'uses' =>'Api\UserController@reset_password']);
+    Route::post('reset_password', 					['as' => 'front_users_validate_reset_password_link' ,'uses' =>'Api\UserController@reset_password']);
 
+    /* Edit Front user address */
+
+    Route::get('edit_address',						['as' => 'front_users_address'        				,'uses' =>'Api\UserController@edit_address']);
+		
 
 });
 

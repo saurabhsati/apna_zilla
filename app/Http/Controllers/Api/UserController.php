@@ -72,6 +72,7 @@ class UserController extends Controller
 		return response()->json($json);
     }
 
+
     /* User  Chnage Password Service*/
      public function change_password(Request $request)
     {
@@ -387,36 +388,55 @@ class UserController extends Controller
      */
     public function recover_password(Request $request)
     {
-        $email = $request->input('recover_email');
-        $user = Sentinel::findByCredentials(['email' => $email]);
+            $email = $request->input('email');
 
-        if($user)
-        {
-			$reminder = Reminder::create($user);
+        	$data = array();
+	        $data['email']  = $email;     
+	        $data['new_password']  =  base64_encode(rand());
+        
+	        $obj_user = Sentinel::createModel();
 
-            $email_status = $this->forget_password_send_mail($email,$reminder->code);
-            if($email_status)
-            {
-               $json['status'] = "SUCCESS";
-	           $json['message']  = 'Password Reset Link Set to the Email Id Please Check Your Email Account !';  
-	           return response()->json($json);
-            }
-            else
-            {
-                  $json['status'] = "ERROR";
-		          $json['message']  = 'Error while sending the email to your email id !';  
-		          return response()->json($json);
-            }
+	        $update_password = $obj_user::where('email',$email)->update(['password'=> Hash::make($data['new_password'])]);
+	        if($update_password)
+	        {
+				$subject = "RightNext | Recover Password";
+	            
+	        	$content = view('email.recover_password',compact('content'))->render();
+                $content = html_entity_decode($content);
+                $send_mail =0;
+                if(!empty($email))
+                {
+	                $send_mail = Mail::send('api.email.forget_password_mail', $data, function ($message)use ($email,$subject)
+	                            {
+	                                $message->from('admin@rightnext.com','RightNext Admin');
+	                                $message->to($email)
+	                                        ->subject($subject);
+	                                        //->setBody($content, 'text/html');
+	                            });
 
-        }
-        else
-        {
-          $json['status'] = "ERROR";
-          $json['message']  = 'Invalid Email Id You Have Provided !';  
-          return response()->json($json);
-        }
-      
-    }
+	                
+	            }
+	             if($send_mail)
+	            {
+	                $json['status']   = "SUCCESS";
+	                $json['message']  = 'Password Updated Successfully, Your new password is sent to your email.';
+	            }
+	            else
+	            {
+	                $json['status']   = "ERROR";
+	                $json['message']  = 'Error while sending forgot password email.'; 
+	            }
+	        }
+	         else
+	        {
+	          $json['status'] = "ERROR";
+	          $json['message']  = 'Invalid Email Id You Have Provided !';  
+	          return response()->json($json);
+	        }
+	        
+	        return response()->json($json);
+
+   }
 
     /* Send Mail containg the reset password url  */
     private function forget_password_send_mail($email, $reminder_code)
@@ -468,7 +488,7 @@ class UserController extends Controller
     }
 
     /* get user detail  by email id */
-     public function get_user_details($email)
+    public function get_user_details($email)
     {
         $credentials = ['email'    => $email];
         $user = Sentinel::findByCredentials($credentials); // check if user exists
@@ -547,6 +567,17 @@ class UserController extends Controller
           
         }
 
+    }
+
+    /* Edit Front user address */
+    public function edit_address(Request $request)
+    {
+
+    	$obj_user_info = UserModel::where('id','=',$user_id)->get();
+        if($obj_user_info)
+        {
+            $arr_user_info = $obj_user_info->toArray();
+        }
     }
 
 }
