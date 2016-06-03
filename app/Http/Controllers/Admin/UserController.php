@@ -421,7 +421,7 @@ class UserController extends Controller
         }
 
         $user = Sentinel::findById($user_id);
-
+        //dd($arr_data);
         $status = Sentinel::update($user,$arr_data);
 
         if($status)
