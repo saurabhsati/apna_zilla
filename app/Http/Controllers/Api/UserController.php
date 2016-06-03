@@ -301,22 +301,10 @@ class UserController extends Controller
     		$cv_path 			= $request->file('profile_pic')->getClientOriginalName();
 	        $image_extension 	= $request->file('profile_pic')->getClientOriginalExtension();
 	        $image_name 		= sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
-	        if($image_name)
-	        {
-	        	$result = $obj_user::where('id',$id)->first();
-	    		if($result)
-	    		{
-	    			$arr_result  	= $result->toArray();
-	    		  	$unlink_path    = $this->profile_pic_base_path.$arr_result['profile_pic'];
-                    $unlink_image   = unlink($unlink_path);
-                    if($unlink_image==TRUE)
-                    {
-                        $final_image = $request->file('profile_pic')->move($this->profile_pic_base_path,$image_name);          
-                    }
-
-	    		}	
-				$profile_pic = $image_name; 
-	        }
+	         $request->file('profile_pic')->move(
+                    $this->profile_pic_base_path, $image_name
+                );
+	        $profile_pic = $image_name; 
 	        
     	}
     	else

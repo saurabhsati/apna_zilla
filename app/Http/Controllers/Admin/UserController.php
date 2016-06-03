@@ -212,6 +212,7 @@ class UserController extends Controller
             //$user = Sentinel::getUser();
 
             $user->roles()->attach($role);
+            $send_mail=0;
             $obj_email_template = EmailTemplateModel::where('id','12')->first();
             if($email!='')
             {
