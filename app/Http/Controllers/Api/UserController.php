@@ -389,14 +389,14 @@ class UserController extends Controller
     public function recover_password(Request $request)
     {
             $email = $request->input('email');
-            dd($email);
-        	$data = array();
+
+            $data = array();
 	        $data['email']  = $email;     
-	        $data['new_password']  =  base64_encode(rand());
+	        $data['new_password']  =  rand();
         
 	        $obj_user = Sentinel::createModel();
-
-	        $update_password = $obj_user::where('email',$email)->update(['password'=> Hash::make($data['new_password'])]);
+	        ///Hash::make($data['new_password']
+	        $update_password = $obj_user::where('email',$email)->update(['password'=>Hash::make($data['new_password'])]);
 	        if($update_password)
 	        {
 				$subject = "RightNext | Recover Password";
@@ -411,12 +411,9 @@ class UserController extends Controller
 	                                $message->from('admin@rightnext.com','RightNext Admin');
 	                                $message->to($email)
 	                                        ->subject($subject);
-	                                        //->setBody($content, 'text/html');
-	                            });
-	                dd($send_mail);
-	                 
+	                           });
 	            }
-	             if($send_mail)
+	            if($send_mail)
 	            {
 	                $json['status']   = "SUCCESS";
 	                $json['message']  = 'Password Updated Successfully, Your new password is sent to your email.';
@@ -438,146 +435,59 @@ class UserController extends Controller
 
    }
 
-    /* Send Mail containg the reset password url  */
-    private function forget_password_send_mail($email, $reminder_code)
-    {
-        // Retrieve Email Template
+   
 
-        $user = $this->get_user_details($email);
-
-        if($user)
-        {
-            $obj_email_template = EmailTemplate::where('id','11')->first();
-            if($obj_email_template)
-            {
-                $arr_email_template = $obj_email_template->toArray();
-
-                $content = $arr_email_template['template_html'];
-
-                $content        = str_replace("##USER_FNAME##",$user->first_name,$content);
-                $content        = str_replace("##EMAIL##",$user->email,$content);
-
-
-                $reminder_url = '<a href=" '.URL::to('front_users/validate_reset_password_link/'.base64_encode($user->id).'/'.base64_encode($reminder_code) ).'">Click Here</a>.<br/>' ;
-
-                $content        = str_replace("##APP_NAME##","RightNext",$content);
-                $content        = str_replace("##RESET_LINK##",$reminder_url,$content);
-
-
-                $content        = str_replace("##RESET_LINK##",$reminder_code,$content);
-
-                $content = view('email.front_general',compact('content'))->render();
-                $content = html_entity_decode($content);
-                $send_mail =0;
-                if(!empty($user->email))
-                {
-	                $send_mail = Mail::send(array(),array(), function($message) use($user,$arr_email_template,$content)
-	                            {
-	                                $message->from($arr_email_template['template_from_mail'], $arr_email_template['template_from']);
-	                                $message->to($user->email, $user->first_name)
-	                                        ->subject($arr_email_template['template_subject'])
-	                                        ->setBody($content, 'text/html');
-	                            });
-
-	                return $send_mail;
-	            }
-	            return $send_mail;
-            }
-        }
-
-    }
-
-    /* get user detail  by email id */
-    public function get_user_details($email)
-    {
-        $credentials = ['email'    => $email];
-        $user = Sentinel::findByCredentials($credentials); // check if user exists
-
-        if($user)
-        {
-            return $user;
-        }
-        return FALSE;
-    }
-
-    /* Validate the reset password link when user hit the url */
-
-    public function validate_reset_password_link(Request $request)
-    {
-        $user_id = base64_decode($request->input('enc_id'));
-        $reminder_code = base64_decode($request->input('enc_reminder_code'));
-
-        $user = Sentinel::findById($user_id);
-        if(!$user)
-        {
-             $json['status'] = "ERROR";
-	         $json['message']  = 'Invalid User Request !';  
-	         return response()->json($json);
-        }
-
-        if(Reminder::exists($user))
-        {
-        	$json['status'] = "SUCCESS";
-	        $json['message']  = 'User Has Valid Request !';  
-	        return response()->json($json);
-            
-        }
-        else
-        {
-        	$json['status'] = "ERROR";
-	        $json['message']  = 'Reset Password Link Expired !';  
-	        return response()->json($json);
-        }
-    }
-
-    /* If valid user get email to reset the password generate new password & complete the remainder activity */
-
-    public function reset_password(Request $request)
-    {
-       
-
-        $enc_id = $request->input('enc_id');
-        $enc_reminder_code = $request->input('enc_reminder_code');
-        $password = $request->input('password');
-
-        $user_id = base64_decode($enc_id);
-        $reminder_code = base64_decode($enc_reminder_code);
-
-        $user = Sentinel::findById($user_id);
-        
-
-        if(!$user)
-        {
-            $json['status'] = "ERROR";
-	        $json['message']  = 'Invalid User Request !';  
-	        return response()->json($json);
-        }
-
-        if ($reminder = Reminder::complete($user, $reminder_code, $password))
-        {
-            $json['status'] = "SUCCESS";
-	        $json['message']  = 'Password Reset Successfully !';  
-	        return response()->json($json);
-        }
-        else
-        {
-            $json['status'] = "ERROR";
-	        $json['message']  = 'Reset Password Link Expired !';  
-	        return response()->json($json);
-          
-        }
-
-    }
 
     /* Edit Front user address */
     public function edit_address(Request $request)
     {
-
-    	$obj_user_info = UserModel::where('id','=',$user_id)->get();
+    	$id   = $request->input('id');
+    	$obj_user_info = UserModel::select(['state','city','area','pincode','first_name'])->where('id','=',$id)->first();
         if($obj_user_info)
         {
             $arr_user_info = $obj_user_info->toArray();
         }
+        if($arr_user_info)
+        {
+
+         	$json['data'] 	= $arr_user_info;
+			$json['status']	= "SUCCESS";
+			$json['message']  = 'User Address Detail Get Successfully !';
+    	  
+        }
+		else
+		{
+			$json['status']	= "ERROR";
+            $json['message']  = 'Information not available.';	
+		}
+		   return response()->json($json);
+
     }
+
+    /* Update Front user address */
+    public function update_address(Request $request)
+    {
+    	$id     =  $request->input('user_id');
+
+        $arr_data['city']           = $request->input('city_id');
+        $arr_data['state']          = $request->input('state_id');
+        $arr_data['area']           = $request->input('area');
+        $arr_data['pincode']        = $request->input('pincode');
+        
+        $status = UserModel::where('id',$id)->update($arr_data);
+
+        if($status)
+        {
+            $json['status'] = 'SUCCESS';
+            $json['message']  = 'Address Updated Successfully.';
+        }
+        else
+        {
+            $json['status'] = 'ERROR';
+            $json['message']  = 'Error while updating address .';
+        }
+         return response()->json($json);
+    }
+
 
 }

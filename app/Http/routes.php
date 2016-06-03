@@ -617,6 +617,51 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		
 	});
 
+	/*--------------------------WEB SERVICES-------------------------*/
+
+	Route::group(['prefix'=>'api','middleware'=>'api'],function()
+	{
+
+		Route::post('register',					        ['as' => 'front_users_register'        				,'uses' =>'Api\UserController@register']);
+		Route::post('login',							['as' => 'front_users_profile'        				,'uses' =>'Api\UserController@login']);
+		Route::post('change_password',					['as' => 'front_users_change_password'        		,'uses' =>'Api\UserController@change_password']);
+		
+		Route::get('edit',					            ['as' => 'front_users_edit'        				    ,'uses' =>'Api\UserController@edit']);
+		Route::post('update',					        ['as' => 'front_users_profile_update'        	    ,'uses' =>'Api\UserController@update']);
+		
+		Route::post('recover_password',					['as' => 'front_users_recover_password'        		,'uses' =>'Api\UserController@recover_password']);
+		
+	    /* Edit Front user address */
+	    Route::get('edit_address',						['as' => 'front_users_address'        				,'uses' =>'Api\UserController@edit_address']);
+		Route::post('update_address',			        ['as' => 'update_address'                           ,'uses' =>'Api\UserController@update_address']);
+
+		Route::group(array('prefix' => '/location_common'), function()
+		{
+			Route::get('get_states_by_country',  		['as' => 'get_states_by_country' 					,'uses' => 'Api\LocationCommonController@get_states_by_country']);
+			Route::get('get_cities_by_state',  			['as' => 'get_cities_by_state' 						,'uses' => 'Api\LocationCommonController@get_cities_by_state']);
+			Route::get('get_postalcode_by_city',        ['as' => 'get_postalcode_by_city' 					,'uses' => 'Api\LocationCommonController@get_postalcode_by_city']);
+				
+
+		});	
+
+	});
+
+	/*------------------------END-------------------------------------*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	/*--------------------------Front-login-section-------------------------------*/
 
 	Route::any('/facebook/register',					'Front\AuthController@register_via_facebook');
@@ -760,28 +805,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 });
 
 
-/*--------------------------WEB SERVICES-------------------------*/
 
-Route::group(['prefix'=>'api','middleware'=>'api'],function()
-{
-
-	Route::post('register',					        ['as' => 'front_users_register'        				,'uses' =>'Api\UserController@register']);
-	Route::post('login',							['as' => 'front_users_profile'        				,'uses' =>'Api\UserController@login']);
-	Route::post('change_password',					['as' => 'front_users_change_password'        		,'uses' =>'Api\UserController@change_password']);
-	
-	Route::get('edit',					            ['as' => 'front_users_edit'        				    ,'uses' =>'Api\UserController@edit']);
-	Route::post('update',					        ['as' => 'front_users_profile_update'        	    ,'uses' =>'Api\UserController@update']);
-	
-	Route::post('recover_password',					['as' => 'front_users_recover_password'        		,'uses' =>'Api\UserController@recover_password']);
-	
-    /* Edit Front user address */
-
-    Route::get('edit_address',						['as' => 'front_users_address'        				,'uses' =>'Api\UserController@edit_address']);
-		
-
-});
-
-/*------------------------END-------------------------------------*/
 
 /*Role Methods*/
 

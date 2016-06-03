@@ -19,7 +19,8 @@ class VerifyCsrfToken extends BaseVerifier
         'order/payment',
         'order/success',
         'order/fail',
-        'order/cancel'
+        'order/cancel',
+        'api/*'
         
 
     ];
