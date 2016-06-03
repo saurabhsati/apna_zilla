@@ -176,7 +176,8 @@ class AuthController extends Controller
  		    $page_title ="Edit Profile";
  		
 			$admin_arr=$user->toArray();
-			return view('web_admin.login.admin_profile',compact('page_title','admin_arr'));
+            $profile_pic_public_path=$this->profile_pic_public_path;
+			return view('web_admin.login.admin_profile',compact('page_title','admin_arr','profile_pic_public_path'));
 
 		}
  	}
@@ -184,10 +185,10 @@ class AuthController extends Controller
  	public function updateprofile(Request $request)
  	{
  		$obj_admin = Sentinel::getUser();////Get Admin all information
- 		 if($obj_admin)
-                {
-                       $admin_data   =   $obj_admin->toArray();
-                 }
+ 		if($obj_admin)
+        {
+               $admin_data   =   $obj_admin->toArray();
+        }
  		$arr_rules 						= array();
  		$arr_rules['office_landline']		= 'required';
         $arr_rules['street_address']    = 'required';
@@ -201,7 +202,7 @@ class AuthController extends Controller
  		}
 
  		 $profile_pic = $admin_data ['profile_pic']?$admin_data ['profile_pic']: "default.jpg";
-
+         //dd($profile_pic );
         if ($request->hasFile('profile_pic'))
         {
             $profile_pic_valiator = Validator::make(array('profile_pic'=>$request->file('profile_pic')),array(
@@ -232,7 +233,8 @@ class AuthController extends Controller
  		$first_name = $request->input('first_name');
  		$update_arr	=array();
  		$update_arr=array('profile_pic'=>$profile_pic,'office_landline'=>$office_landline,'street_address'=>$street_address,'first_name'=>$first_name);
- 		$update_profile = Sentinel::update($obj_admin,$update_arr);
+ 		//dd($update_arr);
+        $update_profile = Sentinel::update($obj_admin,$update_arr);
  			if($update_profile)
  			{
  				Session::flash('success','Profile Updated Successfully');
