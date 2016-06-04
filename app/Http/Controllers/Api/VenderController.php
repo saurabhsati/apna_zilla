@@ -21,7 +21,7 @@ class VenderController extends Controller
     public function __construct()
     {
     	$json                          = array();
-        $this->profile_pic_base_path = base_path().'/public'.config('app.project.img_path.user_profile_pic');
+        $this->profile_pic_base_path   = base_path().'/public'.config('app.project.img_path.user_profile_pic');
         $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');
         $this->objpublic = new GeneratePublicId();
     }
@@ -284,9 +284,9 @@ class VenderController extends Controller
             if($request->file('profile_pic')->isValid())
             {
 
-                $cv_path = $request->file('profile_pic')->getClientOriginalName();
-                $image_extension = $request->file('profile_pic')->getClientOriginalExtension();
-                $image_name = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
+                $cv_path 			= $request->file('profile_pic')->getClientOriginalName();
+                $image_extension 	= $request->file('profile_pic')->getClientOriginalExtension();
+                $image_name 		= sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
                 $request->file('profile_pic')->move(
                     $this->profile_pic_base_path, $image_name
                 );
@@ -302,17 +302,17 @@ class VenderController extends Controller
         }
 
         $arr_data = [
-		            'first_name' => $first_name,
-		            'email' => $email,
-		            'gender' => $gender,
+		            'first_name' 	=> $first_name,
+		            'email'      	=> $email,
+		            'gender' 		=> $gender,
 		            'marital_status' => $marital_status,
-		            'd_o_b'    => date('Y-m-d',strtotime($d_o_b)),
-		            'married_date'    => date('Y-m-d',strtotime($married_date)),
-		            'city' => $city,
-		            'state'=>$state,
-		            'pincode'=>$pincode,
-		            'area' => $area,
-		            'mobile_no' => $mobile_no
+		            'd_o_b'    		=> date('Y-m-d',strtotime($d_o_b)),
+		            'married_date'  => date('Y-m-d',strtotime($married_date)),
+		            'city' 			=> $city,
+		            'state'			=>$state,
+		            'pincode'		=>$pincode,
+		            'area' 			=> $area,
+		            'mobile_no' 	=> $mobile_no
 		          ];
 
         if($password!=FALSE)
@@ -347,7 +347,7 @@ class VenderController extends Controller
  	}
  	public function toggle_status(Request $request)
  	{
- 		$json                          = array();
+ 		$json               = array();
 
  		$enc_id             = $request->input('enc_id');
 		$action             = $request->input('action');
@@ -360,7 +360,7 @@ class VenderController extends Controller
         elseif($action=="block")
         {
             $this->_block($enc_id);
-            $json['status']	 = "ERROR";
+            $json['status']	 = "SUCCESS";
 			$json['message'] = 'Vender Block Successfully !.';	
 		}
         elseif($action=="delete")
@@ -372,7 +372,57 @@ class VenderController extends Controller
 		return response()->json($json);	
 
  	}
- 	 protected function _activate($enc_id)
+
+ 	public function multi_action(Request $request)
+    {
+        $arr_rules             = array();
+        $json                  = array();
+        $multi_action          = $request->input('multi_action');
+        $checked_enc_id_string = $request->input('checked_enc_id_string');
+
+        $checked_record_arr = explode(",",$checked_enc_id_string);
+        
+ 		
+        /* Check if array is supplied*/
+        if(isset($checked_record_arr) && sizeof($checked_record_arr)>0)
+        {
+        	 //dd($multi_action);
+ 		
+	        foreach ($checked_record_arr as $key => $enc_id)
+	        {
+	        	if($multi_action=="activate")
+	            {
+	               $this->_activate($enc_id);
+	               $json['status']	 = "SUCCESS";
+				   $json['message']  = 'Vender Activate Successfully !.';
+	            }
+	            elseif($multi_action=="block")
+	            {
+	               $this->_block($enc_id);
+	               $json['status']	 = "SUCCESS";
+				   $json['message'] = 'Vender Blocked Successfully !.';
+				    
+	            }
+	            elseif($multi_action=="delete")
+	            {
+	               $this->_delete($enc_id);
+	               $json['status']	 = "SUCCESS";
+				   $json['message'] = 'Vender Deleted Successfully !.';
+	            }
+
+	        }
+	    }
+	    else
+	    {
+              $json['status']	     = "ERROR";
+			  $json['message']       = 'Problem Occured, While Doing Multi Action';	
+        }
+
+
+        return response()->json($json);
+    }
+
+    protected function _activate($enc_id)
     {
         $id = base64_decode($enc_id);
 
@@ -385,7 +435,7 @@ class VenderController extends Controller
 
     protected function _block($enc_id)
     {
-        $id = base64_decode($enc_id);
+    	$id = base64_decode($enc_id);
 
         $user = Sentinel::createModel()->where('id',$id)->first();
 
