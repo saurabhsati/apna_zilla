@@ -20,10 +20,12 @@ class VenderController extends Controller
 {
     public function __construct()
     {
+    	$json                          = array();
         $this->profile_pic_base_path = base_path().'/public'.config('app.project.img_path.user_profile_pic');
         $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');
         $this->objpublic = new GeneratePublicId();
     }
+    /* List the venders by sales_executive public id */
     public function index(Request $request)
  	{
  		$sales_user_public_id=$request->input('public_id');
@@ -42,6 +44,7 @@ class VenderController extends Controller
 		}
         return response()->json($json);
  	}
+ 	 /* create the venders by sales_executive public id */
  	public function store(Request $request)
  	{
  		$sales_user_public_id = $request->input('public_id');
@@ -213,22 +216,10 @@ class VenderController extends Controller
 
         return response()->json($json);
  	}
-
+     /* Edit the venders by id */
  	public function edit(Request $request)
  	{
 		$id             = $request->input('id');
-		$first_name     = $request->input('first_name');
-		$gender         = $request->input('gender');
-		$d_o_b          = $request->input('d_o_b');
-		$marital_status = $request->input('marital_status');
-		$married_date   = $request->input('married_date');
-		$email          = $request->input('email');
-		$mobile_no      = $request->input('mobile_no');
-		$password       = $request->input('password');
-		$state          = $request->input('state');
-		$city           = $request->input('city');
-		$pincode        = $request->input('pincode');
-		$area           = $request->input('area');
 
 		$obj_user       = Sentinel::createModel();
 		$arr_data       = array();
@@ -269,6 +260,7 @@ class VenderController extends Controller
  	public function update(Request $request)
  	{
 		$id             = $request->input('id');
+
 		$first_name     = $request->input('first_name');
 		$gender         = $request->input('gender');
 		$d_o_b          = $request->input('d_o_b');
@@ -353,4 +345,59 @@ class VenderController extends Controller
 
 		return response()->json($json);	
  	}
+ 	public function toggle_status(Request $request)
+ 	{
+ 		$json                          = array();
+
+ 		$enc_id             = $request->input('enc_id');
+		$action             = $request->input('action');
+		 if($action=="activate")
+        {
+            $this->_activate($enc_id);
+            $json['status']	 = "SUCCESS";
+			$json['message'] = 'Vender Activate Successfully !.';	
+		}
+        elseif($action=="block")
+        {
+            $this->_block($enc_id);
+            $json['status']	 = "ERROR";
+			$json['message'] = 'Vender Block Successfully !.';	
+		}
+        elseif($action=="delete")
+        {
+            $this->_delete($enc_id);
+            $json['status']	 = "SUCCESS";
+			$json['message'] = 'Vender Delete Successfully !.';	
+        }
+		return response()->json($json);	
+
+ 	}
+ 	 protected function _activate($enc_id)
+    {
+        $id = base64_decode($enc_id);
+
+        $user = Sentinel::createModel()->where('id',$id)->first();
+
+        $user->is_active = "1";
+
+        return $user->save();
+    }
+
+    protected function _block($enc_id)
+    {
+        $id = base64_decode($enc_id);
+
+        $user = Sentinel::createModel()->where('id',$id)->first();
+
+        $user->is_active = "0";
+
+        return $user->save();
+    }
+
+    protected function _delete($enc_id)
+    {
+    	$id = base64_decode($enc_id);
+        $user = Sentinel::findById($id);
+		return $user->delete();
+    }
 }

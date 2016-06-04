@@ -660,9 +660,9 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		{
 			Route::get('/',       								['as' => 'vender_index'     				,'uses' =>'Api\VenderController@index']);
 			Route::post('store',       							['as' => 'vender_store'     				,'uses' =>'Api\VenderController@store']);
-			Route::get('show',       							['as' => 'vender_show'    					,'uses' =>'Api\VenderController@show']);
 			Route::get('edit',       							['as' => 'vender_edit'     					,'uses' =>'Api\VenderController@edit']);
 			Route::post('update',       						['as' => 'vender_update'    			    ,'uses' =>'Api\VenderController@update']);
+			
 			Route::get('toggle_status',       					['as' => 'vender_toggle_status'     		,'uses' =>'Api\VenderController@toggle_status']);
 			Route::post('multi_action',       					['as' => 'vender_,multi_action'     		,'uses' =>'Api\VenderController@multi_action']);
 
