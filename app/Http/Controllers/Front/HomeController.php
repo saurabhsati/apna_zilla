@@ -164,7 +164,13 @@ class HomeController extends Controller
 
     	 $url = sprintf("https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s", $lat, $lng);
 
-		    $content = file_get_contents($url); // get json content
+		    // $content = file_get_contents($url); // get json content
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+
+            $content = curl_exec($ch);
+            curl_close($ch);
 
 		    $metadata = json_decode($content, true); //json decoder
             $result=array();

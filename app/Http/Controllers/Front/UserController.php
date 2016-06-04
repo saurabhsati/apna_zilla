@@ -226,18 +226,27 @@ class UserController extends Controller
 
     public function profile()
     {
+        
         if(!(Session::has('user_id')))
         {
            return redirect('/');
         }
-         if((Session::has('previous_url')))
+        if((Session::has('previous_url')))
         {
           
-            if(Session::get('previous_url') !==url('/').'/')
+            
+             if(Session::get('previous_url') !==url('/').'/' )
             {
-              return redirect(Session::get('previous_url'));
+               /* if(URL::current() == url('/').'/front_users/profile')
+                {
+
+                }*/
+              $redirect_url= Session::get('previous_url');
+              Session::forget('previous_url');
+              return redirect($redirect_url);
             
             }
+        }
             else
             {
         
@@ -264,11 +273,7 @@ class UserController extends Controller
 
                 return view('front.user.profile',compact('arr_user_info','profile_pic_public_path'));
             }
-        }
-        else
-        {
-           return redirect('/');
-        }
+       
     }
 
 
