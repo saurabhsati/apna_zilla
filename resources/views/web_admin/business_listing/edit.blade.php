@@ -403,7 +403,7 @@
                            name="mobile_number"
                            id="mobile_number"
                            data-rule-required="true"
-                           data-rule-maxlength="10"
+                           data-rule-number="true"   data-rule-minlength="10" maxlength="10"
                            placeholder="Enter Mobile Number"
                            value="{{ isset($business['mobile_number'])?$business['mobile_number']:'' }}"
                            />

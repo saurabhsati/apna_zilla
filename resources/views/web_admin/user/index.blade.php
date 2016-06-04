@@ -137,6 +137,7 @@
                   <th>Name</th>
                   <th>Public ID</th>
                   <th>Mobile No</th>
+                  <th>Created Date</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
@@ -156,6 +157,7 @@
                     <td> {{ $user->first_name." ".$user->last_name }} </td>
                     <td> {{ $user->public_id }} </td>
                     <td> {{ $user->mobile_no }} </td>
+                    <td> {{ date('Y-m-d',strtotime($user->created_at))}} </td>
 
                     <td  >
                          @if($user->is_active=="0")

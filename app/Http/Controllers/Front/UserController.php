@@ -56,7 +56,7 @@ class UserController extends Controller
 
 
  	public function store(Request $request)
-    {
+    {   
         $arr_rules = array();
         $arr_rules['first_name']   =   "required";
         $arr_rules['last_name']    =   "required";
@@ -103,7 +103,7 @@ class UserController extends Controller
             }
 
             $mobile_otp =  mt_rand(0,66666);
-            // dd($mobile_otp);
+             //dd($mobile_otp);
              $status = Sentinel::registerAndActivate([
                 'first_name' => $first_name,
                 'last_name'  => $last_name,
@@ -117,10 +117,10 @@ class UserController extends Controller
             if($status)
             {
                 /*-------------send SMS OTP-----------------*/
-
-    			$response  = $this->send_otp($mobile,$mobile_otp);
+                $response='';
+    			//$response  = $this->send_otp($mobile,$mobile_otp);
                 //dd($response);
-                if($response!='')
+                if($response=='')
                 {
                      /*------------------------------------------*/
 
