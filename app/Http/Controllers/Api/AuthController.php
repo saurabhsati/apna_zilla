@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
 use App\Common\Services\GeneratePublicId;
 
 use App\Models\UserModel;
@@ -17,12 +18,13 @@ use Hash;
 use Reminder;
 use URL;
 
-class UserController extends Controller
-{
 
-	public function __construct()
+
+class AuthController extends Controller
+{
+   public function __construct()
 	{
-	    $json                          = array();
+        $json                          = array();
 		$this->profile_pic_base_path   = base_path().'/public'.config('app.project.img_path.user_profile_pic');
 		$this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');
 		
@@ -30,11 +32,12 @@ class UserController extends Controller
 		$this->objpublic = new GeneratePublicId();
         $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');
 	}
-
 	/* User  Login Service*/
 
     public function login(Request $request)
     {
+        
+
         $email_or_mobile = $request->input('email');
     	$password = $request->input('password');
         if(is_numeric($email_or_mobile))
@@ -146,7 +149,7 @@ class UserController extends Controller
 
     public function register(Request $request)
     {
-    	$first_name       = $request->input('first_name');
+        $first_name       = $request->input('first_name');
     	$last_name        = $request->input('last_name');
     	$email            = $request->input('email');
     	$mobile_no        = $request->input('mobile_no');
@@ -302,8 +305,8 @@ class UserController extends Controller
 	/* Profile Update Service*/
     public function update(Request $request)
     {
-    	$json =array();
-    	$id			     = $request->input('id');
+       $json =array();
+        $id			     = $request->input('id');
     	$obj_user = Sentinel::createModel();
     	if($request->hasFile('profile_pic'))
     	{
@@ -430,7 +433,8 @@ class UserController extends Controller
 	        
 	        return response()->json($json);
 
-   }
+    }
+    
 
    
 
@@ -485,6 +489,5 @@ class UserController extends Controller
         }
          return response()->json($json);
     }
-
 
 }

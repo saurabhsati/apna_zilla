@@ -349,23 +349,23 @@ class VenderController extends Controller
  	{
  		$json               = array();
 
- 		$enc_id             = $request->input('enc_id');
+ 		$id             = $request->input('id');
 		$action             = $request->input('action');
 		 if($action=="activate")
         {
-            $this->_activate($enc_id);
+            $this->_activate($id);
             $json['status']	 = "SUCCESS";
 			$json['message'] = 'Vender Activate Successfully !.';	
 		}
         elseif($action=="block")
         {
-            $this->_block($enc_id);
+            $this->_block($id);
             $json['status']	 = "SUCCESS";
 			$json['message'] = 'Vender Block Successfully !.';	
 		}
         elseif($action=="delete")
         {
-            $this->_delete($enc_id);
+            $this->_delete($id);
             $json['status']	 = "SUCCESS";
 			$json['message'] = 'Vender Delete Successfully !.';	
         }
@@ -378,9 +378,9 @@ class VenderController extends Controller
         $arr_rules             = array();
         $json                  = array();
         $multi_action          = $request->input('multi_action');
-        $checked_enc_id_string = $request->input('checked_enc_id_string');
+        $checked_id_string = $request->input('checked_id_string');
 
-        $checked_record_arr = explode(",",$checked_enc_id_string);
+        $checked_record_arr = explode(",",$checked_id_string);
         
  		
         /* Check if array is supplied*/
@@ -388,24 +388,24 @@ class VenderController extends Controller
         {
         	 //dd($multi_action);
  		
-	        foreach ($checked_record_arr as $key => $enc_id)
+	        foreach ($checked_record_arr as $key => $id)
 	        {
 	        	if($multi_action=="activate")
 	            {
-	               $this->_activate($enc_id);
+	               $this->_activate($id);
 	               $json['status']	 = "SUCCESS";
 				   $json['message']  = 'Vender Activate Successfully !.';
 	            }
 	            elseif($multi_action=="block")
 	            {
-	               $this->_block($enc_id);
+	               $this->_block($id);
 	               $json['status']	 = "SUCCESS";
 				   $json['message'] = 'Vender Blocked Successfully !.';
 				    
 	            }
 	            elseif($multi_action=="delete")
 	            {
-	               $this->_delete($enc_id);
+	               $this->_delete($id);
 	               $json['status']	 = "SUCCESS";
 				   $json['message'] = 'Vender Deleted Successfully !.';
 	            }
@@ -422,10 +422,8 @@ class VenderController extends Controller
         return response()->json($json);
     }
 
-    protected function _activate($enc_id)
+    protected function _activate($id)
     {
-        $id = base64_decode($enc_id);
-
         $user = Sentinel::createModel()->where('id',$id)->first();
 
         $user->is_active = "1";
@@ -433,21 +431,18 @@ class VenderController extends Controller
         return $user->save();
     }
 
-    protected function _block($enc_id)
+    protected function _block($id)
     {
-    	$id = base64_decode($enc_id);
-
-        $user = Sentinel::createModel()->where('id',$id)->first();
+    	$user = Sentinel::createModel()->where('id',$id)->first();
 
         $user->is_active = "0";
 
         return $user->save();
     }
 
-    protected function _delete($enc_id)
+    protected function _delete($id)
     {
-    	$id = base64_decode($enc_id);
-        $user = Sentinel::findById($id);
+    	 $user = Sentinel::findById($id);
 		return $user->delete();
     }
 }

@@ -44,6 +44,7 @@ class BusinessListingModel extends Model
                          'sales_user_public_id',
                          'busiess_ref_public_id',
                          ];
+                         
     public function user_details()
     {
     	return $this->belongsTo('App\Models\UserModel','user_id','id');

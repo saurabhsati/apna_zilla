@@ -611,40 +611,40 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::post('/success',							'Front\OrderController@payment_success');
 		Route::post('/fail',							'Front\OrderController@payment_fail');
 		Route::post('/cancel',							'Front\OrderController@payment_cancle');
-		
-
 
 		
 	});
 
 	/*--------------------------WEB SERVICES-------------------------*/
 
+
 	Route::group(['prefix'=>'api','middleware'=>'api'],function()
 	{
-		/* User Register Service */
-		Route::post('register',					        ['as' => 'front_users_register'        				,'uses' =>'Api\UserController@register']);
+
+        /* User Register Service */
+		Route::post('register',					        ['as' => 'front_users_register'        				,'uses' =>'Api\AuthController@register']);
 		
 		/* User  Login Service*/
-		Route::post('login',							['as' => 'front_users_profile'        				,'uses' =>'Api\UserController@login']);
+		Route::post('login',							['as' => 'front_users_profile'        				,'uses' =>'Api\AuthController@login']);
 		
 		/* User  Chnage Password Service*/
-		Route::post('change_password',					['as' => 'front_users_change_password'        		,'uses' =>'Api\UserController@change_password']);
+		Route::post('change_password',					['as' => 'front_users_change_password'        		,'uses' =>'Api\AuthController@change_password']);
 		
 		/*  Profile Edit Service */
-		Route::get('edit',					            ['as' => 'front_users_edit'        				    ,'uses' =>'Api\UserController@edit']);
-	    
-	    /* Profile Update Service*/
-		Route::post('update',					        ['as' => 'front_users_profile_update'        	    ,'uses' =>'Api\UserController@update']);
+		Route::get('edit',					            ['as' => 'front_users_edit'        				    ,'uses' =>'Api\AuthController@edit']);
+
+
+	    Route::post('update',					        ['as' => 'front_users_profile_update'        	    ,'uses' =>'Api\AuthController@update']);
 		
 		/* Recover Password Service:  check valid email and send the reset password link through email
 	     */
-		Route::post('recover_password',					['as' => 'front_users_recover_password'        		,'uses' =>'Api\UserController@recover_password']);
+		Route::post('recover_password',					['as' => 'front_users_recover_password'        		,'uses' =>'Api\AuthController@recover_password']);
 		
 	    /* Edit Front user address */
-	    Route::get('edit_address',						['as' => 'front_users_address'        				,'uses' =>'Api\UserController@edit_address']);
+	    Route::get('edit_address',						['as' => 'front_users_address'        				,'uses' =>'Api\AuthController@edit_address']);
 		
 		/* Update Front user address */
-		Route::post('update_address',			        ['as' => 'update_address'                           ,'uses' =>'Api\UserController@update_address']);
+		Route::post('update_address',			        ['as' => 'update_address'                           ,'uses' =>'Api\AuthController@update_address']);
 
 		/* Common service for getting the state ,city & pincode */
 		Route::group(array('prefix' => '/location_common'), function()
@@ -663,10 +663,15 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 			Route::get('edit',       							['as' => 'vender_edit'     					,'uses' =>'Api\VenderController@edit']);
 			Route::post('update',       						['as' => 'vender_update'    			    ,'uses' =>'Api\VenderController@update']);
 			
-			Route::get('toggle_status',       					['as' => 'vender_toggle_status'     		,'uses' =>'Api\VenderController@toggle_status']);
+			Route::post('toggle_status',       					['as' => 'vender_toggle_status'     		,'uses' =>'Api\VenderController@toggle_status']);
 			Route::post('multi_action',       					['as' => 'vender_,multi_action'     		,'uses' =>'Api\VenderController@multi_action']);
 
 
+		});
+
+		Route::group(array('prefix' => '/business'), function()
+		{
+			Route::get('/',       								['as' => 'business_index'     				,'uses' =>'Api\BusinessController@index']);
 		});
 
 
