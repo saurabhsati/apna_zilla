@@ -672,6 +672,8 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::group(array('prefix' => '/business'), function()
 		{
 			Route::get('/',       								['as' => 'business_index'     				,'uses' =>'Api\BusinessController@index']);
+			Route::post('store',       							['as' => 'business_store'     				,'uses' =>'Api\BusinessController@store']);
+			
 		});
 
 

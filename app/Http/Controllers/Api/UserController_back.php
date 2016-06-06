@@ -18,11 +18,9 @@ use Hash;
 use Reminder;
 use URL;
 
-
-
-class AuthController extends Controller
-{
-   public function __construct()
+class UserController extends Controller
+{       
+	public function __construct()
 	{
         $json                          = array();
 		$this->profile_pic_base_path   = base_path().'/public'.config('app.project.img_path.user_profile_pic');
@@ -32,6 +30,12 @@ class AuthController extends Controller
 		$this->objpublic = new GeneratePublicId();
         $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');
 	}
+
+    /*public function test(Request $request)
+    {
+        dd("test11");
+    }*/
+
 	/* User  Login Service*/
 
     public function login(Request $request)
@@ -367,12 +371,6 @@ class AuthController extends Controller
 		  	$result_update = $obj_user::where('id',$id)->update($arr_data);
 		  	if($result_update)
 		  	{
-                $user_info               = $result->toArray();
-            
-                $profile_image           = url('/uploads/users/profile_pic').'/'.$user_info['profile_pic'];
-                $arr_data                = $user_info;
-                $arr_data['profile_pic'] = $profile_image;
-                $json['data']= $arr_data;
 		  		$json['status']	= "SUCCESS";
                 $json['message']  = 'Profile Updated successfully ! ';
 		  	}
@@ -440,7 +438,6 @@ class AuthController extends Controller
 	        return response()->json($json);
 
     }
-    
 
    
 
@@ -483,17 +480,8 @@ class AuthController extends Controller
         
         $status = UserModel::where('id',$id)->update($arr_data);
 
-        $obj_user_info = UserModel::select(['state','city','area','pincode','first_name'])->where('id','=',$id)->first();
-        if($obj_user_info)
-        {
-            $arr_user_info = $obj_user_info->toArray();
-        }
-        
-
-          
         if($status)
         {
-            $json['data']   = $arr_user_info;
             $json['status'] = 'SUCCESS';
             $json['message']  = 'Address Updated Successfully.';
         }
@@ -504,5 +492,9 @@ class AuthController extends Controller
         }
          return response()->json($json);
     }
+
+    
+    
+
 
 }

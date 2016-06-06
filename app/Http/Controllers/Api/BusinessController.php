@@ -109,63 +109,65 @@ class BusinessController extends Controller
 
     public function store(Request $request)
     {
-        
-         $user_id                         =  $request->input('user_id');
-
+         dd($request->all());
+         $user_id                          = $request->input('user_id');
+         $arr_data['sales_user_public_id'] = $request->input('sales_user_public_id');
          $arr_all=$request->all();
+        
+         $arr_all['business_added_by']     = $request->input('business_added_by');
+         $arr_all['business_name']         =  $request->input('business_name');
 
-         $arr_all['business_name']        =  $request->input('business_name');
-         $business_cat                    =  $request->input('business_cat');
-         $business_cat_arr                =   explode(",",$business_cat);
+         $business_cat_arr                =   explode(",",$request->input('business_cat'));
+         $payment_mode                    =   explode(",",$request->input('payment_mode'));
+         $business_service                =   explode(",",$request->input('business_service'));
+
          $main_image                      =  $request->input('main_image'); 
 
-         //location fields
-         $area                            =  $request->input('area');
-         $city                            =  $request->input('city');
-         $pincode                         =  $request->input('pincode');
-         $state                           =  $request->input('state');
-         $country                         =  $request->input('country');
-         $lat                             =  $request->input('lat');
-         $lng                             =  $request->input('lng');
+         //location  fields
+         $arr_all['area']       =     $request->input('area');
+         $arr_all['city']       =      $request->input('city');
+         $arr_all['pincode']    =      $request->input('pincode');
+         $arr_all['state']      =      $request->input('state');
+         $arr_all['country']    =      $request->input('country');
+         $arr_all['lat']        =      $request->input('lat');
+         $arr_all['lng']        =      $request->input('lng');
 
-         //business times
-          $mon_in                          =  $request->input('mon_in');  
-          $mon_out                         =  $request->input('mon_out');
-          $tue_in                          =  $request->input('tue_in');
-          $tue_out                         =  $request->input('tue_out');
-          $wed_in                          =  $request->input('wed_in');
-          $wed_out                         =  $request->input('wed_out');
-          $thus_in                         =  $request->input('thus_in');
-          $thus_out                        =  $request->input('thus_out');
-          $fri_in                          =  $request->input('fri_in');
-          $fri_out                         =  $request->input('fri_out');
-          $sat_in                          =  $request->input('sat_in');
-          $sat_out                         =  $request->input('sat_out');
-          $is_sunday                       =  $request->input('is_sunday');
-
-          if($is_sunday=='1')
-          { 
-              $sun_open   = $request->input('sun_in');
-              $sun_close   = $request->input('sun_out');
-
-          } 
-
-          $company_info                     =  $request->input('company_info');
-          $establish_year                   =  $request->input('establish_year');
-          $keywords                         =  $request->input('keywords');
+          $arr_all['company_info']                     =  $request->input('company_info');
+          $arr_all['establish_year']                   =  $request->input('establish_year');
+          $arr_all['keywords']                         =  $request->input('keywords');
 
           //Contact input array
           $contact_person_name  =       $request->input('contact_person_name');
           $mobile_number        =       $request->input('mobile_number');
-          $email_id             =       $request->input('email_id');
+          
+         //business times
+          $arr_time=array();
+          $arr_time['mon_open']                          =  $request->input('mon_in');  
+          $arr_time['mon_close']                         =  $request->input('mon_out');
+          $arr_time['tue_open']                          =  $request->input('tue_in');
+          $arr_time['tue_close']                         =  $request->input('tue_out');
+          $arr_time['wed_open ']                         =  $request->input('wed_in');
+          $arr_time['wed_close']                         =  $request->input('wed_out');
+          $arr_time['thus_open']                         =  $request->input('thus_in');
+          $arr_time['thus_close']                        =  $request->input('thus_out');
+          $arr_time['fri_open']                          =  $request->input('fri_in');
+          $arr_time['fri_close']                         =  $request->input('fri_out');
+          $arr_time['sat_open']                          =  $request->input('sat_in');
+          $arr_time['sat_close']                         =  $request->input('sat_out');
+          $is_sunday                           =  $request->input('is_sunday');
 
+          if($is_sunday=='1')
+          { 
+              $arr_time['sun_open']    = $request->input('sun_in');
+              $arr_time['sun_close']   = $request->input('sun_out');
 
-      
+          } 
+            
         if($request->hasFile('main_image'))
         {
-          $fileName                    = $request->input'main_image');
+          $fileName                    = $request->input('main_image');
           $fileExtension               = strtolower($request->file('main_image')->getClientOriginalExtension());
-          if(in_array($fileExtension,['png','jpg','jpeg'))
+          if(in_array($fileExtension,['png','jpg','jpeg']))
           {
                 $filename              =sha1(uniqid().$fileName.uniqid()).'.'.$fileExtension;
                 $request->file('main_image')->move($this->business_base_img_path,$filename);
@@ -173,17 +175,20 @@ class BusinessController extends Controller
           else
           {
               $json['status']                = "ERROR";
-              $json['message']               = 'Information not available.';
+              $json['message']               = 'Invali Image Format .';
           }
 
           $file_url              = $fileName;
-          $main_image              = $filename;
+          $arr_data['main_image'] = $filename;
         }
         else
         {
             $json['status']                = "ERROR";
-            $json['message']               = 'Information not available.';
+            $json['message']               = 'Please Select Image.';
         }
+        dd($request->all());
+        $insert_data = BusinessListingModel::create($arr_data);
+        $business_id = $insert_data->id;
           
     }
 }
