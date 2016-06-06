@@ -121,8 +121,17 @@ class BusinessController extends Controller
                  }
 
          }
-      }
-        dd($arr_data);
+      $json['data']    = $arr_data;
+      $json['status']  = 'SUCCESS';
+      $json['message'] = 'Business List !';
+    }
+    else
+    {
+      $json['status']  = 'ERROR';
+      $json['message'] = 'No Business Record Found!';
+    }
+        return response()->json($json);
+        
        
         
       
