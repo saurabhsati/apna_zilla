@@ -42,13 +42,13 @@ class VenderController extends Controller
            {
 	           	foreach ($user_info as $key => $value) 
 	            {
-	            	 $arr_data[$key]['first_name']           =$value['first_name'];
-	            	 $arr_data[$key]['profile_pic']           = url('/uploads/users/profile_pic').'/'.$value['profile_pic'];
-	            	 $arr_data[$key]['public_id']           = $value['public_id'];
-	            	 $arr_data[$key]['mobile_no']           = $value['mobile_no'];
-	            	 $arr_data[$key]['created_at']           = date('Y-m-d',strtotime($value['created_at']));
-	            	 $arr_data[$key]['is_active']           = $value['is_active'];
-	            	 $arr_data[$key]['id']           = $value['id'];
+	            	 $arr_data[$key]['first_name']  = $value['first_name'];
+	            	 $arr_data[$key]['profile_pic'] = url('/uploads/users/profile_pic').'/'.$value['profile_pic'];
+	            	 $arr_data[$key]['public_id']   = $value['public_id'];
+	            	 $arr_data[$key]['mobile_no']   = $value['mobile_no'];
+	            	 $arr_data[$key]['created_at']  = date('Y-m-d',strtotime($value['created_at']));
+	            	 $arr_data[$key]['is_active']   = $value['is_active'];
+	            	 $arr_data[$key]['id']          = $value['id'];
 	            }
 	        }
             $json['data'] 	 = $arr_data;

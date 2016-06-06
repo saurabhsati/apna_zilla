@@ -13,7 +13,7 @@
 
        {!!Meta::generate() !!}
 
-      <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+      <link rel="icon" href="{{ url('/') }}/assets/front/images/favicon.ico" type="image/x-icon" />
       <!-- Bootstrap Core CSS -->
       <link href="{{ url('/') }}/assets/front/css/bootstrap.css" rel="stylesheet" type="text/css" />
       <!-- main CSS -->

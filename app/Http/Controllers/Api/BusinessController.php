@@ -41,6 +41,8 @@ class BusinessController extends Controller
        $this->business_public_img_path = url('/')."/uploads/business/main_image/";
        $this->business_base_img_path   = base_path()."/public/uploads/business/main_image";
 
+        $this->BusinessImageUploadModel=new BusinessImageUploadModel();
+
        $this->business_public_upload_img_path = url('/')."/uploads/business/business_upload_image/";
        $this->business_base_upload_img_path = base_path()."/public/uploads/business/business_upload_image/";
        $this->objpublic = new GeneratePublicId();
@@ -61,49 +63,67 @@ class BusinessController extends Controller
         {
             $arr_sub_category = $obj_sub_category->toArray();
         }
-        $obj_business_listing = BusinessListingModel::orderBy('id','DESC')->where('sales_user_public_id',$sales_user_public_id)
-        																  ->with(['category'=>function ($query) 
-        																  		  { 
-        																  		  //$query->select('id','business_id');
-        																  		  },
-        																  		  'user_details',
-        																  		  'reviews',
-        																  		  'membership_plan_details'])->get();
+        $obj_business_listing = BusinessListingModel::/*select(['id','busiess_ref_public_id','business_name','main_image','created_at','is_active'])->*/orderBy('id','DESC')->where('sales_user_public_id',$sales_user_public_id)
+        																  ->with(['category','user_details','reviews','membership_plan_details'])->get();
         																  	      
         																  	      //->get(['id','busiess_ref_public_id','business_name','main_image']);
    	    if($obj_business_listing)
    	    {
    	    	$business_listing=$obj_business_listing->toArray();
    	    }
+        //dd($business_listing);
+        $arr_data=[];
+        if(isset($business_listing) && sizeof($business_listing)>0)
+        {
+     	     foreach ($business_listing as $key => $business)
+        	 {
 
-   	    
+                 $arr_data[$key]['busiess_ref_public_id'] = $business['busiess_ref_public_id'];
+                 $arr_data[$key]['main_image']            = url('/uploads/business/main_image').'/'.$business['main_image'];
+                 $arr_data[$key]['business_name']         = $business['business_name'];
+                 $arr_data[$key]['created_at']            = date('Y-m-d',strtotime($business['created_at']));
+                 $arr_data[$key]['is_active']             = $business['is_active'];
+                 $arr_data[$key]['id']                    = $business['id'];
 
- 	     foreach ($business_listing as $key => $business)
-    	 {
-    	 	foreach ($business['category'] as $key => $selected_category) 
-    	 	{
-    	 		foreach ($arr_sub_category as $key => $sub_category)
-    	 		{
-	    	 		   if ($sub_category['cat_id']==$selected_category['category_id'])
-	    	 		   {
-	    	 		 		$sub_category_title[]	=	$sub_category['title'];
-	    	 		 		foreach ($arr_main_category as $key => $main_category)
-		    	 		    {
-		    	 		   		if($main_category['cat_id']==$sub_category['parent'])
-		    	 		   		{
-		    	 		   			$main_cat_title[]=$main_category['title'];
-		    	 		   		}
+                 if(isset($business['user_details']) && sizeof($business['user_details'])>0)
+                 {
+                      $arr_data[$key]['vender_first_name']         = $business['user_details']['first_name'];
+                      $arr_data[$key]['vender_public_id']         = $business['user_details']['public_id'];
+                 }
 
-		    	 		    }
-	    	 		   }
-	    	 		  
-    	 		}
 
-    	 	}
-    	 	$business_listing[$key]['main_category_title']=$main_cat_title[0];
-    	 	$business_listing[$key]['sub_category_title']=implode(',',$sub_category_title);
-    	 }
 
+
+                 $sub_category_title=$main_cat_title='';
+                 if(isset($business['category']) && sizeof($business['category'])>0)
+                 {
+              	  	foreach ($business['category'] as $key2 => $selected_category) 
+              	  	{
+              	  		foreach ($arr_sub_category as $key3 => $sub_category)
+              	 	  	{
+          	    	 		   if ($sub_category['cat_id']==$selected_category['category_id'])
+          	    	 		   {
+          	    	 		 		$sub_category_title[]	=	$sub_category['title'];
+          	    	 		 		foreach ($arr_main_category as $key4 => $main_category)
+          		    	 		    {
+          		    	 		   		if($main_category['cat_id']==$sub_category['parent'])
+          		    	 		   		{
+          		    	 		   			$main_cat_title[]=$main_category['title'];
+                                $arr_data[$key]['main_category_title']   = $main_cat_title[0];
+          		    	 		   		}
+
+          		    	 		    }
+          	    	 		   }
+          	    	    }
+                       $arr_data[$key]['sub_category_title']    = implode(',',$sub_category_title);
+
+              	   	}
+                 }
+
+         }
+      }
+        dd($arr_data);
+       
         
       
 
@@ -111,7 +131,7 @@ class BusinessController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
+
          $arr_data=array();
          $arr_data['user_id']              = $request->input('user_id');
          $arr_data['sales_user_public_id'] = $request->input('sales_user_public_id');
@@ -208,7 +228,7 @@ class BusinessController extends Controller
           $files = $request->file('business_image');
           $file_count = count($files);
           $uploadcount = 0;
-          if(isset($files) && sizeof($files))
+          if(isset($files) && sizeof($files)>0)
           {
                foreach($files as $file) 
                {
