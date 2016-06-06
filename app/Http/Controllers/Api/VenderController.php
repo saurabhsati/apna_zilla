@@ -33,7 +33,25 @@ class VenderController extends Controller
         $obj_user = Sentinel::createModel()->orderBy('created_at','DESC')->where('sales_user_public_id','=',$sales_user_public_id)->get();
         if($obj_user)
 		{
-			$json['data'] 	 = $obj_user;
+			$obj_user_info = UserModel::get();
+            if($obj_user)
+            {
+                $user_info = $obj_user->toArray();
+            }
+            if(isset($user_info) && sizeof($user_info)>0)
+           {
+	           	foreach ($user_info as $key => $value) 
+	            {
+	            	 $arr_data[$key]['first_name']           =$value['first_name'];
+	            	 $arr_data[$key]['profile_pic']           = url('/uploads/users/profile_pic').'/'.$value['profile_pic'];
+	            	 $arr_data[$key]['public_id']           = $value['public_id'];
+	            	 $arr_data[$key]['mobile_no']           = $value['mobile_no'];
+	            	 $arr_data[$key]['created_at']           = date('Y-m-d',strtotime($value['created_at']));
+	            	 $arr_data[$key]['is_active']           = $value['is_active'];
+	            	 $arr_data[$key]['id']           = $value['id'];
+	            }
+	        }
+            $json['data'] 	 = $arr_data;
 			$json['status']  = 'SUCCESS';
 			$json['message'] = 'Vender List !';
 		}

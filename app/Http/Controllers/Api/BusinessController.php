@@ -120,10 +120,9 @@ class BusinessController extends Controller
          $arr_data['business_added_by']     = ucfirst($request->input('business_added_by'));
          $arr_data['business_name']         =  $request->input('business_name');
 
-         $business_cat_arr                =   explode(",",$request->input('business_cat'));
+         $business_cat                    =   explode(",",$request->input('business_cat'));
          $payment_mode                    =   explode(",",$request->input('payment_mode'));
          $business_service                =   explode(",",$request->input('business_service'));
-
          $main_image                      =  $request->input('main_image'); 
 
          //location  fields
@@ -175,7 +174,7 @@ class BusinessController extends Controller
            $business_main_cat_slug=$request->input('business_main_cat_slug');
           $public_id = $this->objpublic->generate_business_public_by_category($business_main_cat_slug,$business_id);
           BusinessListingModel::where('id', '=', $business_id)->update(array('busiess_ref_public_id' => $public_id));
-          if(isset($business_cat) && sizeof($business_cat))
+          if(isset($business_cat) && sizeof($business_cat)>0)
           {
             foreach ($business_cat as $key => $value)
             {
@@ -184,7 +183,7 @@ class BusinessController extends Controller
                 $insert_data = BusinessCategoryModel::create($arr_cat_data);
             }
           }
-          if(isset($payment_mode) && sizeof($payment_mode))
+          if(isset($payment_mode) && sizeof($payment_mode)>0)
           {
             foreach ($payment_mode as $key => $value)
             {
@@ -193,7 +192,7 @@ class BusinessController extends Controller
                 $insert_data = BusinessPaymentModeModel::create($arr_paymentmode_data);
             }
           }
-          if(isset($business_service) && sizeof($business_service))
+          if(isset($business_service) && sizeof($business_service)>0)
           {
               foreach ($business_service as $key => $value)
               {
