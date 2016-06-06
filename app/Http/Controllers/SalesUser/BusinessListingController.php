@@ -257,8 +257,8 @@ class BusinessListingController extends Controller
         $insert_data = BusinessListingModel::create($arr_data);
         $business_id = $insert_data->id;
 
-         $business_cat_slug=$form_data['business_public_id'];
-        $public_id = $this->objpublic->generate_business_public_by_category($business_cat_slug,$business_id);
+         $business_main_cat_slug=$form_data['business_main_cat_slug'];
+        $public_id = $this->objpublic->generate_business_public_by_category($business_main_cat_slug,$business_id);
         BusinessListingModel::where('id', '=', $business_id)->update(array('busiess_ref_public_id' => $public_id));
         foreach ($business_cat as $key => $value)
         {
