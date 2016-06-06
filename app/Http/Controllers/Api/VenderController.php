@@ -25,7 +25,7 @@ class VenderController extends Controller
         $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');
         $this->objpublic = new GeneratePublicId();
     }
-    /* List the venders by sales_executive public id */
+    /* List the venders by sales_executive public id RNT-NPNL5 */
     public function index(Request $request)
  	{
  		$sales_user_public_id=$request->input('public_id');

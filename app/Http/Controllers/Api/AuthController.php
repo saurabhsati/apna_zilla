@@ -367,8 +367,11 @@ class AuthController extends Controller
 		  	$result_update = $obj_user::where('id',$id)->update($arr_data);
 		  	if($result_update)
 		  	{
-                $user_info               = $result->toArray();
-            
+                 $obj_user_info = UserModel::where('id',$id)->first();
+                if($obj_user_info)
+                {
+                    $user_info = $obj_user_info->toArray();
+                }
                 $profile_image           = url('/uploads/users/profile_pic').'/'.$user_info['profile_pic'];
                 $arr_data                = $user_info;
                 $arr_data['profile_pic'] = $profile_image;
