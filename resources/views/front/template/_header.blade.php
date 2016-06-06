@@ -101,7 +101,7 @@ $(document).ready(function(){
   });
 
      $(".spe_mobile3").click(function(){
-    $(".spe_submobile3").slideToggle("slow");
+      $(".spe_submobile3").slideToggle("slow");
       if($(this).find('a').hasClass('act'))
       {
            $(this).find('a').removeClass('act');

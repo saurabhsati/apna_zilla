@@ -162,8 +162,8 @@ class HomeController extends Controller
          Session::put('share_lat',$lat);
          Session::put('share_lng',$lng);
 
-    	 $url = sprintf("https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s", $lat, $lng);
-
+    	 //$url = sprintf("https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s", $lat, $lng);
+             $url = sprintf("https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lng."&key=AIzaSyAiweelKCt0VFBBnvXr8kKmFAQqg3Rx7Fw");
 		    // $content = file_get_contents($url); // get json content
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
@@ -419,7 +419,7 @@ class HomeController extends Controller
             {
                 $current_city='Delhi';
             }
-            $arr_city=[];
+             $arr_city=[];
              $obj_city_arr=CityModel::where('city_title',$current_city)->first();
              if($obj_city_arr)
              {
