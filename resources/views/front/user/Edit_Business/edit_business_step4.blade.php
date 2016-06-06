@@ -113,6 +113,7 @@
                           <div class="col-lg-2 label-text">Modes Of Payment <span>:</span></div>
                             <div class="col-sm-12 col-md-12 col-lg-10 m_l">
                                <div class="fileupload fileupload-new business_upload_image_" data-provides="fileupload">
+                               @if(isset($business['payment_mode']) && sizeof($business['payment_mode'])>0)
                                  @foreach($business['payment_mode'] as $payment_mode)
 
                                   <div class="fileupload-new img-thumbnail main" style="width: 300px; height: 62px;" data-payment-mode="{{ $payment_mode['title'] }}">
@@ -125,6 +126,10 @@
                                     </div>
                                   </div>
                                   @endforeach
+
+                                  @else
+                                  <span class="col-lg-8 label-text">No Business Payment Mode Availbale</span>
+                                  @endif
                                  <div class="error" id="err_delete_payment_mode"></div>
                                </div>
                                 <span class='help-block'>{{ $errors->first('main_image') }}</span>
@@ -134,7 +139,7 @@
 
                          <div class="user_box_sub">
                          <div class="row">
-                          <div class="col-lg-2 label-text"><a href="#" class="add_payment_mode">Add More Payment Mode</a> <span>:</span></div>
+                          <div class="col-lg-2 label-text"><a href="javascript:void(0)" class="add_payment_mode">Add More Payment Mode</a> <span>:</span></div>
                          </div></div>
 
                         <div class="user_box_sub add_more_payment_mode" style="display: none;">

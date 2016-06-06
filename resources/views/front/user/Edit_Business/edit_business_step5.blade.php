@@ -85,6 +85,7 @@
                             <div class="col-lg-2 label-text">Uploaded Business Gallery Images<span>:</span></div>
                             <div class="col-sm-12 col-md-12 col-lg-10 m_l">
                                <div class="fileupload fileupload-new business_upload_image_" data-provides="fileupload">
+                               @if(isset($business['image_upload_details']) && sizeof($business['image_upload_details'])>0)
                                  @foreach($business['image_upload_details'] as $image)
 
                                   <div class="fileupload-new img-thumbnail main" style="width: 202px; height: 160px;" data-image="{{ $image['image_name'] }}">
@@ -98,6 +99,9 @@
                                     </div>
                                   </div>
                                @endforeach
+                                @else
+                                  <span class="col-lg-8 label-text">No Business Gallery Images Availbale</span>
+                                  @endif
                                <div class="error" id="err_delete_image"></div>
                                </div>
                                 <span class='help-block'>{{ $errors->first('main_image') }}</span>
@@ -144,6 +148,8 @@
                             <div class="col-lg-2 label-text">Business Services<span>:</span></div>
                             <div class="col-sm-12 col-md-12 col-lg-10 m_l">
                                <div class="fileupload fileupload-new business_upload_image_" data-provides="fileupload">
+                               @if(isset($business['service']) && sizeof($business['service'])>0)
+                                 
                                  @foreach($business['service'] as $service)
 
                                   <div class="fileupload-new img-thumbnail main" style="width: 300px; height: 62px;" data-service="{{ $service['name'] }}">
@@ -157,6 +163,9 @@
                                   </div>
 
                                   @endforeach
+                                  @else
+                                  <span class="col-lg-8 label-text">No Business Services Availbale</span>
+                                  @endif
                                   <div class="error" id="err_delete_service"></div>
 
                                </div>
