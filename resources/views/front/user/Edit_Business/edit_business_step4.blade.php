@@ -189,6 +189,8 @@
                             
                           <div class="title_acc">Opening Hours</div>
                             <div class="row" style="margin-bottom: 15px;">
+                          @if(isset($business['business_times']) && sizeof($business['business_times'])>0)
+
                           @foreach($business['business_times'] as $time)   
                            <div class="user_box_sub">
                             <div class="row" style=" margin-left: 10px;">
@@ -398,9 +400,219 @@
 
                         </div>
                            @endforeach
+                           @else
+                            <div class="user_box_sub">
+                            <div class="row" style=" margin-left: 10px;">
+                            <div class="col-lg-2 label-text">Monday<span>:</span></div>
+                             <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                                  <div class="input-group">
+                                      <a class="input-group-addon" href="javascript:void(0);">
+                                          <i class="fa fa-clock-o"></i>
+                                      </a>
+                                      <input class="form-control timepicker-default" name="mon_in" id="mon_in"  
+                                      value="" 
+                                      type="text" data-rule-required="true">
+                                  </div>
+                              </div>
+
+                              <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                                  <div class="input-group">
+                                      <a class="input-group-addon" href="javascript:void(0);">
+                                          <i class="fa fa-clock-o"></i>
+                                      </a>
+                                      <input class="form-control timepicker-default" name="mon_out" id="mon_out"
+                                      value=""
+                                       type="text" data-rule-required="true">
+                                  </div>
+                              </div>
+                              </div>
+                          </div>
+
+                          <div class="user_box_sub">
+                            <div class="row" style=" margin-left: 10px;">
+                            <div class="col-lg-2 label-text">Tuesday<span>:</span></div>
+                             <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                                  <div class="input-group">
+                                      <a class="input-group-addon" href="javascript:void(0);">
+                                          <i class="fa fa-clock-o"></i>
+                                      </a>
+                                      <input class="form-control timepicker-default" name="tue_in" id="tue_in" type="text" 
+                                      value=""
+                                      data-rule-required="true">
+                                  </div>
+                              </div>
+
+                              <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                                  <div class="input-group">
+                                      <a class="input-group-addon" href="javascript:void(0);">
+                                          <i class="fa fa-clock-o"></i>
+                                      </a>
+                                      <input class="form-control timepicker-default" name="tue_out" id="tue_out" type="text" 
+                                      value=""
+                                      data-rule-required="true">
+                                  </div>
+                              </div>
+                              </div>
+                          </div>
+
+                          <div class="user_box_sub">
+                            <div class="row" style=" margin-left: 10px;">
+                            <div class="col-lg-2 label-text">Wednesday<span>:</span></div>
+                             <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                                  <div class="input-group">
+                                      <a class="input-group-addon" href="javascript:void(0);">
+                                          <i class="fa fa-clock-o"></i>
+                                      </a>
+                                      <input class="form-control timepicker-default" name="wed_in" id="wed_in" type="text" 
+                                      value=""
+                                      data-rule-required="true">
+                                  </div>
+                              </div>
+
+                              <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                                  <div class="input-group">
+                                      <a class="input-group-addon" href="javascript:void(0);">
+                                          <i class="fa fa-clock-o"></i>
+                                      </a>
+                                      <input class="form-control timepicker-default" name="wed_out" id="wed_out" type="text" 
+                                      value=""
+                                      data-rule-required="true">
+                                  </div>
+                              </div>
+                              </div>
+                          </div>
+
+                         <div class="user_box_sub">
+                            <div class="row" style=" margin-left: 10px;">
+                            <div class="col-lg-2 label-text">Thursday<span>:</span></div>
+                             <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                                  <div class="input-group">
+                                      <a class="input-group-addon" href="javascript:void(0);">
+                                          <i class="fa fa-clock-o"></i>
+                                      </a>
+                                      <input class="form-control timepicker-default" name="thu_in" id="thu_in" type="text" 
+                                      value=""
+                                      data-rule-required="true">
+                                  </div>
+                              </div>
+
+                              <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                                  <div class="input-group">
+                                      <a class="input-group-addon" href="javascript:void(0);">
+                                          <i class="fa fa-clock-o"></i>
+                                      </a>
+                                      <input class="form-control timepicker-default" name="thu_out" id="thu_out" type="text" 
+                                      value=""
+                                      data-rule-required="true">
+                                  </div>
+                              </div>
+                              </div>
+                          </div>
+
+                          <div class="user_box_sub">
+                            <div class="row" style=" margin-left: 10px;">
+                            <div class="col-lg-2 label-text">Friday<span>:</span></div>
+                             <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                                  <div class="input-group">
+                                      <a class="input-group-addon" href="javascript:void(0);">
+                                          <i class="fa fa-clock-o"></i>
+                                      </a>
+                                      <input class="form-control timepicker-default" name="fri_in" id="fri_in" type="text" 
+                                      value=""
+                                      data-rule-required="true">
+                                  </div>
+                              </div>
+
+                              <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                                  <div class="input-group">
+                                      <a class="input-group-addon" href="javascript:void(0);">
+                                          <i class="fa fa-clock-o"></i>
+                                      </a>
+                                      <input class="form-control timepicker-default" name="fri_out" id="fri_out" type="text"
+                                      value=""
+                                       data-rule-required="true">
+                                  </div>
+                              </div>
+                              </div>
+                          </div>
+
+                          <div class="user_box_sub">
+                            <div class="row" style=" margin-left: 10px;">
+                            <div class="col-lg-2 label-text">Saturday<span>:</span></div>
+                             <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                                  <div class="input-group">
+                                      <a class="input-group-addon" href="javascript:void(0);">
+                                          <i class="fa fa-clock-o"></i>
+                                      </a>
+                                      <input class="form-control timepicker-default" name="sat_in" id="sat_in" type="text" 
+                                        value=""
+                                      data-rule-required="true">
+                                  </div>
+                              </div>
+
+                              <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                                  <div class="input-group">
+                                      <a class="input-group-addon" href="javascript:void(0);">
+                                          <i class="fa fa-clock-o"></i>
+                                      </a>
+                                      <input class="form-control timepicker-default" name="sat_out" id="sat_out" type="text" 
+                                      value=""
+                                      data-rule-required="true">
+                                  </div>
+                              </div>
+                              </div>
+                          </div>
+
+                          <div class="user_box_sub">
+                            <div class="row" style=" margin-left: 10px;">
+                            <div class="col-lg-2 label-text ">Sunday<span>:</span></div>
+
+                             <div class="col-sm-3 col-md-3 col-lg-3 m_l controls">
+                                    &nbsp &nbsp &nbsp &nbsp &nbsp
+                                    <input type="radio"  name="is_sunday" value="1" onclick="sunday_status('on');" checked="true"  />
+                                    <label >On </label>
+                                     &nbsp &nbsp &nbsp &nbsp &nbsp
+                                       <input type="radio"  name="is_sunday" value="0"  onclick="sunday_status('off');"/>
+                                    <label  for="is_sunday">Off </label>
+                              </div>
+                              </div>
+                              </div>
+                            
+
+
+                              <div class="user_box_sub" id="sunday_section"  >
+                            <div class="row" style=" margin-left: 10px;">
+                            <div class="col-lg-2 label-text "><span></span></div>
+                             <div class="col-sm-3 col-md-3 col-lg-3 m_l controls">
+                                  <div class="input-group">
+                                      <a class="input-group-addon" href="javascript:void(0);">
+                                          <i class="fa fa-clock-o"></i>
+                                      </a>
+                                      <input class="form-control timepicker-default" name="sun_in" id="sun_in" type="text" 
+                                      value="{{ isset($time['sun_open'])?$time['sun_open']:'' }}"
+                                      data-rule-required="true">
+                                  </div>
+                              </div>
+
+                              <div class="col-sm-3 col-md-3 col-lg-3 m_l">
+                                  <div class="input-group">
+                                      <a class="input-group-addon" href="javascript:void(0);">
+                                          <i class="fa fa-clock-o"></i>
+                                      </a>
+                                      <input class="form-control timepicker-default" name="sun_out" id="sun_out" type="text" 
+                                        value="{{ isset($time['sun_close'])?$time['sun_close']:'' }}"
+                                      data-rule-required="true">
+                                  </div>
+                              </div>
+                              </div>
+                          </div>
+
+                        </div>
+                           @endif
                           <hr/>
 
                                 <div class="button_save1">
+                                <a class="btn btn-post" href="{{ url('/front_users/edit_business_step3/'.Request::segment(3))}}" style="float: left; margin-right:194px; "> Back</a>
                                   <button type="submit" class="btn btn-post" name="add_contacts" style="float: left; margin-left:125px; ">Save &amp; continue</button>
                                   <!-- <a class="btn btn-post pull-left" href="#">previous</a>
                                   <a class="btn btn-post" href="#">Save &amp; exit</a>

@@ -178,6 +178,7 @@
 
 
                   <div class="button_save1">
+                   <a class="btn btn-post" href="{{ url('/front_users/edit_business_step2/'.Request::segment(3))}}" style="float: left; margin-right:194px; "> Back</a>
                     <button type="submit" class="btn btn-post" name="add_contacts" style="float: left; margin-left:125px; ">Save &amp; continue</button>
                    
                  </div>

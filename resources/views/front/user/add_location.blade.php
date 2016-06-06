@@ -230,7 +230,8 @@
                   </div>
                </div>
              <div class="button_save1">
-                    <button type="submit" class="btn btn-post" name="add_business" style="float: left; margin-left:194px; ">Save &amp; continue</button>
+             <a class="btn btn-post" href="{{ url('/front_users/edit_business_step1/'.Request::segment(3))}}" style="float: left; margin-right:194px; "> Back</a>
+             <button type="submit" class="btn btn-post" name="add_business" style="float: left; margin-right:194px; ">Save &amp; continue</button>
                     <!-- <a href="#" class="btn btn-post pull-left">previous</a>
                     <a href="#" class="btn btn-post">Save &amp; exit</a>
                     <a href="#" class="btn btn-post pull-right">Next</a> -->

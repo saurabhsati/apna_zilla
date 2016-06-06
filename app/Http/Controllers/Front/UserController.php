@@ -226,27 +226,19 @@ class UserController extends Controller
 
     public function profile()
     {
-        
-        if(!(Session::has('user_id')))
-        {
-           return redirect('/');
-        }
-        if((Session::has('previous_url')))
-        {
-          
-            
-             if(Session::get('previous_url') !==url('/').'/' )
+            if(!(Session::has('user_id')))
             {
-               /* if(URL::current() == url('/').'/front_users/profile')
-                {
-
-                }*/
-              $redirect_url= Session::get('previous_url');
-              Session::forget('previous_url');
-              return redirect($redirect_url);
-            
+               return redirect('/');
             }
-        }
+            if(Session::get('previous_url') !==url('/').'/' && Session::get('previous_url')!=null)
+            {
+              
+              $redirect_url= Session::get('previous_url');
+             
+                 Session::forget('previous_url');
+                 return redirect($redirect_url);
+             }
+        
             else
             {
         
@@ -1098,12 +1090,14 @@ class UserController extends Controller
             $id = base64_decode($enc_id);
             $arr_rules = array();
             $arr_rules['business_name'] = "required";
-            $arr_rules['business_cat']      = "required";
+            //$arr_rules['business_cat']      = "required";
 
             $validator = Validator::make($request->all(),$arr_rules);
 
             if($validator->fails())
             {
+                print_r($validator->errors()->all());exit;
+                
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
@@ -1319,7 +1313,7 @@ class UserController extends Controller
          $arr_rules['establish_year']='required';
          $arr_rules['keywords']='required';
          $arr_all=$request->all();
-
+        // dd( $arr_all);
         //business times
         $arr_rules['mon_in']='required';
         $arr_rules['mon_out']='required';
@@ -1333,6 +1327,7 @@ class UserController extends Controller
         $arr_rules['fri_out']='required';
         $arr_rules['sat_in']='required';
         $arr_rules['sat_out']='required';
+
         if($arr_all['is_sunday']=='1')
         { 
             $arr_rules['sun_in']='required';
@@ -1344,7 +1339,7 @@ class UserController extends Controller
 
          if($validator->fails())
          {
-             //print_r( $validator->errors()->all());exit;
+             print_r( $validator->errors()->all());exit;
             return redirect()->back()->withErrors($validator)->withInput();
          }
 
