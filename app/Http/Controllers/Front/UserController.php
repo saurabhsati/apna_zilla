@@ -1341,18 +1341,26 @@ class UserController extends Controller
 
          if($validator->fails())
          {
-             print_r( $validator->errors()->all());exit;
+            // print_r( $validator->errors()->all());exit;
             return redirect()->back()->withErrors($validator)->withInput();
          }
 
         
-         $payment_mode=$arr_all['payment_mode'];
-         $payment_count = count($payment_mode);
-         //exit;
+         $payment_mode=$request->input('payment_mode');
+          $payment_count = count($payment_mode);
+          $business_payment_mode = BusinessPaymentModeModel::where('business_id',$id);
+          if($business_payment_mode)
+          {
+             $res= $business_payment_mode->delete();
+          }
+          $business_payment_mode = BusinessPaymentModeModel::where('business_id',$id);
+          if($business_payment_mode)
+          {
+             $res= $business_payment_mode->delete();
+          }
         if($payment_count>0)
         {
-             $business_payment_mode = BusinessPaymentModeModel::where('business_id',$id);
-            $res= $business_payment_mode->delete();
+            
             
             foreach($payment_mode as $key =>$value) {
              if($value!=null)
@@ -1366,6 +1374,7 @@ class UserController extends Controller
             }
 
         }
+
         $business_data['company_info']=$request->input('company_info');
         $business_data['establish_year']=$request->input('establish_year');
         $business_data['keywords']=$request->input('keywords');
