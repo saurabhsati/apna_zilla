@@ -265,7 +265,8 @@ class BusinessListingController extends Controller
             $arr_paymentmode_data['title']=$value;
             $insert_data = BusinessPaymentModeModel::create($arr_paymentmode_data);
         }
-         $ser_count = count($business_service);
+        
+        $ser_count = count($business_service);
          //exit;
         if($ser_count>0)
         {

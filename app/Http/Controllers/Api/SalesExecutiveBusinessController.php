@@ -138,6 +138,192 @@ class SalesExecutiveBusinessController extends Controller
 
       }
 
+      /*Add business basic information step 1 */
+      public function store_business_step1(Request $request)
+      {
+        $arr_data                         = array();
+        $form_data                        = $request->all();
+        $arr_data['user_id']              = $request->input('user_id');
+        $arr_data['sales_user_public_id'] = $request->input('sales_user_public_id');
+        $arr_data['business_added_by']    = ucfirst($request->input('business_added_by'));
+        $arr_data['business_name']        = $request->input('business_name');
+        $business_cat                     = explode(",",$request->input('business_cat'));
+        $main_image                       = $request->input('main_image');
+
+       
+        //Upload Image 
+        if($request->hasFile('main_image'))
+            {
+                $fileName                    = $request->input('main_image');
+                $fileExtension               = strtolower($request->file('main_image')->getClientOriginalExtension());
+                if(in_array($fileExtension,['png','jpg','jpeg']))
+                {
+                      $filename = sha1(uniqid().$fileName.uniqid()).'.'.$fileExtension;
+                      $request->file('main_image')->move($this->business_base_img_path,$filename);
+                }
+                else
+                {
+                    $json['status']     = "ERROR";
+                    $json['message']    = 'Invalid Image Format .';
+                }
+
+                $file_url               = $fileName;
+                $arr_data['main_image'] = $filename;
+            }
+
+            else
+            {
+                $json['status']                = "ERROR";
+                $json['message']               = 'Please Select Image.';
+            }
+        
+        //End Upload Image
+        
+
+        $insert_data                        = BusinessListingModel::create($arr_data);
+        
+        //create business public id 
+        $business_id                        = $insert_data->id;
+        $business_cat_slug                  = $form_data['business_public_id'];
+        $public_id                          = $this->objpublic->generate_business_public_by_category($business_cat_slug,$business_id); 
+        $business = BusinessListingModel::find($business_id);
+        $business->busiess_ref_public_id = $public_id;
+        $business->save();
+
+        
+        //Add business category
+        if(sizeof($business_cat)>0)
+        {
+           foreach ($business_cat as $key => $value)
+            {
+                $arr_cat_data['business_id'] = $business_id;
+                $arr_cat_data['category_id'] = $value;
+                $insert_data                 = BusinessCategoryModel::create($arr_cat_data);
+            }
+        }
+
+        if($business_id > 0)
+        {
+          $json['status']      = 'SUCCESS';
+          $json['message']     = 'Business Created Successfully.';
+          $json['business_id'] = $business_id;
+        }
+        else
+        {
+           $json['status'] = 'ERROR';
+           $json['message']  = 'Error Occure while Creating Business.';
+
+        }
+        
+
+        return response()->json($json);
+
+      }
+
+      /* Add business Store Location  step2*/
+      public function store_business_step2(Request $request)
+      {
+        $arr_data            = array();
+       
+        $business_id         = $request->input('business_id');
+
+        $arr_data['area']    = $request->input('area');
+        $arr_data['city']    = $request->input('city');
+        $arr_data['pincode'] = $request->input('pincode');
+        $arr_data['state']   = $request->input('state');
+        $arr_data['country'] = $request->input('country');
+        $arr_data['lat']     = $request->input('lat');
+        $arr_data['lng']     = $request->input('lng');
+
+        $locationUpadte = BusinessListingModel::where('id', '=', $business_id)->update($arr_data);
+
+        if($locationUpadte)
+        {
+          $json['status']      = 'SUCCESS';
+          $json['message']     = 'Business Location Successfully Updated.';
+
+        }
+        else
+        {
+          $json['status']  = 'ERROR';
+          $json['message'] = 'Error Occure while Creating Business.';
+
+        }
+
+        return response()->json($json);
+
+      }
+      public function store_business_step3(Request $request)
+      {
+        $arr_data            = array();
+       
+        $business_id                = $request->input('business_id');
+        $arr_data['company_info']   = $request->input('company_info');
+        $arr_data['establish_year'] = $request->input('establish_year');
+        $arr_data['keywords']       = $request->input('keywords');
+
+
+
+        $contactInfoUpadte = BusinessListingModel::where('id', '=', $business_id)->update($arr_data);
+
+        if($contactInfoUpadte)
+        {
+          $json['status']      = 'SUCCESS';
+          $json['message']     = 'Business Contact info Successfully Updated.';
+
+        }
+        else
+        {
+          $json['status']  = 'ERROR';
+          $json['message'] = 'Error Occure while Creating Business.';
+
+        }
+
+        return response()->json($json);
+
+
+      }
+
+      public function store_business_step4(Request $request)
+      {
+        $arr_data            = array();
+       
+        $business_id         = $request->input('business_id');
+
+        $arr_data['prefix_name']         = $request->input('prefix_name');
+        $arr_data['contact_person_name'] = $request->input('contact_person_name');
+        $arr_data['mobile_number']       = $request->input('mobile_number');
+        $payment_mode                    = explode(",",$request->input('payment_mode'));
+        $contactInfoUpadte               = BusinessListingModel::where('id', '=', $business_id)->update($arr_data);
+
+        if(sizeof($payment_mode)>0)
+        {
+          foreach ($payment_mode as $key => $value)
+                {
+                    $arr_paymentmode_data['business_id']=$business_id;
+                    $arr_paymentmode_data['title']=$value;
+                    $insert_data = BusinessPaymentModeModel::create($arr_paymentmode_data);
+                }
+          
+        }
+
+        if($contactInfoUpadte)
+        {
+          $json['status']      = 'SUCCESS';
+          $json['message']     = 'Business Contact info Successfully Updated.';
+
+        }
+        else
+        {
+          $json['status']  = 'ERROR';
+          $json['message'] = 'Error Occure while Creating Business.';
+
+        }
+
+        return response()->json($json);
+
+
+      }
       public function store(Request $request)
       {
 
@@ -149,7 +335,7 @@ class SalesExecutiveBusinessController extends Controller
            $arr_data['business_added_by']     = ucfirst($request->input('business_added_by'));
            $arr_data['business_name']         =  $request->input('business_name');
 
-           $business_cat                    =   explode(",",$request->input('business_cat'));
+           $business_cat = explode(",",$request->input('business_cat'));
            $payment_mode                    =   explode(",",$request->input('payment_mode'));
            $business_service                =   explode(",",$request->input('business_service'));
            $main_image                      =  $request->input('main_image'); 
@@ -188,7 +374,7 @@ class SalesExecutiveBusinessController extends Controller
                     $json['message']               = 'Invali Image Format .';
                 }
 
-                $file_url              = $fileName;
+                $file_url               = $fileName;
                 $arr_data['main_image'] = $filename;
             }
             else
@@ -204,6 +390,7 @@ class SalesExecutiveBusinessController extends Controller
             $public_id = $this->objpublic->generate_business_public_by_category($business_main_cat_slug,$business_id);
             BusinessListingModel::where('id', '=', $business_id)->update(array('busiess_ref_public_id' => $public_id));
 
+            //Add business category
             if(isset($business_cat) && sizeof($business_cat)>0)
             {
                 foreach ($business_cat as $key => $value)
@@ -213,6 +400,7 @@ class SalesExecutiveBusinessController extends Controller
                     $insert_data = BusinessCategoryModel::create($arr_cat_data);
                 }
             }
+            //Add business Payment mode
             if(isset($payment_mode) && sizeof($payment_mode)>0)
             {
                 foreach ($payment_mode as $key => $value)
@@ -222,6 +410,7 @@ class SalesExecutiveBusinessController extends Controller
                     $insert_data = BusinessPaymentModeModel::create($arr_paymentmode_data);
                 }
             }
+            //Add business service
             if(isset($business_service) && sizeof($business_service)>0)
             {
                 foreach ($business_service as $key => $value)
@@ -301,4 +490,8 @@ class SalesExecutiveBusinessController extends Controller
           return response()->json($json);
             
       }
+
+
+
+
 }
