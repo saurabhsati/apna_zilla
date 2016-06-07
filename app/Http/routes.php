@@ -646,6 +646,16 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		/* Update Front user address */
 		Route::post('update_address',			        ['as' => 'update_address'                           ,'uses' =>'Api\AuthController@update_address']);
 
+			/* Front Business Route*/
+		Route::group(array('prefix' => '/business'), function()
+		{
+			Route::get('/',       								['as' => 'business_index'     				,'uses' =>'Api\FrontBusinessController@index']);
+			Route::post('store',       							['as' => 'business_store'     				,'uses' =>'Api\FrontBusinessController@store']);
+			
+		});
+
+
+
 		/* Common service for getting the state ,city & pincode */
 		Route::group(array('prefix' => '/location_common'), function()
 		{
@@ -669,11 +679,15 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 		});
 
-		Route::group(array('prefix' => '/business'), function()
+	
+		/* Sales Executive Business Route*/
+		Route::group(array('prefix' => '/sales_user'), function()
 		{
-			Route::get('/',       								['as' => 'business_index'     				,'uses' =>'Api\BusinessController@index']);
-			Route::post('store',       							['as' => 'business_store'     				,'uses' =>'Api\BusinessController@store']);
-			
+			Route::group(array('prefix' => '/business'), function()
+		    {
+			  Route::get('/',       								['as' => 'business_index'     				,'uses' =>'Api\SalesExecutiveBusinessController@index']);
+			  Route::post('store',       							['as' => 'business_store'     				,'uses' =>'Api\SalesExecutiveBusinessController@store']);
+			});
 		});
 
 
