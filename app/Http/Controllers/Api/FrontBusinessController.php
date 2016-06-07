@@ -136,13 +136,10 @@ class FrontBusinessController extends Controller
         }
        
         return response()->json($json);
-        
-       
     }
-
+    
     public function store_business_step1(Request $request)
     {
-      //dd($request->all());
          $arr_data=array();
          $arr_data['user_id']              = $request->input('user_id');
          $arr_data['business_added_by']    = ucfirst($request->input('business_added_by'));
@@ -207,9 +204,9 @@ class FrontBusinessController extends Controller
             
           return response()->json($json);
     }
+
     public function store_business_step2(Request $request)
     {
-      // dd($request->all());
         $business_id         = $request->input('business_id');
         $user_id             = $request->input('user_id');
 
@@ -235,10 +232,9 @@ class FrontBusinessController extends Controller
         }
          return response()->json($json);
     }
+
     public function store_business_step3(Request $request)
     {
-
-      // dd($request->all());
         $business_id         = $request->input('business_id');
         $user_id             = $request->input('user_id');
 
@@ -263,10 +259,10 @@ class FrontBusinessController extends Controller
          return response()->json($json);
 
     }
+
     public function store_business_step4(Request $request)
     {
         $json                           = array();
-        //dd($request->all());
         $business_id         = $request->input('business_id');
         $user_id             = $request->input('user_id');
 
@@ -331,10 +327,10 @@ class FrontBusinessController extends Controller
           }
           return response()->json($json);
     }
-     public function store_business_step5(Request $request)
+
+    public function store_business_step5(Request $request)
     {
         $json                           = array();
-        //dd($request->all());
         $business_id      = $request->input('business_id');
         $user_id          = $request->input('user_id');
         $business_service = explode(",",$request->input('business_service'));
@@ -356,11 +352,12 @@ class FrontBusinessController extends Controller
         $uploadcount = 0;
         if(isset($files) && sizeof($files)>0)
         {
-             foreach($files as $file) 
-             {
+            foreach($files as $file) 
+            {
                 $destinationPath = $this->business_base_upload_img_path;
                 $fileName = $file->getClientOriginalName();
                 $fileExtension  = strtolower($file->getClientOriginalExtension());
+
                 if(in_array($fileExtension,['png','jpg','jpeg']))
                 {
                       $filename =sha1(uniqid().$fileName.uniqid()).'.'.$fileExtension;
@@ -388,7 +385,86 @@ class FrontBusinessController extends Controller
              $json['status'] = 'ERROR';
              $json['message']  = 'Error Occure while Creating Business.';
         }
-      return response()->json($json);
+
+        return response()->json($json);
+    }
+
+    public function update_business_step1(Request $request)
+    {
+      dd($request->all());
+            $json        = array();
+            $business_id = $request->input('business_id');
+            $main_image  = $request->input('main_image');
+
+            if ($request->hasFile('main_image'))
+            {
+                $profile_pic_valiator = Validator::make(array('main_image'=>$request->file('main_image')),array( 'main_image' => 'mimes:jpg,jpeg,png' ));
+
+                if ($request->file('main_image')->isValid() && $profile_pic_valiator->passes())
+                {
+                    $cv_path            = $request->file('main_image')->getClientOriginalName();
+                    $image_extension    = $request->file('main_image')->getClientOriginalExtension();
+                    $image_name         = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
+                    $request->file('main_image')->move($business_base_img_upload_path, $image_name);
+                    $main_image     = $image_name;
+                }
+                else
+                {
+                    return redirect()->back()->withErrors($validator)->withInput();
+                }
+
+            }
+            $business_data['business_name'] = $request->input('business_name');
+            $business_data['main_image']    = $main_image;
+            $business_cat                   = $request->input('business_cat');
+            $business_cat_slug              = $request->input('business_public_id');
+
+            if($business_cat!=null)
+            {
+                $business_category = BusinessCategoryModel::where('business_id',$business_id);
+                $res= $business_category->delete();
+
+                foreach ($business_cat as $key => $value)
+                {
+                    $arr_cat_data['business_id']=$business_id;
+                    $arr_cat_data['category_id']=$value;
+                    $insert_data = BusinessCategoryModel::create($arr_cat_data);
+                }
+            }
+
+
+             
+             $chk_business_category=[];
+             $chk_business_category=BusinessListingModel::where('id', '=', $business_id)->where('busiess_ref_public_id',$business_cat_slug)->first();
+             if($chk_business_category)
+             {
+                  $arr_business = $chk_business_category->toArray();
+                  if(sizeof($arr_business)>0)
+                  {
+                    $business_data['busiess_ref_public_id']= $business_cat_slug;
+                  }
+              }
+              else
+              {
+                 $public_id = $this->objpublic->generate_business_public_by_category($business_cat_slug,$id);
+                 $business_data['busiess_ref_public_id']= $public_id;
+              }
+
+
+              $business_data_res=BusinessListingModel::where('id',$business_id)->update($business_data);
+              if($business_data_res)
+              {
+                  $json['business_id'] = $business_id;
+                  $json['status']      = 'SUCCESS';
+                  $json['message']     = 'Business Fifth Step completed Successfully ! .';
+              }
+              else
+              {
+                   $json['status'] = 'ERROR';
+                   $json['message']  = 'Error Occure while Creating Business.';
+              }
+
+              return response()->json($json);
 
     }
 
