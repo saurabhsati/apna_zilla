@@ -940,9 +940,9 @@ class UserController extends Controller
         /* $arr_data['establish_year']  =        $request->input('establish_year');
         $arr_data['keywords']           =        $request->input('keywords');*/
 
-        $services_add = BusinessListingModel::where(array('user_id'=>$user_id,'id'=> $business_id ))->update($arr_data);
+        /*$services_add = BusinessListingModel::where(array('user_id'=>$user_id,'id'=> $business_id ))->update($arr_data);
         if($services_add)
-        {
+        {*/
             if(count($business_services)>0)
             {
                 foreach ($business_services as $key => $value)
@@ -986,10 +986,10 @@ class UserController extends Controller
             return redirect('/front_users/add_business');
 
 
-        }else {
+        /*}else {
             Session::flash('error','Error While Adding Services Information');
         }
-
+*/
         return redirect()->back();
     }
 
