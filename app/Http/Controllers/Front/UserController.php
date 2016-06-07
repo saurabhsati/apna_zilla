@@ -1353,11 +1353,8 @@ class UserController extends Controller
           {
              $res= $business_payment_mode->delete();
           }
-          $business_payment_mode = BusinessPaymentModeModel::where('business_id',$id);
-          if($business_payment_mode)
-          {
-             $res= $business_payment_mode->delete();
-          }
+        
+         
         if($payment_count>0)
         {
             
