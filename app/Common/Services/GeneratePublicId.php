@@ -19,6 +19,8 @@ class GeneratePublicId
          return  strtoupper('RNT-'.$hashids->encode($in));
 
     }
+
+    
     /* Generate Business Public id*/
 	public function generate_business_public_by_category($cat_ref_slug,$in)
     {

@@ -516,7 +516,7 @@ class UserController extends Controller
         $id = session('user_id');
          $user_id = base64_decode($id);
 
-        $obj_business_info = BusinessListingModel::with(['category','membership_plan_details'])->where('user_id','=',$user_id)->with('reviews');
+        $obj_business_info = BusinessListingModel::orderBy('created_at','DESC')->with(['category','membership_plan_details'])->where('user_id','=',$user_id)->with('reviews');
 
         $arr_business_info =  array();
         $cat_title =  "";

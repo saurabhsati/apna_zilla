@@ -389,9 +389,80 @@ class FrontBusinessController extends Controller
         return response()->json($json);
     }
 
+    public function edit_business_step1(Request $request)
+    {
+       $business_id = $request->input('business_id');
+       $business_public_img_path = url('/')."/uploads/business/main_image/";
+       $page_title ="Edit Business";
+       $parent_obj_category = CategoryModel::where('parent','=',0)->select('cat_id','title')->orderBy('title','ASC')->get();
+
+        if($parent_obj_category)
+        {
+            $arr_main_category = $parent_obj_category->toArray();
+        }
+        $obj_sub_category = CategoryModel::where('parent','!=','0')->get();
+
+        if($obj_sub_category)
+        {
+            $arr_sub_category = $obj_sub_category->toArray();
+        }
+        $obj_business_data=BusinessListingModel::with(['category'])->where('id',$business_id)->first();
+        if($obj_business_data)
+        {
+          $business_data=$obj_business_data->toArray();
+        }
+
+        $arr_data=[];
+        if(isset($business_data) && sizeof($business_data)>0)
+        {
+          $arr_data['main_image']            = url('/uploads/business/main_image').'/'.$business_data['main_image'];
+          $arr_data['business_name']         = $business_data['business_name'];
+          $arr_data['business_id']           = $business_data['id'];
+
+                 $sub_category_title=$main_cat_title='';
+                 if(isset($business_data['category']) && sizeof($business_data['category'])>0)
+                 {
+                    foreach ($business_data['category'] as $key2 => $selected_category) 
+                    {
+                      foreach ($arr_sub_category as $key3 => $sub_category)
+                      {
+                         if ($sub_category['cat_id']==$selected_category['category_id'])
+                         {
+
+                            $sub_category_title[] = $sub_category['title'];
+
+                            foreach ($arr_main_category as $key4 => $main_category)
+                            {
+                              if($main_category['cat_id']==$sub_category['parent'])
+                              {
+                                $main_cat_title[]=$main_category['title'];
+                                $arr_data['main_category_title']   = $main_cat_title[0];
+                              }
+
+                            }
+                         }
+                      }
+                       $arr_data['sub_category_title']    = implode(',',$sub_category_title);
+
+                    }
+                 }
+        }
+        if(sizeof($arr_data)>0)
+        {
+            $json['data']    = $arr_data;
+            $json['status']  = 'SUCCESS';
+            $json['message'] = 'Business List !';
+        }
+        else
+        {
+            $json['status']  = 'ERROR';
+            $json['message'] = 'No Business Record Found!';
+        }
+          return response()->json($json);
+
+    }
     public function update_business_step1(Request $request)
     {
-      dd($request->all());
             $json        = array();
             $business_id = $request->input('business_id');
             $main_image  = $request->input('main_image');
@@ -405,7 +476,7 @@ class FrontBusinessController extends Controller
                     $cv_path            = $request->file('main_image')->getClientOriginalName();
                     $image_extension    = $request->file('main_image')->getClientOriginalExtension();
                     $image_name         = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
-                    $request->file('main_image')->move($business_base_img_upload_path, $image_name);
+                    $request->file('main_image')->move($this->business_base_img_path, $image_name);
                     $main_image     = $image_name;
                 }
                 else
@@ -416,7 +487,7 @@ class FrontBusinessController extends Controller
             }
             $business_data['business_name'] = $request->input('business_name');
             $business_data['main_image']    = $main_image;
-            $business_cat                   = $request->input('business_cat');
+            $business_cat                   =  explode(",",$request->input('business_cat'));
             $business_cat_slug              = $request->input('business_public_id');
 
             if($business_cat!=null)
@@ -446,17 +517,17 @@ class FrontBusinessController extends Controller
               }
               else
               {
-                 $public_id = $this->objpublic->generate_business_public_by_category($business_cat_slug,$id);
+                 $public_id = $this->objpublic->generate_business_public_by_category($business_cat_slug,$business_id);
                  $business_data['busiess_ref_public_id']= $public_id;
               }
-
 
               $business_data_res=BusinessListingModel::where('id',$business_id)->update($business_data);
               if($business_data_res)
               {
                   $json['business_id'] = $business_id;
+                  $json['next_url'] = url('/').'/api/business/edit_business_step2/'.$business_id;
                   $json['status']      = 'SUCCESS';
-                  $json['message']     = 'Business Fifth Step completed Successfully ! .';
+                  $json['message']     = 'Business First Step Updated Successfully ! .';
               }
               else
               {
