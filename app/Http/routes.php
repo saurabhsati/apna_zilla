@@ -659,10 +659,17 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		/* Common service for getting the state ,city & pincode */
 		Route::group(array('prefix' => '/location_common'), function()
 		{
-			Route::get('get_states_by_country',  		['as' => 'get_states_by_country' 					,'uses' => 'Api\LocationCommonController@get_states_by_country']);
-			Route::get('get_cities_by_state',  			['as' => 'get_cities_by_state' 						,'uses' => 'Api\LocationCommonController@get_cities_by_state']);
-			Route::get('get_postalcode_by_city',        ['as' => 'get_postalcode_by_city' 					,'uses' => 'Api\LocationCommonController@get_postalcode_by_city']);
-		});	
+			Route::get('get_states_by_country',  		['as' => 'get_states_by_country' 					,'uses' => 'Api\CommonController@get_states_by_country']);
+			Route::get('get_cities_by_state',  			['as' => 'get_cities_by_state' 						,'uses' => 'Api\CommonController@get_cities_by_state']);
+			Route::get('get_postalcode_by_city',        ['as' => 'get_postalcode_by_city' 					,'uses' => 'Api\CommonController@get_postalcode_by_city']);
+		});
+
+		/* Common service for getting the Subcategory */
+		Route::group(array('prefix' => '/category_common'), function()
+		{
+			Route::get('get_sub_category_by_main',  		['as' => 'get_states_by_country' 					,'uses' => 'Api\CommonController@get_sub_category_by_main']);
+		});
+
 
 		/* create vendor */
 
@@ -685,8 +692,8 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		{
 			Route::group(array('prefix' => '/business'), function()
 		    {
-			  Route::get('/',       								['as' => 'business_index'     				,'uses' =>'Api\SalesExecutiveBusinessController@index']);
-			  Route::post('store',       							['as' => 'business_store'     				,'uses' =>'Api\SalesExecutiveBusinessController@store']);
+			  Route::get('/',       												['as' => 'business_index'     				,'uses' =>'Api\SalesExecutiveBusinessController@index']);
+			  Route::post('store_business_step1',       							['as' => 'business_store_step1'     		,'uses' =>'Api\SalesExecutiveBusinessController@store_business_step1']);
 			});
 		});
 

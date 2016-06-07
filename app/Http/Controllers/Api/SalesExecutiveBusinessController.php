@@ -50,10 +50,10 @@ class SalesExecutiveBusinessController extends Controller
 
       public function index(Request $request)
       {
-      		$sales_user_public_id=$request->input('public_id');
+      		  $sales_user_public_id=$request->input('public_id');
 
-      		 $obj_main_category = CategoryModel::where('parent','0')->get();
-           if($obj_main_category)
+      		  $obj_main_category = CategoryModel::where('parent','0')->get();
+            if($obj_main_category)
             {
                 $arr_main_category = $obj_main_category->toArray();
             }
@@ -131,11 +131,7 @@ class SalesExecutiveBusinessController extends Controller
           $json['message'] = 'No Business Record Found!';
         }
             return response()->json($json);
-            
-           
-            
-          
-
+       
       }
 
       public function store(Request $request)
@@ -301,4 +297,6 @@ class SalesExecutiveBusinessController extends Controller
           return response()->json($json);
             
       }
+      
+
 }

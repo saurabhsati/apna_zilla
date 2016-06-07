@@ -54,8 +54,10 @@ class FrontBusinessController extends Controller
 
     public function index(Request $request)
     {
-    	$user_id=$request->input('user_id');
-    	$obj_main_category = CategoryModel::where('parent','0')->get();
+    	  $user_id=$request->input('user_id');
+
+    	  $obj_main_category = CategoryModel::where('parent','0')->get();
+
         if($obj_main_category)
         {
             $arr_main_category = $obj_main_category->toArray();
@@ -123,17 +125,23 @@ class FrontBusinessController extends Controller
                  }
 
          }
-      $json['data']    = $arr_data;
-      $json['status']  = 'SUCCESS';
-      $json['message'] = 'Business List !';
-    }
-    else
-    {
-      $json['status']  = 'ERROR';
-      $json['message'] = 'No Business Record Found!';
-    }
+            $json['data']    = $arr_data;
+            $json['status']  = 'SUCCESS';
+            $json['message'] = 'Business List !';
+        }
+        else
+        {
+          $json['status']  = 'ERROR';
+          $json['message'] = 'No Business Record Found!';
+        }
+       
         return response()->json($json);
         
        
+    }
+
+    public function store_business_step1()
+    {
+
     }
 }

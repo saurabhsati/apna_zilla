@@ -9,9 +9,10 @@ use App\Http\Controllers\Controller;
 use App\Models\StateModel;
 use App\Models\CityModel;
 use App\Models\PlaceModel;
+use App\Models\CategoryModel;
 use Input;
 
-class LocationCommonController extends Controller
+class CommonController extends Controller
 {
     public function __construct()
     {
@@ -42,7 +43,8 @@ class LocationCommonController extends Controller
         else
         {
             $json['status'] ="ERROR";
-            $json['arr_state'] = array();
+            $json['data'] = array();
+            $json['message']  = 'No Records Found !.';
         }
         return response()->json($json);
     }
@@ -67,11 +69,13 @@ class LocationCommonController extends Controller
         {
             $json['status'] ="SUCCESS";
             $json['data'] = $arr_citiy;
+            $json['message']  = 'Information Get Successfully.';
         }
         else
         {
             $json['status'] ="ERROR";
             $json['data'] = array();
+            $json['message']  = 'No Records Found !.';
         }
         return response()->json($json);
     }
@@ -96,12 +100,43 @@ class LocationCommonController extends Controller
         {
             $json['status'] ="SUCCESS";
             $json['data'] = $arr_postalcode;
+            $json['message']  = 'Information Get Successfully.';
         }
         else
         {
             $json['status'] ="ERROR";
             $json['data'] = array();
+            $json['message']  = 'No Records Found !.';
         }
         return response()->json($json);
     }
+
+    /* Get Sub Category By Main Category*/
+    public function get_sub_category_by_main(Request $request)
+    {
+        $id           = $request->input('main_cat_id');
+        $obj_category = CategoryModel::where('parent',$id)->get();
+
+        $arr_category = array();
+        $json = array();
+
+        if($obj_category && count($obj_category)>0)
+        {
+            $arr_category = $obj_category->toArray();
+
+            $json['status'] = "SUCCESS";
+            $json['data']   = $arr_category;
+            $json['message']  = 'Information Get Successfully.';
+
+        }
+        else
+        {
+            $json['status'] = "ERROR";
+            $json['data']   = array(); 
+            $json['message']  = 'No Records Found !.';           
+        }
+
+        return response()->json($json);
+    }
+
 }
