@@ -727,7 +727,75 @@
                                   <h4><b>Business Payment Modes</b></h4>
                               </div>
                           </div>
-            <div class="form-group">
+
+                             <?php $selected_paymnt_arr=array();?>
+                           @if(sizeof($business['payment_mode'])>0)
+                             @foreach($business['payment_mode'] as $payment_mode)
+                                <?php $selected_paymnt_arr[]=$payment_mode['title'];?>
+                                @endforeach
+                              @endif
+                               <div class="form-group add_more_payment_mode" style="display: block;">
+                          <div class="form-group">
+
+                               
+                             
+                             <div class="col-sm-3 col-lg-3 controls" style="margin-left: 51px;">
+                                  <input type="checkbox"  name="payment_mode[]" value="Cash Payment" @if(search_array('Cash Payment',$selected_paymnt_arr)) checked="checked" @endif value="Paying online" />
+                                  <label class="control-label"> Cash Payment </label>
+                                  <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                              </div>
+                             
+                                <div class="col-sm-5 col-lg-3 controls">
+                                    <input type="checkbox"  name="payment_mode[]" @if(search_array('Paying online',$selected_paymnt_arr)) checked @endif value="Paying online" />
+                                    <label class=" control-label"> Paying online  </label>
+                                    <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                                </div>
+                              </div>
+
+
+                              <div class="form-group">
+                                <div class="col-sm-3 col-lg-3 controls" style="margin-left: 51px;">
+                                 <input type="checkbox"  name="payment_mode[]" value="Paying by cheque" @if(search_array('Paying by cheque',$selected_paymnt_arr)) checked @endif/>
+                                  <label class=" control-label" > Paying by cheque  </label>
+                                  <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                                </div>
+                            
+                                <div class="col-sm-5 col-lg-3 controls">
+                                    <input type="checkbox"  name="payment_mode[]" value="Paying by credit" @if(search_array('Paying by credit',$selected_paymnt_arr)) checked @endif/>
+                                      <label class="control-label"> Paying by credit  </label>
+                                      <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                                </div>
+                              </div>
+
+                              <div class="form-group">
+                               <div class="col-sm-3 col-lg-3 controls" style="margin-left: 51px;">
+                                    <input type="checkbox"  name="payment_mode[]" value="Paying by Dabit Card" @if(search_array('Paying by Dabit Card',$selected_paymnt_arr)) checked @endif/>
+                                      <label class="control-label">Paying by Dabit Card  </label>
+                               <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                                </div>
+                             
+                               <div class="col-sm-5 col-lg-3 controls">
+                                    <input type="checkbox"  name="payment_mode[]" value="Gift cards" @if(search_array('Gift cards',$selected_paymnt_arr)) checked @endif/>
+                                     <label class="control-label"> Gift cards  </label>
+                                  <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                                </div> 
+                              </div>
+
+                              <div class="form-group">
+                               <div class="col-sm-3 col-lg-3 controls" style="margin-left: 51px;">
+                                    <input type="checkbox"  name="payment_mode[]" value="Paying by Bank Transfer" @if(search_array('Paying by Bank Transfer',$selected_paymnt_arr)) checked @endif/>
+                                     <label class="control-label"> Paying by Bank Trnasfer  </label>
+                                     <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                                </div>
+                           
+                               <div class="col-sm-5 col-lg-3 controls">
+                                    <input type="checkbox"  name="payment_mode[]" value="Paying by lay-by" @if(search_array('Paying by lay-by',$selected_paymnt_arr)) checked @endif/>
+                                    <label class="control-label"> Paying by lay-by  </label>
+                                    <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                                </div>
+                              </div> 
+                               </div>
+            <!-- <div class="form-group">
                             <label class="col-sm-3 col-lg-2 control-label"> Payment Mode  <i class="red">*</i> </label>
                             <div class="col-sm-9 col-lg-10 controls">
                                <div class="fileupload fileupload-new business_upload_image_" data-provides="fileupload">
@@ -742,9 +810,7 @@
                                      </p>
                                     </div>
                                   </div>
-                              <!--     <a href="javascript:void(0);" onclick="javascript: return delete_gallery($image['business_id'],$image['image_name'],$business['id'])">
-                                     <span class="glyphicon glyphicon-minus-sign" style="font-size: 20px;"></span></a> -->
-                                  <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
 
                                   @endforeach
                     <div class="error" id="err_delete_payment_mode"></div>
@@ -785,7 +851,7 @@
                              <label class="col-sm-3 col-lg-2 control-label"></label>
 
                               </div>
-                              </div>
+                              </div> -->
            <hr/>
 
             <div class="form-group">
@@ -856,6 +922,22 @@
 </div>
 </div>
 </div>
+<?php
+  function search_array($search_val, $arr)
+  {
+    $flag = 0; 
+    //dd($arr);
+    foreach ($arr as $key => $value) {
+     
+      if(trim($value) == trim($search_val))
+       { $flag = 1;  break ;} 
+    
+    }
+    
+    return $flag;
+  }
+
+?>
 <!-- END Main Content -->
 
 <script type="text/javascript">

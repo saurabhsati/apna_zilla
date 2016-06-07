@@ -861,6 +861,7 @@ class UserController extends Controller
         // For adding Payment Modes.
         $arr_payment        =  array();
         $arr_payment        =  $request->input('payment_mode');
+
         if(count($arr_payment)>0)
         {
             foreach ($arr_payment as $key => $value)
@@ -940,9 +941,9 @@ class UserController extends Controller
         /* $arr_data['establish_year']  =        $request->input('establish_year');
         $arr_data['keywords']           =        $request->input('keywords');*/
 
-        $services_add = BusinessListingModel::where(array('user_id'=>$user_id,'id'=> $business_id ))->update($arr_data);
+        /*$services_add = BusinessListingModel::where(array('user_id'=>$user_id,'id'=> $business_id ))->update($arr_data);
         if($services_add)
-        {
+        {*/
             if(count($business_services)>0)
             {
                 foreach ($business_services as $key => $value)
@@ -986,10 +987,10 @@ class UserController extends Controller
             return redirect('/front_users/add_business');
 
 
-        }else {
+        /*}else {
             Session::flash('error','Error While Adding Services Information');
         }
-
+*/
         return redirect()->back();
     }
 
@@ -1096,7 +1097,7 @@ class UserController extends Controller
 
             if($validator->fails())
             {
-                print_r($validator->errors()->all());exit;
+               // print_r($validator->errors()->all());exit;
                 
                 return redirect()->back()->withErrors($validator)->withInput();
             }
@@ -1123,11 +1124,13 @@ class UserController extends Controller
             $business_data['business_name']      = $request->input('business_name');
             $business_data['main_image']      = $business_image;
             //dd($business_data);
-            $business_category = BusinessCategoryModel::where('business_id',$id);
-            $res= $business_category->delete();
+            
             $business_cat=$request->input('business_cat');
-            if($business_cat)
+            if($business_cat!=null)
             {
+                $business_category = BusinessCategoryModel::where('business_id',$id);
+                $res= $business_category->delete();
+
                 foreach ($business_cat as $key => $value)
                 {
                     $arr_cat_data['business_id']=$id;
@@ -1154,7 +1157,6 @@ class UserController extends Controller
                  $business_data['busiess_ref_public_id']= $public_id;
                  //BusinessListingModel::where('id', '=', $id)->update(array('busiess_ref_public_id' => $public_id));
                }
-
             $business_data_res=BusinessListingModel::where('id',$id)->update($business_data);
             if($business_data_res)
             {
@@ -1349,6 +1351,9 @@ class UserController extends Controller
          //exit;
         if($payment_count>0)
         {
+             $business_payment_mode = BusinessPaymentModeModel::where('business_id',$id);
+            $res= $business_payment_mode->delete();
+            
             foreach($payment_mode as $key =>$value) {
              if($value!=null)
              {

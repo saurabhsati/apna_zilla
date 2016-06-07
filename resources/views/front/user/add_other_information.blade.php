@@ -100,6 +100,73 @@
                               </div>
                            </div>
                       </div>
+                        <div class="user_box_sub">
+                        <div class="row">
+                          <div class="col-lg-2 label-text">Modes Of Payment <span>:</span></div>
+                            <div class="col-sm-12 col-md-12 col-lg-10 m_l">
+                            <div class="form-group">
+
+                               
+                             
+                             <div class="col-sm-3 col-lg-5 controls" >
+                                  <input type="checkbox"  name="payment_mode[]" value="Cash Payment"  value="Paying online" />
+                                  <label class="label-text"> Cash Payment </label>
+                                  <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                              </div>
+                             
+                                <div class="col-sm-5 col-lg-4 controls">
+                                    <input type="checkbox"  name="payment_mode[]" value="Paying online" />
+                                    <label class=" label-text"> Paying online  </label>
+                                    <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                                </div>
+                              </div>
+
+
+                              <div class="form-group">
+                                <div class="col-sm-3 col-lg-5 controls" >
+                                 <input type="checkbox"  name="payment_mode[]" value="Paying by cheque" />
+                                  <label class=" label-text" > Paying by cheque  </label>
+                                  <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                                </div>
+                            
+                                <div class="col-sm-5 col-lg-4 controls">
+                                    <input type="checkbox"  name="payment_mode[]" value="Paying by credit" />
+                                      <label class="label-text"> Paying by credit  </label>
+                                      <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                                </div>
+                              </div>
+
+                              <div class="form-group">
+                               <div class="col-sm-3 col-lg-5 controls" >
+                                    <input type="checkbox"  name="payment_mode[]" value="Paying by Dabit Card" />
+                                      <label class="label-text">Paying by Dabit Card  </label>
+                               <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                                </div>
+                             
+                               <div class="col-sm-5 col-lg-4 controls">
+                                    <input type="checkbox"  name="payment_mode[]" value="Gift cards" />
+                                     <label class="label-text"> Gift cards  </label>
+                                  <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                                </div> 
+                              </div>
+
+                              <div class="form-group">
+                               <div class="col-sm-3 col-lg-5 controls" >
+                                    <input type="checkbox"  name="payment_mode[]" value="Paying by Bank Transfer" />
+                                     <label class="label-text"> Paying by Bank Trnasfer  </label>
+                                     <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                                </div>
+                           
+                               <div class="col-sm-5 col-lg-4 controls">
+                                    <input type="checkbox"  name="payment_mode[]" value="Paying by lay-by"/>
+                                    <label class="label-text"> Paying by lay-by  </label>
+                                    <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
+                                </div>
+                              </div>
+                              
+                            </div>
+                         </div>
+                         </div>
 
                               <!--  <div class="user_box_sub">
                                   <div class="row">
@@ -113,7 +180,7 @@
 
 
                             <div class="user_box_sub">
-                              <div class="col-sm-5 col-md-3" style="float:right;margin-right: -133px;">
+                              <!-- <div class="col-sm-5 col-md-3" style="float:right;margin-right: -133px;">
                                      <a href="javascript:void(0);" id='add-payment'>
                                          <span class="glyphicon glyphicon-plus-sign" style="font-size: 22px;"></span>
                                      </a>
@@ -139,7 +206,7 @@
                                      <label class="col-lg-2 label-text"></label>
 
                                       </div>
-                                  </div>
+                                  </div> -->
                               </div>
                             <hr/>
 
