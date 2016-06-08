@@ -738,6 +738,10 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 					Route::post('step5', ['as'=>'edit_step5', 'uses'=>'Api\SalesExecutiveBusinessController@update_business_step5']);
 				});
 
+				//delete gallery image
+				 Route::post('/delete_gallery',  ['as' => 'business_index', 'uses' =>'Api\SalesExecutiveBusinessController@delete_gallery']);
+				//delete service
+				Route::post('/delete_service',  ['as' => 'business_index', 'uses' =>'Api\SalesExecutiveBusinessController@delete_service']); 
 
 
 			});
