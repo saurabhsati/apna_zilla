@@ -157,8 +157,8 @@ class SalesExecutiveBusinessController extends Controller
                 }
                 else
                 {
-                    $json['status']     = "ERROR";
-                    $json['message']    = 'Invalid Image Format .';
+                    $json['status']  = "ERROR";
+                    $json['message'] = 'Invalid Image Format .';
                 }
 
                 $file_url               = $fileName;
@@ -167,24 +167,23 @@ class SalesExecutiveBusinessController extends Controller
 
             else
             {
-                $json['status']                = "ERROR";
-                $json['message']               = 'Please Select Image.';
+                $json['status']  = "ERROR";
+                $json['message'] = 'Please Select Image.';
             }
         
         //End Upload Image
         
 
-        $insert_data                        = BusinessListingModel::create($arr_data);
+        $insert_data = BusinessListingModel::create($arr_data);
         
         //create business public id 
-        $business_id                        = $insert_data->id;
-        $business_cat_slug                  = $form_data['business_public_id'];
-        $public_id                          = $this->objpublic->generate_business_public_by_category($business_cat_slug,$business_id); 
-        $business = BusinessListingModel::find($business_id);
+        $business_id                     = $insert_data->id;
+        $business_cat_slug = $form_data['business_public_id'];
+        $public_id         = $this->objpublic->generate_business_public_by_category($business_cat_slug,$business_id);
+        $business                        = BusinessListingModel::find($business_id);
         $business->busiess_ref_public_id = $public_id;
         $business->save();
 
-        
         //Add business category
         if(sizeof($business_cat)>0)
         {
@@ -204,8 +203,8 @@ class SalesExecutiveBusinessController extends Controller
         }
         else
         {
-           $json['status'] = 'ERROR';
-           $json['message']  = 'Error Occure while Creating Business.';
+           $json['status']  = 'ERROR';
+           $json['message'] = 'Error Occure while Creating Business.';
 
         }
         
@@ -262,8 +261,8 @@ class SalesExecutiveBusinessController extends Controller
 
         if($contactInfoUpadte)
         {
-          $json['status']      = 'SUCCESS';
-          $json['message']     = 'Business Contact info Successfully Updated.';
+          $json['status']  = 'SUCCESS';
+          $json['message'] = 'Business Contact info Successfully Updated.';
 
         }
         else
@@ -578,21 +577,239 @@ class SalesExecutiveBusinessController extends Controller
 
     }
     
-    //Start update business 
+    /*-------------Start update business----------------*/ 
     //Update business step1
     public function update_business_step1(Request $request)
     {
-      $arr_data    = array();
+      $json        = array();
       $business_id = $request->input('business_id');
+      $main_image  = $request->input('main_image');
+      if($request->input('user_id')!='' || $request->input('user_id')!=null)
+      {
+        $business_data['user_id'] = $request->input('user_id');
+      }
+    
+      if($request->hasFile('main_image'))
+      {
+          $profile_pic_valiator = Validator::make(array('main_image'=>$request->file('main_image')),array( 'main_image' => 'mimes:jpg,jpeg,png' ));
+
+          if($request->file('main_image')->isValid() && $profile_pic_valiator->passes())
+          {
+              $cv_path         = $request->file('main_image')->getClientOriginalName();
+              $image_extension = $request->file('main_image')->getClientOriginalExtension();
+              $image_name      = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
+              $request->file('main_image')->move($this->business_base_img_path, $image_name);
+              $main_image                  = $image_name;
+              $business_data['main_image'] = $main_image;
+          }
+          else
+          {
+              return redirect()->back()->withErrors($validator)->withInput();
+          }
+
+      }
+
+      $business_data['business_name'] = $request->input('business_name');
+      $business_cat                   = explode(",", $request->input('business_cat'));
+      $business_cat_slug              = $request->input('business_public_id');
+
+      if($business_cat!=null)
+      {
+          $business_category = BusinessCategoryModel::where('business_id',$business_id);
+          $res               = $business_category->delete();
+
+          foreach ($business_cat as $key => $value)
+          {
+              $arr_cat_data['business_id'] = $business_id;
+              $arr_cat_data['category_id'] = $value;
+              $insert_data                 = BusinessCategoryModel::create($arr_cat_data);
+          }
+       
+      }
 
 
-      $arr_data['sales_user_public_id'] = $request->input('sales_user_public_id');
-      $arr_data['business_added_by']    = ucfirst($request->input('business_added_by'));
-      $arr_data['business_name']        = $request->input('business_name');
-      $business_cat                     = explode(",",$request->input('business_cat'));
-      $main_image                       = $request->input('main_image');
+       
+       $chk_business_category = [];
+       $chk_business_category = BusinessListingModel::where('id', '=', $business_id)->where('busiess_ref_public_id',$business_cat_slug)->first();
+       if($chk_business_category)
+       {
+            $arr_business = $chk_business_category->toArray();
+            if(sizeof($arr_business)>0)
+            {
+              $business_data['busiess_ref_public_id'] = $business_cat_slug;
+            }
+        }
+        else
+        {
+           $public_id                              = $this->objpublic->generate_business_public_by_category($business_cat_slug,$business_id);
+           $business_data['busiess_ref_public_id'] = $public_id;
+        }
 
-      $business_data_update=BusinessListingModel::where('id',$id)->update($business_data);
+        $business_data_res = BusinessListingModel::where('id',$business_id)->update($business_data);
+        if($business_data_res)
+        {
+            $json['business_id'] = $business_id;
+            $json['status']      = 'SUCCESS';
+            $json['message']     = 'Business First Step Updated Successfully ! .';
+        }
+        else
+        {
+             $json['status']  = 'ERROR';
+             $json['message'] = 'Error Occure while Updating Business.';
+        }
+
+        return response()->json($json);
+
+    }
+   
+    public function update_business_step2(Request $request)
+    {
+
+            $business_id              = $request->input('business_id');
+            $business_data['area']    = $request->input('area');
+            $business_data['country'] = $request->input('country');
+            $business_data['state']   = $request->input('state');
+            $business_data['city']    = $request->input('city');
+            $business_data['pincode'] = $request->input('pincode');
+            $business_data['lat']     = $request->input('lat');
+            $business_data['lng']     = $request->input('lng');
+            //dd($business_data);
+            $business_data_res = BusinessListingModel::where('id',$business_id)->update($business_data);
+
+            if($business_data_res)
+            {
+                $json['business_id'] = $business_id;
+                $json['status']      = 'SUCCESS';
+                $json['message']     = 'Business Second Step Updated Successfully ! .';
+            }
+            else
+            {
+                 $json['status']  = 'ERROR';
+                 $json['message'] = 'Error Occure while Updating Business.';
+            }
+
+            return response()->json($json);
+
+    }
+
+    public function update_business_step3(Request $request)
+    {
+         $business_id                          = $request->input('business_id');
+
+         $business_data['prefix_name']         = $request->input('prefix_name');
+         $business_data['contact_person_name'] = $request->input('contact_person_name');
+         $business_data['mobile_number']       = $request->input('mobile_number');
+
+         $business_data_res=BusinessListingModel::where('id',$business_id)->update($business_data);
+
+          if($business_data_res)
+          {
+              $json['business_id'] = $business_id;
+              $json['status']      = 'SUCCESS';
+              $json['message']     = 'Business Third Step Updated Successfully ! .';
+          }
+          else
+          {
+               $json['status']  = 'ERROR';
+               $json['message'] = 'Error Occure while Updating Business.';
+          }
+
+          return response()->json($json);
+    }
+
+    public function update_business_step4(Request $request)
+    {
+        $business_id = $request->input('business_id');
+
+
+        $business_data['company_info']   = $request->input('company_info');
+        $business_data['establish_year'] = $request->input('establish_year');
+        $business_data['keywords']       = $request->input('keywords');
+        $is_sunday                       = $request->input('is_sunday');
+       
+
+         $payment_mode_arr               =  explode(",",$request->input('payment_mode'));
+        //dd($payment_mode);
+        $payment_count         = count($payment_mode_arr);
+        $business_payment_mode = BusinessPaymentModeModel::where('business_id',$business_id);
+        if($business_payment_mode)
+        {
+           $res= $business_payment_mode->delete();
+        }
+      
+        if($payment_count>0)
+        {
+              foreach($payment_mode_arr as $key =>$value) 
+              {
+                 if($value!=null)
+                 {
+                        $arr_payment_mode_data['business_id'] = $business_id;
+                        $arr_payment_mode_data['title']       = $value;
+                        $insert_data                          = BusinessPaymentModeModel::create($arr_payment_mode_data);
+                 }
+
+              }
+
+        }
+
+        $business_data_res               = BusinessListingModel::where('id',$business_id)->update($business_data);
+        if($business_data_res)
+        {
+
+            $arr_time                = array();
+            $arr_time['business_id'] = $business_id;
+            $arr_time['mon_open']    = $request->input('mon_in');
+            $arr_time['mon_close']   = $request->input('mon_out');
+            $arr_time['tue_open']    = $request->input('tue_in');
+            $arr_time['tue_close']   = $request->input('tue_out');
+            $arr_time['wed_open']    = $request->input('wed_in');
+            $arr_time['wed_close']   = $request->input('wed_out');
+            $arr_time['thus_open']   = $request->input('thu_in');
+            $arr_time['thus_close']  = $request->input('thu_out');
+            $arr_time['fri_open']    = $request->input('fri_in');
+            $arr_time['fri_close']   = $request->input('fri_out');
+            $arr_time['sat_open']    = $request->input('sat_in');
+            $arr_time['sat_close']   = $request->input('sat_out');
+            if($is_sunday == '1')
+            { 
+                 $arr_time['sun_open']    = $request->input('sun_in');
+                 $arr_time['sun_close']   = $request->input('sun_out');
+            }
+            else
+            {
+                $arr_time['sun_open']  = "";
+                $arr_time['sun_close'] = "";
+            } 
+
+            $business_time_exist = BusinessTimeModel::where('business_id',$business_id)->first(['id','business_id']);
+
+            if($business_time_exist)
+            {
+                $arr_exist = $business_time_exist->toArray();
+                if(count($arr_exist) > 0)
+                {
+                    $business_time_update = BusinessTimeModel::where('business_id',$business_id)->update($arr_time);
+                }
+            }
+            else 
+            {
+                    $business_time_add = BusinessTimeModel::create($arr_time);
+            }
+
+             $json['business_id'] = $business_id;
+             $json['status']      = 'SUCCESS';
+             $json['message']     = 'Business Fourth Step Updated Successfully ! .';
+
+        }
+        else
+        {
+           $json['status']  = 'ERROR';
+           $json['message'] = 'Error Occure while Updating Business.';
+        }
+
+        return response()->json($json);
+
+
 
     }
 
