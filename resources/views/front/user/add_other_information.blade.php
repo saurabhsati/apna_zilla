@@ -84,7 +84,7 @@
                         <div class="row">
                           <div class="col-lg-2 label-text">Establishment Year <span>:</span></div>
                             <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                              <input type="text"  class="input_acct"  id="establish_year" name="establish_year"  placeholder="Enter Establishment Year" data-rule-required="true"  />
+                              <input type="text"  class="input_acct"  id="establish_year" name="establish_year"  placeholder="Enter Establishment Year" data-rule-required="true"  data-rule-number="true" data-rule-minlength="4" maxlength="4"/>
                                <div class="error_msg">{{ $errors->first('establish_year') }} </div>
                             </div>
                         </div>

@@ -111,7 +111,7 @@
                         <div class="col-sm-12 col-md-12 col-lg-10 m_l">
                           <div class="input-group">
                           <span class="input-group-addon" id="basic-addon1">+91</span>
-                          <input type="text" class="form-control"  id="mobile_no" name="mobile_no" placeholder="Enter Mobile Number" data-rule-required="true" />
+                          <input type="text" class="form-control"  id="mobile_no" name="mobile_no" placeholder="Enter Mobile Number" data-rule-required="true" data-rule-number="true"   data-rule-minlength="10" maxlength="10"/>
                           </div>
                           <!-- <div class="hyper_link_more"><a href="#">Add more mobile number</a></div> -->
                           <div class="error_msg">{{ $errors->first('mobile_no') }} </div>
