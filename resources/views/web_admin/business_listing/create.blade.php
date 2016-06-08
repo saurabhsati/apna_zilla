@@ -637,14 +637,14 @@
               <div class="form-group">
                
                 <div class="col-sm-3 col-lg-3 controls" style="margin-left: 51px;">
-                    <input type="checkbox"  name="payment_mode[]" value="Cash Payment"  />
-                     <label class="control-label"> Cash Payment </label>
+                    <input type="checkbox"  name="payment_mode[]" value="Cash"  />
+                     <label class="control-label"> Cash </label>
                     <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                 </div>
              
                 <div class="col-sm-5 col-lg-3 controls">
-                    <input type="checkbox"  name="payment_mode[]" value="Paying online" />
-                    <label class=" control-label"> Paying online  </label>
+                    <input type="checkbox"  name="payment_mode[]" value="Net Banking" />
+                    <label class=" control-label"> Net Banking  </label>
                     <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                 </div>
               </div>
@@ -652,42 +652,42 @@
 
               <div class="form-group">
                 <div class="col-sm-3 col-lg-3 controls" style="margin-left: 51px;">
-                 <input type="checkbox"  name="payment_mode[]" value="Paying by cheque"/>
-                  <label class=" control-label" > Paying by cheque  </label>
+                 <input type="checkbox"  name="payment_mode[]" value="Cheque"/>
+                  <label class=" control-label" > Cheque  </label>
                   <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                 </div>
             
                 <div class="col-sm-5 col-lg-3 controls">
-                    <input type="checkbox"  name="payment_mode[]" value="Paying by credit"/>
-                      <label class="control-label"> Paying by credit  </label>
+                    <input type="checkbox"  name="payment_mode[]" value="Credit Card "/>
+                      <label class="control-label"> Credit Card   </label>
                       <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                 </div>
               </div>
 
               <div class="form-group">
                <div class="col-sm-3 col-lg-3 controls" style="margin-left: 51px;">
-                    <input type="checkbox"  name="payment_mode[]" value="Paying by Dabit Card "/>
-                      <label class="control-label">Paying by Dabit Card  </label>
+                    <input type="checkbox"  name="payment_mode[]" value="Debit Card"/>
+                      <label class="control-label">Debit Card </label>
                <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                 </div>
              
                <div class="col-sm-5 col-lg-3 controls">
-                    <input type="checkbox"  name="payment_mode[]" value="Gift cards" />
-                     <label class="control-label"> Gift cards  </label>
+                    <input type="checkbox"  name="payment_mode[]" value="Gift Card" />
+                     <label class="control-label"> Gift Card  </label>
                   <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                 </div>
               </div>
 
               <div class="form-group">
                <div class="col-sm-3 col-lg-3 controls" style="margin-left: 51px;">
-                    <input type="checkbox"  name="payment_mode[]" value="Paying by Bank Trnasfer"/>
-                     <label class="control-label"> Paying by Bank Trnasfer  </label>
+                    <input type="checkbox"  name="payment_mode[]" value="Bank Transfer"/>
+                     <label class="control-label"> Bank Transfer  </label>
                      <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                 </div>
            
                <div class="col-sm-5 col-lg-3 controls">
-                    <input type="checkbox"  name="payment_mode[]" value="Paying by lay-by"/>
-                    <label class="control-label"> Paying by lay-by  </label>
+                    <input type="checkbox"  name="payment_mode[]" value="Lay-by"/>
+                    <label class="control-label"> Lay-by  </label>
                     <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                 </div>
               </div>
