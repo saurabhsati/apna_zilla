@@ -1549,6 +1549,10 @@ class UserController extends Controller
            {
             echo "done";
            }
+           else
+           {
+            echo "fail";
+           }
         }
 
     }
@@ -1563,6 +1567,10 @@ class UserController extends Controller
             echo "done";
 
         }
+        else
+       {
+        echo "fail";
+       }
 
     }
     public function my_favourite_businesses(Request $request,$page='1')

@@ -423,7 +423,7 @@ class BusinessListingController extends Controller
         $arr_all  = array();
         $arr_all=$request->all();
         $business_service=$arr_all['business_service'];
-        $payment_mode=$arr_all['payment_mode'];
+        $payment_mode=$request->input('payment_mode');
         $form_data	= array();
  		$business_data = array();
  		$arr_rules = array();
@@ -510,10 +510,14 @@ class BusinessListingController extends Controller
         }
         $payment_count = count($payment_mode);
          //exit;
+        $business_payment = BusinessPaymentModeModel::where('business_id',$id);
+        if( $business_payment)
+        {
+             $res= $business_payment->delete();
+        }
         if($payment_count>0)
         {
-            $business_payment = BusinessPaymentModeModel::where('business_id',$id);
-             $res= $business_payment->delete();
+            
 
          foreach($payment_mode as $key =>$value)
          {

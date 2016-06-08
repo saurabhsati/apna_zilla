@@ -80,7 +80,7 @@
                       <div class="row">
                         <div class="col-lg-2 label-text">Company Information <span>:</span></div>
                           <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                            <textarea  class="input_acct" id="company_info" name="company_info" style="width: 682px;" placeholder="Enter Company Information" data-rule-required="true" />{{ isset($business['company_info'])?$business['company_info']:'' }}</textarea>
+                            <textarea  class="input_acct" id="company_info" name="company_info" style="width: 682px;" placeholder="Enter Company Information" data-rule-required="true" />{{ isset($business['company_info'])?strip_tags($business['company_info']):'' }}</textarea>
                             <div class="error_msg">{{ $errors->first('company_info') }} </div>
                           </div>
                        </div>
@@ -101,7 +101,7 @@
                       <div class="row">
                         <div class="col-lg-2 label-text">Keywords <span>:</span></div>
                           <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                            <textarea  class="input_acct" id="keywords" name="keywords"  style="width: 682px;" placeholder="Enter Keywords" data-rule-required="true" />{{ isset($business['keywords'])?$business['keywords']:'' }}</textarea>
+                            <textarea  class="input_acct" id="keywords" name="keywords"  style="width: 682px;" placeholder="Enter Keywords" data-rule-required="true" />{{ isset($business['keywords'])?strip_tags($business['keywords']):'' }}</textarea>
                             <div class="error_msg">{{ $errors->first('keywords') }} </div>
                           </div>
                        </div>
@@ -122,14 +122,14 @@
                                
                              
                              <div class="col-sm-3 col-lg-5 controls" >
-                                  <input type="checkbox"  name="payment_mode[]" value="Cash Payment" @if(search_array('Cash Payment',$selected_paymnt_arr)) checked="checked" @endif value="Paying online" />
-                                  <label class="label-text"> Cash Payment </label>
+                                  <input type="checkbox"  name="payment_mode[]" value="Cash" @if(search_array('Cash',$selected_paymnt_arr)) checked="checked" @endif  />
+                                  <label class="label-text"> Cash </label>
                                   <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                               </div>
                              
                                 <div class="col-sm-5 col-lg-4 controls">
-                                    <input type="checkbox"  name="payment_mode[]" @if(search_array('Paying online',$selected_paymnt_arr)) checked @endif value="Paying online" />
-                                    <label class=" label-text"> Paying online  </label>
+                                    <input type="checkbox"  name="payment_mode[]" @if(search_array('Net Banking',$selected_paymnt_arr)) checked @endif value="Net Banking" />
+                                    <label class=" label-text"> Net Banking  </label>
                                     <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                                 </div>
                               </div>
@@ -137,42 +137,42 @@
 
                               <div class="form-group">
                                 <div class="col-sm-3 col-lg-5 controls" >
-                                 <input type="checkbox"  name="payment_mode[]" value="Paying by cheque" @if(search_array('Paying by cheque',$selected_paymnt_arr)) checked @endif/>
-                                  <label class=" label-text" > Paying by cheque  </label>
+                                 <input type="checkbox"  name="payment_mode[]" value="Cheque" @if(search_array('Cheque',$selected_paymnt_arr)) checked @endif/>
+                                  <label class=" label-text" > Cheque  </label>
                                   <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                                 </div>
                             
                                 <div class="col-sm-5 col-lg-4 controls">
-                                    <input type="checkbox"  name="payment_mode[]" value="Paying by credit" @if(search_array('Paying by credit',$selected_paymnt_arr)) checked @endif/>
-                                      <label class="label-text"> Paying by credit  </label>
+                                    <input type="checkbox"  name="payment_mode[]" value="Credit Card" @if(search_array('Credit Card',$selected_paymnt_arr)) checked @endif/>
+                                      <label class="label-text"> Credit Card  </label>
                                       <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                                 </div>
                               </div>
 
                               <div class="form-group">
                                <div class="col-sm-3 col-lg-5 controls" >
-                                    <input type="checkbox"  name="payment_mode[]" value="Paying by Dabit Card" @if(search_array('Paying by Dabit Card',$selected_paymnt_arr)) checked @endif/>
-                                      <label class="label-text">Paying by Dabit Card  </label>
+                                    <input type="checkbox"  name="payment_mode[]" value="Debit Card" @if(search_array('Debit Card',$selected_paymnt_arr)) checked @endif/>
+                                      <label class="label-text">Debit Card </label>
                                <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                                 </div>
                              
                                <div class="col-sm-5 col-lg-4 controls">
-                                    <input type="checkbox"  name="payment_mode[]" value="Gift cards" @if(search_array('Gift cards',$selected_paymnt_arr)) checked @endif/>
-                                     <label class="label-text"> Gift cards  </label>
+                                    <input type="checkbox"  name="payment_mode[]" value="Gift Card" @if(search_array('Gift Card',$selected_paymnt_arr)) checked @endif/>
+                                     <label class="label-text"> Gift Card  </label>
                                   <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                                 </div> 
                               </div>
 
                               <div class="form-group">
                                <div class="col-sm-3 col-lg-5 controls" >
-                                    <input type="checkbox"  name="payment_mode[]" value="Paying by Bank Transfer" @if(search_array('Paying by Bank Transfer',$selected_paymnt_arr)) checked @endif/>
-                                     <label class="label-text"> Paying by Bank Trnasfer  </label>
+                                    <input type="checkbox"  name="payment_mode[]" value="Bank Transfer" @if(search_array('Bank Transfer',$selected_paymnt_arr)) checked @endif/>
+                                     <label class="label-text">Bank Transfer  </label>
                                      <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                                 </div>
                            
                                <div class="col-sm-5 col-lg-4 controls">
-                                    <input type="checkbox"  name="payment_mode[]" value="Paying by lay-by" @if(search_array('Paying by lay-by',$selected_paymnt_arr)) checked @endif/>
-                                    <label class="label-text"> Paying by lay-by  </label>
+                                    <input type="checkbox"  name="payment_mode[]" value="Lay-by" @if(search_array('Lay-by',$selected_paymnt_arr)) checked @endif/>
+                                    <label class="label-text"> Lay-by  </label>
                                     <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                                 </div>
                               </div>
