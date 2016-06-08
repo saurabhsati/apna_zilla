@@ -529,6 +529,7 @@ class FrontBusinessController extends Controller
                     {
                       $uploaded_image_gallery[$key]['url']=url('/')."/uploads/business/business_upload_image/".$image_gallery['image_name'];
                       $uploaded_image_gallery[$key]['image_name']=$image_gallery['image_name'];
+                      $uploaded_image_gallery[$key]['id']=$image_gallery['id'];
                     }
                  } 
 
@@ -786,12 +787,128 @@ class FrontBusinessController extends Controller
         }
 
         return response()->json($json);
-
-
-
     }
 
+    public function update_business_step5(Request $request)
+    {
+        $destinationPath = $this->business_base_upload_img_path;
+        $business_id =$request->input('business_id');
+        $flag=1;
+        $business_service = explode(",",$request->input('business_service'));
+        if(sizeof($business_service))
+        {
+              foreach($business_service as $key =>$value) 
+              {
+                 if($value!=null)
+                 {
 
+                        $arr_serv_data['business_id']=$business_id;
+                        $arr_serv_data['name']=$value;
+                        $insert_data = BusinessServiceModel::create($arr_serv_data);
+                        if($insert_data)
+                        {
+                            $flag=1;
+                        }
+                        else
+                        {
+                             $flag=0;
+                        }
+                }
+             }
+
+        }
+
+         $files = $request->file('business_image');
+         $file_count = count($files);
+         $uploadcount = 0;
+         foreach($files as $file)
+         {
+             if($file!=null)
+             {
+                $fileName = $file->getClientOriginalName();
+                $fileExtension  = strtolower($file->getClientOriginalExtension());
+                $flag=1;
+                if(in_array($fileExtension,['png','jpg','jpeg']))
+                {
+                      $filename =sha1(uniqid().$fileName.uniqid()).'.'.$fileExtension;
+                      $file->move($destinationPath,$filename);
+                      $arr_insert['image_name']=$filename;
+                      $arr_insert['business_id']=$business_id;
+                      $insert_data1=$this->BusinessImageUploadModel->create($arr_insert);
+                      $uploadcount ++;
+                }
+                else
+                {
+                     Session::flash('error','Invalid file extension');
+                     $flag=0;
+                }
+                
+            }
+         }
+
+          if($flag==1)
+          {
+              $json['business_id'] = $business_id;
+              $json['status']      = 'SUCCESS';
+              $json['message']     = 'Business Fifth Step Updated Successfully ! .';
+
+          }
+          else
+          {
+             $json['status'] = 'ERROR';
+             $json['message']  = 'Error Occure while Updating Business.';
+          }
+          return response()->json($json);
+    }
+
+    public function delete_gallery(Request $request)
+    {
+        $business_base_upload_img_path =base_path()."/public/uploads/business/business_upload_image/";
+
+        $image_name=$request->input('image_name');
+
+        $id=$request->input('id');
+
+        $Business = $this->BusinessImageUploadModel->where('id',$id);
+        $res= $Business->delete();
+        if($res)
+        {
+           $business_base_upload_img_path.$image_name;
+           if(unlink($business_base_upload_img_path.$image_name))
+           {
+           
+              $json['status']      = 'SUCCESS';
+              $json['message']     = 'Business Gallery Image Deleted Successfully ! .';
+
+          }
+          else
+          {
+             $json['status'] = 'ERROR';
+             $json['message']  = 'Error Occure while Deleting Business Gallery.';
+          }
+          return response()->json($json);
+        }
+    }
+
+    public function delete_service(Request $request)
+    {
+        $id=$request->input('id');
+        $service = BusinessServiceModel::where('id',$id);
+        $res= $service->delete();
+        if($res)
+        {
+
+           $json['status']      = 'SUCCESS';
+           $json['message']     = 'Business Service Deleted Successfully ! .';
+
+        }
+        else
+        {
+           $json['status'] = 'ERROR';
+           $json['message']  = 'Error Occure while Deleting Business Service.';
+        }
+        return response()->json($json);
+    }
 
 
 

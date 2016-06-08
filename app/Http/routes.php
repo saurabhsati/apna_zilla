@@ -656,13 +656,17 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 			Route::post('store_business_step4',       	['as' => 'business_store_business_step4'    ,'uses' =>'Api\FrontBusinessController@store_business_step4']);
 			Route::post('store_business_step5',       	['as' => 'business_store_business_step5'    ,'uses' =>'Api\FrontBusinessController@store_business_step5']);
 
-			Route::any('edit_business_step',       	['as' => 'business_edit_business_step1'    ,'uses' =>'Api\FrontBusinessController@edit_business_step']);
+			Route::any('edit_business_step',      	 	['as' => 'business_edit_business_step'    	,'uses' =>'Api\FrontBusinessController@edit_business_step']);
 			
 			Route::post('update_business_step1',       	['as' => 'business_update_business_step1'    ,'uses' =>'Api\FrontBusinessController@update_business_step1']);
 			Route::post('update_business_step2',       	['as' => 'business_update_business_step2'    ,'uses' =>'Api\FrontBusinessController@update_business_step2']);
 			Route::post('update_business_step3',       	['as' => 'business_update_business_step3'    ,'uses' =>'Api\FrontBusinessController@update_business_step3']);
 			Route::post('update_business_step4',       	['as' => 'business_update_business_step4'    ,'uses' =>'Api\FrontBusinessController@update_business_step4']);
 			Route::post('update_business_step5',       	['as' => 'business_update_business_step5'    ,'uses' =>'Api\FrontBusinessController@update_business_step5']);
+			
+
+			Route::post('delete_gallery',       		['as' => 'delete_gallery'    				,'uses' =>'Api\FrontBusinessController@delete_gallery']);
+			Route::post('delete_service',       		['as' => 'delete_service'   				,'uses' =>'Api\FrontBusinessController@delete_service']);
 			
 		});
 
