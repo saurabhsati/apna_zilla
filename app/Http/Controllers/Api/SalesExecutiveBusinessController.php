@@ -113,7 +113,7 @@ class SalesExecutiveBusinessController extends Controller
               		    	 		    }
               	    	 		   }
               	    	    }
-                           $arr_data[$key]['sub_category_title']    = implode(',',$sub_category_title);
+                           $arr_data[$key]['sub_category_title'] = implode(',',$sub_category_title);
 
                   	   	}
                      }
@@ -203,8 +203,8 @@ class SalesExecutiveBusinessController extends Controller
         }
         else
         {
-           $json['status']  = 'ERROR';
-           $json['message'] = 'Error Occure while Creating Business.';
+          $json['status']  = 'ERROR';
+          $json['message'] = 'Error Occure while Creating Business.';
 
         }
         
@@ -628,9 +628,10 @@ class SalesExecutiveBusinessController extends Controller
       }
 
 
-       
-       $chk_business_category = [];
-       $chk_business_category = BusinessListingModel::where('id', '=', $business_id)->where('busiess_ref_public_id',$business_cat_slug)->first();
+       if($business_cat_slug)
+       {
+        $chk_business_category = [];
+        $chk_business_category = BusinessListingModel::where('id', '=', $business_id)->where('busiess_ref_public_id',$business_cat_slug)->first();
        if($chk_business_category)
        {
             $arr_business = $chk_business_category->toArray();
@@ -644,6 +645,9 @@ class SalesExecutiveBusinessController extends Controller
            $public_id                              = $this->objpublic->generate_business_public_by_category($business_cat_slug,$business_id);
            $business_data['busiess_ref_public_id'] = $public_id;
         }
+
+       }
+       
 
         $business_data_res = BusinessListingModel::where('id',$business_id)->update($business_data);
         if($business_data_res)
