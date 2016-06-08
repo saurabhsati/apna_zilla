@@ -332,12 +332,12 @@ class VenderController extends Controller
 		            'first_name' 	=> $first_name,
 		            'email'      	=> $email,
 		            'gender' 		=> $gender,
-		            'marital_status' => $marital_status,
+		            'marital_status'=> $marital_status,
 		            'd_o_b'    		=> date('Y-m-d',strtotime($d_o_b)),
 		            'married_date'  => date('Y-m-d',strtotime($married_date)),
 		            'city' 			=> $city,
-		            'state'			=>$state,
-		            'pincode'		=>$pincode,
+		            'state'			=> $state,
+		            'pincode'		=> $pincode,
 		            'area' 			=> $area,
 		            'mobile_no' 	=> $mobile_no
 		          ];
