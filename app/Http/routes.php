@@ -649,7 +649,10 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 			/* Front Business Route*/
 		Route::group(array('prefix' => '/business'), function()
 		{
+
 			Route::post('/',       						['as' => 'business_index'     				,'uses' =>'Api\FrontBusinessController@index']);
+			Route::post('favorite',       			    ['as' => 'business_favorite'     			,'uses' =>'Api\FrontBusinessController@favorite']);
+			Route::post('toggle_favourite',       	    ['as' => 'business_toggle_favourite'     	,'uses' =>'Api\FrontBusinessController@toggle_favourite']);
 			Route::post('store_business_step1',       	['as' => 'business_store_business_step1'    ,'uses' =>'Api\FrontBusinessController@store_business_step1']);
 			Route::post('store_business_step2',       	['as' => 'business_store_business_step2'    ,'uses' =>'Api\FrontBusinessController@store_business_step2']);
 			Route::post('store_business_step3',       	['as' => 'business_store_business_step3'    ,'uses' =>'Api\FrontBusinessController@store_business_step3']);
@@ -658,18 +661,20 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 			Route::any('edit_business_step',      	 	['as' => 'business_edit_business_step'    	,'uses' =>'Api\FrontBusinessController@edit_business_step']);
 			
+			/* Update Business */
 			Route::post('update_business_step1',       	['as' => 'business_update_business_step1'    ,'uses' =>'Api\FrontBusinessController@update_business_step1']);
 			Route::post('update_business_step2',       	['as' => 'business_update_business_step2'    ,'uses' =>'Api\FrontBusinessController@update_business_step2']);
 			Route::post('update_business_step3',       	['as' => 'business_update_business_step3'    ,'uses' =>'Api\FrontBusinessController@update_business_step3']);
 			Route::post('update_business_step4',       	['as' => 'business_update_business_step4'    ,'uses' =>'Api\FrontBusinessController@update_business_step4']);
 			Route::post('update_business_step5',       	['as' => 'business_update_business_step5'    ,'uses' =>'Api\FrontBusinessController@update_business_step5']);
 			
-
+            /* Perticular item delete service (Gallery Image & Services )*/
 			Route::post('delete_gallery',       		['as' => 'delete_gallery'    				,'uses' =>'Api\FrontBusinessController@delete_gallery']);
 			Route::post('delete_service',       		['as' => 'delete_service'   				,'uses' =>'Api\FrontBusinessController@delete_service']);
 			
 		});
 		
+		/* Assign Membership*/
 		Route::post('assign_membership',					['as' => 'assign_membership' 	  ,'uses' 	=>'Api\MembershipPlanController@assign_membership']);
 		Route::post('get_plan_cost',				 	['as' => 'get_plan_cost' 	      ,'uses' 	=>'Api\MembershipPlanController@get_plan_cost']);
 
@@ -686,7 +691,8 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		/* Common service for getting the Subcategory */
 		Route::group(array('prefix' => '/category_common'), function()
 		{
-			Route::get('get_sub_category_by_main',  		['as' => 'get_states_by_country' 					,'uses' => 'Api\CommonController@get_sub_category_by_main']);
+			Route::post('get_sub_category_by_main',  		['as' => 'get_states_by_country' 					,'uses' => 'Api\CommonController@get_sub_category_by_main']);
+			Route::post('get_main_category',  				['as' => 'get_main_category' 					,'uses' => 'Api\CommonController@get_main_category']);
 		});
 
 
