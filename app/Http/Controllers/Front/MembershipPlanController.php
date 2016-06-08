@@ -12,7 +12,7 @@ use App\Models\MemberCostModel;
 use Session;
 class MembershipPlanController extends Controller
 {
-	 public function assign_membership($enc_business_id,$enc_business_name,$enc_user_id,$enc_category_id)
+	public function assign_membership($enc_business_id,$enc_business_name,$enc_user_id,$enc_category_id)
     {
     	//echo $enc_user_id;
         $page_title="Assign Membership";

@@ -669,6 +669,9 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 			Route::post('delete_service',       		['as' => 'delete_service'   				,'uses' =>'Api\FrontBusinessController@delete_service']);
 			
 		});
+		
+		Route::post('assign_membership',					['as' => 'assign_membership' 	  ,'uses' 	=>'Api\MembershipPlanController@assign_membership']);
+		Route::post('get_plan_cost',				 	['as' => 'get_plan_cost' 	      ,'uses' 	=>'Api\MembershipPlanController@get_plan_cost']);
 
 
 

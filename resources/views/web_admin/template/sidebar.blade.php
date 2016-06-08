@@ -201,7 +201,7 @@
              <li class="{{ Request::segment(2)=='membershipcost'? 'active':'' }}">
                 <a href="javascript:void(0)"  class="dropdown-toggle">
                     <i class="fa fa-inr"></i>
-                    <span>Membership Plan Costs</span>
+                    <span>Plan Costs</span>
                     <b class="arrow fa fa-angle-right"></b>
                 </a>
                  <ul class="submenu">
