@@ -630,23 +630,23 @@ class SalesExecutiveBusinessController extends Controller
 
        if($business_cat_slug)
        {
-        $chk_business_category = [];
-        $chk_business_category = BusinessListingModel::where('id', '=', $business_id)->where('busiess_ref_public_id',$business_cat_slug)->first();
-       if($chk_business_category)
-       {
-            $arr_business = $chk_business_category->toArray();
-            if(sizeof($arr_business)>0)
-            {
-              $business_data['busiess_ref_public_id'] = $business_cat_slug;
+          $chk_business_category = [];
+          $chk_business_category = BusinessListingModel::where('id', '=', $business_id)->where('busiess_ref_public_id',$business_cat_slug)->first();
+           if($chk_business_category)
+           {
+              $arr_business = $chk_business_category->toArray();
+              if(sizeof($arr_business)>0)
+              {
+                $business_data['busiess_ref_public_id'] = $business_cat_slug;
+              }
             }
-        }
-        else
-        {
-           $public_id                              = $this->objpublic->generate_business_public_by_category($business_cat_slug,$business_id);
-           $business_data['busiess_ref_public_id'] = $public_id;
-        }
+            else
+            {
+               $public_id                              = $this->objpublic->generate_business_public_by_category($business_cat_slug,$business_id);
+               $business_data['busiess_ref_public_id'] = $public_id;
+            }
 
-       }
+        }
        
 
         $business_data_res = BusinessListingModel::where('id',$business_id)->update($business_data);
@@ -725,14 +725,13 @@ class SalesExecutiveBusinessController extends Controller
     {
         $business_id = $request->input('business_id');
 
-
         $business_data['company_info']   = $request->input('company_info');
         $business_data['establish_year'] = $request->input('establish_year');
         $business_data['keywords']       = $request->input('keywords');
         $is_sunday                       = $request->input('is_sunday');
        
 
-         $payment_mode_arr               =  explode(",",$request->input('payment_mode'));
+        $payment_mode_arr = explode(",",$request->input('payment_mode'));
         //dd($payment_mode);
         $payment_count         = count($payment_mode_arr);
         $business_payment_mode = BusinessPaymentModeModel::where('business_id',$business_id);
@@ -756,28 +755,28 @@ class SalesExecutiveBusinessController extends Controller
 
         }
 
-        $business_data_res               = BusinessListingModel::where('id',$business_id)->update($business_data);
+        $business_data_res = BusinessListingModel::where('id',$business_id)->update($business_data);
         if($business_data_res)
         {
 
             $arr_time                = array();
             $arr_time['business_id'] = $business_id;
-            $arr_time['mon_open']    = $request->input('mon_in');
-            $arr_time['mon_close']   = $request->input('mon_out');
-            $arr_time['tue_open']    = $request->input('tue_in');
-            $arr_time['tue_close']   = $request->input('tue_out');
-            $arr_time['wed_open']    = $request->input('wed_in');
-            $arr_time['wed_close']   = $request->input('wed_out');
-            $arr_time['thus_open']   = $request->input('thu_in');
-            $arr_time['thus_close']  = $request->input('thu_out');
-            $arr_time['fri_open']    = $request->input('fri_in');
-            $arr_time['fri_close']   = $request->input('fri_out');
-            $arr_time['sat_open']    = $request->input('sat_in');
-            $arr_time['sat_close']   = $request->input('sat_out');
+            $arr_time['mon_open']    = $request->input('mon_open');
+            $arr_time['mon_close']   = $request->input('mon_close');
+            $arr_time['tue_open']    = $request->input('tue_open');
+            $arr_time['tue_close']   = $request->input('tue_close');
+            $arr_time['wed_open']    = $request->input('wed_open');
+            $arr_time['wed_close']   = $request->input('wed_close');
+            $arr_time['thus_open']   = $request->input('thus_open');
+            $arr_time['thus_close']  = $request->input('thus_close');
+            $arr_time['fri_open']    = $request->input('fri_open');
+            $arr_time['fri_close']   = $request->input('fri_close');
+            $arr_time['sat_open']    = $request->input('sat_open');
+            $arr_time['sat_close']   = $request->input('sat_close');
             if($is_sunday == '1')
             { 
-                 $arr_time['sun_open']    = $request->input('sun_in');
-                 $arr_time['sun_close']   = $request->input('sun_out');
+                 $arr_time['sun_open']    = $request->input('sun_open');
+                 $arr_time['sun_close']   = $request->input('sun_close');
             }
             else
             {
@@ -816,6 +815,129 @@ class SalesExecutiveBusinessController extends Controller
 
 
     }
+
+
+    public function update_business_step5(Request $request)
+    {
+        $destinationPath = $this->business_base_upload_img_path;
+        $business_id =$request->input('business_id');
+        $flag=1;
+        $business_service = explode(",",$request->input('business_service'));
+        if(sizeof($business_service))
+        {
+              foreach($business_service as $key =>$value) 
+              {
+                 if($value!=null)
+                 {
+
+                        $arr_serv_data['business_id']=$business_id;
+                        $arr_serv_data['name']=$value;
+                        $insert_data = BusinessServiceModel::create($arr_serv_data);
+                        if($insert_data)
+                        {
+                            $flag=1;
+                        }
+                        else
+                        {
+                             $flag=0;
+                        }
+                }
+             }
+
+        }
+
+         $files = $request->file('business_image');
+         $file_count = count($files);
+         $uploadcount = 0;
+         foreach($files as $file)
+         {
+             if($file!=null)
+             {
+                $fileName = $file->getClientOriginalName();
+                $fileExtension  = strtolower($file->getClientOriginalExtension());
+                $flag=1;
+                if(in_array($fileExtension,['png','jpg','jpeg']))
+                {
+                      $filename =sha1(uniqid().$fileName.uniqid()).'.'.$fileExtension;
+                      $file->move($destinationPath,$filename);
+                      $arr_insert['image_name']=$filename;
+                      $arr_insert['business_id']=$business_id;
+                      $insert_data1=$this->BusinessImageUploadModel->create($arr_insert);
+                      $uploadcount ++;
+                }
+                else
+                {
+                     Session::flash('error','Invalid file extension');
+                     $flag=0;
+                }
+                
+            }
+         }
+
+          if($flag==1)
+          {
+              $json['business_id'] = $business_id;
+              $json['status']      = 'SUCCESS';
+              $json['message']     = 'Business Fifth Step Updated Successfully ! .';
+
+          }
+          else
+          {
+             $json['status'] = 'ERROR';
+             $json['message']  = 'Error Occure while Updating Business.';
+          }
+          return response()->json($json);
+    }
+
+    public function delete_gallery(Request $request)
+    {
+        $business_base_upload_img_path =base_path()."/public/uploads/business/business_upload_image/";
+
+        $image_name=$request->input('image_name');
+
+        $id=$request->input('id');
+
+        $Business = $this->BusinessImageUploadModel->where('id',$id);
+        $res= $Business->delete();
+        if($res)
+        {
+           $business_base_upload_img_path.$image_name;
+           if(unlink($business_base_upload_img_path.$image_name))
+           {
+           
+              $json['status']      = 'SUCCESS';
+              $json['message']     = 'Business Gallery Image Deleted Successfully ! .';
+
+          }
+          else
+          {
+             $json['status'] = 'ERROR';
+             $json['message']  = 'Error Occure while Deleting Business Gallery.';
+          }
+          return response()->json($json);
+        }
+    }
+
+    public function delete_service(Request $request)
+    {
+        $id=$request->input('id');
+        $service = BusinessServiceModel::where('id',$id);
+        $res= $service->delete();
+        if($res)
+        {
+
+           $json['status']      = 'SUCCESS';
+           $json['message']     = 'Business Service Deleted Successfully ! .';
+
+        }
+        else
+        {
+           $json['status'] = 'ERROR';
+           $json['message']  = 'Error Occure while Deleting Business Service.';
+        }
+        return response()->json($json);
+    }
+
 
 
 
