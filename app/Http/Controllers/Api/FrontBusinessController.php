@@ -46,8 +46,8 @@ class FrontBusinessController extends Controller
        $this->BusinessImageUploadModel=new BusinessImageUploadModel();
 
        $this->business_public_upload_img_path = url('/')."/uploads/business/business_upload_image/";
-       $this->business_base_upload_img_path = base_path()."/public/uploads/business/business_upload_image/";
-       $this->objpublic = new GeneratePublicId();
+       $this->business_base_upload_img_path   = base_path()."/public/uploads/business/business_upload_image/";
+       $this->objpublic                       = new GeneratePublicId();
 	}
 
 
@@ -91,14 +91,15 @@ class FrontBusinessController extends Controller
 
                  if(isset($business['user_details']) && sizeof($business['user_details'])>0)
                  {
-                      $arr_data[$key]['vender_first_name']         = $business['user_details']['first_name'];
-                      $arr_data[$key]['vender_public_id']         = $business['user_details']['public_id'];
+                      $arr_data[$key]['vender_first_name'] = $business['user_details']['first_name'];
+                      $arr_data[$key]['vender_public_id']  = $business['user_details']['public_id'];
                  }
 
 
 
 
                  $sub_category_title=$main_cat_title='';
+
                  if(isset($business['category']) && sizeof($business['category'])>0)
                  {
               	  	foreach ($business['category'] as $key2 => $selected_category) 
@@ -125,6 +126,7 @@ class FrontBusinessController extends Controller
                  }
 
          }
+
             $json['data']    = $arr_data;
             $json['status']  = 'SUCCESS';
             $json['message'] = 'Business List !';
@@ -172,15 +174,19 @@ class FrontBusinessController extends Controller
               $json['message']               = 'Please Select Image.';
           }
 
-         $insert_data = BusinessListingModel::create($arr_data);
+          $insert_data = BusinessListingModel::create($arr_data);
 
-         $business_id = $insert_data->id;
+          $business_id = $insert_data->id;
 
           $business_main_cat_slug=$request->input('business_main_cat_slug');
+
           $public_id = $this->objpublic->generate_business_public_by_category($business_main_cat_slug,$business_id);
+
           BusinessListingModel::where('id', '=', $business_id)->update(array('busiess_ref_public_id' => $public_id));
+
           $insert_data=0;
-           if(isset($business_cat) && sizeof($business_cat)>0)
+
+          if(isset($business_cat) && sizeof($business_cat)>0)
           {
               foreach ($business_cat as $key => $value)
               {
@@ -189,8 +195,9 @@ class FrontBusinessController extends Controller
                   $insert_data = BusinessCategoryModel::create($arr_cat_data);
               }
           }
+      
          if($insert_data)
-         {
+          {
                $json['business_id'] = $business_id;
                $json['status']      = 'SUCCESS';
                $json['message']     = 'Business First Step completed Successfully ! .';
@@ -219,6 +226,7 @@ class FrontBusinessController extends Controller
         $arr_data['lng']     = $request->input('lng');
 
         $location_add = BusinessListingModel::where(array('user_id'=>$user_id,'id'=>$business_id))->update($arr_data);
+
         if($location_add)
         {
             $json['business_id'] = $business_id;
@@ -244,6 +252,7 @@ class FrontBusinessController extends Controller
 
 
         $location_add = BusinessListingModel::where(array('user_id'=>$user_id,'id'=>$business_id))->update($arr_data);
+
         if($location_add)
         {
            
@@ -262,9 +271,9 @@ class FrontBusinessController extends Controller
 
     public function store_business_step4(Request $request)
     {
-        $json                           = array();
-        $business_id         = $request->input('business_id');
-        $user_id             = $request->input('user_id');
+        $json        = array();
+        $business_id = $request->input('business_id');
+        $user_id     = $request->input('user_id');
 
         $arr_data['company_info']   = $request->input('company_info');
         $arr_data['establish_year'] = $request->input('establish_year');
@@ -280,9 +289,9 @@ class FrontBusinessController extends Controller
         {
               foreach ($payment_mode as $key => $value)
               {
-                  $arr_paymentmode_data['business_id']=$business_id;
-                  $arr_paymentmode_data['title']=$value;
-                  $insert_data = BusinessPaymentModeModel::create($arr_paymentmode_data);
+                  $arr_paymentmode_data['business_id'] = $business_id;
+                  $arr_paymentmode_data['title']       = $value;
+                  $insert_data                         = BusinessPaymentModeModel::create($arr_paymentmode_data);
               }
          }
 
@@ -355,16 +364,16 @@ class FrontBusinessController extends Controller
             foreach($files as $file) 
             {
                 $destinationPath = $this->business_base_upload_img_path;
-                $fileName = $file->getClientOriginalName();
-                $fileExtension  = strtolower($file->getClientOriginalExtension());
+                $fileName        = $file->getClientOriginalName();
+                $fileExtension   = strtolower($file->getClientOriginalExtension());
 
                 if(in_array($fileExtension,['png','jpg','jpeg']))
                 {
-                      $filename =sha1(uniqid().$fileName.uniqid()).'.'.$fileExtension;
+                      $filename = sha1(uniqid().$fileName.uniqid()).'.'.$fileExtension;
                       $file->move($destinationPath,$filename);
-                      $arr_insert['image_name']=$filename;
-                      $arr_insert['business_id']=$business_id;
-                      $insert_data1=$this->BusinessImageUploadModel->create($arr_insert);
+                      $arr_insert['image_name']  = $filename;
+                      $arr_insert['business_id'] = $business_id;
+                      $insert_data1              = $this->BusinessImageUploadModel->create($arr_insert);
                       $uploadcount ++;
                 }
                 else
@@ -382,42 +391,53 @@ class FrontBusinessController extends Controller
         }
         else
         {
-             $json['status'] = 'ERROR';
-             $json['message']  = 'Error Occure while Creating Business.';
+             $json['status']  = 'ERROR';
+             $json['message'] = 'Error Occure while Creating Business.';
         }
 
         return response()->json($json);
     }
 
-    public function edit_business_step1(Request $request)
+    public function edit_business_step(Request $request)
     {
        $business_id = $request->input('business_id');
+
        $business_public_img_path = url('/')."/uploads/business/main_image/";
+
        $page_title ="Edit Business";
+
        $parent_obj_category = CategoryModel::where('parent','=',0)->select('cat_id','title')->orderBy('title','ASC')->get();
 
         if($parent_obj_category)
         {
             $arr_main_category = $parent_obj_category->toArray();
         }
+
         $obj_sub_category = CategoryModel::where('parent','!=','0')->get();
 
         if($obj_sub_category)
         {
             $arr_sub_category = $obj_sub_category->toArray();
         }
-        $obj_business_data=BusinessListingModel::with(['category'])->where('id',$business_id)->first();
+
+        $obj_business_data=BusinessListingModel::with(['category','payment_mode','business_times','image_upload_details','service'])->where('id',$business_id)->first();
+
         if($obj_business_data)
         {
           $business_data=$obj_business_data->toArray();
         }
 
-        $arr_data=[];
+         $arr_data=[];
+
         if(isset($business_data) && sizeof($business_data)>0)
         {
-          $arr_data['main_image']            = url('/uploads/business/main_image').'/'.$business_data['main_image'];
-          $arr_data['business_name']         = $business_data['business_name'];
-          $arr_data['business_id']           = $business_data['id'];
+                /* Step 1 Data */
+
+                $arr_data['business_id']           = $business_data['id'];
+                $arr_data['busiess_ref_public_id']           = $business_data['busiess_ref_public_id'];
+                $arr_data['main_image']            = url('/uploads/business/main_image').'/'.$business_data['main_image'];
+                $arr_data['business_name']         = $business_data['business_name'];
+               
 
                  $sub_category_title=$main_cat_title='';
                  if(isset($business_data['category']) && sizeof($business_data['category'])>0)
@@ -446,12 +466,93 @@ class FrontBusinessController extends Controller
 
                     }
                  }
-        }
+
+                /* Step 2 Data */
+                $arr_data['area']        = $business_data['area'];
+                $arr_data['country']     = $business_data['country'];
+                $arr_data['state']       = $business_data['state'];
+                $arr_data['city']        = $business_data['city'];
+                $arr_data['lat']         = $business_data['lat'];
+                $arr_data['lng']         = $business_data['lng'];
+                $arr_data['pincode']     = $business_data['pincode'];
+
+                /* Step 3 Data */
+                $arr_data['prefix_name']             =        $business_data['prefix_name'];
+                $arr_data['contact_person_name']     =        $business_data['contact_person_name'];
+                $arr_data['mobile_number']           =        $business_data['mobile_number'];
+
+
+                /* Step 4 Data */
+                $arr_data['company_info']   = strip_tags($business_data['company_info']);
+                $arr_data['establish_year'] = $business_data['establish_year'];
+                $arr_data['keywords']       = strip_tags($business_data['keywords']);
+
+                 if(isset($business_data['business_times']) && sizeof($business_data['business_times'])>0)
+                 {
+                    foreach ($business_data['business_times'] as $time) 
+                    {
+                         $arr_data['mon_open']   = $time['mon_open'];
+                         $arr_data['mon_close']  = $time['mon_close'];
+                         $arr_data['tue_open']   = $time['tue_open'];
+                         $arr_data['tue_close']  = $time['tue_close'];
+                         $arr_data['wed_open']   = $time['wed_open'];
+                         $arr_data['wed_close']  = $time['wed_close'];
+                         $arr_data['thus_open']  = $time['thus_open'];
+                         $arr_data['thus_close'] = $time['thus_close'];
+                         $arr_data['fri_open']   = $time['fri_open'];
+                         $arr_data['fri_close']  = $time['fri_close'];
+                         $arr_data['sat_open']   = $time['sat_open'];
+                         $arr_data['sat_close']  = $time['sat_close'];
+                         $arr_data['sun_open']   = $time['sun_open'];
+                         $arr_data['sun_close']  = $time['sun_close'];
+                    }
+                }
+                $selected_payment_mode=array();
+                if(isset($business_data['payment_mode']) && sizeof($business_data['payment_mode'])>0)
+                 {
+                    foreach ($business_data['payment_mode'] as $payment) 
+                    {
+                      $selected_payment_mode[]=$payment['title'];
+                    }
+                 }   
+                 $arr_data['selected_payment_mode']=implode(',', $selected_payment_mode);
+               
+       
+                /* Step 5 Data */
+
+                /* Uploaded Image Data*/
+
+                $uploaded_image_gallery =array();
+                if(isset($business_data['image_upload_details']) && sizeof($business_data['image_upload_details'])>0)
+                 {
+                    foreach ($business_data['image_upload_details'] as $key =>  $image_gallery) 
+                    {
+                      $uploaded_image_gallery[$key]['url']=url('/')."/uploads/business/business_upload_image/".$image_gallery['image_name'];
+                      $uploaded_image_gallery[$key]['image_name']=$image_gallery['image_name'];
+                    }
+                 } 
+
+                 $arr_data['uploaded_image_gallery']=$uploaded_image_gallery;  
+
+                /* Services Data*/
+
+                 $services_array =array();
+                 if(isset($business_data['service']) && sizeof($business_data['service'])>0)
+                 {
+                    foreach ($business_data['service'] as $key => $serv) 
+                    {
+                       $services_array[$key]['id']=$serv['id'];
+                       $services_array[$key]['name']=$serv['name'];
+                    }
+                 } 
+                $arr_data['business_services']= $services_array;  
+         }
+         
         if(sizeof($arr_data)>0)
         {
             $json['data']    = $arr_data;
             $json['status']  = 'SUCCESS';
-            $json['message'] = 'Business List !';
+            $json['message'] = 'Business  First Step Data Get Successfully !';
         }
         else
         {
@@ -525,17 +626,168 @@ class FrontBusinessController extends Controller
               if($business_data_res)
               {
                   $json['business_id'] = $business_id;
-                  $json['next_url'] = url('/').'/api/business/edit_business_step2/'.$business_id;
                   $json['status']      = 'SUCCESS';
                   $json['message']     = 'Business First Step Updated Successfully ! .';
               }
               else
               {
-                   $json['status'] = 'ERROR';
-                   $json['message']  = 'Error Occure while Creating Business.';
+                   $json['status']  = 'ERROR';
+                   $json['message'] = 'Error Occure while Updating Business.';
               }
 
               return response()->json($json);
+
+    }
+   
+    public function update_business_step2(Request $request)
+    {
+
+
+            $business_id              = $request->input('business_id');
+            $business_data['area']    = $request->input('area');
+            $business_data['country'] = $request->input('country');
+            $business_data['state']   = $request->input('state');
+            $business_data['city']    = $request->input('city');
+            $business_data['pincode'] = $request->input('pincode');
+            $business_data['lat']     = $request->input('lat');
+            $business_data['lng']     = $request->input('lng');
+            //dd($business_data);
+            $business_data_res=BusinessListingModel::where('id',$business_id)->update($business_data);
+
+            if($business_data_res)
+            {
+                $json['business_id'] = $business_id;
+                $json['status']      = 'SUCCESS';
+                $json['message']     = 'Business Second Step Updated Successfully ! .';
+            }
+            else
+            {
+                 $json['status']  = 'ERROR';
+                 $json['message'] = 'Error Occure while Updating Business.';
+            }
+
+            return response()->json($json);
+
+    }
+
+    public function update_business_step3(Request $request)
+    {
+         $business_id                          = $request->input('business_id');
+
+         $business_data['prefix_name']         = $request->input('prefix_name');
+         $business_data['contact_person_name'] = $request->input('contact_person_name');
+         $business_data['mobile_number']       = $request->input('mobile_number');
+
+         $business_data_res=BusinessListingModel::where('id',$business_id)->update($business_data);
+
+          if($business_data_res)
+          {
+              $json['business_id'] = $business_id;
+              $json['status']      = 'SUCCESS';
+              $json['message']     = 'Business Third Step Updated Successfully ! .';
+          }
+          else
+          {
+               $json['status'] = 'ERROR';
+               $json['message']  = 'Error Occure while Updating Business.';
+          }
+
+          return response()->json($json);
+    }
+
+    public function update_business_step4(Request $request)
+    {
+        $business_id = $request->input('business_id');
+
+
+        $business_data['company_info']   = $request->input('company_info');
+        $business_data['establish_year'] = $request->input('establish_year');
+        $business_data['keywords']       = $request->input('keywords');
+        $is_sunday                       = $request->input('is_sunday');
+       
+
+         $payment_mode_arr               =  explode(",",$request->input('payment_mode'));
+        //dd($payment_mode);
+        $payment_count = count($payment_mode_arr);
+        $business_payment_mode = BusinessPaymentModeModel::where('business_id',$business_id);
+        if($business_payment_mode)
+        {
+           $res= $business_payment_mode->delete();
+        }
+      
+        if($payment_count>0)
+        {
+              foreach($payment_mode_arr as $key =>$value) 
+              {
+                 if($value!=null)
+                 {
+                        $arr_payment_mode_data['business_id']=$business_id;
+                        $arr_payment_mode_data['title']=$value;
+                        $insert_data = BusinessPaymentModeModel::create($arr_payment_mode_data);
+                 }
+
+              }
+
+        }
+
+        $business_data_res               = BusinessListingModel::where('id',$business_id)->update($business_data);
+        if($business_data_res)
+        {
+
+            $arr_time                = array();
+            $arr_time['business_id'] = $business_id;
+            $arr_time['mon_open']    = $request->input('mon_in');
+            $arr_time['mon_close']   = $request->input('mon_out');
+            $arr_time['tue_open']    = $request->input('tue_in');
+            $arr_time['tue_close']   = $request->input('tue_out');
+            $arr_time['wed_open']    = $request->input('wed_in');
+            $arr_time['wed_close']   = $request->input('wed_out');
+            $arr_time['thus_open']   = $request->input('thu_in');
+            $arr_time['thus_close']  = $request->input('thu_out');
+            $arr_time['fri_open']    = $request->input('fri_in');
+            $arr_time['fri_close']   = $request->input('fri_out');
+            $arr_time['sat_open']    = $request->input('sat_in');
+            $arr_time['sat_close']   = $request->input('sat_out');
+            if($is_sunday=='1')
+            { 
+                 $arr_time['sun_open']    = $request->input('sun_in');
+                 $arr_time['sun_close']   = $request->input('sun_out');
+            }
+            else
+            {
+                $arr_time['sun_open']="";
+                $arr_time['sun_close']="";
+            } 
+
+            $business_time_exist = BusinessTimeModel::where('business_id',$business_id)->first(['id','business_id']);
+
+            if($business_time_exist)
+            {
+                $arr_exist = $business_time_exist->toArray();
+                if(count($arr_exist) > 0)
+                {
+                    $business_time_update = BusinessTimeModel::where('business_id',$business_id)->update($arr_time);
+                }
+            }
+            else 
+            {
+                    $business_time_add = BusinessTimeModel::create($arr_time);
+            }
+
+             $json['business_id'] = $business_id;
+             $json['status']      = 'SUCCESS';
+             $json['message']     = 'Business Fourth Step Updated Successfully ! .';
+
+        }
+        else
+        {
+           $json['status'] = 'ERROR';
+           $json['message']  = 'Error Occure while Updating Business.';
+        }
+
+        return response()->json($json);
+
+
 
     }
 

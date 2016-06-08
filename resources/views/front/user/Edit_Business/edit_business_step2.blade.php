@@ -270,16 +270,12 @@ $(document ).ready(function (){
   $("#validation-form").validate({
     // Specify the validation rules
       rules: {
-          building: "required",
-          street: "required",
-          landmark: "required",
+         
           area: "required",
       },
     // Specify the validation error messages
       messages: {
-          building: "Please enter building name.",
-          street: "Please enter street.",
-          landmark: "Please enter landmark.",
+         
           area: "Please enter area.",
 
       },

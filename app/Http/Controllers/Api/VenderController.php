@@ -42,13 +42,22 @@ class VenderController extends Controller
            {
 	           	foreach ($user_info as $key => $value) 
 	            {
-	            	 $arr_data[$key]['first_name']  = $value['first_name'];
-	            	 $arr_data[$key]['profile_pic'] = url('/uploads/users/profile_pic').'/'.$value['profile_pic'];
-	            	 $arr_data[$key]['public_id']   = $value['public_id'];
-	            	 $arr_data[$key]['mobile_no']   = $value['mobile_no'];
-	            	 $arr_data[$key]['created_at']  = date('Y-m-d',strtotime($value['created_at']));
-	            	 $arr_data[$key]['is_active']   = $value['is_active'];
-	            	 $arr_data[$key]['id']          = $value['id'];
+	            	 $arr_data[$key]['first_name']     = $value['first_name'];
+	            	 $arr_data[$key]['gender']         = $value['gender'];
+	            	 $arr_data[$key]['marital_status'] = $value['marital_status'];
+	            	 $arr_data[$key]['profile_pic']    = url('/uploads/users/profile_pic').'/'.$value['profile_pic'];
+	            	 $arr_data[$key]['public_id']      = $value['public_id'];
+	            	 $arr_data[$key]['mobile_no']      = $value['mobile_no'];
+	            	 $arr_data[$key]['created_at']     = date('Y-m-d',strtotime($value['created_at']));
+	            	 $arr_data[$key]['d_o_b']          = date('Y-m-d',strtotime($value['d_o_b']));
+	            	 $arr_data[$key]['married_date']   = date('Y-m-d',strtotime($value['married_date']));
+	            	 $arr_data[$key]['email']          = $value['email'];
+	            	 $arr_data[$key]['state']          = $value['state'];
+	            	 $arr_data[$key]['city']           = $value['city'];
+	            	 $arr_data[$key]['pincode']        = $value['pincode'];
+	            	 $arr_data[$key]['area']           = $value['area'];
+	            	 $arr_data[$key]['is_active']      = $value['is_active'];
+	            	 $arr_data[$key]['id']             = $value['id'];
 	            }
 	        }
             $json['data'] 	 = $arr_data;
