@@ -182,7 +182,7 @@
               <div class="row">
                 <div class="col-lg-3  label-text">Pin code :</div>
                   <div class="col-sm-9 col-md-9 col-lg-9 m_l">
-                     <input type="text" data-geo="postal_code" value="{{ isset($business['pincode'])?$business['pincode']:'' }}" id="pincode" name="pincode" class="input_acct">
+                     <input type="text" data-geo="postal_code" value="{{ isset($business['pincode'])?$business['pincode']:'' }}" id="pincode" name="pincode" class="input_acct" data-rule-number="true"   data-rule-minlength="6" maxlength="6">
                     <div class="error_msg">{{ $errors->first('zipcode') }} </div>
                 </div>
               </div>

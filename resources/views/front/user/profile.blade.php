@@ -377,7 +377,7 @@
                         <span class="input-group-addon" id="basic-addon1">+91</span>
                         <input type="text" name="mobile_no"
                                value="{{ isset($user['mobile_no'])?$user['mobile_no']:'' }}"
-                               class="form-control" placeholder="Enter Mobile No:" data-rule-integer="true" data-rule-required="true"/>
+                               class="form-control" placeholder="Enter Mobile No:" data-rule-integer="true" data-rule-required="true" data-rule-number="true"   data-rule-minlength="10" maxlength="10" />
 
                         </div>
                         </div>

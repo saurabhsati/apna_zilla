@@ -161,7 +161,7 @@
                            id="d_o_b"
                            data-rule-required="true"
                            placeholder="Enter Date of Birth"
-                           value="{{ date('Y-m-d',strtotime($arr_user_data['d_o_b'])) }}"/>
+                           value="{{ date('m/d/Y',strtotime($arr_user_data['d_o_b'])) }}"/>
                     <span class='help-block'>{{ $errors->first('d_o_b') }}</span>
                 </div>
             </div>
@@ -171,7 +171,7 @@
                 <label class="col-sm-3 col-lg-2 control-label" for="marital_status">Marital Status<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
 
-                      <select class="form-control" data-placeholder="Choose a Category" name="marital_status" tabindex="1">
+                      <select class="form-control" data-placeholder="Choose a Category" name="marital_status" tabindex="1"  onchange="chkeck_marital_status(this);">
                         <option value="" >Select...</option>
                         <option value="Married" {{ $arr_user_data['marital_status']=='Married'?"selected ='selected'":'' }}>Married</option>
                         <option value="Un Married" {{ $arr_user_data['marital_status']=='Un Married'?"selected='selected'":'' }}>Un Married</option>
@@ -186,7 +186,7 @@
           <div class="form-group" style="" id="div_married_date" name="div_married_date">
                 <label class="col-sm-3 col-lg-2 control-label" for="married_date">Married Date<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control date-picker" name="married_date" id="married_date" data-rule-required="" placeholder="Enter Married  Date" value="{{ date('m-d-y',strtotime($arr_user_data['married_date'])) }}"/>
+                    <input class="form-control date-picker" name="married_date" id="married_date" data-rule-required="" placeholder="Enter Married  Date" value="{{ date('m/d/Y',strtotime($arr_user_data['married_date'])) }}"/>
                     <span class='help-block'>{{ $errors->first('married_date') }}</span>
                </div>
             </div>
@@ -228,7 +228,7 @@
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="password">Password<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input type="password"
+                    <input type="text"
                            class="form-control"
                            name="password"
                            id="password"
