@@ -709,21 +709,37 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		{
 			Route::group(array('prefix' => '/business'), function()
 		    {
+		    	//Business listing
+				Route::get('/',  ['as' => 'business_index', 'uses' =>'Api\SalesExecutiveBusinessController@index']);
+				
+				// Add business  
+			  	Route::group(array('prefix' => '/add'), function()
+			    {
+					Route::post('/', ['as'=>'add_step1', 'uses'=>'Api\SalesExecutiveBusinessController@store_business_step1']);
+					Route::post('step2', ['as'=>'add_step2', 'uses'=>'Api\SalesExecutiveBusinessController@store_business_step2']);
+					Route::post('step3', ['as'=>'add_step3', 'uses'=>'Api\SalesExecutiveBusinessController@store_business_step3']);
+					Route::post('step4', ['as'=>'add_step4', 'uses'=>'Api\SalesExecutiveBusinessController@store_business_step4']);
+					Route::post('step5', ['as'=>'add_step5', 'uses'=>'Api\SalesExecutiveBusinessController@store_business_step5']);
+				});
 
-			  Route::get('/',  ['as' => 'business_index', 'uses' =>'Api\SalesExecutiveBusinessController@index']);
-			  Route::post('store', ['as' => 'business_store', 'uses' =>'Api\SalesExecutiveBusinessController@store']);
+			    //edit business
+			   Route::post('/edit',  ['as' => 'business_index', 'uses' =>'Api\SalesExecutiveBusinessController@edit']);
+
+			    //update business
+				Route::group(array('prefix' => '/update'), function()
+			    {
+					Route::post('/', ['as'=>'edit_step1', 'uses'=>'Api\SalesExecutiveBusinessController@update_business_step1']);
+					Route::post('step2', ['as'=>'edit_step2', 'uses'=>'Api\SalesExecutiveBusinessController@update_business_step2']);
+					Route::post('step3', ['as'=>'edit_step3', 'uses'=>'Api\SalesExecutiveBusinessController@update_business_step3']);
+					Route::post('step4', ['as'=>'edit_step4', 'uses'=>'Api\SalesExecutiveBusinessController@update_business_step4']);
+					Route::post('step5', ['as'=>'edit_step5', 'uses'=>'Api\SalesExecutiveBusinessController@update_business_step5']);
+				});
+
+
 
 			});
-			Route::group(array('prefix' => '/addbusiness'), function()
-		    {
-				Route::post('/', ['as'=>'add_step1', 'uses'=>'Api\SalesExecutiveBusinessController@store_business_step1']);
-				Route::post('step2', ['as'=>'add_step2', 'uses'=>'Api\SalesExecutiveBusinessController@store_business_step2']);
-				Route::post('step3', ['as'=>'add_step3', 'uses'=>'Api\SalesExecutiveBusinessController@store_business_step3']);
-				Route::post('step4', ['as'=>'add_step4', 'uses'=>'Api\SalesExecutiveBusinessController@store_business_step4']);
-				Route::post('step5', ['as'=>'add_step5', 'uses'=>'Api\SalesExecutiveBusinessController@store_business_step5']);
-
-
-			});
+			
+			
 
         });  
 
