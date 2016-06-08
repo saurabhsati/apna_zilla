@@ -20,6 +20,7 @@ use App\Models\StateModel;
 use App\Models\PlaceModel;
 use App\Models\CityModel;
 use App\Models\BusinessTimeModel;
+use App\Models\FavouriteBusinessesModel;
 
 use App\Models\MembershipModel;
 use App\Models\MemberCostModel;
@@ -86,6 +87,7 @@ class FrontBusinessController extends Controller
                  $arr_data[$key]['main_image']            = url('/uploads/business/main_image').'/'.$business['main_image'];
                  $arr_data[$key]['business_name']         = $business['business_name'];
                  $arr_data[$key]['id']                    = $business['id'];
+                 $arr_data[$key]['is_verified']           = $business['is_verified'];
 
                  $sub_category_title=$main_cat_title=$main_cat_id='';
 
@@ -913,17 +915,92 @@ class FrontBusinessController extends Controller
     
     public function favorite(Request $request)
     {
-      $user_id = $request->input('user_id');
-       $obj_fav = FavouriteBusinessesModel::with('business.reviews')->where('user_id',$user_id)->where('is_favourite','=','1')
-                              ->paginate($per_page);
-             if($obj_fav)
-            {
-                $tmp_arr_fav   = $obj_fav->toArray(); 
-                $arr_paginate_business   = $obj_fav->render();   
-                $arr_fav       = $tmp_arr_fav['data'];
+
+
+        $user_id = $request->input('user_id');
+        $obj_fav = FavouriteBusinessesModel::with('business.reviews')->where('user_id',$user_id)->where('is_favourite','=','1')
+                              ->get();
+        if($obj_fav)
+        {
+            $fav_business_listing   = $obj_fav->toArray(); 
+           
+        }
+        $arr_data=[];
+        if(isset($fav_business_listing) && sizeof($fav_business_listing)>0)
+        {
+             foreach ($fav_business_listing as $key => $fav)
+             {
+                   $arr_data[$key]['is_favourite']      = $fav['is_favourite'];
+                   $arr_data[$key]['business_id']       = $fav['business_id'];
+                   $arr_data[$key]['main_image']        = url('/uploads/business/main_image').'/'.$fav['business'][0]['main_image'];
+                   $arr_data[$key]['business_name']     = $fav['business'][0]['business_name'];
+                   $arr_data[$key]['id']                = $fav['business'][0]['id'];
+                   $arr_data[$key]['review_star_count'] = sizeof($fav['business'][0]['reviews']);
+                   $arr_data[$key]['establish_year']    = $fav['business'][0]['establish_year'];
+                   $arr_data[$key]['area']              = $fav['business'][0]['area'];
+                   $arr_data[$key]['mobile_number']     = $fav['business'][0]['mobile_number'];
+                   $arr_data[$key]['is_verified']       = $fav['business'][0]['is_verified'];
             }
+        }
+        if($arr_data)
+        {
+
+            $json['data']    = $arr_data;
+            $json['status']  = 'SUCCESS';
+            $json['message'] = 'Favorite Business List !';
+        }
+        else
+        {
+          $json['status']  = 'ERROR';
+          $json['message'] = 'No Favorite Business Record Found!';
+        }
+
+         return response()->json($json);
     }
 
+    public function toggle_favourite(Request $request)
+    {
+        $user_id     = $request->input('user_id');
+        $business_id = $request->input('business_id');
+
+        $arr_fav =array();
+
+        $obj_fav = FavouriteBusinessesModel::where(array('user_id'=>$user_id,'business_id'=>$business_id))->get();
+        if($obj_fav)
+        {
+          $arr_fav = $obj_fav->toArray();
+        }
+        
+        if(isset($arr_fav) && sizeof($arr_fav)>0)
+        {
+             foreach ($arr_fav as $key => $fav)
+             {
+                if($fav['is_favourite']== '0')
+                {
+                    $result = FavouriteBusinessesModel::where(array('user_id'=>$user_id,'business_id'=>$business_id))
+                                                       ->update(array('is_favourite'=>'1'));
+                    $json['status']  = 'SUCCESS';
+                    $json['message'] = 'Business Favorite Successfully  !';
+                }
+
+                if($fav['is_favourite']== '1')
+                {
+                  $result = FavouriteBusinessesModel::where(array('user_id'=>$user_id,'business_id'=>$business_id))
+                                                    ->update(array('is_favourite'=>'0'));
+                  $json['status']  = 'SUCCESS';
+                  $json['message'] = 'Business Un-Favorite Successfully !';
+                }
+
+             }
+        }     
+        else
+        {
+          $json['status']  = 'ERROR';
+          $json['message'] = 'No Favorite Business Record Found!';
+        }
+     
+      return response()->json($json);
+    }
 
 
 

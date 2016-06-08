@@ -139,4 +139,29 @@ class CommonController extends Controller
         return response()->json($json);
     }
 
+    public function get_main_category(Request $request)
+    {
+        $obj_category = CategoryModel::where('parent','0')->get();
+
+        $arr_category = array();
+        $json = array();
+
+        if($obj_category && count($obj_category)>0)
+        {
+            $arr_category = $obj_category->toArray();
+            $json['status'] = "SUCCESS";
+            $json['data']   = $arr_category;
+            $json['message']  = 'Information Get Successfully.';
+
+        }
+        else
+        {
+            $json['status'] = "ERROR";
+            $json['data']   = array(); 
+            $json['message']  = 'No Records Found !.';           
+        }
+
+        return response()->json($json);
+    }
+
 }
