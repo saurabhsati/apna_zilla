@@ -748,7 +748,12 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 				 Route::post('/delete_gallery',  ['as' => 'business_index', 'uses' =>'Api\SalesExecutiveBusinessController@delete_gallery']);
 				//delete service
 				Route::post('/delete_service',  ['as' => 'business_index', 'uses' =>'Api\SalesExecutiveBusinessController@delete_service']); 
-
+				//business verification
+				Route::post('/toggle_verifired_status',  ['as' => 'toggle_verifired_status', 'uses' =>'Api\SalesExecutiveBusinessController@toggle_verifired_status']);
+				//business status update
+				Route::post('/active_status',  ['as' => 'active_status', 'uses' =>'Api\SalesExecutiveBusinessController@_active_status']);
+				//business delete
+				Route::post('/delete',  ['as' => 'delete', 'uses' =>'Api\SalesExecutiveBusinessController@_delete']);
 
 			});
 			

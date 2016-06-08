@@ -939,6 +939,77 @@ class SalesExecutiveBusinessController extends Controller
     }
 
 
+    public function _toggle_verifired_status(Request $request)
+    {
+        $business_id           = $request->input('business_id');
+        $Business              = BusinessListingModel::where('id',$business_id)->first();
+        $is_verified           = $request->input('is_verified');
+        $Business->is_verified = $is_verified;
+        $business_verify = $Business->save();
+
+        if($business_verify)
+        {
+           $json['status']      = 'SUCCESS';
+           $json['message']     = 'Business verify  Successfully ! .';
+        }
+        else
+        {
+          $json['status']  = 'ERROR';
+          $json['message'] = 'Error Occure while verify Business.';
+
+        }
+
+        return response()->json($json);
+       
+    }
+
+    public function _active_status(Request $request)
+    {
+        $business_id         = $request->input('business_id');
+        $Business            = BusinessListingModel::where('id',$business_id)->first();
+        $is_active           = $request->input('is_active');
+        $Business->is_active = $is_active;
+        $business_active     = $Business->save();
+
+        if($business_active)
+        {
+           $json['status']      = 'SUCCESS';
+           $json['message']     = 'Business Updated Successfully ! .';
+        }
+        else
+        {
+          $json['status']  = 'ERROR';
+          $json['message'] = 'Error Occure while verify Business.';
+        }
+
+        return response()->json($json);
+       
+    }
+
+    public function _delete(Request $request)
+    {
+        $business_id     = $request->input('business_id');
+        $Business        = BusinessListingModel::where('id',$business_id)->first();
+        $business_delete = $Business->delete();
+
+        if($business_delete)
+        {
+           $json['status']  = 'SUCCESS';
+           $json['message'] = 'Business delete Successfully ! .';
+        }
+        else
+        {
+          $json['status']  = 'ERROR';
+          $json['message'] = 'Error Occure while delete Business.';
+        }
+
+        return response()->json($json);
+       
+    }
+
+    
+
+
 
 
      
