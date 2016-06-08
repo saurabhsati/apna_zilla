@@ -52,7 +52,6 @@ class VenderController extends Controller
 	            	 $arr_data[$key]['d_o_b']          = date('Y-m-d',strtotime($value['d_o_b']));
 	            	 $arr_data[$key]['married_date']   = date('Y-m-d',strtotime($value['married_date']));
 	            	 $arr_data[$key]['email']          = $value['email'];
-	            	 $arr_data[$key]['mobile_no']      = $value['mobile_no'];
 	            	 $arr_data[$key]['state']          = $value['state'];
 	            	 $arr_data[$key]['city']           = $value['city'];
 	            	 $arr_data[$key]['pincode']        = $value['pincode'];
