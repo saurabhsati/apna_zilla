@@ -911,6 +911,18 @@ class FrontBusinessController extends Controller
         return response()->json($json);
     }
     
+    public function favorite(Request $request)
+    {
+      $user_id = $request->input('user_id');
+       $obj_fav = FavouriteBusinessesModel::with('business.reviews')->where('user_id',$user_id)->where('is_favourite','=','1')
+                              ->paginate($per_page);
+             if($obj_fav)
+            {
+                $tmp_arr_fav   = $obj_fav->toArray(); 
+                $arr_paginate_business   = $obj_fav->render();   
+                $arr_fav       = $tmp_arr_fav['data'];
+            }
+    }
 
 
 

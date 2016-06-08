@@ -336,8 +336,8 @@ class VenderController extends Controller
 		            'd_o_b'    		=> date('Y-m-d',strtotime($d_o_b)),
 		            'married_date'  => date('Y-m-d',strtotime($married_date)),
 		            'city' 			=> $city,
-		            'state'			=>$state,
-		            'pincode'		=>$pincode,
+		            'state'			=> $state,
+		            'pincode'		=> $pincode,
 		            'area' 			=> $area,
 		            'mobile_no' 	=> $mobile_no
 		          ];
