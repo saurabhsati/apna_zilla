@@ -649,7 +649,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 			/* Front Business Route*/
 		Route::group(array('prefix' => '/business'), function()
 		{
-			Route::get('/',       						['as' => 'business_index'     				,'uses' =>'Api\FrontBusinessController@index']);
+			Route::post('/',       						['as' => 'business_index'     				,'uses' =>'Api\FrontBusinessController@index']);
 			Route::post('store_business_step1',       	['as' => 'business_store_business_step1'    ,'uses' =>'Api\FrontBusinessController@store_business_step1']);
 			Route::post('store_business_step2',       	['as' => 'business_store_business_step2'    ,'uses' =>'Api\FrontBusinessController@store_business_step2']);
 			Route::post('store_business_step3',       	['as' => 'business_store_business_step3'    ,'uses' =>'Api\FrontBusinessController@store_business_step3']);

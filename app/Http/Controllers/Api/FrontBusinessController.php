@@ -69,7 +69,7 @@ class FrontBusinessController extends Controller
             $arr_sub_category = $obj_sub_category->toArray();
         }
         $obj_business_listing = BusinessListingModel::orderBy('id','DESC')->where('user_id','=',$user_id)
-        																  ->with(['category','user_details','reviews','membership_plan_details'])->get();
+        																  ->with(['category','reviews','membership_plan_details'])->get();
         																  
    	    if($obj_business_listing)
    	    {
@@ -85,20 +85,9 @@ class FrontBusinessController extends Controller
                  $arr_data[$key]['busiess_ref_public_id'] = $business['busiess_ref_public_id'];
                  $arr_data[$key]['main_image']            = url('/uploads/business/main_image').'/'.$business['main_image'];
                  $arr_data[$key]['business_name']         = $business['business_name'];
-                 $arr_data[$key]['created_at']            = date('Y-m-d',strtotime($business['created_at']));
-                 $arr_data[$key]['is_active']             = $business['is_active'];
                  $arr_data[$key]['id']                    = $business['id'];
 
-                 if(isset($business['user_details']) && sizeof($business['user_details'])>0)
-                 {
-                      $arr_data[$key]['vender_first_name'] = $business['user_details']['first_name'];
-                      $arr_data[$key]['vender_public_id']  = $business['user_details']['public_id'];
-                 }
-
-
-
-
-                 $sub_category_title=$main_cat_title='';
+                 $sub_category_title=$main_cat_title=$main_cat_id='';
 
                  if(isset($business['category']) && sizeof($business['category'])>0)
                  {
@@ -113,17 +102,29 @@ class FrontBusinessController extends Controller
           		    	 		    {
           		    	 		   		if($main_category['cat_id']==$sub_category['parent'])
           		    	 		   		{
-          		    	 		   			$main_cat_title[]=$main_category['title'];
+                                $main_cat_title[]=$main_category['title'];
+          		    	 		   			$main_cat_id=$main_category['cat_id'];
                                 $arr_data[$key]['main_category_title']   = $main_cat_title[0];
           		    	 		   		}
 
           		    	 		    }
           	    	 		   }
           	    	    }
-                       $arr_data[$key]['sub_category_title']    = implode(',',$sub_category_title);
+                      if($sub_category_title!='')
+                      {
+                         $arr_data[$key]['sub_category_title']    = implode(',',$sub_category_title);
+                      }
 
               	   	}
                  }
+                 $arr_data[$key]['user_id']   = $business['user_id'];
+                 $arr_data[$key]['main_cat_id']   = $main_cat_id;
+                 $arr_data[$key]['review_star_count'] = sizeof($business['reviews']);
+                 $arr_data[$key]['establish_year']    = $business['establish_year'];
+                 $arr_data[$key]['area']              = $business['area'];
+                 $arr_data[$key]['mobile_number']     = $business['mobile_number'];
+                 $arr_data[$key]['membership_plan']   = sizeof($business['membership_plan_details']);
+                
 
          }
 
