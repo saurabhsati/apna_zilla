@@ -21,6 +21,7 @@ use App\Models\PlaceModel;
 use App\Models\CityModel;
 use App\Models\BusinessTimeModel;
 use App\Models\FavouriteBusinessesModel;
+use App\Models\DealsTransactionModel;
 
 use App\Models\MembershipModel;
 use App\Models\MemberCostModel;
@@ -999,7 +1000,74 @@ class FrontBusinessController extends Controller
           $json['message'] = 'No Favorite Business Record Found!';
         }
      
-      return response()->json($json);
+        return response()->json($json);
+    }
+    public function my_order(Request $request)
+    {
+        $user_id = $request->input('user_id');
+        $arr_order    =$arr_my_order= array();
+        $per_page = 2;
+
+        $obj_order = DealsTransactionModel::orderBy('created_at','DESC')
+                                          ->with('user_orders','order_deal.offers_info')
+                                          ->where('user_id',$user_id)
+                                          ->get();
+         if($obj_order)
+        {
+            $arr_order   = $obj_order->toArray(); 
+            
+        }
+        
+
+        if(isset($arr_order) && sizeof($arr_order)>0)
+        {
+          foreach ($arr_order as $key => $order_tran)
+           {
+                        
+                $arr_data[$key]['deal_image'] = url('uploads/deal').'/'.$order_tran['order_deal']['deal_image'];
+                $arr_data[$key]['deal_name']  = $order_tran['order_deal']['name'];
+                $final=0; 
+                foreach($order_tran['order_deal']['offers_info'] as $offers)
+                {
+                  $total=0;
+                  foreach($order_tran['user_orders'] as  $selected_offers)
+                  {
+                   if($selected_offers['offer_id']==$offers['id'])
+                   {
+
+                   
+                         $total=$total+$offers['discounted_price']*$selected_offers['order_quantity']; 
+                         $final=$final+ $total;
+                         
+                           $arr_data[$key]['offer_name']             = $offers['name'];
+                           $arr_data[$key]['offer_title']            = $offers['title'];
+                           $arr_data[$key]['offer_main_price']       = $offers['main_price'];
+                           $arr_data[$key]['offer_discounted_price'] = $offers['discounted_price'];
+                           $arr_data[$key]['offer_order_quantity']   = $selected_offers['order_quantity'];
+                           $arr_data[$key]['total']                  = $total;
+
+                    }
+                  }
+                }
+                $arr_data[$key]['transaction_status'] = $order_tran['transaction_status'];
+                $arr_data[$key]['final_amount_paid']  = $final;
+
+
+           }
+        }
+        if(sizeof($arr_data)>0)
+        {
+            $json['data']    = $arr_data;
+            $json['status']  = 'SUCCESS';
+            $json['message'] = 'Order List !';
+        }
+        else
+        {
+            $json['status']  = 'ERROR';
+            $json['message'] = 'No Order Record Found!';
+        }
+        return response()->json($json);
+
     }
 
 

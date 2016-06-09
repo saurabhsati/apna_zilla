@@ -652,6 +652,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 			Route::post('/',       						['as' => 'business_index'     				,'uses' =>'Api\FrontBusinessController@index']);
 			Route::post('favorite',       			    ['as' => 'business_favorite'     			,'uses' =>'Api\FrontBusinessController@favorite']);
+			Route::post('my_order',       			    ['as' => 'business_my_order'     			,'uses' =>'Api\FrontBusinessController@my_order']);
 			Route::post('toggle_favourite',       	    ['as' => 'business_toggle_favourite'     	,'uses' =>'Api\FrontBusinessController@toggle_favourite']);
 			Route::post('store_business_step1',       	['as' => 'business_store_business_step1'    ,'uses' =>'Api\FrontBusinessController@store_business_step1']);
 			Route::post('store_business_step2',       	['as' => 'business_store_business_step2'    ,'uses' =>'Api\FrontBusinessController@store_business_step2']);
