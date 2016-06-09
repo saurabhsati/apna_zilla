@@ -1056,12 +1056,14 @@ class SalesExecutiveBusinessController extends Controller
           }
           elseif($action=="block")
           {
+
                $this->review_block($review_id);
                $json['status']  = "SUCCESS";
                $json['message'] = 'Review Block Successfully !.';  
           }
           elseif($action=="delete")
           {
+             //dd('asdfs');
                $this->review_delete($review_id);    
                $json['status']  = "SUCCESS";
                $json['message'] = 'Review Delete Successfully !.';
@@ -1083,7 +1085,7 @@ class SalesExecutiveBusinessController extends Controller
     }
     protected function review_delete($review_id)
     {
-         $review = ReviewsModel::findById($review_id);
-         return $review->delete();
+      return ReviewsModel::where('id',$review_id)->delete();
+        
     }
 }
