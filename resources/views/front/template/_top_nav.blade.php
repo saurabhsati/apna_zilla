@@ -38,7 +38,7 @@
 
 
                          {{--@if ($user = Sentinel::check())--}}
-                         @if(Session::has('mobile_no'))
+                         @if(Session::has('mobile_no')  || Session::has('user_id'))
 
 <!--
                           <li class="nav-item">
@@ -81,7 +81,7 @@
 
 
                         </ul>
-                        <?php if(empty(session::get('mobile_no')))
+                        <?php if(empty(session::get('mobile_no')) || empty(Session::has('user_id')))
                         {
                           /*echo '<a data-toggle="modal" id="open_register" data-target="#reg_poup" class="btn btn-post" >List your Business </a>';*/
                           echo '<a data-toggle="modal" id="open_register" data-target="#reg_poup" class="btn btn-post" onclick="set_flag()" >List your Business </a>';
