@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
-
 use App\Models\BusinessListingModel;
 use App\Models\BusinessCategoryModel;
 use App\Models\BusinessImageUploadModel;
@@ -21,7 +19,6 @@ use App\Models\StateModel;
 use App\Models\PlaceModel;
 use App\Models\CityModel;
 use App\Models\BusinessTimeModel;
-
 use App\Models\MembershipModel;
 use App\Models\MemberCostModel;
 use App\Models\TransactionModel;
@@ -89,12 +86,7 @@ class SalesExecutiveBusinessController extends Controller
                           $arr_data[$key]['vender_first_name']         = $business['user_details']['first_name'];
                           $arr_data[$key]['vender_public_id']         = $business['user_details']['public_id'];
                      }
-
-                    
-
                      $arr_data[$key]['reviews'] = sizeof($business['reviews']);
-
-
                      $sub_category_title=$main_cat_title='';
                      if(isset($business['category']) && sizeof($business['category'])>0)
                      {
@@ -146,8 +138,7 @@ class SalesExecutiveBusinessController extends Controller
         $arr_data['business_name']        = $request->input('business_name');
         $business_cat                     = explode(",",$request->input('business_cat'));
         $main_image                       = $request->input('main_image');
-
-       
+     
         //Upload Image 
         if($request->hasFile('main_image'))
             {
@@ -175,8 +166,7 @@ class SalesExecutiveBusinessController extends Controller
             }
         
         //End Upload Image
-        
-
+ 
         $insert_data = BusinessListingModel::create($arr_data);
         
         //create business public id 
@@ -208,21 +198,15 @@ class SalesExecutiveBusinessController extends Controller
         {
           $json['status']  = 'ERROR';
           $json['message'] = 'Error Occure while Creating Business.';
-
         }
-        
-
         return response()->json($json);
-
       }
 
       /* Add business Store Location  step2*/
       public function store_business_step2(Request $request)
       {
         $arr_data            = array();
-       
         $business_id         = $request->input('business_id');
-
         $arr_data['area']    = $request->input('area');
         $arr_data['city']    = $request->input('city');
         $arr_data['pincode'] = $request->input('pincode');
@@ -237,17 +221,13 @@ class SalesExecutiveBusinessController extends Controller
         {
           $json['status']      = 'SUCCESS';
           $json['message']     = 'Business Location Successfully Updated.';
-
         }
         else
         {
           $json['status']  = 'ERROR';
           $json['message'] = 'Error Occure while Creating Business.';
-
         }
-
-        return response()->json($json);
-
+       return response()->json($json);
       }
       public function store_business_step3(Request $request)
       {
@@ -257,34 +237,23 @@ class SalesExecutiveBusinessController extends Controller
         $arr_data['company_info']   = $request->input('company_info');
         $arr_data['establish_year'] = $request->input('establish_year');
         $arr_data['keywords']       = $request->input('keywords');
-
-
-
         $contactInfoUpadte = BusinessListingModel::where('id', '=', $business_id)->update($arr_data);
-
         if($contactInfoUpadte)
         {
           $json['status']  = 'SUCCESS';
           $json['message'] = 'Business Contact info Successfully Updated.';
-
         }
         else
         {
           $json['status']  = 'ERROR';
           $json['message'] = 'Error Occure while Creating Business.';
-
         }
-
         return response()->json($json);
-
-
       }
-
       public function store_business_step4(Request $request)
       {
         $arr_data    = array();
         $business_id = $request->input('business_id');
-
         $arr_data['company_info']   = $request->input('company_info');
         $arr_data['establish_year'] = $request->input('establish_year');
         $arr_data['keywords']       = $request->input('keywords');
@@ -299,9 +268,7 @@ class SalesExecutiveBusinessController extends Controller
                     $arr_paymentmode_data['title']=$value;
                     $insert_data = BusinessPaymentModeModel::create($arr_paymentmode_data);
                 }
-          
         }
-
         $arr_time               = array();
 
         $arr_time['mon_open']   = $request->input('mon_open');
@@ -340,8 +307,6 @@ class SalesExecutiveBusinessController extends Controller
         }
 
         return response()->json($json);
-
-
       }
 
       public function store_business_step5(Request $request)
@@ -404,12 +369,8 @@ class SalesExecutiveBusinessController extends Controller
         $json['message'] = 'Business gallery images and services successfully updated.';
 
         return response()->json($json);
-
-
       }
-
-      
-      
+    
      //end add business
      
      //edit  business 
@@ -664,14 +625,11 @@ class SalesExecutiveBusinessController extends Controller
              $json['status']  = 'ERROR';
              $json['message'] = 'Error Occure while Updating Business.';
         }
-
         return response()->json($json);
-
     }
    
     public function update_business_step2(Request $request)
     {
-
             $business_id              = $request->input('business_id');
             $business_data['area']    = $request->input('area');
             $business_data['country'] = $request->input('country');
@@ -696,7 +654,6 @@ class SalesExecutiveBusinessController extends Controller
             }
 
             return response()->json($json);
-
     }
 
     public function update_business_step3(Request $request)
@@ -723,7 +680,6 @@ class SalesExecutiveBusinessController extends Controller
 
           return response()->json($json);
     }
-
     public function update_business_step4(Request $request)
     {
         $business_id = $request->input('business_id');
@@ -732,8 +688,7 @@ class SalesExecutiveBusinessController extends Controller
         $business_data['establish_year'] = $request->input('establish_year');
         $business_data['keywords']       = $request->input('keywords');
         $is_sunday                       = $request->input('is_sunday');
-       
-
+  
         $payment_mode_arr = explode(",",$request->input('payment_mode'));
         //dd($payment_mode);
         $payment_count         = count($payment_mode_arr);
@@ -1076,7 +1031,7 @@ class SalesExecutiveBusinessController extends Controller
         { 
            $json['data']    = $data;
            $json['status']  = 'SUCCESS';
-           $json['message'] = 'Business Review List ! .';
+           $json['message'] = 'Business Review  ! .';
         }
         else
         {
@@ -1097,39 +1052,35 @@ class SalesExecutiveBusinessController extends Controller
           {
               $this->review_activate($review_id);
               $json['status']  = "SUCCESS";
-              $json['message'] = 'Review(s) Activate Successfully !.'; 
+              $json['message'] = 'Review Activate Successfully !.'; 
           }
           elseif($action=="block")
           {
                $this->review_block($review_id);
                $json['status']  = "SUCCESS";
-               $json['message'] = 'Review(s) Block Successfully !.';  
+               $json['message'] = 'Review Block Successfully !.';  
           }
           elseif($action=="delete")
           {
                $this->review_delete($review_id);    
                $json['status']  = "SUCCESS";
-               $json['message'] = 'Review(s) Delete Successfully !.';
+               $json['message'] = 'Review Delete Successfully !.';
           }
           return response()->json($json); 
-
     }
 
    protected function review_activate($review_id)
     {
-      
         $review = ReviewsModel::where('id',$review_id)->first();
         $review->is_active = "1";
          return $review->save();
     }
-
     protected function review_block($review_id)
     {
         $review = ReviewsModel::where('id',$review_id)->first();
         $review->is_active = "0";
         return $review->save();
     }
-
     protected function review_delete($review_id)
     {
          $review = ReviewsModel::findById($review_id);
