@@ -720,7 +720,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 			Route::group(array('prefix' => '/business'), function()
 		    {
 		    	//Business listing
-				Route::get('/',  ['as' => 'business_index', 'uses' =>'Api\SalesExecutiveBusinessController@index']);
+				Route::post('/',  ['as' => 'business_index', 'uses' =>'Api\SalesExecutiveBusinessController@index']);
 				
 				// Add business  
 			  	Route::group(array('prefix' => '/add'), function()
