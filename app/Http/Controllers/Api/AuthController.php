@@ -529,12 +529,14 @@ class AuthController extends Controller
             {
                $arr_user_info = $obj_user_info->toArray();
             }
-            $data['user_id']            = $arr_user_info['id'];
-            $data['name']               = $arr_user_info['first_name'];
-            $data['email']              = $arr_user_info['email'];
+            $data['user_id']     = $arr_user_info['id'];
+            $data['name']        = $arr_user_info['first_name'];
+            $data['email']       = $arr_user_info['email'];
+            $json['account_url'] = url('/front_users/profile');
             if($data)
             {
                 $json['data']=$data;
+
                 $json['status'] = "SUCCESS";
                 $json['msg']    = "Login Successfully";
             }
@@ -629,7 +631,7 @@ class AuthController extends Controller
             $data['user_id']            = $arr_user_info['id'];
             $data['name']               = $arr_user_info['first_name'];
             $data['email']              = $arr_user_info['email'];
-            
+            $json['account_url']   = url('/front_users/profile');
             $login_status = Sentinel::login($existing_user); // process login a user
 
             if($data)
