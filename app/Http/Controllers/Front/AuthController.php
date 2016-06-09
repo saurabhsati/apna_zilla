@@ -67,11 +67,16 @@ class AuthController extends Controller
             $user_first_name = $existing_user->first_name;
             $user_email = $existing_user->email;
 
+             $obj_user_info = UserModel::where('email','=',$email)->first();
+            if($obj_user_info);
+            {
+               $arr_user_info = $obj_user_info->toArray();
+            }
             //dd($existing_user->toArray());
 
             Session::set('user_name', $user_first_name);
             Session::set('user_mail', $user_email);
-
+            Session::set('user_id', $arr_user_info['id']);
             $login_status = Sentinel::login($existing_user); // process login a user
 
             Session::flash('success','Login Successfull');
@@ -115,7 +120,7 @@ class AuthController extends Controller
 
              Session::set('user_name', $status->first_name);
              Session::set('user_mail', $status->email);
-
+             Session::set('user_id', $id);
             Session::flash('success','Login Successfull');
 
             $data['status'] = "SUCCESS";

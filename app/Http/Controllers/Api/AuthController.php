@@ -507,7 +507,7 @@ class AuthController extends Controller
 
     public function register_via_facebook(Request $request)
     {
-
+        $json          = $data   =  array();
         $fname         = $request->input('fname');
         $lname         = $request->input('lname');
         $email         = $request->input('email');
@@ -524,11 +524,23 @@ class AuthController extends Controller
             $credentials   = [ 'email' => $email ];
             $existing_user = Sentinel::findUserByCredentials($credentials);
             $login_status  = Sentinel::login($existing_user); // process login a user
-            
+            $obj_user_info = UserModel::where('email','=',$email)->first();
+            if($obj_user_info);
+            {
+               $arr_user_info = $obj_user_info->toArray();
+            }
+            $data['user_id']            = $arr_user_info['id'];
+            $data['name']               = $arr_user_info['first_name'];
+            $data['email']              = $arr_user_info['email'];
+            if($data)
+            {
+                $json['data']=$data;
+                $json['status'] = "SUCCESS";
+                $json['msg']    = "You Have Registered Successfully";
+            }
 
-            $data['status'] = "SUCCESS";
-            $data['msg']    = "Redirect to Profile Page";
-            return response()->json($data);
+           
+           
         }
         else
         {
@@ -541,38 +553,139 @@ class AuthController extends Controller
                         'via_social'            => '1',
                         'ask_for_old_password'  => '0'
                        ];
-        $status = Sentinel::registerAndActivate($arr_data);
+                         
+            $status = Sentinel::registerAndActivate($arr_data);
 
-        if($status)
+            if($status)
+            {
+                $user = Sentinel::findById($status->id);
+
+                $id   = $status->id;
+                $user = Sentinel::findById($status->id);
+                $role = Sentinel::findRoleBySlug('user');
+
+                $user->roles()->attach($role); /* Assign Normal Users Role */
+                $public_id = $this->objpublic->generate_public_id($id);
+
+                $insert_public_id = UserModel::where('id', '=', $id)->update(array('public_id' => $public_id));
+                
+                $data['name']                = $fname.' '.$lname;
+                $data['email']               = $email;
+                $data['plain_text_password'] = $password;
+                if($data)
+                {
+                    $json['data']=$data;
+                    $json['status'] = "SUCCESS";
+                    $json['msg']    = "You Have Registered Successfully";
+                }
+            }
+            else
+            {
+                $json['status'] = "ERROR";
+                $json['msg']    = "Problem Occured While Registration";
+                
+            }
+                        
+        }
+        return response()->json($json);
+    }
+
+    public function register_via_google_plus(Request $request)
+    {
+       
+
+        $name         = $request->input('name');
+        $email        = $request->input('email');
+        $first_name=$last_name      = "";
+        $array_name     = explode(" ",$name);
+        $first_name     = $array_name[0];
+       
+
+        if(!empty($array_name[1]))
         {
-            $user = Sentinel::findById($status->id);
+            $last_name = $array_name[1];
+        }
 
-            $id   = $status->id;
-            $user = Sentinel::findById($status->id);
-            $role = Sentinel::findRoleBySlug('user');
+        /* -------------     Generate a Password    ------------------------ */
+        $digits = 8;
+        $password =  rand(pow(10, $digits-1), pow(10, $digits)-1);
 
-            $user->roles()->attach($role); /* Assign Normal Users Role */
+        /* Existing User Check */
+        $user = Sentinel::createModel();
 
-            //$preferences = $this->create_preferences($status->id);  /* Create Preference for user */
+        if($user->where('email',$email)->get()->count()>0)
+        {
+            $credentials = [ 'email' => $email ];
+            $existing_user = Sentinel::findUserByCredentials($credentials);
 
-            $email_id = $email;
-
-            $data['name']                   = $fname.' '.$lname;
-            $data['email']                  = $email;
-            $data['plain_text_password']    = $password;
-
+            $user_first_name = $existing_user->first_name;
+            $user_email = $existing_user->email;
+            $obj_user_info = UserModel::where('email','=',$email)->first();
+            if($obj_user_info);
+            {
+               $arr_user_info = $obj_user_info->toArray();
+            }
             
+            $data['user_id']            = $arr_user_info['id'];
+            $data['name']               = $arr_user_info['first_name'];
+            $data['email']              = $arr_user_info['email'];
+            
+            $login_status = Sentinel::login($existing_user); // process login a user
 
-            $data['status'] = "SUCCESS";
-            $data['msg']    = "You Have Registered Successfully";
-            return response()->json($data);
+            if($data)
+            {
+                $json['data']=$data;
+                $json['status'] = "SUCCESS";
+                $json['msg']    = "Login Successfully !!";
+            }
+            return response()->json($json);
         }
         else
         {
-            $data['status'] = "ERROR";
-            $data['msg']    = "Problem Occured While Registration";
-            return response()->json($data);
-        }
-    }
 
+            $arr_data = [
+
+                        'first_name'            => $first_name,
+                        'last_name'             => $last_name,
+                        'email'                 => $email,
+                        'password'              => $password,
+                        'is_active'             => '1',
+                        'via_social'            => '1',
+                        'ask_for_old_password'  => '0'
+            ];
+            $status = Sentinel::registerAndActivate($arr_data);
+            if($status)
+            {
+                $user = Sentinel::findById($status->id);
+
+                $id = $status->id;
+                $user = Sentinel::findById($status->id);
+                $role = Sentinel::findRoleBySlug('user');
+
+                $user->roles()->attach($role); /* Assign Normal Users Role */
+                $public_id = $this->objpublic->generate_public_id($id);
+
+                $insert_public_id = UserModel::where('id', '=', $id)->update(array('public_id' => $public_id));
+                // /$preferences = $this->create_preferences($status->id);  /* Create Preference for user */
+
+                $data['name']                = $first_name.' '.$last_name;
+                $data['email']               = $email;
+                $data['plain_text_password'] = $password;
+                if($data)
+                {
+                    $json['data']   = $data;
+                    $json['status'] = "SUCCESS";
+                    $json['msg']    = "You Have Registered Successfully";
+                }
+            }
+            else
+            {
+                $json['status'] = "ERROR";
+                $json['msg']    = "Problem Occured While Registration";
+                
+            }
+         }
+         return response()->json($json);
+
+    }
 }
