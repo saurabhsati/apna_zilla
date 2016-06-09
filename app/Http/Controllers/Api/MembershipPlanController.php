@@ -75,13 +75,13 @@ class MembershipPlanController extends Controller
 	        {
 	           $json['data'] 	 = $arr_data;
 	           $json['status']      = 'SUCCESS';
-	           $json['message']     = 'Business Service Deleted Successfully ! .';
+	           $json['message']     = 'Membership Plan ! .';
 
 	        }
 	        else
 	        {
 	           $json['status'] = 'ERROR';
-	           $json['message']  = 'Error Occure while Deleting Business Service.';
+	           $json['message']  = 'Error occure while getting membership plan.';
 	        }
 	        return response()->json($json);
     }
