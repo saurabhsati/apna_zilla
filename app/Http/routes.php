@@ -539,7 +539,17 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 					
 		});
 
+		/*-------------Business Reviews Module------------*/
+		Route::group(['prefix'=>'reviews'], function (){
 
+			Route::get('/{enc_id}',       					['as' => 'admin_reviews_manage'     ,'uses' =>  'SalesUser\ReviewController@index']);
+			Route::get('view/{enc_id}',    					['as' => 'admin_reviews_view'       ,'uses' =>'SalesUser\ReviewController@view']);
+			Route::get('delete/{enc_id}',   				['as' => 'admin_reviews_delete'     ,'uses' =>'SalesUser\ReviewController@delete']);
+			Route::get('toggle_status/{enc_id}/{action}', 	['as' => 'admin_reviews_status'     ,'uses' =>'SalesUser\ReviewController@toggle_status']);
+			Route::post('multi_action',						['as' => 'admin_reviews_multiation' ,'uses' =>'SalesUser\ReviewController@multi_action']);
+		});
+
+		
 		/*------------- Sales User added  OLd Deals Module under business list ------------*/
 		Route::group(['prefix'=>'deals'], function (){
 			Route::get('/{enc_id}',						 ['as' => 'sales_deals_index'             		,'uses' =>'SalesUser\DealController@index']);
