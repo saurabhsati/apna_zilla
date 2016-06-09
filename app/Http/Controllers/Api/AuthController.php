@@ -536,7 +536,7 @@ class AuthController extends Controller
             {
                 $json['data']=$data;
                 $json['status'] = "SUCCESS";
-                $json['msg']    = "You Have Registered Successfully";
+                $json['msg']    = "Login Successfully";
             }
 
            
