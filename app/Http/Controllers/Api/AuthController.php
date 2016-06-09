@@ -529,7 +529,7 @@ class AuthController extends Controller
             {
                $arr_user_info = $obj_user_info->toArray();
             }
-            $data['user_id']     = $arr_user_info['id'];
+            $data['user_id']     = base64_encode($arr_user_info['id']);
             $data['name']        = $arr_user_info['first_name'];
             $data['email']       = $arr_user_info['email'];
             $json['account_url'] = url('/front_users/profile');
@@ -629,7 +629,7 @@ class AuthController extends Controller
                $arr_user_info = $obj_user_info->toArray();
             }
             
-            $data['user_id']            = $arr_user_info['id'];
+            $data['user_id']            = base64_encode($arr_user_info['id']);
             $data['name']               = $arr_user_info['first_name'];
             $data['email']              = $arr_user_info['email'];
             $json['account_url']   = url('/front_users/profile');
