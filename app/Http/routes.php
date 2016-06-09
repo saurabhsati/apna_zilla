@@ -646,6 +646,12 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		/* Update Front user address */
 		Route::post('update_address',			        ['as' => 'update_address'                           ,'uses' =>'Api\AuthController@update_address']);
 
+		/* Register Via Facebook*/
+		Route::post('register_via_facebook',			['as' => 'register_via_facebook'                    ,'uses' =>'Api\AuthController@register_via_facebook']);
+
+		/* Register Via Facebook*/
+		Route::post('register_via_google_plus',			['as' => 'register_via_google_plus'                    ,'uses' =>'Api\AuthController@register_via_google_plus']);
+
 			/* Front Business Route*/
 		Route::group(array('prefix' => '/business'), function()
 		{
