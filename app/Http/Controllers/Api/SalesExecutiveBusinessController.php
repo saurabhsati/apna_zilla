@@ -1048,69 +1048,91 @@ class SalesExecutiveBusinessController extends Controller
 
         return response()->json($json);
     }
-    public function review_view($enc_id)
+    public function show_review(Request $request)
     {
-      $id = base64_decode($enc_id);
-        $page_title = " Business Review :View";
+      
+         $review_id     = $request->input('review_id');
 
         $arr_review_view = array();
-        $obj_review_view =ReviewsModel::with(['business_details'])->where('id',$id)->first();
-
+        $obj_review_view =ReviewsModel::with(['business_details'])->where('id',$review_id)->first();
         if($obj_review_view)
         {
             $arr_review_view = $obj_review_view->toArray();
         }
-         return view('web_admin.reviews.view',compact('page_title','arr_review_view'));
-    }
-    public function review_toggle_status($enc_id,$action)
-    {
-        if($action=="activate")
+        $data=[];
+        if(isset($arr_review_view) && sizeof($arr_review_view)>0)
         {
-            $this->review_activate($enc_id);
+          
+              $data['id']            = $arr_review_view['id'];
+              $data['business_name'] = $arr_review_view['business_details']['business_name'];
+              $data['name']          = $arr_review_view['name'];
+              $data['mobile_number'] = $arr_review_view['mobile_number'];
+              $data['email']         = $arr_review_view['email'];
+              $data['ratings']       = $arr_review_view['ratings'];
+              $data['message']       = $arr_review_view['message'];
+             }
 
-            Session::flash('success','Review(s) Activated Successfully');
+        if($data)
+        { 
+           $json['data']    = $data;
+           $json['status']  = 'SUCCESS';
+           $json['message'] = 'Business Review List ! .';
         }
-        elseif($action=="block")
+        else
         {
-            $this->review_block($enc_id);
-
-            Session::flash('success','Review(s) Blocked Successfully');
-        }
-        elseif($action=="delete")
-        {
-            $this->review_delete($enc_id);
-
-            Session::flash('success','Review(s) Deleted Successfully');
+          $json['status']  = 'ERROR';
+          $json['message'] = 'Error Occure while Listing Business Review';
         }
 
-        return redirect()->back();
+        return response()->json($json);
+    }    
+
+    public function review_toggle_status(Request $request)
+    {        
+          $review_id             = $request->input('review_id');
+          $action             = $request->input('action');
+
+          $json =[];
+          if($action=="activate")
+          {
+              $this->review_activate($review_id);
+              $json['status']  = "SUCCESS";
+              $json['message'] = 'Review(s) Activate Successfully !.'; 
+          }
+          elseif($action=="block")
+          {
+               $this->review_block($review_id);
+               $json['status']  = "SUCCESS";
+               $json['message'] = 'Review(s) Block Successfully !.';  
+          }
+          elseif($action=="delete")
+          {
+               $this->review_delete($review_id);    
+               $json['status']  = "SUCCESS";
+               $json['message'] = 'Review(s) Delete Successfully !.';
+          }
+          return response()->json($json); 
+
     }
 
-    protected function review_activate($enc_id)
+   protected function review_activate($review_id)
     {
-        $id = base64_decode($enc_id);
-        return ReviewsModel::where('id',$id)->update(array('is_active'=>1));
-    }
-
-    protected function review_block($enc_id)
-    {
-        $id = base64_decode($enc_id);
-        return ReviewsModel::where('id',$id)->update(array('is_active'=>0));
-    }
-
-    protected function review_delete($enc_id)
-    {
-        $id = base64_decode($enc_id);
-        return ReviewsModel::where('id',$id)->delete();
-    }
-    
-
-
-
-
-     
-
       
-      
+        $review = ReviewsModel::where('id',$review_id)->first();
+        $review->is_active = "1";
+         return $review->save();
+    }
 
+    protected function review_block($review_id)
+    {
+        $review = ReviewsModel::where('id',$review_id)->first();
+        $review->is_active = "0";
+        return $review->save();
+    }
+
+    protected function review_delete($review_id)
+    {
+         $review = ReviewsModel::findById($review_id);
+         return $review->delete();
+    }
 }
