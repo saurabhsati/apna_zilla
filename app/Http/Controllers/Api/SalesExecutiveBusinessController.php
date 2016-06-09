@@ -1009,6 +1009,75 @@ class SalesExecutiveBusinessController extends Controller
        
     }
 
+     public function review_index($enc_id)
+    {
+
+        $id = base64_decode($enc_id);
+      $obj_reviews = ReviewsModel::with(['business_details'])->where('business_id',$id)->get();
+        $arr_reviews = array();
+
+        if($obj_reviews)
+        {
+            $arr_reviews = $obj_reviews->toArray();
+        }
+        $page_title = "Business Review :Manage ";
+      return view('web_admin.reviews.index',compact('page_title','arr_reviews','enc_id'));
+    }
+    public function review_view($enc_id)
+    {
+      $id = base64_decode($enc_id);
+        $page_title = " Business Review :View";
+
+        $arr_review_view = array();
+        $obj_review_view =ReviewsModel::with(['business_details'])->where('id',$id)->first();
+
+        if($obj_review_view)
+        {
+            $arr_review_view = $obj_review_view->toArray();
+        }
+         return view('web_admin.reviews.view',compact('page_title','arr_review_view'));
+    }
+    public function review_toggle_status($enc_id,$action)
+    {
+        if($action=="activate")
+        {
+            $this->review_activate($enc_id);
+
+            Session::flash('success','Review(s) Activated Successfully');
+        }
+        elseif($action=="block")
+        {
+            $this->review_block($enc_id);
+
+            Session::flash('success','Review(s) Blocked Successfully');
+        }
+        elseif($action=="delete")
+        {
+            $this->review_delete($enc_id);
+
+            Session::flash('success','Review(s) Deleted Successfully');
+        }
+
+        return redirect()->back();
+    }
+
+    protected function review_activate($enc_id)
+    {
+        $id = base64_decode($enc_id);
+        return ReviewsModel::where('id',$id)->update(array('is_active'=>1));
+    }
+
+    protected function review_block($enc_id)
+    {
+        $id = base64_decode($enc_id);
+        return ReviewsModel::where('id',$id)->update(array('is_active'=>0));
+    }
+
+    protected function review_delete($enc_id)
+    {
+        $id = base64_decode($enc_id);
+        return ReviewsModel::where('id',$id)->delete();
+    }
     
 
 

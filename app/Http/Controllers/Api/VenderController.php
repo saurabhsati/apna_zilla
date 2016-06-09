@@ -27,7 +27,7 @@ class VenderController extends Controller
     }
     /* List the venders by sales_executive public id RNT-NPNL5 */
     public function index(Request $request)
- 	{
+ 	{   $arr_data = array();
  		$sales_user_public_id=$request->input('public_id');
        
         $obj_user = Sentinel::createModel()->orderBy('created_at','DESC')->where('sales_user_public_id','=',$sales_user_public_id)->get();
