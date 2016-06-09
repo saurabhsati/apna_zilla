@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\SalesUser;
 
 use Illuminate\Http\Request;
 
@@ -12,8 +12,7 @@ use Session;
 use Validator;
 class ReviewController extends Controller
 {
-    //
-    public function __construct()
+   public function __construct()
     {
 
     }
@@ -21,7 +20,7 @@ class ReviewController extends Controller
     {
 
         $id = base64_decode($enc_id);
-    	$obj_reviews = ReviewsModel::with(['business_details'])->where('business_id',$id)->get();
+        $obj_reviews = ReviewsModel::with(['business_details'])->where('business_id',$id)->get();
         $arr_reviews = array();
 
         if($obj_reviews)
@@ -29,11 +28,11 @@ class ReviewController extends Controller
             $arr_reviews = $obj_reviews->toArray();
         }
         $page_title = "Business Review :Manage ";
-	    return view('sales_user.reviews.index',compact('page_title','arr_reviews','enc_id'));
+        return view('sales_user.reviews.index',compact('page_title','arr_reviews','enc_id'));
     }
     public function view($enc_id)
     {
-    	$id = base64_decode($enc_id);
+        $id = base64_decode($enc_id);
         $page_title = " Business Review :View";
 
         $arr_review_view = array();

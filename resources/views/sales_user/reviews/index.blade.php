@@ -1,4 +1,4 @@
-    @extends('sales_user.template.admin')
+    @extends('sales_user.template.sales')
 
 
     @section('main_content')
