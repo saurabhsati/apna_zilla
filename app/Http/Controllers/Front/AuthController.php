@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\EmailTemplate;
 use App\Models\UserModel;
-
+use App\Common\Services\GeneratePublicId;
 use Sentinel;
 use Validator;
 use Session;
@@ -22,6 +22,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
+        $this->objpublic = new GeneratePublicId();
     }
 
     public function register_via_google_plus(Request $request)
@@ -101,7 +102,9 @@ class AuthController extends Controller
             $role = Sentinel::findRoleBySlug('user');
 
             $user->roles()->attach($role); /* Assign Normal Users Role */
+            $public_id = $this->objpublic->generate_public_id($id);
 
+            $insert_public_id = UserModel::where('id', '=', $id)->update(array('public_id' => $public_id));
             // /$preferences = $this->create_preferences($status->id);  /* Create Preference for user */
 
             $email_id = $email;
@@ -200,7 +203,9 @@ class AuthController extends Controller
             $role = Sentinel::findRoleBySlug('user');
 
             $user->roles()->attach($role); /* Assign Normal Users Role */
+            $public_id = $this->objpublic->generate_public_id($id);
 
+            $insert_public_id = UserModel::where('id', '=', $id)->update(array('public_id' => $public_id));
             //$preferences = $this->create_preferences($status->id);  /* Create Preference for user */
 
             $email_id = $email;
