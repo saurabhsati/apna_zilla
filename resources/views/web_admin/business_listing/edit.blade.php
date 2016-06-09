@@ -105,7 +105,7 @@
                   <input type="hidden" name="tmp_user_id" id="tmp_user_id" value="{{ isset($business['user_details']['id'] )?$business['user_details']['id']:'' }}">
 
                     <span class='help-block'>{{ $errors->first('user_id') }}</span>
-                     <div class="alert alert-warning">Note: Auto Complete the User Public Id field by typing prefix RNT- </div>
+                     <div class="alert alert-warning">Note: Auto Complete the User Public Id field by typing prefix RNT </div>
                 </div>
             </div>
             <div class="form-group">

@@ -102,12 +102,12 @@
                            id="user_id" 
                            data-rule-required="true"
                            placeholder="Enter User Public ID"
-                           value="RNT-"
+                           value="RNT"
                            />
                   <input type="hidden" name="tmp_user_id" id="tmp_user_id">
 
                     <span class='help-block'>{{ $errors->first('user_id') }}</span>
-                     <div class="alert alert-warning">Note: Auto Complete the User Public Id field by typing prefix RNT- </div>
+                     <div class="alert alert-warning">Note: Auto Complete the User Public Id field by typing prefix RNT </div>
                 </div>
             </div>
 
