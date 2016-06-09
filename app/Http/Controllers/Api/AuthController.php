@@ -529,12 +529,14 @@ class AuthController extends Controller
             {
                $arr_user_info = $obj_user_info->toArray();
             }
-            $data['user_id']            = $arr_user_info['id'];
-            $data['name']               = $arr_user_info['first_name'];
-            $data['email']              = $arr_user_info['email'];
+            $data['user_id']     = $arr_user_info['id'];
+            $data['name']        = $arr_user_info['first_name'];
+            $data['email']       = $arr_user_info['email'];
+            $json['account_url'] = url('/front_users/profile');
             if($data)
             {
                 $json['data']=$data;
+
                 $json['status'] = "SUCCESS";
                 $json['msg']    = "Login Successfully";
             }
@@ -558,6 +560,7 @@ class AuthController extends Controller
 
             if($status)
             {
+                $this->via_social_registration_send_mail($arr_data);
                 $user = Sentinel::findById($status->id);
 
                 $id   = $status->id;
@@ -629,7 +632,7 @@ class AuthController extends Controller
             $data['user_id']            = $arr_user_info['id'];
             $data['name']               = $arr_user_info['first_name'];
             $data['email']              = $arr_user_info['email'];
-            
+            $json['account_url']   = url('/front_users/profile');
             $login_status = Sentinel::login($existing_user); // process login a user
 
             if($data)
@@ -656,6 +659,7 @@ class AuthController extends Controller
             $status = Sentinel::registerAndActivate($arr_data);
             if($status)
             {
+                $this->via_social_registration_send_mail($arr_data);
                 $user = Sentinel::findById($status->id);
 
                 $id = $status->id;
@@ -687,5 +691,35 @@ class AuthController extends Controller
          }
          return response()->json($json);
 
+    }
+     public function via_social_registration_send_mail($arr_data)
+    {
+        // Retrieve Email Template
+
+        $obj_email_template = EmailTemplate::where('id','3')->first();
+        if($obj_email_template)
+        {
+            $arr_email_template = $obj_email_template->toArray();
+
+            $content = $arr_email_template['template_html'];
+
+            $content = str_replace("##USER_FNAME##",        $arr_data['first_name'] , $content);
+            $content = str_replace("##USER_EMAIL##",        $arr_data['email']      , $content);
+            $content = str_replace("##USER_PLAIN_PASS##",   $arr_data['password']   , $content);
+            $content = str_replace("##APP_LINK##",          config('app.project.name'), $content);
+
+            $content = view('email.general',compact('content'))->render();
+            $content = html_entity_decode($content);
+
+            $send_mail = Mail::send(array(),array(), function($message) use($arr_data,$arr_email_template,$content)
+                        {
+                            $message->from($arr_email_template['template_from_mail'], $arr_email_template['template_from']);
+                            $message->to($arr_data['email'], $arr_data['first_name'])
+                                    ->subject($arr_email_template['template_subject'])
+                                    ->setBody($content, 'text/html');
+                        });
+
+            return $send_mail;
+        }
     }
 }
