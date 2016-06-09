@@ -771,6 +771,9 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 				Route::post('/active_status',  ['as' => 'active_status', 'uses' =>'Api\SalesExecutiveBusinessController@_active_status']);
 				//business delete
 				Route::post('/delete',  ['as' => 'delete', 'uses' =>'Api\SalesExecutiveBusinessController@_delete']);
+				
+				//Review 
+				Route::post('/review_index',  ['as' => 'delete', 'uses' =>'Api\SalesExecutiveBusinessController@review_index']);
 
 			});
 			

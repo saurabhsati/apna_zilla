@@ -26,6 +26,7 @@ use App\Models\MembershipModel;
 use App\Models\MemberCostModel;
 use App\Models\TransactionModel;
 use App\Models\EmailTemplateModel;
+use App\Models\ReviewsModel;
 use App\Common\Services\GeneratePublicId;
 use Validator;
 use Session;
@@ -1009,19 +1010,43 @@ class SalesExecutiveBusinessController extends Controller
        
     }
 
-     public function review_index($enc_id)
+     public function review_index(Request $request)
     {
 
-        $id = base64_decode($enc_id);
-      $obj_reviews = ReviewsModel::with(['business_details'])->where('business_id',$id)->get();
+       $business_id= $request->input('business_id');
+       $obj_reviews = ReviewsModel::with(['business_details'])->where('business_id',$business_id)->get();
         $arr_reviews = array();
 
         if($obj_reviews)
         {
             $arr_reviews = $obj_reviews->toArray();
         }
-        $page_title = "Business Review :Manage ";
-      return view('web_admin.reviews.index',compact('page_title','arr_reviews','enc_id'));
+        $data=[];
+        if(isset($arr_reviews) && sizeof($arr_reviews)>0)
+        {
+          foreach ($arr_reviews as $key => $review)
+           {
+            $data[$key]['id']=$review['id'];
+            $data[$key]['name']=$review['name'];
+            $data[$key]['mobile_number']=$review['mobile_number'];
+            $data[$key]['email']=$review['email'];
+            $data[$key]['ratings']=$review['ratings'];
+            $data[$key]['message']=$review['message'];
+          }
+        }
+        if($data)
+        { 
+           $json['data']    = $data;
+           $json['status']  = 'SUCCESS';
+           $json['message'] = 'Business Review List ! .';
+        }
+        else
+        {
+          $json['status']  = 'ERROR';
+          $json['message'] = 'Error Occure while Listing Business Review';
+        }
+
+        return response()->json($json);
     }
     public function review_view($enc_id)
     {
