@@ -161,9 +161,15 @@ class AuthController extends Controller
             $existing_user = Sentinel::findUserByCredentials($credentials);
             $login_status  = Sentinel::login($existing_user); // process login a user
             //dd($login_status);
-
+            $obj_user_info = UserModel::where('email','=',$email)->first();
+            if($obj_user_info);
+            {
+               $arr_user_info = $obj_user_info->toArray();
+            }
             Session::set('user_name', $fname);
             Session::set('user_mail', $email);
+            Session::set('user_id', $arr_user_info['id']);
+
             //Session::set('user_id', $email);
 
            Session::flash('success','Login Successfull');
@@ -202,9 +208,11 @@ class AuthController extends Controller
             $data['name']                   = $fname.' '.$lname;
             $data['email']                  = $email;
             $data['plain_text_password']    = $password;
+            
 
             Session::set('user_name', $fname);
             Session::set('user_mail', $data['email']);
+            Session::set('user_id', $id);
 
             Session::flash('success','Login Successfull');
 

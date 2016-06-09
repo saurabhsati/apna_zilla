@@ -530,17 +530,17 @@ class AuthController extends Controller
             $data['msg']    = "Redirect to Profile Page";
             return response()->json($data);
         }
-
-        $arr_data = [
-
-                    'first_name'            => $fname,
-                    'last_name'             => $lname,
-                    'email'                 => $email,
-                    'password'              => $password,
-                    'is_active'             => '1',
-                    'via_social'            => '1',
-                    'ask_for_old_password'  => '0'
-        ];
+        else
+        {
+           $arr_data =[
+                        'first_name'            => $fname,
+                        'last_name'             => $lname,
+                        'email'                 => $email,
+                        'password'              => $password,
+                        'is_active'             => '1',
+                        'via_social'            => '1',
+                        'ask_for_old_password'  => '0'
+                       ];
         $status = Sentinel::registerAndActivate($arr_data);
 
         if($status)
@@ -561,10 +561,7 @@ class AuthController extends Controller
             $data['email']                  = $email;
             $data['plain_text_password']    = $password;
 
-            Session::set('user_name', $fname);
-            Session::set('user_mail', $data['email']);
-
-            Session::flash('success','Login Successfull');
+            
 
             $data['status'] = "SUCCESS";
             $data['msg']    = "You Have Registered Successfully";
