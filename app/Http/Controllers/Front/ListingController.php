@@ -57,12 +57,28 @@ class ListingController extends Controller
         $page_title ='List Details';
 
         $arr_business_details = array();
-        $obj_business_details = BusinessListingModel::where('id',$id)->first();
+
+         $obj_business_details = BusinessListingModel::where(array('id'=>$id,'is_active'=>'1'))->with(['business_times','also_list_category','image_upload_details','payment_mode','category_details','service','reviews'=>function($query){
+          $query->where('is_active','1');
+         }])->first();
+         if($obj_business_details)
+         {
+           $arr_business_details=$obj_business_details->toArray();
+         }
+        /* if($obj_business_details)
+        {
+            $obj_business_details->load(['business_times','also_list_category','reviews','image_upload_details','payment_mode','category_details','service']);
+            $arr_business_details = $obj_business_details->toArray();
+        }*/
+
+
+
+       /* $obj_business_details = BusinessListingModel::where('id',$id)->first();
         if($obj_business_details)
         {
             $obj_business_details->load(['business_times','also_list_category','reviews','image_upload_details','payment_mode','category_details','service']);
             $arr_business_details = $obj_business_details->toArray();
-        }
+        }*/
 
         //related listing business start
        /* $obj_business_listing_city = CityModel::where('city_title',$city)->get();
@@ -78,105 +94,108 @@ class ListingController extends Controller
             $key_business_city[$value['id']]=$value['id'];
           }
         }*/
-
-        $arr_business_by_category = array();
-        $obj_business_listing = BusinessCategoryModel::where('category_id',$arr_business_details['category_details']['category_id'])->limit(4)->get();
-
-        if($obj_business_listing)
+        if($arr_business_details)
         {
-            $obj_business_listing->load(['business_by_category','business_rating']);
-            $arr_business_by_category = $obj_business_listing->toArray();
+                $arr_business_by_category = array();
+                $obj_business_listing = BusinessCategoryModel::where('category_id',$arr_business_details['category_details']['category_id'])->limit(4)->get();
 
-        }
-         $key_business_cat=array();
-
-      if(sizeof($arr_business_by_category)>0)
-      {
-          foreach ($arr_business_by_category as $key => $value) {
-            $key_business_cat[$value['business_id']]=$value['business_id'];
-          }
-      }
-       if( sizeof($key_business_cat)>0)
-      {
-          $result = $key_business_cat;
-          if(($key = array_search($id, $result)) !== false){
-             unset($result[$key]);
-             }
-          $all_related_business = array();
-          if(sizeof($result)>0)
-          {
-
-            $obj_business_listing = BusinessListingModel::where('city',$city)->whereIn('id', $result)->with(['reviews'])->get();
-            if($obj_business_listing)
-            {
-              $all_related_business = $obj_business_listing->toArray();
-
-            }
-          }
-      }
-        //related listing business end
-
-         $obj_category = CategoryModel::where('parent','!=','0')->get();
-        if($obj_category)
-        {
-            $all_category = $obj_category->toArray();
-        }
-         if($slug_area!='')
-         {
-               $search_by=explode("@", $slug_area);
-             if($search_by!='')
-              {
-                 Session::put('search_by', str_replace('-',' ',$search_by[0]));
-                 Session::put('business_id', $enc_id);
-              }
-              //echo Session::get('search_by');
-         }
-        $sub_category='';
-        $obj_sub_category = CategoryModel::where('cat_id',$arr_business_by_category[0]['category_id'])->get();
-        if($obj_sub_category)
-        {
-            $sub_category = $obj_sub_category->toArray();
-        }
-         $parent_category='';
-         if(sizeof($sub_category)>0)
-        {
-          $main_cat_id=$sub_category[0]['parent'];
-           $obj_parent_category = CategoryModel::where('cat_id',$main_cat_id)->get();
-            if($obj_parent_category)
-            {
-                $parent_category = $obj_parent_category->toArray();
-            }
-        }
-        /* Add Favorite Icon  */
-        $arr_fav_business = array();
-        if(Session::has('user_id'))
-        {
-             $user_id  = base64_decode(Session::get('user_id'));
-             
-
-              $str = "";
-              $obj_favourite = FavouriteBusinessesModel::where(array('user_id'=>$user_id ,'is_favourite'=>"1" ))->get(['business_id']);
-
-              if($obj_favourite)
-              {
-                $obj_favourite->toArray();
-
-                foreach ($obj_favourite as $key => $value)
+                if($obj_business_listing)
                 {
-                  array_push($arr_fav_business, $value['business_id']);
+                    $obj_business_listing->load(['business_by_category','business_rating']);
+                    $arr_business_by_category = $obj_business_listing->toArray();
+
                 }
-              }
-              else
+                 $key_business_cat=array();
+
+              if(sizeof($arr_business_by_category)>0)
               {
-                $arr_fav_business = array();
+                  foreach ($arr_business_by_category as $key => $value) {
+                    $key_business_cat[$value['business_id']]=$value['business_id'];
+                  }
               }
-        }
-        else
-        {
-            $arr_fav_business = array();
-        }
-        Meta::setDescription($arr_business_details['company_info']);
-        Meta::addKeyword($arr_business_details['keywords']);
+               if( sizeof($key_business_cat)>0)
+              {
+                  $result = $key_business_cat;
+                  if(($key = array_search($id, $result)) !== false){
+                     unset($result[$key]);
+                     }
+                  $all_related_business = array();
+                  if(sizeof($result)>0)
+                  {
+
+                    $obj_business_listing = BusinessListingModel::where('city',$city)->whereIn('id', $result)->with(['reviews'])->get();
+                    if($obj_business_listing)
+                    {
+                      $all_related_business = $obj_business_listing->toArray();
+
+                    }
+                  }
+              }
+                //related listing business end
+
+                 $obj_category = CategoryModel::where('parent','!=','0')->get();
+                if($obj_category)
+                {
+                    $all_category = $obj_category->toArray();
+                }
+                 if($slug_area!='')
+                 {
+                       $search_by=explode("@", $slug_area);
+                     if($search_by!='')
+                      {
+                         Session::put('search_by', str_replace('-',' ',$search_by[0]));
+                         Session::put('business_id', $enc_id);
+                      }
+                      //echo Session::get('search_by');
+                 }
+                $sub_category='';
+                $obj_sub_category = CategoryModel::where('cat_id',$arr_business_by_category[0]['category_id'])->get();
+                if($obj_sub_category)
+                {
+                    $sub_category = $obj_sub_category->toArray();
+                }
+                 $parent_category='';
+                 if(sizeof($sub_category)>0)
+                {
+                  $main_cat_id=$sub_category[0]['parent'];
+                   $obj_parent_category = CategoryModel::where('cat_id',$main_cat_id)->get();
+                    if($obj_parent_category)
+                    {
+                        $parent_category = $obj_parent_category->toArray();
+                    }
+                }
+                /* Add Favorite Icon  */
+                $arr_fav_business = array();
+                if(Session::has('user_id'))
+                {
+                     $user_id  = base64_decode(Session::get('user_id'));
+                     
+
+                      $str = "";
+                      $obj_favourite = FavouriteBusinessesModel::where(array('user_id'=>$user_id ,'is_favourite'=>"1" ))->get(['business_id']);
+
+                      if($obj_favourite)
+                      {
+                        $obj_favourite->toArray();
+
+                        foreach ($obj_favourite as $key => $value)
+                        {
+                          array_push($arr_fav_business, $value['business_id']);
+                        }
+                      }
+                      else
+                      {
+                        $arr_fav_business = array();
+                      }
+                }
+                else
+                {
+                    $arr_fav_business = array();
+                }
+                Meta::setDescription($arr_business_details['company_info']);
+                Meta::addKeyword($arr_business_details['keywords']);
+      }
+      
      // dd($arr_business_details);
         return view('front.listing.detail',compact('main_image_path','page_title','arr_fav_business','arr_business_details','parent_category','all_related_business','all_category','city','search_by'));
     }
