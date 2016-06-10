@@ -60,8 +60,7 @@ class SalesExecutiveBusinessController extends Controller
                 $arr_sub_category = $obj_sub_category->toArray();
             }
             $obj_business_listing = BusinessListingModel::orderBy('id','DESC')
-            ->where('is_active','!=','2')
-            ->where('sales_user_public_id',$sales_user_public_id)
+                                              ->where('sales_user_public_id',$sales_user_public_id)
             																  ->with(['category','user_details','reviews','membership_plan_details'])->get();
             																  	      
             																  	      //->get(['id','busiess_ref_public_id','business_name','main_image']);
@@ -86,12 +85,12 @@ class SalesExecutiveBusinessController extends Controller
 
                      if(isset($business['user_details']) && sizeof($business['user_details'])>0)
                      {
-                          $arr_data[$key]['vender_first_name']         = $business['user_details']['first_name'];
+                          $arr_data[$key]['vender_first_name']        = $business['user_details']['first_name'];
                           $arr_data[$key]['vender_public_id']         = $business['user_details']['public_id'];
                      }
-                     $arr_data[$key]['reviews'] = sizeof($business['reviews']);
+                     $arr_data[$key]['reviews']    = sizeof($business['reviews']);
                      $arr_data[$key]['is_feature'] = sizeof($business['membership_plan_details']);
-                     $sub_category_title=$main_cat_title='';
+                     $sub_category_title           = $main_cat_title='';
                      if(isset($business['category']) && sizeof($business['category'])>0)
                      {
                   	  	foreach ($business['category'] as $key2 => $selected_category) 
@@ -162,7 +161,6 @@ class SalesExecutiveBusinessController extends Controller
                 $file_url               = $fileName;
                 $arr_data['main_image'] = $filename;
             }
-
             else
             {
                 $json['status']  = "ERROR";
@@ -235,8 +233,7 @@ class SalesExecutiveBusinessController extends Controller
       }
       public function store_business_step3(Request $request)
       {
-        $arr_data            = array();
-       
+        $arr_data                   = array();
         $business_id                = $request->input('business_id');
         $arr_data['company_info']   = $request->input('company_info');
         $arr_data['establish_year'] = $request->input('establish_year');
@@ -292,7 +289,6 @@ class SalesExecutiveBusinessController extends Controller
         { 
             $arr_time['sun_open']  = $request->input('sun_open');
             $arr_time['sun_close'] = $request->input('sun_close');
-
         } 
 
         $business_time_add = BusinessTimeModel::create($arr_time);
@@ -513,7 +509,6 @@ class SalesExecutiveBusinessController extends Controller
                 $uploaded_image_gallery[$key]['image_name']=$image_gallery['image_name'];
               }
            } 
-
            $arr_data['uploaded_image_gallery']=$uploaded_image_gallery;  
 
           /* Services Data*/
@@ -541,8 +536,7 @@ class SalesExecutiveBusinessController extends Controller
             $json['status']  = 'ERROR';
             $json['message'] = 'No Business Record Found!';
         }
-          return response()->json($json);
-
+         return response()->json($json);
     }
     
     /*-------------Start update business----------------*/ 
@@ -563,9 +557,9 @@ class SalesExecutiveBusinessController extends Controller
 
           if($request->file('main_image')->isValid() && $profile_pic_valiator->passes())
           {
-              $cv_path         = $request->file('main_image')->getClientOriginalName();
-              $image_extension = $request->file('main_image')->getClientOriginalExtension();
-              $image_name      = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
+              $cv_path                     = $request->file('main_image')->getClientOriginalName();
+              $image_extension             = $request->file('main_image')->getClientOriginalExtension();
+              $image_name                  = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
               $request->file('main_image')->move($this->business_base_img_path, $image_name);
               $main_image                  = $image_name;
               $business_data['main_image'] = $main_image;
@@ -820,11 +814,11 @@ class SalesExecutiveBusinessController extends Controller
                 $flag=1;
                 if(in_array($fileExtension,['png','jpg','jpeg']))
                 {
-                      $filename =sha1(uniqid().$fileName.uniqid()).'.'.$fileExtension;
+                      $filename                  = sha1(uniqid().$fileName.uniqid()).'.'.$fileExtension;
                       $file->move($destinationPath,$filename);
-                      $arr_insert['image_name']=$filename;
-                      $arr_insert['business_id']=$business_id;
-                      $insert_data1=$this->BusinessImageUploadModel->create($arr_insert);
+                      $arr_insert['image_name']  = $filename;
+                      $arr_insert['business_id'] = $business_id;
+                      $insert_data1              = $this->BusinessImageUploadModel->create($arr_insert);
                       $uploadcount ++;
                 }
                 else
@@ -845,7 +839,7 @@ class SalesExecutiveBusinessController extends Controller
           }
           else
           {
-             $json['status'] = 'ERROR';
+             $json['status']   = 'ERROR';
              $json['message']  = 'Error Occure while Updating Business.';
           }
           return response()->json($json);
@@ -907,7 +901,7 @@ class SalesExecutiveBusinessController extends Controller
         $Business              = BusinessListingModel::where('id',$business_id)->first();
         $is_verified           = $request->input('is_verified');
         $Business->is_verified = $is_verified;
-        $business_verify = $Business->save();
+        $business_verify       = $Business->save();
 
         if($business_verify)
         {
@@ -971,7 +965,6 @@ class SalesExecutiveBusinessController extends Controller
 
      public function review_index(Request $request)
     {
-
        $business_id= $request->input('business_id');
        $obj_reviews = ReviewsModel::with(['business_details'])->where('business_id',$business_id)->get();
         $arr_reviews = array();
@@ -985,12 +978,12 @@ class SalesExecutiveBusinessController extends Controller
         {
           foreach ($arr_reviews as $key => $review)
            {
-            $data[$key]['id']=$review['id'];
-            $data[$key]['name']=$review['name'];
-            $data[$key]['mobile_number']=$review['mobile_number'];
-            $data[$key]['email']=$review['email'];
-            $data[$key]['ratings']=$review['ratings'];
-            $data[$key]['message']=$review['message'];
+            $data[$key]['id']            = $review['id'];
+            $data[$key]['name']          = $review['name'];
+            $data[$key]['mobile_number'] = $review['mobile_number'];
+            $data[$key]['email']         = $review['email'];
+            $data[$key]['ratings']       = $review['ratings'];
+            $data[$key]['message']       = $review['message'];
           }
         }
         if($data)
@@ -1009,7 +1002,6 @@ class SalesExecutiveBusinessController extends Controller
     }
     public function show_review(Request $request)
     {
-      
          $review_id     = $request->input('review_id');
 
         $arr_review_view = array();
@@ -1049,7 +1041,7 @@ class SalesExecutiveBusinessController extends Controller
     public function review_toggle_status(Request $request)
     {        
           $review_id             = $request->input('review_id');
-          $action             = $request->input('action');
+          $action                = $request->input('action');
 
           $json =[];
           if($action=="activate")
@@ -1060,7 +1052,6 @@ class SalesExecutiveBusinessController extends Controller
           }
           elseif($action=="block")
           {
-
                $this->review_block($review_id);
                $json['status']  = "SUCCESS";
                $json['message'] = 'Review Block Successfully !.';  
@@ -1075,7 +1066,7 @@ class SalesExecutiveBusinessController extends Controller
           return response()->json($json); 
     }
 
-   protected function review_activate($review_id)
+    protected function review_activate($review_id)
     {
         $review = ReviewsModel::where('id',$review_id)->first();
         $review->is_active = "1";
@@ -1090,6 +1081,5 @@ class SalesExecutiveBusinessController extends Controller
     protected function review_delete($review_id)
     {
       return ReviewsModel::where('id',$review_id)->delete();
-        
     }
 }

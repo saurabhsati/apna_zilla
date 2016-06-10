@@ -165,8 +165,7 @@ class CommonController extends Controller
         return response()->json($json);
     }
 
-
-    public function get_users_by_sales_executive(Request $request)
+   public function get_users_by_sales_executive(Request $request)
    {
         $sales_user_public_id        = $request->input('sales_user_public_id');
         $obj_user  = UserModel::where('sales_user_public_id',$sales_user_public_id)->get();
@@ -183,8 +182,8 @@ class CommonController extends Controller
         {
           foreach ($arr_user as $key => $user)
            {
-               $data[$key]['id']            = $user['id'];
-               $data[$key]['public_id']          = $user['public_id'];
+               $data[$key]['id']         = $user['id'];
+               $data[$key]['public_id']  = $user['public_id'];
                $data[$key]['first_name'] = $user['first_name'];
           }
         }
