@@ -90,6 +90,7 @@ class SalesExecutiveBusinessController extends Controller
                           $arr_data[$key]['vender_public_id']         = $business['user_details']['public_id'];
                      }
                      $arr_data[$key]['reviews'] = sizeof($business['reviews']);
+                     $arr_data[$key]['is_feature'] = sizeof($business['membership_plan_details']);
                      $sub_category_title=$main_cat_title='';
                      if(isset($business['category']) && sizeof($business['category'])>0)
                      {
