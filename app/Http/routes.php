@@ -740,6 +740,8 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 		Route::group(array('prefix' => '/sales_user'), function()
 		{
+			   Route::post('/dashboard',  ['as' => 'business_index', 'uses' =>'Api\SalesExecutiveDashboardController@dashboard']);
+			
 			Route::group(array('prefix' => '/business'), function()
 		    {
 		    	//Business listing

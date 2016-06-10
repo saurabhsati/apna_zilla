@@ -81,7 +81,7 @@ class SalesExecutiveBusinessController extends Controller
                      $arr_data[$key]['business_name']         = $business['business_name'];
                      $arr_data[$key]['created_at']            = date('Y-m-d',strtotime($business['created_at']));
                      $arr_data[$key]['is_active']             = $business['is_active'];
-                     $arr_data[$key]['is_verified']         = $business['is_verified'];
+                     $arr_data[$key]['is_verified']           = $business['is_verified'];
                      $arr_data[$key]['id']                    = $business['id'];
 
                      if(isset($business['user_details']) && sizeof($business['user_details'])>0)
