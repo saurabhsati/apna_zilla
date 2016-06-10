@@ -10,6 +10,7 @@ use App\Models\StateModel;
 use App\Models\CityModel;
 use App\Models\PlaceModel;
 use App\Models\CategoryModel;
+use App\Models\UserModel;
 use Input;
 
 class CommonController extends Controller
@@ -144,7 +145,7 @@ class CommonController extends Controller
         $obj_category = CategoryModel::where('parent','0')->get();
 
         $arr_category = array();
-        $json = array();
+        $json =$data= array();
 
         if($obj_category && count($obj_category)>0)
         {
@@ -163,5 +164,43 @@ class CommonController extends Controller
 
         return response()->json($json);
     }
+
+
+    public function get_users_by_sales_executive(Request $request)
+   {
+        $sales_user_public_id        = $request->input('sales_user_public_id');
+        $obj_user  = UserModel::where('sales_user_public_id',$sales_user_public_id)->get();
+
+        $arr_user = array();
+        $json = array();
+
+        if($obj_user)
+        {
+            $arr_user = $obj_user->toArray();
+        }
+
+       if(isset($arr_user) && sizeof($arr_user)>0)
+        {
+          foreach ($arr_user as $key => $user)
+           {
+               $data[$key]['id']            = $user['id'];
+               $data[$key]['public_id']          = $user['public_id'];
+               $data[$key]['first_name'] = $user['first_name'];
+          }
+        }
+        if($data)
+        { 
+           $json['data']    = $data;
+           $json['status']  = 'SUCCESS';
+           $json['message'] = 'User List ! .';
+        }
+        else
+        {
+          $json['status']  = 'ERROR';
+          $json['message'] = 'Error Occure while Listing User';
+        }
+
+        return response()->json($json);
+   }
 
 }

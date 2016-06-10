@@ -712,6 +712,13 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 			Route::post('get_main_category',  				['as' => 'get_main_category' 					,'uses' => 'Api\CommonController@get_main_category']);
 		});
 
+		/* Common service for getting the selected business users */
+		Route::group(array('prefix' => '/user_common'), function()
+		{
+			Route::post('get_users_by_sales_executive',  		['as' => 'get_users_by_sales_executive' 					,'uses' => 'Api\CommonController@get_users_by_sales_executive']);
+		
+		});
+
 
 		/* create vendor */
 
