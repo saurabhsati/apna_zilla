@@ -895,20 +895,39 @@ class SalesExecutiveBusinessController extends Controller
     }
 
 
-    public function _toggle_verifired_status(Request $request)
+    public function toggle_verifired_status(Request $request)
     {
+      $json=array();
         $business_id           = $request->input('business_id');
-        $Business              = BusinessListingModel::where('id',$business_id)->first();
-        $is_verified           = $request->input('is_verified');
-        $Business->is_verified = $is_verified;
-        $business_verify       = $Business->save();
 
-        if($business_verify)
+        $obj_business = BusinessListingModel::where('id',$business_id)->first();
+        if($obj_business)
         {
-           $json['status']      = 'SUCCESS';
-           $json['message']     = 'Business verify  Successfully ! .';
+          $business = $obj_business->toArray();
         }
-        else
+        if(isset($business) && sizeof($business)>0)
+        {
+            
+                if($business['is_verified']== '0')
+                {
+                   $result = BusinessListingModel::where('id',$business_id)
+                                                       ->update(array('is_verified'=>'1'));
+                  $json['status']  = 'SUCCESS';
+                    $json['message'] = 'Business Verify Successfully  !';
+                }
+
+                else if($business['is_verified']== '1')
+                {
+
+                  $result = BusinessListingModel::where('id',$business_id)
+                                                   ->update(array('is_verified'=>'0'));
+                  $json['status']  = 'SUCCESS';
+                  $json['message'] = 'Business Un-Verify Successfully !';
+                }
+
+           
+        }
+         else
         {
           $json['status']  = 'ERROR';
           $json['message'] = 'Error Occure while verify Business.';

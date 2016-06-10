@@ -791,6 +791,7 @@ class BusinessListingController extends Controller
 
     public function multi_action(Request $request)
     {
+       
         $arr_rules = array();
         $arr_rules['multi_action'] = "required";
         $arr_rules['checked_record'] = "required";
@@ -799,15 +800,16 @@ class BusinessListingController extends Controller
         $validator = Validator::make($request->all(),$arr_rules);
 
         if($validator->fails())
-        {
+        {  print_r($validator->errors()->all());exit;
             Session::flash('error','Please Select Any Record(s)');
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+
         $multi_action = $request->input('multi_action');
         $checked_record = $request->input('checked_record');
 
-        /* Check if array is supplied*/
+       /* Check if array is supplied*/
         if(is_array($checked_record) && sizeof($checked_record)<=0)
         {
             Session::flash('error','Problem Occured, While Doing Multi Action');
