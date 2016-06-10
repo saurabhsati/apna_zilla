@@ -163,7 +163,7 @@ class HomeController extends Controller
          Session::put('share_lng',$lng);
 
     	 //$url = sprintf("https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s", $lat, $lng);
-             $url = sprintf("https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lng."&key=AIzaSyAiweelKCt0VFBBnvXr8kKmFAQqg3Rx7Fw");
+             $url = sprintf("https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lng."&key=AIzaSyBTxXd1ZVgKmI4y4_Pg2PXw2LCOIPHDMeMs");
 		    // $content = file_get_contents($url); // get json content
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
@@ -171,7 +171,7 @@ class HomeController extends Controller
 
             $content = curl_exec($ch);
             curl_close($ch);
-
+            //var_dump($content);
 		    $metadata = json_decode($content, true); //json decoder
             $result=array();
             if(sizeof($metadata['results']))
