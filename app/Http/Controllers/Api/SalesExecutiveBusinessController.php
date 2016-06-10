@@ -59,7 +59,9 @@ class SalesExecutiveBusinessController extends Controller
             {
                 $arr_sub_category = $obj_sub_category->toArray();
             }
-            $obj_business_listing = BusinessListingModel::/*select(['id','busiess_ref_public_id','business_name','main_image','created_at','is_active'])->*/orderBy('id','DESC')->where('sales_user_public_id',$sales_user_public_id)
+            $obj_business_listing = BusinessListingModel::orderBy('id','DESC')
+            ->where('is_active','!=','2')
+            ->where('sales_user_public_id',$sales_user_public_id)
             																  ->with(['category','user_details','reviews','membership_plan_details'])->get();
             																  	      
             																  	      //->get(['id','busiess_ref_public_id','business_name','main_image']);
@@ -79,6 +81,7 @@ class SalesExecutiveBusinessController extends Controller
                      $arr_data[$key]['business_name']         = $business['business_name'];
                      $arr_data[$key]['created_at']            = date('Y-m-d',strtotime($business['created_at']));
                      $arr_data[$key]['is_active']             = $business['is_active'];
+                     $arr_data[$key]['is_verified']         = $business['is_verified'];
                      $arr_data[$key]['id']                    = $business['id'];
 
                      if(isset($business['user_details']) && sizeof($business['user_details'])>0)
