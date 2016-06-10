@@ -172,7 +172,7 @@ class CommonController extends Controller
         $obj_user  = UserModel::where('sales_user_public_id',$sales_user_public_id)->get();
 
         $arr_user = array();
-        $json = array();
+        $json =$data= array();
 
         if($obj_user)
         {
