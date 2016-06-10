@@ -8,7 +8,7 @@
      padding-right: 0 !important; 
     }
     div.table-responsive>div.dataTables_wrapper>div.row>div[class^="col-"]:first-child {
-     padding-left: 0; 
+     padding-left: 0 !important; 
 }
 </style>
     <link rel="stylesheet" type="text/css" href="{{ url('/assets/data-tables/latest/') }}/dataTables.bootstrap.min.css">
@@ -167,6 +167,7 @@
 
                           <br/>
                           <div class="clearfix"></div>
+                          <div class="col-md-12">
                           <div class="table-responsive" style="border:0">
 
                             <input type="hidden" name="multi_action" value="" />
@@ -427,6 +428,7 @@
 
                               </tbody>
                             </table>
+                            </div>
                           </div>
 
 
