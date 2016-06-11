@@ -662,7 +662,13 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		/* Register Via Facebook*/
 		Route::post('register_via_google_plus',			['as' => 'register_via_google_plus'                    ,'uses' =>'Api\AuthController@register_via_google_plus']);
 
-			/* Front Business Route*/
+			/* Front Get all main category Route*/
+		Route::post('get_all_main_Category',			['as' => 'get_all_main_Category'                    ,'uses' =>'Api\FrontAllCategoryController@get_all_main_Category']);	
+
+		/* Front Get all main category Route*/
+		Route::post('get_all_sub_categories_category',			['as' => 'get_all_sub_categories_category'                    ,'uses' =>'Api\FrontAllCategoryController@get_all_sub_categories_category']);
+
+			/* Front Business Route*/	
 		Route::group(array('prefix' => '/business'), function()
 		{
 

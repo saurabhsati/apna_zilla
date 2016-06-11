@@ -15,7 +15,10 @@
                         <ul class="nav-list">
                          <?php
                           $city='';
-                          if(Session::has('city')){
+                          if(Session::has('search_city_title')){
+                          $city= Session::get('search_city_title');
+                         }
+                          else if(Session::has('city')){
                           $city=Session::get('city');
                           }else{
                           $city='Delhi';
