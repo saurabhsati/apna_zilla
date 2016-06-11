@@ -30,7 +30,7 @@ class AllCategoryController extends Controller
         {
         	$current_city='Delhi';
         }
-       
+       //dd($arr_category);
  		$cat_img_path = url('/').config('app.project.img_path.category');
     	return view('front.allcategory.index',compact('page_title','current_city','arr_category','sub_category','cat_img_path'));
     }
