@@ -666,9 +666,9 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::post('get_all_main_Category',			['as' => 'get_all_main_Category'                    ,'uses' =>'Api\FrontAllCategoryController@get_all_main_Category']);	
 
 		/* Front Get all sub category of main category Route*/
-		Route::post('get_business_details',			['as' => 'get_business_details'                    ,'uses' =>'Api\FrontAllCategoryController@get_business_details']);
-	         /* Front Get selected sub category main category Route*/
-			Route::post('get_business_listing',			['as' => 'get_business_listing'                    ,'uses' =>'Api\FrontAllCategoryController@get_business_listing']);
+		Route::post('get_all_sub_category',			['as' => 'get_all_sub_category'                    ,'uses' =>'Api\FrontAllCategoryController@get_all_sub_category']);
+	         /* Front Business Listing Route*/
+		Route::post('get_business_listing',			['as' => 'get_business_listing'                    ,'uses' =>'Api\FrontAllCategoryController@get_business_listing']);
 
 			/* Front Business Route*/	
 		Route::group(array('prefix' => '/business'), function()

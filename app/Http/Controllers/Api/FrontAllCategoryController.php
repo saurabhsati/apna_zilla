@@ -27,7 +27,7 @@ class FrontAllCategoryController extends Controller
 	 			$arr_category = $obj_main_category->toArray();
 	 		}
 	 	
-	    	if(isset($arr_category) && sizeof($arr_category)>0)
+		    	if(isset($arr_category) && sizeof($arr_category)>0)
 			{
 				foreach ($arr_category as $key => $cat) 
 				{
@@ -35,6 +35,7 @@ class FrontAllCategoryController extends Controller
 					$data[$key]['title']        = $cat['title'];
 					$data[$key]['cat_slug']     = $cat['cat_slug'];
 					$data[$key]['cat_ref_slug'] = $cat['cat_ref_slug'];
+					$data[$key]['cat_img'] = url('/uploads/category').'/'.$cat['cat_img'];
 				}
 			$json['data'] 	 = $data;
 			$json['status']  = 'SUCCESS';
@@ -48,7 +49,7 @@ class FrontAllCategoryController extends Controller
              return response()->json($json);	 	
 	}
 
-	public function get_business_details(Request $request)
+	public function get_all_sub_category(Request $request)
 	{
 		  $data     = array();
 		  $cat_id   = $request->input('cat_id');
@@ -70,12 +71,12 @@ class FrontAllCategoryController extends Controller
 				}
 		    $json['data'] 	 = $data;
 			$json['status']  = 'SUCCESS';
-			$json['message'] = 'Sub Categories List of Main Category !';
+			$json['message'] = 'All Sub Category!';
 		}
 		else
 		{
 			$json['status']  = 'ERROR';
-			$json['message'] = 'No Sub Category of Main Category Record Found!';
+			$json['message'] = 'No Record Found!';
 		}
              return response()->json($json);	 	
 	     
@@ -89,7 +90,6 @@ class FrontAllCategoryController extends Controller
 		  $city     = $request->input('city');
 		  $user_id     = $request->input('user_id');
 
-
 		  /* Get Business by category */
             $obj_business_listing = BusinessCategoryModel::where('category_id',$cat_id)->get();
             if($obj_business_listing)
@@ -100,20 +100,15 @@ class FrontAllCategoryController extends Controller
             $key_business_cat=array();
             if(sizeof($arr_business_by_category)>0)
             {
-                foreach ($arr_business_by_category as $key => $value) 
+               foreach ($arr_business_by_category as $key => $value) 
                 {
                   $key_business_cat[$value['business_id']]=$value['business_id'];
                 }
             }
-
-
           $obj_business_listing= $arr_data_business =$total_review =[];
-
-
         if(sizeof($key_business_cat)>0)
         {
             $result = $key_business_cat;
-
             $arr_business = array();
             if(sizeof($result)>0)
             {
@@ -122,22 +117,18 @@ class FrontAllCategoryController extends Controller
             }
          }
           
-         if($obj_business_listing)
-	        {
-	            $arr_data_business = $obj_business_listing->toArray();
-	        }
-	       if($user_id !="")
-           {
-              
-            
+        if($obj_business_listing)
+        {
+            $arr_data_business = $obj_business_listing->toArray();
+        }
+       if($user_id !="")
+       {
               $arr_fav_business = array();
               $str = "";
               $obj_favourite = FavouriteBusinessesModel::where(array('user_id'=>$user_id ,'is_favourite'=>"1" ))->get(['business_id']);
-
               if($obj_favourite)
               {
                 $obj_favourite->toArray();
-
                 foreach ($obj_favourite as $key => $value)
                 {
                   array_push($arr_fav_business, $value['business_id']);
@@ -152,7 +143,6 @@ class FrontAllCategoryController extends Controller
           {
               $arr_fav_business = array();
           }
-
 		if(isset($arr_data_business) && sizeof($arr_data_business)>0)
 		{
 			foreach ($arr_data_business as $key => $business) 
@@ -165,17 +155,15 @@ class FrontAllCategoryController extends Controller
 					{
 						$data[$key]['is_favourite']            = 0;
 					}
-
-					$data[$key]['id']            = $business['id'];
+       				$data[$key]['id']            = $business['id'];
 					$data[$key]['business_name'] = $business['business_name'];
-					$data[$key]['main_image']    = $business['main_image'];
+					$data[$key]['main_image']    = url('/uploads/business/main_image').'/'.$business['main_image'];
 					$data[$key]['area']          = $business['area'];
 					$data[$key]['city']          = $business['city'];
 					$data[$key]['pincode']       = $business['pincode'];
 					$data[$key]['mobile_number'] = $business['mobile_number'];
 					$data[$key]['avg_rating']    = $business['avg_rating'];
 				}
-
 		    $json['data'] 	 = $data;
 			$json['status']  = 'SUCCESS';
 			$json['message'] = 'Business Listing !';
