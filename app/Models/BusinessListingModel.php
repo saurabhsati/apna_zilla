@@ -10,7 +10,7 @@ class BusinessListingModel extends Model
 {
 
     use SoftDeletes;
-    use Rememberable;
+    //use Rememberable;
     protected $table='business';
     protected $fillable=['business_name',
                          'user_id',
