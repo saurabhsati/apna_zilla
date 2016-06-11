@@ -694,7 +694,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		/* Assign Membership*/
 		Route::post('assign_membership',					['as' => 'assign_membership' 	  ,'uses' 	=>'Api\MembershipPlanController@assign_membership']);
 		Route::post('get_plan_cost',				 	['as' => 'get_plan_cost' 	      ,'uses' 	=>'Api\MembershipPlanController@get_plan_cost']);
-
+		Route::post('manual_plan_purchase',				 	['as' => 'manual_plan_purchase' 	      ,'uses' 	=>'Api\MembershipPlanController@manual_plan_purchase']);
 
 
 		/* Common service for getting the state ,city & pincode */
