@@ -30,6 +30,7 @@ class AllCategoryController extends Controller
         {
         	$current_city='Delhi';
         }
+
         $arr_category = array();
         $where_arr=array('parent'=>0);
         $obj_main_category = CategoryModel::where('is_active','1')->where($where_arr)->get();
@@ -43,7 +44,7 @@ class AllCategoryController extends Controller
         {
             $sub_category = $obj_sub_category->toArray();
         }
- 		$cat_img_path = url('/').config('app.project.img_path.category');
+	$cat_img_path = url('/').config('app.project.img_path.category');
     	return view('front.allcategory.index',compact('page_title','current_city','arr_category','sub_category','cat_img_path'));
     }
     public function popular_city($city_title)
