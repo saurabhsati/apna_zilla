@@ -304,7 +304,7 @@ class AuthController extends Controller
         if($user)
         {
 
-            if($user-> == 1)
+            if($user->is_active== 1)
             {
                     /* Check if Users Role is Admin */
                     $role = Sentinel::findRoleBySlug('normal');
