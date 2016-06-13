@@ -179,6 +179,7 @@ class FrontAllCategoryController extends Controller
 	public function get_business_details(Request $request)
 	{
          $business_id  = $request->input('business_id');
+         $user_id  = $request->input('user_id');
          $_business    = $data =array();
          $obj_business = BusinessListingModel::where('id',$business_id)->first();
        
@@ -207,11 +208,11 @@ class FrontAllCategoryController extends Controller
          }
 
 
-       if($arr_business_details['user_id'] !="")
+       if($user_id !="")
        {
               $arr_fav_business = array();
               $str              = "";
-              $obj_favourite    = FavouriteBusinessesModel::where(array('user_id'=>$arr_business_details['id'] ,'is_favourite'=>"1" ))->get(['business_id']);
+              $obj_favourite    = FavouriteBusinessesModel::where(array('user_id'=>$user_id ,'is_favourite'=>"1" ))->get(['business_id']);
               if($obj_favourite)
               {
                 $obj_favourite->toArray();
@@ -224,30 +225,32 @@ class FrontAllCategoryController extends Controller
               {
                 $arr_fav_business = array();
               }
-          }
-          else
-          {
-           $arr_fav_business = array();
-          }
+	      }
+	      else
+	      {
+	       $arr_fav_business = array();
+	      }
+		
+		if(in_array($arr_business_details['id'], $arr_fav_business))
+		{
+			$data['is_favourite']            = 1;
+		}
+		else
+		{
+			$data['is_favourite']            = 0;
+		}
 
-
-					if(in_array($arr_business_details['id'], $arr_fav_business))
-					{
-						$data['is_favourite']            = 1;
-					}
-					else
-					{
-						$data['is_favourite']            = 0;
-					}
 		$data['business_name']  = $arr_business_details['business_name'];
 		$data['main_image']     = url('/uploads/business/main_image').'/'.$arr_business_details['main_image'];
 		$data['area']           = $arr_business_details['area'];
 		$data['city']           = $arr_business_details['city'];
 		$data['pincode']        = $arr_business_details['pincode'];
-		$data['mobile_number']  = $arr_business_details['mobile_number'];
-		$data['lat']     = $arr_business_details['lat'];
-		$data['avg_rating']     = $arr_business_details['avg_rating'];
-		$data['about']     = $arr_business_details['company_info'];
+		$data['mobile_number'] = $arr_business_details['mobile_number'];
+		$data['lat']           = $arr_business_details['lat'];
+		$data['lng']           = $arr_business_details['lng'];
+		$data['avg_rating']    = $arr_business_details['avg_rating'];
+		$data['is_verified']    = $arr_business_details['is_verified'];
+		$data['about']         = $arr_business_details['company_info'];
 				
 	    $business_times=[]; 
    	    foreach ($arr_business_details['business_times'] as $key => $value) 
@@ -305,7 +308,6 @@ class FrontAllCategoryController extends Controller
 		$reviews=[];
 		foreach ($arr_business_details['reviews'] as $key => $value) 
 		{
-			$reviews[$key]['title']   = $value['title'];
 			$reviews[$key]['name']    = $value['name'];
 			$reviews[$key]['message'] = $value['message'];
 			$reviews[$key]['date']    = $value['created_at'];
