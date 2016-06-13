@@ -775,7 +775,8 @@ class BusinessListingController extends Controller
         return redirect()->back();
     }
     public function multi_action(Request $request)
-    {
+    { //dd($request->all());
+
         $arr_rules = array();
         $arr_rules['multi_action'] = "required";
         $arr_rules['checked_record'] = "required";
@@ -791,6 +792,8 @@ class BusinessListingController extends Controller
 
         $multi_action = $request->input('multi_action');
         $checked_record = $request->input('checked_record');
+
+        
 
         /* Check if array is supplied*/
         if(is_array($checked_record) && sizeof($checked_record)<=0)

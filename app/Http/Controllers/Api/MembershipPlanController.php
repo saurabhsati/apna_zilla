@@ -8,7 +8,10 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\MembershipModel;
 use App\Models\MemberCostModel;
-
+use App\Models\BusinessListingModel;
+use App\Models\TransactionModel;
+use App\Models\EmailTemplateModel;
+use Mail;
 
 class MembershipPlanController extends Controller
 {
@@ -150,7 +153,110 @@ class MembershipPlanController extends Controller
         return response()->json($json);
 
     }
+    public function manual_plan_purchase(Request $request)
+    {        
+        $sales_user_public_id = $request->input('sales_user_public_id');
 
+        $arr_data    =    $transaction = array();
+        $business_id = $request->input('business_id');
+        $user_id     = $request->input('user_id');
+        $category_id = $request->input('category_id');
+        $plan_id     = $request->input('plan_id');
+        $price       = $request->input('price');
+        $validity    = $request->input('validity');
+        $start_date  = date('Y-m-d');
+       
+        $arr_data['business_id']          = $business_id;
+        $arr_data['user_id']              = $user_id;
+        $arr_data['category_id']          = $category_id;
+        $arr_data['membership_id']        = $plan_id;
+        $arr_data['price']                = $price;
+        $arr_data['transaction_status']   = 'Active';
+        $arr_data['sales_user_public_id'] = $sales_user_public_id;
+        $arr_data['start_date']           = $start_date;
+        $arr_data['expire_date']          = date('Y-m-d', strtotime("+".$validity."days"));
+       
+        
+        $transaction = TransactionModel::create($arr_data);
+        
+        if($transaction)
+        {
+             $obj_single_transaction=TransactionModel::where('id',$transaction->id)->first();
+             $transaction_id='TXN'.$transaction->id;
+             $update_arr_data['transaction_id']        =    $transaction_id;
+             $transaction = TransactionModel::where('id',$transaction->id)->update($update_arr_data);
 
+            if($obj_single_transaction)
+            {
+                $obj_single_transaction->load(['user_records']);
+                $obj_single_transaction->load(['membership']);
+                $obj_single_transaction->load(['business']);
+                $obj_single_transaction->load(['category']);
 
+                $arr_single_transaction = $obj_single_transaction->toArray();
+            }
+            $first_name    = ucfirst($arr_single_transaction['user_records']['first_name']);
+            $email         = ucfirst($arr_single_transaction['user_records']['email']);
+            $business_name = ucfirst($arr_single_transaction['business']['business_name']);
+            $plan          = ucfirst($arr_single_transaction['membership']['title']);
+            $category      = ucfirst($arr_single_transaction['category']['title']);
+            $expiry_date   = date('d-M-Y',strtotime($arr_single_transaction['expire_date']));
+            //echo "Payment Success" . "<pre>" . print_r( $_POST, true ) . "</pre>";die();
+
+            $obj_email_template = EmailTemplateModel::where('id','13')->first();
+            if($obj_email_template)
+            {
+                $arr_email_template = $obj_email_template->toArray();
+
+                $content        = $arr_email_template['template_html'];
+                $content         = str_replace("##USER_FNAME##",$first_name,$content);
+                $content        = str_replace("##BUSINESS_NAME##",$business_name,$content);
+                $content        = str_replace("##CATEGORY##",$category,$content);
+                $content        = str_replace("##TRANS_ID##",$transaction_id,$content);
+                $content        = str_replace("##TRANS_STATUS##","Active",$content);
+
+                $content        = str_replace("##MODE##","Payment Hand Over To Sales User",$content);
+                $content        = str_replace("##EXPIRY##",$expiry_date,$content);
+                $content        = str_replace("##PLAN##",$plan,$content);
+                $content        = str_replace("##APP_LINK##","RightNext",$content);
+                 //print_r($content);exit;
+                $content = view('email.front_general',compact('content'))->render();
+                $content = html_entity_decode($content);
+                $send_mail ='';
+                if($email!='')
+                {
+                            $send_mail = Mail::send(array(),array(), function($message) use($email,$first_name,$arr_email_template,$content)
+                                {
+                                    $message->from($arr_email_template['template_from_mail'], $arr_email_template['template_from']);
+                                    $message->to($email, $first_name)
+                                            ->subject($arr_email_template['template_subject'])
+                                            ->setBody($content, 'text/html');
+                                });
+                }
+               else
+                {
+                    $json['message']='success ! uccess ! Membership Assign Successfully!! ';
+                    $json['status']   = "SUCCESS";
+                }
+                //return $send_mail;
+                if($send_mail)
+                {
+                    $json['message']='success ! Success ! Membership Assign Successfully ! ';
+                    $json['status']   = "SUCCESS";
+                }
+                else
+                {   $json['message']='Error ! Membership Assign Successfully But Mail Not Delivered Yet ! ';
+                    $json['status']   = "ERROR";
+                }
+           }
+         }
+       
+        return response()->json($json);
+
+    }
 }
+
+
+
+
+

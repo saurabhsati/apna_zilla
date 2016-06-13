@@ -791,6 +791,7 @@ class BusinessListingController extends Controller
 
     public function multi_action(Request $request)
     {
+       
         $arr_rules = array();
         $arr_rules['multi_action'] = "required";
         $arr_rules['checked_record'] = "required";
@@ -799,15 +800,16 @@ class BusinessListingController extends Controller
         $validator = Validator::make($request->all(),$arr_rules);
 
         if($validator->fails())
-        {
+        {  print_r($validator->errors()->all());exit;
             Session::flash('error','Please Select Any Record(s)');
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+
         $multi_action = $request->input('multi_action');
         $checked_record = $request->input('checked_record');
 
-        /* Check if array is supplied*/
+       /* Check if array is supplied*/
         if(is_array($checked_record) && sizeof($checked_record)<=0)
         {
             Session::flash('error','Problem Occured, While Doing Multi Action');
@@ -1005,27 +1007,32 @@ class BusinessListingController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $business_id=base64_decode($request->input('business_id'));
-        $user_id=base64_decode($request->input('user_id'));
-        $category_id=base64_decode($request->input('category_id'));
-        $plan_id=$request->input('plan_id');
-        $price=$request->input('price');
-        $validity=$request->input('validity');
+        $business_id = base64_decode($request->input('business_id'));
+        $user_id     = base64_decode($request->input('user_id'));
+        $category_id = base64_decode($request->input('category_id'));
+        $plan_id     = $request->input('plan_id');
+        $price       = $request->input('price');
+        $validity    = $request->input('validity');
 
-        $arr_data['business_id']=$business_id;
-        $arr_data['user_id']=$user_id;
-        $arr_data['category_id']=$category_id;
-        $arr_data['membership_id']=$plan_id;
-        $arr_data['price']=$price;
-        $arr_data['transaction_status']='Active';
-        $arr_data['sales_user_public_id']=$sales_user_public_id;
-        $arr_data['start_date']=date('Y-m-d');
-        $arr_data['expire_date']=date('Y-m-d', strtotime("+".$validity."days"));
+        $arr_data['business_id']          = $business_id;
+        $arr_data['user_id']              = $user_id;
+      
+        $arr_data['category_id']          = $category_id;
+        $arr_data['membership_id']        = $plan_id;
+        $arr_data['price']                = $price;
+        $arr_data['transaction_status']   = 'Active';
+        $arr_data['sales_user_public_id'] = $sales_user_public_id;
+        $arr_data['start_date']           = date('Y-m-d');
+        $arr_data['expire_date']          = date('Y-m-d', strtotime("+".$validity."days"));
        // dd($arr_data);
         $transaction = TransactionModel::create($arr_data);
         if($transaction)
         {
              $obj_single_transaction=TransactionModel::where('id',$transaction->id)->first();
+             $transaction_id='TXN'.$transaction->id;
+             $update_arr_data['transaction_id']        =    $transaction_id;
+             $transaction = TransactionModel::where('id',$transaction->id)->update($update_arr_data);
+
             if($obj_single_transaction)
             {
                 $obj_single_transaction->load(['user_records']);
@@ -1035,12 +1042,12 @@ class BusinessListingController extends Controller
 
                 $arr_single_transaction = $obj_single_transaction->toArray();
             }
-            $first_name=ucfirst($arr_single_transaction['user_records']['first_name']);
-            $email=ucfirst($arr_single_transaction['user_records']['email']);
-            $business_name=ucfirst($arr_single_transaction['business']['business_name']);
-            $plan=ucfirst($arr_single_transaction['membership']['title']);
-            $category=ucfirst($arr_single_transaction['category']['title']);
-            $expiry_date=date('d-M-Y',strtotime($arr_single_transaction['expire_date']));
+            $first_name    = ucfirst($arr_single_transaction['user_records']['first_name']);
+            $email         = ucfirst($arr_single_transaction['user_records']['email']);
+            $business_name = ucfirst($arr_single_transaction['business']['business_name']);
+            $plan          = ucfirst($arr_single_transaction['membership']['title']);
+            $category      = ucfirst($arr_single_transaction['category']['title']);
+            $expiry_date   = date('d-M-Y',strtotime($arr_single_transaction['expire_date']));
             //echo "Payment Success" . "<pre>" . print_r( $_POST, true ) . "</pre>";die();
 
             $obj_email_template = EmailTemplateModel::where('id','13')->first();
@@ -1048,17 +1055,17 @@ class BusinessListingController extends Controller
             {
                 $arr_email_template = $obj_email_template->toArray();
 
-                $content        = $arr_email_template['template_html'];
-                $content         = str_replace("##USER_FNAME##",$first_name,$content);
-                $content        = str_replace("##BUSINESS_NAME##",$business_name,$content);
-                $content        = str_replace("##CATEGORY##",$category,$content);
-                $content        = str_replace("##TRANS_ID##","Payment Done BY Sales User",$content);
-                $content        = str_replace("##TRANS_STATUS##","Active",$content);
+                $content = $arr_email_template['template_html'];
+                $content = str_replace("##USER_FNAME##",$first_name,$content);
+                $content = str_replace("##BUSINESS_NAME##",$business_name,$content);
+                $content = str_replace("##CATEGORY##",$category,$content);
+                $content = str_replace("##TRANS_ID##",$transaction_id,$content);
+                $content = str_replace("##TRANS_STATUS##","Active",$content);
 
-                $content        = str_replace("##MODE##","Payment Hand Over To Sales User",$content);
-                $content        = str_replace("##EXPIRY##",$expiry_date,$content);
-                $content        = str_replace("##PLAN##",$plan,$content);
-                $content        = str_replace("##APP_LINK##","RightNext",$content);
+                $content = str_replace("##MODE##","Payment Hand Over To Sales User",$content);
+                $content = str_replace("##EXPIRY##",$expiry_date,$content);
+                $content = str_replace("##PLAN##",$plan,$content);
+                $content = str_replace("##APP_LINK##","RightNext",$content);
                  //print_r($content);exit;
                 $content = view('email.front_general',compact('content'))->render();
                 $content = html_entity_decode($content);

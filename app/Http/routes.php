@@ -662,7 +662,15 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		/* Register Via Facebook*/
 		Route::post('register_via_google_plus',			['as' => 'register_via_google_plus'                    ,'uses' =>'Api\AuthController@register_via_google_plus']);
 
-			/* Front Business Route*/
+			/* Front Get all main category Route*/
+		Route::post('get_all_main_Category',			['as' => 'get_all_main_Category'                    ,'uses' =>'Api\FrontAllCategoryController@get_all_main_Category']);	
+
+		/* Front Get all sub category of main category Route*/
+		Route::post('get_all_sub_category',			['as' => 'get_all_sub_category'                    ,'uses' =>'Api\FrontAllCategoryController@get_all_sub_category']);
+	         /* Front Business Listing Route*/
+		Route::post('get_business_listing',			['as' => 'get_business_listing'                    ,'uses' =>'Api\FrontAllCategoryController@get_business_listing']);
+
+			/* Front Business Route*/	
 		Route::group(array('prefix' => '/business'), function()
 		{
 
@@ -694,7 +702,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		/* Assign Membership*/
 		Route::post('assign_membership',					['as' => 'assign_membership' 	  ,'uses' 	=>'Api\MembershipPlanController@assign_membership']);
 		Route::post('get_plan_cost',				 	['as' => 'get_plan_cost' 	      ,'uses' 	=>'Api\MembershipPlanController@get_plan_cost']);
-
+		Route::post('manual_plan_purchase',				 	['as' => 'manual_plan_purchase' 	      ,'uses' 	=>'Api\MembershipPlanController@manual_plan_purchase']);
 
 
 		/* Common service for getting the state ,city & pincode */
@@ -710,6 +718,13 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		{
 			Route::post('get_sub_category_by_main',  		['as' => 'get_states_by_country' 					,'uses' => 'Api\CommonController@get_sub_category_by_main']);
 			Route::post('get_main_category',  				['as' => 'get_main_category' 					,'uses' => 'Api\CommonController@get_main_category']);
+		});
+
+		/* Common service for getting the selected business users */
+		Route::group(array('prefix' => '/user_common'), function()
+		{
+			Route::post('get_users_by_sales_executive',  		['as' => 'get_users_by_sales_executive' 					,'uses' => 'Api\CommonController@get_users_by_sales_executive']);
+		
 		});
 
 
@@ -733,6 +748,8 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 		Route::group(array('prefix' => '/sales_user'), function()
 		{
+			   Route::post('/dashboard',  ['as' => 'business_index', 'uses' =>'Api\SalesExecutiveDashboardController@dashboard']);
+			
 			Route::group(array('prefix' => '/business'), function()
 		    {
 		    	//Business listing

@@ -77,7 +77,6 @@ class BusinessController extends Controller
         {
      	     foreach ($business_listing as $key => $business)
         	 {
-
                  $arr_data[$key]['busiess_ref_public_id'] = $business['busiess_ref_public_id'];
                  $arr_data[$key]['main_image']            = url('/uploads/business/main_image').'/'.$business['main_image'];
                  $arr_data[$key]['business_name']         = $business['business_name'];
@@ -87,12 +86,9 @@ class BusinessController extends Controller
 
                  if(isset($business['user_details']) && sizeof($business['user_details'])>0)
                  {
-                      $arr_data[$key]['vender_first_name']         = $business['user_details']['first_name'];
-                      $arr_data[$key]['vender_public_id']         = $business['user_details']['public_id'];
+                      $arr_data[$key]['vender_first_name'] = $business['user_details']['first_name'];
+                      $arr_data[$key]['vender_public_id']  = $business['user_details']['public_id'];
                  }
-
-
-
 
                  $sub_category_title=$main_cat_title='';
                  if(isset($business['category']) && sizeof($business['category'])>0)
@@ -131,28 +127,19 @@ class BusinessController extends Controller
       $json['message'] = 'No Business Record Found!';
     }
         return response()->json($json);
-        
-       
-        
-      
-
-   }
+     }
 
     public function store(Request $request)
     {
-
          $arr_data=array();
          $arr_data['user_id']              = $request->input('user_id');
          $arr_data['sales_user_public_id'] = $request->input('sales_user_public_id');
-         
-        
-         $arr_data['business_added_by']     = ucfirst($request->input('business_added_by'));
-         $arr_data['business_name']         =  $request->input('business_name');
-
-         $business_cat                    =   explode(",",$request->input('business_cat'));
-         $payment_mode                    =   explode(",",$request->input('payment_mode'));
-         $business_service                =   explode(",",$request->input('business_service'));
-         $main_image                      =  $request->input('main_image'); 
+         $arr_data['business_added_by']    = ucfirst($request->input('business_added_by'));
+         $arr_data['business_name']        = $request->input('business_name');
+         $business_cat                     = explode(",",$request->input('business_cat'));
+         $payment_mode                     = explode(",",$request->input('payment_mode'));
+         $business_service                 = explode(",",$request->input('business_service'));
+         $main_image                       = $request->input('main_image');
 
          //location  fields
           $arr_data['area']                = $request->input('area');
@@ -170,9 +157,6 @@ class BusinessController extends Controller
           $arr_data['contact_person_name'] = $request->input('contact_person_name');
           $arr_data['mobile_number']       = $request->input('mobile_number');
           
-         
-          
-            
           if($request->hasFile('main_image'))
           {
             $fileName                    = $request->input('main_image');
@@ -200,7 +184,7 @@ class BusinessController extends Controller
           $insert_data = BusinessListingModel::create($arr_data);
           $business_id = $insert_data->id;
 
-           $business_main_cat_slug=$request->input('business_main_cat_slug');
+          $business_main_cat_slug=$request->input('business_main_cat_slug');
           $public_id = $this->objpublic->generate_business_public_by_category($business_main_cat_slug,$business_id);
           BusinessListingModel::where('id', '=', $business_id)->update(array('busiess_ref_public_id' => $public_id));
           if(isset($business_cat) && sizeof($business_cat)>0)
@@ -282,7 +266,6 @@ class BusinessController extends Controller
                   $arr_time['sun_close']   = $request->input('sun_out');
 
               } 
-
               $business_time_add = BusinessTimeModel::create($arr_time);
 
               if($business_time_add)
@@ -295,7 +278,6 @@ class BusinessController extends Controller
                    $json['status'] = 'ERROR';
                    $json['message']  = 'Error Occure while Creating Business.';
               }
-
           }
         return response()->json($json);
           

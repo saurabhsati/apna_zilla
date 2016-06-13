@@ -286,8 +286,8 @@ class CategorySearchController extends Controller
           }
 
 
-           /* Get Business by city selected */
-         /* $obj_business_listing_city = CityModel::where('city_title',$city)->get();
+           /* Get Business by city selected *//*
+          $obj_business_listing_city = CityModel::where('city_title',$city)->get();
           if($obj_business_listing_city)
           {
             $obj_business_listing_city->load(['business_details']);
@@ -299,8 +299,8 @@ class CategorySearchController extends Controller
               foreach ($arr_business_by_city[0]['business_details'] as $key => $value) {
                 $key_business_city[$value['id']]=$value['id'];
               }
-            }
-*/
+            }*/
+
             /* Get Business by category */
             $obj_business_listing = BusinessCategoryModel::where('category_id',$cat_id)->get();
             if($obj_business_listing)

@@ -2,6 +2,15 @@
 
 
     @section('main_content')
+    <style type="text/css">
+    div.table-responsive>div.dataTables_wrapper>div.row>div[class^="col-"]:last-child 
+    {
+     padding-right: 0 !important; 
+    }
+    div.table-responsive>div.dataTables_wrapper>div.row>div[class^="col-"]:first-child {
+     padding-left: 0 !important; 
+}
+</style>
     <link rel="stylesheet" type="text/css" href="{{ url('/assets/data-tables/latest/') }}/dataTables.bootstrap.min.css">
     <!-- BEGIN Page Title -->
     <div class="page-title">
@@ -101,330 +110,330 @@
                 </div>
             </div>
             </form>
+            
+            <form class="form-horizontal" id="frm_manage" method="POST" action="{{ url('/sales_user/business_listing/multi_action') }}">
             <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-             <form class="form-horizontal" id="frm_manage" method="POST" action="{{ url('/sales_user/business_listing/multi_action') }}">
+             
 
-            {{ csrf_field() }}
-                        <div class="btn-toolbar pull-right clearfix mrg-tps">
-            <!--- Add new record - - - -->
-                <div class="btn-group">
-                <a href="{{ url('/sales_user/business_listing/create')}}" class="btn btn-primary btn-add-new-records">Add business</a>
-                </div>
-            <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-            <div class="btn-group">
-                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
-                    title="Multiple Unblock"
-                    href="javascript:void(0);"
-                    onclick="javascript : return check_multi_action('frm_manage','activate');"
-                    style="text-decoration:none;">
+                            {{ csrf_field() }}
+                           <div class="btn-toolbar pull-right clearfix mrg-tps">
+                                <!--- Add new record - - - -->
+                                    <div class="btn-group">
+                                    <a href="{{ url('/sales_user/business_listing/create')}}" class="btn btn-primary btn-add-new-records">Add business</a>
+                                    </div>
+                                <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+                                <div class="btn-group">
+                                    <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
+                                        title="Multiple Unblock"
+                                        href="javascript:void(0);"
+                                        onclick="javascript : return check_multi_action('frm_manage','activate');"
+                                        style="text-decoration:none;">
 
-                    <i class="fa fa-unlock"></i>
-                </a>
-                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
-                   title="Multiple Block"
-                   href="javascript:void(0);"
-                   onclick="javascript : return check_multi_action('frm_manage','block');"
-                   style="text-decoration:none;">
-                    <i class="fa fa-lock"></i>
-                </a>
-                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
-                   title="Multiple Delete"
-                   href="javascript:void(0);"
-                   onclick="javascript : return check_multi_action('frm_manage','delete');"
-                   style="text-decoration:none;">
-                   <i class="fa fa-trash-o"></i>
-                </a>
-            </div>
-            <div class="btn-group">
-                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
-                   title="Refresh"
-                   href="{{ url('/sales_user/business_listing') }}"
-                   style="text-decoration:none;">
-                   <i class="fa fa-repeat"></i>
-                </a>
-            </div>
-          </div>
+                                        <i class="fa fa-unlock"></i>
+                                    </a>
+                                    <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
+                                       title="Multiple Block"
+                                       href="javascript:void(0);"
+                                       onclick="javascript : return check_multi_action('frm_manage','block');"
+                                       style="text-decoration:none;">
+                                        <i class="fa fa-lock"></i>
+                                    </a>
+                                    <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
+                                       title="Multiple Delete"
+                                       href="javascript:void(0);"
+                                       onclick="javascript : return check_multi_action('frm_manage','delete');"
+                                       style="text-decoration:none;">
+                                       <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </div>
+                                <div class="btn-group">
+                                    <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
+                                       title="Refresh"
+                                       href="{{ url('/sales_user/business_listing') }}"
+                                       style="text-decoration:none;">
+                                       <i class="fa fa-repeat"></i>
+                                    </a>
+                                </div>
+                              </div>
 
-            </div>
-            </div>
-           
-         
-
-            <div class="col-md-10">
-
-
-            <div id="ajax_op_status">
-
-            </div>
-            <div class="alert alert-danger" id="no_select" style="display:none;"></div>
-            <div class="alert alert-warning" id="warning_msg" style="display:none;"></div>
-          </div>
-
-          <br/>
-          <div class="clearfix"></div>
-          <div class="table-responsive" style="border:0">
-
-            <input type="hidden" name="multi_action" value="" />
-
-            <table class="table table-advance"  id="business_manage" >
-              <thead>
-                <tr>
-                  <th style="width:1%"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
-                  <th style="width:1%;">No</th>
-                 <!--  <th width="width:10%;" style="text-align:center">Business Image</th> -->
-                  <th width="width:10%;" style="text-align:center">Business Public Id</th>
-                  <th width="width:10%;" style="text-align:center">Business Name</th>
-                  <th width="width:3%;" style="text-align:center">Vender First Name</th>
-                  <th width="width:5%;" style="text-align:center">Vender Public ID</th>
-                  <th width="width:5%;" style="text-align:center">Main Category</th>
-                  <th width="width:10%;" style="text-align:center">Sub Category</th>
-                  <th width="width:3%;" style="text-align:center" >Deals</th>
-                  <th width="width:52%;" style="text-align:center">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-
-               @if(isset($business_listing) && sizeof($business_listing)>0)
-                  @foreach($business_listing as $key => $business)
-
-                  <?php
-                    $category_id='';
-                     foreach ($business['category'] as $business_category)
-                      {
-                         foreach ($arr_sub_category as $sub_category)
-                          {
-                            if($business_category['category_id']==$sub_category['cat_id'])
-                            {
-                               foreach ($arr_main_category as $main_category)
-                               {
-                                  if($sub_category['parent']==$main_category['cat_id'])
-                                  {
-                                   $category_id=$sub_category['parent'];
-                                  }
-                                }
-                            }
-                          }
-                      }
-                     $category_id;
-                     $business_id=$business['id'];
-                     $user_id=$business['user_details']['id'];
-
-                     if(!sizeof($business['membership_plan_details'])>0)
-                     {
-                       $style= " alert  alert red";
-                     }
-                     else
-                     {
-                       $style='';
-                       $style= 'style="color: Green;"';
-                     }
-                     ?>
-                  <tr>
-                    <td width="width:1%;">
-                      <input type="checkbox"
-                             name="checked_record[]"
-                             value="{{ base64_encode($business['id']) }}" />
-                    </td width="width:1%;">
-                     <td >
-                      {{ $key+1 }}
-                    </td>
-                    <!-- <td>
-                    <img src="{{ $business_public_img_path.'/'.$business['main_image']}}" alt=""   style="width:30px; height:30px;" />   </td> -->
-                     <td width="width:10%;"> {{ $business['busiess_ref_public_id'] }} </td>
-                    <td width="width:10%;"> {{ $business['business_name'] }} </td>
-                    
-                     <td width="width:3%;"> {{ $business['user_details']['first_name'] }} </td>
-                    <td width="width:5%;"> {{ $business['user_details']['public_id'] }} </td>
-                  <td width="width:5%;">
-                   <?php
-                    $categoty=$subcategory=array();
-                    if(isset($business['category']) && sizeof($business['category'])>0){
-                    foreach ($business['category'] as $business_category) {
-                    foreach ($arr_sub_category as $sub_category) {
-                      if($business_category['category_id']==$sub_category['cat_id'])
-                      {
-                         foreach ($arr_main_category as $main_category) {
-
-                          if($sub_category['parent']==$main_category['cat_id'])
-                          {
-                             $categoty[]=$main_category['title'];
-
-                          }
-
-
-                          }
-                          $subcategory[]=$sub_category['title'];
-                       }
-                     }
-                   }
-                 }
-                 if(sizeof($categoty)>0)
-                   {
-                     echo $categoty[0];
-                   }
-
-                  ?>
-                  </td>
-                   <td width="width:10%;">
-                       <?php
-                       if(sizeof($subcategory)>0)
-                       {
-                        foreach ($subcategory as $key => $value) {
-
-                          echo $value;
-                           if($key < sizeof($subcategory)-1)
-                            { echo ' , '; }
-                        }
-
-                       }
-                      ?>
-                  </td>
-
-                 <!--    <td> {{ $business['user_details']['title'] }} </td> -->
-                    
-                    <!--  <td> {{ $business['user_details']['city'] }} </td> -->
-
-
-
-                    <td width="width:3%;">
-
-                       <?php
-                 foreach ($business['category'] as $business_category) {
-                 foreach ($arr_sub_category as $sub_category) {
-                      if($business_category['category_id']==$sub_category['cat_id'])
-                      {
-                         foreach ($arr_main_category as $main_category) {
-
-                          if($sub_category['parent']==$main_category['cat_id'])
-                          {
-                            if($main_category['is_allow_to_add_deal']=='1')
-                            {
-                              //$check_allow='';
-                              $check_allow=1;
-                            }
-                            else
-                            {
-                              // $check_allow='';
-                              $check_allow=0;
-                            }
-                          }
-
-
-                          }
-
-                       }
-                     }
-                   }
-                  ?>
-
-                     <?php
-                    if(sizeof($business['membership_plan_details']  )>0)
-                    {
-                       $expire_date = new \Carbon($business['membership_plan_details'][0]['expire_date']);
-                        $now = Carbon::now();
-                        $difference = ($expire_date->diff($now)->days < 1)
-                            ? 'today'
-                            : $expire_date->diffForHumans($now);
                            
-                        if (strpos($difference, 'after') !== false || strpos($difference, 'today') !== false) 
-                        {
-                      ?>
+                            </div>
+                             <div class="col-md-10">
+                            <div id="ajax_op_status">
+                            </div>
+                            <div class="alert alert-danger" id="no_select" style="display:none;"></div>
+                            <div class="alert alert-warning" id="warning_msg" style="display:none;"></div>
+                          </div>
 
-                             @if( $check_allow=='0')
-                                 <a class="btn btn-info" href="javascript:void(0);">
-                                  No Feature
-                                  </a>
-                             @elseif($business['is_active']=="1" && $check_allow=='1')
-                                 <a class="btn btn-success" href="{{ url('/sales_user/deals/'.base64_encode($business['id'])) }}">
-                                   View Deal
-                                </a>
-                                @else
-                               <a class="btn btn-error" href="javascript:void(0);">
-                                     Block Business
-                                  </a>
-                             @endif
-                             
-                       <?php
-                      }
-                      else
-                          { ?>
-                           <a class="btn btn-error" href="javascript:void(0);">
-                               Plan Expired
-                            </a>
-                          <?php
-                          }
+                          <br/>
+                          <div class="clearfix"></div>
+                          <div class="col-md-12">
+                          <div class="table-responsive" style="border:0">
 
-                    }
-                     else
-                        {?>
-                         <a class="btn btn-error" href="javascript:void(0);">
-                             No Feature
-                          </a>
-                        <?php
-                        }
-                       ?>
+                            <input type="hidden" name="multi_action" value="" />
 
-                    </td>
-                     <td width="width:52%;">
-                     @if( sizeof($business['reviews'])>0)
-                     <a href="{{ url('sales_user/reviews/'.base64_encode($business['id'])) }}" class="show-tooltip" title="Ratings Available"> <i class="glyphicon glyphicon-star" ></i> </a>
-                      @else
-                       <a href="#" class="show-tooltip" title="No Ratings Available"> <i class="glyphicon glyphicon-star-empty" ></i> </a>
-                       @endif
-                       |
-                         @if($business['is_verified']=="0")
-                        <a  href="{{ url('/sales_user/business_listing/toggle_verifired_status/').'/'.base64_encode($business['id']).'/verified' }}" class="show-tooltip" title="Un-Verified">
-                            <i class="fa fa-thumbs-down" ></i>
-                        </a>
+                            <table class="table table-advance"  id="business_manage" >
+                              <thead>
+                                <tr>
+                                  <th style="width:1%"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
+                                  <th style="width:1%;">No</th>
+                                 <!--  <th width="width:10%;" style="text-align:center">Business Image</th> -->
+                                  <th width="width:10%;" style="text-align:center">Business Public Id</th>
+                                  <th width="width:10%;" style="text-align:center">Business Name</th>
+                                  <th width="width:3%;" style="text-align:center">Vender First Name</th>
+                                  <th width="width:5%;" style="text-align:center">Vender Public ID</th>
+                                  <th width="width:5%;" style="text-align:center">Main Category</th>
+                                  <th width="width:10%;" style="text-align:center">Sub Category</th>
+                                  <th width="width:3%;" style="text-align:center" >Deals</th>
+                                  <th width="width:52%;" style="text-align:center">Action</th>
+                                </tr>
+                              </thead>
+                              <tbody>
 
-                        @elseif($business['is_verified']=="1")
-                        <a   href="{{ url('/sales_user/business_listing/toggle_verifired_status/').'/'.base64_encode($business['id']).'/unverified' }}" class="show-tooltip" title="Verified">
-                          <i class="fa fa-thumbs-up" ></i>
-                        </a>
-                        @endif
-                        |
-                   
-                     @if($business['is_active']=="0")
-                        <a  href="{{ url('/sales_user/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/activate' }}" class="show-tooltip" title="Block">
-                           <i class="fa fa-lock" ></i>
-                        </a>
+                               @if(isset($business_listing) && sizeof($business_listing)>0)
+                                  @foreach($business_listing as $key => $business)
 
-                        @elseif($business['is_active']=="1")
-                        <a  href="{{ url('/sales_user/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/block' }}" class="show-tooltip" title="Active">
-                            <i class="fa fa-unlock" ></i>
-                        </a>
-                         @elseif($business['is_active']=="2")
-                        <a   href="{{ url('/sales_user/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/activate' }}" class="show-tooltip" title="Pending">
-                             <i class="fa fa-unlock-alt" ></i>
-                        </a>
-                        @endif
-                        |
-                      <a href="{{ url('/sales_user/business_listing/show/').'/'.base64_encode($business['id']) }}" class="show-tooltip" title="Show">
-                          <i class="fa fa-eye" ></i>
-                        </a>
-                        |
-                        <a href="{{ url('/sales_user/business_listing/edit/').'/'.base64_encode($business['id']) }}" class="show-tooltip" title="Edit">
-                          <i class="fa fa-edit" ></i>
-                        </a>
+                                  <?php
+                                    $category_id='';
+                                     foreach ($business['category'] as $business_category)
+                                      {
+                                         foreach ($arr_sub_category as $sub_category)
+                                          {
+                                            if($business_category['category_id']==$sub_category['cat_id'])
+                                            {
+                                               foreach ($arr_main_category as $main_category)
+                                               {
+                                                  if($sub_category['parent']==$main_category['cat_id'])
+                                                  {
+                                                   $category_id=$sub_category['parent'];
+                                                  }
+                                                }
+                                            }
+                                          }
+                                      }
+                                     $category_id;
+                                     $business_id=$business['id'];
+                                     $user_id=$business['user_details']['id'];
 
-                       |
-                        <a href="{{ url('/sales_user/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/delete' }}"
-                           onclick="javascript:return confirm_delete()" class="show-tooltip" title="Delete">
-                          <i class="fa fa-trash" ></i>
-                        </a>
+                                     if(!sizeof($business['membership_plan_details'])>0)
+                                     {
+                                       $style= " alert  alert red";
+                                     }
+                                     else
+                                     {
+                                       $style='';
+                                       $style= 'style="color: Green;"';
+                                     }
+                                     ?>
+                                  <tr>
+                                    <td width="width:1%;">
+                                      <input type="checkbox"
+                                             name="checked_record[]"
+                                             value="{{ base64_encode($business['id']) }}" />
+                                    </td width="width:1%;">
+                                     <td >
+                                      {{ $key+1 }}
+                                    </td>
+                                    <!-- <td>
+                                    <img src="{{ $business_public_img_path.'/'.$business['main_image']}}" alt=""   style="width:30px; height:30px;" />   </td> -->
+                                     <td width="width:10%;"> {{ $business['busiess_ref_public_id'] }} </td>
+                                    <td width="width:10%;"> {{ $business['business_name'] }} </td>
+                                    
+                                     <td width="width:3%;"> {{ $business['user_details']['first_name'] }} </td>
+                                    <td width="width:5%;"> {{ $business['user_details']['public_id'] }} </td>
+                                  <td width="width:5%;">
+                                   <?php
+                                    $categoty=$subcategory=array();
+                                    if(isset($business['category']) && sizeof($business['category'])>0){
+                                    foreach ($business['category'] as $business_category) {
+                                    foreach ($arr_sub_category as $sub_category) {
+                                      if($business_category['category_id']==$sub_category['cat_id'])
+                                      {
+                                         foreach ($arr_main_category as $main_category) {
 
-                    </td>
-                    
+                                          if($sub_category['parent']==$main_category['cat_id'])
+                                          {
+                                             $categoty[]=$main_category['title'];
 
-                  </tr>
-                  @endforeach
-                @endif
+                                          }
 
-              </tbody>
-            </table>
-          </div>
+
+                                          }
+                                          $subcategory[]=$sub_category['title'];
+                                       }
+                                     }
+                                   }
+                                 }
+                                 if(sizeof($categoty)>0)
+                                   {
+                                     echo $categoty[0];
+                                   }
+
+                                  ?>
+                                  </td>
+                                   <td width="width:10%;">
+                                       <?php
+                                       if(sizeof($subcategory)>0)
+                                       {
+                                        foreach ($subcategory as $key => $value) {
+
+                                          echo $value;
+                                           if($key < sizeof($subcategory)-1)
+                                            { echo ' , '; }
+                                        }
+
+                                       }
+                                      ?>
+                                  </td>
+
+                                 <!--    <td> {{ $business['user_details']['title'] }} </td> -->
+                                    
+                                    <!--  <td> {{ $business['user_details']['city'] }} </td> -->
+
+
+
+                                    <td width="width:3%;">
+
+                                       <?php
+                                 foreach ($business['category'] as $business_category) {
+                                 foreach ($arr_sub_category as $sub_category) {
+                                      if($business_category['category_id']==$sub_category['cat_id'])
+                                      {
+                                         foreach ($arr_main_category as $main_category) {
+
+                                          if($sub_category['parent']==$main_category['cat_id'])
+                                          {
+                                            if($main_category['is_allow_to_add_deal']=='1')
+                                            {
+                                              //$check_allow='';
+                                              $check_allow=1;
+                                            }
+                                            else
+                                            {
+                                              // $check_allow='';
+                                              $check_allow=0;
+                                            }
+                                          }
+
+
+                                          }
+
+                                       }
+                                     }
+                                   }
+                                  ?>
+
+                                     <?php
+                                    if(sizeof($business['membership_plan_details']  )>0)
+                                    {
+                                       $expire_date = new \Carbon($business['membership_plan_details'][0]['expire_date']);
+                                        $now = Carbon::now();
+                                        $difference = ($expire_date->diff($now)->days < 1)
+                                            ? 'today'
+                                            : $expire_date->diffForHumans($now);
+                                           
+                                        if (strpos($difference, 'after') !== false || strpos($difference, 'today') !== false) 
+                                        {
+                                      ?>
+
+                                             @if( $check_allow=='0')
+                                                 <a class="btn btn-info" href="javascript:void(0);">
+                                                  No Feature
+                                                  </a>
+                                             @elseif($business['is_active']=="1" && $check_allow=='1')
+                                                 <a class="btn btn-success" href="{{ url('/sales_user/deals/'.base64_encode($business['id'])) }}">
+                                                   View Deal
+                                                </a>
+                                                @else
+                                               <a class="btn btn-error" href="javascript:void(0);">
+                                                     Block Business
+                                                  </a>
+                                             @endif
+                                             
+                                       <?php
+                                      }
+                                      else
+                                          { ?>
+                                           <a class="btn btn-error" href="javascript:void(0);">
+                                               Plan Expired
+                                            </a>
+                                          <?php
+                                          }
+
+                                    }
+                                     else
+                                        {?>
+                                         <a class="btn btn-error" href="javascript:void(0);">
+                                             No Feature
+                                          </a>
+                                        <?php
+                                        }
+                                       ?>
+
+                                    </td>
+                                     <td width="width:52%;">
+                                     @if( sizeof($business['reviews'])>0)
+                                     <a href="{{ url('sales_user/reviews/'.base64_encode($business['id'])) }}" class="show-tooltip" title="Ratings Available"> <i class="glyphicon glyphicon-star" ></i> </a>
+                                      @else
+                                       <a href="#" class="show-tooltip" title="No Ratings Available"> <i class="glyphicon glyphicon-star-empty" ></i> </a>
+                                       @endif
+                                       |
+                                         @if($business['is_verified']=="0")
+                                        <a  href="{{ url('/sales_user/business_listing/toggle_verifired_status/').'/'.base64_encode($business['id']).'/verified' }}" class="show-tooltip" title="Un-Verified">
+                                            <i class="fa fa-thumbs-down" ></i>
+                                        </a>
+
+                                        @elseif($business['is_verified']=="1")
+                                        <a   href="{{ url('/sales_user/business_listing/toggle_verifired_status/').'/'.base64_encode($business['id']).'/unverified' }}" class="show-tooltip" title="Verified">
+                                          <i class="fa fa-thumbs-up" ></i>
+                                        </a>
+                                        @endif
+                                        |
+                                   
+                                     @if($business['is_active']=="0")
+                                        <a  href="{{ url('/sales_user/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/activate' }}" class="show-tooltip" title="Block">
+                                           <i class="fa fa-lock" ></i>
+                                        </a>
+
+                                        @elseif($business['is_active']=="1")
+                                        <a  href="{{ url('/sales_user/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/block' }}" class="show-tooltip" title="Active">
+                                            <i class="fa fa-unlock" ></i>
+                                        </a>
+                                         @elseif($business['is_active']=="2")
+                                        <a   href="{{ url('/sales_user/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/activate' }}" class="show-tooltip" title="Pending">
+                                             <i class="fa fa-unlock-alt" ></i>
+                                        </a>
+                                        @endif
+                                        |
+                                      <a href="{{ url('/sales_user/business_listing/show/').'/'.base64_encode($business['id']) }}" class="show-tooltip" title="Show">
+                                          <i class="fa fa-eye" ></i>
+                                        </a>
+                                        |
+                                        <a href="{{ url('/sales_user/business_listing/edit/').'/'.base64_encode($business['id']) }}" class="show-tooltip" title="Edit">
+                                          <i class="fa fa-edit" ></i>
+                                        </a>
+
+                                       |
+                                        <a href="{{ url('/sales_user/business_listing/toggle_status/').'/'.base64_encode($business['id']).'/delete' }}"
+                                           onclick="javascript:return confirm_delete()" class="show-tooltip" title="Delete">
+                                          <i class="fa fa-trash" ></i>
+                                        </a>
+
+                                    </td>
+                                    
+
+                                  </tr>
+                                  @endforeach
+                                @endif
+
+                              </tbody>
+                            </table>
+                            </div>
+                          </div>
+
 
           </form>
+
       </div>
   </div>
 </div>
