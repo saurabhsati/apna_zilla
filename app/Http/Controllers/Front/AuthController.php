@@ -121,7 +121,7 @@ class AuthController extends Controller
              Session::set('user_name', $status->first_name);
              Session::set('user_mail', $status->email);
              Session::set('user_id', base64_encode($id));
-            Session::flash('success','Login Successfull');
+             Session::flash('success','Login Successfull');
 
             $data['status'] = "SUCCESS";
             $data['msg'] = "You Have Registered Successfully";
@@ -304,7 +304,7 @@ class AuthController extends Controller
         if($user)
         {
 
-            if($user->is_active == 1)
+            if($user-> == 1)
             {
                     /* Check if Users Role is Admin */
                     $role = Sentinel::findRoleBySlug('normal');
@@ -541,12 +541,7 @@ class AuthController extends Controller
         $user = Sentinel::findByCredentials(['email' => $email]);
         if($user)
         {
-
-
             $reminder = Reminder::create($user);
-
-
-       
             $email_status = $this->forget_password_send_mail($email,$reminder->code);
             if($email_status)
             {
@@ -556,7 +551,6 @@ class AuthController extends Controller
             {
                 echo "sending_error";
             }
-
         }
         else
         {
@@ -574,13 +568,9 @@ class AuthController extends Controller
             if($obj_email_template)
             {
                 $arr_email_template = $obj_email_template->toArray();
-
                 $content = $arr_email_template['template_html'];
-
                 $content        = str_replace("##USER_FNAME##",$user->first_name,$content);
                 $content        = str_replace("##EMAIL##",$user->email,$content);
-
-
                 $reminder_url = '<a href=" '.URL::to('front_users/validate_reset_password_link/'.base64_encode($user->id).'/'.base64_encode($reminder_code) ).'">Click Here</a>.<br/>' ;
 
                 $content        = str_replace("##APP_NAME##","RightNext",$content);
@@ -643,7 +633,6 @@ class AuthController extends Controller
      public function reset_password(Request $request)
     {
        // dd($request->all());
-
         $arr_rules = array();
         $arr_rules['password'] = "required|confirmed";
         $arr_rules['enc_id'] = "required";
