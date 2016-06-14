@@ -102,7 +102,7 @@
                     <input class="form-control" name="middle_name" id="middle_name" placeholder="Enter Middle Name " data-rule-required="" />
                     <span class='help-block'>{{ $errors->first('middle_name') }}</span>
                 </div>
-            </div>
+            </div>-->
 
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="last_name">Last Name<i class="red"></i></label>
@@ -110,7 +110,7 @@
                     <input class="form-control" name="last_name" id="last_name"  placeholder="Enter Last Name" data-rule-required="" />
                     <span class='help-block'>{{ $errors->first('last_name') }}</span>
                 </div>
-            </div> -->
+            </div> 
 
               <div class="form-group">
                   <label class="col-sm-3 col-lg-2 control-label">Gender</label>
@@ -129,7 +129,7 @@
                <div class="form-group">
                   <label class="cdol-sm-3 col-lg-2 control-label">DOB</label>
                   <div class="col-sm-5 col-lg-3 controls">
-                     <input class="form-control date-picker" id="d_o_b" name="d_o_b" size="16" type="text" value="" />
+                     <input class="form-control date-picker" data-date-format="dd-mm-yyyy" id="d_o_b" name="d_o_b" size="16" type="text" value="" />
                   </div>
                  <span class='help-block'>{{ $errors->first('d_o_b') }}</span>
                </div>
@@ -151,7 +151,7 @@
             <div class="form-group" style="display:none;" id="div_married_date" name="div_married_date">
                 <label class="col-sm-3 col-lg-2 control-label" for="married_date">Married Date<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control date-picker" name="married_date" id="married_date" data-rule-required="" placeholder="Enter Married  Date" />
+                    <input class="form-control date-picker" data-date-format="dd-mm-yyyy" name="married_date" id="married_date" data-rule-required="" placeholder="Enter Married  Date" />
                     <span class='help-block'>{{ $errors->first('married_date') }}</span>
                </div>
             </div>
@@ -288,6 +288,8 @@
 </div>
 <!-- END Main Content -->
 <script type="text/javascript">
+
+  
     var site_url = "{{url('/')}}";
     function loadPreviewImage(ref)
     {

@@ -125,7 +125,7 @@
                            />
                     <span class='help-block'>{{ $errors->first('middle_name') }}</span>
                 </div>
-            </div>
+            </div>-->
 
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="last_name">Last Name<i class="red"></i></label>
@@ -138,7 +138,7 @@
                            value="{{ isset($arr_user_data['last_name'])?$arr_user_data['last_name']:'' }}"/>
                     <span class='help-block'>{{ $errors->first('last_name') }}</span>
                 </div>
-            </div> -->
+            </div> 
 
 
              <div class="form-group">
@@ -177,7 +177,8 @@
                            id="d_o_b"
                            data-rule-required="true"
                            placeholder="Enter Date of Birth"
-                           value="{{ date('m/d/Y',strtotime($arr_user_data['d_o_b'])) }}"/>
+                           data-date-format="dd-mm-yyyy"
+                           value="{{ date('d-m-Y',strtotime($arr_user_data['d_o_b'])) }}"/>
                     <span class='help-block'>{{ $errors->first('d_o_b') }}</span>
                 </div>
             </div>
@@ -199,7 +200,7 @@
           <div class="form-group" style="" id="div_married_date" name="div_married_date">
                 <label class="col-sm-3 col-lg-2 control-label" for="married_date">Married Date<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control date-picker" name="married_date" id="married_date" data-rule-required="" placeholder="Enter Married  Date" value="{{ date('m/d/Y',strtotime($arr_user_data['married_date'])) }}"/>
+                    <input class="form-control date-picker" data-date-format="dd-mm-yyyy" name="married_date" id="married_date" data-rule-required="" placeholder="Enter Married  Date" value="{{ date('d-m-Y',strtotime($arr_user_data['married_date'])) }}"/>
                     <span class='help-block'>{{ $errors->first('married_date') }}</span>
                </div>
             </div>
