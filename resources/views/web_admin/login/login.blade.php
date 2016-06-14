@@ -39,6 +39,7 @@
                         <div class="alert alert-danger" id="success-error-message">{{ Session::get('error') }}</div>
                     @endif
             	 {{ csrf_field() }}
+                 
                 <h3>Login to your account</h3>
                 <hr/>
                 <div class="form-group ">
