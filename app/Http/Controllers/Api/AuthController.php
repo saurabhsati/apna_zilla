@@ -284,8 +284,9 @@ class AuthController extends Controller
 		  	}
 		  	else if($role=='admin' || $role=='sales')
 		  	{
-		  		$arr_data['office_landline'] 	 = $arr_result['office_landline'];
-		  		$arr_data['street_address'] 	 = $arr_result['street_address'];
+                $arr_data['office_landline'] = $arr_result['office_landline'];
+                $arr_data['street_address']  = $arr_result['street_address'];
+                $arr_data['last_name']       = $arr_result['last_name'];
 		  	}
 
 
