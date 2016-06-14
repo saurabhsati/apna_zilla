@@ -359,10 +359,11 @@ class AuthController extends Controller
 
 		  		$arr_data['married_date'] 	     = date('Y-m-d',strtotime($request->input('married_date')));
 		  	}
-		  	else if($role=='admin' || $role=='sales')
-		  	{
-		  	    $arr_data['office_landline'] 	 = $request->input('office_landline');
-		  		$arr_data['street_address'] 	 = $request->input('street_address');
+            else if($role == 'admin' || $role=='sales')
+            {   
+                $arr_data['first_name']      = $request->input('last_name');
+                $arr_data['office_landline'] = $request->input('office_landline');
+                $arr_data['street_address']  = $request->input('street_address');
 		  	}
 		  	//dd($arr_data);
 		  	$result_update = $obj_user::where('id',$id)->update($arr_data);
