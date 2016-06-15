@@ -271,7 +271,7 @@ class SalesExecutiveBusinessController extends Controller
                 }
         }
         $arr_time               = array();
-
+        $arr_time['business_id'] = $business_id;
         $arr_time['mon_open']   = $request->input('mon_open');
         $arr_time['mon_close']  = $request->input('mon_close');
         $arr_time['tue_open']   = $request->input('tue_open');
