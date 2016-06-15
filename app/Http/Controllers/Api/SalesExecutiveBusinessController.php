@@ -233,7 +233,7 @@ class SalesExecutiveBusinessController extends Controller
       }
       public function store_business_step3(Request $request)
       {
-        $arr_data                   = array();
+        /*$arr_data                   = array();
         $business_id                = $request->input('business_id');
         $arr_data['company_info']   = $request->input('company_info');
         $arr_data['establish_year'] = $request->input('establish_year');
@@ -249,7 +249,28 @@ class SalesExecutiveBusinessController extends Controller
           $json['status']  = 'ERROR';
           $json['message'] = 'Error Occure while Creating Business.';
         }
-        return response()->json($json);
+        return response()->json($json);*/
+         $business_id                          = $request->input('business_id');
+
+         $business_data['prefix_name']         = $request->input('prefix_name');
+         $business_data['contact_person_name'] = $request->input('contact_person_name');
+         $business_data['mobile_number']       = $request->input('mobile_number');
+
+         $business_data_res=BusinessListingModel::where('id',$business_id)->update($business_data);
+
+          if($business_data_res)
+          {
+              $json['business_id'] = $business_id;
+              $json['status']      = 'SUCCESS';
+              $json['message']     = 'Business Third Step Updated Successfully ! .';
+          }
+          else
+          {
+               $json['status']  = 'ERROR';
+               $json['message'] = 'Error Occure while Updating Business.';
+          }
+
+          return response()->json($json);
       }
       public function store_business_step4(Request $request)
       {
