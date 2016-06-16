@@ -76,6 +76,8 @@ class VenderController extends Controller
  	{
  		$sales_user_public_id = $request->input('public_id');
 
+        $arr_data_json = array();
+
  		$first_name           = $request->input('first_name');
  		$gender               = $request->input('gender');
  		$d_o_b                = $request->input('d_o_b');
@@ -90,7 +92,8 @@ class VenderController extends Controller
  		$area                 = $request->input('area');
 
  		$user = Sentinel::createModel();
-
+ 		$user_id = $user->id;
+ 		$arr_data_json['vender_user_id'] = $user_id;
         if(is_numeric($mobile_no) && strlen($mobile_no)==10)
         {
             if($email!='')
@@ -137,7 +140,6 @@ class VenderController extends Controller
                 }
             }
            
-
 	        $profile_pic = "default.jpg";
 
 	        if ($request->hasFile('profile_pic'))
@@ -196,6 +198,9 @@ class VenderController extends Controller
 
                 $insert_public_id = UserModel::where('id', '=', $id)->update(array('public_id' => $public_id));
 				
+				$arr_data_json['vender_user_id']   = $id;
+				$arr_data_json['vender_public_id'] = $insert_public_id;
+
                 if($email!='')
                 {
                 	$obj_email_template = EmailTemplateModel::where('id','12')->first();
@@ -225,6 +230,7 @@ class VenderController extends Controller
                 }
 
 				$json['status']  = 'SUCCESS';
+				$json['data']    = $arr_data_json;
 				$json['message'] = 'Verder Created Successfully !';
             }
             else
