@@ -602,7 +602,7 @@ class SalesExecutiveBusinessController extends Controller
       $business_cat                   = explode(",", $request->input('business_cat'));
       $business_cat_slug              = $request->input('business_public_id');
 
-      if($business_cat!=null)
+      if($business_cat!=null || $business_cat!='')
       {
           $business_category = BusinessCategoryModel::where('business_id',$business_id);
           $res               = $business_category->delete();
