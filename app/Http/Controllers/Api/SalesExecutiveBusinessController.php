@@ -111,7 +111,7 @@ class SalesExecutiveBusinessController extends Controller
               		    	 		    }
               	    	 		   }
               	    	    }
-                          if(sizeof($sub_category_title)>0 && isset($sub_category_title))
+                          if(strlen($sub_category_title)>0 && isset($sub_category_title))
                           {
                              $arr_data[$key]['sub_category_title'] = implode(',',$sub_category_title);
                           }  
