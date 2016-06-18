@@ -1072,6 +1072,8 @@ class SalesExecutiveBusinessController extends Controller
               $data['email']         = $arr_review_view['email'];
               $data['ratings']       = $arr_review_view['ratings'];
               $data['message']       = $arr_review_view['message'];
+              $data['is_active']     = $arr_review_view['is_active'];
+              
              }
 
         if($data)
