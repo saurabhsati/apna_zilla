@@ -263,34 +263,34 @@ class SalesExecutiveBusinessController extends Controller
 
         if(sizeof($payment_mode)>0)
         {
-          foreach ($payment_mode as $key => $value)
+              foreach ($payment_mode as $key => $value)
                 {
                     $arr_paymentmode_data['business_id']=$business_id;
                     $arr_paymentmode_data['title']=$value;
                     $insert_data = BusinessPaymentModeModel::create($arr_paymentmode_data);
                 }
         }
-        $arr_time               = array();
-
-        $arr_time['mon_open']   = $request->input('mon_open');
-        $arr_time['mon_close']  = $request->input('mon_close');
-        $arr_time['tue_open']   = $request->input('tue_open');
-        $arr_time['tue_close']  = $request->input('tue_close');
-        $arr_time['wed_open']   = $request->input('wed_open');
-        $arr_time['wed_close']  = $request->input('wed_close');
-        $arr_time['thus_open']  = $request->input('thus_open');
-        $arr_time['thus_close'] = $request->input('thus_close');
-        $arr_time['fri_open']   = $request->input('fri_open');
-        $arr_time['fri_close']  = $request->input('fri_close');
-        $arr_time['sat_open']   = $request->input('sat_open');
-        $arr_time['sat_close']  = $request->input('sat_close');
+        $arr_time                = array();
+        $arr_time['business_id'] = $business_id;
+        $arr_time['mon_open']    = $request->input('mon_open');
+        $arr_time['mon_close']   = $request->input('mon_close');
+        $arr_time['tue_open']    = $request->input('tue_open');
+        $arr_time['tue_close']   = $request->input('tue_close');
+        $arr_time['wed_open']    = $request->input('wed_open');
+        $arr_time['wed_close']   = $request->input('wed_close');
+        $arr_time['thus_open']   = $request->input('thus_open');
+        $arr_time['thus_close']  = $request->input('thus_close');
+        $arr_time['fri_open']    = $request->input('fri_open');
+        $arr_time['fri_close']   = $request->input('fri_close');
+        $arr_time['sat_open']    = $request->input('sat_open');
+        $arr_time['sat_close']   = $request->input('sat_close');
         
         if($request->input('is_sunday') == '1')
         { 
             $arr_time['sun_open']  = $request->input('sun_open');
             $arr_time['sun_close'] = $request->input('sun_close');
         } 
-
+        //dd($arr_time);
         $business_time_add = BusinessTimeModel::create($arr_time);
         
         if($business_time_add)

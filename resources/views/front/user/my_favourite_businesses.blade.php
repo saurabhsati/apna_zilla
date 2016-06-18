@@ -62,7 +62,7 @@
              $slug_area=str_slug($restaurants['business'][0]['area']);
              $business_area=$slug_business.'@'.$slug_area;
             ?>
-              <a href="javascript:void(0);">
+              <a href="{{url('/')}}/{{$restaurants['business'][0]['city']}}/{{$business_area}}/{{base64_encode($restaurants['business'][0]['id'])}}">
                 @if($restaurants['business'][0]['is_verified']==1)
                             <img class="product-like-icon1" src="{{ url('/') }}/assets/front/images/verified-green.png" alt="write_review"/>
                             @endif
