@@ -665,7 +665,7 @@ class UserController extends Controller
         $arr_data['user_id']           =        $user_id;
         $arr_data['business_name']     =        $request->input('business_name');
         $business_cat                  =        $request->input('business_cat');
-
+        $arr_data['is_active']         =  '2';
         //dd($business_cat);
 
         $arr_data['main_image']        =        $business_image;

@@ -187,7 +187,7 @@ class BusinessListingController extends Controller
         $arr_data['user_id']=$form_data['tmp_user_id'];
 
 
-        $arr_data['is_active']='2';
+        $arr_data['is_active']='1';
         $arr_data['business_added_by']=$form_data['business_added_by'];
         $arr_data['business_name']=$form_data['business_name'];
         $business_cat=$form_data['business_cat'];

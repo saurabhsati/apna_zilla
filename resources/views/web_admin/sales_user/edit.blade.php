@@ -186,7 +186,7 @@
                 <label class="col-sm-3 col-lg-2 control-label" for="marital_status">Marital Status<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
 
-                      <select class="form-control" data-placeholder="Choose a Category" name="marital_status" tabindex="1">
+                      <select class="form-control" data-placeholder="Choose a Category" name="marital_status" tabindex="1" onchange="chkeck_marital_status(this);">
                         <option value="" >Select...</option>
                         <option value="Married" {{ $arr_user_data['marital_status']=='Married'?"selected ='selected'":'' }}>Married</option>
                         <option value="Un Married" {{ $arr_user_data['marital_status']=='Un Married'?"selected='selected'":'' }}>Un Married</option>
@@ -496,5 +496,18 @@
                         }
         });
      }
+
+    function chkeck_marital_status(ref)
+    {
+       var marital_status= $("select[name='marital_status']").val();
+       if(marital_status=='Married')
+       {
+         $("#div_married_date").css('display','block');
+       }
+       else
+       {
+        $("#div_married_date").css('display','none');
+       }
+    }
 </script>
 @stop

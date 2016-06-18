@@ -111,7 +111,13 @@ class SalesExecutiveBusinessController extends Controller
               		    	 		    }
               	    	 		   }
               	    	    }
-                           $arr_data[$key]['sub_category_title'] = implode(',',$sub_category_title);
+                          if(strlen($sub_category_title)>0 && isset($sub_category_title))
+                          {
+                             $arr_data[$key]['sub_category_title'] = implode(',',$sub_category_title);
+                          }  
+                          else{
+                            $arr_data[$key]['sub_category_title'] = array();
+                          }
 
                   	   	}
                      }
@@ -233,7 +239,7 @@ class SalesExecutiveBusinessController extends Controller
       }
       public function store_business_step3(Request $request)
       {
-        $arr_data                   = array();
+        /*$arr_data                   = array();
         $business_id                = $request->input('business_id');
         $arr_data['company_info']   = $request->input('company_info');
         $arr_data['establish_year'] = $request->input('establish_year');
@@ -249,7 +255,28 @@ class SalesExecutiveBusinessController extends Controller
           $json['status']  = 'ERROR';
           $json['message'] = 'Error Occure while Creating Business.';
         }
-        return response()->json($json);
+        return response()->json($json);*/
+         $business_id                          = $request->input('business_id');
+
+         $business_data['prefix_name']         = $request->input('prefix_name');
+         $business_data['contact_person_name'] = $request->input('contact_person_name');
+         $business_data['mobile_number']       = $request->input('mobile_number');
+
+         $business_data_res=BusinessListingModel::where('id',$business_id)->update($business_data);
+
+          if($business_data_res)
+          {
+              $json['business_id'] = $business_id;
+              $json['status']      = 'SUCCESS';
+              $json['message']     = 'Business Third Step Updated Successfully ! .';
+          }
+          else
+          {
+               $json['status']  = 'ERROR';
+               $json['message'] = 'Error Occure while Updating Business.';
+          }
+
+          return response()->json($json);
       }
       public function store_business_step4(Request $request)
       {
@@ -270,20 +297,22 @@ class SalesExecutiveBusinessController extends Controller
                     $insert_data = BusinessPaymentModeModel::create($arr_paymentmode_data);
                 }
         }
-        $arr_time                = array();
+
+        $arr_time               = array();
         $arr_time['business_id'] = $business_id;
-        $arr_time['mon_open']    = $request->input('mon_open');
-        $arr_time['mon_close']   = $request->input('mon_close');
-        $arr_time['tue_open']    = $request->input('tue_open');
-        $arr_time['tue_close']   = $request->input('tue_close');
-        $arr_time['wed_open']    = $request->input('wed_open');
-        $arr_time['wed_close']   = $request->input('wed_close');
-        $arr_time['thus_open']   = $request->input('thus_open');
-        $arr_time['thus_close']  = $request->input('thus_close');
-        $arr_time['fri_open']    = $request->input('fri_open');
-        $arr_time['fri_close']   = $request->input('fri_close');
-        $arr_time['sat_open']    = $request->input('sat_open');
-        $arr_time['sat_close']   = $request->input('sat_close');
+        $arr_time['mon_open']   = $request->input('mon_open');
+        $arr_time['mon_close']  = $request->input('mon_close');
+        $arr_time['tue_open']   = $request->input('tue_open');
+        $arr_time['tue_close']  = $request->input('tue_close');
+        $arr_time['wed_open']   = $request->input('wed_open');
+        $arr_time['wed_close']  = $request->input('wed_close');
+        $arr_time['thus_open']  = $request->input('thus_open');
+        $arr_time['thus_close'] = $request->input('thus_close');
+        $arr_time['fri_open']   = $request->input('fri_open');
+        $arr_time['fri_close']  = $request->input('fri_close');
+        $arr_time['sat_open']   = $request->input('sat_open');
+        $arr_time['sat_close']  = $request->input('sat_close');
+
         
         if($request->input('is_sunday') == '1')
         { 
@@ -575,7 +604,7 @@ class SalesExecutiveBusinessController extends Controller
       $business_cat                   = explode(",", $request->input('business_cat'));
       $business_cat_slug              = $request->input('business_public_id');
 
-      if($business_cat!=null)
+      if($business_cat!=null || $business_cat!='')
       {
           $business_category = BusinessCategoryModel::where('business_id',$business_id);
           $res               = $business_category->delete();
