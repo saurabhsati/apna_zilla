@@ -111,7 +111,7 @@ class SalesExecutiveBusinessController extends Controller
               		    	 		    }
               	    	 		   }
               	    	    }
-                          if(strlen($sub_category_title)>0 && isset($sub_category_title))
+                          if($sub_category_title!='')
                           {
                              $arr_data[$key]['sub_category_title'] = implode(',',$sub_category_title);
                           }  
@@ -573,6 +573,7 @@ class SalesExecutiveBusinessController extends Controller
       $json        = array();
       $business_id = $request->input('business_id');
       $main_image  = $request->input('main_image');
+      $business_cat_data = $request->input('business_cat'); 
       if($request->input('user_id')!='' || $request->input('user_id')!=null)
       {
         $business_data['user_id'] = $request->input('user_id');
@@ -599,23 +600,25 @@ class SalesExecutiveBusinessController extends Controller
       }
 
       $business_data['business_name'] = $request->input('business_name');
-      $business_cat                   = explode(",", $request->input('business_cat'));
       $business_cat_slug              = $request->input('business_public_id');
-
-      if($business_cat!=null || $business_cat!='')
+      if($business_cat_data !='NA')
       {
-          $business_category = BusinessCategoryModel::where('business_id',$business_id);
-          $res               = $business_category->delete();
+       $business_cat                   = explode(",", $request->input('business_cat'));
+    
+        if($business_cat)
+        {
+            $business_category = BusinessCategoryModel::where('business_id',$business_id);
+            $res               = $business_category->delete();
 
-          foreach ($business_cat as $key => $value)
-          {
-              $arr_cat_data['business_id'] = $business_id;
-              $arr_cat_data['category_id'] = $value;
-              $insert_data                 = BusinessCategoryModel::create($arr_cat_data);
-          }
-       
-      }
-
+            foreach ($business_cat as $key => $value)
+            {
+                $arr_cat_data['business_id'] = $business_id;
+                $arr_cat_data['category_id'] = $value;
+                $insert_data                 = BusinessCategoryModel::create($arr_cat_data);
+            }
+         
+        }
+       }
 
        if($business_cat_slug)
        {
