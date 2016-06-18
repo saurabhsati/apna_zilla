@@ -87,13 +87,18 @@
                           }
 
                           ?>
-
+                           <?php
+                           $slug_business=str_slug($business['business_name']);
+                           $slug_area=str_slug($business['area']);
+                           $business_area=$slug_business.'@'.$slug_area;
+                          ?>
                         <div class="product_title">
 
-                        <a href="javascript:void(0);">
+                        <a href="{{url('/')}}/{{$business['city']}}/{{$business_area}}/{{base64_encode($business['id'])}}">
                         @if($business['is_verified']==1)
                             <img class="product-like-icon1" src="{{ url('/') }}/assets/front/images/verified-green.png" alt="write_review"/>
                             @endif
+
                             {{ucwords($business['business_name'])}}</a></div>
                              <h4> @if(isset($title))Category::{{$title}}@endif</h4>
                         <div class="rating_star">

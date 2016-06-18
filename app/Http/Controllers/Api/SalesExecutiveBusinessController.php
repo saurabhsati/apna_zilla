@@ -290,13 +290,14 @@ class SalesExecutiveBusinessController extends Controller
 
         if(sizeof($payment_mode)>0)
         {
-          foreach ($payment_mode as $key => $value)
+              foreach ($payment_mode as $key => $value)
                 {
                     $arr_paymentmode_data['business_id']=$business_id;
                     $arr_paymentmode_data['title']=$value;
                     $insert_data = BusinessPaymentModeModel::create($arr_paymentmode_data);
                 }
         }
+
         $arr_time               = array();
         $arr_time['business_id'] = $business_id;
         $arr_time['mon_open']   = $request->input('mon_open');
@@ -311,13 +312,14 @@ class SalesExecutiveBusinessController extends Controller
         $arr_time['fri_close']  = $request->input('fri_close');
         $arr_time['sat_open']   = $request->input('sat_open');
         $arr_time['sat_close']  = $request->input('sat_close');
+
         
         if($request->input('is_sunday') == '1')
         { 
             $arr_time['sun_open']  = $request->input('sun_open');
             $arr_time['sun_close'] = $request->input('sun_close');
         } 
-
+        //dd($arr_time);
         $business_time_add = BusinessTimeModel::create($arr_time);
         
         if($business_time_add)

@@ -65,7 +65,7 @@
                  }
                  ?>
                  @endforeach
-                
+
               </span>
            </a>
         </li>
@@ -114,8 +114,16 @@
                              $slug_business=str_slug($business['business_name']);
                              $slug_area=str_slug($business['area']);
                              $business_area=$slug_business.'@'.$slug_area;
+                              if(!empty($business['city']))
+                              {
+                                $city=$business['city'];
+                              }
+                              else
+                              {
+                                $city='Delhi';
+                              }
                             ?>
-                            <a href="{{url('/')}}/{{$current_city}}/{{$business_area}}/{{base64_encode($business['id'])}}">
+                            <a href="{{url('/')}}/{{$city}}/{{$business_area}}/{{base64_encode($business['id'])}}">
                                  <div class="col-sm-3 col-md-3 col-lg-3 col-bott-mar">
 
                                  <div class="first-cate-img">
