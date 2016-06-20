@@ -203,12 +203,12 @@ class ListingController extends Controller
 
     public function store_reviews(Request $request)
     {
-        $arr_rules = array();
-        $arr_rules['rating'] = "required";
-        $arr_rules['review'] = "required";
-        $arr_rules['name'] = "required";
+        $arr_rules              = array();
+        $arr_rules['rating']    = "required";
+        $arr_rules['review']    = "required";
+        $arr_rules['name']      = "required";
         $arr_rules['mobile_no'] = "required";
-        $arr_rules['email'] = "required";
+        $arr_rules['email']     = "required";
 
         $validator = Validator::make($request->all(),$arr_rules);
 
@@ -256,8 +256,11 @@ class ListingController extends Controller
                 $avg_review= $tot_review=0;
               }
 
-        $business_data['avg_rating']=round($avg_review);
-        $business_data=BusinessListingModel::where('id',$id)->update($business_data);
+if (isset($business_rating[0]['reviews']) ) {
+  
+      $business_data['avg_rating']=round($avg_review);
+}
+          $business_data=BusinessListingModel::where('id',$id)->update($business_data);
         if($business_data)
         {
           //echo 'success';

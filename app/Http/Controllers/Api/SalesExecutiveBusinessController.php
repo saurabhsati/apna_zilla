@@ -73,8 +73,7 @@ class SalesExecutiveBusinessController extends Controller
             if(isset($business_listing) && sizeof($business_listing)>0)
             {
          	     foreach ($business_listing as $key => $business)
-            	 {
-
+            	 {                    
                      $arr_data[$key]['busiess_ref_public_id'] = $business['busiess_ref_public_id'];
                      $arr_data[$key]['main_image']            = url('/uploads/business/main_image').'/'.$business['main_image'];
                      $arr_data[$key]['business_name']         = $business['business_name'];
@@ -106,6 +105,7 @@ class SalesExecutiveBusinessController extends Controller
               		    	 		   		{
               		    	 		   			$main_cat_title[]=$main_category['title'];
                                     $arr_data[$key]['main_category_title']   = $main_cat_title[0];
+                                    $arr_data['main_category_id']  =$main_category['cat_id'];
               		    	 		   		}
 
               		    	 		    }
@@ -463,7 +463,8 @@ class SalesExecutiveBusinessController extends Controller
                         if($main_category['cat_id']==$sub_category['parent'])
                         {
                           $main_cat_title[]=$main_category['title'];
-                          $arr_data['main_category_title']   = $main_cat_title[0];
+                          $arr_data['main_category_title'] = $main_cat_title[0];
+                           $arr_data['main_category_id']   = $main_category['cat_id'];
                         }
 
                       }
