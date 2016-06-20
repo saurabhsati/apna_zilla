@@ -21,12 +21,13 @@ class MembershipPlanController extends Controller
     }
     public function assign_membership(Request $request)
     {
-    	    $category_id               = $request->input('main_category_id');
+    	    $arr_data     = array();
+            $category_id               = $request->input('main_category_id');
 			$arr_data['business_id ']  = $request->input('business_id');
 			$arr_data['business_name'] = $request->input('business_name');
 			$arr_data['user_id']       = $request->input('user_id');
 			$arr_data['category_id']   = $category_id;
-			$arr_cost_data             = $arr_membership_plan = array();
+			$arr_cost_data             = $arr_membership_plan =  array();
 
 	        $obj_cost_data = MemberCostModel::where('category_id',$category_id)->first();
 	        if($obj_cost_data)
@@ -35,7 +36,7 @@ class MembershipPlanController extends Controller
 	        }
 	        if(sizeof($arr_cost_data)>0)
 	        {
-	            $obj_membership_plan = MembershipModel::orderBy('plan_id','DESC')->get();
+	            $obj_membership_plan = MembershipModel::orderBy('plan_id','DESC')->select('plan_id','title','description', 'no_normal_deals', 'validity')->get();
 	            if($obj_membership_plan)
 	            {
 	                $arr_membership_plan = $obj_membership_plan->toArray();
@@ -54,32 +55,16 @@ class MembershipPlanController extends Controller
 	                {
 	                    $arr_membership_plan[$key]['price']=$arr_cost_data['basic_cost'];
 	                }
+               }
 
-
-	            }
-
-	            
-	           
 	        }
+          
 
-           if(isset($arr_membership_plan) && sizeof($arr_membership_plan)>0)
-           {
-	           	foreach ($arr_membership_plan as $key => $plan) 
-	            {
-	            	 $arr_data[$key]['plan_id']         = $plan['plan_id'];
-	            	 $arr_data[$key]['title']           = $plan['title'];
-	            	 $arr_data[$key]['description']     = $plan['description'];
-	            	 $arr_data[$key]['no_normal_deals'] = $plan['no_normal_deals'];
-	            	 $arr_data[$key]['validity']        = $plan['validity'];
-	            }
-	        }
-
-	        if($arr_data)
+	        if($arr_membership_plan)
 	        {
-	           $json['data'] 	 = $arr_data;
+	           $json['data'] 	 = $arr_membership_plan;
 	           $json['status']      = 'SUCCESS';
 	           $json['message']     = 'Membership Plan ! .';
-
 	        }
 	        else
 	        {
@@ -88,9 +73,7 @@ class MembershipPlanController extends Controller
 	        }
 	        return response()->json($json);
     }
-
-
-    public function get_plan_cost(Request $request)
+   public function get_plan_cost(Request $request)
     {
         $category_id=$request->input('category_id');
         $plan_id=$request->input('plan_id');
@@ -143,7 +126,6 @@ class MembershipPlanController extends Controller
                     $json['price']    = 0;
                     $json['validity'] = $validity;
                 }
-
         }
         else
         {
