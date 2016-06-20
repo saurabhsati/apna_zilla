@@ -120,8 +120,8 @@ class FrontBusinessController extends Controller
 
               	   	}
                  }
-                 $arr_data[$key]['user_id']   = $business['user_id'];
-                 $arr_data[$key]['main_cat_id']   = $main_cat_id;
+                 $arr_data[$key]['user_id']           = $business['user_id'];
+                 $arr_data[$key]['main_cat_id']       = $main_cat_id;
                  $arr_data[$key]['review_star_count'] = sizeof($business['reviews']);
                  $arr_data[$key]['establish_year']    = $business['establish_year'];
                  $arr_data[$key]['area']              = $business['area'];

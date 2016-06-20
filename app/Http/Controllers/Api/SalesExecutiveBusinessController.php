@@ -431,19 +431,44 @@ class SalesExecutiveBusinessController extends Controller
         {
           $business_data=$obj_business_data->toArray();
         }
+              
+        $obj_business_listing = BusinessListingModel::orderBy('id','DESC')->where('id',$business_id)->with(['membership_plan_details'])->get();
+                                                  
+        if($obj_business_listing)
+        {
+          $membership_plan_detail=$obj_business_listing->toArray();
+        }
+
+        if (isset($membership_plan_detail)) 
+        {
+          foreach ($membership_plan_detail as $key => $membership_plan) 
+          {
+                $membership_plan  = $membership_plan['membership_plan_details'];
+
+          }
+        }
 
          $arr_data=[];
+
+        if (isset($membership_plan) && sizeof($membership_plan) >0)
+        {
+          $arr_data['membership_plan_detail']= "Assign";
+        }
+        else
+         {
+          $arr_data['membership_plan_detail']= "Not Assign";
+         } 
 
         if(isset($business_data) && sizeof($business_data)>0)
         {
           /* Step 1 Data */
-          $arr_data['busiess_ref_public_id']= $business_data['busiess_ref_public_id'];
-          $arr_data['user_id']= $business_data['user_id'];
-          $arr_data['sales_user_public_id']= $business_data['sales_user_public_id'];
-          $arr_data['business_added_by']= $business_data['business_added_by'];
-          $arr_data['business_id']   = $business_data['id'];
-          $arr_data['main_image']    = url('/uploads/business/main_image').'/'.$business_data['main_image'];
-          $arr_data['business_name'] = $business_data['business_name'];
+          $arr_data['busiess_ref_public_id'] = $business_data['busiess_ref_public_id'];
+          $arr_data['user_id']               = $business_data['user_id'];
+          $arr_data['sales_user_public_id']  = $business_data['sales_user_public_id'];
+          $arr_data['business_added_by']     = $business_data['business_added_by'];
+          $arr_data['business_id']           = $business_data['id'];
+          $arr_data['main_image']            = url('/uploads/business/main_image').'/'.$business_data['main_image'];
+          $arr_data['business_name']         = $business_data['business_name'];
          
 
            $sub_category_title=$main_cat_title='';
@@ -464,7 +489,7 @@ class SalesExecutiveBusinessController extends Controller
                         {
                           $main_cat_title[]=$main_category['title'];
                           $arr_data['main_category_title'] = $main_cat_title[0];
-                           $arr_data['main_category_id']   = $main_category['cat_id'];
+                          $arr_data['main_category_id']   = $main_category['cat_id'];
                         }
 
                       }
