@@ -134,7 +134,7 @@ class HomeController extends Controller
                 }
 
             }
-             $obj_business_listing = BusinessListingModel::where('is_active','1')->whereIn('id', $business_ids)->take(8)->get();
+             $obj_business_listing = BusinessListingModel::where('is_active','1')->whereIn('id', $business_ids)->orderBy('created_at', 'DESC')->take(8)->get();
             if($obj_business_listing)
             {
                 $business_listing = $obj_business_listing->toArray();
@@ -570,20 +570,13 @@ class HomeController extends Controller
             }
 
         }
-         $obj_business_listing = BusinessListingModel::where('is_active','1')->whereIn('id', $business_ids)->take(8)->with(['reviews'])->get();
+         $obj_business_listing = BusinessListingModel::where('is_active','1')->whereIn('id', $business_ids)->orderBy('created_at', 'DESC')->take(8)->with(['reviews'])->get();
         if($obj_business_listing)
         {
             $business_listing = $obj_business_listing->toArray();
         }
         //dd($business_listing);
-         if(!empty($current_city))
-          {
-            $city=$current_city;
-          }
-          else
-          {
-            $city='Delhi';
-          }
+         
         $html='';
         if(sizeof($business_listing)>0)
         {
@@ -592,7 +585,14 @@ class HomeController extends Controller
              $slug_business=str_slug($business['business_name']);
              $slug_area=str_slug($business['area']);
              $business_area=$slug_business.'@'.$slug_area;
-
+             if(!empty($business['city']))
+              {
+                $city=$business['city'];
+              }
+              else
+              {
+                $city='Delhi';
+              }
             $html.='<a href="'.url('/').'/'.$city.'/'.$business_area.'/'.base64_encode($business['id']).'"><div class="col-sm-3 col-md-3 col-lg-3 col-bott-mar">
                                  <div class="first-cate-img">
                                     <img class="over-img" alt="" src="'.get_resized_image_path($business['main_image'],$main_image_path,205,270) .'">

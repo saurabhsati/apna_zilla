@@ -665,7 +665,7 @@ class UserController extends Controller
         $arr_data['user_id']           =        $user_id;
         $arr_data['business_name']     =        $request->input('business_name');
         $business_cat                  =        $request->input('business_cat');
-
+        $arr_data['is_active']         =  '2';
         //dd($business_cat);
 
         $arr_data['main_image']        =        $business_image;
@@ -1594,6 +1594,7 @@ class UserController extends Controller
                 $arr_paginate_business   = $obj_fav->render();   
                 $arr_fav       = $tmp_arr_fav['data'];
             }
+            //dd($arr_fav);
              $main_image_path="uploads/business/main_image";
              return view('front.user.my_favourite_businesses',compact('arr_fav','main_image_path','arr_paginate_business'));
           }

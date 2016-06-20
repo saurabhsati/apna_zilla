@@ -32,7 +32,7 @@
 
 	<div class="container">
 		<div class="row">
-		<?php //echo '<pre>';print_r($arr_sub_category);?>
+	
 			<div class="col-lg-1">&nbsp;</div>
 			<div class="col-sm-12 col-md-12 col-lg-10">
 				<div class="my_whit_bg">

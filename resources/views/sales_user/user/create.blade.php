@@ -129,7 +129,7 @@
                <div class="form-group">
                   <label class="cdol-sm-3 col-lg-2 control-label">Date Of Birth</label>
                   <div class="col-sm-5 col-lg-3 controls">
-                     <input class="form-control date-picker" id="d_o_b" name="d_o_b" size="16" type="text" value="" />
+                     <input class="form-control date-picker" id="d_o_b" data-date-format="dd-mm-yyyy" name="d_o_b" size="16" type="text" value="" />
                   </div>
                  <span class='help-block'>{{ $errors->first('d_o_b') }}</span>
                </div>
@@ -151,7 +151,7 @@
                 <div class="form-group" style="display:none;" id="div_married_date" name="div_married_date">
                 <label class="col-sm-3 col-lg-2 control-label" for="married_date">Married Date<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control date-picker" name="married_date" id="married_date" data-rule-required="" placeholder="Enter Married  Date" />
+                    <input class="form-control date-picker" data-date-format="dd-mm-yyyy" name="married_date" id="married_date" data-rule-required="" placeholder="Enter Married  Date" />
                     <span class='help-block'>{{ $errors->first('married_date') }}</span>
                </div>
             </div>

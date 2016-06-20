@@ -73,8 +73,7 @@ class SalesExecutiveBusinessController extends Controller
             if(isset($business_listing) && sizeof($business_listing)>0)
             {
          	     foreach ($business_listing as $key => $business)
-            	 {
-
+            	 {                    
                      $arr_data[$key]['busiess_ref_public_id'] = $business['busiess_ref_public_id'];
                      $arr_data[$key]['main_image']            = url('/uploads/business/main_image').'/'.$business['main_image'];
                      $arr_data[$key]['business_name']         = $business['business_name'];
@@ -106,12 +105,19 @@ class SalesExecutiveBusinessController extends Controller
               		    	 		   		{
               		    	 		   			$main_cat_title[]=$main_category['title'];
                                     $arr_data[$key]['main_category_title']   = $main_cat_title[0];
+                                    $arr_data['main_category_id']  =$main_category['cat_id'];
               		    	 		   		}
 
               		    	 		    }
               	    	 		   }
               	    	    }
-                           $arr_data[$key]['sub_category_title'] = implode(',',$sub_category_title);
+                          if($sub_category_title!='')
+                          {
+                             $arr_data[$key]['sub_category_title'] = implode(',',$sub_category_title);
+                          }  
+                          else{
+                            $arr_data[$key]['sub_category_title'] = array();
+                          }
 
                   	   	}
                      }
@@ -233,7 +239,7 @@ class SalesExecutiveBusinessController extends Controller
       }
       public function store_business_step3(Request $request)
       {
-        $arr_data                   = array();
+        /*$arr_data                   = array();
         $business_id                = $request->input('business_id');
         $arr_data['company_info']   = $request->input('company_info');
         $arr_data['establish_year'] = $request->input('establish_year');
@@ -249,7 +255,28 @@ class SalesExecutiveBusinessController extends Controller
           $json['status']  = 'ERROR';
           $json['message'] = 'Error Occure while Creating Business.';
         }
-        return response()->json($json);
+        return response()->json($json);*/
+         $business_id                          = $request->input('business_id');
+
+         $business_data['prefix_name']         = $request->input('prefix_name');
+         $business_data['contact_person_name'] = $request->input('contact_person_name');
+         $business_data['mobile_number']       = $request->input('mobile_number');
+
+         $business_data_res=BusinessListingModel::where('id',$business_id)->update($business_data);
+
+          if($business_data_res)
+          {
+              $json['business_id'] = $business_id;
+              $json['status']      = 'SUCCESS';
+              $json['message']     = 'Business Third Step Updated Successfully ! .';
+          }
+          else
+          {
+               $json['status']  = 'ERROR';
+               $json['message'] = 'Error Occure while Updating Business.';
+          }
+
+          return response()->json($json);
       }
       public function store_business_step4(Request $request)
       {
@@ -263,15 +290,16 @@ class SalesExecutiveBusinessController extends Controller
 
         if(sizeof($payment_mode)>0)
         {
-          foreach ($payment_mode as $key => $value)
+              foreach ($payment_mode as $key => $value)
                 {
                     $arr_paymentmode_data['business_id']=$business_id;
                     $arr_paymentmode_data['title']=$value;
                     $insert_data = BusinessPaymentModeModel::create($arr_paymentmode_data);
                 }
         }
-        $arr_time               = array();
 
+        $arr_time               = array();
+        $arr_time['business_id'] = $business_id;
         $arr_time['mon_open']   = $request->input('mon_open');
         $arr_time['mon_close']  = $request->input('mon_close');
         $arr_time['tue_open']   = $request->input('tue_open');
@@ -284,13 +312,14 @@ class SalesExecutiveBusinessController extends Controller
         $arr_time['fri_close']  = $request->input('fri_close');
         $arr_time['sat_open']   = $request->input('sat_open');
         $arr_time['sat_close']  = $request->input('sat_close');
+
         
         if($request->input('is_sunday') == '1')
         { 
             $arr_time['sun_open']  = $request->input('sun_open');
             $arr_time['sun_close'] = $request->input('sun_close');
         } 
-
+        //dd($arr_time);
         $business_time_add = BusinessTimeModel::create($arr_time);
         
         if($business_time_add)
@@ -434,7 +463,8 @@ class SalesExecutiveBusinessController extends Controller
                         if($main_category['cat_id']==$sub_category['parent'])
                         {
                           $main_cat_title[]=$main_category['title'];
-                          $arr_data['main_category_title']   = $main_cat_title[0];
+                          $arr_data['main_category_title'] = $main_cat_title[0];
+                           $arr_data['main_category_id']   = $main_category['cat_id'];
                         }
 
                       }
@@ -546,6 +576,7 @@ class SalesExecutiveBusinessController extends Controller
       $json        = array();
       $business_id = $request->input('business_id');
       $main_image  = $request->input('main_image');
+      $business_cat_data = $request->input('business_cat'); 
       if($request->input('user_id')!='' || $request->input('user_id')!=null)
       {
         $business_data['user_id'] = $request->input('user_id');
@@ -572,23 +603,25 @@ class SalesExecutiveBusinessController extends Controller
       }
 
       $business_data['business_name'] = $request->input('business_name');
-      $business_cat                   = explode(",", $request->input('business_cat'));
       $business_cat_slug              = $request->input('business_public_id');
-
-      if($business_cat!=null)
+      if($business_cat_data !='NA')
       {
-          $business_category = BusinessCategoryModel::where('business_id',$business_id);
-          $res               = $business_category->delete();
+       $business_cat                   = explode(",", $request->input('business_cat'));
+    
+        if($business_cat)
+        {
+            $business_category = BusinessCategoryModel::where('business_id',$business_id);
+            $res               = $business_category->delete();
 
-          foreach ($business_cat as $key => $value)
-          {
-              $arr_cat_data['business_id'] = $business_id;
-              $arr_cat_data['category_id'] = $value;
-              $insert_data                 = BusinessCategoryModel::create($arr_cat_data);
-          }
-       
-      }
-
+            foreach ($business_cat as $key => $value)
+            {
+                $arr_cat_data['business_id'] = $business_id;
+                $arr_cat_data['category_id'] = $value;
+                $insert_data                 = BusinessCategoryModel::create($arr_cat_data);
+            }
+         
+        }
+       }
 
        if($business_cat_slug)
        {
@@ -1003,6 +1036,7 @@ class SalesExecutiveBusinessController extends Controller
             $data[$key]['email']         = $review['email'];
             $data[$key]['ratings']       = $review['ratings'];
             $data[$key]['message']       = $review['message'];
+            $data[$key]['is_active']     = $review['is_active'];
           }
         }
         if($data)
@@ -1040,6 +1074,8 @@ class SalesExecutiveBusinessController extends Controller
               $data['email']         = $arr_review_view['email'];
               $data['ratings']       = $arr_review_view['ratings'];
               $data['message']       = $arr_review_view['message'];
+              $data['is_active']     = $arr_review_view['is_active'];
+              
              }
 
         if($data)
