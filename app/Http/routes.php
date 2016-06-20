@@ -748,7 +748,17 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 		});
 
+
+		/* Transaction details*/
+		Route::group(array('prefix' => '/transactions_details'), function()
+		{
+
+			Route::get('/',  		['as' => 'transactions_details'  ,'uses' => 'Api\TransactionController@index']);
+			Route::post('edit',       							['as' => 'transaction_edit'     					,'uses' =>'Api\TransactionController@edit']);
+			Route::post('view',  		['as' => 'transactions_details'  ,'uses' => 'Api\TransactionController@view']);
+
 	
+        });
 		/* Sales Executive Business Route*/
 
 		Route::group(array('prefix' => '/sales_user'), function()

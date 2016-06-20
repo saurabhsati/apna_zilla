@@ -120,8 +120,8 @@ class FrontBusinessController extends Controller
 
               	   	}
                  }
-                 $arr_data[$key]['user_id']   = $business['user_id'];
-                 $arr_data[$key]['main_cat_id']   = $main_cat_id;
+                 $arr_data[$key]['user_id']           = $business['user_id'];
+                 $arr_data[$key]['main_cat_id']       = $main_cat_id;
                  $arr_data[$key]['review_star_count'] = sizeof($business['reviews']);
                  $arr_data[$key]['establish_year']    = $business['establish_year'];
                  $arr_data[$key]['area']              = $business['area'];
@@ -437,8 +437,9 @@ class FrontBusinessController extends Controller
         {
                 /* Step 1 Data */
 
+
                 $arr_data['business_id']           = $business_data['id'];
-                $arr_data['busiess_ref_public_id']           = $business_data['busiess_ref_public_id'];
+                $arr_data['busiess_ref_public_id'] = $business_data['busiess_ref_public_id'];
                 $arr_data['main_image']            = url('/uploads/business/main_image').'/'.$business_data['main_image'];
                 $arr_data['business_name']         = $business_data['business_name'];
                
