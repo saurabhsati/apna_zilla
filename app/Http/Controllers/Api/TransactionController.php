@@ -27,8 +27,6 @@ class TransactionController extends Controller
             $obj_transaction->load(['category']);
             $arr_transaction = $obj_transaction->toArray();
         }
-
-
             $data =array();
            foreach ($arr_transaction as $key => $value) 
            {
@@ -75,16 +73,13 @@ class TransactionController extends Controller
             $arr_single_transaction = $obj_single_transaction->toArray();
         }
                   $data =array();
-          
            		 $data['username']   = $arr_single_transaction['user_records']['first_name'];
            		 $data['business']   = $arr_single_transaction['business']['business_name'];
            		 $data['category']   = $arr_single_transaction['category']['title'];
            		 $data['price']      = $arr_single_transaction['price'];
            		 $data['transaction_status']     = $arr_single_transaction['transaction_status'];
                  $data['membership']  = $arr_single_transaction['membership']['title'];
-          
-             
-       
+
         if($data)
         {
 			$json['data'] 	 = $data;
@@ -98,10 +93,6 @@ class TransactionController extends Controller
 		}
         return response()->json($json);
      }
-
-
-
-
 
      public function view(Request $request)
      {
@@ -119,16 +110,15 @@ class TransactionController extends Controller
             $arr_single_transaction = $obj_single_transaction->toArray();
         }
                   $data =array();
-          
-           		 $data['username']   = $arr_single_transaction['user_records']['first_name'];
-           		 $data['business']   = $arr_single_transaction['business']['business_name'];
-           		 $data['category']   = $arr_single_transaction['category']['title'];
-           		 $data['price']      = $arr_single_transaction['price'];
-           		 $data['transaction_status']     = $arr_single_transaction['transaction_status'];
-                 $data['membership']  = $arr_single_transaction['membership']['title'];
-          
-          
-         
+                  $data['username']           = $arr_single_transaction['user_records']['first_name'];
+	              $data['business']           = $arr_single_transaction['business']['business_name'];
+	              $data['category']           = $arr_single_transaction['category']['title'];
+	              $data['price']              = $arr_single_transaction['price'];
+	              $data['transaction_status'] = $arr_single_transaction['transaction_status'];
+	              $data['membership']         = $arr_single_transaction['membership']['title'];
+	              $data['start_date']         = $arr_single_transaction['start_date'];
+	              $data['expire_date']        = $arr_single_transaction['expire_date'];
+	     
         if($data)
         {
 			$json['data'] 	 = $data;
