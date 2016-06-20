@@ -17,7 +17,7 @@ class MembershipPlanController extends Controller
 {
 	public function __construct()
 	{
-       $json                           = array();
+       $json = array();
     }
     public function assign_membership(Request $request)
     {
