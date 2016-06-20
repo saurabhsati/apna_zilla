@@ -122,7 +122,7 @@ class VenderController extends Controller
             	$obj_mobile_arr_count =[];
             	$mobile_exist=0;
             		
-            	$obj_mobile_arr_count=$user->where('mobile_no',$mobile_no)->get();
+            	$obj_mobile_arr_count = $user->where('mobile_no',$mobile_no)->get();
             	if($obj_mobile_arr_count)
             	{
             		$mobile_exist=sizeof($obj_mobile_arr_count->toArray());

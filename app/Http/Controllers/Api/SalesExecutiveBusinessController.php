@@ -442,6 +442,7 @@ class SalesExecutiveBusinessController extends Controller
           $membership_plan_detail=$obj_business_listing->toArray();
         }
 
+        
         if (isset($membership_plan_detail)) 
         {
           foreach ($membership_plan_detail as $key => $membership_plan) 
@@ -451,6 +452,8 @@ class SalesExecutiveBusinessController extends Controller
           }
         }
 
+
+//dd($membership_plan);
          $arr_data=[];
 
         if (isset($membership_plan) && sizeof($membership_plan) >0)
@@ -461,6 +464,46 @@ class SalesExecutiveBusinessController extends Controller
          {
           $arr_data['membership_plan_detail']= "Not Assign";
          } 
+
+
+          if(sizeof($membership_plan) >0)
+            {
+               foreach ($membership_plan as $key => $value) 
+                    {
+                     // $date1 = date('Y-m-d',strtotime($business['membership_plan_details'][0]['expire_date']));
+
+                      $expire_date = new \Carbon($value['expire_date']);
+                        $now = Carbon::now();
+                        $difference = ($expire_date->diff($now)->days < 1)
+                            ? 'today'
+                            : $expire_date->diffForHumans($now);
+                           
+                        if (strpos($difference, 'after') !== false || strpos($difference, 'today') !== false) 
+                        {
+                      
+                          if($difference=='today')
+                          {
+                             $arr_data['membership_status'] =$difference;
+                           //echo "<div style='color: Green;'>Active only for ".$difference;
+                          }
+                          else
+                          {
+                            $arr_data['membership_status'] =$difference;
+                            //echo "<div style='color: Green;'>".$difference. "  Membership plan get expired";
+                          }
+                        }
+                        else
+                        {
+                          $arr_data['membership_status'] = "Expired";
+                          //echo "<div style='color: red;'>Expired</div>";
+                        }
+                      }
+
+                  }
+             else
+            {
+              $arr_data['membership_status'] = "NA";
+            }
 
         if(isset($business_data) && sizeof($business_data)>0)
         {
