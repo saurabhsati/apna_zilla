@@ -754,7 +754,8 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		{
 
 			Route::get('/',  		['as' => 'transactions_details'  ,'uses' => 'Api\TransactionController@index']);
-			
+			Route::post('edit',       							['as' => 'transaction_edit'     					,'uses' =>'Api\TransactionController@edit']);
+			Route::post('view',  		['as' => 'transactions_details'  ,'uses' => 'Api\TransactionController@view']);
 
 	
         });
