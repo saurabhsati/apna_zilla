@@ -33,8 +33,8 @@ use URL;
 
 class UserController extends Controller
 {
- 	public function __construct()
- 	{
+    public function __construct()
+    {
         $this->profile_pic_base_path = base_path().'/public'.config('app.project.img_path.user_profile_pic');
         $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');
 
@@ -52,10 +52,10 @@ class UserController extends Controller
         /*$this->business_public_upload_img_path = url('/')."/uploads/business/business_upload_image/";
         $this->business_base_upload_img_path = base_path()."/public/uploads/business/business_upload_image/";*/
 
- 	}
+    }
 
 
- 	public function store(Request $request)
+    public function store(Request $request)
     {   
         $arr_rules = array();
         $arr_rules['first_name']   =   "required";
@@ -90,7 +90,7 @@ class UserController extends Controller
             {
                 if($user->where('email',$email)->get()->count()>0)
                 {
-                	$json['status'] = "EMAIL_EXIST_ERROR";
+                    $json['status'] = "EMAIL_EXIST_ERROR";
                     $json['msg']    = "Email Id Already Exists";
                     return response()->json($json);
                 }
@@ -118,7 +118,7 @@ class UserController extends Controller
             {
                 /*-------------send SMS OTP-----------------*/
                 $response='';
-    			//$response  = $this->send_otp($mobile,$mobile_otp);
+                //$response  = $this->send_otp($mobile,$mobile_otp);
                 //dd($response);
                 if($response=='')
                 {
@@ -1581,7 +1581,7 @@ class UserController extends Controller
         }
         if(Session::has('user_id'))
           {
-          	$id = session('user_id');
+            $id = session('user_id');
             $user_id = base64_decode(Session::get('user_id'));
             $arr_fav    =$arr_paginate_business= array();
             $per_page = 2;
