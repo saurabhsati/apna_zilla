@@ -14,10 +14,11 @@ use App\Models\DealModel;
 class TransactionController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
+      $sales_user_public_id =$request->input('sales_user_public_id');
    		$arr_transaction = array();
-   		$obj_transaction = TransactionModel::orderBy('id','DESC')->get();
+   		$obj_transaction = TransactionModel::where('sales_user_public_id',$sales_user_public_id)->orderBy('id','DESC')->get();
 
    		if($obj_transaction)
    		{
@@ -107,16 +108,20 @@ class TransactionController extends Controller
 
             $arr_single_transaction = $obj_single_transaction->toArray();
         }
-                  $data =array();
-                  $data['username']           = $arr_single_transaction['user_records']['first_name'];
-	              $data['business']           = $arr_single_transaction['business']['business_name'];
-	              $data['category']           = $arr_single_transaction['category']['title'];
-	              $data['price']              = $arr_single_transaction['price'];
-	              $data['transaction_status'] = $arr_single_transaction['transaction_status'];
-	              $data['membership']         = $arr_single_transaction['membership']['title'];
-	              $data['start_date']         = $arr_single_transaction['start_date'];
-	              $data['expire_date']        = $arr_single_transaction['expire_date'];
-	     
+                $data                       = array();
+                $data['username']           = $arr_single_transaction['user_records']['first_name'];
+                $data['created_at']         = date('d M Y',strtotime($arr_single_transaction['created_at']));
+                $data['business']           = $arr_single_transaction['business']['business_name'];
+                $data['category']           = $arr_single_transaction['category']['title'];
+                $data['price']              = $arr_single_transaction['price'];
+                $data['transaction_status'] = $arr_single_transaction['transaction_status'];
+                $data['membership']         = $arr_single_transaction['membership']['title'];
+                $data['start_date']         = date('d-m-Y',strtotime($arr_single_transaction['start_date']));
+                $data['expire_date']        = date('d-m-Y',strtotime($arr_single_transaction['expire_date']));
+
+                $data['email']              = $arr_single_transaction['user_records']['email'];
+                $data['mobile_no']          = $arr_single_transaction['user_records']['mobile_no'];
+              
         if($data)
         {
     			$json['data'] 	 = $data;
