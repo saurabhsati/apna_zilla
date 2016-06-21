@@ -37,6 +37,8 @@ class TransactionController extends Controller
               $data[$key]['price']              = $value['price'];
               $data[$key]['start_date']         = $value['start_date'];
               $data[$key]['expire_date']        = $value['expire_date'];
+              $data[$key]['start_date']         = date('d-m-Y',strtotime($value['start_date']));
+              $data[$key]['expire_date']        = date('d-m-Y',strtotime($value['expire_date']));
               $data[$key]['category']           = $value['category']['title'];
               $data[$key]['business']           = $value['business']['business_name'];
               $data[$key]['membership']         = $value['membership']['title'];
