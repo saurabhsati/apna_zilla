@@ -16,13 +16,13 @@ class TransactionController extends Controller
 
     public function index()
     {
- 		$arr_transaction = array();
- 		$obj_transaction = TransactionModel::orderBy('id','DESC')->get();
+   		$arr_transaction = array();
+   		$obj_transaction = TransactionModel::orderBy('id','DESC')->get();
 
- 		if($obj_transaction)
- 		{
- 			$obj_transaction->load(['user_records']);
- 			$obj_transaction->load(['membership']);
+   		if($obj_transaction)
+   		{
+       			$obj_transaction->load(['user_records']);
+       			$obj_transaction->load(['membership']);
             $obj_transaction->load(['business']);
             $obj_transaction->load(['category']);
             $arr_transaction = $obj_transaction->toArray();
@@ -41,7 +41,6 @@ class TransactionController extends Controller
               $data[$key]['membership']         = $value['membership']['title'];
               $data[$key]['User Email']         = $value['user_records']['email'];
            }   															
-       
      
        if($data)
         { 
@@ -79,9 +78,6 @@ class TransactionController extends Controller
                $data['price']              = $arr_single_transaction['price'];
                $data['transaction_status'] = $arr_single_transaction['transaction_status'];
                $data['membership']         = $arr_single_transaction['membership']['title'];
-
-          $arr_data['transaction_status']  = $request->input('transaction_status');
-           $result =TransactionModel::where('id',$id)->update($arr_data);
           if($data)
           {
         			$json['data'] 	 = $data;
@@ -123,9 +119,9 @@ class TransactionController extends Controller
 	     
         if($data)
         {
-			$json['data'] 	 = $data;
-			$json['status']	 = "SUCCESS";
-			$json['message'] = 'Transaction Details';	
+    			$json['data'] 	 = $data;
+    			$json['status']	 = "SUCCESS";
+    			$json['message'] = 'Transaction Details';	
         }
 		else
 		{
@@ -134,4 +130,44 @@ class TransactionController extends Controller
 		}
         return response()->json($json);
      }
+
+     public function update(Request $request)
+     {
+        $id     =  $request->input('id');
+        $arr_single_transaction = array();
+        $obj_single_transaction = TransactionModel::where('id',$id)->first();
+
+        if($obj_single_transaction)
+        {
+            $obj_single_transaction->load(['user_records']);
+            $obj_single_transaction->load(['membership']);
+            $obj_single_transaction->load(['business']);
+            $obj_single_transaction->load(['category']);
+
+            $arr_single_transaction = $obj_single_transaction->toArray();
+         }
+               $data                       = $arr_data= array();
+               $data['username']           = $arr_single_transaction['user_records']['first_name'];
+               $data['business']           = $arr_single_transaction['business']['business_name'];
+               $data['category']           = $arr_single_transaction['category']['title'];
+               $data['price']              = $arr_single_transaction['price'];
+               $data['transaction_status'] = $arr_single_transaction['transaction_status'];
+               $data['membership']         = $arr_single_transaction['membership']['title'];
+
+           $arr_data['transaction_status']  = $request->input('transaction_status');
+           $result =TransactionModel::where('id',$id)->update($arr_data);
+          if($data)
+          {
+              $json['data']    = $data;
+              $json['status']  = "SUCCESS";
+              $json['message'] = 'Transaction Updated Successfully!.';  
+          }
+          else
+          {
+              $json['status']   = "ERROR";
+              $json['message']  = 'Error while transaction update'; 
+          }
+         return response()->json($json);
+      }
+
 }
