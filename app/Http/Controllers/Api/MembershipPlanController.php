@@ -227,8 +227,8 @@ class MembershipPlanController extends Controller
                     $json['status']   = "SUCCESS";
                 }
                 else
-                {   $json['message']='Error ! Membership Assign Successfully But Mail Not Delivered Yet ! ';
-                    $json['status']   = "ERROR";
+                {   $json['message']='Membership Assign Successfully But Mail Not Delivered Yet ! ';
+                    $json['status']   = "SUCCESS";
                 }
            }
          }
