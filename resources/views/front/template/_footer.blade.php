@@ -767,8 +767,9 @@ If you need any more details on RightNext Verified, please refer to
 
   function register_new_account()
   {
-
+ 
     var site_url   = "{{ url('/') }}";
+    
     var first_name = $('#first_name').val();
     var last_name  = $('#last_name').val();
     var email      = $('#emailid').val();
@@ -819,14 +820,14 @@ If you need any more details on RightNext Verified, please refer to
     }
     else
     {
-      jQuery.ajax({
-           url      : site_url+"/front_users/store?_token="+token,
+        jQuery.ajax({
+           url      : site_url+"/front_users/user_registration",
            method   : 'POST',
            dataType : 'json',
-           data     : 'email='+email+'&password='+password+'&first_name='+first_name+'&last_name='+last_name+'&mobile='+mobile,
+           data     : 'email='+email+'&password='+password+'&first_name='+first_name+'&last_name='+last_name+'&mobile='+mobile+"&_token="+token,
            success: function(response)
            {
-            //console.log(response);
+              
               if(response.status == "SUCCESS" )
               {
                 //console.log(response.mobile_no);
@@ -1231,10 +1232,7 @@ If you need any more details on RightNext Verified, please refer to
 
 <!-- jquery validation -->
 <script type="text/javascript" src="{{url('/')}}/assets/jquery-validation/dist/jquery.validate.min.js"></script>
-
-<!-- <input type="hidden" id="is_session_mail" value="<?php //echo $is_mail ;?>" > </input>
- -->
-
+  
 
  <script type="text/javascript">
 var supports = (function () {

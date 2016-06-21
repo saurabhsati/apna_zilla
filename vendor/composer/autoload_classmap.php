@@ -53,7 +53,9 @@ return array(
     'App\\Http\\Controllers\\Api\\MembershipPlanController' => $baseDir . '/app/Http/Controllers/Api/MembershipPlanController.php',
     'App\\Http\\Controllers\\Api\\SalesExecutiveBusinessController' => $baseDir . '/app/Http/Controllers/Api/SalesExecutiveBusinessController.php',
     'App\\Http\\Controllers\\Api\\SalesExecutiveDashboardController' => $baseDir . '/app/Http/Controllers/Api/SalesExecutiveDashboardController.php',
+
     'App\\Http\\Controllers\\Api\\TransactionController' => $baseDir . '/app/Http/Controllers/Api/TransactionController.php',
+
     'App\\Http\\Controllers\\Api\\VenderController' => $baseDir . '/app/Http/Controllers/Api/VenderController.php',
     'App\\Http\\Controllers\\Auth\\AuthController' => $baseDir . '/app/Http/Controllers/Auth/AuthController.php',
     'App\\Http\\Controllers\\Auth\\PasswordController' => $baseDir . '/app/Http/Controllers/Auth/PasswordController.php',

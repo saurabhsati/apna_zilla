@@ -135,7 +135,134 @@ class AuthController extends Controller
         }
     }
 
+     public function register_via_normal(Request $request)
+    {   
+        $arr_rules = array();
+        $arr_rules['first_name']   =   "required";
+        $arr_rules['last_name']    =   "required";
+        $arr_rules['mobile']       =   "required";
+        //$arr_rules['email']        =   "required|email";
+        $arr_rules['password']     =   "required|min:6|confirmed";
 
+        $validator = Validator::make($request->all(),$arr_rules);
+
+        if($validator->fails())
+        {
+          $json['status'] = "VALIDATION_ERROR";
+          //return response()->json($json);
+          //return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $first_name     =  $request->input('first_name');
+        $last_name      =  $request->input('last_name');
+        $email          =  $request->input('email');
+        $mobile_no      =  $request->input('mobile');
+        $password       =  $request->input('password');
+
+
+        if(is_numeric($mobile_no) && strlen($mobile_no)==10)
+        {
+            $mobile = $mobile_no;
+            /* Duplication Check*/
+
+            $user = Sentinel::createModel();
+            if($email!='')
+            {
+                if($user->where('email',$email)->get()->count()>0)
+                {
+                    $json['status'] = "EMAIL_EXIST_ERROR";
+                    $json['msg']    = "Email Id Already Exists";
+                    return response()->json($json);
+                }
+            }
+            if($user->where('mobile_no',$mobile)->get()->count()>0)
+            {
+                $json['status'] = "MOBILE_EXIST_ERROR";
+                $json['msg']    = "Mobile No.Already Exists";
+                return response()->json($json);
+            }
+
+            $mobile_otp =  mt_rand(0,66666);
+             //dd($mobile_otp);
+             $status = Sentinel::registerAndActivate([
+                'first_name' => $first_name,
+                'last_name'  => $last_name,
+                'email'      => $email,
+                'mobile_no'  => $mobile_no,
+                'password'   => $password,
+                'mobile_OTP' => $mobile_otp,
+                'is_active'  => '0'
+               ]);
+
+            if($status)
+            {
+                /*-------------send SMS OTP-----------------*/
+                $response='';
+                //$response  = $this->send_otp($mobile,$mobile_otp);
+                //dd($response);
+                if($response=='')
+                {
+                     /*------------------------------------------*/
+
+                    /* Assign Normal Users Role */
+
+                        $role = Sentinel::findRoleBySlug('normal');
+
+                        $user = Sentinel::findById($status->id);
+
+                         $enc_id=$status->id;
+                        //$public_id=uniqid( 'RTN_' ,false);
+                        $public_id = $this->objpublic->generate_public_id($enc_id);
+
+                        $insert_public_id = UserModel::where('id', '=', $enc_id)->update(array('public_id' => $public_id));
+
+                        //$user = Sentinel::getUser();
+
+                        $user->roles()->attach($role);
+
+
+                        $json['status']     = "SUCCESS";
+                        $json['mobile_no']  = $mobile;
+                    }
+                    else
+                    {
+                        $json['status'] = "ERROR";
+                        $json['msg']    = "Error while Registration";
+                    }
+                     return response()->json($json);
+
+                }
+                else
+                {
+                   $json['status'] = "OTP_ERROR";
+                   $json['msg']    = "Mobile OTP Error.";
+
+                }
+                return response()->json($json);
+        }
+        else
+        {
+            $json['status'] = "MOBILE_ERROR";
+            $json['msg']    = "Invalid Mobile No.";
+        }
+
+        return response()->json($json);
+    }
+
+     public function send_otp($mobile,$mobile_otp)
+    {
+
+        $url = "http://smsway.co.in/api/sendhttp.php?authkey=70Asotxsg0Q556948f8&mobiles='".$mobile."'&message=RightNext Registration OPT = '".$mobile_otp."'&sender=SMSWAY&route=4&country=91";
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+        $response = curl_exec($ch);
+        curl_close($ch);
+       // $response='1';
+        return $response;
+    }
+    
     public function register_via_facebook(Request $request)
     {
         $arr_rules = array();

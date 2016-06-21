@@ -753,9 +753,10 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::group(array('prefix' => '/transactions_details'), function()
 		{
 
-			Route::get('/',  		['as' => 'transactions_details'  ,'uses' => 'Api\TransactionController@index']);
+			Route::post('/',  		['as' => 'transactions_details'  ,'uses' => 'Api\TransactionController@index']);
 			Route::post('edit',       							['as' => 'transaction_edit'     					,'uses' =>'Api\TransactionController@edit']);
 			Route::post('view',  		['as' => 'transactions_details'  ,'uses' => 'Api\TransactionController@view']);
+			Route::post('update',		'Api\TransactionController@update');
 
 	
         });
@@ -859,7 +860,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	Route::get('/faqs',									 ['as' => 'contact_us_form'      ,'uses' => 'Front\FaqController@index']);
 	Route::group(array('prefix' => '/front_users'), function()
 	{
-		Route::any('store',								['as' => 'front_users_store'    		  		    ,'uses' =>'Front\UserController@store']);
+		Route::post('user_registration',								['as' => 'front_users_store'    		  		    ,'uses' =>'Front\AuthController@register_via_normal']);
 		Route::post('process_login',					['as' => 'front_users_process_login'        		,'uses' =>'Front\AuthController@process_login']);
 		Route::post('recover_password',					['as' => 'front_users_recover_password'        		,'uses' =>'Front\AuthController@recover_password']);
 		Route::get('/validate_reset_password_link/{enc_id}/{enc_reminder_code}','Front\AuthController@validate_reset_password_link');
