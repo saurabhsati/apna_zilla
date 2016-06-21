@@ -1232,10 +1232,7 @@ If you need any more details on RightNext Verified, please refer to
 
 <!-- jquery validation -->
 <script type="text/javascript" src="{{url('/')}}/assets/jquery-validation/dist/jquery.validate.min.js"></script>
-
-<!-- <input type="hidden" id="is_session_mail" value="<?php //echo $is_mail ;?>" > </input>
- -->
-
+  
 
  <script type="text/javascript">
 var supports = (function () {

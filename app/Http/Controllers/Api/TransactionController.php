@@ -28,9 +28,11 @@ class TransactionController extends Controller
             $obj_transaction->load(['category']);
             $arr_transaction = $obj_transaction->toArray();
         }
+           
             $data =array();
            foreach ($arr_transaction as $key => $value) 
            {
+              $data[$key]['id']                 = $value['id'];
               $data[$key]['transaction_id']     = $value['transaction_id'];
               $data[$key]['transaction_status'] = $value['transaction_status'];
               $data[$key]['username']           = $value['user_records']['first_name'];
