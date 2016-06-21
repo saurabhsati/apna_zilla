@@ -60,7 +60,7 @@ class TransactionController extends Controller
      public function edit(Request $request)
      {
         $id     =  $request->input('id');
-       $arr_single_transaction = array();
+        $arr_single_transaction = array();
         $obj_single_transaction = TransactionModel::where('id',$id)->first();
 
         if($obj_single_transaction)
@@ -71,33 +71,35 @@ class TransactionController extends Controller
             $obj_single_transaction->load(['category']);
 
             $arr_single_transaction = $obj_single_transaction->toArray();
-        }
-                  $data =array();
-           		 $data['username']   = $arr_single_transaction['user_records']['first_name'];
-           		 $data['business']   = $arr_single_transaction['business']['business_name'];
-           		 $data['category']   = $arr_single_transaction['category']['title'];
-           		 $data['price']      = $arr_single_transaction['price'];
-           		 $data['transaction_status']     = $arr_single_transaction['transaction_status'];
-                 $data['membership']  = $arr_single_transaction['membership']['title'];
+         }
+               $data                       = array();
+               $data['username']           = $arr_single_transaction['user_records']['first_name'];
+               $data['business']           = $arr_single_transaction['business']['business_name'];
+               $data['category']           = $arr_single_transaction['category']['title'];
+               $data['price']              = $arr_single_transaction['price'];
+               $data['transaction_status'] = $arr_single_transaction['transaction_status'];
+               $data['membership']         = $arr_single_transaction['membership']['title'];
 
-        if($data)
-        {
-			$json['data'] 	 = $data;
-			$json['status']	 = "SUCCESS";
-			$json['message'] = 'Transaction Updated Successfully!.';	
-        }
-		else
-		{
-			$json['status']	  = "ERROR";
-            $json['message']  = 'Error while transaction update';	
-		}
-        return response()->json($json);
-     }
+          $arr_data['transaction_status']  = $request->input('transaction_status');
+           $result =TransactionModel::where('id',$id)->update($arr_data);
+          if($data)
+          {
+        			$json['data'] 	 = $data;
+        			$json['status']	 = "SUCCESS";
+        			$json['message'] = 'Transaction Updated Successfully!.';	
+          }
+      		else
+      		{
+      			$json['status']	  = "ERROR";
+                  $json['message']  = 'Error while transaction update';	
+      		}
+         return response()->json($json);
+      }
 
      public function view(Request $request)
      {
         $id     =  $request->input('id');
-       $arr_single_transaction = $arr_data=array();
+        $arr_single_transaction = $arr_data=array();
         $obj_single_transaction = TransactionModel::where('id',$id)->first();
 
         if($obj_single_transaction)
