@@ -3,6 +3,7 @@ storage/framework/cache/*
 storage/framework/sessions/*
 storage/framework/views/*
 vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+vendor/hashids/hashids/*
 storage/framework/logs/laravel.log
 public/uploads/business/business_upload_image/resize_cache
 public/uploads/business/main_image/resize_cache
