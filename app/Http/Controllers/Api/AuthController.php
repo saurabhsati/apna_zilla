@@ -339,7 +339,10 @@ class AuthController extends Controller
 
 			
 			$arr_data['first_name']     = $request->input('first_name');
-			$arr_data['email']          = $request->input('email');
+			if($request->input('email')!='')
+            {
+                $arr_data['email']          = $request->input('email');
+            }
 		  	$arr_data['profile_pic']    = $profile_pic;
 
 			if($role=='Normal')

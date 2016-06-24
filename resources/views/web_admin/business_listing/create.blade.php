@@ -1,6 +1,4 @@
     @extends('web_admin.template.admin')
-
-
     @section('main_content')
     <style type="text/css">
   .error_msg .error_business_image{
@@ -128,7 +126,7 @@
              <div class="form-group">
               <label class="col-sm-3 col-lg-2 control-label" for="main_business_cat">Business Main Category <i class="red">*</i></label>
             <div class="col-sm-6 col-lg-4 controls">
-            <select class="form-control" name="main_business_cat" id="main_business_cat" onchange="getSubCategory(this)">
+            <select class="form-control" name="main_business_cat" id="main_business_cat" data-rule-required="true" onchange="getSubCategory(this)">
               <option> Select Business Main Categories</option>
              @if(isset($arr_category) && sizeof($arr_category)>0)
              @foreach($arr_category as $category)
@@ -143,7 +141,7 @@
             <div class="form-group">
               <label class="col-sm-3 col-lg-2 control-label" for="main_business_cat">Business  Sub Category <i class="red">*</i></label>
             <div class="col-sm-6 col-lg-4 controls" id="sub_category_div" name="sub_category_div" style="">
-            <select class="form-control" id="example-getting-started" name="business_cat[]" multiple="multiple">
+            <select class="form-control" id="example-getting-started" data-rule-required="true" name="business_cat[]" multiple="multiple">
             <option value="">Select Business Sub Category </option>
                <!--   <option value="tomatoes">Tomatoes</option>
                   <option value="mozarella">Mozzarella</option>
@@ -175,7 +173,7 @@
                          <span class="btn btn-default btn-file"><span class="fileupload-new" >Select image</span>
 
                          <span class="fileupload-exists">Change</span>
-                         <input type="file" class="file-input" name="main_image" id="ad_image"/></span>
+                         <input type="file" class="file-input" data-rule-required="true" name="main_image" id="ad_image"/></span>
                          <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
 
                          <span  >
@@ -255,21 +253,21 @@
              <div class="form-group">
                 <label class="col-sm-3 col-lg-4 control-label" for="country">Country <i class="red">*</i></label>
                 <div class="col-sm-5 col-lg-8 controls">
-                <input type="text" data-geo="country" value="" id="country" name="country" class="form-control">
+                <input type="text" data-rule-required="true" data-geo="country" value="" id="country" name="country" class="form-control">
                    <span class='help-block'>{{ $errors->first('country') }}</span>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 col-lg-4 control-label" for="state">State <i class="red">*</i></label>
                 <div class="col-sm-5 col-lg-8 controls">
-                <input type="text" data-geo="administrative_area_level_1" value="" id="state" name="state" class="form-control">
+                <input type="text" data-rule-required="true" data-geo="administrative_area_level_1" value="" id="state" name="state" class="form-control">
                   <span class='help-block'>{{ $errors->first('state') }}</span>
                 </div>
             </div>
              <div class="form-group">
                 <label class="col-sm-3 col-lg-4 control-label" for="city">City <i class="red">*</i></label>
                 <div class="col-sm-5 col-lg-8 controls">
-                 <input type="text" data-geo="administrative_area_level_2" value="" id="city" name="city" class="form-control">
+                 <input type="text" data-rule-required="true" data-geo="administrative_area_level_2" value="" id="city" name="city" class="form-control">
                   <span class='help-block'>{{ $errors->first('city') }}</span>
                 </div>
             </div>
@@ -277,21 +275,21 @@
             <div class="form-group" ><!-- style="display:none;" -->
                 <label class="col-sm-3 col-lg-4 control-label" for="lat">Latitude <i class="red">*</i></label>
                 <div class="col-sm-5 col-lg-8 controls">
-                 <input type="text" data-geo="lat" value="" id="lat" name="lat" class="form-control">
+                 <input type="text" data-rule-required="true" data-geo="lat" value="" id="lat" name="lat" class="form-control">
                   <span class='help-block'>{{ $errors->first('lat') }}</span>
                 </div>
             </div>
             <div class="form-group" ><!-- style="display:none;" -->
                 <label class="col-sm-3 col-lg-4 control-label" for="lng">Longitude <i class="red">*</i></label>
                 <div class="col-sm-5 col-lg-8 controls">
-                 <input type="text" data-geo="lng" value="" id="lng" name="lng" class="form-control">
+                 <input type="text" data-rule-required="true" data-geo="lng" value="" id="lng" name="lng" class="form-control">
                   <span class='help-block'>{{ $errors->first('lng') }}</span>
                 </div>
             </div>
             <div class="form-group" >
                 <label class="col-sm-3 col-lg-4 control-label" for="postal_code">Pin-code <i class="red">*</i></label>
                 <div class="col-sm-5 col-lg-8 controls">
-                 <input type="text" data-geo="postal_code" value="" id="pincode" name="pincode" class="form-control">
+                 <input type="text" data-rule-required="true" data-geo="postal_code" value="" id="pincode" name="pincode" class="form-control">
                   <span class='help-block'>{{ $errors->first('postal code') }}</span>
                 </div>
             </div>
@@ -332,7 +330,7 @@
                            name="mobile_number"
                            id="mobile_number"
                            data-rule-required="true"
-                          data-rule-number="true"   data-rule-minlength="10" maxlength="10"
+                           data-rule-number="true"   data-rule-minlength="10" maxlength="10"
                            placeholder="Enter Mobile Number"
                            value=""
                            />
@@ -555,10 +553,10 @@
 
             <div class="form-group" style="display:block;">
                  <label class="col-sm-3 col-lg-2 control-label" >Sunday<i class="red">*</i></label>
-                  &nbsp &nbsp &nbsp &nbsp &nbsp
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <input type="radio"  name="is_sunday" value="1" onclick="sunday_status('on');" checked="" />
                   <label >On </label>
-                   &nbsp &nbsp &nbsp &nbsp &nbsp
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                      <input type="radio"  name="is_sunday" value="0"  onclick="sunday_status('off');"/>
                   <label  for="is_sunday">Off </label>
                   <br/>
