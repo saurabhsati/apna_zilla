@@ -102,7 +102,7 @@
                            placeholder="Enter User Public ID"
                            value="RNT"
                            />
-                  <input type="hidden" name="tmp_user_id" id="tmp_user_id">
+                  <input type="hidden" data-rule-required="true" name="tmp_user_id" id="tmp_user_id">
 
                     <span class='help-block'>{{ $errors->first('user_id') }}</span>
                      <div class="alert alert-warning">Note: Auto Complete the User Public Id field by typing prefix RNT </div>
@@ -126,7 +126,7 @@
              <div class="form-group">
               <label class="col-sm-3 col-lg-2 control-label" for="main_business_cat">Business Main Category <i class="red">*</i></label>
             <div class="col-sm-6 col-lg-4 controls">
-            <select class="form-control" name="main_business_cat" id="main_business_cat" data-rule-required="true" onchange="getSubCategory(this)">
+            <select class="form-control" data-rule-required="true" name="main_business_cat" id="main_business_cat"  onchange="getSubCategory(this)">
               <option> Select Business Main Categories</option>
              @if(isset($arr_category) && sizeof($arr_category)>0)
              @foreach($arr_category as $category)
@@ -554,15 +554,15 @@
             <div class="form-group" style="display:block;">
                  <label class="col-sm-3 col-lg-2 control-label" >Sunday<i class="red">*</i></label>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <input type="radio"  name="is_sunday" value="1" onclick="sunday_status('on');" checked="" />
+                  <input type="radio"  name="is_sunday" value="1" onclick="sunday_status('on');"  />
                   <label >On </label>
                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                     <input type="radio"  name="is_sunday" value="0"  onclick="sunday_status('off');"/>
+                     <input type="radio"  name="is_sunday" value="0"  onclick="sunday_status('off');" checked=""/>
                   <label  for="is_sunday">Off </label>
                   <br/>
             </div>
 
-              <div class="form-group" id="sunday_section" style="display:block;">
+              <div class="form-group" id="sunday_section" style="display:none;">
                <label class="col-sm-3 col-lg-2 control-label" ></label>
                <div class="col-sm-3 col-lg-3 controls">
                     <div class="input-group">
