@@ -967,7 +967,7 @@ class FrontBusinessController extends Controller
 
         $arr_fav =array();
 
-        $obj_fav = FavouriteBusinessesModel::where(array('user_id'=>$user_id,'business_id'=>$business_id))->get();
+        $obj_fav = FavouriteBusinessesModel::where(array('user_id'=>$user_id,'business_id'=>$business_id))->first();
         if($obj_fav)
         {
           $arr_fav = $obj_fav->toArray();
@@ -975,9 +975,10 @@ class FrontBusinessController extends Controller
         
         if(isset($arr_fav) && sizeof($arr_fav)>0)
         {
-             foreach ($arr_fav as $key => $fav)
-             {
-                if($fav['is_favourite']== '0')
+             /*foreach ($arr_fav as $key => $fav)
+             {*/
+               
+                if($arr_fav['is_favourite']== '0')
                 {
                     $result = FavouriteBusinessesModel::where(array('user_id'=>$user_id,'business_id'=>$business_id))
                                                        ->update(array('is_favourite'=>'1'));
@@ -985,7 +986,7 @@ class FrontBusinessController extends Controller
                     $json['message'] = 'Business Favorite Successfully  !';
                 }
 
-                if($fav['is_favourite']== '1')
+                if($arr_fav['is_favourite']== '1')
                 {
                   $result = FavouriteBusinessesModel::where(array('user_id'=>$user_id,'business_id'=>$business_id))
                                                     ->update(array('is_favourite'=>'0'));
@@ -993,12 +994,14 @@ class FrontBusinessController extends Controller
                   $json['message'] = 'Business Un-Favorite Successfully !';
                 }
 
-             }
+            // }
         }     
-        else
-        {
-          $json['status']  = 'ERROR';
-          $json['message'] = 'No Favorite Business Record Found!';
+      else
+      {
+          $result = FavouriteBusinessesModel::where(array('user_id'=>$user_id,'business_id'=>$business_id))
+                                            ->create(array('is_favourite'=>'1'));
+          $json['status']  = 'SUCCESS';
+          $json['message'] = 'Business Favorite create Successfully !';
         }
      
         return response()->json($json);
