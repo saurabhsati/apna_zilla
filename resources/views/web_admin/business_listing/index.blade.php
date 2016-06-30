@@ -295,6 +295,8 @@
 
                                 <td width="width:3%;">
                                    <?php
+
+                             $check_allow ='';      
                              foreach ($business['category'] as $business_category) {
                              foreach ($arr_sub_category as $sub_category) {
                                   if($business_category['category_id']==$sub_category['cat_id'])
