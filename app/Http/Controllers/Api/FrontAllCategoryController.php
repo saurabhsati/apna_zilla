@@ -208,6 +208,66 @@ class FrontAllCategoryController extends Controller
          }
 
 
+//dd( $arr_business_details );
+
+
+        if($arr_business_details)
+        {
+                $arr_business_by_category = array();
+
+               $arr_business_by_category = array();
+                $obj_business_listing = BusinessCategoryModel::where('category_id',$arr_business_details['category_details']['category_id'])->limit(4)->get();
+
+                if($obj_business_listing)
+                {
+                    $obj_business_listing->load(['business_by_category','business_rating']);
+                    $arr_business_by_category = $obj_business_listing->toArray();
+
+                }
+                 $key_business_cat=array();
+
+              if(sizeof($arr_business_by_category)>0)
+              {
+                  foreach ($arr_business_by_category as $key => $value) {
+                    $key_business_cat[$value['business_id']]=$value['business_id'];
+                  }
+              }
+               if( sizeof($key_business_cat)>0)
+              {
+                  $result = $key_business_cat;
+                  if(($key = array_search($business_id, $result)) !== false){
+                     unset($result[$key]);
+                     }
+                  $all_related_business = array();
+                  if(sizeof($result)>0)
+                  {
+
+                    $obj_business    = BusinessListingModel::where('city',$arr_business_details['city'])->whereIn('id', $result)->with(['reviews'])->get();
+
+                    if($obj_business)
+                    {
+                      $all_related_business = $obj_business->toArray();
+
+                    }
+                  }
+              }
+          }
+
+
+//dd($all_related_business);
+
+   	    foreach ($all_related_business as $key => $value) 
+		{			
+			$related_business[$key]['all_related_business']['business_name'] = $value['business_name'];
+			$related_business[$key]['all_related_business']['main_image']    = $value['main_image'];
+			$related_business[$key]['all_related_business']['area']          = $value['area'];
+			$related_business[$key]['all_related_business']['city']          = $value['city'];
+			$related_business[$key]['all_related_business']['state']         = $value['state'];
+			$related_business[$key]['all_related_business']['country']       = $value['country'];	
+			
+		}
+
+
        if($user_id !="")
        {
               $arr_fav_business = array();
@@ -240,16 +300,16 @@ class FrontAllCategoryController extends Controller
 			$data['is_favourite']            = 0;
 		}
 
-		$data['business_name']  = $arr_business_details['business_name'];
-		$data['main_image']     = url('/uploads/business/main_image').'/'.$arr_business_details['main_image'];
-		$data['area']           = $arr_business_details['area'];
-		$data['city']           = $arr_business_details['city'];
-		$data['pincode']        = $arr_business_details['pincode'];
+		$data['business_name'] = $arr_business_details['business_name'];
+		$data['main_image']    = url('/uploads/business/main_image').'/'.$arr_business_details['main_image'];
+		$data['area']          = $arr_business_details['area'];
+		$data['city']          = $arr_business_details['city'];
+		$data['pincode']       = $arr_business_details['pincode'];
 		$data['mobile_number'] = $arr_business_details['mobile_number'];
 		$data['lat']           = $arr_business_details['lat'];
 		$data['lng']           = $arr_business_details['lng'];
 		$data['avg_rating']    = $arr_business_details['avg_rating'];
-		$data['is_verified']    = $arr_business_details['is_verified'];
+		$data['is_verified']   = $arr_business_details['is_verified'];
 		$data['about']         = $arr_business_details['company_info'];
 				
 	    $business_times=[]; 
@@ -270,6 +330,8 @@ class FrontAllCategoryController extends Controller
 			$business_times[$key]['business_times']['sun_open']   = $value['sun_open'];
 			$business_times[$key]['business_times']['sun_close']  = $value['sun_close'];	
 		}
+
+
       
        $image_upload_details=[];
 
@@ -317,6 +379,8 @@ class FrontAllCategoryController extends Controller
 	    $data['service']              = $service;
 	    $data['payment_mode']         = $payment_mode;
 	    $data['reviews']              = $reviews;
+
+	    $data['related_business']       = $related_business;
 
 
 	    if(isset($arr_business_details) && sizeof($arr_business_details)>0)
