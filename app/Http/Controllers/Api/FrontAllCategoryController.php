@@ -255,15 +255,17 @@ class FrontAllCategoryController extends Controller
 
 
 //dd($all_related_business);
-
+          	$related_business=[];
    	    foreach ($all_related_business as $key => $value) 
 		{			
-			$related_business[$key]['all_related_business']['business_name'] = $value['business_name'];
-			$related_business[$key]['all_related_business']['main_image']    = $value['main_image'];
-			$related_business[$key]['all_related_business']['area']          = $value['area'];
-			$related_business[$key]['all_related_business']['city']          = $value['city'];
-			$related_business[$key]['all_related_business']['state']         = $value['state'];
-			$related_business[$key]['all_related_business']['country']       = $value['country'];	
+			$related_business[$key]['id']                    = $value['id'];
+			$related_business[$key]['busiess_ref_public_id'] = $value['busiess_ref_public_id'];
+			$related_business[$key]['business_name']         = $value['business_name'];
+			$related_business[$key]['main_image']            = url('/uploads/business/business_upload_image').'/'.$value['main_image'];
+			$related_business[$key]['area']                  = $value['area'];
+			$related_business[$key]['city']                  = $value['city'];
+			$related_business[$key]['state']                 = $value['state'];
+			$related_business[$key]['country']               = $value['country'];	
 			
 		}
 
@@ -357,7 +359,7 @@ class FrontAllCategoryController extends Controller
             }
 			foreach ($sub_category as $key => $value) 
 			{
-				$data[$key]['also_list_category']['name'] =  $value['title']; 
+				$data[$key]['also_list_category'] =  $value['title']; 
 		    }
          
 		}
