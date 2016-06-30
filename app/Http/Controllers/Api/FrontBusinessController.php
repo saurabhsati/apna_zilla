@@ -1021,7 +1021,6 @@ class FrontBusinessController extends Controller
             $arr_order   = $obj_order->toArray(); 
             
         }
-        
 
         if(isset($arr_order) && sizeof($arr_order)>0)
         {

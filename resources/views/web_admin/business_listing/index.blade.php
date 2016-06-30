@@ -384,7 +384,7 @@
                                 |
                                      @if($business['is_verified']=="0")
                                     <a href="{{ url('/web_admin/business_listing/toggle_verifired_status/').'/'.base64_encode($business['id']).'/verified' }}" class="show-tooltip" title="Un-Verifired">
-                                         <i class="fa fa-thumbs-down" ></i>
+                                         <i class="fa fa-thumbs-o-down" ></i>
                                     </a>
 
                                     @elseif($business['is_verified']=="1")
