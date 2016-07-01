@@ -32,7 +32,7 @@
          <div class="row">
                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-                  <div class="about_us_section">
+                  <div class="about_us_section min-height">
                      <div id='faq_acc'>
                         <ul>
                         	 @if(isset($faq_pages) && sizeof($faq_pages)>0)

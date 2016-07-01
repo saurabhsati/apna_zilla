@@ -6,11 +6,11 @@
  <div class="gry_container" style="padding: 7px 0 16px;">
      @include('front.deal.deal_top_bar')
 
-       <div class="container min-height">
+       <div class="container ">
          <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12">
 
-                  <div class="delas">
+                  <div class="delas min-height">
                   <div id="dash_tab" style="background:#fff;padding:10px;">
                      <ul class="resp-tabs-list">
                         <li>Latest Deals</li>
