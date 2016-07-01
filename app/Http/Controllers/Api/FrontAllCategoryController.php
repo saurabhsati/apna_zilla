@@ -373,9 +373,9 @@ class FrontAllCategoryController extends Controller
 	    $data['service']              = $service;
 	    $data['payment_mode']         = $payment_mode;
 	    $data['reviews']              = $reviews;
-	     $data['reviews']              = $reviews;
-
+	    $data['reviews']              = $reviews;
 	    $data['also_list_category']       = $aa;
+	    $data['related_business']       = $related_business;
 
 
 	    if(isset($arr_business_details) && sizeof($arr_business_details)>0)
