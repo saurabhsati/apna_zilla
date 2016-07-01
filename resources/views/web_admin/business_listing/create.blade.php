@@ -786,7 +786,7 @@
 
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
-                <input type="submit"  class="btn btn-primary" value="Submit">
+                <input type="submit"  class="btn btn-primary" value="Submit" onclick="return setExtraData()">
 
             </div>
         </div>
@@ -1093,8 +1093,13 @@ function getSubCategory(ref)
 
 </script>
 <script type="text/javascript">
+  function setExtraData()
+  {
+    return tinymce.triggerSave();
+  }
+
     tinymce.init({ selector:'textarea' });
-    //tinymce.init('#page_desc');
+
 </script>
 
 @stop

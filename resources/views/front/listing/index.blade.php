@@ -368,7 +368,7 @@
               ?>
 
 
-              <div class="resta-rating-block11 dtls-pg">
+              <div class="resta-rating-block11 dtls-pg rate-size">
               <?php for($i=0;$i<round($restaurants['avg_rating']);$i++){ ?>
               <i class="fa fa-star star-acti"></i>
               <?php }?>
@@ -378,7 +378,7 @@
                 </div>
                &nbsp;@if(isset($tot_review)){{$tot_review}} @endif Ratings
               <span class=""> Estd.in {{ $restaurants['establish_year'] }} </span></div>
-              <div class="p_details"><i class="fa fa-phone"></i><span> {{ $restaurants['landline_number'] }} &nbsp; {{ $restaurants['mobile_number'] }}</span></div>
+              <div class="p_details width-page"><i class="fa fa-phone"></i><span> {{ $restaurants['landline_number'] }} &nbsp; {{ $restaurants['mobile_number'] }}</span></div>
               <div class="p_details"><i class="fa fa-map-marker"></i>
                 <span> {{ $restaurants['area'] }}<br/>
 

@@ -926,7 +926,7 @@
 
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
-                <input type="submit"  class="btn btn-primary" value="Update">
+                <input type="submit"  class="btn btn-primary" value="Update" onclick="return setExtraData()">
 
             </div>
         </div>
@@ -1290,6 +1290,10 @@ function getSubCategory(ref)
  $(".add_new_subcategory_div").css('display','block');
      return false;
 });
+ function setExtraData()
+  {
+    return tinymce.triggerSave();
+  }
 </script>
 <script type="text/javascript">
     tinymce.init({ selector:'textarea' });

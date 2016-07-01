@@ -455,7 +455,7 @@ If you need any more details on RightNext Verified, please refer to
                         <div class="col-sm-3 col-md-3 col-lg-3">
                          <div class="footer_heading">{{$about_us['page_title'] or ''}}</div>
                            <div class="heading_bor"></div>
-                           <div class="menu_name">
+                           <div class="menu_name more-link">
                             <?php echo isset($about_us['page_desc'])?str_limit($about_us['page_desc'],250):"";?>
                             <a href="{{ url('/') }}/page/aboutus" class="{{ Request::segment(2)=='aboutus'? 'act':'' }}">View More</a>
                            </div>
@@ -497,9 +497,9 @@ If you need any more details on RightNext Verified, please refer to
                            <div class="heading_bor"></div>
                            <div class="menu_name contect-i">
                             <ul>
-                                 <li><a href="javascript:void(0);"><i class="fa fa-envelope"></i>Email :  @if(isset($site_settings['site_email_address'])){{$site_settings['site_email_address']}}@endif</a></li>
-                                 <li><a href="javascript:void(0);"><i class="fa fa-phone phone-i"></i>Phone :  @if(isset($site_settings['phone_number'])){{$site_settings['phone_number']}}@endif </a></li>
-                                 <li><a href="javascript:void(0);"><i class="fa fa-map-marker phone-i"></i>Address :  @if(isset($site_settings['site_address'])){{$site_settings['site_address']}}@endif</a>
+                                 <li><!--<a href="javascript:void(0);">--><i class="fa fa-envelope"></i>Email :  @if(isset($site_settings['site_email_address'])){{$site_settings['site_email_address']}}@endif<!--</a>--></li>
+                                 <li><!--<a href="javascript:void(0);">--><i class="fa fa-phone phone-i"></i>Phone :  @if(isset($site_settings['phone_number'])){{$site_settings['phone_number']}}@endif<!-- </a>--></li>
+                                 <li><!--<a href="javascript:void(0);">--><i class="fa fa-map-marker phone-i"></i>Address :  @if(isset($site_settings['site_address'])){{$site_settings['site_address']}}@endif<!--</a>-->
                                  </li>
                               </ul>
                            </div>

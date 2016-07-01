@@ -80,7 +80,7 @@
     clear: left;
 }
 #dash_tab .resp-tabs-list li:hover {
-    border-bottom: 2px solid #e6ab2a ;  margin-bottom: -2px !important;
+    border-bottom: 2px solid #e6ab2a ;  margin-bottom: -1px !important;
 }
 .dash_line{float: left; margin: 16px 25px 0 25px;}
 #dash_tab .resp-tab-active {

@@ -42,7 +42,7 @@
                @if(isset($arr_category) && sizeof($arr_category)>0)
                @foreach($arr_category as $key => $category)
                <?php $count=0; ?>
-               <li <?php if($key>11){echo 'style=display:none;';}?> >
+               <li <?php if($key>19){echo 'style=display:none;';}?> >
                   <a href="{{ url('/') }}/{{$current_city}}/category-{{$category['cat_slug']}}/{{$category['cat_id']}}">
                      <span class="cate-img"><img src="{{ $cat_img_path.'/'.$category['cat_img']}}" alt="" height="30px" width="30px" /></span>
                      <span class="cate-txt">{{ ucfirst($category['title'])}}</span>

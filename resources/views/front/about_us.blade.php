@@ -71,10 +71,10 @@
                         <?php if(!Session::has('user_name'))
                         {
                           /*echo '<a data-toggle="modal" id="open_register" data-target="#reg_poup" class="btn btn-post" >List your Business </a>';*/
-                          echo '<a data-toggle="modal" id="open_register" data-target="#reg_poup" class="btn btn-post" onclick="set_flag()" >Add Your Listing Now </a>';
+                          echo '<a data-toggle="modal" id="open_register" data-target="#reg_poup" class="btn btn-post right-flt" onclick="set_flag()" >Add Your Listing Now </a>';
                         }
                         else {
-                          echo '<a class="btn btn-post" href="'.url('/').'/front_users/add_business" id="list_your_business" >Add Your Listing Now</a>';
+                          echo '<a class="btn btn-post right-flt" href="'.url('/').'/front_users/add_business" id="list_your_business" >Add Your Listing Now</a>';
                         }
 
                       ?>

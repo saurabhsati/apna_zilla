@@ -73,13 +73,18 @@
                    @if(isset($times['sat_close'])){{ $times['sat_close']}}  @else {{'00:00'}} @endif
                    </a></li>
 
-                  <li class="brdr"><a href="#">Sunday   : @if(isset($times['sun_open'])){{ $times['sun_open']}}  
-                  @elseif(empty($times['sun_open'])){{'OFF'}}
-                  @else {{'00:00'}} @endif - 
-                  @if(isset($times['sun_close'])){{ $times['sun_close']}} 
-                    @elseif(empty($times['sun_close'])){{'OFF'}}
-                     @else {{'Off'}} @endif
+                  <li class="brdr"><a href="#">Sunday   : 
+                  @if(!empty($times['sun_open']) && !empty($times['sun_close']))
+                  {{ $times['sun_open']}}  - {{ $times['sun_close']}} 
+                  @else
+                  {{ 'OFF' }}
+                  @endif
+
+
+                 
                   </a></li>
+
+                  
                    @endforeach
                    @else
                   <span class="col-sm-3 col-md-3 col-lg-12">No Business Time Available.</span>
@@ -152,7 +157,7 @@
                         <?php }?>
                       </div>
                      <div class="p_details"><i class="fa fa-phone"></i><span> {{$arr_business_details['landline_number']}} &nbsp; {{$arr_business_details['mobile_number']}}</span></div>
-                     <div class="p_details"><i class="fa fa-map-marker"></i> <span>{{$arr_business_details['area']}} (<a href="javascript:void(0);" onclick="show_map()">map</a>)</span></div>
+                     <div class="p_details"><i class="fa fa-map-marker"></i> <span>{{$arr_business_details['area']}} (<a href="javascript:void(0);" onclick="show_map()"> map</a>)</span></div>
                      <input type="hidden" value=" <?php echo strip_tags($arr_business_details['area']); ?>" name="set_loc_info" id="set_loc_info">
                       <input type="hidden" 
                            name="area"
@@ -283,14 +288,7 @@
                <div class="icons">
                   <div class="img_icons popup-v"><a data-toggle="modal" data-target="#share"><img src="{{ url('/') }}/assets/front/images/shar.png" alt="share"/>Share</a></div>
                   <div class="img_icons" style="cursor: pointer;" onclick="showreview()"><img src="{{ url('/') }}/assets/front/images/write_review.png" alt="write_review" >write review</div>
-                   <div class="img_icons resta-rating-block11">
-                      <?php for($i=0;$i<round($arr_business_details['avg_rating']);$i++){ ?>
-                      <i class="fa fa-star star-acti"></i>
-                      <?php }?>
-                      <?php for($i=0;$i<(5-round($arr_business_details['avg_rating']));$i++){ ?>
-                      <i class="fa fa-star"></i>
-                        <?php }?>Total Rating
-                      </div>
+
 
                   <!-- <div class="img_icons" id="top_review_set" style="cursor: pointer;">
                     <div class="yr_rating-over">
@@ -308,11 +306,19 @@
                      <a data-toggle="modal" data-target="#sms"><img src="{{ url('/') }}/assets/front/images/sms-emil.png" alt="write_review"/>Sms/Email</a>
                   </div>
                   <div class="img_icons popup-v">
-                    <a data-toggle="modal" data-target="#verifed"><img src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>verified</a>
+                    <a data-toggle="modal" data-target="#verifed"><img src="{{ url('/') }}/assets/front/images/verified-det.png" alt="write_review"/>verified</a>
                   </div>
                   <div class="img_icons popup-v">
                     <a href="javascript:void(0);" onclick="show_map()"><img src="{{ url('/') }}/assets/front/images/loct.png" alt="write_review"  />View Map</a>
                   </div>
+                     <div class="img_icons resta-rating-block11 det-rates">
+                      <?php for($i=0;$i<round($arr_business_details['avg_rating']);$i++){ ?>
+                      <i class="fa fa-star star-acti"></i>
+                      <?php }?>
+                      <?php for($i=0;$i<(5-round($arr_business_details['avg_rating']));$i++){ ?>
+                      <i class="fa fa-star"></i>
+                        <?php }?>Total Rating
+                      </div>
                </div>
 
             </div>
@@ -541,14 +547,17 @@
                </div>
                <br />
             </div>
+
+
+
+
          </div>
              @else
          <span>No Business Profile Found</span>
          @endif
-      </div>
-      <div class="row">
-      <div class="col-sm-12 col-md-3 col-lg-3"></div>
+         <div class="col-sm-3 col-md-3 col-lg-3"></div>
          <div class="col-sm-12 col-md-9 col-lg-9">
+
             <div class="title_main">Related Listing</div>
             <div class="row">
                @if(isset($all_related_business) && sizeof($all_related_business)>0)
@@ -575,8 +584,15 @@
                <span class="col-sm-3 col-md-3 col-lg-3">No related records found !</span>
                @endif
             </div>
-         </div>
+        </div>
+
+
       </div>
+
+
+     
+
+
    </div>
 </div>
 

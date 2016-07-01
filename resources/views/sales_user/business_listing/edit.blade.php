@@ -911,7 +911,7 @@
 
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
-                <input type="submit"  class="btn btn-primary" value="Update">
+                <input type="submit"  class="btn btn-primary" value="Update" onclick="return setExtraData()">
 
             </div>
         </div>
@@ -1282,22 +1282,12 @@ function getSubCategory(ref)
 });
 </script>
 <script type="text/javascript">
-    $(document).ready(function()
-    {
-        tinymce.init({
-          selector: 'textarea',
-          height:200,
-          plugins: [
-            'advlist autolink lists link image charmap print preview anchor',
-            'searchreplace visualblocks code fullscreen',
-            'insertdatetime media table contextmenu paste code'
-          ],
-          toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-          content_css: [
-            '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
-            '//www.tinymce.com/css/codepen.min.css'
-          ]
-        });  
-    });
+  function setExtraData()
+  {
+    return tinymce.triggerSave();
+  }
+
+    tinymce.init({ selector:'textarea' });
+
 </script>
 @stop
