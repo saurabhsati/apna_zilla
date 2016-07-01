@@ -999,7 +999,7 @@ class FrontBusinessController extends Controller
       else
       {
           $result = FavouriteBusinessesModel::where(array('user_id'=>$user_id,'business_id'=>$business_id))
-                                            ->create(array('is_favourite'=>'1'));
+                                            ->insert(array('is_favourite'=>'1'));
           $json['status']  = 'SUCCESS';
           $json['message'] = 'Business Favorite create Successfully !';
         }

@@ -353,8 +353,7 @@ class FrontAllCategoryController extends Controller
 		{          
 			$aa[$key]['also_list_category'] =  $value['category_list']['title']; 
 	    }
-		
-		
+	
 
        	$payment_mode=[];
 		foreach ($arr_business_details['payment_mode'] as $key => $value) 
@@ -375,7 +374,7 @@ class FrontAllCategoryController extends Controller
 	    $data['reviews']              = $reviews;
 	    $data['reviews']              = $reviews;
 	    $data['also_list_category']       = $aa;
-	    $data['related_business']       = $related_business;
+	    $data['related_businesss']       = $related_business;
 
 
 	    if(isset($arr_business_details) && sizeof($arr_business_details)>0)
