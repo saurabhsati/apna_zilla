@@ -6,7 +6,7 @@
  <div class="gry_container" style="padding: 7px 0 16px;">
      @include('front.deal.deal_top_bar')
 
-       <div class="container">
+       <div class="container min-height">
          <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12">
 
