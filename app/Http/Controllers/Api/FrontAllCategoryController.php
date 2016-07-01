@@ -198,7 +198,7 @@ class FrontAllCategoryController extends Controller
        
         $arr_business_details = array();
 
-         $obj_business_details = BusinessListingModel::where(array('id'=>$business_id,'is_active'=>'1'))->with(['business_times','also_list_category','image_upload_details','payment_mode','category_details','service','reviews'=>function($query){
+         $obj_business_details = BusinessListingModel::where(array('id'=>$business_id,'is_active'=>'1'))->with(['business_times','also_list_category.category_list','image_upload_details','payment_mode','category_details','service','reviews'=>function($query){
           $query->where('is_active','1');
          }])->first();
        
@@ -348,21 +348,13 @@ class FrontAllCategoryController extends Controller
 			$service[$key]['name'] = $value['name'];
 		}
 
+		$aa =[];
 		foreach ($arr_business_details['also_list_category'] as $key => $value) 
-		{
-           $sub_category='';
-
-            $obj_sub_category = CategoryModel::where('cat_id',$value['category_id'])->get();
-            if($obj_sub_category)
-            {
-                $sub_category = $obj_sub_category->toArray();
-            }
-			foreach ($sub_category as $key => $value) 
-			{
-				$data[$key]['also_list_category'] =  $value['title']; 
-		    }
-         
-		}
+		{          
+			$aa[$key]['also_list_category'] =  $value['category_list']['title']; 
+	    }
+		
+		
 
        	$payment_mode=[];
 		foreach ($arr_business_details['payment_mode'] as $key => $value) 
@@ -381,8 +373,9 @@ class FrontAllCategoryController extends Controller
 	    $data['service']              = $service;
 	    $data['payment_mode']         = $payment_mode;
 	    $data['reviews']              = $reviews;
+	     $data['reviews']              = $reviews;
 
-	    $data['related_business']       = $related_business;
+	    $data['also_list_category']       = $aa;
 
 
 	    if(isset($arr_business_details) && sizeof($arr_business_details)>0)
