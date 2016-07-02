@@ -292,11 +292,12 @@ class FrontAllCategoryController extends Controller
 			$related_business[$key]['id']                    = $value['id'];
 			$related_business[$key]['busiess_ref_public_id'] = $value['busiess_ref_public_id'];
 			$related_business[$key]['business_name']         = $value['business_name'];
-			$related_business[$key]['main_image']            = url('/uploads/business/business_upload_image').'/'.$value['main_image'];
+			$related_business[$key]['main_image']            = url('/uploads/business/main_image').'/'.$value['main_image'];
 			$related_business[$key]['area']                  = $value['area'];
 			$related_business[$key]['city']                  = $value['city'];
 			$related_business[$key]['state']                 = $value['state'];
 			$related_business[$key]['country']               = $value['country'];	
+			
 			
 		}
 
