@@ -9,6 +9,7 @@ use App\Models\CategoryModel;
 use App\Models\BusinessCategoryModel;
 use App\Models\BusinessListingModel;
 use App\Models\FavouriteBusinessesModel;
+use App\Models\CityModel;
 
 class FrontAllCategoryController extends Controller
 {
@@ -16,6 +17,36 @@ class FrontAllCategoryController extends Controller
 	{
        $json    = array();
     }
+
+	public function get_all_city()
+	{
+
+		    $arr_city = $data = array();
+	    	$where_arr=array('parent'=>0);
+	    	$obj_city = CityModel::get();
+	 		if($obj_city)
+	 		{
+	 			$arr_city = $obj_city->toArray();
+	 		}
+	 	//dd($arr_city);
+		    	if(isset($arr_city) && sizeof($arr_city)>0)
+			{
+				foreach ($arr_city as $key => $city) 
+				{
+					$data[$key]['id']         = $city['id'];
+					$data[$key]['city_title'] = $city['city_title'];
+    			}
+			$json['data'] 	 = $data;
+			$json['status']  = 'SUCCESS';
+			$json['message'] = 'City List !';
+		}
+		else
+		{
+			$json['status']  = 'ERROR';
+			$json['message'] = 'No City Record Found!';
+		}
+             return response()->json($json);	 	
+	}	    
 
 	public function get_all_main_Category()
 	{

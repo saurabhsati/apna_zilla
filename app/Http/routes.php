@@ -667,6 +667,10 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 		/* Front Get all sub category of main category Route*/
 		Route::post('get_all_sub_category',			['as' => 'get_all_sub_category'                    ,'uses' =>'Api\FrontAllCategoryController@get_all_sub_category']);
+
+
+			/* Front Get all city Route*/
+		Route::post('get_all_city',			['as' => 'get_all_city'                    ,'uses' =>'Api\FrontAllCategoryController@get_all_city']);	
 	         
 	         /* Front Business Listing Route*/
 		Route::post('get_business_listing',			['as' => 'get_business_listing'                    ,'uses' =>'Api\FrontAllCategoryController@get_business_listing']);
