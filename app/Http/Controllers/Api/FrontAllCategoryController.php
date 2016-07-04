@@ -87,12 +87,12 @@ class FrontAllCategoryController extends Controller
     		}
 
 
-	     $data['popular_cat']       = $popular_cat;
-	      $data['normal_cat']       = $normal_cat;
+	       $data['popular_cat']       = $popular_cat;
+	       $data['normal_cat']       = $normal_cat;
 
 			$json['data'] 	 = $data;
 			$json['status']  = 'SUCCESS';
-			$json['message'] = 'Main Category List !';
+			$json['message'] = 'popular and normal category';
              return response()->json($json);	 	
 
     		
