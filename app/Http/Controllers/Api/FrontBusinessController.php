@@ -993,13 +993,13 @@ class FrontBusinessController extends Controller
                   $result = FavouriteBusinessesModel::where(array('user_id'=>$user_id,'business_id'=>$business_id))
                                                     ->update(array('is_favourite'=>'0'));
 
-                   dd($result);                                 
+                                                 
                   $json['status']  = 'SUCCESS';
                   $json['message'] = 'Business Un-Favorite Successfully !';
                 }
 
             // }
-        }     
+        }   
       else
       {
           $result = FavouriteBusinessesModel::where(array('user_id'=>$user_id,'business_id'=>$business_id))
