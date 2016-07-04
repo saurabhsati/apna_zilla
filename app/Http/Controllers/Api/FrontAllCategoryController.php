@@ -46,8 +46,57 @@ class FrontAllCategoryController extends Controller
 			$json['message'] = 'No City Record Found!';
 		}
              return response()->json($json);	 	
-	}	    
+	}	
 
+
+	public function get_popular_and_normal_Category(Request $request)
+	{
+			$cat_id  = $request->input('cat_id');
+			$data = array();
+	    	
+	    	$obj_main_category = CategoryModel::where('parent',$cat_id)->where('is_popular','1')->get();
+	 		if($obj_main_category)
+	 		{
+	 			$arr_popular_category = $obj_main_category->toArray();
+	 		}
+
+            $popular_cat=[];
+		    if(isset($arr_popular_category) && sizeof($arr_popular_category)>0)
+			{
+				foreach ($arr_popular_category as $key => $cat) 
+				{
+					$popular_cat[$key]['cat_id'] = $cat['cat_id'];
+					$popular_cat[$key]['title']  = $cat['title'];
+    			}
+    		}
+
+			$normal_cat=[];
+	    	$obj_main_category = CategoryModel::where('parent',$cat_id)->where('is_popular','0')->get();
+	 		if($obj_main_category)
+	 		{
+	 			$arr_normal_category = $obj_main_category->toArray();
+	 		}
+
+		    if(isset($arr_normal_category) && sizeof($arr_normal_category)>0)
+			{
+				foreach ($arr_normal_category as $key => $cat) 
+				{
+					$normal_cat[$key]['cat_id'] = $cat['cat_id'];
+					$normal_cat[$key]['title']  = $cat['title'];
+    			}
+    		}
+
+
+	     $data['popular_cat']       = $popular_cat;
+	      $data['normal_cat']       = $normal_cat;
+
+			$json['data'] 	 = $data;
+			$json['status']  = 'SUCCESS';
+			$json['message'] = 'Main Category List !';
+             return response()->json($json);	 	
+
+    		
+	}
 	public function get_all_main_Category()
 	{
 		    $arr_category = $data = array();

@@ -669,6 +669,9 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::post('get_all_sub_category',			['as' => 'get_all_sub_category'                    ,'uses' =>'Api\FrontAllCategoryController@get_all_sub_category']);
 
 
+		Route::post('get_popular_and_normal_Category',			['as' => 'get_popular_and_normal_Category'                    ,'uses' =>'Api\FrontAllCategoryController@get_popular_and_normal_Category']);
+
+
 			/* Front Get all city Route*/
 		Route::post('get_all_city',			['as' => 'get_all_city'                    ,'uses' =>'Api\FrontAllCategoryController@get_all_city']);	
 	         
