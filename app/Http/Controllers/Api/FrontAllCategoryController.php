@@ -134,21 +134,11 @@ class FrontAllCategoryController extends Controller
 
 	public function all_business_and_deals(Request $request)
 	{		
-		  $data       =$arr_final_list   = array();
-		  $serch_name   = $request->input('serch_name');
-		  $city          = $request->input('city');
+		  $data       = $arr_final_list   = array();
+		  $serch_name = $request->input('serch_name');
+		  $city       = $request->input('city');
 
-
-   /*   $obj_business_listing = BusinessListingModel::where("business_name", 'like', "%".$serch_name."%")
-      											   ->where('city',$city)
-                                                   ->where('is_active','1')->get();
-      if($obj_business_listing)
-      {
-          $business_listing = $obj_business_listing->toArray();
-      }*/
-   
-
-        $deal_data =$business_data =array();  
+           $deal_data =$business_data =array();  
             /* Serch text as business name */
             $obj_business_listing = BusinessListingModel::where('city',$city)
                                     ->where(function ($query) use ($serch_name) {
@@ -162,11 +152,11 @@ class FrontAllCategoryController extends Controller
                 $arr_final_business = array();
                 if(sizeof($arr_business)>0)
                 {
-                    foreach ($arr_business as $ckey => $business)
+                    foreach ($arr_business as $key => $business)
                     {
-                        $business_data[$ckey]['business_id']   = $business['id'];
-                        $business_data[$ckey]['business_name'] = $business['business_name'];
-                        $business_data[$ckey]['type']          = 'Business';
+                        $business_data[$key]['id']            = $business['id'];
+                        $business_data[$key]['business_name'] = $business['business_name'];
+                        $business_data[$key]['type']          = 'Business';
                        
                     }
                 }
@@ -183,11 +173,11 @@ class FrontAllCategoryController extends Controller
                 $arr_final_business = array();
                 if(sizeof($arr_deals_info)>0)
                 {
-                    foreach ($arr_deals_info as $key => $deal)
+                    foreach ($arr_deals_info as $ckey => $deal)
                     {
-                        $deal_data[$key]['id'] = $deal['id'];
-                        $deal_data[$key]['name'] = $deal['name'];
-                        $deal_data[$key]['type'] = 'deal_detail';
+                        $deal_data[$ckey]['id'] = $deal['id'];
+                        $deal_data[$ckey]['name'] = $deal['name'];
+                        $deal_data[$ckey]['type'] = 'deal_detail';
                     }
                 }
             }
