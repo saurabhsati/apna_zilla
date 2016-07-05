@@ -223,17 +223,19 @@ class FrontAllCategoryController extends Controller
           {
            $arr_fav_business = array();
           }
+        
+          
 		if(isset($arr_data_business) && sizeof($arr_data_business)>0)
 		{
 			foreach ($arr_data_business as $key => $business) 
 				{
 					if(in_array($business['id'], $arr_fav_business))
 					{
-						$data[$key]['is_favourite']            = 1;
+						$data[$key]['is_favourite']  = 1;
 					}
 					else
 					{
-						$data[$key]['is_favourite']            = 0;
+						$data[$key]['is_favourite']  = 0;
 					}
        				$data[$key]['id']            = $business['id'];
 					$data[$key]['business_name'] = $business['business_name'];
@@ -270,9 +272,9 @@ class FrontAllCategoryController extends Controller
        
         if(sizeof($_business)>0)
         {
-          $visited_count=$_business['visited_count'];
-          $update_visited_count= $visited_count+1;
-          $update_data['visited_count']=$update_visited_count;
+          $visited_count                = $_business['visited_count'];
+          $update_visited_count         = $visited_count+1;
+          $update_data['visited_count'] = $update_visited_count;
           BusinessListingModel::where('id',$business_id)->update($update_data);
         }
        
