@@ -155,7 +155,7 @@ class FrontAllCategoryController extends Controller
                     foreach ($arr_business as $key => $business)
                     {
                         $business_data[$key]['id']            = $business['id'];
-                        $business_data[$key]['business_name'] = $business['business_name'];
+                        $business_data[$key]['name'] = $business['business_name'];
                         $business_data[$key]['type']          = 'Business';
                        
                     }
@@ -175,7 +175,7 @@ class FrontAllCategoryController extends Controller
                 {
                     foreach ($arr_deals_info as $ckey => $deal)
                     {
-                        $deal_data[$ckey]['id'] = $deal['id'];
+                        $deal_data[$ckey]['id']   = $deal['id'];
                         $deal_data[$ckey]['name'] = $deal['name'];
                         $deal_data[$ckey]['type'] = 'deal_detail';
                     }
