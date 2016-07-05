@@ -210,9 +210,10 @@ class FrontAllCategoryController extends Controller
 		{
 			foreach ($arr_sub_category as $key => $sub_cat) 
 				{
-					$data[$key]['cat_id']     = $sub_cat['cat_id'];
-					$data[$key]['title']      = $sub_cat['title'];
+					$data[$key]['id']     = $sub_cat['cat_id'];
+					$data[$key]['name']      = $sub_cat['title'];
 					$data[$key]['cat_slug']   = $sub_cat['cat_slug'];
+					$data[$key]['type']   = "sub_category";
 				}
 		    $json['data'] 	 = $data;
 			$json['status']  = 'SUCCESS';
