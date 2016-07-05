@@ -380,7 +380,7 @@ class FrontAllCategoryController extends Controller
        
         $arr_business_details = array();
 
-         $obj_business_details = BusinessListingModel::where(array('id'=>$business_id,'is_active'=>'1'))->with(['business_times','also_list_category.category_list','image_upload_details','payment_mode','category_details','service','reviews'=>function($query){
+         $obj_business_details = BusinessListingModel::where(array('id'=>$business_id,'is_active'=>'1'))->with(['business_times','user_details','also_list_category.category_list','image_upload_details','payment_mode','category_details','service','reviews'=>function($query){
           $query->where('is_active','1');
          }])->first();
        
@@ -390,7 +390,7 @@ class FrontAllCategoryController extends Controller
          }
 
 
-
+//dd($arr_business_details['user_details']['profile_pic']);
 
         if($arr_business_details)
         {
@@ -550,9 +550,8 @@ class FrontAllCategoryController extends Controller
 			$reviews[$key]['message'] = $value['message'];
 			$reviews[$key]['ratings'] = $value['ratings'];			
 			$reviews[$key]['date']    =date('F Y',strtotime($value['created_at'])) ;
+			$reviews[$key]['image']    =url('/uploads/users/profile_pic').'/'.$arr_business_details['user_details']['profile_pic'];
 		}
-
-
 		
 	    $data['business_times']       = $business_times;
 	    $data['image_upload_details'] = $image_upload_details;
@@ -560,7 +559,7 @@ class FrontAllCategoryController extends Controller
 	    $data['payment_mode']         = $payment_mode;
 	    $data['reviews']              = $reviews;
 	    $data['reviews']              = $reviews;
-	    $data['also_list_category']       = $aa;
+	    $data['also_list_category']      = $aa;
 	    $data['related_businesss']       = $related_business;
 
 
