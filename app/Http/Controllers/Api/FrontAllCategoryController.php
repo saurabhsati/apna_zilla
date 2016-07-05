@@ -10,6 +10,7 @@ use App\Models\BusinessCategoryModel;
 use App\Models\BusinessListingModel;
 use App\Models\FavouriteBusinessesModel;
 use App\Models\CityModel;
+use App\Models\DealModel;
 
 class FrontAllCategoryController extends Controller
 {
@@ -147,14 +148,14 @@ class FrontAllCategoryController extends Controller
       }*/
    
 
-
+        $deal_data =$business_data =array();  
             /* Serch text as business name */
             $obj_business_listing = BusinessListingModel::where('city',$city)
                                     ->where(function ($query) use ($serch_name) {
                                     $query->where('business_name','like',"%".$serch_name."%")
                                     ->orWhere('keywords','like',"%".$serch_name."%");
                                     })->get();
-                                  //  return response()->json($obj_business_listing);
+                                 
             if($obj_business_listing)
             {
                 $arr_business = $obj_business_listing->toArray();
@@ -163,26 +164,45 @@ class FrontAllCategoryController extends Controller
                 {
                     foreach ($arr_business as $ckey => $business)
                     {
-                        $arr_final_list[$ckey]['business_id']   = $business['id'];
-                        $arr_final_list[$ckey]['business_name'] = $business['business_name'];
-                        $arr_final_list[$ckey]['type']          = 'Business';
+                        $business_data[$ckey]['business_id']   = $business['id'];
+                        $business_data[$ckey]['business_name'] = $business['business_name'];
+                        $business_data[$ckey]['type']          = 'Business';
                        
                     }
                 }
 
 
             }
-            dd($arr_final_list);
+       
+            /* Deals by search text */
+             $obj_deals_info = DealModel::where('is_active','1')
+                                        ->where('name','like',"%".$serch_name."%")
+                                        ->orderBy('created_at','DESC')->get();
+                                    
+            if($obj_deals_info)
+            {
+                $arr_deals_info = $obj_deals_info->toArray();
+                $arr_final_business = array();
+                if(sizeof($arr_deals_info)>0)
+                {
+                    foreach ($arr_deals_info as $key => $deal)
+                    {
+                        $deal_data[$key]['deal_id'] = $deal['id'];
+                        $deal_data[$key]['name'] = $deal['name'];
+                        $deal_data[$key]['type'] = 'deal_detail';
+                      
+                    }
+                }
+            }
 
-
-           
+          
 	}
 
 	public function all_sub_category()
 	{
 		  $data     = array();
 
-		$obj_sub_category = CategoryModel::where('parent',0)->where('is_active','1')->orderBy('is_popular', 'DESC')->get();
+		$obj_sub_category = CategoryModel::where('parent',1)->where('is_active','1')->orderBy('is_popular', 'DESC')->get();
   	 	if($obj_sub_category)
   	 	{
   	 		$arr_sub_category = $obj_sub_category->toArray();
