@@ -195,6 +195,14 @@ class FrontAllCategoryController extends Controller
                 }
             }
 
+	    $data['Business']       = $business_data;
+	    $data['Deals']       = $deal_data;
+  
+	    $json['data'] 	 = $data;
+		$json['status']  = 'SUCCESS';
+		$json['message'] = 'Business details !';
+	
+	     return response()->json($json);	 	
           
 	}
 
@@ -202,7 +210,9 @@ class FrontAllCategoryController extends Controller
 	{
 		  $data     = array();
 
-		$obj_sub_category = CategoryModel::where('parent',1)->where('is_active','1')->orderBy('is_popular', 'DESC')->get();
+            $obj_sub_category = CategoryModel::where('parent','!=',0)
+                                           ->where('is_active','=',1)
+                                           ->get();
   	 	if($obj_sub_category)
   	 	{
   	 		$arr_sub_category = $obj_sub_category->toArray();
