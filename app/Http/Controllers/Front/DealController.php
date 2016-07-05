@@ -53,8 +53,10 @@ class DealController extends Controller
       {
           $obj_business_listing = $obj_business_listing->toArray();
       }
-       $key_business_city=array();
-     if(sizeof($obj_business_listing)>0)
+       
+      $key_business_city=array();
+      
+      if(sizeof($obj_business_listing)>0)
       {
         foreach ($obj_business_listing as $key => $value) {
           $key_business_city[$value['id']]=$value['id'];

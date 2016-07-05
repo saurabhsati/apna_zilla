@@ -129,6 +129,87 @@ class FrontAllCategoryController extends Controller
              return response()->json($json);	 	
 	}
 
+
+
+	public function all_business_and_deals(Request $request)
+	{		
+		  $data       =$arr_final_list   = array();
+		  $serch_name   = $request->input('serch_name');
+		  $city          = $request->input('city');
+
+
+   /*   $obj_business_listing = BusinessListingModel::where("business_name", 'like', "%".$serch_name."%")
+      											   ->where('city',$city)
+                                                   ->where('is_active','1')->get();
+      if($obj_business_listing)
+      {
+          $business_listing = $obj_business_listing->toArray();
+      }*/
+   
+
+
+            /* Serch text as business name */
+            $obj_business_listing = BusinessListingModel::where('city',$city)
+                                    ->where(function ($query) use ($serch_name) {
+                                    $query->where('business_name','like',"%".$serch_name."%")
+                                    ->orWhere('keywords','like',"%".$serch_name."%");
+                                    })->get();
+                                  //  return response()->json($obj_business_listing);
+            if($obj_business_listing)
+            {
+                $arr_business = $obj_business_listing->toArray();
+                $arr_final_business = array();
+                if(sizeof($arr_business)>0)
+                {
+                    foreach ($arr_business as $ckey => $business)
+                    {
+                        $arr_final_list[$ckey]['business_id']   = $business['id'];
+                        $arr_final_list[$ckey]['business_name'] = $business['business_name'];
+                        $arr_final_list[$ckey]['type']          = 'Business';
+                       
+                    }
+                }
+
+
+            }
+            dd($arr_final_list);
+
+
+           
+	}
+
+	public function all_sub_category()
+	{
+		  $data     = array();
+
+		$obj_sub_category = CategoryModel::where('parent',0)->where('is_active','1')->orderBy('is_popular', 'DESC')->get();
+  	 	if($obj_sub_category)
+  	 	{
+  	 		$arr_sub_category = $obj_sub_category->toArray();
+  	 	}
+
+  	 	
+	    if(isset($arr_sub_category) && sizeof($arr_sub_category)>0)
+		{
+			foreach ($arr_sub_category as $key => $sub_cat) 
+				{
+					$data[$key]['cat_id']     = $sub_cat['cat_id'];
+					$data[$key]['title']      = $sub_cat['title'];
+					$data[$key]['cat_slug']   = $sub_cat['cat_slug'];
+				}
+		    $json['data'] 	 = $data;
+			$json['status']  = 'SUCCESS';
+			$json['message'] = 'All Sub Category!';
+		}
+		else
+		{
+			$json['status']  = 'ERROR';
+			$json['message'] = 'No Record Found!';
+		}
+             return response()->json($json);	 	
+
+	}	  
+
 	public function get_all_sub_category(Request $request)
 	{
 		  $data     = array();
@@ -224,11 +305,12 @@ class FrontAllCategoryController extends Controller
            $arr_fav_business = array();
           }
         
-          
+       // dd($arr_fav_business);
 		if(isset($arr_data_business) && sizeof($arr_data_business)>0)
 		{
 			foreach ($arr_data_business as $key => $business) 
 				{
+
 					if(in_array($business['id'], $arr_fav_business))
 					{
 						$data[$key]['is_favourite']  = 1;
