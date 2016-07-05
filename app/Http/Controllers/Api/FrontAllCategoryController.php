@@ -170,8 +170,6 @@ class FrontAllCategoryController extends Controller
                        
                     }
                 }
-
-
             }
        
             /* Deals by search text */
@@ -187,20 +185,19 @@ class FrontAllCategoryController extends Controller
                 {
                     foreach ($arr_deals_info as $key => $deal)
                     {
-                        $deal_data[$key]['deal_id'] = $deal['id'];
+                        $deal_data[$key]['id'] = $deal['id'];
                         $deal_data[$key]['name'] = $deal['name'];
                         $deal_data[$key]['type'] = 'deal_detail';
-                      
                     }
                 }
             }
 
-	    $data['Business']       = $business_data;
+	    $data['Business']    = $business_data;
 	    $data['Deals']       = $deal_data;
   
 	    $json['data'] 	 = $data;
 		$json['status']  = 'SUCCESS';
-		$json['message'] = 'Business details !';
+		$json['message'] = 'Business and deal details !';
 	
 	     return response()->json($json);	 	
           
