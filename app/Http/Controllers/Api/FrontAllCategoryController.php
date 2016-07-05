@@ -155,7 +155,7 @@ class FrontAllCategoryController extends Controller
                     foreach ($arr_business as $key => $business)
                     {
                         $business_data[$key]['id']            = $business['id'];
-                        $business_data[$key]['name'] = $business['business_name'];
+                        $business_data[$key]['name']         = $business['business_name'];
                         $business_data[$key]['type']          = 'Business';
                        
                     }
@@ -390,7 +390,6 @@ class FrontAllCategoryController extends Controller
          }
 
 
-//dd( $arr_business_details );
 
 
         if($arr_business_details)
@@ -448,6 +447,7 @@ class FrontAllCategoryController extends Controller
 			$related_business[$key]['city']                  = $value['city'];
 			$related_business[$key]['state']                 = $value['state'];
 			$related_business[$key]['country']               = $value['country'];	
+
 			
 			
 		}
@@ -548,8 +548,12 @@ class FrontAllCategoryController extends Controller
 		{
 			$reviews[$key]['name']    = $value['name'];
 			$reviews[$key]['message'] = $value['message'];
-			$reviews[$key]['date']    = $value['created_at'];
+			$reviews[$key]['ratings'] = $value['ratings'];			
+			$reviews[$key]['date']    = date("Y-m-d",strtotime($value['created_at'])) ;
 		}
+
+
+		
 	    $data['business_times']       = $business_times;
 	    $data['image_upload_details'] = $image_upload_details;
 	    $data['service']              = $service;
