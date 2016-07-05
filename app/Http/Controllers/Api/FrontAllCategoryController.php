@@ -134,7 +134,7 @@ class FrontAllCategoryController extends Controller
 
 	public function all_business_and_deals(Request $request)
 	{		
-		  $data       = $arr_final_list   = array();
+		  $data       = $arr_final_list =$arr_sub_category   = array();
 		  $serch_name = $request->input('serch_name');
 		  $city       = $request->input('city');
 
@@ -182,8 +182,31 @@ class FrontAllCategoryController extends Controller
                 }
             }
 
+       
+        $obj_sub_category = CategoryModel::where('parent','!=',0)
+                                           ->where('is_active','=',1)
+                                           ->get();
+  	 	if($obj_sub_category)
+  	 	{
+  	 		$arr_sub_category = $obj_sub_category->toArray();
+  	 	}
+
+  	 	$sub_category=[];
+	    if(isset($arr_sub_category) && sizeof($arr_sub_category)>0)
+		{
+			foreach ($arr_sub_category as $key => $sub_cat) 
+				{
+					$sub_category[$key]['id']       = $sub_cat['cat_id'];
+					$sub_category[$key]['name']     = $sub_cat['title'];
+					$sub_category[$key]['cat_slug'] = $sub_cat['cat_slug'];
+					$sub_category[$key]['type']     = "sub_category";
+				}
+		  
+		}
+
 	    $data['Business']    = $business_data;
 	    $data['Deals']       = $deal_data;
+	    $data['sub_category'] = $sub_category;
   
 	    $json['data'] 	 = $data;
 		$json['status']  = 'SUCCESS';
@@ -543,6 +566,21 @@ class FrontAllCategoryController extends Controller
 		{
 			$payment_mode[$key]['title'] = $value['title'];
 		}
+
+
+/*
+       $obj_business_rating_count = BusinessListingModel::with(array('reviews'=>function ($query)
+                                    {
+                                        $query->select(['ratings','business_id', DB::raw('count(*) as total_rating')]);
+                                        $query->groupBy('ratings'); 
+                                    }
+                                    ))->where('id',$id)->first();
+        if($obj_business_rating_count)
+        {
+            $business_rating_count = $obj_business_rating_count->toArray();
+        }
+     dd($business_rating_count);*/
+		
 		$reviews=[];
 		foreach ($arr_business_details['reviews'] as $key => $value) 
 		{
@@ -550,7 +588,7 @@ class FrontAllCategoryController extends Controller
 			$reviews[$key]['message'] = $value['message'];
 			$reviews[$key]['ratings'] = $value['ratings'];			
 			$reviews[$key]['date']    =date('F Y',strtotime($value['created_at'])) ;
-			$reviews[$key]['image']    =url('/uploads/users/profile_pic').'/'.$arr_business_details['user_details']['profile_pic'];
+			$reviews[$key]['image']    =url('/uploads/users/profile_pic/resize_cache').'/'.$arr_business_details['user_details']['profile_pic'];
 		}
 		
 	    $data['business_times']       = $business_times;
