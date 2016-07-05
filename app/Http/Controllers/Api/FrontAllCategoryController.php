@@ -549,7 +549,7 @@ class FrontAllCategoryController extends Controller
 			$reviews[$key]['name']    = $value['name'];
 			$reviews[$key]['message'] = $value['message'];
 			$reviews[$key]['ratings'] = $value['ratings'];			
-			$reviews[$key]['date']    = date("Y-m-d",strtotime($value['created_at'])) ;
+			$reviews[$key]['date']    =date('F Y',strtotime($value['created_at'])) ;
 		}
 
 
