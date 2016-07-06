@@ -11,6 +11,7 @@ use App\Models\BusinessListingModel;
 use App\Models\FavouriteBusinessesModel;
 use App\Models\CityModel;
 use App\Models\DealModel;
+use DB;
 
 class FrontAllCategoryController extends Controller
 {
@@ -567,19 +568,124 @@ class FrontAllCategoryController extends Controller
 		}
 
 
-/*
+
+		
        $obj_business_rating_count = BusinessListingModel::with(array('reviews'=>function ($query)
                                     {
                                         $query->select(['ratings','business_id', DB::raw('count(*) as total_rating')]);
                                         $query->groupBy('ratings'); 
                                     }
-                                    ))->where('id',$id)->first();
+                                    ))->where('id',$business_id)->first();
         if($obj_business_rating_count)
         {
             $business_rating_count = $obj_business_rating_count->toArray();
         }
-     dd($business_rating_count);*/
-		
+
+
+
+                                $star1 = 0;
+                                $star2 = 0;
+                                $star3 = 0;
+                                $star4 = 0;
+                                $star5 = 0;
+                               
+                      if(isset($business_rating_count['reviews']) && sizeof($business_rating_count['reviews'])>0 )
+                        {
+                            foreach($business_rating_count['reviews'] as $review)
+                            {
+                              
+                              if($review['ratings']==1)
+                              { 
+                                $star1=$review['total_rating'];  
+                              }
+                               if($review['ratings']==2)
+                              { 
+                              
+                                $star2=$review['total_rating'];  
+                              }
+                               if($review['ratings']==3)
+                              {                                 
+                                $star3=$review['total_rating'];  
+                              }
+                               if($review['ratings']==4)
+                              {                                
+                                $star4=$review['total_rating'];  
+
+                              }
+                               if($review['ratings']==5)
+                              { 
+                               $star5=$review['total_rating'];  
+                              }
+
+                      }
+                  }
+
+                        
+                             $no_of_rating = $star1 + $star2 + $star3 + $star4 + $star5;
+                      // dd($no_of_rating);
+                            if($star1 != 0)
+                            {
+                                $star1 = ($star1/$no_of_rating); 
+                                $star1 = $star1 *100;
+                                $star1 = round($star1);
+                            }
+                            else
+                            {
+                              $star1 = 0;
+                            }
+                            
+                            if($star2 != 0)
+                            {
+                              $star2 = ($star2/$no_of_rating); 
+                              $star2 = $star2 *100;
+                              $star2 = round($star2);
+                            }
+                            else
+                            {
+                              $star2 = 0;
+                            }
+                            
+                            if($star3 != 0)
+                            {
+                              $star3 = ($star3/$no_of_rating); 
+                              $star3 = $star3 *100;
+                              $star3 = round($star3);
+                            }
+                            else
+                            {
+                              $star3 = 0;
+                            }
+
+                            if($star4 !=0)
+                            {
+                              $star4 = ($star4/$no_of_rating);
+                              $star4 = $star4 *100;
+                              $star4 = round($star4);
+                            }
+                            else
+                            {
+                              $star4 = 0;
+                            }
+
+                            if($star5 !=0)
+                            {
+                              $star5 = ($star5/$no_of_rating); 
+                              $star5 = $star5 *100;
+                              $star5 = round($star5);
+                            }
+                            else
+                            {
+                              $star5 = 0;
+                            }
+                    
+   
+			 $data['reviews_star']['star1']    = $star1;
+			 $data['reviews_star']['star2']    = $star2;
+			 $data['reviews_star']['star3']    = $star3;
+			 $data['reviews_star']['star4']    = $star4;
+			 $data['reviews_star']['star5']    = $star5;
+
+
 		$reviews=[];
 		foreach ($arr_business_details['reviews'] as $key => $value) 
 		{
@@ -595,9 +701,8 @@ class FrontAllCategoryController extends Controller
 	    $data['service']              = $service;
 	    $data['payment_mode']         = $payment_mode;
 	    $data['reviews']              = $reviews;
-	    $data['reviews']              = $reviews;
-	    $data['also_list_category']      = $aa;
-	    $data['related_businesss']       = $related_business;
+	    $data['also_list_category']   = $aa;
+	    $data['related_businesss']    = $related_business;
 
 
 	    if(isset($arr_business_details) && sizeof($arr_business_details)>0)
