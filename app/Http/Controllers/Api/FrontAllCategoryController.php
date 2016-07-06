@@ -308,6 +308,7 @@ class FrontAllCategoryController extends Controller
                 }
             }
           $obj_business_listing= $arr_data_business =$total_review =[];
+
         if(sizeof($key_business_cat)>0)
         {
             $result = $key_business_cat;
@@ -315,7 +316,10 @@ class FrontAllCategoryController extends Controller
             if(sizeof($result)>0)
             {
               /* fetch business records by id's */
-               $obj_business_listing = BusinessListingModel::where('city',$city)->where('is_active','1')->whereIn('id', $result)->get();
+               $obj_business_listing = BusinessListingModel::with(['reviews'])
+                                                            ->where('city',$city)
+                                                            ->where('is_active','1')
+                                                            ->whereIn('id', $result)->get();
             }
          }
           
@@ -323,6 +327,8 @@ class FrontAllCategoryController extends Controller
         {
             $arr_data_business = $obj_business_listing->toArray();
         }
+//dd($arr_data_business);
+        
        if($user_id !="")
        {
               $arr_fav_business = array();
@@ -347,11 +353,13 @@ class FrontAllCategoryController extends Controller
           }
         
        // dd($arr_fav_business);
+           $cnt=[];
 		if(isset($arr_data_business) && sizeof($arr_data_business)>0)
 		{
 			foreach ($arr_data_business as $key => $business) 
 				{
 
+					
 					if(in_array($business['id'], $arr_fav_business))
 					{
 						$data[$key]['is_favourite']  = 1;
@@ -361,6 +369,7 @@ class FrontAllCategoryController extends Controller
 						$data[$key]['is_favourite']  = 0;
 					}
        				$data[$key]['id']            = $business['id'];
+       				$data[$key]['review_count']  = count($business['reviews']);
 					$data[$key]['business_name'] = $business['business_name'];
 					$data[$key]['main_image']    = url('/uploads/business/main_image').'/'.$business['main_image'];
 					$data[$key]['area']          = $business['area'];
@@ -368,7 +377,10 @@ class FrontAllCategoryController extends Controller
 					$data[$key]['pincode']       = $business['pincode'];
 					$data[$key]['mobile_number'] = $business['mobile_number'];
 					$data[$key]['avg_rating']    = $business['avg_rating'];
+					$data[$key]['is_verified']    = $business['is_verified'];
+					$data[$key]['establish_year']    = "Estd.in" .$business['establish_year'];
 				}
+			
 		    $json['data'] 	 = $data;
 			$json['status']  = 'SUCCESS';
 			$json['message'] = 'Business Listing !';
@@ -412,9 +424,6 @@ class FrontAllCategoryController extends Controller
            $arr_business_details=$obj_business_details->toArray();
          }
 
-
-//dd($arr_business_details['user_details']['profile_pic']);
-
         if($arr_business_details)
         {
                 $arr_business_by_category = array();
@@ -439,9 +448,10 @@ class FrontAllCategoryController extends Controller
                if( sizeof($key_business_cat)>0)
               {
                   $result = $key_business_cat;
-                  if(($key = array_search($business_id, $result)) !== false){
+                  if(($key = array_search($business_id, $result)) !== false)
+                  {
                      unset($result[$key]);
-                     }
+                  }
                   $all_related_business = array();
                   if(sizeof($result)>0)
                   {
@@ -457,9 +467,8 @@ class FrontAllCategoryController extends Controller
               }
           }
 
-
 //dd($all_related_business);
-          	$related_business=[];
+      	$related_business=[];
    	    foreach ($all_related_business as $key => $value) 
 		{			
 			$related_business[$key]['id']                    = $value['id'];
@@ -470,12 +479,8 @@ class FrontAllCategoryController extends Controller
 			$related_business[$key]['city']                  = $value['city'];
 			$related_business[$key]['state']                 = $value['state'];
 			$related_business[$key]['country']               = $value['country'];	
-
-			
-			
+	
 		}
-
-
        if($user_id !="")
        {
               $arr_fav_business = array();
@@ -538,8 +543,6 @@ class FrontAllCategoryController extends Controller
 			$business_times[$key]['business_times']['sun_open']   = $value['sun_open'];
 			$business_times[$key]['business_times']['sun_close']  = $value['sun_close'];	
 		}
-
-
       
        $image_upload_details=[];
 
@@ -566,9 +569,6 @@ class FrontAllCategoryController extends Controller
 		{
 			$payment_mode[$key]['title'] = $value['title'];
 		}
-
-
-
 		
        $obj_business_rating_count = BusinessListingModel::with(array('reviews'=>function ($query)
                                     {
@@ -581,104 +581,100 @@ class FrontAllCategoryController extends Controller
             $business_rating_count = $obj_business_rating_count->toArray();
         }
 
-
-
-                                $star1 = 0;
-                                $star2 = 0;
-                                $star3 = 0;
-                                $star4 = 0;
-                                $star5 = 0;
+	            $star1 = 0;
+	            $star2 = 0;
+	            $star3 = 0;
+	            $star4 = 0;
+	            $star5 = 0;
                                
-                      if(isset($business_rating_count['reviews']) && sizeof($business_rating_count['reviews'])>0 )
-                        {
-                            foreach($business_rating_count['reviews'] as $review)
-                            {
-                              
-                              if($review['ratings']==1)
-                              { 
-                                $star1=$review['total_rating'];  
-                              }
-                               if($review['ratings']==2)
-                              { 
-                              
-                                $star2=$review['total_rating'];  
-                              }
-                               if($review['ratings']==3)
-                              {                                 
-                                $star3=$review['total_rating'];  
-                              }
-                               if($review['ratings']==4)
-                              {                                
-                                $star4=$review['total_rating'];  
-
-                              }
-                               if($review['ratings']==5)
-                              { 
-                               $star5=$review['total_rating'];  
-                              }
+              if(isset($business_rating_count['reviews']) && sizeof($business_rating_count['reviews'])>0 )
+                {
+                    foreach($business_rating_count['reviews'] as $review)
+                    {
+                      
+                      if($review['ratings']==1)
+                      { 
+                        $star1=$review['total_rating'];  
+                      }
+                       if($review['ratings']==2)
+                      { 
+                      
+                        $star2=$review['total_rating'];  
+                      }
+                       if($review['ratings']==3)
+                      {                                 
+                        $star3=$review['total_rating'];  
+                      }
+                       if($review['ratings']==4)
+                      {                                
+                        $star4=$review['total_rating'];  
 
                       }
-                  }
+                       if($review['ratings']==5)
+                      { 
+                       $star5=$review['total_rating'];  
+                      }
 
-                        
-                             $no_of_rating = $star1 + $star2 + $star3 + $star4 + $star5;
-                      // dd($no_of_rating);
-                            if($star1 != 0)
-                            {
-                                $star1 = ($star1/$no_of_rating); 
-                                $star1 = $star1 *100;
-                                $star1 = round($star1);
-                            }
-                            else
-                            {
-                              $star1 = 0;
-                            }
-                            
-                            if($star2 != 0)
-                            {
-                              $star2 = ($star2/$no_of_rating); 
-                              $star2 = $star2 *100;
-                              $star2 = round($star2);
-                            }
-                            else
-                            {
-                              $star2 = 0;
-                            }
-                            
-                            if($star3 != 0)
-                            {
-                              $star3 = ($star3/$no_of_rating); 
-                              $star3 = $star3 *100;
-                              $star3 = round($star3);
-                            }
-                            else
-                            {
-                              $star3 = 0;
-                            }
+              }
+          }                        
+                 
+               $no_of_rating = $star1 + $star2 + $star3 + $star4 + $star5;
+          // dd($no_of_rating);
+                if($star1 != 0)
+                {
+                    $star1 = ($star1/$no_of_rating); 
+                    $star1 = $star1 *100;
+                    $star1 = round($star1);
+                }
+                else
+                {
+                  $star1 = 0;
+                }
+                
+                if($star2 != 0)
+                {
+                  $star2 = ($star2/$no_of_rating); 
+                  $star2 = $star2 *100;
+                  $star2 = round($star2);
+                }
+                else
+                {
+                  $star2 = 0;
+                }
+                
+                if($star3 != 0)
+                {
+                  $star3 = ($star3/$no_of_rating); 
+                  $star3 = $star3 *100;
+                  $star3 = round($star3);
+                }
+                else
+                {
+                  $star3 = 0;
+                }
 
-                            if($star4 !=0)
-                            {
-                              $star4 = ($star4/$no_of_rating);
-                              $star4 = $star4 *100;
-                              $star4 = round($star4);
-                            }
-                            else
-                            {
-                              $star4 = 0;
-                            }
+                if($star4 !=0)
+                {
+                  $star4 = ($star4/$no_of_rating);
+                  $star4 = $star4 *100;
+                  $star4 = round($star4);
+                }
+                else
+                {
+                  $star4 = 0;
+                }
 
-                            if($star5 !=0)
-                            {
-                              $star5 = ($star5/$no_of_rating); 
-                              $star5 = $star5 *100;
-                              $star5 = round($star5);
-                            }
-                            else
-                            {
-                              $star5 = 0;
-                            }
-                    
-   
+                if($star5 !=0)
+                {
+                  $star5 = ($star5/$no_of_rating); 
+                  $star5 = $star5 *100;
+                  $star5 = round($star5);
+                }
+                else
+                {
+                  $star5 = 0;
+                }
+             
 			 $data['reviews_star']['star1']    = $star1;
 			 $data['reviews_star']['star2']    = $star2;
 			 $data['reviews_star']['star3']    = $star3;
@@ -704,18 +700,15 @@ class FrontAllCategoryController extends Controller
 	    $data['also_list_category']   = $aa;
 	    $data['related_businesss']    = $related_business;
 
-
 	    if(isset($arr_business_details) && sizeof($arr_business_details)>0)
 		{
- 
 		    $json['data'] 	 = $data;
 			$json['status']  = 'SUCCESS';
 			$json['message'] = 'Business details !';
 		}
 		else
 		{
-
-			$json['status']  = 'ERROR';
+  			$json['status']  = 'ERROR';
 			$json['message'] = ' No Business details available !';
 		}	
            return response()->json($json);	 	
