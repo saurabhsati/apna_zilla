@@ -184,6 +184,7 @@ class FrontAllCategoryController extends Controller
 
        
         $obj_sub_category = CategoryModel::where('parent','!=',0)
+        								   ->where('title','like',"%".$serch_name."%")
                                            ->where('is_active','=',1)
                                            ->get();
   	 	if($obj_sub_category)
@@ -201,9 +202,7 @@ class FrontAllCategoryController extends Controller
 					$sub_category[$key]['cat_slug'] = $sub_cat['cat_slug'];
 					$sub_category[$key]['type']     = "sub_category";
 				}
-		  
-		}
-
+ 		}
 	    $data['Business']    = $business_data;
 	    $data['Deals']       = $deal_data;
 	    $data['sub_category'] = $sub_category;
