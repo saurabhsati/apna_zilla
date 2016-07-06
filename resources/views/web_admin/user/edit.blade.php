@@ -100,13 +100,13 @@
 
 
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="first_name">First Name<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="first_name">Full Name<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
                            name="first_name"
                            id="first_name"
                            data-rule-required="true"
-                           placeholder="Enter First Name"
+                           placeholder="Enter Full Name"
                            value="{{ isset($arr_user_data['first_name'])?$arr_user_data['first_name']:'' }}"
                            />
                     <span class='help-block'>{{ $errors->first('first_name') }}</span>
@@ -186,7 +186,7 @@
                       <select class="form-control" data-placeholder="Choose a Category" name="marital_status" tabindex="1" onchange="chkeck_marital_status(this);">
                         <option value="" >Select...</option>
                         <option value="Married" {{ $arr_user_data['marital_status']=='Married'?"selected ='selected'":'' }}>Married</option>
-                        <option value="Un Married" {{ $arr_user_data['marital_status']=='Un Married'?"selected='selected'":'' }}>Un Married</option>
+                        <option value="Un Married" {{ $arr_user_data['marital_status']=='Un Married'?"selected='selected'":'' }}>UnMarried</option>
                         {{-- <option value="Divorced" {{ $arr_user_data['marital_status']=='Divorced'?"selected ='selected'":'' }}>Divorced</option>
                         <option value="Widowed" {{ $arr_user_data['marital_status']=='Widowed'?"selected ='selected'":'' }}>Widowed</option> --}}
                      </select>
@@ -213,7 +213,7 @@
                            data-rule-required=""
                            data-rule-email=""
                            placeholder="Enter Email"
-                           value="{{ isset($arr_user_data['email'])?$arr_user_data['email']:'' }}" />
+                           value="{{ isset($arr_user_data['email'])?$arr_user_data['email']:'' }}" disabled />
 
                     <span class='help-block'>{{ $errors->first('email') }}</span>
                 </div>
@@ -233,7 +233,7 @@
                            data-rule-required="true"
                            placeholder="Enter Mobile No" data-rule-number="true"   data-rule-minlength="10" maxlength="10" 
                            value="{{ isset($arr_user_data['mobile_no'])?$arr_user_data['mobile_no']:'' }}"
-                           />
+                            disabled/>
                     <span class='help-block'>{{ $errors->first('mobile_no') }}</span>
                 </div>
             </div>

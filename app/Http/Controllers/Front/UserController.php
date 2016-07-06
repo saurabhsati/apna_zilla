@@ -61,7 +61,7 @@ class UserController extends Controller
         $arr_rules['first_name']   =   "required";
         $arr_rules['last_name']    =   "required";
         $arr_rules['mobile']       =   "required";
-        //$arr_rules['email']        =   "required|email";
+        $arr_rules['email']        =   "required|email";
         $arr_rules['password']     =   "required|min:6|confirmed";
 
         $validator = Validator::make($request->all(),$arr_rules);
@@ -70,7 +70,7 @@ class UserController extends Controller
         {
           $json['status'] = "VALIDATION_ERROR";
           //return response()->json($json);
-          //return redirect()->back()->withErrors($validator)->withInput();
+          return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $first_name     =  $request->input('first_name');
@@ -101,6 +101,14 @@ class UserController extends Controller
                 $json['msg']    = "Mobile No.Already Exists";
                 return response()->json($json);
             }
+
+            if($user->where('email',$email)->get()->count()>0)
+            {
+                $json['status'] = "MOBILE_EXIST_ERROR";
+                $json['msg']    = "Mobile No.Already Exists";
+                return response()->json($json);
+            }
+
 
             $mobile_otp =  mt_rand(0,66666);
              //dd($mobile_otp);

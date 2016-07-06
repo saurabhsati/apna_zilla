@@ -77,6 +77,7 @@
 
            {{ csrf_field() }}
 
+
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="name">Profile Picture</label>
                 <div class="col-sm-6 col-lg-4 controls">
@@ -87,7 +88,6 @@
                     <span class='help-block'>{{ $errors->first('profile_pic') }}</span>
                 </div>
             </div>
-
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="first_name">First Name<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">

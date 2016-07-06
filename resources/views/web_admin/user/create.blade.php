@@ -89,9 +89,9 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="first_name">First Name <i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="first_name">Full Name <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control" name="first_name" id="first_name" placeholder="Enter First Name " data-rule-required="true" />
+                    <input class="form-control" name="first_name" id="first_name" placeholder="Enter Full Name " data-rule-required="true" />
                     <span class='help-block'>{{ $errors->first('first_name') }}</span>
                 </div>
             </div>
@@ -116,10 +116,10 @@
                   <label class="col-sm-3 col-lg-2 control-label">Gender <i class="red">*</i></label>
                   <div class="col-sm-9 col-lg-10 controls">
                      <label class="radio">
-                        <input type="radio" name="gender" value="male" /> Male
+                        <input type="radio" name="gender" id="gender" value="male" > Male
                      </label>
                      <label class="radio">
-                        <input type="radio" name="gender" value="female" /> Female
+                        <input type="radio" name="gender" id="gender" value="female" /> Female
                      </label>
                   <span class='help-block'>{{ $errors->first('gender') }}</span>
                  </div>
@@ -129,7 +129,7 @@
                <div class="form-group">
                   <label class="cdol-sm-3 col-lg-2 control-label">DOB <i class="red">*</i></label>
                   <div class="col-sm-5 col-lg-3 controls">
-                     <input class="form-control date-picker" id="d_o_b"  data-date-format="dd-mm-yyyy" name="d_o_b" size="16" type="text" value="" />
+                     <input class="form-control date-picker" id="d_o_b"  data-date-format="dd-mm-yyyy" name="d_o_b" size="16" type="text" value="" data-rule-required="true" />
                   </div>
                  <span class='help-block'>{{ $errors->first('d_o_b') }}</span>
                </div>
@@ -138,10 +138,10 @@
                 <div class="form-group">
                   <label class="col-sm-3 col-lg-2 control-label">Marital Status <i class="red">*</i></label>
                   <div class="col-sm-6 col-lg-4 controls">
-                     <select class="form-control" data-placeholder="Choose a Category" name="marital_status" tabindex="1" onchange="chkeck_marital_status(this);">
+                     <select class="form-control" data-placeholder="Choose a Category" data-rule-required="true" name="marital_status" tabindex="1" onchange="chkeck_marital_status(this);">
                         <option value="">Select...</option>
                         <option value="Married">Married</option>
-                        <option value="Un Married">Un Married</option>
+                        <option value="Un Married">UnMarried</option>
                         {{-- <option value="Divorced">Divorced</option>
                         <option value="Widowed">Widowed</option> --}}
                      </select>
@@ -151,7 +151,7 @@
                 <div class="form-group" style="display:none;" id="div_married_date" name="div_married_date">
                 <label class="col-sm-3 col-lg-2 control-label" for="married_date">Married Date<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control date-picker" name="married_date" data-date-format="dd-mm-yyyy"  id="married_date" data-rule-required="" placeholder="Enter Married  Date" />
+                    <input class="form-control date-picker" name="married_date" data-date-format="dd-mm-yyyy"  id="married_date" data-rule-required="" data-rule-required="true" placeholder="Enter Married  Date" />
                     <span class='help-block'>{{ $errors->first('married_date') }}</span>
                </div>
             </div>
@@ -172,7 +172,7 @@
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="mobile_no">Mobile No<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control" name="mobile_no" id="mobile_no"  placeholder="Enter Mobile No " data-rule-required="true" data-rule-number="true"   data-rule-minlength="10" maxlength="10" />
+                    <input class="form-control" name="mobile_no" id="mobile_no"  placeholder="Enter Mobile No " data-rule-required="" data-rule-digit=""   data-rule-minlength="10" maxlength="16" />
                     <span class='help-block'>{{ $errors->first('mobile_no') }}</span>
                 </div>
             </div>
@@ -292,7 +292,9 @@
 </div>
 </div>
 <!-- END Main Content -->
+
 <script type="text/javascript">
+
     var site_url = "{{url('/')}}";
     function loadPreviewImage(ref)
     {
@@ -318,6 +320,7 @@
     function chkeck_marital_status(ref)
     {
        var marital_status= $("select[name='marital_status']").val();
+
        if(marital_status=='Married')
        {
          $("#div_married_date").css('display','block');
@@ -327,6 +330,7 @@
         $("#div_married_date").css('display','none');
        }
     }
+ 
 </script>
 <script type="text/javascript">
  window.onload = function() {

@@ -111,7 +111,7 @@
                 <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="page_desc">Page Content<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <textarea name="page_desc" id="page_desc"  data-rule-required="true" class="form-control" ></textarea>
+                    <textarea name="page_desc" id="page_desc" data-rule-required="true" class="form-control" ></textarea>
                     <span class='help-block'>{{ $errors->first('page_desc') }}</span>
                 </div>
                 </div>

@@ -98,7 +98,7 @@ class UserController extends Controller
        // $arr_rules['work_experience'] = "required";
 
         //$arr_rules['street_address'] = "required";
-        $arr_rules['mobile_no'] = "required";
+       // $arr_rules['mobile_no'] = "required";
         //$arr_rules['home_landline'] = "required";
         //$arr_rules['office_landline'] = "required";
 
@@ -137,9 +137,15 @@ class UserController extends Controller
         /* Duplication Check*/
         $user = Sentinel::createModel();
 
-        if($user->where('mobile_no',$mobile_no)->get()->count()>0)
+       /* if($user->where('mobile_no',$mobile_no)->get()->count()>0)
         {
             Session::flash('error','Vender Already Exists With This Mobile No');
+            return redirect()->back();
+        }*/
+
+        if($user->where('email',$email)->get()->count()>0)
+        {
+            Session::flash('error','Vender Already Exists With This Email');
             return redirect()->back();
         }
 
