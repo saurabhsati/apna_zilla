@@ -341,6 +341,7 @@ class FrontAllCategoryController extends Controller
 	               $obj_business_listing = BusinessListingModel::with(['reviews'])
 	                                                            ->where('city',$city)
 	                                                            ->where('is_active','1')
+	                                                             ->orderBy('visited_count', 'ASC')
 	                                                            ->whereIn('id', $result)->get();
 	           }     
 	       }
@@ -454,7 +455,6 @@ class FrontAllCategoryController extends Controller
 
 			$json['id'] 	         = $arr_id['id'];
 			$json['business_data'] 	 = $business_data;
-			$json['place_details'] 	 = $places;
 			$json['status']          = 'SUCCESS';
 			$json['message']         = 'Business Listing !';
           
@@ -485,7 +485,7 @@ class FrontAllCategoryController extends Controller
 
 		$json['place_details'] 	 = $places;
 		$json['status']          = 'SUCCESS';
-		$json['message']         = 'Business Listing !';
+		$json['message']         = 'All Places of City';
       
         return response()->json($json);
 	}
