@@ -297,6 +297,7 @@ class FrontAllCategoryController extends Controller
 		  $distance = $request->input('distance');
 
 		  $most_popular =  $request->input('most_popular');
+		  $rating       =  $request->input('rating');
 		
 		
 		  /* Get Business by category */
@@ -326,27 +327,37 @@ class FrontAllCategoryController extends Controller
             if(sizeof($result)>0)
             {
 	           if ($most_popular=1)
-	            {            
-	              /* fetch business records by id's */
+	            { 
 	               $obj_business_listing = BusinessListingModel::with(['reviews'])
 	                                                            ->where('city',$city)
 	                                                            ->where('is_active','1')
 	                                                            ->whereIn('id', $result)
 	                                                            ->orderBy('visited_count', 'DESC')
 	                                                            ->get();
-	            }	            
-		       else
-		       {
-	       	              /* fetch business records by id's */
+	            }	
+	            else  
+	         	if ($rating=1)
+	            {            
 	               $obj_business_listing = BusinessListingModel::with(['reviews'])
 	                                                            ->where('city',$city)
 	                                                            ->where('is_active','1')
-	                                                             ->orderBy('visited_count', 'ASC')
-	                                                            ->whereIn('id', $result)->get();
-	           }     
-	       }
+	                                                            ->whereIn('id', $result)
+	                                                            ->orderBy('avg_rating', 'DESC')
+	                                                            ->get();
+	            }
+	           else
+	           {       	  
+      	       	  /* fetch business records by id's */
+      	           $obj_business_listing = BusinessListingModel::with(['reviews'])
+  	                                                            ->where('city',$city)
+  	                                                            ->where('is_active','1')
+  	                                                            ->whereIn('id', $result)
+      	                                                        ->get();
+      	        }                                                    
+		     }
          }
           
+
         if($obj_business_listing)
         {
             $arr_data_business = $obj_business_listing->toArray();
