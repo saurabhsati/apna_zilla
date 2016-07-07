@@ -325,39 +325,18 @@ class FrontAllCategoryController extends Controller
 	            
 
             if(sizeof($result)>0)
-            {
-	           if ($most_popular=1)
-	            { 
-	               $obj_business_listing = BusinessListingModel::with(['reviews'])
-	                                                            ->where('city',$city)
-	                                                            ->where('is_active','1')
-	                                                            ->whereIn('id', $result)
-	                                                            ->orderBy('visited_count', 'DESC')
-	                                                            ->get();
-	            }	
-	            else  
-	         	if ($rating=1)
-	            {            
-	               $obj_business_listing = BusinessListingModel::with(['reviews'])
-	                                                            ->where('city',$city)
-	                                                            ->where('is_active','1')
-	                                                            ->whereIn('id', $result)
-	                                                            ->orderBy('avg_rating', 'DESC')
-	                                                            ->get();
-	            }
-	           else
-	           {       	  
+            {                	  
       	       	  /* fetch business records by id's */
       	           $obj_business_listing = BusinessListingModel::with(['reviews'])
   	                                                            ->where('city',$city)
   	                                                            ->where('is_active','1')
   	                                                            ->whereIn('id', $result)
       	                                                        ->get();
-      	        }                                                    
+      	                                                           
 		     }
-         }
-          
 
+	    }
+      
         if($obj_business_listing)
         {
             $arr_data_business = $obj_business_listing->toArray();
@@ -397,8 +376,20 @@ class FrontAllCategoryController extends Controller
                 {
                   $obj_business_listing = BusinessListingModel::whereIn('id',$result)->with(['reviews']);
 
+
+			      if($rating==1)
+			      {
+			          $obj_business_listing->orderBy('avg_rating','DESC');
+			      }
+			      else
+			      	if($most_popular==1)
+			      {
+			         /* Get business records list order by mostly visited as Descending order */
+			          $obj_business_listing->orderBy('visited_count','DESC');
+			      }
+			  
                   /* If Location lat & log has been set by session calculate the distance range and get the business under that range */
-                  if(isset($latitude) && isset($longitude))
+                  if(isset($latitude) && isset($longitude) && $latitude!='' && $longitude!='')
                   {
                        
                         $qutt='*,ROUND( 6379 * acos (
@@ -452,6 +443,7 @@ class FrontAllCategoryController extends Controller
 							$business_data[$key]['mobile_number']  = $value['mobile_number'];
 							$business_data[$key]['avg_rating']     = $value['avg_rating'];
 							$business_data[$key]['is_verified']    = $value['is_verified'];
+							$business_data[$key]['visited_count']    = $value['visited_count'];
 							$business_data[$key]['establish_year'] = "Estd.in" .$value['establish_year'];
                    			$business_data[$key]['distance']      = $value['distance'];
 
