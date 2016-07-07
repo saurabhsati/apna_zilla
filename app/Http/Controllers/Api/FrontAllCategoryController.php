@@ -197,7 +197,7 @@ class FrontAllCategoryController extends Controller
   	 	$sub_category=[];
 	    if(isset($arr_sub_category) && sizeof($arr_sub_category)>0)
 		{
-			foreach ($arr_sub_category as $key => $sub_cat) 
+			    foreach ($arr_sub_category as $key => $sub_cat) 
 				{
 					$sub_category[$key]['id']       = $sub_cat['cat_id'];
 					$sub_category[$key]['name']     = $sub_cat['title'];
@@ -219,9 +219,9 @@ class FrontAllCategoryController extends Controller
 
 	public function all_sub_category()
 	{
-		  $data     = array();
+		 $data     = array();
 
-            $obj_sub_category = CategoryModel::where('parent','!=',0)
+         $obj_sub_category = CategoryModel::where('parent','!=',0)
                                            ->where('is_active','=',1)
                                            ->get();
   	 	if($obj_sub_category)
@@ -281,9 +281,7 @@ class FrontAllCategoryController extends Controller
 			$json['status']  = 'ERROR';
 			$json['message'] = 'No Record Found!';
 		}
-             return response()->json($json);	 	
-	     
-   
+             return response()->json($json);
 	}
 
 	public function get_business_listing(Request $request)
@@ -403,8 +401,7 @@ class FrontAllCategoryController extends Controller
                         {
                         	 $arr_distance  =$obj_business_listing->get()->toArray();
                         }
-                      
-                   
+                                       
                    		foreach ($arr_distance as $key => $value) 
                    		{
                    			$business_data[$key]['id']       = $value['id'];
@@ -417,7 +414,6 @@ class FrontAllCategoryController extends Controller
 							{
 								$business_data[$key]['is_favourite']  = 0;
 							}
-							
 							$business_data[$key]['review_count']   = count($value['reviews']);
 							$business_data[$key]['business_name']  = $value['business_name'];
 							$business_data[$key]['main_image']     = url('/uploads/business/main_image').'/'.$value['main_image'];
@@ -428,57 +424,21 @@ class FrontAllCategoryController extends Controller
 							$business_data[$key]['avg_rating']     = $value['avg_rating'];
 							$business_data[$key]['is_verified']    = $value['is_verified'];
 							$business_data[$key]['establish_year'] = "Estd.in" .$value['establish_year'];
-
-                  		
                    			$business_data[$key]['distance']      = $value['distance'];
 
                    		}
                     }
 	            }
 	        }
-               //dd($arr_distance);     
-        
-/*        $business_data = $business =[];
-		if(isset($arr_data_business) && sizeof($arr_data_business)>0)
-		{
-			foreach ($arr_data_business as $key => $business) 
-				{					
-					if(in_array($business['id'], $arr_fav_business))
-					{
-						$business_data[$key]['is_favourite']  = 1;
-					}
-					else
-					{
-						$business_data[$key]['is_favourite']  = 0;
-					}
-					$business_data[$key]['id']             = $business['id'];
-					$business_data[$key]['review_count']   = count($business['reviews']);
-					$business_data[$key]['business_name']  = $business['business_name'];
-					$business_data[$key]['main_image']     = url('/uploads/business/main_image').'/'.$business['main_image'];
-					$business_data[$key]['area']           = $business['area'];
-					$business_data[$key]['city']           = $business['city'];
-					$business_data[$key]['pincode']        = $business['pincode'];
-					$business_data[$key]['mobile_number']  = $business['mobile_number'];
-					$business_data[$key]['avg_rating']     = $business['avg_rating'];
-					$business_data[$key]['is_verified']    = $business['is_verified'];
-					$business_data[$key]['establish_year'] = "Estd.in" .$business['establish_year'];
-				}
-			 
-		}
-	    $data['business_data']    = $business_data;
-	   */
       
             $result_city_id  = CityModel::select('id')->where('city_title',$city)->first();  
 	    	$arr_id = $result_city_id->toArray();
-
-	    	//$data['business_data']    = $business_data;
 
 			$json['id'] 	         = $arr_id['id'];
 			$json['business_data'] 	 = $business_data;
 			$json['status']          = 'SUCCESS';
 			$json['message']         = 'Business Listing !';
           
-
            return response()->json($json);	 	
 	}
 
