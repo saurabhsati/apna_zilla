@@ -11,6 +11,7 @@ use App\Models\BusinessListingModel;
 use App\Models\FavouriteBusinessesModel;
 use App\Models\CityModel;
 use App\Models\DealModel;
+use App\Models\ReviewsModel;
 use DB;
 
 class FrontAllCategoryController extends Controller
@@ -801,5 +802,67 @@ class FrontAllCategoryController extends Controller
 		}	
            return response()->json($json);	 	
 	}
+
+    public function store_reviews(Request $request)
+    {
+	    $rating      =  $request->input('rating');
+	    $name        =  $request->input('name');
+	    $review      =  $request->input('review');
+	    $mobile_no   =  $request->input('mobile_no');
+	    $email       =  $request->input('email');
+	    $id          =  $request->input('business_id');
+
+        $arr_data                  = array();
+        $arr_data['ratings']       = $rating;
+        $arr_data['name']          = $name;
+        $arr_data['message']       = $review;
+        $arr_data['mobile_number'] = $mobile_no;
+        $arr_data['email']         = $email;
+        $arr_data['business_id']   = $id;
+
+        $status = ReviewsModel::create($arr_data);
+
+        if($status)
+        {
+           $business_rating = BusinessListingModel::where('id',$arr_data['business_id'])->with(['reviews'])->get()->toArray();
+           $reviews=0;
+              if(isset($business_rating[0]['reviews']) && sizeof($business_rating[0]['reviews'])>0){
+              foreach($business_rating[0]['reviews'] as $business_review){
+                 $reviews=$reviews+$business_review['ratings'];
+              }
+
+             }
+             if(sizeof($business_rating[0]['reviews']))
+              {
+                $tot_review=sizeof($business_rating[0]['reviews']);
+                $avg_review=($reviews/$tot_review);
+              }
+              else
+              {
+                $avg_review= $tot_review=0;
+              }
+
+			 if (isset($business_rating[0]['reviews']) ) 
+			  {
+			      $business_data['avg_rating']=round($avg_review);
+			  }
+				          $business_data=BusinessListingModel::where('id',$id)->update($business_data);
+		}		          
+        
+
+	    if($business_data)
+		{
+		    $json['business_data'] 	 = $business_data;
+			$json['status']  = 'SUCCESS';
+			$json['message'] = 'Review Submitted Successfully';
+		}
+		else
+		{
+  			$json['status']  = 'ERROR';
+			$json['message'] = 'Problem Occurred While Submitting Review';
+		}	
+           return response()->json($json);	 	
+    }
+
 
 }
