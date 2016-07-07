@@ -291,6 +291,9 @@ class FrontAllCategoryController extends Controller
 		  $cat_id  = $request->input('cat_id');
 		  $city    = $request->input('city');
 		  $user_id = $request->input('user_id');
+		  $latitude = $request->input('latitude');
+		  $longitude = $request->input('longitude');
+		  // $range = $request->input('range');
 
 		  /* Get Business by category */
             $obj_business_listing = BusinessCategoryModel::where('category_id',$cat_id)->get();
@@ -327,7 +330,7 @@ class FrontAllCategoryController extends Controller
         {
             $arr_data_business = $obj_business_listing->toArray();
         }
-//dd($arr_data_business);
+
         
        if($user_id !="")
        {
@@ -353,13 +356,108 @@ class FrontAllCategoryController extends Controller
           }
         
        // dd($arr_fav_business);
-           $cnt=[];
+
+
+
+          
+
+
+
+            $obj_business_listing = BusinessCategoryModel::where('category_id',$cat_id)->get();
+            if($obj_business_listing)
+            {
+              $obj_business_listing->load(['business_by_category','business_rating']);
+              $arr_business_by_category = $obj_business_listing->toArray();
+            }
+            $key_business_cat=array();
+            if(sizeof($arr_business_by_category)>0)
+            {
+                foreach ($arr_business_by_category as $key => $value) 
+                {
+                  $key_business_cat[$value['business_id']]=$value['business_id'];
+                }
+            }
+             $obj_business_listing=[];
+            /* Merge the business by city and Business by category result  and generate the complete business id's array */
+
+//dd($arr_business_by_category);
+            if(sizeof($key_business_cat)>0)
+            {
+                $result = $key_business_cat;
+                $arr_business = array();
+
+                if(sizeof($result)>0)
+                {
+                  $obj_business_listing = BusinessListingModel::whereIn('id',$result)->with(['reviews']);
+
+                  /* If Location lat & log has been set by session calculate the distance range and get the business under that range */
+                  if(isset($latitude) && isset($longitude))
+                  {
+                       
+                        $qutt='*,ROUND( 6379 * acos (
+                          cos ( radians('.$latitude.') )
+                          * cos( radians( `lat` ) )
+                          * cos( radians( `lng` ) - radians('.$longitude.') )
+                          + sin ( radians('.$latitude.') )
+                          * sin( radians( `lat` ) )
+                        ),2) as distance';
+
+                        $obj_business_listing = $obj_business_listing->selectRaw($qutt);
+                       	
+                       	$arr_distance=$distance=[];
+                       	$range = 1000;                 
+                        $obj_business_listing = $obj_business_listing->having('distance', ' < ', $range);
+                       
+                        $arr_distance  =$obj_business_listing->get()->toArray();
+                   
+                   		foreach ($arr_distance as $key => $value) 
+                   		{
+                   			$distance[$key]['id']            = $value['id'];
+                   			$distance[$key]['business_name'] = $value['business_name'];
+                   			$distance[$key]['distance']      = $value['distance'];
+
+                   		}
+
+
+                     /*   if(Session::has('distance'))
+                        {
+                         $distance=Session::get('distance');
+                         $search_range=(int)$distance;
+                         //echo $search_range;exit;
+
+                         if($obj_business_listing)
+                          {
+                              $obj_business_listing = $obj_business_listing->having('distance', ' < ', $search_range);
+                          }
+                        }
+                        else
+                        {
+                          if($obj_business_listing)
+                          {
+                              $obj_business_listing = $obj_business_listing->having('distance', ' < ', 10);
+                          }
+                        }
+*/
+                 }
+              }
+          }
+                  
+           $data['distance']    = $distance;
+
+       
+
+
+
+
+          
+          $result_city_id  = CityModel::select('id')->where('city_title',$city)->first();  
+      	  $data['city_id']    = $result_city_id->toArray();
+        
+        
 		if(isset($arr_data_business) && sizeof($arr_data_business)>0)
 		{
 			foreach ($arr_data_business as $key => $business) 
-				{
-
-					
+				{					
 					if(in_array($business['id'], $arr_fav_business))
 					{
 						$data[$key]['is_favourite']  = 1;
@@ -380,7 +478,7 @@ class FrontAllCategoryController extends Controller
 					$data[$key]['is_verified']    = $business['is_verified'];
 					$data[$key]['establish_year']    = "Estd.in" .$business['establish_year'];
 				}
-			
+			 
 		    $json['data'] 	 = $data;
 			$json['status']  = 'SUCCESS';
 			$json['message'] = 'Business Listing !';
