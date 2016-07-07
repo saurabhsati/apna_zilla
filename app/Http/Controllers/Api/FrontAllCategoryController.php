@@ -295,6 +295,10 @@ class FrontAllCategoryController extends Controller
 		  $latitude = $request->input('latitude');
 		  $longitude = $request->input('longitude');
 		  $distance = $request->input('distance');
+
+		  $most_popular =  $request->input('most_popular');
+		  $city_id =  $request->input('city_id');
+
 		
 		  /* Get Business by category */
             $obj_business_listing = BusinessCategoryModel::where('category_id',$cat_id)->get();
@@ -303,7 +307,7 @@ class FrontAllCategoryController extends Controller
               $obj_business_listing->load(['business_by_category','business_rating']);
               $arr_business_by_category = $obj_business_listing->toArray();
             }
-            $key_business_cat=array();
+            $key_business_cat=$arr_palces=array();
             if(sizeof($arr_business_by_category)>0)
             {
                foreach ($arr_business_by_category as $key => $value) 
@@ -318,14 +322,29 @@ class FrontAllCategoryController extends Controller
         {
             $result = $key_business_cat;
             $arr_business = array();
+	            
+
             if(sizeof($result)>0)
             {
-              /* fetch business records by id's */
-               $obj_business_listing = BusinessListingModel::with(['reviews'])
-                                                            ->where('city',$city)
-                                                            ->where('is_active','1')
-                                                            ->whereIn('id', $result)->get();
-            }
+	           if ($most_popular=1)
+	            {            
+	              /* fetch business records by id's */
+	               $obj_business_listing = BusinessListingModel::with(['reviews'])
+	                                                            ->where('city',$city)
+	                                                            ->where('is_active','1')
+	                                                            ->whereIn('id', $result)
+	                                                            ->orderBy('visited_count', 'DESC')
+	                                                            ->get();
+	            }	            
+		       else
+		       {
+	       	              /* fetch business records by id's */
+	               $obj_business_listing = BusinessListingModel::with(['reviews'])
+	                                                            ->where('city',$city)
+	                                                            ->where('is_active','1')
+	                                                            ->whereIn('id', $result)->get();
+	           }     
+	       }
          }
           
         if($obj_business_listing)
@@ -333,7 +352,28 @@ class FrontAllCategoryController extends Controller
             $arr_data_business = $obj_business_listing->toArray();
         }
 
-        
+
+
+	    $city_place = CityModel::with(['city_places'])->where('id', $city_id)->get();
+	    
+	    if($city_place)
+	    {
+	    	$arr_palces	= $city_place->toArray();
+	    }
+
+	    $places=[];
+		foreach ($arr_palces as $pkey => $val) 
+		{
+			 foreach ($val['city_places'] as $key => $value)
+			  {
+				$places[$key]['id']        = $value['id'];
+				$places[$key]['place_name'] = $value['place_name'];
+				$places[$key]['latitude']  = $value['latitude'];
+				$places[$key]['longitude'] = $value['longitude'];
+			  } 
+		}
+
+  
        if($user_id !="")
        {
               $arr_fav_business = array();
@@ -426,6 +466,7 @@ class FrontAllCategoryController extends Controller
 							$business_data[$key]['establish_year'] = "Estd.in" .$value['establish_year'];
                    			$business_data[$key]['distance']      = $value['distance'];
 
+
                    		}
                     }
 	            }
@@ -436,6 +477,7 @@ class FrontAllCategoryController extends Controller
 
 			$json['id'] 	         = $arr_id['id'];
 			$json['business_data'] 	 = $business_data;
+			$json['place_details'] 	 = $places;
 			$json['status']          = 'SUCCESS';
 			$json['message']         = 'Business Listing !';
           
@@ -772,6 +814,7 @@ class FrontAllCategoryController extends Controller
 	    $email       =  $request->input('email');
 	    $id          =  $request->input('business_id');
 
+
         $arr_data                  = array();
         $arr_data['ratings']       = $rating;
         $arr_data['name']          = $name;
@@ -811,8 +854,7 @@ class FrontAllCategoryController extends Controller
         
 
 	    if($business_data)
-		{
-		    $json['business_data'] 	 = $business_data;
+		{		   
 			$json['status']  = 'SUCCESS';
 			$json['message'] = 'Review Submitted Successfully';
 		}
