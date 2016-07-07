@@ -297,8 +297,7 @@ class FrontAllCategoryController extends Controller
 		  $distance = $request->input('distance');
 
 		  $most_popular =  $request->input('most_popular');
-		  $city_id =  $request->input('city_id');
-
+		
 		
 		  /* Get Business by category */
             $obj_business_listing = BusinessCategoryModel::where('category_id',$cat_id)->get();
@@ -351,29 +350,7 @@ class FrontAllCategoryController extends Controller
         {
             $arr_data_business = $obj_business_listing->toArray();
         }
-
-
-
-	    $city_place = CityModel::with(['city_places'])->where('id', $city_id)->get();
-	    
-	    if($city_place)
-	    {
-	    	$arr_palces	= $city_place->toArray();
-	    }
-
-	    $places=[];
-		foreach ($arr_palces as $pkey => $val) 
-		{
-			 foreach ($val['city_places'] as $key => $value)
-			  {
-				$places[$key]['id']        = $value['id'];
-				$places[$key]['place_name'] = $value['place_name'];
-				$places[$key]['latitude']  = $value['latitude'];
-				$places[$key]['longitude'] = $value['longitude'];
-			  } 
-		}
-
-  
+ 
        if($user_id !="")
        {
               $arr_fav_business = array();
@@ -482,6 +459,35 @@ class FrontAllCategoryController extends Controller
 			$json['message']         = 'Business Listing !';
           
            return response()->json($json);	 	
+	}
+
+	public function get_all_city_places(Request $request)
+	{
+         $city_id =  $request->input('city_id');
+ 
+ 	     $city_place = CityModel::with(['city_places'])->where('id', $city_id)->get();
+	    
+	    if($city_place)
+	    {
+	    	$arr_palces	= $city_place->toArray();
+	    }
+	    $places=[];
+		foreach ($arr_palces as $pkey => $val) 
+		{
+			 foreach ($val['city_places'] as $key => $value)
+			  {
+				$places[$key]['id']         = $value['id'];
+				$places[$key]['place_name'] = $value['place_name'];
+				$places[$key]['latitude']   = $value['latitude'];
+				$places[$key]['longitude']  = $value['longitude'];
+			  } 
+		}
+
+		$json['place_details'] 	 = $places;
+		$json['status']          = 'SUCCESS';
+		$json['message']         = 'Business Listing !';
+      
+        return response()->json($json);
 	}
 
 	public function get_business_details(Request $request)

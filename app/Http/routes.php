@@ -673,7 +673,9 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 		Route::post('all_business_and_deals',			['as' => 'all_business_and_deals'                    ,'uses' =>'Api\FrontAllCategoryController@all_business_and_deals']);
 
 
-		Route::post('store_reviews',			['as' => 'store_reviews'                    ,'uses' =>'Api\FrontAllCategoryController@store_reviews']);
+		Route::post('get_all_city_places',			['as' => 'get_all_city_places'                    ,'uses' =>'Api\FrontAllCategoryController@get_all_city_places']);
+
+			Route::post('store_reviews',			['as' => 'store_reviews'                    ,'uses' =>'Api\FrontAllCategoryController@store_reviews']);
 		
 		Route::post('get_popular_and_normal_Category',			['as' => 'get_popular_and_normal_Category'                    ,'uses' =>'Api\FrontAllCategoryController@get_popular_and_normal_Category']);
 
