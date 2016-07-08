@@ -13,6 +13,7 @@ class ReviewsModel extends Model
     protected $table = 'reviews';
 
     protected $fillable = ['business_id',
+                            'user_id',
                             'title',
                             'message',
     						'mobile_number',

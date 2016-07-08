@@ -14,7 +14,9 @@ use App\Models\DealModel;
 use App\Models\ReviewsModel;
 use App\Models\StateModel;
 use App\Models\BusinessSendEnquiryModel;
+use App\Models\UserModel;
 use DB;
+
 
 class FrontAllCategoryController extends Controller
 {
@@ -628,16 +630,17 @@ class FrontAllCategoryController extends Controller
 		$data['is_verified']   = $arr_business_details['is_verified'];
 		$data['about']         = $arr_business_details['company_info'];
 
-        $state_detalis=[];
-		$state =StateModel::with(['country_details'])->select()->where('id',$arr_business_details['state'])->get();
-		if($state)
+        $city_detalis=[];
+		$city =CityModel::select('city_title')->where('id',$arr_business_details['city'])->get();
+		if($city)
 		{
-	    	$state_detalis =$state->toArray();	
-		}	
+	    	$city_detalis =$city->toArray();	
+		}
+	
 				
-	   $data['page_url']   = url('/').'/'.str_slug($arr_business_details['business_name'],'-').'@'.str_slug($arr_business_details['area'],'-').'-'.str_slug($arr_business_details['landmark'],'-').'-'.$state_detalis[0]['state_title'].'-'.$arr_business_details['pincode'].'-'.$state_detalis[0]['country_details']['country_name'].'/'.base64_encode($arr_business_details['id']);
+	   $data['page_url']   = url('/').'/'.$city_detalis[0]['city_title'].'/'. str_slug($arr_business_details['business_name'],'-').'@'.str_slug($arr_business_details['area'],'-').'/'.base64_encode($arr_business_details['id']);
 
-				
+
 	    $business_times=[]; 
    	    foreach ($arr_business_details['business_times'] as $key => $value) 
 		{			
@@ -794,17 +797,32 @@ class FrontAllCategoryController extends Controller
 			 $data['reviews_star']['star4']    = $star4;
 			 $data['reviews_star']['star5']    = $star5;
 
-
-		$reviews=[];
+ 		$reviews=[];
 		foreach ($arr_business_details['reviews'] as $key => $value) 
 		{
 			$reviews[$key]['name']    = $value['name'];
 			$reviews[$key]['message'] = $value['message'];
 			$reviews[$key]['ratings'] = $value['ratings'];			
 			$reviews[$key]['date']    =date('F Y',strtotime($value['created_at'])) ;
-			$reviews[$key]['image']   =url('/uploads/users/profile_pic').'/'.$arr_business_details['user_details']['profile_pic'];
+			
+			if($user_id == $value['user_id'] )
+			{	
+				$profile_pic=[];
+				$image = UserModel::select('profile_pic')->where('id',$user_id)->first();
+				if($image) 
+				{
+				     $profile_pic=$image;	
+				}
+							    
+			      $reviews[$key]['image']   =url('/uploads/users/profile_pic').'/'.$profile_pic['profile_pic'];
+			 }
+			 else
+			 {
+			 	 $reviews[$key]['image']   =url('/assets/front/images/testi-user.png');
+			 }     
 		}
-	//get_resized_image_path($user['profile_pic'],'uploads/users/profile_pic',200,200)
+	//get_resized_image_path($user['profile_pic'],'/assets/front/images',200,200)
+		//http://localhost/justdial/public/assets/front/images/testi-user.png
 		//dd($arr_business_details['user_details']['profile_pic']);
 
 	    $data['business_times']       = $business_times;
@@ -832,13 +850,13 @@ class FrontAllCategoryController extends Controller
 
     public function store_reviews(Request $request)
     {
-	    $rating      =  $request->input('rating');
-	    $name        =  $request->input('name');
-	    $review      =  $request->input('review');
-	    $mobile_no   =  $request->input('mobile_no');
-	    $email       =  $request->input('email');
-	    $id          =  $request->input('business_id');
-
+	    $rating    = $request->input('rating');
+	    $name      = $request->input('name');
+	    $review    = $request->input('review');
+	    $mobile_no = $request->input('mobile_no');
+	    $email     = $request->input('email');
+	    $id        = $request->input('business_id');
+	    $user_id   = $request->input('user_id');
 
         $arr_data                  = array();
         $arr_data['ratings']       = $rating;
@@ -847,6 +865,7 @@ class FrontAllCategoryController extends Controller
         $arr_data['mobile_number'] = $mobile_no;
         $arr_data['email']         = $email;
         $arr_data['business_id']   = $id;
+        $arr_data['user_id']       = $user_id;
 
         $status = ReviewsModel::create($arr_data);
 
@@ -854,10 +873,13 @@ class FrontAllCategoryController extends Controller
         {
            $business_rating = BusinessListingModel::where('id',$arr_data['business_id'])->with(['reviews'])->get()->toArray();
            $reviews=0;
-              if(isset($business_rating[0]['reviews']) && sizeof($business_rating[0]['reviews'])>0){
-              foreach($business_rating[0]['reviews'] as $business_review){
-                 $reviews=$reviews+$business_review['ratings'];
-              }
+             
+              if(isset($business_rating[0]['reviews']) && sizeof($business_rating[0]['reviews'])>0)
+              {
+                foreach($business_rating[0]['reviews'] as $business_review)
+                {
+                   $reviews=$reviews+$business_review['ratings'];
+                }
 
              }
              if(sizeof($business_rating[0]['reviews']))
@@ -874,7 +896,7 @@ class FrontAllCategoryController extends Controller
 			  {
 			      $business_data['avg_rating']=round($avg_review);
 			  }
-				          $business_data=BusinessListingModel::where('id',$id)->update($business_data);
+			$business_data=BusinessListingModel::where('id',$id)->update($business_data);
 		}		          
         
 
@@ -897,12 +919,14 @@ class FrontAllCategoryController extends Controller
         $email       = $request->input('email');
         $mobile      = $request->input('mobile');
         $business_id = $request->input('business_id');
+        $user_id = $request->input('user_id');
 
         $arr_data                = array();
         $arr_data['name']        = $name;
         $arr_data['email']       = $email;
         $arr_data['mobile']      = $mobile;
         $arr_data['business_id'] = $business_id;
+        $arr_data['user_id']     = $user_id;
 
         $status = BusinessSendEnquiryModel::create($arr_data);
         if($status)
