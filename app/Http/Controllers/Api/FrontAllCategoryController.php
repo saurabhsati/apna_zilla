@@ -638,9 +638,8 @@ class FrontAllCategoryController extends Controller
 		}
 		
 		foreach($city_detalis as $val)
-		{			
-				
-	   $data['page_url']  = url('/').'/'.$val['city_title'].'/'.str_slug($arr_business_details['business_name'],'-').'@'.str_slug($arr_business_details['area'],'-').'/'.base64_encode($arr_business_details['id']);
+		{		
+	      $data['page_url']  = url('/').'/'.$val['city_title'].'/'.str_slug($arr_business_details['business_name'],'-').'@'.str_slug($arr_business_details['area'],'-').'/'.base64_encode($arr_business_details['id']);
 		}
 
 		
