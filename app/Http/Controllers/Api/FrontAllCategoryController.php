@@ -528,7 +528,7 @@ class FrontAllCategoryController extends Controller
            $arr_business_details=$obj_business_details->toArray();
          }
 
-
+//dd($arr_business_details);
         if($arr_business_details)
         {
                 $arr_business_by_category = array();
@@ -636,16 +636,15 @@ class FrontAllCategoryController extends Controller
 		{
 	    	$city_detalis =$city->toArray();	
 		}
-		$c = [];
+		
 		foreach($city_detalis as $val)
 		{			
-			$c =$val['city_title'];
+				
+	   $data['page_url']  = url('/').'/'.$val['city_title'].'/'.str_slug($arr_business_details['business_name'],'-').'@'.str_slug($arr_business_details['area'],'-').'/'.base64_encode($arr_business_details['id']);
 		}
 
 				
-	   $data['page_url']   = url('/').'/'.$c.'/'. str_slug($arr_business_details['business_name'],'-').'@'.str_slug($arr_business_details['area'],'-').'/'.base64_encode($arr_business_details['id']);
-
-
+	 
 	    $business_times=[]; 
    	    foreach ($arr_business_details['business_times'] as $key => $value) 
 		{			
