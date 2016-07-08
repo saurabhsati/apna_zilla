@@ -28,4 +28,9 @@ class CityModel extends Model
          return $this->hasMany('App\Models\BusinessListingModel','city','id');
     }
 
+     public function city_places()
+    {
+         return $this->hasMany('App\Models\PlaceModel','city_id','id');
+    }
+
 }

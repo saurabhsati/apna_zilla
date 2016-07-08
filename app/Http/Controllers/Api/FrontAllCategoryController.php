@@ -11,6 +11,7 @@ use App\Models\BusinessListingModel;
 use App\Models\FavouriteBusinessesModel;
 use App\Models\CityModel;
 use App\Models\DealModel;
+use App\Models\ReviewsModel;
 use DB;
 
 class FrontAllCategoryController extends Controller
@@ -196,7 +197,7 @@ class FrontAllCategoryController extends Controller
   	 	$sub_category=[];
 	    if(isset($arr_sub_category) && sizeof($arr_sub_category)>0)
 		{
-			foreach ($arr_sub_category as $key => $sub_cat) 
+			    foreach ($arr_sub_category as $key => $sub_cat) 
 				{
 					$sub_category[$key]['id']       = $sub_cat['cat_id'];
 					$sub_category[$key]['name']     = $sub_cat['title'];
@@ -218,9 +219,9 @@ class FrontAllCategoryController extends Controller
 
 	public function all_sub_category()
 	{
-		  $data     = array();
+		 $data     = array();
 
-            $obj_sub_category = CategoryModel::where('parent','!=',0)
+         $obj_sub_category = CategoryModel::where('parent','!=',0)
                                            ->where('is_active','=',1)
                                            ->get();
   	 	if($obj_sub_category)
@@ -280,9 +281,7 @@ class FrontAllCategoryController extends Controller
 			$json['status']  = 'ERROR';
 			$json['message'] = 'No Record Found!';
 		}
-             return response()->json($json);	 	
-	     
-   
+             return response()->json($json);
 	}
 
 	public function get_business_listing(Request $request)
@@ -290,11 +289,17 @@ class FrontAllCategoryController extends Controller
 		  $data    = array();
 		  $cat_id  = $request->input('cat_id');
 		  $city    = $request->input('city');
+
 		  $user_id = $request->input('user_id');
+
 		  $latitude = $request->input('latitude');
 		  $longitude = $request->input('longitude');
-		  // $range = $request->input('range');
+		  $distance = $request->input('distance');
 
+		  $most_popular =  $request->input('most_popular');
+		  $rating       =  $request->input('rating');
+		
+		
 		  /* Get Business by category */
             $obj_business_listing = BusinessCategoryModel::where('category_id',$cat_id)->get();
             if($obj_business_listing)
@@ -302,7 +307,7 @@ class FrontAllCategoryController extends Controller
               $obj_business_listing->load(['business_by_category','business_rating']);
               $arr_business_by_category = $obj_business_listing->toArray();
             }
-            $key_business_cat=array();
+            $key_business_cat=$arr_palces=array();
             if(sizeof($arr_business_by_category)>0)
             {
                foreach ($arr_business_by_category as $key => $value) 
@@ -310,28 +315,33 @@ class FrontAllCategoryController extends Controller
                   $key_business_cat[$value['business_id']]=$value['business_id'];
                 }
             }
+
           $obj_business_listing= $arr_data_business =$total_review =[];
 
         if(sizeof($key_business_cat)>0)
         {
             $result = $key_business_cat;
             $arr_business = array();
+	            
+
             if(sizeof($result)>0)
-            {
-              /* fetch business records by id's */
-               $obj_business_listing = BusinessListingModel::with(['reviews'])
-                                                            ->where('city',$city)
-                                                            ->where('is_active','1')
-                                                            ->whereIn('id', $result)->get();
-            }
-         }
-          
+            {                	  
+      	       	  /* fetch business records by id's */
+      	           $obj_business_listing = BusinessListingModel::with(['reviews'])
+  	                                                            ->where('city',$city)
+  	                                                            ->where('is_active','1')
+  	                                                            ->whereIn('id', $result)
+      	                                                        ->get();
+      	                                                           
+		     }
+
+	    }
+      
         if($obj_business_listing)
         {
             $arr_data_business = $obj_business_listing->toArray();
         }
-
-        
+ 
        if($user_id !="")
        {
               $arr_fav_business = array();
@@ -339,59 +349,47 @@ class FrontAllCategoryController extends Controller
               $obj_favourite    = FavouriteBusinessesModel::where(array('user_id'=>$user_id ,'is_favourite'=>"1" ))->get(['business_id']);
               if($obj_favourite)
               {
-                $obj_favourite->toArray();
-                foreach ($obj_favourite as $key => $value)
-                {
-                  array_push($arr_fav_business, $value['business_id']);
-                }
+	                $obj_favourite->toArray();
+	                foreach ($obj_favourite as $key => $value)
+	                {
+	                  array_push($arr_fav_business, $value['business_id']);
+	                }
               }
               else
               {
                 $arr_fav_business = array();
               }
-          }
-          else
-          {
-           $arr_fav_business = array();
-          }
+        }
+        else
+        {
+            $arr_fav_business = array();
+        }
         
        // dd($arr_fav_business);
-
-
-
-          
-
-
-
-            $obj_business_listing = BusinessCategoryModel::where('category_id',$cat_id)->get();
-            if($obj_business_listing)
-            {
-              $obj_business_listing->load(['business_by_category','business_rating']);
-              $arr_business_by_category = $obj_business_listing->toArray();
-            }
-            $key_business_cat=array();
-            if(sizeof($arr_business_by_category)>0)
-            {
-                foreach ($arr_business_by_category as $key => $value) 
-                {
-                  $key_business_cat[$value['business_id']]=$value['business_id'];
-                }
-            }
-             $obj_business_listing=[];
-            /* Merge the business by city and Business by category result  and generate the complete business id's array */
-
-//dd($arr_business_by_category);
+      
             if(sizeof($key_business_cat)>0)
             {
                 $result = $key_business_cat;
-                $arr_business = array();
+                $business_data  =[];
 
                 if(sizeof($result)>0)
                 {
                   $obj_business_listing = BusinessListingModel::whereIn('id',$result)->with(['reviews']);
 
+
+			      if($rating==1)
+			      {
+			          $obj_business_listing->orderBy('avg_rating','DESC');
+			      }
+			      else
+			      	if($most_popular==1)
+			      {
+			         /* Get business records list order by mostly visited as Descending order */
+			          $obj_business_listing->orderBy('visited_count','DESC');
+			      }
+			  
                   /* If Location lat & log has been set by session calculate the distance range and get the business under that range */
-                  if(isset($latitude) && isset($longitude))
+                  if(isset($latitude) && isset($longitude) && $latitude!='' && $longitude!='')
                   {
                        
                         $qutt='*,ROUND( 6379 * acos (
@@ -404,91 +402,95 @@ class FrontAllCategoryController extends Controller
 
                         $obj_business_listing = $obj_business_listing->selectRaw($qutt);
                        	
-                       	$arr_distance=$distance=[];
-                       	$range = 1000;                 
-                        $obj_business_listing = $obj_business_listing->having('distance', ' < ', $range);
-                       
-                        $arr_distance  =$obj_business_listing->get()->toArray();
-                   
-                   		foreach ($arr_distance as $key => $value) 
-                   		{
-                   			$distance[$key]['id']            = $value['id'];
-                   			$distance[$key]['business_name'] = $value['business_name'];
-                   			$distance[$key]['distance']      = $value['distance'];
-
-                   		}
-
-
-                     /*   if(Session::has('distance'))
-                        {
-                         $distance=Session::get('distance');
-                         $search_range=(int)$distance;
-                         //echo $search_range;exit;
-
-                         if($obj_business_listing)
-                          {
-                              $obj_business_listing = $obj_business_listing->having('distance', ' < ', $search_range);
-                          }
+                       	if($distance!='')
+                        {                     
+                             $search_range=(int)$distance;
+                             if($obj_business_listing)
+	                          {
+	                             $obj_business_listing = $obj_business_listing->having('distance', ' < ', $search_range);
+	                          }
                         }
                         else
-                        {
-                          if($obj_business_listing)
-                          {
-                              $obj_business_listing = $obj_business_listing->having('distance', ' < ', 10);
-                          }
+                        {    if($obj_business_listing)
+	                          {
+	                              $obj_business_listing = $obj_business_listing->having('distance', ' < ', 10);
+	                          }
                         }
-*/
-                 }
-              }
-          }
-                  
-           $data['distance']    = $distance;
 
-       
+                        if ($obj_business_listing)
+                        {
+                        	 $arr_distance  =$obj_business_listing->get()->toArray();
+                        }
+                                       
+                   		foreach ($arr_distance as $key => $value) 
+                   		{
+                   			$business_data[$key]['id']       = $value['id'];
+
+							if(in_array($value['id'], $arr_fav_business))
+							{
+								$business_data[$key]['is_favourite']  = 1;
+							}
+							else
+							{
+								$business_data[$key]['is_favourite']  = 0;
+							}
+							$business_data[$key]['review_count']   = count($value['reviews']);
+							$business_data[$key]['business_name']  = $value['business_name'];
+							$business_data[$key]['main_image']     = url('/uploads/business/main_image').'/'.$value['main_image'];
+							$business_data[$key]['area']           = $value['area'];
+							$business_data[$key]['city']           = $value['city'];
+							$business_data[$key]['pincode']        = $value['pincode'];
+							$business_data[$key]['mobile_number']  = $value['mobile_number'];
+							$business_data[$key]['avg_rating']     = $value['avg_rating'];
+							$business_data[$key]['is_verified']    = $value['is_verified'];
+							$business_data[$key]['visited_count']    = $value['visited_count'];
+							$business_data[$key]['establish_year'] = "Estd.in" .$value['establish_year'];
+                   			$business_data[$key]['distance']      = $value['distance'];
 
 
+                   		}
+                    }
+	            }
+	        }
+      
+            $result_city_id  = CityModel::select('id')->where('city_title',$city)->first();  
+	    	$arr_id = $result_city_id->toArray();
 
-
+			$json['id'] 	         = $arr_id['id'];
+			$json['business_data'] 	 = $business_data;
+			$json['status']          = 'SUCCESS';
+			$json['message']         = 'Business Listing !';
           
-          $result_city_id  = CityModel::select('id')->where('city_title',$city)->first();  
-      	  $data['city_id']    = $result_city_id->toArray();
-        
-        
-		if(isset($arr_data_business) && sizeof($arr_data_business)>0)
-		{
-			foreach ($arr_data_business as $key => $business) 
-				{					
-					if(in_array($business['id'], $arr_fav_business))
-					{
-						$data[$key]['is_favourite']  = 1;
-					}
-					else
-					{
-						$data[$key]['is_favourite']  = 0;
-					}
-       				$data[$key]['id']            = $business['id'];
-       				$data[$key]['review_count']  = count($business['reviews']);
-					$data[$key]['business_name'] = $business['business_name'];
-					$data[$key]['main_image']    = url('/uploads/business/main_image').'/'.$business['main_image'];
-					$data[$key]['area']          = $business['area'];
-					$data[$key]['city']          = $business['city'];
-					$data[$key]['pincode']       = $business['pincode'];
-					$data[$key]['mobile_number'] = $business['mobile_number'];
-					$data[$key]['avg_rating']    = $business['avg_rating'];
-					$data[$key]['is_verified']    = $business['is_verified'];
-					$data[$key]['establish_year']    = "Estd.in" .$business['establish_year'];
-				}
-			 
-		    $json['data'] 	 = $data;
-			$json['status']  = 'SUCCESS';
-			$json['message'] = 'Business Listing !';
-		}
-		else
-		{
-			$json['status']  = 'ERROR';
-			$json['message'] = 'No Record Found in Business Listing!';
-		}
            return response()->json($json);	 	
+	}
+
+	public function get_all_city_places(Request $request)
+	{
+         $city_id =  $request->input('city_id');
+ 
+ 	     $city_place = CityModel::with(['city_places'])->where('id', $city_id)->get();
+	    
+	    if($city_place)
+	    {
+	    	$arr_palces	= $city_place->toArray();
+	    }
+	    $places=[];
+		foreach ($arr_palces as $pkey => $val) 
+		{
+			 foreach ($val['city_places'] as $key => $value)
+			  {
+				$places[$key]['id']         = $value['id'];
+				$places[$key]['place_name'] = $value['place_name'];
+				$places[$key]['latitude']   = $value['latitude'];
+				$places[$key]['longitude']  = $value['longitude'];
+			  } 
+		}
+
+		$json['place_details'] 	 = $places;
+		$json['status']          = 'SUCCESS';
+		$json['message']         = 'All Places of City';
+      
+        return response()->json($json);
 	}
 
 	public function get_business_details(Request $request)
@@ -811,5 +813,67 @@ class FrontAllCategoryController extends Controller
 		}	
            return response()->json($json);	 	
 	}
+
+    public function store_reviews(Request $request)
+    {
+	    $rating      =  $request->input('rating');
+	    $name        =  $request->input('name');
+	    $review      =  $request->input('review');
+	    $mobile_no   =  $request->input('mobile_no');
+	    $email       =  $request->input('email');
+	    $id          =  $request->input('business_id');
+
+
+        $arr_data                  = array();
+        $arr_data['ratings']       = $rating;
+        $arr_data['name']          = $name;
+        $arr_data['message']       = $review;
+        $arr_data['mobile_number'] = $mobile_no;
+        $arr_data['email']         = $email;
+        $arr_data['business_id']   = $id;
+
+        $status = ReviewsModel::create($arr_data);
+
+        if($status)
+        {
+           $business_rating = BusinessListingModel::where('id',$arr_data['business_id'])->with(['reviews'])->get()->toArray();
+           $reviews=0;
+              if(isset($business_rating[0]['reviews']) && sizeof($business_rating[0]['reviews'])>0){
+              foreach($business_rating[0]['reviews'] as $business_review){
+                 $reviews=$reviews+$business_review['ratings'];
+              }
+
+             }
+             if(sizeof($business_rating[0]['reviews']))
+              {
+                $tot_review=sizeof($business_rating[0]['reviews']);
+                $avg_review=($reviews/$tot_review);
+              }
+              else
+              {
+                $avg_review= $tot_review=0;
+              }
+
+			 if (isset($business_rating[0]['reviews']) ) 
+			  {
+			      $business_data['avg_rating']=round($avg_review);
+			  }
+				          $business_data=BusinessListingModel::where('id',$id)->update($business_data);
+		}		          
+        
+
+	    if($business_data)
+		{		   
+			$json['status']  = 'SUCCESS';
+			$json['message'] = 'Review Submitted Successfully';
+		}
+		else
+		{
+  			$json['status']  = 'ERROR';
+			$json['message'] = 'Problem Occurred While Submitting Review';
+		}	
+           return response()->json($json);	 	
+    }
+
 
 }
