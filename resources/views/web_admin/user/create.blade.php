@@ -314,7 +314,7 @@
 
     function clearPreviewImage()
     {
-        $('#preview_profile_pic').attr('src',site_url+'/images/front/avatar.jpg');
+        $('#preview_profile_pic').attr('src',site_url+'/images/admin/avatar/avatar.jpg');
         $("#removal_handle").hide();
     }
     function chkeck_marital_status(ref)

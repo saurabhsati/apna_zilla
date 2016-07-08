@@ -164,8 +164,7 @@ class UserController extends Controller
                 $cv_path = $request->file('profile_pic')->getClientOriginalName();
                 $image_extension = $request->file('profile_pic')->getClientOriginalExtension();
                 $image_name = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
-                $request->file('profile_pic')->move(
-                    $this->profile_pic_base_path, $image_name
+                $request->file('profile_pic')->move($this->profile_pic_base_path, $image_name
                 );
 
                 $profile_pic = $image_name;
