@@ -12,6 +12,8 @@ use App\Models\FavouriteBusinessesModel;
 use App\Models\CityModel;
 use App\Models\DealModel;
 use App\Models\ReviewsModel;
+use App\Models\StateModel;
+use App\Models\BusinessSendEnquiryModel;
 use DB;
 
 class FrontAllCategoryController extends Controller
@@ -19,6 +21,7 @@ class FrontAllCategoryController extends Controller
 	public function __construct()
 	{
        $json    = array();
+       //$url =Request::url();
     }
 
 	public function get_all_city()
@@ -495,8 +498,8 @@ class FrontAllCategoryController extends Controller
 
 	public function get_business_details(Request $request)
 	{
-         $business_id  = $request->input('business_id');
-         $user_id  = $request->input('user_id');
+	     $business_id  = $request->input('business_id');
+         $user_id      = $request->input('user_id');
          $_business    = $data =array();
          $obj_business = BusinessListingModel::where('id',$business_id)->first();
        
@@ -523,6 +526,7 @@ class FrontAllCategoryController extends Controller
          {
            $arr_business_details=$obj_business_details->toArray();
          }
+
 
         if($arr_business_details)
         {
@@ -624,6 +628,16 @@ class FrontAllCategoryController extends Controller
 		$data['avg_rating']    = $arr_business_details['avg_rating'];
 		$data['is_verified']   = $arr_business_details['is_verified'];
 		$data['about']         = $arr_business_details['company_info'];
+
+        $state_detalis=[];
+		$state =StateModel::with(['country_details'])->select()->where('id',$arr_business_details['state'])->get();
+		if($state)
+		{
+	    	$state_detalis =$state->toArray();	
+		}	
+				
+	   $data['page_url']   = url('/').'/'.str_slug($arr_business_details['business_name'],'-').'@'.str_slug($arr_business_details['area'],'-').'-'.str_slug($arr_business_details['landmark'],'-').'-'.$state_detalis[0]['state_title'].'-'.$arr_business_details['pincode'].'-'.$state_detalis[0]['country_details']['country_name'].'/'.base64_encode($arr_business_details['id']);
+
 				
 	    $business_times=[]; 
    	    foreach ($arr_business_details['business_times'] as $key => $value) 
@@ -789,9 +803,11 @@ class FrontAllCategoryController extends Controller
 			$reviews[$key]['message'] = $value['message'];
 			$reviews[$key]['ratings'] = $value['ratings'];			
 			$reviews[$key]['date']    =date('F Y',strtotime($value['created_at'])) ;
-			$reviews[$key]['image']    =url('/uploads/users/profile_pic/resize_cache').'/'.$arr_business_details['user_details']['profile_pic'];
+			$reviews[$key]['image']    =url('/assets/front/images/testi-user.png');
 		}
-		
+	
+		//dd($arr_business_details['reviews']);
+
 	    $data['business_times']       = $business_times;
 	    $data['image_upload_details'] = $image_upload_details;
 	    $data['service']              = $service;
@@ -799,6 +815,7 @@ class FrontAllCategoryController extends Controller
 	    $data['reviews']              = $reviews;
 	    $data['also_list_category']   = $aa;
 	    $data['related_businesss']    = $related_business;
+	   
 
 	    if(isset($arr_business_details) && sizeof($arr_business_details)>0)
 		{
@@ -874,6 +891,35 @@ class FrontAllCategoryController extends Controller
 		}	
            return response()->json($json);	 	
     }
+
+    public function store_sms_details(Request $request)
+    {
+        $name        = $request->input('name');
+        $email       = $request->input('email');
+        $mobile      = $request->input('mobile');
+        $business_id = $request->input('business_id');
+
+        $arr_data                = array();
+        $arr_data['name']        = $name;
+        $arr_data['email']       = $email;
+        $arr_data['mobile']      = $mobile;
+        $arr_data['business_id'] = $business_id;
+
+        $status = BusinessSendEnquiryModel::create($arr_data);
+        if($status)
+        {          	 					
+          	 $json['status']    = "SUCCESS";
+          	 $json['message']    ="sms details store Successfully";
+        }
+       	else
+       	{	
+            $json['status'] = "MOBILE_ERROR";
+            $json['message']    = "error while sms details store";
+        }    
+        
+        return response()->json($json);
+    }
+
 
 
 }
