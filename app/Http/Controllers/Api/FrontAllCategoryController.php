@@ -21,7 +21,6 @@ class FrontAllCategoryController extends Controller
 	public function __construct()
 	{
        $json    = array();
-       //$url =Request::url();
     }
 
 	public function get_all_city()
@@ -803,10 +802,10 @@ class FrontAllCategoryController extends Controller
 			$reviews[$key]['message'] = $value['message'];
 			$reviews[$key]['ratings'] = $value['ratings'];			
 			$reviews[$key]['date']    =date('F Y',strtotime($value['created_at'])) ;
-			$reviews[$key]['image']    =url('/assets/front/images/testi-user.png');
+			$reviews[$key]['image']   =url('/uploads/users/profile_pic').'/'.$arr_business_details['user_details']['profile_pic'];
 		}
-	
-		//dd($arr_business_details['reviews']);
+	//get_resized_image_path($user['profile_pic'],'uploads/users/profile_pic',200,200)
+		//dd($arr_business_details['user_details']['profile_pic']);
 
 	    $data['business_times']       = $business_times;
 	    $data['image_upload_details'] = $image_upload_details;
