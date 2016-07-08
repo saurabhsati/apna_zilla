@@ -412,7 +412,7 @@ class BusinessListingController extends Controller
         //$arr_rules['landmark']='required';
         $arr_rules['area']='required';
         $arr_rules['city']='required';
-        //$arr_rules['pincode']='required';
+        $arr_rules['pincode']='required';
         $arr_rules['state']='required';
         $arr_rules['country']='required';
         $arr_rules['lat']='required';

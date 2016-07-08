@@ -106,7 +106,9 @@ class CouponController extends Controller
                                ->where('start_date',$start_date)    
                                ->where('end_date',$end_date)
                                ->get();
-         $is_duplicate=[];                      
+
+
+        $is_duplicate=[];                      
         if($obj_is_duplicate)
         {
             $is_duplicate=$obj_is_duplicate->toArray();
