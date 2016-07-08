@@ -501,6 +501,7 @@ class FrontAllCategoryController extends Controller
 	{
 	     $business_id  = $request->input('business_id');
          $user_id      = $request->input('user_id');
+          $city      = $request->input('city');
          $_business    = $data =array();
          $obj_business = BusinessListingModel::where('id',$business_id)->first();
        
@@ -629,7 +630,7 @@ class FrontAllCategoryController extends Controller
 		$data['avg_rating']    = $arr_business_details['avg_rating'];
 		$data['is_verified']   = $arr_business_details['is_verified'];
 		$data['about']         = $arr_business_details['company_info'];
-
+/*
         $city_detalis=[];
 		$city =CityModel::select('city_title')->where('id',$arr_business_details['city'])->get();
 		if($city)
@@ -641,7 +642,8 @@ class FrontAllCategoryController extends Controller
 		{		
 	      $data['page_url']  = url('/').'/'.$val['city_title'].'/'.str_slug($arr_business_details['business_name'],'-').'@'.str_slug($arr_business_details['area'],'-').'/'.base64_encode($arr_business_details['id']);
 		}
-
+*/
+		 $data['page_url']  = url('/').'/'.$city.'/'.str_slug($arr_business_details['business_name'],'-').'@'.str_slug($arr_business_details['area'],'-').'/'.base64_encode($arr_business_details['id']);
 		
 	 
 	    $business_times=[]; 
