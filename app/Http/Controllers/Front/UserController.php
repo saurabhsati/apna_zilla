@@ -1526,7 +1526,7 @@ class UserController extends Controller
         {
             Session::flash('error','Error While Adding Business');
         }
-        return redirect(url('/').'/front_users/edit_business_step5/'.base64_encode($id));
+        return redirect(url('/front_users/my_business'));
 
     }
      public function delete_payment_mode(Request $request)

@@ -819,7 +819,7 @@ function sunday_status(status)
 
 $(document).ready(function()
 {
-
+  $("#validation-form").validate();
  $('#validation-form').submit(function(){
     tinyMCE.triggerSave();
  }); 
@@ -1062,8 +1062,6 @@ function getSubCategory(ref)
                               
                                 if(typeof(response.arr_sub_cat) == "object")
                                 {
-                                  //$(".multiselect-container").css("display",'block');
-                                  // var option = '';
                                    jQuery(response.arr_sub_cat).each(function(index,arr_sub_cat)
                                    {
                                     option+='<option value="'+arr_sub_cat.cat_id+'">'+arr_sub_cat.title+'</option>';

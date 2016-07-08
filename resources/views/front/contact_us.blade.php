@@ -59,24 +59,48 @@
            {{ csrf_field() }}
            <div class="gren_bor_title">GET IN TOUCH</div>
 
-           <div class="bor_grn">&nbsp;</div>
-           <div class="user_box">
-           <input class="input_acct " type="text" name="name" id="name" value="" placeholder="Name">
-           <div class="error_msg" id="err_name"></div>
-           </div>
-           <div class="user_box">
-           <input class="input_acct" type="text" name="mobile_no" id="mobile_no" value="" placeholder="Mobile No">
-           <div class="error_msg" id="err_mobile_no"></div>
-           </div>
-           <div class="user_box">
-           <input class="input_acct" type="text" name="email" id="email" value="" placeholder="Email">
-           <div class="error_msg" id="err_email"></div>
-           </div>
-           <div class="user_box">
-            <textarea class="textarea_box" name="message" id="message" placeholder="Message" type=""></textarea>
-            <div class="error_msg" id="err_message"></div></div>
-           <br/>
-           <button class="pull-left btn btn-post" id="contact_submit" type="submit" name="contact_submit">Submit now</button>
+           <?php
+                $user = Sentinel::check();
+           ?>
+           @if($user)
+               <div class="bor_grn">&nbsp;</div>
+               <div class="user_box">
+               <input class="input_acct " type="text" name="name" id="name" value="{{$user['first_name'] or ''}}" placeholder="Name">
+               <div class="error_msg" id="err_name"></div>
+               </div>
+               <div class="user_box">
+               <input class="input_acct" type="text" name="mobile_no" id="mobile_no" value="{{$user['mobile_no'] or ''}}" placeholder="Mobile No">
+               <div class="error_msg" id="err_mobile_no"></div>
+               </div>
+               <div class="user_box">
+               <input class="input_acct" type="text" name="email" id="email" value="{{$user['email'] or ''}}" placeholder="Email">
+               <div class="error_msg" id="err_email"></div>
+               </div>
+               <div class="user_box">
+                <textarea class="textarea_box" name="message" id="message" placeholder="Message" type=""></textarea>
+                <div class="error_msg" id="err_message"></div></div>
+               <br/>
+               <button class="pull-left btn btn-post" id="contact_submit" type="submit" name="contact_submit">Submit now</button>
+           @else
+               <div class="bor_grn">&nbsp;</div>
+               <div class="user_box">
+               <input class="input_acct " type="text" name="name" id="name" value="" placeholder="Name">
+               <div class="error_msg" id="err_name"></div>
+               </div>
+               <div class="user_box">
+               <input class="input_acct" type="text" name="mobile_no" id="mobile_no" value="" placeholder="Mobile No">
+               <div class="error_msg" id="err_mobile_no"></div>
+               </div>
+               <div class="user_box">
+               <input class="input_acct" type="text" name="email" id="email" value="" placeholder="Email">
+               <div class="error_msg" id="err_email"></div>
+               </div>
+               <div class="user_box">
+                <textarea class="textarea_box" name="message" id="message" placeholder="Message" type=""></textarea>
+                <div class="error_msg" id="err_message"></div></div>
+               <br/>
+               <button class="pull-left btn btn-post" id="contact_submit" type="submit" name="contact_submit">Submit now</button>
+           @endif
            </form>
            <div class="clr"></div>
          </div>
