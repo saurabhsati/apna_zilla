@@ -290,19 +290,18 @@ class FrontAllCategoryController extends Controller
 
 	public function get_business_listing(Request $request)
 	{
-		  $data    = array();
-		  $cat_id  = $request->input('cat_id');
-		  $city    = $request->input('city');
+		  $data         = array();
+		  $cat_id       = $request->input('cat_id');
+		  $city         = $request->input('city');
+		  $user_id      = $request->input('user_id');
+		  $latitude     = $request->input('latitude');
+		  $longitude    = $request->input('longitude');
+		  $distance     = $request->input('distance');
+		  $most_popular = $request->input('most_popular');
+		  $rating       = $request->input('rating');
 
-		  $user_id = $request->input('user_id');
 
-		  $latitude = $request->input('latitude');
-		  $longitude = $request->input('longitude');
-		  $distance = $request->input('distance');
-
-		  $most_popular =  $request->input('most_popular');
-		  $rating       =  $request->input('rating');
-		
+         $business_data  =[];
 		
 		  /* Get Business by category */
             $obj_business_listing = BusinessCategoryModel::where('category_id',$cat_id)->get();
@@ -326,9 +325,8 @@ class FrontAllCategoryController extends Controller
         {
             $result = $key_business_cat;
             $arr_business = array();
-	            
-
-            if(sizeof($result)>0)
+	 
+	        if(sizeof($result)>0)
             {                	  
       	       	  /* fetch business records by id's */
       	           $obj_business_listing = BusinessListingModel::with(['reviews'])
@@ -336,9 +334,7 @@ class FrontAllCategoryController extends Controller
   	                                                            ->where('is_active','1')
   	                                                            ->whereIn('id', $result)
       	                                                        ->get();
-      	                                                           
-		     }
-
+     	     }
 	    }
       
         if($obj_business_listing)
@@ -379,7 +375,6 @@ class FrontAllCategoryController extends Controller
                 if(sizeof($result)>0)
                 {
                   $obj_business_listing = BusinessListingModel::whereIn('id',$result)->with(['reviews']);
-
 
 			      if($rating==1)
 			      {
@@ -455,30 +450,20 @@ class FrontAllCategoryController extends Controller
 	                   			$business_data[$key]['distance']      = $value['distance'];
 	                   		}	
 
-
-						$json['business_data'] 	 = $business_data;
-						$json['status']          = 'SUCCESS';
-						$json['message']         = 'Business Listing !';
-			          
-
-                   		}
-                   		else
-                   		{ 
-							$json['business_data'] 	 = $business_data;
-							$json['status']          = 'SUCCESS';
-							$json['message']         = 'Business Listing !';
-						}	
-                    }
+                        }
+ 		            }
 	            }
-	        }
+	         }  
       
             $result_city_id  = CityModel::select('id')->where('city_title',$city)->first();  
 	    	$arr_id = $result_city_id->toArray();
 
+				
 			$json['id'] 	         = $arr_id['id'];
+			$json['business_data'] 	 = $business_data;
 			$json['status']          = 'SUCCESS';
 			$json['message']         = 'Business Listing !';
-          
+          		
            return response()->json($json);	 	
 	}
 
@@ -514,10 +499,11 @@ class FrontAllCategoryController extends Controller
 	public function get_business_details(Request $request)
 	{
 	     $business_id  = $request->input('business_id');
-         $user_id      = $request->input('user_id');
-          $city      = $request->input('city');
-         $_business    = $data =array();
-         $obj_business = BusinessListingModel::where('id',$business_id)->first();
+	     $user_id      = $request->input('user_id');
+	     $city         = $request->input('city');
+	     
+	     $_business    = $data =array();
+	     $obj_business = BusinessListingModel::where('id',$business_id)->first();
        
         if( $obj_business != FALSE)
         {
@@ -529,8 +515,7 @@ class FrontAllCategoryController extends Controller
 			$json['message'] = ' No Business details available !';
 			return response()->json($json);
         }
-       	
-
+   
         if(sizeof($_business)>0)
         {
           $visited_count                = $_business['visited_count'];
