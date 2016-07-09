@@ -125,8 +125,11 @@
                     <img src="{{url('/')}}/images/front/default_category.png" width="100" height="100" id="preview_cat_img"  />
                     <span class="btn btn-danger" id="removal_handle" style="display:none;" onclick="clearPreviewImage()">X</span>
                     <input class="form-control" name="cat_img" id="cat_img" type="file" onchange="loadPreviewImage(this)"/>
-
-                    <span class='help-block'>{{ $errors->first('cat_img') }}</span>
+                   <i class="red">     
+                        Please use 100 x 100 pixel image for best result ,
+                        allowed only JPG, JPEG and PNG image   
+                    </i>                     
+            <span class='help-block'>{{ $errors->first('cat_img') }}</span>
                 </div>
             </div>
 

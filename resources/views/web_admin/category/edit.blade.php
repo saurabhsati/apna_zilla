@@ -97,7 +97,11 @@
                     @endif
 
                     <input class="form-control" name="cat_img" id="cat_img" type="file" onchange="loadPreviewImage(this)"/>
-
+                    
+                   <i class="red">     
+                        Please use 100 x 100 pixel image for best result ,
+                        allowed only JPG, JPEG and PNG image   
+                    </i>                     
                     <span class='help-block'>{{ $errors->first('cat_img') }}</span>
                 </div>
             </div>

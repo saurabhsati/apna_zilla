@@ -363,7 +363,7 @@
             <div class="form-group" >
                 <label class="col-sm-3 col-lg-4 control-label" for="postal_code">Pin-code <i class="red"></i></label>
                 <div class="col-sm-5 col-lg-8 controls">
-                 <input type="text" data-geo="postal_code" data-rule-required="true" value="{{ isset($business['pincode'])?$business['pincode']:'' }}" id="pincode" name="pincode" class="form-control">
+                 <input type="text" data-geo="postal_code" value="{{ isset($business['pincode'])?$business['pincode']:'' }}" id="pincode" name="pincode" class="form-control">
                   <span class='help-block'>{{ $errors->first('postal code') }}</span>
                 </div>
             </div>
@@ -939,7 +939,6 @@
 </div>
 <!-- END Main Content -->
 <?php
-  $("#validation-form").validate();
   function search_array($search_val, $arr)
   {
     $flag = 0; 

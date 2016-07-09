@@ -347,32 +347,30 @@ class BusinessListingController extends Controller
 
     }
     public function edit($enc_id)
- 	{
- 		$id = base64_decode($enc_id);
- 		$page_title = "Business Listing: Edit ";
- 		$business_public_img_path = $this->business_public_img_path;
-        $business_base_upload_img_path =$this->business_public_upload_img_path;
- 		$business_data = array();
- 		$parent_obj_category = CategoryModel::where('parent','=',0)->select('cat_id','title')->orderBy('title','ASC')->get();
+    {
+        $id                            = base64_decode($enc_id);
+        $page_title                    = "Business Listing: Edit ";
+        $business_public_img_path      = $this->business_public_img_path;
+        $business_base_upload_img_path = $this->business_public_upload_img_path;
+        $business_data                 = array();
+        $parent_obj_category = CategoryModel::where('parent','=',0)->select('cat_id','title')->orderBy('title','ASC')->get();
 
- 		if($parent_obj_category)
- 		{
- 			$arr_parent_category = $parent_obj_category->toArray();
- 		}
+        if($parent_obj_category)
+        {
+            $arr_parent_category = $parent_obj_category->toArray();
+        }
         $obj_category = CategoryModel::orderBy('title','ASC')->get();
 
         if($obj_category)
         {
             $arr_category = $obj_category->toArray();
         }
- 		$obj_user_res = UserModel::where('role','normal')->get();
+        $obj_user_res = UserModel::where('role','normal')->get();
         if( $obj_user_res != FALSE)
         {
             $arr_user = $obj_user_res->toArray();
         }
-
-
-        //dd($arr_place);
+     //dd($arr_place);
          $arr_upload_image = array();
         $obj_upload_image_res = BusinessImageUploadModel::where('business_id',$id)->get();
 
@@ -382,9 +380,8 @@ class BusinessListingController extends Controller
         }
 
         $business_data=BusinessListingModel::with(['category','user_details','image_upload_details','service','business_times','payment_mode'])->where('id',$id)->get()->toArray();
- 		//dd($business_data);
+        //dd($business_data);
          return view('web_admin.business_listing.edit',compact('page_title','arr_parent_category','business_data','arr_user','arr_category','business_public_img_path','business_base_upload_img_path','arr_upload_image'));
-
  	}
  	public function update(Request $request,$enc_id)
  	{
