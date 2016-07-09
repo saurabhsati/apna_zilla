@@ -145,7 +145,7 @@
               </thead>
               <tbody>
 
-                 @if(isset($arr_category) && sizeof($arr_category)>0)
+                  @if(isset($arr_category) && sizeof($arr_category)>0)
                   @foreach($arr_category as $key => $category)
                   <tr>
                     <td>

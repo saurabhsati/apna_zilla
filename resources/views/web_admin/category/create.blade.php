@@ -204,7 +204,7 @@
 
     function clearPreviewImage()
     {
-        $('#preview_cat_img').attr('src',site_url+'/images/front/default_category.png');
+        $('#preview_cat_img').attr('src',site_url+'/images/admin/avatar/avatar.jpg');
         $("#removal_handle").hide();
     }
 
@@ -238,20 +238,20 @@
     }
     function check_explore_count()
     {
-         var _token = $('input[name=_token]').val();
-  var dataString = {  _token: _token };
+        var _token = $('input[name=_token]').val();
+        var dataString = {  _token: _token };
         var url= site_url+'/web_admin/categories/check_explore_count';
         $.post( url,dataString)
       .done(function( data ) {
         if(data=='reached'){
-             $('#err_delete_payment_mode').html('<div style="color:red">Maximum Explore Directory Category Count Reached .</div>');
+             $('#err_delete_payment_mode').html('<div style="color:red">Maximum Explore Directory Category Count Reached (Maximum 6 only).</div>');
              var request_id=$('.delete_payment_mode').parents('.main').attr('data-payment-mode');
              $('div[data-payment-mode="'+request_id+'"]').remove();
              $('#is_explore_directory').attr('disabled','disabled');
         }
         else
         {
-            $('#err_delete_payment_mode').html('<div style="color:green">Allow to Add Explore Directory Category.</div>');
+            $('#err_delete_payment_mode').html('<div style="color:green">Allow to Add Explore Directory Category (Maximum 6 only).</div>');
              var request_id=$('.delete_payment_mode').parents('.main').attr('data-payment-mode');
              $('div[data-payment-mode="'+request_id+'"]').remove();
         }

@@ -178,8 +178,7 @@ class CategoryController extends Controller
         $arr_rules = array();
         $arr_rules['category'] = "required";
         $arr_rules['cat_meta_description'] = "required";
-        $arr_rules['is_active'] = "required";
-
+        
         $validator = Validator::make($request->all(),$arr_rules);
         if($validator->fails())
         {
@@ -237,7 +236,6 @@ class CategoryController extends Controller
             'title' => $category,
             'cat_ref_slug' => $cat_ref_slug,
             'cat_meta_description' => $cat_meta_description,
-            'is_active' => $is_active,
             'is_popular' => $is_popular,
             'is_explore_directory' => $is_explore_directory,
             'is_allow_to_add_deal'=>$is_allow_to_add_deal,

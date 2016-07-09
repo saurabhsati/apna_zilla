@@ -107,7 +107,7 @@ class BusinessListingController extends Controller
         {
             $arr_user = $obj_user_res->toArray();
         }
-        $obj_category = CategoryModel::where('parent','=',0)->select('cat_id','title')->orderBy('title','ASC')->get();
+        $obj_category = CategoryModel::where('parent','=',0)->select('cat_id','title')->where('is_active',1)->orderBy('title','ASC')->get();
 
  		if($obj_category)
  		{
