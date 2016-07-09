@@ -41,7 +41,7 @@ class CategoryController extends Controller
  		$page_title = "Create Category";
 
         $arr_category = array();
-        $obj_category = CategoryModel::where('parent',0)->orderBy('title','ASC')->get();
+        $obj_category = CategoryModel::where('parent',0)->where('is_active',1)->orderBy('title','ASC')->get();
 
         if($obj_category!=FALSE)
         {

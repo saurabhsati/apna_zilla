@@ -107,75 +107,76 @@ class BusinessListingController extends Controller
         {
             $arr_user = $obj_user_res->toArray();
         }
-        $obj_category = CategoryModel::where('parent','=',0)->select('cat_id','title')->where('is_active',1)->orderBy('title','ASC')->get();
+        $obj_category = CategoryModel::where('parent','=',0)->where('is_active',1)->orderBy('title','ASC')->get();
+
 
  		if($obj_category)
  		{
  			$arr_category = $obj_category->toArray();
  		}
 
-       
+    
         return view('web_admin.business_listing.create',compact('page_title','arr_user','arr_category'));
     }
     public function store(Request $request)
     {
         //echo'<pre>';
       
-        $arr_rules	=	array();
-         $form_data=$request->all();
+       $arr_rules                        = array();
+       $form_data                        = $request->all();
         //business fields
-    	$arr_rules['tmp_user_id']='required';
-        $arr_rules['business_name']='required';
-        $arr_rules['business_cat']='required';
-        $arr_rules['main_image']='required';
+       $arr_rules['tmp_user_id']         = 'required';
+       $arr_rules['business_name']       = 'required';
+       $arr_rules['business_cat']        = 'required';
+       $arr_rules['main_image']          = 'required';
 
 
         //location fields
-       // $arr_rules['building']='required';
-        //$arr_rules['street']='required';
-       // $arr_rules['landmark']='required';
-        $arr_rules['area']='required';
-        $arr_rules['city']='required';
-        $arr_rules['pincode']='required';
-        $arr_rules['state']='required';
-        $arr_rules['country']='required';
-        $arr_rules['lat']='required';
-        $arr_rules['lng']='required';
+       // $arr_rules['building']         = 'required';
+       //$arr_rules['street']            = 'required';
+       // $arr_rules['landmark']         = 'required';
+       $arr_rules['area']                = 'required';
+       $arr_rules['city']                = 'required';
+       $arr_rules['pincode']             = 'required';
+       $arr_rules['state']               = 'required';
+       $arr_rules['country']             = 'required';
+       $arr_rules['lat']                 = 'required';
+       $arr_rules['lng']                 = 'required';
 
         //contact info fields
-        $arr_rules['contact_person_name']='required';
-        $arr_rules['mobile_number']='required';
-        //$arr_rules['landline_number']='required';
-        //$arr_rules['fax_no']='required';
-        //$arr_rules['toll_free_number']='required';
-        //$arr_rules['email_id']='required';
-        //$arr_rules['website']='required';
+       $arr_rules['contact_person_name'] = 'required';
+       $arr_rules['mobile_number']       = 'required';
+       //$arr_rules['landline_number']   = 'required';
+       //$arr_rules['fax_no']            = 'required';
+       //$arr_rules['toll_free_number']  = 'required';
+       //$arr_rules['email_id']          = 'required';
+       //$arr_rules['website']           = 'required';
         //business times
-        $arr_rules['mon_in']='required';
-        $arr_rules['mon_out']='required';
-        $arr_rules['tue_in']='required';
-        $arr_rules['tue_out']='required';
-        $arr_rules['wed_in']='required';
-        $arr_rules['wed_out']='required';
-        $arr_rules['thus_in']='required';
-        $arr_rules['thus_out']='required';
-        $arr_rules['fri_in']='required';
-        $arr_rules['fri_out']='required';
-        $arr_rules['sat_in']='required';
-        $arr_rules['sat_out']='required';
+       $arr_rules['mon_in']              = 'required';
+       $arr_rules['mon_out']             = 'required';
+       $arr_rules['tue_in']              = 'required';
+       $arr_rules['tue_out']             = 'required';
+       $arr_rules['wed_in']              = 'required';
+       $arr_rules['wed_out']             = 'required';
+       $arr_rules['thus_in']             = 'required';
+       $arr_rules['thus_out']            = 'required';
+       $arr_rules['fri_in']              = 'required';
+       $arr_rules['fri_out']             = 'required';
+       $arr_rules['sat_in']              = 'required';
+       $arr_rules['sat_out']             = 'required';
 
         if($form_data['is_sunday']=='1')
         { 
-            $arr_rules['sun_in']='required';
-            $arr_rules['sun_out']='required';
+            $arr_rules['sun_in']  = 'required';
+            $arr_rules['sun_out'] = 'required';
         }  
         
         //other fields
-    	//$arr_rules['hours_of_operation']='required';
-    	$arr_rules['company_info']='required';
-        $arr_rules['establish_year']='required';
-    	$arr_rules['keywords']='required';
-    	//$arr_rules['youtube_link']='required';
+        //$arr_rules['hours_of_operation'] = 'required';
+        $arr_rules['company_info']         = 'required';
+        $arr_rules['establish_year']       = 'required';
+        $arr_rules['keywords']             = 'required';
+        //$arr_rules['youtube_link']       = 'required';
     	$validator = Validator::make($request->all(),$arr_rules);
 
         if($validator->fails())
@@ -217,32 +218,32 @@ class BusinessListingController extends Controller
 
 
         //location input array
-        $arr_data['building']=$request->input('building');
-        $arr_data['street']=$request->input('street');
-        $arr_data['landmark']=$request->input('landmark');
-        $arr_data['area']=$request->input('area');
-        $arr_data['city']=$request->input('city');
-        $arr_data['pincode']=$request->input('pincode');
-        $arr_data['state']=$request->input('state');
-        $arr_data['country']=$request->input('country');
-        $arr_data['lat']=$request->input('lat');
-        $arr_data['lng']=$request->input('lng');
+        $arr_data['building']             = $request->input('building');
+        $arr_data['street']               = $request->input('street');
+        $arr_data['landmark']             = $request->input('landmark');
+        $arr_data['area']                 = $request->input('area');
+        $arr_data['city']                 = $request->input('city');
+        $arr_data['pincode']              = $request->input('pincode');
+        $arr_data['state']                = $request->input('state');
+        $arr_data['country']              = $request->input('country');
+        $arr_data['lat']                  = $request->input('lat');
+        $arr_data['lng']                  = $request->input('lng');
         //Contact input array
-        $arr_data['contact_person_name']=$form_data['contact_person_name'];
-        $arr_data['mobile_number']=$form_data['mobile_number'];
-        //$arr_data['landline_number']=$form_data['landline_number'];
-        //$arr_data['fax_no']=$form_data['fax_no'];
-        //$arr_data['toll_free_number']=$form_data['toll_free_number'];
-        $arr_data['email_id']=$request->input('email_id');
-        //$arr_data['website']=$request->input('website');
+        $arr_data['contact_person_name']  = $form_data['contact_person_name'];
+        $arr_data['mobile_number']        = $form_data['mobile_number'];
+        //$arr_data['landline_number']    = $form_data['landline_number'];
+        //$arr_data['fax_no']             = $form_data['fax_no'];
+        //$arr_data['toll_free_number']   = $form_data['toll_free_number'];
+        $arr_data['email_id']             = $request->input('email_id');
+        //$arr_data['website']            = $request->input('website');
 
 
         //other input array
-        //$arr_data['hours_of_operation']=$form_data['hours_of_operation'];
-    	$arr_data['company_info']=$form_data['company_info'];
-        $arr_data['establish_year']=$form_data['establish_year'];
-    	$arr_data['keywords']=$form_data['keywords'];
-    	//$arr_data['youtube_link']=$form_data['youtube_link'];
+        //$arr_data['hours_of_operation'] = $form_data['hours_of_operation'];
+        $arr_data['company_info']         = $form_data['company_info'];
+        $arr_data['establish_year']       = $form_data['establish_year'];
+        $arr_data['keywords']             = $form_data['keywords'];
+        //$arr_data['youtube_link']       = $form_data['youtube_link'];
 
         $insert_data = BusinessListingModel::create($arr_data);
 

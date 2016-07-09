@@ -1,8 +1,12 @@
     @extends('web_admin.template.admin')
     @section('main_content')
     <style type="text/css">
-  .error_msg .error_business_image{
+  .error_msg .error_business_image {
     color:red;
+  }
+
+  .error  {
+   color:red; 
   }
 </style>
     <!-- BEGIN Page Title -->
@@ -337,7 +341,7 @@
                     <span class='help-block'>{{ $errors->first('mobile_number') }}</span>
                 </div>
             </div>
-           <!--  <div class="form-group">
+          {{--  <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="landline_number">Landline Number <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
@@ -404,7 +408,7 @@
                     <span class='help-block'>{{ $errors->first('website') }}</span>
                 </div>
             </div>
- -->
+ --}}
 
 
 
@@ -425,7 +429,7 @@
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control timepicker-default" name="mon_in" id="mon_in" type="text" data-rule-required="true">
+                        <input class="form-control timepicker-default" name="mon_in" id="mon_in" type="text" data-rule-required="true" >
                     </div>
                 </div>
 
@@ -766,24 +770,7 @@
                     <span class='help-block'>{{ $errors->first('keywords') }}</span>
                 </div>
             </div>
-          <!--   <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="youtube_link">Youtube Link<i class="red"></i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="youtube_link"
-                           id="youtube_link"
-                           data-rule-required=""
-                           placeholder="Enter Youtube Link"
-                           value=""
-                           />
-                    <span class='help-block'>{{ $errors->first('youtube_link') }}</span>
-                </div>
-            </div> -->
-                      
-
-
-
-
+        
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
                 <input type="submit"  class="btn btn-primary" value="Submit" onclick="return setExtraData()">
@@ -1068,14 +1055,11 @@ function getSubCategory(ref)
 
                                    });
 
-                                  
                                    categCheck.html(option);
                                    categCheck.multiselect('rebuild');
 
                                 }
                                 
-                            
-
                             }
                             else
                             {
