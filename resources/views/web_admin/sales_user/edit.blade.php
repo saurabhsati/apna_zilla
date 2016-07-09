@@ -113,20 +113,7 @@
                 </div>
             </div>
 
-           <!--  <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="middle_name">Middle Name<i class="red"></i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="middle_name"
-                           id="middle_name"
-                           data-rule-required=""
-                           placeholder="Enter Middle Name"
-                           value="{{ isset($arr_user_data['middle_name'])?$arr_user_data['middle_name']:'' }}"
-                           />
-                    <span class='help-block'>{{ $errors->first('middle_name') }}</span>
-                </div>
-            </div>-->
-
+          
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="last_name">Last Name<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
@@ -154,20 +141,7 @@
                 </div>
             </div>
 
-            <!-- <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="role">Role<i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                <label class="radio">
-                        <input type="radio" name="role" {{ $arr_user_data['role']=='normal'?"checked":'' }} value="normal" /> Normal
-                     </label>
-                     <label class="radio">
-                        <input type="radio" name="role" {{ $arr_user_data['role']=='sales'?"checked":'' }} value="sales" /> Sales
-                     </label>
-                  <span class='help-block'>{{ $errors->first('role') }}</span>
-                </div>
-            </div> -->
-
-
+         
 
                 <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="d_o_b">Date Of Birth<i class="red">*</i></label>
@@ -189,9 +163,8 @@
                       <select class="form-control" data-placeholder="Choose a Category" name="marital_status" tabindex="1" onchange="chkeck_marital_status(this);">
                         <option value="" >Select...</option>
                         <option value="Married" {{ $arr_user_data['marital_status']=='Married'?"selected ='selected'":'' }}>Married</option>
-                        <option value="Un Married" {{ $arr_user_data['marital_status']=='Un Married'?"selected='selected'":'' }}>Un Married</option>
-                       {{--  <option value="Divorced" {{ $arr_user_data['marital_status']=='Divorced'?"selected ='selected'":'' }}>Divorced</option>
-                        <option value="Widowed" {{ $arr_user_data['marital_status']=='Widowed'?"selected ='selected'":'' }}>Widowed</option> --}}
+                        <option value="Un Married" {{ $arr_user_data['marital_status']=='Un Married'?"selected='selected'":'' }}>UnMarried</option>
+                       
                      </select>
                     <span class='help-block'>{{ $errors->first('marital_status') }}</span>
                 </div>
@@ -287,19 +260,7 @@
                     <span class='help-block'>{{ $errors->first('city') }}</span>
                 </div>
             </div>
-        <!--  <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="street_address">Street <i class="red"></i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <textarea name="street_address"
-                              id="street_address"
-                              data-rule-required=""
-                              class="form-control"
-                              placeholder="Enter Street Address"
-                              onblur="codeAddress()">{{ isset($arr_user_data['street_address'])?$arr_user_data['street_address']:'' }}</textarea>
-                    <span class='help-block'>{{ $errors->first('street_address') }}</span>
-                </div>
-            </div> -->
-
+       
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="area">Area<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
@@ -316,35 +277,6 @@
 
 
 
-         <!--    <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="home_landline">Home Land line<i class="red"></i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="home_landline"
-                           id="home_landline"
-                           data-rule-required=""
-                           placeholder="Enter Home Landline No"
-                           value="{{ isset($arr_user_data['home_landline'])?$arr_user_data['home_landline']:'' }}"
-                           />
-                    <span class='help-block'>{{ $errors->first('mobile_no') }}</span>
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="office_landline">Office Land line<i class="red"></i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="office_landline"
-                           id="office_landline"
-                           data-rule-required=""
-                           placeholder="Enter Office landline No"
-                           value="{{ isset($arr_user_data['office_landline'])?$arr_user_data['office_landline']:'' }}"
-                           />
-                    <span class='help-block'>{{ $errors->first('office_landline') }}</span>
-                </div>
-            </div>
- -->
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
                 <input type="submit"  class="btn btn-primary" value="Update">

@@ -83,7 +83,7 @@ class UserController extends Controller
        $arr_rules['first_name']         = "required";
        // $arr_rules['middle_name']     = "required";
        //$arr_rules['last_name']        = "required";
-       $arr_rules['gender']             = "required";
+      // $arr_rules['gender']             = "required";
        $arr_rules['d_o_b']              = "required";
        //$arr_rules['email']            = "required|email";
        $arr_rules['password']           = "required|min:6";
