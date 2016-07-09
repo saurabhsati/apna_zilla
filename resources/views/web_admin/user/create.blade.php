@@ -83,6 +83,9 @@
                     <img src="{{url('/')}}/images/admin/avatar/avatar.jpg" width="100px" height="100px" id="preview_profile_pic"  />
                     <span class="btn btn-danger" id="removal_handle" style="display:none;" onclick="clearPreviewImage()">X</span>
                     <input class="form-control" name="profile_pic" id="profile_pic" type="file" onchange="loadPreviewImage(this)"/>
+                    
+                       <i class="red"> Please use 100 x 100 pixel image for best result ,
+                        allowed only JPG, JPEG and PNG image</i>
 
                     <span class='help-block'>{{ $errors->first('profile_pic') }}</span>
                 </div>

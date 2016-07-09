@@ -84,7 +84,8 @@
                     <img src="{{url('/')}}/images/admin/avatar/avatar.jpg" width="100px" height="100px" id="preview_profile_pic"  />
                     <span class="btn btn-danger" id="removal_handle" style="display:none;" onclick="clearPreviewImage()">X</span>
                     <input class="form-control" name="profile_pic" id="profile_pic" type="file" onchange="loadPreviewImage(this)"/>
-
+                       <i class="red"> Please use 100 x 100 pixel image for best result ,
+                        allowed only JPG, JPEG and PNG image</i>
                     <span class='help-block'>{{ $errors->first('profile_pic') }}</span>
                 </div>
             </div>
@@ -92,6 +93,7 @@
                 <label class="col-sm-3 col-lg-2 control-label" for="first_name">First Name<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" name="first_name" id="first_name" placeholder="Enter First Name " data-rule-required="true" />
+
                     <span class='help-block'>{{ $errors->first('first_name') }}</span>
                 </div>
             </div>
@@ -102,6 +104,7 @@
                 <label class="col-sm-3 col-lg-2 control-label" for="last_name">Last Name<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" name="last_name" id="last_name"  placeholder="Enter Last Name" data-rule-required="true" />
+
                     <span class='help-block'>{{ $errors->first('last_name') }}</span>
                 </div>
             </div> 
@@ -121,7 +124,7 @@
 
              <div class="box-content">
                <div class="form-group">
-                  <label class="cdol-sm-3 col-lg-2 control-label">DOB</label>
+                  <label class="cdol-sm-3 col-lg-2 control-label">DOB<i class="red">*</i></label>
                   <div class="col-sm-5 col-lg-3 controls">
                      <input class="form-control date-picker" data-rule-required="true" data-date-format="dd-mm-yyyy" id="d_o_b" name="d_o_b" size="16" type="text" value="{{ old('d_o_b') }}" />
                   </div> 
