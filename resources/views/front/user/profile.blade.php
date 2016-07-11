@@ -477,7 +477,8 @@
     }
       function chkeck_marital_status(ref)
     {
-       var marital_status= $("select[name='marital_status']").val();
+       var marital_status = $("select[name='marital_status']").val();
+       //alert(marital_status);
        console.log(marital_status);
        if(marital_status=='Married')
        {

@@ -309,6 +309,7 @@ class UserController extends Controller
 
     public function update(Request $request, $enc_id)
     {
+     
         $user_id = base64_decode($enc_id);
         $arr_rules = array();
 

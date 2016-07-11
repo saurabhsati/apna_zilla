@@ -72,7 +72,7 @@
         <form class="form-horizontal"
               id="validation-form"
               method="POST"
-              action="{{ url('/web_admin/users/update/'.base64_encode($arr_user_data['id'])) }} ' "
+              action="{{ url('/web_admin/users/update/'.base64_encode($arr_user_data['id'])) }}"
               enctype="multipart/form-data">
 
            {{ csrf_field() }}
@@ -190,10 +190,10 @@
                     <input class="form-control"
                            name="mobile_no"
                            id="mobile_no"
-                           data-rule-required="true"
-                           placeholder="Enter Mobile No" data-rule-number="true"   data-rule-minlength="10" maxlength="10" 
+                            data-rule-required="true"
+                           placeholder="Enter Mobile No"   data-rule-number="true"   data-rule-minlength="10" maxlength="10" 
                            value="{{ isset($arr_user_data['mobile_no'])?$arr_user_data['mobile_no']:'' }}"
-                            disabled/>
+                            readonly="true" />
                     <span class='help-block'>{{ $errors->first('mobile_no') }}</span>
                 </div>
             </div>

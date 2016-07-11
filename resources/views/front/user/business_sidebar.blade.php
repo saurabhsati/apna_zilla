@@ -13,7 +13,7 @@
                          <li><a href="#">add keywords</a></li> 
                        </ul>
                      </li>
-                  <li class="brdr"><a href="#">upload video/logo/pictures</a></li>
+                  <li class="brdr"><a href="#">upload logo/pictures</a></li>
                 </ul>
                 <div class="clearfix"></div>
                </div>

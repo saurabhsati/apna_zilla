@@ -131,7 +131,7 @@
               <label class="col-sm-3 col-lg-2 control-label" for="main_business_cat">Business Main Category <i class="red">*</i></label>
             <div class="col-sm-6 col-lg-4 controls">
             <select class="form-control" data-rule-required="true" name="main_business_cat" id="main_business_cat"  onchange="getSubCategory(this)">
-              <option> Select Business Main Categories</option>
+              <option value=""> Select Business Main Categories</option>
              @if(isset($arr_category) && sizeof($arr_category)>0)
              @foreach($arr_category as $category)
               <option  name="sub_cat" id="sub_cat" value="{{ $category['cat_id'] }}" >
@@ -786,20 +786,10 @@
 <!-- END Main Content -->
 
 <script type="text/javascript">
-<<<<<<< HEAD
  function setExtraData()
   {
     return tinymce.triggerSave();
   }
-=======
-
-
-  function setExtraData()
-  {
-    return tinymce.triggerSave();
-  }
-
->>>>>>> 3630846d9225534a28317342ce5d84bf9ac1b33a
 function sunday_status(status)
 {
   if(status=='on')

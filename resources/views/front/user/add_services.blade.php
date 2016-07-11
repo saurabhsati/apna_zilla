@@ -261,6 +261,7 @@ $('#add-image').click(function()
                   $('#error_business_image').css('color','red')
                   $('#error_business_image').fadeIn(3000);
                   document.getElementById('error_business_image').innerHTML="Business Image Field is required.";
+                // alert("Business Image Field is required.");
                   setTimeout(function(){
                   $('#error_business_image').fadeOut(4000);
                   },3000);

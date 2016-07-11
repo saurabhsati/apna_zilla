@@ -111,7 +111,7 @@
                   <div class="col-lg-3  label-text" for="main_business_cat">Business Main Category  </div>
                   <div class="col-sm-9 col-md-9 col-lg-9 m_l">
                   <select class="input_acct" name="main_business_cat" data-rule-required="true"  id="main_business_cat" onchange="getSubCategory(this)">
-                    <option> Select Business Main Categories</option>
+                    <option value=""> Select Business Main Categories</option>
                    @if(isset($arr_category) && sizeof($arr_category)>0)
                    @foreach($arr_category as $category)
                     <option  name="sub_cat" id="sub_cat" value="{{ $category['cat_id'] }}" >

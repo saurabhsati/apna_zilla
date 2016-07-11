@@ -14,7 +14,7 @@ color: #e6ab2a;
                   <li class="brdr"><a class="{{ Request::segment(2)=='edit_business_step2'? 'active':'' }} " href="{{ url('/front_users/edit_business_step2/'.Request::segment(3))}}">Location Information</a></li>
                   <li class="brdr"><a class="{{ Request::segment(2)=='edit_business_step3'? 'active':'' }} " href="{{ url('/front_users/edit_business_step3/'.Request::segment(3))}}">Contact Information</a></li>
                   <li class="brdr"><a class="{{ Request::segment(2)=='edit_business_step4'? 'active':'' }} " href="{{ url('/front_users/edit_business_step4/'.Request::segment(3))}}">Other Information</a></li>
-                  <li class="brdr"><a class="{{ Request::segment(2)=='edit_business_step5'? 'active':'' }} " href="{{ url('/front_users/edit_business_step5/'.Request::segment(3))}}">Video/Pictures/Services</a></li>
+                  <li class="brdr"><a class="{{ Request::segment(2)=='edit_business_step5'? 'active':'' }} " href="{{ url('/front_users/edit_business_step5/'.Request::segment(3))}}">Pictures/Services</a></li>
 
                 </ul>
                 <div class="clearfix"></div>

@@ -575,13 +575,13 @@ class UserController extends Controller
            return redirect('/');
         }
         //Getting all the details of the Category Table
-       $obj_category = CategoryModel::where('parent','=',0)->select('cat_id','title')->orderBy('title','ASC')->get();
+       $obj_category = CategoryModel::where('parent','=',0)->where('is_active','=',1)->select('cat_id','title')->orderBy('title','ASC')->get();
 
         if($obj_category)
         {
             $arr_category = $obj_category->toArray();
         }
-
+//dd($arr_category);
    
 
 

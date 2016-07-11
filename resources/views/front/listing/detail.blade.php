@@ -134,7 +134,7 @@
                </ul>
                <div class="clearfix"></div>
             </div> -->
-         </div>
+         </div> 
          @if(isset($arr_business_details) && sizeof($arr_business_details)>0)
          <div class="col-sm-12 col-md-9 col-lg-9">
             <div class="p_detail_view">
@@ -143,6 +143,7 @@
                   <div class="product_detail_banner" style="background-color:rgba(0,0,0,0.7);">
                      <div class="product_title etd">
                      <a href="#">
+
                       @if($arr_business_details['is_verified']==1)
                      <img src="{{ url('/') }}/assets/front/images/verified.png" alt="write_review"/>@endif
                      {{$arr_business_details['business_name']}}</a>
@@ -305,9 +306,11 @@
                   <div class="img_icons popup-v">
                      <a data-toggle="modal" data-target="#sms"><img src="{{ url('/') }}/assets/front/images/sms-emil.png" alt="write_review"/>Sms/Email</a>
                   </div>
+                  @if($arr_business_details['is_verified']==1)
                   <div class="img_icons popup-v">
                     <a data-toggle="modal" data-target="#verifed"><img src="{{ url('/') }}/assets/front/images/verified-det.png" alt="write_review"/>verified</a>
                   </div>
+                  @endif
                   <div class="img_icons popup-v">
                     <a href="javascript:void(0);" onclick="show_map()"><img src="{{ url('/') }}/assets/front/images/loct.png" alt="write_review"  />View Map</a>
                   </div>
