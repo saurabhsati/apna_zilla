@@ -151,9 +151,21 @@ var disabled_dates = [];
   $(document).ready(function()
   {
 
-        $('input.start_date').datepicker();
+         $('input.start_date').pickmeup({
+          position    : 'bottom',
+          hide_on_select  : true,
+          format:'d-m-Y',
+          min: new Date(),
+      
+        });
      
-        $('input.end_date').datepicker();
+        $('input.end_date').pickmeup({
+          position    : 'bottom',
+          hide_on_select  : true,
+          format:'d-m-Y',
+          min: new Date(),
+         
+        });
 
   });
 
