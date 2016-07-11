@@ -395,6 +395,8 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		Route::get('/',						['as' => 'list_contact_enquiry' ,'uses' => 'Admin\ContactEnquiryController@index']);
 		Route::get('show/{enc_id}',			['as' => 'show_contact_enquiry' ,'uses' => 'Admin\ContactEnquiryController@show']);
 
+		Route::any('multi_action',       					['as' => 'contact_multi_action'     		,'uses' =>'ContactEnquiryController@multi_action']);
+
 	});
 
     /*************************************End*****************************************************/
