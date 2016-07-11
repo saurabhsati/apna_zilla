@@ -83,6 +83,7 @@
                                                     <th>Membership Plan</th>
                                                      <th>Business Name</th>
                                                     <th>Category Name</th>
+                                                     <th>Transaction Status</th>
                                                     <th>Price</th>
                                                     <th>Start Date</th>
                                                     <th>Expire Date</th>
@@ -103,6 +104,11 @@
                                                 </td>
                                                  <td>
                                                     {{ isset($arr_single_transaction['category']) && $arr_single_transaction['category']? $arr_single_transaction['category']['title']:'' }}
+                                                </td>
+
+                                                <td>
+                                                    
+                                                        {{ $arr_single_transaction['transaction_status'] }}
                                                 </td>
                                                     <td>Rs.
                                                     {{ $arr_single_transaction['price'] }}/- </td>

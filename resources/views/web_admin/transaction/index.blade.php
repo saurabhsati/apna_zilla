@@ -1,4 +1,4 @@
-    @extends('web_admin.template.admin')
+  @extends('web_admin.template.admin')
 
 
     @section('main_content')
