@@ -203,14 +203,23 @@
                 </div>
               </div>
             </div>
+            
+                         <div class="user_box_sub">
+            <div class="row">
+             <div class="col-lg-3"><a class="btn btn-post" href="{{ url('/front_users/edit_business_step1/'.Request::segment(3))}}" style="float: left;margin-bottom:10px;"> Back</a></div>
+              <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+  <button type="submit" class="btn btn-post" name="add_business" style="float: left;  ">Save &amp; continue</button>
+                </div>
+              </div>
+            </div>
 </div>
 
                     </div>
                   </div>
                </div>
              <div class="button_save1">
-              <a class="btn btn-post" href="{{ url('/front_users/edit_business_step1/'.Request::segment(3))}}" style="float: left; margin-right:194px; "> Back</a>
-                    <button type="submit" class="btn btn-post" name="add_business" style="float: left; margin-left:194px; ">Save &amp; continue</button>
+              
+                  
                     <!-- <a href="#" class="btn btn-post pull-left">previous</a>
                     <a href="#" class="btn btn-post">Save &amp; exit</a>
                     <a href="#" class="btn btn-post pull-right">Next</a> -->

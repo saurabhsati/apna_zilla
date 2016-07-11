@@ -35,7 +35,7 @@
      </div>
      <hr/>
 
-       <div class="container">
+       <div class="container edit-bussi">
          <div class="row">
           @include('front.user.Edit_Business.edit_business_left_side_bar_menu')
           <div class="col-sm-12 col-md-9 col-lg-9">
@@ -80,7 +80,7 @@
                       <div class="row">
                         <div class="col-lg-2 label-text">Company Information <span>:</span></div>
                           <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                            <textarea  class="input_acct" id="company_info" name="company_info" style="width: 682px;" placeholder="Enter Company Information" data-rule-required="true" />{{ isset($business['company_info'])?strip_tags($business['company_info']):'' }}</textarea>
+                            <textarea  class="input_acct text-area" id="company_info" rows="" cols="" name="company_info" placeholder="Enter Company Information" data-rule-required="true" />{{ isset($business['company_info'])?strip_tags($business['company_info']):'' }}</textarea>
                             <div class="error_msg">{{ $errors->first('company_info') }} </div>
                           </div>
                        </div>
@@ -91,7 +91,7 @@
                         <div class="row">
                           <div class="col-lg-2 label-text">Establishment Year <span>:</span></div>
                             <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                              <input type="text"  class="input_acct"  id="establish_year" name="establish_year"  placeholder="Enter Establishment Year"  data-rule-required="true" data-rule-integer="true" value="{{ isset($business['establish_year'])?$business['establish_year']:'' }}" data-rule-number="true" data-rule-minlength="4" maxlength="4"/>
+                              <input type="text" style="color:#717171;"  class="input_acct"  id="establish_year" name="establish_year"  placeholder="Enter Establishment Year"  data-rule-required="true" data-rule-integer="true" value="{{ isset($business['establish_year'])?$business['establish_year']:'' }}" data-rule-number="true" data-rule-minlength="4" maxlength="4"/>
                                <div class="error_msg">{{ $errors->first('establish_year') }} </div>
                             </div>
                         </div>
@@ -101,81 +101,78 @@
                       <div class="row">
                         <div class="col-lg-2 label-text">Keywords <span>:</span></div>
                           <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                            <textarea  class="input_acct" id="keywords" name="keywords"  style="width: 682px;" placeholder="Enter Keywords" data-rule-required="true" />{{ isset($business['keywords'])?strip_tags($business['keywords']):'' }}</textarea>
+                            <textarea  class="input_acct text-area" id="keywords" rows="" cols="" name="keywords" placeholder="Enter Keywords" data-rule-required="true" />{{ isset($business['keywords'])?strip_tags($business['keywords']):'' }}</textarea>
                             <div class="error_msg">{{ $errors->first('keywords') }} </div>
                           </div>
                        </div>
                     </div>
+                    <br/>
                     <?php $selected_paymnt_arr=array();?>
                            @if(sizeof($business['payment_mode'])>0)
                              @foreach($business['payment_mode'] as $payment_mode)
                                 <?php $selected_paymnt_arr[]=$payment_mode['title'];?>
                                 @endforeach
                               @endif
-
+                        <hr>
+                      
                        <div class="user_box_sub">
                         <div class="row">
                           <div class="col-lg-2 label-text">Modes Of Payment <span>:</span></div>
                             <div class="col-sm-12 col-md-12 col-lg-10 m_l">
-                            <div class="form-group">
+                            <div class="form-group" style="margin-bottom:0;">
 
                                
                              
-                             <div class="col-sm-3 col-lg-5 controls" >
+                             <div class="col-sm-3 col-lg-3 controls" >
                                   <input type="checkbox"  name="payment_mode[]" value="Cash" @if(search_array('Cash',$selected_paymnt_arr)) checked="checked" @endif  />
                                   <label class="label-text"> Cash </label>
                                   <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                               </div>
                              
-                                <div class="col-sm-5 col-lg-4 controls">
+                                <div class="col-sm-3 col-lg-3 controls">
                                     <input type="checkbox"  name="payment_mode[]" @if(search_array('Net Banking',$selected_paymnt_arr)) checked @endif value="Net Banking" />
                                     <label class=" label-text"> Net Banking  </label>
                                     <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                                 </div>
-                              </div>
-
-
-                              <div class="form-group">
-                                <div class="col-sm-3 col-lg-5 controls" >
+                           <div class="col-sm-3 col-lg-3 controls" >
                                  <input type="checkbox"  name="payment_mode[]" value="Cheque" @if(search_array('Cheque',$selected_paymnt_arr)) checked @endif/>
                                   <label class=" label-text" > Cheque  </label>
                                   <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                                 </div>
                             
-                                <div class="col-sm-5 col-lg-4 controls">
+                                <div class="col-sm-3 col-lg-3 controls">
                                     <input type="checkbox"  name="payment_mode[]" value="Credit Card" @if(search_array('Credit Card',$selected_paymnt_arr)) checked @endif/>
                                       <label class="label-text"> Credit Card  </label>
                                       <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                                 </div>
                               </div>
 
+
                               <div class="form-group">
-                               <div class="col-sm-3 col-lg-5 controls" >
+                               <div class="col-sm-3 col-lg-3 controls" >
                                     <input type="checkbox"  name="payment_mode[]" value="Debit Card" @if(search_array('Debit Card',$selected_paymnt_arr)) checked @endif/>
                                       <label class="label-text">Debit Card </label>
                                <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                                 </div>
                              
-                               <div class="col-sm-5 col-lg-4 controls">
+                               <div class="col-sm-3 col-lg-3 controls">
                                     <input type="checkbox"  name="payment_mode[]" value="Gift Card" @if(search_array('Gift Card',$selected_paymnt_arr)) checked @endif/>
                                      <label class="label-text"> Gift Card  </label>
                                   <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                                 </div> 
-                              </div>
-
-                              <div class="form-group">
-                               <div class="col-sm-3 col-lg-5 controls" >
+                                <div class="col-sm-3 col-lg-3 controls" >
                                     <input type="checkbox"  name="payment_mode[]" value="Bank Transfer" @if(search_array('Bank Transfer',$selected_paymnt_arr)) checked @endif/>
                                      <label class="label-text">Bank Transfer  </label>
                                      <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                                 </div>
                            
-                               <div class="col-sm-5 col-lg-4 controls">
+                               <div class="col-sm-3 col-lg-3 controls">
                                     <input type="checkbox"  name="payment_mode[]" value="Lay-by" @if(search_array('Lay-by',$selected_paymnt_arr)) checked @endif/>
                                     <label class="label-text"> Lay-by  </label>
                                     <span class='help-block'>{{ $errors->first('payment_mode') }}</span>
                                 </div>
                               </div>
+
                               <!--  <div class="fileupload fileupload-new business_upload_image_" data-provides="fileupload">
                                @if(isset($business['payment_mode']) && sizeof($business['payment_mode'])>0)
                                  @foreach($business['payment_mode'] as $payment_mode)
@@ -427,7 +424,7 @@
                             <div class="row" style=" margin-left: 10px;">
                             <div class="col-lg-2 label-text ">Sunday<span>:</span></div>
 
-                             <div class="col-sm-3 col-md-3 col-lg-3 m_l controls">
+                             <div class="col-sm-4 col-md-3 col-lg-3 m_l controls">
                                     &nbsp &nbsp &nbsp &nbsp &nbsp
                                     <input type="radio"  name="is_sunday" value="1" onclick="sunday_status('on');" @if(($time['sun_open']!='') && ($time['sun_open']!='')) checked="true"  @endif/>
                                     <label >On </label>
@@ -637,12 +634,14 @@
                             <div class="col-lg-2 label-text ">Sunday<span>:</span></div>
 
                              <div class="col-sm-3 col-md-3 col-lg-3 m_l controls">
+                                   <div class="gender-top" style="margin-top:5px;">
                                     &nbsp &nbsp &nbsp &nbsp &nbsp
                                     <input type="radio"  name="is_sunday" value="1" onclick="sunday_status('on');" checked="true"  />
                                     <label >On </label>
                                      &nbsp &nbsp &nbsp &nbsp &nbsp
                                        <input type="radio"  name="is_sunday" value="0"  onclick="sunday_status('off');"/>
                                     <label  for="is_sunday">Off </label>
+                                 </div>
                               </div>
                               </div>
                               </div>
@@ -681,12 +680,20 @@
                           <hr/>
 
                                 <div class="button_save1">
-                                <a class="btn btn-post" href="{{ url('/front_users/edit_business_step3/'.Request::segment(3))}}" style="float: left; margin-right:194px; "> Back</a>
-                                  <button type="submit" class="btn btn-post" name="add_contacts" style="float: left; margin-left:125px; ">Save &amp; continue</button>
+                               
+                             
                                   <!-- <a class="btn btn-post pull-left" href="#">previous</a>
                                   <a class="btn btn-post" href="#">Save &amp; exit</a>
                                   <a class="btn btn-post pull-right" href="#">Next</a> -->
                                </div>
+                               <div class="user_box_sub">
+                      <div class="row">
+                        <div class="col-lg-2 label-text"> <a class="btn btn-post" href="{{ url('/front_users/edit_business_step3/'.Request::segment(3))}}" style="float: left; margin-bottom:10px; "> Back</a></div>
+                          <div class="col-sm-12 col-md-12 col-lg-10 m_l">
+     <button type="submit" class="btn btn-post" name="add_contacts" style="float: left; ">Save &amp; continue</button>
+                          </div>
+                       </div>
+                    </div>
                  </div>
                  </div>
                  </div>

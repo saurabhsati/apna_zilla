@@ -799,6 +799,10 @@
 <!-- END Main Content -->
 
 <script type="text/javascript">
+ function setExtraData()
+  {
+    return tinymce.triggerSave();
+  }
 function sunday_status(status)
 {
   if(status=='on')
@@ -1093,13 +1097,8 @@ function getSubCategory(ref)
 
 </script>
 <script type="text/javascript">
-  function setExtraData()
-  {
-    return tinymce.triggerSave();
-  }
-
     tinymce.init({ selector:'textarea' });
 
+    //tinymce.init('#page_desc');
 </script>
-
 @stop

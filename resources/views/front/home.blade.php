@@ -124,7 +124,7 @@
                               }
                             ?>
                             <a href="{{url('/')}}/{{$city}}/{{$business_area}}/{{base64_encode($business['id'])}}">
-                                 <div class="col-sm-3 col-md-3 col-lg-3 col-bott-mar">
+                                 <div class="col-sm-4 col-md-4 col-lg-3 col-bott-mar">
 
                                  <div class="first-cate-img">
                                     <img class="over-img" alt="" src="{{get_resized_image_path($business['main_image'],$main_image_path,205,270) }}">

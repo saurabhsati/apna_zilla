@@ -28,11 +28,11 @@
           </div>
      </div>
      <hr/>
-<div class="container">
+<div class="container per-detl min-height">
  <div class="row">
 
    @include('front.user.profile_left')
-
+   
    <div class="col-sm-12 col-md-9 col-lg-9">
     <div class="my_whit_bg">
       <div class="title_acc">Please provide your address details</div>
@@ -55,6 +55,7 @@
       @endif
 
       <div class="row">
+        <div class="col-sm-2 col-md-2 col-lg-2">&nbsp;</div>
       <div class="col-sm-9 col-md-9 col-lg-9">
         <div class="box_profile">
         <form class="form-horizontal"
@@ -151,7 +152,14 @@
                      </div>
                    </div>
                  </div>
-
+                   <div class="user_box_sub">
+                     <div class="row">
+                      <div class="col-lg-3  label-text hidden-xs hidden-sm">&nbsp;</div>
+                      <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                      <button type="submit" style="float:left;" class="btn-post">Save &amp; Continue</button>
+                     </div>
+                   </div>
+                 </div>
                  <!-- <div class="user_box_sub">
                    <div class="row">
                     <div class="col-lg-3  label-text">Street Address :</div>
@@ -164,7 +172,7 @@
                </div> -->
 
 
-             <button type="submit" style="float: left;margin-left: 142px;;" class="yellow1 ui button">Save & Continue</button>
+             
              @endforeach
 
              @else
@@ -173,7 +181,7 @@
            </form>
            </div>
          </div>
-
+  <div class="col-sm-2 col-md-2 col-lg-2">&nbsp;</div>
        </div>
      </div>
      </div>

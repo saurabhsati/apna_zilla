@@ -36,7 +36,7 @@
      </div>
  <hr/>
 
- <div class="container">
+ <div class="container my-bussi">
   <div class="row">
  @include('front.user.my_business_left')
     <!-- location popup end -->
@@ -95,8 +95,10 @@
               <span class=""> Estd.in {{ $restaurants['business'][0]['establish_year'] }} </span></div>
               <div class="p_details"><i class="fa fa-phone"></i><span> {{ $restaurants['business'][0]['mobile_number'] }}</span></div>
               <div class="p_details"><i class="fa fa-map-marker"></i>
-                <span> {{ $restaurants['business'][0]['area'] }} </span>
-                    @if(Session::has('user_id'))
+              <span> {{ $restaurants['business'][0]['area'] }} </span>
+                </div>
+                 <div class="p_details">
+                  @if(Session::has('user_id'))
                      <span class="remo_fav" id="{{ 'show_fav_status_'.$restaurants['id'] }}" style="width: 175px;">
                         <a href="javascript:void(0);" class="active" onclick="add_to_favourite('{{$restaurants['business'][0]['id']}}')"  style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Remove favorite</span></a>
                         </span>
@@ -105,7 +107,7 @@
                       <a href="javascript:void(0);" data-target="#login_poup" data-toggle="modal" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a>
                       </span>
                     @endif
-                </div>
+                    </div>
               </div>
             </div>
           </div>

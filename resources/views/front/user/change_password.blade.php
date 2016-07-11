@@ -26,7 +26,7 @@
           </div>
      </div>
      <hr/>
-<div class="container">
+<div class="container per-detl min-height">
          <div class="row">
 
             @include('front.user.profile_left')
@@ -45,7 +45,7 @@
       {{ csrf_field() }}
 
 
-
+  <div class="col-sm-2 col-md-2 col-lg-2">&nbsp;</div>
                  <div class="col-sm-9 col-md-9 col-lg-9">
                 <div class="box_profile">
 
@@ -80,16 +80,23 @@
                         </div>
                          </div>
                     </div>
-
+                    <div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3 hidden-xs hidden-sm label-text">&nbsp;</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+ <button type="submit" class="btn-post" style="float:left">Save &amp; Continue</button>
+                        </div>
+                         </div>
+                    </div>
                    </div>
 
-                    <button type="submit" class="yellow1 ui button">Save & Continue</button>
+                   
 
 
                     </form>
 
               </div>
-
+  <div class="col-sm-2 col-md-2 col-lg-2">&nbsp;</div>
                 </div>
 
                  </div>

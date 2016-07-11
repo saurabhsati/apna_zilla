@@ -25,7 +25,7 @@
      </div>
      <hr/>
 
-       <div class="container">
+       <div class="container my-bussi">
          <div class="row">
               @include('front.user.my_business_left')
 

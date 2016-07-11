@@ -145,14 +145,15 @@
                       @endif
                   </select>
                 <span class='help-block'>{{ $errors->first('business_cat') }}</span>
+                 <div class="hyper_link_more"><a href="javascript:void(0);" class="add_new_subcategory">Add New Sub Category </a></div>
                   </div>
                   </div></div>
 
-                  <div class="user_box_sub">
+<!--                  <div class="user_box_sub">
                   <div class="row">
-                  <div class="col-lg-3  label-text"><a href="javascript:void(0);" class="add_new_subcategory">Add New Sub Category </a></div>
+                  
                   </div>
-                 </div>
+                 </div>-->
             <div class="add_new_subcategory_div" id="add_new_subcategory_div" style="display:none;">
             <div class="user_box_sub ">
              <div class="row">
@@ -184,19 +185,31 @@
               </select>
               <span class='help-block'>{{ $errors->first('business_cat') }}</span>
                 <div class="alert alert-warning">Note: Firstly Select The Business Main category From Business Main Category Drop-down , Then Click ON None Selected Button  </div>
+                
+                
             </div>
 
             </div>
             </div>
-
-
-
+             
+            
+</div>
+                    <div class="user_box_sub ">
+              
+             <div class="row">
+                   <div class="col-lg-3  label-text hidden-xs hidden-sm">&nbsp;</div>
+                 <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                 <div class="button_save1">
+                  <button type="submit" class="btn btn-post" name="add_business" style="float: left; ">Save &amp; continue</button>
+                   </div>
+                 </div>
+                  </div>
                 </div>
                     </div>
                   </div>
                </div>
              <div class="button_save1">
-                    <button type="submit" class="btn btn-post" name="add_business" style="float: left; margin-left:350px; ">Save &amp; continue</button>
+             <!--       <button type="submit" class="btn btn-post" name="add_business" style="float: left; margin-left:350px; ">Save &amp; continue</button>-->
                     <!-- <a href="#" class="btn btn-post pull-left">previous</a>
                     <a href="#" class="btn btn-post">Save &amp; exit</a>
                     <a href="#" class="btn btn-post pull-right">Next</a> -->
