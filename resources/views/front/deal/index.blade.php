@@ -3,7 +3,7 @@
 @section('main_section')
  @include('front.template._search_top_nav')
 <!--search area end here-->
- <div class="gry_container" style="padding: 7px 0 16px;">
+ <div class="gry_container" style="padding: 7px 0 0px;">
      @include('front.deal.deal_top_bar')
 
        <div class="container ">

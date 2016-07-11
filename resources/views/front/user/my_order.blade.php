@@ -83,7 +83,7 @@
                                  $final=$final+ $total;
                             ?>
                            
-                           <div class="<?php  if($key<=sizeof($deal['user_orders'])-1) { echo "bordersk" ;}?>"></div>
+                           <!--<div class="<?php  if($key<=sizeof($deal['user_orders'])-1) { echo "bordersk" ;}?>"></div>-->
                             <div class="main-oderboxs">
                             <div class="title-ondss">{{ucfirst($offers['name'])}}</div>
                             <p>{{ucfirst($offers['title'])}}</p>
@@ -98,9 +98,12 @@
                            <span> <i class="fa fa-inr "></i> {{$offers['discounted_price']}}</span>
                            </div>
                            <br/>
-                            <div class="qntyg"> Selected Qty      :{{$selected_offers['order_quantity']}}</div>
+                            <div class="qntyg"> Selected Qty      :</div>
+                                <div class="right-kgf1"> <span>{{$selected_offers['order_quantity']}}</span></div>
+                                 <br/>
+                                <div class="qntyg">  Total :</div>
                            <div class="right-kgf1">
-                          <span>  Total : <i class="fa fa-inr "></i> {{$total}}</span></div>
+                          <span>   <i class="fa fa-inr "></i> {{$total}}</span></div>
                            </div>
 
                             @endif                         

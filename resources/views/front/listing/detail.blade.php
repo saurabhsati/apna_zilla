@@ -51,37 +51,37 @@
                <ul class="spe_submobile2">
                @if(isset($arr_business_details['business_times']) && sizeof($arr_business_details['business_times'])>0)
                  @foreach($arr_business_details['business_times'] as $times)
-                  <li class="brdr"><a href="#">Monday   :  @if(isset($times['mon_open'])) {{ $times['mon_open']}} @else {{'00:00'}} @endif - 
-                     @if(isset($times['mon_close'])) {{ $times['mon_close']}} @else {{'00:00'}} @endif</a></li> 
+                   <li class="brdr"><a href="#"> <span class="days-cat">Monday</span>  <span> :</span> <span class="time-cat"> @if(isset($times['mon_open'])) {{ $times['mon_open']}} @else {{'00:00'}} @endif - 
+                     @if(isset($times['mon_close'])) {{ $times['mon_close']}} @else {{'00:00'}} @endif </span></a></li> 
 
-                  <li class="brdr"><a href="#">Tuesday  : @if(isset($times['tue_open'])){{ $times['tue_open']}} @else {{'00:00'}} @endif -
-                   @if(isset($times['tue_close'])) {{ $times['tue_close']}} @else {{'00:00'}} @endif</a></li> 
+                   <li class="brdr"><a href="#"><span class="days-cat">Tuesday </span> <span> :</span> <span class="time-cat"> @if(isset($times['tue_open'])){{ $times['tue_open']}} @else {{'00:00'}} @endif -
+                       @if(isset($times['tue_close'])) {{ $times['tue_close']}} @else {{'00:00'}} @endif </span></a></li> 
 
-                  <li class="brdr"><a href="#">Wednesday: @if(isset($times['wed_open'])){{ $times['wed_open']}} @else {{'00:00'}} @endif - 
-                  @if(isset($times['wed_close'])){{ $times['wed_close']}}  @else {{'00:00'}} @endif
+                   <li class="brdr"><a href="#"><span class="days-cat">Wednesday </span> <span> :</span> <span class="time-cat"> @if(isset($times['wed_open'])){{ $times['wed_open']}} @else {{'00:00'}} @endif - 
+                       @if(isset($times['wed_close'])){{ $times['wed_close']}}  @else {{'00:00'}} @endif</span>
                   </a></li>
 
-                  <li class="brdr"><a href="#">Thursday : @if(isset($times['thus_open'])){{$times['thus_open']}}  @else {{'00:00'}} @endif -
-                    @if(isset($times['thus_close'])){{ $times['thus_close']}}  @else {{'00:00'}} @endif
+                   <li class="brdr"><a href="#"><span class="days-cat"> Thursday</span> <span> :</span> <span class="time-cat">@if(isset($times['thus_open'])){{$times['thus_open']}}  @else {{'00:00'}} @endif -
+                       @if(isset($times['thus_close'])){{ $times['thus_close']}}  @else {{'00:00'}} @endif</span>
                    </a></li>
 
-                  <li class="brdr"><a href="#">Friday   : @if(isset($times['fri_open'])){{ $times['fri_open']}}  @else {{'00:00'}} @endif -
-                   @if(isset($times['fri_close'])){{ $times['fri_close']}}  @else {{'00:00'}} @endif
+                   <li class="brdr"><a href="#"><span class="days-cat">Friday</span>   <span> :</span> <span class="time-cat">@if(isset($times['fri_open'])){{ $times['fri_open']}}  @else {{'00:00'}} @endif -
+                       @if(isset($times['fri_close'])){{ $times['fri_close']}}  @else {{'00:00'}} @endif</span>
                    </a></li>
 
-                  <li class="brdr"><a href="#">Saturday : @if(isset($times['sat_open'])){{ $times['sat_open']}}  @else {{'00:00'}} @endif -
-                   @if(isset($times['sat_close'])){{ $times['sat_close']}}  @else {{'00:00'}} @endif
+                   <li class="brdr"><a href="#"><span class="days-cat">Saturday</span> <span> :</span> <span class="time-cat">@if(isset($times['sat_open'])){{ $times['sat_open']}}  @else {{'00:00'}} @endif -
+                       @if(isset($times['sat_close'])){{ $times['sat_close']}}  @else {{'00:00'}} @endif</span>
                    </a></li>
 
-                  <li class="brdr"><a href="#">Sunday   : 
-                  @if(!empty($times['sun_open']) && !empty($times['sun_close']))
+                   <li class="brdr"><a href="#"><span class="days-cat">Sunday </span> <span> :</span> 
+                 <span class="time-cat"> @if(!empty($times['sun_open']) && !empty($times['sun_close']))
                   {{ $times['sun_open']}}  - {{ $times['sun_close']}} 
                   @else
                   {{ 'OFF' }}
                   @endif
 
 
-                 
+                       </span>
                   </a></li>
 
                   
@@ -359,30 +359,131 @@
                         @endif
 
                         <div class="rating_views" >
+                         <?php 
+                                $star1=0;
+                                $star2=0;
+                                $star3=0;
+                                $star4=0;
+                                $star5=0;
+                                 ?>
+                      @if(isset($business_rating_count['reviews']) && sizeof($business_rating_count['reviews'])>0 )
+
+                            @foreach($business_rating_count['reviews'] as $review)
+                              <?php 
+                              
+                              if($review['ratings']==1)
+                              { 
+                                $star1=$review['total_rating'];  
+                              }
+                               if($review['ratings']==2)
+                              { 
+                              
+                                $star2=$review['total_rating'];  
+                              }
+                               if($review['ratings']==3)
+                              { 
+                                
+                                $star3=$review['total_rating'];  
+                              }
+                               if($review['ratings']==4)
+                              { 
+                                
+                                $star4=$review['total_rating'];  
+
+                              }
+                               if($review['ratings']==5)
+                              { 
+                               $star5=$review['total_rating'];  
+                              
+                              }
+                              ?>
+                              @endforeach
+
+                      @endif
+
+                        <?php 
+                             $no_of_rating = $star1 + $star2 + $star3 + $star4 + $star5;
+                       // dd($no_of_rating);
+                            if($star1 != 0)
+                            {
+                                $star1 = ($star1/$no_of_rating); 
+                                $star1 = $star1 *100;
+                                $star1 = round($star1);
+                            }
+                            else
+                            {
+                              $star1 = 0;
+                            }
+                            
+                            if($star2 != 0)
+                            {
+                              $star2 = ($star2/$no_of_rating); 
+                              $star2 = $star2 *100;
+                              $star2 = round($star2);
+                            }
+                            else
+                            {
+                              $star2 = 0;
+                            }
+                            
+                            if($star3 != 0)
+                            {
+                              $star3 = ($star3/$no_of_rating); 
+                              $star3 = $star3 *100;
+                              $star3 = round($star3);
+                            }
+                            else
+                            {
+                              $star3 = 0;
+                            }
+
+                            if($star4 !=0)
+                            {
+                              $star4 = ($star4/$no_of_rating);
+                              $star4 = $star4 *100;
+                              $star4 = round($star4);
+                            }
+                            else
+                            {
+                              $star4 = 0;
+                            }
+
+                            if($star5 !=0)
+                            {
+                              $star5 = ($star5/$no_of_rating); 
+                              $star5 = $star5 *100;
+                              $star5 = round($star5);
+                            }
+                            else
+                            {
+                              $star5 = 0;
+                            }
+                        ?>
+
                            <div class="rank_name">
                               <span>Excellent</span>
-                              <div style="width: 32%;">&nbsp;</div>
-                              60%
+                              <div style="width: {!! $star5 !!}%;">&nbsp;</div>
+                              {!! $star5 !!}%
                            </div>
                            <div class="rank_name">
                               <span>Very Good</span>
-                              <div style="width: 20%;">&nbsp;</div>
-                              20%
+                              <div style="width: {!! $star4 !!}%;">&nbsp;</div>
+                              {!! $star4 !!}%
                            </div>
                            <div class="rank_name">
                               <span>Good</span>
-                              <div style="width: 12%;">&nbsp;</div>
-                              20%
+                              <div style="width: {!! $star3 !!}%;">&nbsp;</div>
+                              {!! $star3 !!}%
                            </div>
                            <div class="rank_name">
                               <span>Average</span>
-                              <div style="width:10%;">&nbsp;</div>
-                              15%
+                              <div style="width:{!! $star2 !!}%;">&nbsp;</div>
+                              {!! $star2 !!}%
                            </div>
                            <div class="rank_name">
                               <span>Poor</span>
-                              <div style="width: 2%;">&nbsp;</div>
-                              5%
+                              <div style="width: {!! $star1 !!}%;">&nbsp;</div>
+                             {!! $star1 !!}%
                            </div>
                         </div>
                        

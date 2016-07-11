@@ -25,7 +25,7 @@
           </div>
      </div>
      <hr/>
-<div class="container">
+<div class="container per-detl">
          <div class="row">
 
            @include('front.user.profile_left')
@@ -77,7 +77,7 @@
 
              <div class="col-sm-3 col-md-3 col-lg-3">
                 <div class="profile_box">
-                    <div class="ig_profile" id="dvPreview">
+                    <div class="ig_profile wdth-img" id="dvPreview">
 
                    <!--  {{$profile_pic_public_path.'/'.$user['profile_pic'] }}
                    {{ get_resized_image_path($user['profile_pic'],$profile_pic_public_path,200,200) }}-->
@@ -212,11 +212,13 @@
                         <div class="row">
                             <div class="col-lg-3  label-text">Gender :</div>
                                 <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+                                <div class="gender-top">
                                 <input type="radio"  name="gender" id="gender" value="male" <?php  if(isset($user['gender'])  &&  $user['gender'] ==  "male" ) { echo "checked=checked";}?> >&nbsp;&nbsp;Male&nbsp;&nbsp;</input>
                                 <input type="radio"  name="gender" id="gender" value="female" <?php  if(isset($user['gender'])  &&  $user['gender'] ==  "female" ) { echo "checked=checked";}?> >&nbsp;&nbsp;Female</input>
                                 <!-- <input type="text" name="occupation"
                                 value="{{-- isset($user['occupation'])?$user['occupation']:'' --}}"
                                 class="input_acct" placeholder="Enter Your Occupation  "/> -->
+                                </div>
                                 </div>
                         </div>
                     </div>
@@ -383,7 +385,14 @@
                         </div>
                          </div>
                     </div>
-
+<div class="user_box_sub">
+                           <div class="row">
+                    <div class="col-lg-3  label-text">&nbsp;</div>
+                    <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+       <button type="submit" class="btn-post" style="float:left;">Save &amp; Continue</button>
+                        </div>
+                         </div>
+                    </div>
                     <!-- <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">Home Landline :</div>
@@ -427,7 +436,7 @@
 
                     </div>
 
-                    <button type="submit" class="yellow1 ui button">Save & Continue</button>
+                  
 
                         @endforeach
                     @endif

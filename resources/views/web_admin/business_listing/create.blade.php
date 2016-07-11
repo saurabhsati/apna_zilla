@@ -786,6 +786,12 @@
 <!-- END Main Content -->
 
 <script type="text/javascript">
+<<<<<<< HEAD
+ function setExtraData()
+  {
+    return tinymce.triggerSave();
+  }
+=======
 
 
   function setExtraData()
@@ -793,6 +799,7 @@
     return tinymce.triggerSave();
   }
 
+>>>>>>> 3630846d9225534a28317342ce5d84bf9ac1b33a
 function sunday_status(status)
 {
   if(status=='on')
@@ -1086,4 +1093,6 @@ function getSubCategory(ref)
 
 </script>
 
+
 @stop
+

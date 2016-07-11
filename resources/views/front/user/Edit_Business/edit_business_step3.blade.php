@@ -79,8 +79,8 @@
 
                 <div class="user_box_sub">
                     <div class="row">
-                      <div class="col-lg-2 label-text">Contact Person's Name<span>:</span></div>
-                        <div class="col-sm-12 col-md-12 col-lg-10 m_l">
+                      <div class="col-lg-3 label-text">Contact Person's Name<span>:</span></div>
+                        <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                           <div class="row">
                             <div class="col-sm-2 col-md-2 col-lg-2">
                               <select class="input_acct" name="prefix_name" >
@@ -104,8 +104,8 @@
 
                   <div class="user_box_sub">
                     <div class="row">
-                      <div class="col-lg-2 label-text">Mobile No.<span>:</span></div>
-                        <div class="col-sm-12 col-md-12 col-lg-10 m_l">
+                      <div class="col-lg-3 label-text">Mobile No.<span>:</span></div>
+                        <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                           <div class="input-group">
                           <span class="input-group-addon" id="basic-addon1">+91</span>
                           <input type="text" class="form-control"  id="mobile_number" name="mobile_number" placeholder="Enter Mobile Number"  
@@ -116,7 +116,15 @@
                         </div>
                     </div>
                   </div>
-
+                  
+                  <div class="user_box_sub">
+                    <div class="row">
+                      <div class="col-lg-3 "><a class="btn btn-post" href="{{ url('/front_users/edit_business_step2/'.Request::segment(3))}}" style="float: left; margin-bottom:10px; "> Back</a></div>
+                        <div class="col-sm-12 col-md-12 col-lg-9 m_l">
+  <button type="submit" class="btn btn-post" name="add_contacts" style="float: left;">Save &amp; continue</button>
+                        </div>
+                    </div>
+                  </div>
                   <!--  <div class="user_box_sub">
                       <div class="row">
                        <div class="col-lg-2 label-text">Landline No. <span>:</span></div>
@@ -181,8 +189,8 @@
 
 
                   <div class="button_save1">
-                  <a class="btn btn-post" href="{{ url('/front_users/edit_business_step2/'.Request::segment(3))}}" style="float: left; margin-right:194px; "> Back</a>
-                    <button type="submit" class="btn btn-post" name="add_contacts" style="float: left; margin-left:125px; ">Save &amp; continue</button>
+                  
+                  
                     <!-- <a class="btn btn-post pull-left" href="#">previous</a>
                     <a class="btn btn-post" href="#">Save &amp; exit</a>
                     <a class="btn btn-post pull-right" href="#">Next</a> -->

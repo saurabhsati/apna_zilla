@@ -23,6 +23,7 @@ use Validator;
 use Meta;
 use Mail;
 use Cookie;
+use DB;
 class ListingController extends Controller
 {
     public function __construct()
@@ -99,6 +100,7 @@ class ListingController extends Controller
                 $arr_business_by_category = array();
                 $obj_business_listing = BusinessCategoryModel::where('category_id',$arr_business_details['category_details']['category_id'])->limit(4)->get();
 
+
                 if($obj_business_listing)
                 {
                     $obj_business_listing->load(['business_by_category','business_rating']);
@@ -124,6 +126,9 @@ class ListingController extends Controller
                   {
 
                     $obj_business_listing = BusinessListingModel::where('city',$city)->whereIn('id', $result)->with(['reviews'])->get();
+                     
+                    
+                    
                     if($obj_business_listing)
                     {
                       $all_related_business = $obj_business_listing->toArray();
@@ -170,7 +175,6 @@ class ListingController extends Controller
                 {
                      $user_id  = base64_decode(Session::get('user_id'));
                      
-
                       $str = "";
                       $obj_favourite = FavouriteBusinessesModel::where(array('user_id'=>$user_id ,'is_favourite'=>"1" ))->get(['business_id']);
 
@@ -194,10 +198,22 @@ class ListingController extends Controller
                 }
                 Meta::setDescription($arr_business_details['company_info']);
                 Meta::addKeyword($arr_business_details['keywords']);
-      }
-      
-     // dd($arr_business_details);
-        return view('front.listing.detail',compact('main_image_path','page_title','arr_fav_business','arr_business_details','parent_category','all_related_business','all_category','city','search_by'));
+           }
+
+
+       $obj_business_rating_count = BusinessListingModel::with(array('reviews'=>function ($query)
+                                    {
+                                        $query->select(['ratings','business_id', DB::raw('count(*) as total_rating')]);
+                                        $query->groupBy('ratings'); 
+                                    }
+                                    ))->where('id',$id)->first();
+        if($obj_business_rating_count)
+        {
+            $business_rating_count = $obj_business_rating_count->toArray();
+        }
+      //dd($business_rating_count);
+        
+        return view('front.listing.detail',compact('main_image_path','page_title','arr_fav_business','business_rating_count','arr_business_details','parent_category','all_related_business','all_category','city','search_by'));
     }
 
 

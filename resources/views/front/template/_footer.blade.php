@@ -1235,6 +1235,7 @@ If you need any more details on RightNext Verified, please refer to
   
 
  <script type="text/javascript">
+     
 var supports = (function () {
     var a = document.documentElement,
         b = "ontouchstart" in window || navigator.msMaxTouchPoints;
@@ -1318,6 +1319,7 @@ if ($("html").hasClass("no-touch")) {
     })(jQuery, this);
 
  } //END IF no-touch for hover script & removeAttr for the links to work
+ 
 </script>
 
       
@@ -1326,6 +1328,77 @@ if ($("html").hasClass("no-touch")) {
   <script src="{{ url('/') }}/assets/front/js/easyResponsiveTabs.js" type="text/javascript"></script>
   <link href="{{ url('/') }}/assets/front/css/easy-responsive-tabs.css" rel="stylesheet" type="text/css" />
   <script src="{{ url('/') }}/assets/front/js/jquery-ui.js" type='text/javascript'></script>
+<script type="text/javascript">
+    /*footer script start here*/
+      var min_applicable_width = 767; 
+  
+  $(document).ready(function () 
+  {
+    applyResponsiveSlideUp($(this).width(),min_applicable_width);
+    
+  });
 
+  
+
+  function applyResponsiveSlideUp(current_width,min_applicable_width)
+  {
+        
+    /* Set For Initial Screen */
+    initResponsiveSlideUp(current_width,min_applicable_width);
+
+    /* Listen Window Resize for further changes */
+    $(window).bind('resize',function()
+    {
+      if($(this).width()<=min_applicable_width)
+      {
+        unbindResponsiveSlideup();  
+        bindResponsiveSlideup();
+      }
+      else
+      {
+        unbindResponsiveSlideup();  
+      }  
+    });
+  }
+
+  function initResponsiveSlideUp(current_width,min_applicable_width)
+  {
+      
+    if(current_width<=min_applicable_width)
+    {
+      unbindResponsiveSlideup();  
+      bindResponsiveSlideup();
+    }
+    else
+    {
+      unbindResponsiveSlideup();  
+    }
+  }
+
+  function bindResponsiveSlideup()
+  {
+    $(".menu_name").hide();
+    $(".footer_heading").bind('click', function () 
+    {
+      var $ans = $(this).parent().find(".menu_name");
+      $ans.slideToggle();
+      $(".menu_name").not($ans).slideUp();
+      $('.menu_name').removeClass('active');
+      
+     $('.footer_heading').not($(this)).removeClass('active');
+      $(this).toggleClass('active');
+      $(this).parent().find(".menu_name").toggleClass('active');
+    });
+
+
+  }
+
+  function unbindResponsiveSlideup()
+  {
+    $(".footer_heading").unbind('click');
+    $(".menu_name").show();
+  }
+      /*footer script end here*/
+</script>
    </body>
 </html>
