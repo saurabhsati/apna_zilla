@@ -137,13 +137,14 @@
                   <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" /></th>
                   <th style="width:228px">Coupon Code</th> 
                   <th style="width:208px">Discount Type</th> 
-                  <th style="width:208px">Discount</th> 
+                 <th style="width:208px">Discount</th> 
                   <th>Expiry Date</th> 
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                
+              
+
                 @if(sizeof($arr_coupon)>0)
                   @foreach($arr_coupon as $coupon)
                    <?php $show_url = '/web_admin/coupon/edit/'.base64_encode($coupon['id']); ?>
@@ -170,8 +171,12 @@
 
                             ?>  </td> 
 
-                    <td> {{ $coupon['discount'] }} </td> 
-
+                    @if($coupon['type'] == "PERCENT")
+                    <td>{{ $coupon['discount'] }}% </td> 
+                    @else
+                    <td>{{ $coupon['discount'] }} </td> 
+                    @endif
+    
                     <td> {{ date('d-m-Y',strtotime($coupon['end_date'])) }} </td> 
                     
                     

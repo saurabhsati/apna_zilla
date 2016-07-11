@@ -34,6 +34,23 @@
             <div class="my_whit_bg">
                  <div class="title_acc">Please provide Password Details</div>
                    <div class="row">
+                   @if(Session::has('success'))
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ Session::get('success') }}
+                </div>
+              @endif
+
+              @if(Session::has('error'))
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ Session::get('error') }}
+                </div>
+              @endif
 
                       <form class="form-horizontal"
                            id="validation-form"
@@ -42,7 +59,7 @@
                            enctype="multipart/form-data"
                            >
 
-      {{ csrf_field() }}
+                    {{ csrf_field() }}
 
 
   <div class="col-sm-2 col-md-2 col-lg-2">&nbsp;</div>
@@ -52,7 +69,7 @@
 
                <div class="user_box_sub">
                            <div class="row">
-                    <div class="col-lg-3  label-text">Current Password:</div>
+                    <div class="col-lg-3  label-text">Current Password</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="password" name="current_password" id="current_password" 
                                 class="input_acct" placeholder="Enter Current Password  "/>
@@ -63,20 +80,20 @@
 
                      <div class="user_box_sub">
                            <div class="row">
-                    <div class="col-lg-3  label-text">New Password :</div>
+                    <div class="col-lg-3  label-text">New Password</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="password" name="new_password" id="new_password" 
-                                class="input_acct" placeholder="Enter New Password: "/>
+                                class="input_acct" data-rule-minlength="6" placeholder="Enter New Password: "/>
                         </div>
                          </div>
                     </div>
 
                     <div class="user_box_sub">
                            <div class="row">
-                    <div class="col-lg-3  label-text">Confirm Password :</div>
+                    <div class="col-lg-3  label-text">Confirm Password</div>
                     <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                          <input type="password" name="confirm_password" id="confirm_password" 
-                                class="input_acct" placeholder="Confirm Password"/>
+                                class="input_acct" data-rule-minlength="6" placeholder="Confirm Password"/>
                         </div>
                          </div>
                     </div>

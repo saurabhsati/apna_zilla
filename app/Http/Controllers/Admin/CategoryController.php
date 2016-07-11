@@ -41,7 +41,7 @@ class CategoryController extends Controller
  		$page_title = "Create Category";
 
         $arr_category = array();
-        $obj_category = CategoryModel::where('parent',0)->get();
+        $obj_category = CategoryModel::where('parent',0)->where('is_active',1)->orderBy('title','ASC')->get();
 
         if($obj_category!=FALSE)
         {
@@ -57,12 +57,13 @@ class CategoryController extends Controller
 
  	public function store(Request $request)
     {
-        $arr_rules = array();
-        $arr_rules['category'] = "required";
-        $arr_rules['title'] = "required";
-        $arr_rules['cat_ref_slug'] = "required";
-        $arr_rules['cat_meta_keyword'] = "required";
+        $arr_rules                         = array();
+        $arr_rules['category']             = "required";
+        $arr_rules['title']                = "required";
+        $arr_rules['cat_ref_slug']         = "required";
+        $arr_rules['cat_meta_keyword']     = "required";
         $arr_rules['cat_meta_description'] = "required";
+        
 
         $validator = Validator::make($request->all(),$arr_rules);
 
@@ -71,17 +72,17 @@ class CategoryController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $category = $request->input('category');
-        $title = $request->input('title');
-        $cat_ref_slug = $request->input('cat_ref_slug');
-        $is_priceable = $request->input('is_priceable','0');
-        $cat_meta_keyword = $request->input('cat_meta_keyword');
+        $category             = $request->input('category');
+        $title                = $request->input('title');
+        $cat_ref_slug         = $request->input('cat_ref_slug');
+        $is_priceable         = $request->input('is_priceable','0');
+        $cat_meta_keyword     = $request->input('cat_meta_keyword');
         $cat_meta_description = $request->input('cat_meta_description');
-        $is_popular = $request->input('is_popular')==null?'0':$request->input('is_popular');
+        $is_popular           = $request->input('is_popular')==null?'0':$request->input('is_popular');
         $is_explore_directory = $request->input('is_explore_directory')==null?'0':$request->input('is_explore_directory');
         $is_allow_to_add_deal = $request->input('is_allow_to_add_deal')==null?'0':$request->input('is_allow_to_add_deal');
 
-        $cat_slug = str_slug($title);
+        $cat_slug             = str_slug($title);
 
          /* update public key in Category table*/
 
@@ -178,8 +179,7 @@ class CategoryController extends Controller
         $arr_rules = array();
         $arr_rules['category'] = "required";
         $arr_rules['cat_meta_description'] = "required";
-        $arr_rules['is_active'] = "required";
-
+        
         $validator = Validator::make($request->all(),$arr_rules);
         if($validator->fails())
         {
@@ -237,7 +237,6 @@ class CategoryController extends Controller
             'title' => $category,
             'cat_ref_slug' => $cat_ref_slug,
             'cat_meta_description' => $cat_meta_description,
-            'is_active' => $is_active,
             'is_popular' => $is_popular,
             'is_explore_directory' => $is_explore_directory,
             'is_allow_to_add_deal'=>$is_allow_to_add_deal,

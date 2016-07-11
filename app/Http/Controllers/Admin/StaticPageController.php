@@ -41,7 +41,7 @@ class StaticPageController extends Controller
 
     	$arr_rules= array();
     	$arr_rules['page_title'] = 'required';
-    	$arr_rules['page_desc']='required';
+    	//$arr_rules['page_desc']='required';
     	$arr_rules['meta_title']='required';
     	$arr_rules['meta_keyword']='required';
     	$arr_rules['meta_desc']='required';

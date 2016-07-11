@@ -90,31 +90,31 @@ class SalesController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $first_name       = $request->input('first_name');
-        $middle_name       = $request->input('middle_name');
+        $first_name      = $request->input('first_name');
+        $middle_name     = $request->input('middle_name');
         $last_name       = $request->input('last_name');
-        $gender       = $request->input('gender');
+        $gender          = $request->input('gender');
 
-        $d_o_b       = $request->input('d_o_b');
-        $marital_status       = $request->input('marital_status');
-        $married_date       = $request->input('married_date');
+        $d_o_b           = $request->input('d_o_b');
+        $marital_status  = $request->input('marital_status');
+        $married_date    = $request->input('married_date');
 
-        $email          = $request->input('email');
-        $password   = $request->input('password');
+        $email           = $request->input('email');
+        $password        = $request->input('password');
 
 
-        // $role       = $request->input('role');
-        $state       = $request->input('state');
-        $pincode       = $request->input('pincode');
-        $city       = $request->input('city');
-        $area       = $request->input('area');
+        // $role         = $request->input('role');
+        $state           = $request->input('state');
+        $pincode         = $request->input('pincode');
+        $city            = $request->input('city');
+        $area            = $request->input('area');
 
-        $occupation       = $request->input('occupation');
-        $work_experience       = $request->input('work_experience');
-        $street_address     = $request->input('street_address');
-        $mobile_no     = $request->input('mobile_no');
-        $home_landline     = $request->input('home_landline');
-        $office_landline     = $request->input('office_landline');
+        $occupation      = $request->input('occupation');
+        $work_experience = $request->input('work_experience');
+        $street_address  = $request->input('street_address');
+        $mobile_no       = $request->input('mobile_no');
+        $home_landline   = $request->input('home_landline');
+        $office_landline = $request->input('office_landline');
 
         /* Duplication Check*/
         $user = Sentinel::createModel();

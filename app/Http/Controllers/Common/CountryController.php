@@ -154,12 +154,13 @@ class CountryController extends Controller
     {
         $arr_state = array();
         $arr_response = array();
-        $obj_main__category = CategoryModel::where('cat_id',$main_cat_id)->select('cat_id','cat_ref_slug')->first();
+        $obj_main__category = CategoryModel::where('cat_id',$main_cat_id)->where('is_active',1)->select('cat_id','cat_ref_slug')->first();
+
         if($obj_main__category != FALSE)
         {
             $arr_main_cat =  $obj_main__category->toArray();
         }
-        $obj_category = CategoryModel::where('parent',$main_cat_id)->select('cat_id','title')->get();
+        $obj_category = CategoryModel::where('parent',$main_cat_id)->select('cat_id','title')->where('is_active',1)->get();
 
         if($obj_category != FALSE)
         {

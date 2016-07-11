@@ -12,6 +12,7 @@ class BusinessSendEnquiryModel extends Model
     use SoftDeletes;
 	 protected $table="business_send_enquiry";
      protected $fillable=['business_id',
+                           'user_id',
      					  'name',
      					  'email',
      					  'mobile',

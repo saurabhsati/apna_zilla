@@ -83,7 +83,7 @@ class UserController extends Controller
        $arr_rules['first_name']         = "required";
        // $arr_rules['middle_name']     = "required";
        //$arr_rules['last_name']        = "required";
-       $arr_rules['gender']             = "required";
+      // $arr_rules['gender']             = "required";
        $arr_rules['d_o_b']              = "required";
        //$arr_rules['email']            = "required|email";
        $arr_rules['password']           = "required|min:6";
@@ -98,7 +98,7 @@ class UserController extends Controller
        // $arr_rules['work_experience'] = "required";
 
         //$arr_rules['street_address'] = "required";
-        $arr_rules['mobile_no'] = "required";
+       // $arr_rules['mobile_no'] = "required";
         //$arr_rules['home_landline'] = "required";
         //$arr_rules['office_landline'] = "required";
 
@@ -137,9 +137,15 @@ class UserController extends Controller
         /* Duplication Check*/
         $user = Sentinel::createModel();
 
-        if($user->where('mobile_no',$mobile_no)->get()->count()>0)
+       /* if($user->where('mobile_no',$mobile_no)->get()->count()>0)
         {
             Session::flash('error','Vender Already Exists With This Mobile No');
+            return redirect()->back();
+        }*/
+
+        if($user->where('email',$email)->get()->count()>0)
+        {
+            Session::flash('error','Vender Already Exists With This Email');
             return redirect()->back();
         }
 
@@ -158,8 +164,7 @@ class UserController extends Controller
                 $cv_path = $request->file('profile_pic')->getClientOriginalName();
                 $image_extension = $request->file('profile_pic')->getClientOriginalExtension();
                 $image_name = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
-                $request->file('profile_pic')->move(
-                    $this->profile_pic_base_path, $image_name
+                $request->file('profile_pic')->move($this->profile_pic_base_path, $image_name
                 );
 
                 $profile_pic = $image_name;

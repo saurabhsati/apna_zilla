@@ -96,21 +96,7 @@
                 </div>
             </div>
 
-            <!-- <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="middle_name">Middle Name<i class="red"></i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control" name="middle_name" id="middle_name" placeholder="Enter Middle Name " data-rule-required="" />
-                    <span class='help-block'>{{ $errors->first('middle_name') }}</span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="last_name">Last Name<i class="red"></i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control" name="last_name" id="last_name"  placeholder="Enter Last Name" data-rule-required="" />
-                    <span class='help-block'>{{ $errors->first('last_name') }}</span>
-                </div>
-            </div> -->
+           
 
               <div class="form-group">
                   <label class="col-sm-3 col-lg-2 control-label">Gender</label>
@@ -141,7 +127,7 @@
                      <select class="form-control" data-placeholder="Choose a Category" name="marital_status" tabindex="1" onchange="chkeck_marital_status(this);">
                         <option value="">Select...</option>
                         <option value="Married">Married</option>
-                        <option value="Un Married">Un Married</option>
+                        <option value="Un Married">UnMarried</option>
                         {{-- <option value="Divorced">Divorced</option>
                         <option value="Widowed">Widowed</option> --}}
                      </select>
@@ -170,7 +156,7 @@
             </div>
             </div>
              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="mobile_no">Mobile No<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="mobile_no">Mobile No</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" name="mobile_no" id="mobile_no"  placeholder="Enter Mobile No " data-rule-required="true" data-rule-number="true"   data-rule-minlength="10" maxlength="10"  />
                     <span class='help-block'>{{ $errors->first('mobile_no') }}</span>

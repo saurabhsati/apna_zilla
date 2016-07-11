@@ -1,3 +1,4 @@
+
 @extends('web_admin.template.admin')
 @section('main_content')
 <style type="text/css">
@@ -102,7 +103,7 @@
                 </div>         
                 </div>
             </div>
-           
+    
             </form>
              <form class="form-horizontal" id="frm_manage" method="POST" action="{{ url('/web_admin/business_listing/multi_action') }}">
              <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
@@ -187,7 +188,7 @@
                             </tr>
                           </thead>
                           <tbody>
-
+    
                            @if(isset($business_listing) && sizeof($business_listing)>0)
                               @foreach($business_listing as $key => $business)
                                <?php
@@ -233,8 +234,8 @@
                                  <td width="width:1%;">
                                   {{ $key+1 }}
                                 </td>
-                               <!--  <td width="width:10%;">
-                                <img src="{{ $business_public_img_path.'/'.$business['main_image']}}" alt=""  style="width:30px; height:30px;" />   </td> -->
+                              {{--  <td width="width:10%;">
+                                <img src="{{ $business_public_img_path.'/'.$business['main_image']}}" alt=""  style="width:30px; height:30px;" />   </td> --}}
                                  <td width="width:10%;"> {{ $business['busiess_ref_public_id'] }} </td>
                                <td width="width:10%;"> {{ $business['business_name'] }} </td>
                                 <td width="width:3%;"> {{ $business['user_details']['first_name']}} </td>
@@ -286,14 +287,7 @@
                                    }
                                   ?>
                               </td>
-
-
-
-                           
-
-                                
-
-                                <td width="width:3%;">
+                          <td width="width:3%;">
                                    <?php
 
                              $check_allow ='';      
@@ -373,6 +367,8 @@
 
                                 </td>
 
+
+                           
                                 <td width="width:52%;">
                                 @if( sizeof($business['reviews'])>0)
                                  

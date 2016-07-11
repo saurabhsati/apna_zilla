@@ -12,10 +12,11 @@ class CategoryController extends Controller
 {
     public function get_sub_category($id)
     {
-    	$obj_category = CategoryModel::where('parent',$id)->get();
+    	$obj_category = CategoryModel::where('parent',$id)->where('is_active','1')->get();
 
     	$arr_category = array();
 		$arr_response = array();
+
 
     	if($obj_category && count($obj_category)>0)
     	{

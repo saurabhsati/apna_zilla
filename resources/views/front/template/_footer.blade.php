@@ -389,7 +389,7 @@
                         <div id="c_pass_error" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div>
                         <div id="confirm_pass_error" style="display: none;"><i style="color: red;margin-left: -170px;">Password Missmatched</i></div>
                      </div>
-                     <div class="terms_service"><input type="checkbox" id="terms_to_agree" class="chk_bx"/> Yes, I agree with Terms of services</div>
+                     <div class="terms_service"><input type="checkbox" id="terms_to_agree" class="chk_bx"/> Yes, I agree with <a href="{{url('/page/terms-of-use')}}" target="_blank">Terms of services</a></div>
                      <div class="clr"></div>
                   </div>
                </div>

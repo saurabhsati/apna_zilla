@@ -101,7 +101,7 @@ class UserController extends Controller
         //$arr_rules['work_experience'] = "required";
 
         //$arr_rules['street_address'] = "required";
-        $arr_rules['mobile_no'] = "required";
+       // $arr_rules['mobile_no'] = "required";
         // $arr_rules['home_landline'] = "required";
         // $arr_rules['office_landline'] = "required";
 

@@ -44,14 +44,13 @@
                       </div>
                       <div class="box-content">
                           <div class="row">
-                              <div class="col-md-3">
-                              <!--  <img class="img-responsive img-thumbnail" src="" alt="logo" /> -->
-                                  <br/><br/>
-                              </div>
                               <div class="col-md-9 user-profile-info">
-                                  <p><span>Name:</span>{{ isset($arr_contact['full_name'])?$arr_contact['full_name']:'' }}</p> 
-                                  <p><span>Email Address:</span> {{ isset($arr_contact['email_address'])?($arr_contact['email_address']):'' }}</p>
-                                  <p><span>Message:</span>{{ isset($arr_contact['message'])?$arr_contact['message']:"" }}</p>
+                                  <p><span>Name      :</span>{{ isset($arr_contact['full_name'])?$arr_contact['full_name']:'' }}</p> 
+                                  <p><span>Email Address :</span> {{ isset($arr_contact['email_address'])?($arr_contact['email_address']):'' }}</p>
+
+                                   <p><span>Mobile Number :</span> {{ isset($arr_contact['mobile_number'])?($arr_contact['mobile_number']):'' }}</p>
+
+                                  <p><span>Message    :</span>{{ isset($arr_contact['message'])?$arr_contact['message']:"" }}</p>
                             </div>
                           </div>
                       </div>
@@ -59,8 +58,6 @@
               </div>
           </div>
   <!-- END Main Content -->
-
-
   @stop                    
 
 

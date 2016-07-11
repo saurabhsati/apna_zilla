@@ -85,7 +85,7 @@
                 <label class="col-sm-3 col-lg-2 control-label" for="name">Category Image</label>
                 <div class="col-sm-6 col-lg-4 controls">
                     @if($arr_data['cat_img']=="avatar.jpg")
-                      <img src="{{url('/')}}/images/front/avatar.jpg" width="200" height="200" id="preview_cat_img"  />
+                      <img src="{{url('/')}}/images/admin/avatar/avatar.jpg" width="200" height="200" id="preview_cat_img"  />
                     @else
                       <img src="{{url('/')}}/uploads/category/{{$arr_data['cat_img']}}" width="200" height="200" id="preview_cat_img"  />
                     @endif
@@ -97,7 +97,11 @@
                     @endif
 
                     <input class="form-control" name="cat_img" id="cat_img" type="file" onchange="loadPreviewImage(this)"/>
-
+                    
+                   <i class="red">     
+                        Please use 100 x 100 pixel image for best result ,
+                        allowed only JPG, JPEG and PNG image   
+                    </i>                     
                     <span class='help-block'>{{ $errors->first('cat_img') }}</span>
                 </div>
             </div>
@@ -109,6 +113,16 @@
                     <span class='help-block'>{{ $errors->first('title') }}</span>
                 </div>
             </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="cat_meta_keyword">Meta Keyword<i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input class="form-control" id="cat_meta_keyword" name="cat_meta_keyword" data-rule-required="true" value="{{ $arr_data['cat_meta_keyword'] }}" />
+                    <span class='help-block'>{{ $errors->first('cat_meta_keyword') }}</span>
+                </div>
+            </div>
+
 
               <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="cat_meta_description">Meta Description<i class="red">*</i></label>
@@ -125,16 +139,16 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="is_active">Is Active <i class="red">*</i></label>
-                <div class="col-sm-6 col-lg-1 controls">
-                    <select class="form-control" name="is_active" id="is_active">
-                            <option value="1" {{ $arr_data['is_active']=='1'?'selected="selected"':'' }}>Yes</option>
-                            <option value="0" {{ $arr_data['is_active']=='0'?'selected="selected"':'' }}>No</option>
-                    </select>
-                    <span class='help-block'>{{ $errors->first('is_active') }}</span>
-                </div>
-            </div>
+       {{--     <div class="form-group">
+                              <label class="col-sm-3 col-lg-2 control-label" for="is_active">Is Active <i class="red">*</i></label>
+                              <div class="col-sm-6 col-lg-1 controls">
+                                  <select class="form-control" name="is_active" id="is_active">
+                                          <option value="1" {{ $arr_data['is_active']=='1'?'selected="selected"':'' }}>Yes</option>
+                                          <option value="0" {{ $arr_data['is_active']=='0'?'selected="selected"':'' }}>No</option>
+                                  </select>
+                                  <span class='help-block'>{{ $errors->first('is_active') }}</span>
+                              </div>
+                          </div>--}}
 
 
             @if($arr_data['is_popular']==1)
@@ -242,7 +256,7 @@ function loadPreviewImage(ref)
 
     function clearPreviewImage()
     {
-        $('#preview_cat_img').attr('src',site_url+'/images/front/avatar.jpg');
+        $('#preview_cat_img').attr('src',site_url+'/images/admin/avatar/avatar.jpg');
         $("#removal_handle").hide();
     }
      function check_explore_count()

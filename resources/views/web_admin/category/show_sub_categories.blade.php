@@ -108,7 +108,15 @@
                       onclick="javascript : return check_multi_action('frm_category_manage','block');"  
                       style="text-decoration:none;">
                       <i class="fa fa-lock"></i>
-                    </a> 
+                    </a>
+
+                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
+                   title="Multiple Delete"
+                   href="javascript:void(0);"
+                   onclick="javascript : return check_multi_action('frm_category_manage','delete');"
+                   style="text-decoration:none;">
+                   <i class="fa fa-trash-o"></i>
+                </a>
 
                   </div>
                   <div class="btn-group"> 
@@ -151,15 +159,7 @@
 
             <td>{{$category['title']}}</td>
             
-          <!-- 
-            <td>
-                <a
-                  class="btn btn-info" 
-                  href="{{ url('/').'/web_admin/attribute/show/'.base64_encode($category['cat_id']) }}"  title="View Attribute">
-                  View
-              </a>
-            </td>
-          -->
+        
            <td width="250">
                          @if($category['is_active']=="0")
                         <a class="btn btn-danger" href="{{ url('/web_admin/categories/toggle_status/').'/'.base64_encode($category['cat_id']).'/activate' }}">
@@ -200,6 +200,50 @@
 </div>
 </div>
 
+<script type="text/javascript">
 
+   $(document).ready(function()
+    {
+        $("#business_manage").DataTable();
+    });
+
+    function confirm_delete()
+    {
+       if(confirm('Are you sure ?'))
+       {
+        return true;
+       }
+       return false;
+    }
+
+    function check_multi_action(frm_id,action)
+    {
+      var frm_ref = jQuery("#"+frm_id);
+      if(jQuery(frm_ref).length && action!=undefined && action!="")
+      {
+       
+        /* Get hidden input reference */
+        var input_multi_action = jQuery('input[name="multi_action"]');
+
+        if(jQuery(input_multi_action).length)
+        {
+          /* Set Action in hidden input*/
+          jQuery('input[name="multi_action"]').val(action);
+
+          /*Submit the referenced form */
+          jQuery(frm_ref)[0].submit();
+
+        }
+        else
+        {
+          console.warn("Required Hidden Input[name]: multi_action Missing in Form ")
+        }
+      }
+      else
+      {
+          console.warn("Required Form[id]: "+frm_id+" Missing in Current Page ")
+      }
+    }
+</script>
 
 @stop  

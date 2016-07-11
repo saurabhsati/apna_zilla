@@ -139,13 +139,13 @@
 
             <input type="hidden" name="multi_action" value="" />
 
-            <table class="table table-advance"  id="table1" >
+            <table class="table table-advance" id="table1">
               <thead>
                 <tr>
-                  <th style="width:18px"> <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
+                  <th > <input type="checkbox" name="mult_change" id="mult_change" value="delete" /></th>
                   <th>Page Name</th>
                   <th>Page Slug</th>
-                  <th width="250" style="text-align:center">Status</th>
+                  <th>Status</th>
                   <th>Action</th>
 
                 </tr>
@@ -162,7 +162,7 @@
               </td>
                <td> {{ $pages['page_title'] }} </td>
                <td> {{ $pages['page_slug'] }} </td>
-                    <td width="250" style="text-align:center">
+                    <td>
                    @if($pages['is_active']=="0")
                   <a class="btn btn-danger" href="{{ url('/web_admin/static_pages/toggle_status/').'/'.base64_encode($pages['id']).'/activate' }}">
                       Block

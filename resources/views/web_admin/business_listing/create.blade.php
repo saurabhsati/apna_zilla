@@ -1,8 +1,12 @@
     @extends('web_admin.template.admin')
     @section('main_content')
     <style type="text/css">
-  .error_msg .error_business_image{
+  .error_msg .error_business_image {
     color:red;
+  }
+
+  .error  {
+   color:red; 
   }
 </style>
     <!-- BEGIN Page Title -->
@@ -337,7 +341,7 @@
                     <span class='help-block'>{{ $errors->first('mobile_number') }}</span>
                 </div>
             </div>
-           <!--  <div class="form-group">
+          {{--  <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="landline_number">Landline Number <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
@@ -404,7 +408,7 @@
                     <span class='help-block'>{{ $errors->first('website') }}</span>
                 </div>
             </div>
- -->
+ --}}
 
 
 
@@ -425,7 +429,7 @@
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control timepicker-default" name="mon_in" id="mon_in" type="text" data-rule-required="true">
+                        <input class="form-control timepicker-default" name="mon_in" id="mon_in" type="text" data-rule-required="true" >
                     </div>
                 </div>
 
@@ -766,27 +770,10 @@
                     <span class='help-block'>{{ $errors->first('keywords') }}</span>
                 </div>
             </div>
-          <!--   <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="youtube_link">Youtube Link<i class="red"></i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="youtube_link"
-                           id="youtube_link"
-                           data-rule-required=""
-                           placeholder="Enter Youtube Link"
-                           value=""
-                           />
-                    <span class='help-block'>{{ $errors->first('youtube_link') }}</span>
-                </div>
-            </div> -->
-                      
-
-
-
-
+        
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
-                <input type="submit"  class="btn btn-primary" value="Submit" onclick="return setExtraData()">
+                <input type="submit"  class="btn btn-primary" value="Submit" onclick="setExtraData()">
 
             </div>
         </div>
@@ -799,10 +786,20 @@
 <!-- END Main Content -->
 
 <script type="text/javascript">
+<<<<<<< HEAD
  function setExtraData()
   {
     return tinymce.triggerSave();
   }
+=======
+
+
+  function setExtraData()
+  {
+    return tinymce.triggerSave();
+  }
+
+>>>>>>> 3630846d9225534a28317342ce5d84bf9ac1b33a
 function sunday_status(status)
 {
   if(status=='on')
@@ -823,10 +820,10 @@ function sunday_status(status)
 
 $(document).ready(function()
 {
-
- $('#validation-form').submit(function(){
+  $("#validation-form").validate();
+ /*$('#validation-form').submit(function(){
     tinyMCE.triggerSave();
- }); 
+ }); */
  var site_url="{{url('/')}}";
  var csrf_token = "{{ csrf_token() }}";
  $("#user_id").autocomplete(
@@ -1066,22 +1063,17 @@ function getSubCategory(ref)
                               
                                 if(typeof(response.arr_sub_cat) == "object")
                                 {
-                                  //$(".multiselect-container").css("display",'block');
-                                  // var option = '';
                                    jQuery(response.arr_sub_cat).each(function(index,arr_sub_cat)
                                    {
                                     option+='<option value="'+arr_sub_cat.cat_id+'">'+arr_sub_cat.title+'</option>';
 
                                    });
 
-                                  
                                    categCheck.html(option);
                                    categCheck.multiselect('rebuild');
 
                                 }
                                 
-                            
-
                             }
                             else
                             {
@@ -1097,8 +1089,10 @@ function getSubCategory(ref)
 
 </script>
 <script type="text/javascript">
-    tinymce.init({ selector:'textarea' });
-
-    //tinymce.init('#page_desc');
+  tinymce.init({ selector:'textarea' });
+ //tinymce.init('#page_desc');
 </script>
+
+
 @stop
+

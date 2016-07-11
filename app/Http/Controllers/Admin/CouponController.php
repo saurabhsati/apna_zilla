@@ -43,7 +43,7 @@ class CouponController extends Controller
         {
             $arr_coupon = $obj_coupon_res->toArray();
         }
-       
+     //  dd($arr_coupon);
         $this->arr_view_data['page_title']      = str_singular($this->module_title);
         $this->arr_view_data['module_title']    = str_plural($this->module_title);
         $this->arr_view_data['module_url_path'] = $this->module_url_path;
@@ -106,7 +106,9 @@ class CouponController extends Controller
                                ->where('start_date',$start_date)    
                                ->where('end_date',$end_date)
                                ->get();
-         $is_duplicate=[];                      
+
+
+        $is_duplicate=[];                      
         if($obj_is_duplicate)
         {
             $is_duplicate=$obj_is_duplicate->toArray();

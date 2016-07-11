@@ -178,10 +178,10 @@
 
 
                         &nbsp;
-                       <a href="{{ url('/').'/web_admin/countries/delete/'.base64_encode($country['id'])}}" class="show-tooltip" title="Delete"
-                       onclick="return confirm_delete();"
-                           onclick="javascript:return confirm_delete()">
-                          <i class="fa fa-trash" ></i>
+                     {{--  <a href="{{ url('/').'/web_admin/countries/delete/'.base64_encode($country['id'])}}" class="show-tooltip" title="Delete"
+                                                                 onclick="return confirm_delete();"
+                                                                     onclick="javascript:return confirm_delete()">
+                                                                    <i class="fa fa-trash" ></i> --}}
                     </td>
                   </tr>
                   @endforeach

@@ -88,14 +88,14 @@
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="contact_number">Mobile Number<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control" name="contact_number" id="contact_number" data-rule-required="true" value="{{ $arr_site_setting['site_contact_number'] }}" />
+                    <input class="form-control" name="contact_number" id="contact_number" data-rule-required="true" data-rule-digits="true" maxlength="16" minlength="10" value="{{ $arr_site_setting['site_contact_number'] }}" />
                     <span class='help-block'>{{ $errors->first('contact_number') }}</span>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="phone_number">Phone Number<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control" name="phone_number" id="phone_number" data-rule-required="true" value="{{ $arr_site_setting['phone_number'] }}" />
+                    <input class="form-control" name="phone_number" id="phone_number" data-rule-required="true" data-rule-digits="true" minlength="6" maxlength="16" value="{{ $arr_site_setting['phone_number'] }}" />
                     <span class='help-block'>{{ $errors->first('phone_number') }}</span>
                 </div>
             </div>

@@ -667,6 +667,23 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 
 		/* Front Get all sub category of main category Route*/
 		Route::post('get_all_sub_category',			['as' => 'get_all_sub_category'                    ,'uses' =>'Api\FrontAllCategoryController@get_all_sub_category']);
+
+		Route::get('all_sub_category',			['as' => 'all_sub_category'                    ,'uses' =>'Api\FrontAllCategoryController@all_sub_category']);
+
+		Route::post('all_business_and_deals',			['as' => 'all_business_and_deals'                    ,'uses' =>'Api\FrontAllCategoryController@all_business_and_deals']);
+
+
+		Route::post('get_all_city_places',			['as' => 'get_all_city_places'                    ,'uses' =>'Api\FrontAllCategoryController@get_all_city_places']);
+
+	    Route::post('store_reviews',			['as' => 'store_reviews'                    ,'uses' =>'Api\FrontAllCategoryController@store_reviews']);
+		
+		Route::post('store_sms_details',			['as' => 'store_sms_details'                    ,'uses' =>'Api\FrontAllCategoryController@store_sms_details']);
+		
+		Route::post('get_popular_and_normal_Category',			['as' => 'get_popular_and_normal_Category'                    ,'uses' =>'Api\FrontAllCategoryController@get_popular_and_normal_Category']);
+
+
+			/* Front Get all city Route*/
+		Route::post('get_all_city',			['as' => 'get_all_city'                    ,'uses' =>'Api\FrontAllCategoryController@get_all_city']);	
 	         
 	         /* Front Business Listing Route*/
 		Route::post('get_business_listing',			['as' => 'get_business_listing'                    ,'uses' =>'Api\FrontAllCategoryController@get_business_listing']);

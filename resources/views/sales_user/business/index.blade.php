@@ -139,9 +139,9 @@
                 <th>Full Name</th>
                 <th>Email</th>
                 <th>Mobile No</th>
-               <th>Deals</th>
-               <th width="" style="text-align:center">Status</th>
-               <th>Action</th>
+                <th>Deals</th>
+                <th width="" style="text-align:center">Status</th>
+                <th>Action</th>
 
 
                 </tr>
@@ -240,6 +240,7 @@
       var frm_ref = jQuery("#"+frm_id);
       if(jQuery(frm_ref).length && action!=undefined && action!="")
       {
+
         /* Get hidden input reference */
         var input_multi_action = jQuery('input[name="multi_action"]');
 

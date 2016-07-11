@@ -965,6 +965,8 @@ class FrontBusinessController extends Controller
         $user_id     = $request->input('user_id');
         $business_id = $request->input('business_id');
 
+
+
         $arr_fav =array();
 
         $obj_fav = FavouriteBusinessesModel::where(array('user_id'=>$user_id,'business_id'=>$business_id))->first();
@@ -986,20 +988,22 @@ class FrontBusinessController extends Controller
                     $json['message'] = 'Business Favorite Successfully  !';
                 }
 
-                if($arr_fav['is_favourite']== '1')
+               else if($arr_fav['is_favourite']== '1')
                 {
                   $result = FavouriteBusinessesModel::where(array('user_id'=>$user_id,'business_id'=>$business_id))
                                                     ->update(array('is_favourite'=>'0'));
+
+                                                 
                   $json['status']  = 'SUCCESS';
                   $json['message'] = 'Business Un-Favorite Successfully !';
                 }
 
             // }
-        }     
+        }   
       else
       {
           $result = FavouriteBusinessesModel::where(array('user_id'=>$user_id,'business_id'=>$business_id))
-                                            ->insert(array('is_favourite'=>'1'));
+                                            ->insert(array('user_id'=>$user_id,'business_id'=>$business_id,'is_favourite'=>'1'));
           $json['status']  = 'SUCCESS';
           $json['message'] = 'Business Favorite create Successfully !';
         }
