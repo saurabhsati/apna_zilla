@@ -50,9 +50,9 @@ class ListingController extends Controller
         }
         if(sizeof($_business)>0)
         {
-          $visited_count=$_business['visited_count'];
-          $update_visited_count= $visited_count+1;
-          $update_data['visited_count']=$update_visited_count;
+          $visited_count                = $_business['visited_count'];
+          $update_visited_count         = $visited_count+1;
+          $update_data['visited_count'] = $update_visited_count;
           BusinessListingModel::where('id',$id)->update($update_data);
         }
         $page_title ='List Details';

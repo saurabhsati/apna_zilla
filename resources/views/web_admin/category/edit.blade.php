@@ -164,7 +164,7 @@
             @elseif($arr_data['is_popular']==0)
 
              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="is_popular">Popular<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="is_popular">Popular</label>
                 <div class="col-sm-1 col-lg-1 controls">
                     <input class="form-control" id="is_popular"  type="checkbox" name="is_popular" />
                     <span class='help-block'>{{ $errors->first('is_popular') }}</span>
@@ -176,7 +176,7 @@
              @if($arr_data['is_explore_directory']==1)
 
              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="is_explore_directory">Explore Directory Category<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="is_explore_directory">Explore Directory Category</label>
                 <div class="col-sm-1 col-lg-1 controls">
                     <input class="form-control" id="is_explore_directory"  type="checkbox" name="is_explore_directory" checked="true" />
                     <span class='help-block'>{{ $errors->first('is_explore_directory') }}</span>
@@ -186,7 +186,7 @@
             @elseif($arr_data['is_explore_directory']==0)
 
              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="is_explore_directory">Explore Directory Category<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="is_explore_directory">Explore Directory Category</label>
                 <div class="col-sm-1 col-lg-1 controls">
                     <input class="form-control" id="is_explore_directory"  type="checkbox" name="is_explore_directory" onclick="return check_explore_count();" />
                     <span class='help-block'>{{ $errors->first('is_explore_directory') }}</span>
@@ -198,7 +198,7 @@
              @if($arr_data['is_allow_to_add_deal']==1)
 
              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="is_allow_to_add_deal">Allow to Add Deals<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="is_allow_to_add_deal">Allow to Add Deals</label>
                 <div class="col-sm-1 col-lg-1 controls">
                     <input class="form-control" id="is_allow_to_add_deal"  type="checkbox" name="is_allow_to_add_deal" checked="true" />
                     <span class='help-block'>{{ $errors->first('is_allow_to_add_deal') }}</span>
@@ -208,7 +208,7 @@
             @elseif($arr_data['is_allow_to_add_deal']==0)
 
              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="is_allow_to_add_deal">Allow to Add Deals<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="is_allow_to_add_deal">Allow to Add Deals</label>
                 <div class="col-sm-1 col-lg-1 controls">
                     <input class="form-control" id="is_allow_to_add_deal"  type="checkbox" name="is_allow_to_add_deal" />
                     <span class='help-block'>{{ $errors->first('is_allow_to_add_deal') }}</span>
@@ -237,6 +237,12 @@
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script type="text/javascript">
 var site_url = "{{url('/')}}";
+
+
+ /*$('#validation-form').submit(function(){
+    tinyMCE.triggerSave();
+ }); */
+
 
 function loadPreviewImage(ref)
     {

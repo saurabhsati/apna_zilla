@@ -620,7 +620,7 @@
                                 <div class="clr"></div>
 
                              <div id="append_service" class="class-add"></div>
-                              <div class="error_msg" id="error_business_service" ></div>
+                              <div class="error_msg" id="error_business_service"></div>
                               <!-- <div class="error_msg" id="error_business_image1" ></div> -->
                              <label class="col-sm-3 col-lg-2 control-label"></label>
 
@@ -919,7 +919,7 @@ $('#add-service').click(function()
 
             if(img_val == "")
             {
-                  $('#error_business_service').css('margin-left','120px');
+                  $('#error_business_service').css('margin-left','20px');
                   $('#error_business_service').show();
                   $('#error_business_service').fadeIn(3000);
                   document.getElementById('error_business_service').innerHTML="The Services is required.";
@@ -1080,7 +1080,7 @@ function getSubCategory(ref)
 </script>
 <script type="text/javascript">
   tinymce.init({ selector:'textarea' });
- //tinymce.init('#page_desc');
+
 </script>
 
 

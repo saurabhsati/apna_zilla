@@ -64,7 +64,9 @@ class DealsOffersController extends Controller
     public function create()
     {
     	$page_title="Create Deals";
-    	$obj_main_category = CategoryModel::where('parent','0')->where('is_allow_to_add_deal',1)->get();
+    	$obj_main_category = CategoryModel::where('parent','0')
+                                            ->where('is_active','1')
+                                            ->where('is_allow_to_add_deal',1)->get();
     	if($obj_main_category)
         {
             $arr_main_category = $obj_main_category->toArray();
@@ -227,8 +229,8 @@ class DealsOffersController extends Controller
          $deal_add = DealsOffersModel::create($data_arr);
             $deal_id=$deal_add->id;
 
-          $files = $request->file('deal_image');
-         $file_count = count($files);
+         $files       = $request->file('deal_image');
+         $file_count  = count($files);
          $uploadcount = 0;
          foreach($files as $file) 
          {
