@@ -621,6 +621,23 @@
                     <span class='help-block'>{{ $errors->first('keywords') }}</span>
                 </div>
             </div>
+
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="contact_person_name">Establish Year<i class="red"></i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input class="form-control" readonly="true"
+                           name="contact_person_name"
+                           id="contact_person_name"
+                           data-rule-required="true"
+                           placeholder="Enter Contact Person Name"
+                           value="{{ isset($business['establish_year'])?$business['establish_year']:'' }}"
+                           />
+                    <span class='help-block'>{{ $errors->first('establish_year') }}</span>
+                </div>
+            </div>
+           
+
+
             <!-- <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="youtube_link">Youtube Link<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">

@@ -142,14 +142,14 @@
             </div>
              
              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="is_popular">Popular<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="is_popular">Popular</label>
                 <div class="col-sm-1 col-lg-1 controls">
                     <input class="form-control" id="is_popular"  type="checkbox" name="is_popular" value="1" />
                     <span class='help-block'>{{ $errors->first('is_popular') }}</span>
                 </div>
             </div>
             <div class="form-group" id="explore_directory">
-                <label class="col-sm-3 col-lg-2 control-label" for="is_explore_directory">Explore Directory Category<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="is_explore_directory">Explore Directory Category</label>
                 <div class="col-sm-1 col-lg-1 controls">
                     <input class="form-control" id="is_explore_directory"  type="checkbox" name="is_explore_directory" value="1" onclick="return check_explore_count();" />
                     <span class='help-block'>{{ $errors->first('is_explore_directory') }}</span>
@@ -157,7 +157,7 @@
                 <div class="error" id="err_delete_payment_mode"></div>
             </div>
             <div class="form-group" id="allow_deal">
-                <label class="col-sm-3 col-lg-2 control-label" for="is_allow_to_add_deal">Allow to Add Deals<i class="red">*</i></label>
+                <label class="col-sm-3 col-lg-2 control-label" for="is_allow_to_add_deal">Allow to Add Deals</label>
                 <div class="col-sm-1 col-lg-1 controls">
                     <input class="form-control" id="is_allow_to_add_deal"  type="checkbox" name="is_allow_to_add_deal" value="1" />
                     <span class='help-block'>{{ $errors->first('is_allow_to_add_deal') }}</span>

@@ -36,18 +36,18 @@ class BusinessListingController extends Controller
     public function __construct()
     {
     	  $arr_except_auth_methods = array();
-          $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
-    	  $this->UserModel = new UserModel();
-    	  $this->BusinessListingModel = new BusinessListingModel();
-    	  $this->RestaurantReviewModel= new RestaurantReviewModel();
-          $this->BusinessImageUploadModel=new BusinessImageUploadModel();
+        $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
+        $this->UserModel                       = new UserModel();
+        $this->BusinessListingModel            = new BusinessListingModel();
+        $this->RestaurantReviewModel           = new RestaurantReviewModel();
+        $this->BusinessImageUploadModel        = new BusinessImageUploadModel();
 
-    	   $this->business_public_img_path = url('/')."/uploads/business/main_image/";
-    	   $this->business_base_img_path = base_path()."/public/uploads/business/main_image";
+        $this->business_public_img_path        = url('/')."/uploads/business/main_image/";
+        $this->business_base_img_path          = base_path()."/public/uploads/business/main_image";
 
-           $this->business_public_upload_img_path = url('/')."/uploads/business/business_upload_image/";
-           $this->business_base_upload_img_path = base_path()."/public/uploads/business/business_upload_image/";
-           $this->objpublic = new GeneratePublicId();
+        $this->business_public_upload_img_path = url('/')."/uploads/business/business_upload_image/";
+        $this->business_base_upload_img_path   = base_path()."/public/uploads/business/business_upload_image/";
+        $this->objpublic                       = new GeneratePublicId();
     }
      /* Business Listing Start */
     public function index(Request $request)
@@ -170,7 +170,7 @@ class BusinessListingController extends Controller
             $arr_rules['sun_in']  = 'required';
             $arr_rules['sun_out'] = 'required';
         }  
-        
+      
         //other fields
         //$arr_rules['hours_of_operation'] = 'required';
         $arr_rules['company_info']         = 'required';
