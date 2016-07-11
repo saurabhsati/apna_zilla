@@ -13,8 +13,6 @@
 
 </style>
 
-
-
 <div class="gry_container">
       <div class="container">
          <div class="row">
@@ -32,7 +30,6 @@
  <div class="row">
 
    @include('front.user.profile_left')
-   
    <div class="col-sm-12 col-md-9 col-lg-9">
     <div class="my_whit_bg">
       <div class="title_acc">Please provide your address details</div>
@@ -70,7 +67,6 @@
 
 
         @if(count($arr_user_info)>0)
-
         @foreach($arr_user_info as $user)
 
 
@@ -86,6 +82,7 @@
                         </div>
                          </div>
                        </div> -->
+
                         <div class="user_box_sub">
                            <div class="row">
                     <div class="col-lg-3  label-text">State :</div>
@@ -95,7 +92,7 @@
                                  data-rule-required="true"
 
                                  >
-                                 <option>Select State</option>
+                                 <option value="">Select State</option>
                                  @if(isset($arr_state) && sizeof($arr_state)>0)
                    @foreach($arr_state as $state)
                 <option value="{{ isset($state['id'])?$state['id']:'' }}" {{ $user['state']==$state['id']?'selected="selected"':'' }}>{{ isset($state['state_title'])?$state['state_title']:'' }}
@@ -115,7 +112,7 @@
                                  data-rule-required="true"
 
                                  >
-                                 <option>Select City</option>
+                                 <option value="">Select City</option>
                         <!-- <option value="{{-- isset($user['marital_status']) ? $user['marital_status']:'' --}}">{{-- $user['marital_status'] --}} </option> -->
 
                         @if(isset($arr_city) && sizeof($arr_city)>0)
@@ -156,7 +153,7 @@
                      <div class="row">
                       <div class="col-lg-3  label-text hidden-xs hidden-sm">&nbsp;</div>
                       <div class="col-sm-12 col-md-12 col-lg-9 m_l">
-                      <button type="submit" style="float:left;" class="btn-post">Save &amp; Continue</button>
+                      <button type="submit" style="float:left;" class="btn-post">Update</button>
                      </div>
                    </div>
                  </div>

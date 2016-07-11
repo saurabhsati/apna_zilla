@@ -388,6 +388,7 @@
                         <input type="password" name="password_confirmation" id="password_confirmation" class="input_box" placeholder="Enter Confirm Password"/>
                         <div id="c_pass_error" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div>
                         <div id="confirm_pass_error" style="display: none;"><i style="color: red;margin-left: -170px;">Password Missmatched</i></div>
+                        <div id="minimum_passwd" style="display: none;"><i style="color: red;margin-left: -170px;">Password should be 6 characters long.</i></div>
                      </div>
                      <div class="terms_service"><input type="checkbox" id="terms_to_agree" class="chk_bx"/> Yes, I agree with <a href="{{url('/page/terms-of-use')}}" target="_blank">Terms of services</a></div>
                      <div class="clr"></div>
@@ -775,6 +776,7 @@ If you need any more details on RightNext Verified, please refer to
     var email      = $('#emailid').val();
     var mobile     = $('#mobile').val();
     var password   = $('#password').val();
+    var length = password.length;
     var conf_password  = $('#password_confirmation').val();
     var filter = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
     var mob_filter = /^[0-9]{10}$/;
@@ -817,6 +819,10 @@ If you need any more details on RightNext Verified, please refer to
     else if(conf_password!=password)
     {
       $('#confirm_pass_error').show();
+    }
+    else if(length<6)
+    {
+      $('#minimum_passwd').show();
     }
     else
     {
@@ -931,6 +937,11 @@ If you need any more details on RightNext Verified, please refer to
       {
         $('#c_pass_error').hide();
         $('#confirm_pass_error').hide();
+      });
+    $('#password_confirmation').keyup(function()
+      {
+        $('#c_pass_error').hide();
+        $('#minimum_passwd').hide();
       });
   });
 </script>

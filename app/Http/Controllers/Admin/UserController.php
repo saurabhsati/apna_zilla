@@ -426,7 +426,7 @@ class UserController extends Controller
         {
             $arr_data['profile_pic'] = $profile_pic;
         }
-
+        //dd($arr_data);
         $user = Sentinel::findById($user_id);
         //dd($arr_data);
         $status = Sentinel::update($user,$arr_data);

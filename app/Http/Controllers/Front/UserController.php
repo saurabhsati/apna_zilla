@@ -430,6 +430,7 @@ class UserController extends Controller
 
     public function address()
     {
+        
         $page_title = "Address";
         if(!(Session::has('user_id')))
         {
@@ -455,7 +456,6 @@ class UserController extends Controller
         {
             $arr_user_info = $obj_user_info->toArray();
         }
-
         return view('front.user.address',compact('page_title','arr_user_info','arr_city','arr_state'));
     }
 

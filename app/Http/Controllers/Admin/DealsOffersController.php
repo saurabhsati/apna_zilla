@@ -302,6 +302,7 @@ class DealsOffersController extends Controller
 
     public function update(Request $request,$enc_id)
     {
+
         //  dd($request->all());
         $id=    base64_decode($enc_id);
 

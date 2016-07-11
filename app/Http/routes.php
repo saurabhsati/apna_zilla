@@ -395,6 +395,8 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 		Route::get('/',						['as' => 'list_contact_enquiry' ,'uses' => 'Admin\ContactEnquiryController@index']);
 		Route::get('show/{enc_id}',			['as' => 'show_contact_enquiry' ,'uses' => 'Admin\ContactEnquiryController@show']);
 
+		Route::get('toggle_status/{enc_id}/{action}',	['as' => 'contact_enquiry_toggle_status'		,'uses' => 'Admin\ContactEnquiryController@toggle_status']);
+
 	});
 
     /*************************************End*****************************************************/
@@ -872,6 +874,7 @@ Route::group(['prefix' => '/','middleware'=>['web']], function()
 	{
 		Route::get('/',									 ['as' => 'contact_us_form'      ,'uses' => 'Front\ContactUsController@index']);
 		Route::post('store',							 ['as' => 'contact_us_store'     ,'uses' => 'Front\ContactUsController@store']);
+
 
 	});
 	Route::get('/faqs',									 ['as' => 'contact_us_form'      ,'uses' => 'Front\FaqController@index']);

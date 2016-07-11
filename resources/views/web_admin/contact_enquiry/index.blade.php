@@ -94,6 +94,13 @@
                    style="text-decoration:none;">
                    <i class="fa fa-repeat"></i>
                 </a> 
+                <a class="btn btn-circle btn-to-success btn-bordered btn-fill show-tooltip"
+                   title="Multiple Delete"
+                   href="javascript:void(0);"
+                   onclick="javascript : return check_multi_action('frm_dynamic_pages_manage','delete');"
+                   style="text-decoration:none;">
+                   <i class="fa fa-trash-o"></i>
+                </a>
             </div>
           </div>
           <br/>
@@ -127,6 +134,11 @@
                           <i class="fa fa-eye" > </i>
                         </a>
                         &nbsp;
+
+                          <a href="{{ url('/').'/web_admin/contact_enquiry/toggle_status/'.base64_encode($contact['contact_us_id']).'/delete' }}"
+                          onclick="return confirm_delete()">
+                          <i class="fa fa-trash" ></i>
+                        </a>
  
                     </td>
                   </tr>

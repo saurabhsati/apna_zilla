@@ -67,7 +67,6 @@
                 {{ Session::get('error') }}
             </div>
           @endif
-
         @if(isset($deal_arr) && sizeof($deal_arr)>0)
             <form class="form-horizontal" id="validation-form" method="POST" action="{{ url('/web_admin/deals_offers/update/'.base64_encode($deal_arr['id'])) }}" enctype="multipart/form-data">
 
