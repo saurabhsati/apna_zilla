@@ -105,6 +105,7 @@
                            name="premium_cost"
                            id="premium_cost"
                            data-rule-required="true"
+                            data-rule-min="0"
                            value="{{ isset($arr_cost_data['premium_cost'])?$arr_cost_data['premium_cost']:'' }}" />
 
                     <span class='help-block'>{{ $errors->first('premium_cost') }}</span>
@@ -117,6 +118,7 @@
                            name="gold_cost"
                            id="gold_cost"
                            data-rule-required="true"
+                            data-rule-min="0"
                            value="{{ isset($arr_cost_data['gold_cost'])?$arr_cost_data['gold_cost']:'' }}" />
 
                     <span class='help-block'>{{ $errors->first('gold_cost') }}</span>
@@ -129,6 +131,7 @@
                            name="basic_cost"
                            id="basic_cost"
                            data-rule-required="true"
+                           data-rule-min="0"
                            value="{{ isset($arr_cost_data['basic_cost'])?$arr_cost_data['basic_cost']:'' }}" />
 
                     <span class='help-block'>{{ $errors->first('basic_cost') }}</span>

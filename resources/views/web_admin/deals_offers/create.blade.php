@@ -181,7 +181,7 @@
                <div id="append" class="class-add"></div>
                 <div class="error_msg" id="error_deal_image" ></div>
                 <div class="error_msg" id="error_deal_image1" ></div>
-               <label class="col-sm-6 col-lg-12 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px upto only</label>
+               <label class="col-sm-6 col-lg-12 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px for best result</label>
 
                 </div>
 
@@ -380,6 +380,34 @@
     tinymce.init({ selector:'textarea' });
     //tinymce.init('#page_desc');
 </script>
+
+
+
+ <script type="text/javascript">
+$(function () {
+    $("#start_day").datepicker({
+
+      alert('jk');
+      /*  numberOfMonths: 2,
+        onSelect: function (selected) {
+          alert('sdafasdf');
+            var dt = new Date(selected);
+            dt.setDate(dt.getDate() + 1);
+            $("#end_day").datepicker("option", "minDate", dt);
+        }
+    });
+    $("#end_day").datepicker({
+        numberOfMonths: 2,
+        onSelect: function (selected) {
+            var dt = new Date(selected);
+            dt.setDate(dt.getDate() - 1);
+            $("#start_day").datepicker("option", "maxDate", dt);
+        }*/
+    });
+});
+</script>
+
+
 <script type="text/javascript">
  var url = "{{ url('/') }}";
 </script>
