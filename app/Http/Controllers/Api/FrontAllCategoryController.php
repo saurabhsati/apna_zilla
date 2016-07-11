@@ -341,6 +341,8 @@ class FrontAllCategoryController extends Controller
         {
             $arr_data_business = $obj_business_listing->toArray();
         }
+
+
  
        if($user_id !="")
        {
@@ -389,7 +391,7 @@ class FrontAllCategoryController extends Controller
 			  
                   /* If Location lat & log has been set by session calculate the distance range and get the business under that range */
                   if(isset($latitude) && isset($longitude) && $latitude!='' && $longitude!='')
-                  {
+                   {
                        
                         $qutt='*,ROUND( 6379 * acos (
                           cos ( radians('.$latitude.') )
@@ -430,11 +432,11 @@ class FrontAllCategoryController extends Controller
 
 								if(in_array($value['id'], $arr_fav_business))
 								{
-									$business_data[$key]['is_favourite']  = 1;
+								$business_data[$key]['is_favourite']   = 1;
 								}
 								else
 								{
-									$business_data[$key]['is_favourite']  = 0;
+								$business_data[$key]['is_favourite']   = 0;
 								}
 								$business_data[$key]['review_count']   = count($value['reviews']);
 								$business_data[$key]['business_name']  = $value['business_name'];
@@ -445,13 +447,50 @@ class FrontAllCategoryController extends Controller
 								$business_data[$key]['mobile_number']  = $value['mobile_number'];
 								$business_data[$key]['avg_rating']     = $value['avg_rating'];
 								$business_data[$key]['is_verified']    = $value['is_verified'];
-								$business_data[$key]['visited_count']    = $value['visited_count'];
+								$business_data[$key]['visited_count']  = $value['visited_count'];
 								$business_data[$key]['establish_year'] = "Estd.in" .$value['establish_year'];
-	                   			$business_data[$key]['distance']      = $value['distance'];
+								$business_data[$key]['distance']       = $value['distance'];
 	                   		}	
 
                         }
  		            }
+ 		            else
+ 		            {
+ 		            		
+
+ 		            		foreach ($arr_data_business as $key => $value) 
+ 		            		{
+
+
+
+ 		            			$business_data[$key]['id']           = $value['id'];
+								if(in_array($value['id'], $arr_fav_business))
+								{
+								$business_data[$key]['is_favourite']   = 1;
+								}
+								else
+								{
+								$business_data[$key]['is_favourite']   = 0;
+
+								}
+								$business_data[$key]['review_count']   = count($value['reviews']);
+								$business_data[$key]['business_name']  = $value['business_name'];
+								$business_data[$key]['main_image']     = url('/uploads/business/main_image').'/'.$value['main_image'];
+								$business_data[$key]['area']           = $value['area'];
+								$business_data[$key]['city']           = $value['city'];
+								$business_data[$key]['pincode']        = $value['pincode'];
+								$business_data[$key]['mobile_number']  = $value['mobile_number'];
+								$business_data[$key]['avg_rating']     = $value['avg_rating'];
+								$business_data[$key]['is_verified']    = $value['is_verified'];
+								$business_data[$key]['visited_count']  = $value['visited_count'];
+								$business_data[$key]['establish_year'] = "Estd.in" .$value['establish_year'];
+								//$business_data[$key]['distance']       = $value['distance'];
+
+							}
+					}
+
+
+
 	            }
 	         }  
       

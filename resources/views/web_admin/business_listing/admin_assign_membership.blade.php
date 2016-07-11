@@ -108,6 +108,7 @@
                            name="price"
                            id="price"
                            data-rule-required="true"
+                           data-rule-min="0"
                            value=""
                            disabled=""
                            />

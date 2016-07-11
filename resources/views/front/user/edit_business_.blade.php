@@ -185,7 +185,7 @@
   <div class="col-lg-3  label-text">Area:</div>
   <div class="col-sm-12 col-md-12 col-lg-9 m_l">
    <input type="text" name="area"
-   value="{{ isset($business['area'])?$business['area']:'' }}"
+   value="{{ isset($business['area']) ? $business['area']:'' }}"
    class="input_acct"
    placeholder="Enter Area's Name" />
  </div>

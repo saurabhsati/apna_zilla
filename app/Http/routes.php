@@ -397,6 +397,7 @@ Route::group(['prefix'=>'/web_admin','middleware'=>['web']], function ()
 
 		Route::get('toggle_status/{enc_id}/{action}',	['as' => 'contact_enquiry_toggle_status'		,'uses' => 'Admin\ContactEnquiryController@toggle_status']);
 
+
 	});
 
     /*************************************End*****************************************************/

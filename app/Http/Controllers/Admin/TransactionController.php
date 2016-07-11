@@ -56,7 +56,7 @@ class TransactionController extends Controller
 
     		$arr_single_transaction = $obj_single_transaction->toArray();
     	}
-
+//dd($arr_single_transaction['membership']);
     	return view('web_admin.transaction.view',compact('page_title','arr_single_transaction'));
     }
     public function edit($enc_id)
