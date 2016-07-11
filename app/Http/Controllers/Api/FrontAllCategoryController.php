@@ -456,10 +456,14 @@ class FrontAllCategoryController extends Controller
  		            }
  		            else
  		            {
- 		            		foreach ($arr_data_business as $key => $value) {
  		            		
 
+ 		            		foreach ($arr_data_business as $key => $value) 
+ 		            		{
 
+
+
+ 		            			$business_data[$key]['id']           = $value['id'];
 								if(in_array($value['id'], $arr_fav_business))
 								{
 								$business_data[$key]['is_favourite']   = 1;
@@ -467,6 +471,7 @@ class FrontAllCategoryController extends Controller
 								else
 								{
 								$business_data[$key]['is_favourite']   = 0;
+
 								}
 								$business_data[$key]['review_count']   = count($value['reviews']);
 								$business_data[$key]['business_name']  = $value['business_name'];
@@ -481,19 +486,8 @@ class FrontAllCategoryController extends Controller
 								$business_data[$key]['establish_year'] = "Estd.in" .$value['establish_year'];
 								//$business_data[$key]['distance']       = $value['distance'];
 
-
-
 							}
-
-
-
-
-
- 		            }
-
-
-
-
+					}
 
 
 
