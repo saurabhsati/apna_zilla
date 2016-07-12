@@ -306,6 +306,7 @@ class VenderController extends Controller
 		$city           = $request->input('city');
 		$pincode        = $request->input('pincode');
 		$area           = $request->input('area');
+		$role           ='Normal';
 
 		$profile_pic = FALSE;
         if ($request->hasFile('profile_pic'))
@@ -345,7 +346,8 @@ class VenderController extends Controller
 		            'state'			=> $state,
 		            'pincode'		=> $pincode,
 		            'area' 			=> $area,
-		            'mobile_no' 	=> $mobile_no
+		            'mobile_no' 	=> $mobile_no,
+		            'role'          => $role
 		          ];
 
         if($password!=FALSE)
