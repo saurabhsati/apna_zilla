@@ -390,7 +390,7 @@ class FrontAllCategoryController extends Controller
 			      }
 			  
                   /* If Location lat & log has been set by session calculate the distance range and get the business under that range */
-                  if(isset($latitude) && isset($longitude) && $latitude!='' && $longitude!='')
+                  if(isset($latitude) && isset($longitude) && $latitude!='' && $longitude!='' && $latitude!=0 && $longitude!=0)
                    {
                        
                         $qutt='*,ROUND( 6379 * acos (
@@ -485,17 +485,19 @@ class FrontAllCategoryController extends Controller
 
 							}
 					}
-
-
-
 	            }
 	         }  
-      
-            $result_city_id  = CityModel::select('id')->where('city_title',$city)->first();  
-	    	$arr_id = $result_city_id->toArray();
 
+      		$arr_id=[];	
+            $result_city_id  = CityModel::select('id')->where('city_title',$city)->first();  
+	    	if ($result_city_id)
+	    	{
+	    	    $arr_id = $result_city_id->toArray();
+	    	    $json['id'] 	         = $arr_id['id'];
+	    	}
+	    	
 				
-			$json['id'] 	         = $arr_id['id'];
+			
 			$json['business_data'] 	 = $business_data;
 			$json['status']          = 'SUCCESS';
 			$json['message']         = 'Business Listing !';
