@@ -519,7 +519,7 @@ class UserController extends Controller
 
             Session::flash('success','Vender(s) Deleted Successfully');
         }
-
+        
         return redirect()->back();
     }
 
