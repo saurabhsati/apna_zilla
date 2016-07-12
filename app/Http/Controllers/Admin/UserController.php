@@ -8,6 +8,7 @@ use App\Models\EmailTemplateModel;
 use App\Models\CountryModel;
 use App\Models\StateModel;
 use App\Models\CityModel;
+use App\Models\BusinessListingModel;
 
 use App\Common\Services\GeneratePublicId;
 
@@ -542,8 +543,25 @@ class UserController extends Controller
 
     protected function _delete($enc_id)
     {
+       // dd('i m here');
         $id = base64_decode($enc_id);
-        $user = Sentinel::findById($id);
+        $user = UserModel::where('id',$id)->get()->toArray();
+       
+        if($user)
+        {
+           $del_business =  BusinessListingModel::where('user_id',$id)->get()->toArray();
+           if($del_business)
+           {
+                foreach ($del_business as $key => $del_business) 
+                {
+                    $business[$key]['id'] = $del_business['id'];   
+                }
+                dd($business);
+           }
+           
+        }
+
+        dd($user);
         return $user->delete();
     }
 
