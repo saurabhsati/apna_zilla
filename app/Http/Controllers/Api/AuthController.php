@@ -306,9 +306,9 @@ class AuthController extends Controller
 	/* Profile Update Service*/
     public function update(Request $request)
     {
-       $json =array();
-        $id			     = $request->input('id');
-    	$obj_user = Sentinel::createModel();
+        $json     = array();
+        $id       = $request->input('id');
+        $obj_user = Sentinel::createModel();
     	if($request->hasFile('profile_pic'))
     	{
     		$cv_path 			= $request->file('profile_pic')->getClientOriginalName();
@@ -338,7 +338,7 @@ class AuthController extends Controller
 
 
 			
-			$arr_data['first_name']     = $request->input('first_name');
+            $arr_data['first_name'] = $request->input('first_name');
 			if($request->input('email')!='')
             {
                 $arr_data['email']          = $request->input('email');
@@ -365,7 +365,7 @@ class AuthController extends Controller
             else if($role == 'admin' || $role=='sales')
             {   
 
-                $arr_data['last_name']      = $request->input('last_name');
+                $arr_data['last_name']       = $request->input('last_name');
 
                 $arr_data['office_landline'] = $request->input('office_landline');
                 $arr_data['street_address']  = $request->input('street_address');
@@ -382,9 +382,9 @@ class AuthController extends Controller
                 $profile_image           = url('/uploads/users/profile_pic').'/'.$user_info['profile_pic'];
                 $arr_data                = $user_info;
                 $arr_data['profile_pic'] = $profile_image;
-                $json['data']= $arr_data;
-		  		$json['status']	= "SUCCESS";
-                $json['message']  = 'Profile Updated successfully ! ';
+                $json['data']            = $arr_data;
+                $json['status']          = "SUCCESS";
+                $json['message']         = 'Profile Updated successfully ! ';
 		  	}
 		  	else
 		  	{
