@@ -75,6 +75,7 @@
 
         <input type="hidden" name="user_id" value="{{ $user['id'] }}"></input>
 
+           {{--  @if($user['profile_pic'] !="") --}}
              <div class="col-sm-3 col-md-3 col-lg-3">
                 <div class="profile_box">
                     <div class="ig_profile wdth-img" id="dvPreview">
@@ -95,6 +96,27 @@
                     </div>
                        </div>
                </div>
+              {{--  @else
+              <div class="col-sm-3 col-md-3 col-lg-3">
+                <div class="profile_box">
+                    <div class="ig_profile wdth-img" id="dvPreview">
+
+                   
+                      <img src="" width="200" height="200" id="preview_profile_pic"  />
+
+
+                    </div>
+                        <div class="button_shpglst">
+                        <div class="fileUpload or_btn">
+                        <span>Upload Photo</span>
+                        <input id="fileupload" type="file" name="profile_pic" class="upload change_pic" onchange="loadPreviewImage(this)"></div>
+                       
+                     <div class="clr"></div>
+                    <div class="line">&nbsp;</div>
+                    </div>
+                       </div>
+               </div>
+              @endif  --}}
 
 
                  <div class="col-sm-9 col-md-9 col-lg-9">
@@ -472,7 +494,7 @@
 
     function clearPreviewImage()
     {
-        $('#preview_profile_pic').attr('src',site_url+'/images/front/avatar.jpg');
+        $('#preview_profile_pic').attr('src',site_url+'/images/admin/avatar/avatar.png');
         $("#removal_handle").hide();
     }
       function chkeck_marital_status(ref)

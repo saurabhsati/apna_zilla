@@ -90,7 +90,7 @@ class CommonController extends Controller
         
         $obj_postalcode = PlaceModel::select('id','postal_code','city_id')
                                        ->where('city_id',$city_id)
-                                       ->orderBy('place_name','ASC')->get();
+                                       ->orderBy('postal_code','ASC')->get();
 
         if($obj_postalcode != FALSE)
         {

@@ -278,8 +278,10 @@
                             </span>
                            </div>
                               <label class="col-sm-3 col-lg-2 control-label">Add More Business Gallery Images <i class="red">*</i> </label>
+                              <div style="color:red" class="error_msg" id="error_business_image" ></div>
+                              <div class="error_msg" id="error_business_image1" ></div>
                               <div class="col-sm-6 col-lg-4 controls">
-
+                                
                               <input type="file" name="business_image[]" id="business_image" class="pimg"   />
                               <div class="error" id="error_business_image">{{ $errors->first('business_image') }}</div>
 
@@ -288,8 +290,7 @@
                                 <div class="clr"></div>
 
                              <div id="append" class="class-add"></div>
-                              <div class="error_msg" id="error_business_image" ></div>
-                              <div class="error_msg" id="error_business_image1" ></div>
+                              
                             <label class="col-sm-6 col-lg-12 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px upto only</label>
 
                               </div>
@@ -711,6 +712,7 @@
                             </span>
                            </div>
                               <label class="col-sm-3 col-lg-2 control-label">Add More Business Services <i class="red">*</i> </label>
+                              <center> <div style="color:red" class="error_msg" id="error_business_service" ></div></center>
                               <div class="col-sm-6 col-lg-4 controls">
 
                               <input class="form-control" type="text" name="business_service[]" id="business_service" class="pimg"   />
@@ -1029,7 +1031,7 @@ $('#add-image').click(function()
                   $('#error_business_image').css('margin-left','120px');
                   $('#error_business_image').show();
                   $('#error_business_image').fadeIn(3000);
-                  document.getElementById('error_business_image').innerHTML="The Image uploaded is required.";
+                  document.getElementById('error_business_image').innerHTML="Business Image field can-not be empty";
                   setTimeout(function(){
                   $('#error_business_image').fadeOut(4000);
                   },3000);
@@ -1094,7 +1096,7 @@ $('#add-service').click(function()
                   $('#error_business_service').css('margin-left','120px');
                   $('#error_business_service').show();
                   $('#error_business_service').fadeIn(3000);
-                  document.getElementById('error_business_service').innerHTML="The Services is required.";
+                  document.getElementById('error_business_service').innerHTML="Services Field can-not be empty.";
                   setTimeout(function(){
                   $('#error_business_service').fadeOut(4000);
                   },3000);
