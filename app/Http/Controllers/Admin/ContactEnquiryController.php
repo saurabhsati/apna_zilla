@@ -55,5 +55,36 @@ class ContactEnquiryController extends Controller
        return view('web_admin.contact_enquiry.show',compact('page_title','arr_contact'));
     }
 
+     public function toggle_status($enc_id,$action)
+    {
+        if($action=="delete")
+        {
+            $this->_delete($enc_id);
+
+            Session::flash('success','ContactEnquiry(s) Deleted Successfully');
+        }
+        elseif($action=="activate")
+        {
+            $this->_activate($enc_id);
+
+            Session::flash('success','ContactEnquiry(s) Activated Successfully');
+        }
+        elseif($action=="deactivate")
+        {
+            $this->_block($enc_id);
+
+            Session::flash('success','ContactEnquiry(s) Deactivate/Blocked Successfully');
+        }
+
+        return redirect('/web_admin/contact_enquiry');
+    }
+
+    protected function _delete($enc_id)
+    {
+        $id = base64_decode($enc_id);
+
+        return ContactEnquiryModel::where('contact_us_id',$id)->delete();
+    }
+
 
   }

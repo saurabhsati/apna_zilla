@@ -167,7 +167,7 @@
                      <?php //echo $user['d_o_b'];
                        $date_explode=explode('-',$user['d_o_b']);
                      // print_r($date_explode) ;?>
-                       <select class="input_acct" name="dd">
+                       <select class="input_acct" name="dd"  data-rule-required="true">
                        <option value="">Day</option>
                             @for($i=1;$i<=31;$i++)
                               <option value="<?php echo $i;?>" <?php  if(isset($date_explode[2])  &&  $date_explode[2] ==  $i ) { echo "selected=selected";}?>>{{ $i }}</option>
@@ -176,7 +176,7 @@
                          </div>
 
                              <div class="col-sm-3 col-md-3 col-lg-3">
-                           <select class="input_acct" name="mm">
+                           <select class="input_acct" name="mm"  data-rule-required="true">
                            <option value="">Month</option>
                                  <option value="01" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '01' ) { echo "selected=selected";}?>>January</option>
                                  <option value="02" <?php  if(isset($date_explode[1])  &&  $date_explode[1] ==  '02' ) { echo "selected=selected";}?>>February</option>
@@ -194,7 +194,7 @@
                             </div>
 
                             <div class="col-sm-3 col-md-3 col-lg-3">
-                                <select class="input_acct" name="yy">
+                                <select class="input_acct" name="yy"  data-rule-required="true">
                                 <option value="">Year</option>
                                 @for($j=date('Y');$j>= 1950 ;$j--)
                                   <option value="<?php echo $j;?>" <?php  if(isset($date_explode[0])  &&  $date_explode[0] ==  $j ) { echo "selected=selected";}?> >{{ $j }}</option>
@@ -213,7 +213,7 @@
                             <div class="col-lg-3  label-text">Gender :</div>
                                 <div class="col-sm-12 col-md-12 col-lg-9 m_l">
                                 <div class="gender-top">
-                                <input type="radio"  name="gender" id="gender" value="male" <?php  if(isset($user['gender'])  &&  $user['gender'] ==  "male" ) { echo "checked=checked";}?> >&nbsp;&nbsp;Male&nbsp;&nbsp;</input>
+                                <input type="radio" data-rule-required="true"  name="gender" id="gender" value="male" <?php  if(isset($user['gender'])  &&  $user['gender'] ==  "male" ) { echo "checked=checked";}?> >&nbsp;&nbsp;Male&nbsp;&nbsp;</input>
                                 <input type="radio"  name="gender" id="gender" value="female" <?php  if(isset($user['gender'])  &&  $user['gender'] ==  "female" ) { echo "checked=checked";}?> >&nbsp;&nbsp;Female</input>
                                 <!-- <input type="text" name="occupation"
                                 value="{{-- isset($user['occupation'])?$user['occupation']:'' --}}"

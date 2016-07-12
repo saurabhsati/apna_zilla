@@ -106,6 +106,20 @@
                     <span class='help-block'>{{ $errors->first('user_id') }}</span>
                 </div>
             </div>
+             <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="user_id">Unique Public Id<i class="red"></i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                 <input class="form-control"
+                           name="public_id"
+                           id="public_id"
+                           data-rule-required="true"
+                           readonly="true"
+                           value="{{ isset($business['user_details']['public_id'])?$business['user_details']['public_id']:'' }}"
+                           />
+
+                    <span class='help-block'>{{ $errors->first('public_id') }}</span>
+                </div>
+            </div>
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="business_name">Business Name<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">

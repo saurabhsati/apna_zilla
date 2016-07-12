@@ -68,8 +68,6 @@
             </div>
           @endif
 
-
-
           <form class="form-horizontal" id="validation-form" method="POST" action="{{ url('/web_admin/deals_offers/store') }}" enctype="multipart/form-data">
 
 
@@ -207,14 +205,14 @@
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" name="price" id="price" data-rule-required="true" data-rule-price="true"/>
                     <span class='help-block'>{{ $errors->first('price') }}</span>
-                </div>
+                </div><font color="green">In Rupees.</font>
             </div>
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="discount_price">Discount<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" name="discount_price" id="discount_price" data-rule-required="true" data-rule-price="true"/>
                     <span class='help-block'>{{ $errors->first('discount_price') }}</span>
-                </div>
+                </div><font color="green">In Rupees.</font>
             </div>
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="deal_type">Deal Type<i class="red">*</i></label>
