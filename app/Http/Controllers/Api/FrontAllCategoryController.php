@@ -390,7 +390,7 @@ class FrontAllCategoryController extends Controller
 			      }
 			  
                   /* If Location lat & log has been set by session calculate the distance range and get the business under that range */
-                  if(isset($latitude) && isset($longitude) && $latitude!='' && $longitude!='')
+                  if(isset($latitude) && isset($longitude) && $latitude!='' && $longitude!='' && $latitude!=0 && $longitude!=0)
                    {
                        
                         $qutt='*,ROUND( 6379 * acos (
@@ -456,14 +456,11 @@ class FrontAllCategoryController extends Controller
  		            }
  		            else
  		            {
- 		            		
-
+ 		            	
  		            		foreach ($arr_data_business as $key => $value) 
  		            		{
-
-
-
  		            			$business_data[$key]['id']           = $value['id'];
+							
 								if(in_array($value['id'], $arr_fav_business))
 								{
 								$business_data[$key]['is_favourite']   = 1;
@@ -471,8 +468,8 @@ class FrontAllCategoryController extends Controller
 								else
 								{
 								$business_data[$key]['is_favourite']   = 0;
-
 								}
+
 								$business_data[$key]['review_count']   = count($value['reviews']);
 								$business_data[$key]['business_name']  = $value['business_name'];
 								$business_data[$key]['main_image']     = url('/uploads/business/main_image').'/'.$value['main_image'];
@@ -488,17 +485,19 @@ class FrontAllCategoryController extends Controller
 
 							}
 					}
-
-
-
 	            }
 	         }  
-      
-            $result_city_id  = CityModel::select('id')->where('city_title',$city)->first();  
-	    	$arr_id = $result_city_id->toArray();
 
+      		$arr_id=[];	
+            $result_city_id  = CityModel::select('id')->where('city_title',$city)->first();  
+	    	if ($result_city_id)
+	    	{
+	    	    $arr_id = $result_city_id->toArray();
+	    	    $json['id'] 	         = $arr_id['id'];
+	    	}
+	    	
 				
-			$json['id'] 	         = $arr_id['id'];
+			
 			$json['business_data'] 	 = $business_data;
 			$json['status']          = 'SUCCESS';
 			$json['message']         = 'Business Listing !';

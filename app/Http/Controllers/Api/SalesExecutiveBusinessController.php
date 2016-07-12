@@ -708,7 +708,7 @@ class SalesExecutiveBusinessController extends Controller
             }
             else
             {
-               $public_id                              = $this->objpublic->generate_business_public_by_category($business_cat_slug,$business_id);
+               $public_id = $this->objpublic->generate_business_public_by_category($business_cat_slug,$business_id);
                $business_data['busiess_ref_public_id'] = $public_id;
             }
 
@@ -761,7 +761,6 @@ class SalesExecutiveBusinessController extends Controller
     public function update_business_step3(Request $request)
     {
          $business_id                          = $request->input('business_id');
-
          $business_data['prefix_name']         = $request->input('prefix_name');
          $business_data['contact_person_name'] = $request->input('contact_person_name');
          $business_data['mobile_number']       = $request->input('mobile_number');

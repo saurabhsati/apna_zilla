@@ -11,7 +11,6 @@
         </div>
     </div>
     <!-- END Page Title -->
-
     <!-- BEGIN Breadcrumb -->
      <div id="breadcrumbs">
         <ul class="breadcrumb">
@@ -124,6 +123,7 @@
                   <th>Membership</th>
                   <th>Business Name</th>
                   <th>Category Name</th>
+                  <th>Deal count</th>
                   <th>Price</th>
                   <th>Start Date</th>
                   <th>Expire Date</th>
@@ -133,6 +133,8 @@
               <tbody>
               @if(sizeof($arr_transaction)>0)
               @foreach($arr_transaction as $key => $transaction)
+
+
 
                   <tr>
                     <td>
@@ -162,6 +164,9 @@
                      <td>
                         {{ isset($transaction['category']) && $transaction['category']? $transaction['category']['title']:'' }}
                     </td>
+
+                    <td>  {{$transaction['membership']['no_normal_deals']}} </td>
+                   
                     <td>Rs.{{ $transaction['price'] }} /- </td>
 
                     <td>

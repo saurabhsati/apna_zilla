@@ -1212,18 +1212,18 @@ If you need any more details on RightNext Verified, please refer to
           {
             if(res=="success")
             {
-               $("#rec_pwd_succ").fadeIn(3000).fadeOut(3000);
+               $("#rec_pwd_succ").fadeIn(4000).fadeOut(4000);
                $("#recover_password").trigger('reset');
             }
             else if(res=="sending_error")
             {
-               $("#rec_pwd_err").fadeIn(3000).fadeOut(3000);
+               $("#rec_pwd_err").fadeIn(4000).fadeOut(4000);
                $("#recover_password").trigger('reset');
             }
             else
             {
 
-              $("#rec_pwd_err").fadeIn(3000).fadeOut(3000);
+              $("#rec_pwd_err").fadeIn(4000).fadeOut(4000);
             }
           },
           complete: function() {

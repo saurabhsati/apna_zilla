@@ -43,6 +43,7 @@ class ListingController extends Controller
 
           return redirect()->back();
          }
+         $_business=[];
          $obj_business = BusinessListingModel::where('id',$id)->first();
         if( $obj_business != FALSE)
         {

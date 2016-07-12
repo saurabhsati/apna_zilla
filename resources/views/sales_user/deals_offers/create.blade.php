@@ -711,12 +711,12 @@ $(document).ready(function()
                {
                  $('#error_deal_image1').css('margin-left','230px')
                  $('#error_deal_image1').show();
-                 $('#error_deal_image1').fadeIn(3000);
+                 $('#error_deal_image1').fadeIn(5000);
                  document.getElementById('error_deal_image1').innerHTML="The file type you are attempting to upload is not allowed.";
                  setTimeout(function(){
                   $('#deal_image').css('border-color','#dddfe0');
-                  $('#error_deal_image1').fadeOut(4000);
-               },3000);
+                  $('#error_deal_image1').fadeOut(5000);
+               },6000);
                flag=0;
                 return false;
               }
