@@ -50,7 +50,7 @@
             </div>
           @endif
 
-{{dd($arr_business)}}
+
              @if(isset($arr_business) && (count($arr_business)>0 ))
                 @foreach($arr_business as $business)
 

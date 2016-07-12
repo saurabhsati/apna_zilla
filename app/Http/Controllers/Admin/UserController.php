@@ -9,6 +9,10 @@ use App\Models\CountryModel;
 use App\Models\StateModel;
 use App\Models\CityModel;
 use App\Models\BusinessListingModel;
+use App\Models\BusinessImageUploadModel;
+use App\Models\DealModel;
+use App\Models\DealsSliderImagesModel;
+use App\Models\TransactionModel;
 
 use App\Common\Services\GeneratePublicId;
 
@@ -543,25 +547,45 @@ class UserController extends Controller
 
     protected function _delete($enc_id)
     {
-       // dd('i m here');
         $id = base64_decode($enc_id);
         $user = UserModel::where('id',$id)->get()->toArray();
-       
         if($user)
         {
-           $del_business =  BusinessListingModel::where('user_id',$id)->get()->toArray();
+           $del_business =  BusinessListingModel::where('user_id',$id)->get()->toArray(); //getting all the Images related to user 
            if($del_business)
            {
                 foreach ($del_business as $key => $del_business) 
                 {
                     $business[$key]['id'] = $del_business['id'];   
                 }
-                dd($business);
-           }
-           
-        }
+                foreach ($business as $key => $business_id) //deleting all the business images of paricular business.
+                {
+                    BusinessImageUploadModel::where('business_id',$business_id)->delete();
+                }
+                
+                //getting all the deals which are related to business
+                $del_deals = DealModel::where('business_id',$business_id)->get()->toArray();
 
-        dd($user);
+                if($del_deals)
+                {
+                    foreach ($del_deals as $key => $del_deals) 
+                    {
+                        $deals[$key]['id'] = $del_deals['id'];
+                    }
+                    foreach ($deals as $key => $deal_id) 
+                    {
+                        DealsSliderImagesModel::where('deal_id',$deal_id)->delete();
+                    }
+                    
+                    //deleteting all the deals related to the business.
+                    DealModel::where('business_id',$business_id)->delete();
+                }
+                //deleteting all the business related to the user.
+               $business_del = BusinessListingModel::where('user_id',$id)->delete();
+           }
+           TransactionModel::where('user_id',$id)->delete(); //deleting all the Transation related to user           
+        }
+        $user = Sentinel::findById($id);
         return $user->delete();
     }
 
