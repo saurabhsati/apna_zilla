@@ -155,6 +155,7 @@
                         @endforeach
                       @endif
                   </select>
+                  <div id="no_sub_cat_ava" class="alert alert-danger" style="display:none">Sorry No Sub-Category available Please select different Categroy</div>
                 <span class='help-block'>{{ $errors->first('business_cat') }}</span>
                 </div>
             </div>
@@ -1272,6 +1273,7 @@ function getSubCategory(ref)
                                 option+='<option value="'+arr_sub_cat.cat_id+'">'+arr_sub_cat.title+'</option>';
 
                                });
+                              $("#no_sub_cat_ava").hide();
                                categCheck.html(option);
                                categCheck.multiselect('rebuild');
 
@@ -1282,6 +1284,7 @@ function getSubCategory(ref)
                             //$(".multiselect-container").css("display",'none');
                             categCheck.html('<option value=""></option>');
                             $(".multiselect-selected-text").html("No Sub Category Available !");
+                             $("#no_sub_cat_ava").show();
                         }
                         return false;
                     }
