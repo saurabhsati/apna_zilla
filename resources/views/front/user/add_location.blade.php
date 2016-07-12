@@ -310,9 +310,6 @@ $("#area").bind("geocode:dragged", function(event, latLng){
         $("#removal_handle").hide();
     }
 </script>
-
-
-
 <script type="text/javascript">
 $(document ).ready(function (){
   $("#validation-form").validate({

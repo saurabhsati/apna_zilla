@@ -95,7 +95,7 @@
             <option value="">Select Business Public Id </option>
                </select>
               <span class='help-block'>{{ $errors->first('business_cat') }}</span>
-                <div class="alert alert-warning">Note:  Select The Business Public ID</div>
+                <div class="alert alert-warning">Note: Select The Business Public ID</div>
 
             </div>
             </div>

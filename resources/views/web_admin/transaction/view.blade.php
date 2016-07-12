@@ -33,6 +33,9 @@
                 <div class="row">
                     <div class="col-md-12">
                        @if(isset($arr_single_transaction) && sizeof($arr_single_transaction)>0)
+
+
+
                         <div class="box">
                             <div class="box-content">
                                 <div class="invoice">
@@ -84,6 +87,7 @@
                                                      <th>Business Name</th>
                                                     <th>Category Name</th>
                                                      <th>Transaction Status</th>
+                                                     <th>Deal Count</th>
                                                     <th>Price</th>
                                                     <th>Start Date</th>
                                                     <th>Expire Date</th>
@@ -110,6 +114,10 @@
                                                     
                                                         {{ $arr_single_transaction['transaction_status'] }}
                                                 </td>
+
+                                                <td>{{$arr_single_transaction['membership']['no_normal_deals']}}
+                                                </td>
+
                                                     <td>Rs.
                                                     {{ $arr_single_transaction['price'] }}/- </td>
                                                     <td>
