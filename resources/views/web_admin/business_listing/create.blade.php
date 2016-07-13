@@ -153,6 +153,7 @@
                   <option value="pepperoni">Pepperoni</option>
                   <option value="onions">Onions</option> -->
               </select>
+              <div id="no_sub_cat_ava" class="alert alert-danger" style="display:none">Sorry No Sub-Category available Please select different Categroy</div>
               <span class='help-block'>{{ $errors->first('business_cat') }}</span>
                 <div class="alert alert-warning">Note: Firstly Select The Business Main category From Business Main Category Drop-down , Then Click ON None Selected Button  </div>
 
@@ -573,7 +574,7 @@
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control  " name="sun_in" id="sun_in" type="text"  >
+                        <input class="form-control  " name="sun_in" id="sun_in" type="text" data-rule-required="true" >
                     </div>
                 </div>
 
@@ -582,7 +583,7 @@
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control " name="sun_out" id="sun_out" type="text" >
+                        <input class="form-control " name="sun_out" id="sun_out" type="text" data-rule-required="true">
                     </div>
                 </div>
 
@@ -1029,7 +1030,7 @@ function getSubCategory(ref)
    var categCheck  = $('#example-getting-started').multiselect
                       ({
                          includeSelectAllOption: true,
-                         enableFiltering : true
+                         //enableFiltering : true
                       });
       categCheck.html('');
     jQuery.ajax({
@@ -1058,7 +1059,7 @@ function getSubCategory(ref)
                                     option+='<option value="'+arr_sub_cat.cat_id+'">'+arr_sub_cat.title+'</option>';
 
                                    });
-
+                                   $("#no_sub_cat_ava").hide();
                                    categCheck.html(option);
                                    categCheck.multiselect('rebuild');
 
@@ -1069,7 +1070,10 @@ function getSubCategory(ref)
                             {
                                 //$(".multiselect-container").css("display",'none');
                                 categCheck.html('<option value=""></option>');
+                                //includeSelectAllOption: false,
                                 $(".multiselect-selected-text").html("No Sub Category Available !");
+                                $("#no_sub_cat_ava").show();
+
                             }
                             return false;
                         }

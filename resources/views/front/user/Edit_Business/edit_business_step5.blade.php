@@ -127,6 +127,9 @@
                     </span>
                 </div>
                   <div class="row">
+                      <div class="error_msg" id="error_business_image" ></div>
+                          <div class="error_msg" id="error_business_image1" ></div>
+                      
                     <div class="col-lg-2 label-text">Upload Business Gallery Images<span>:</span></div>
                        <div class="col-sm-12 col-md-12 col-lg-10 m_l">
                         <input type="file" name="business_image[]" id="business_image" class="input_acct" data-rule-required="true"  />
@@ -136,9 +139,7 @@
                           <div class="error" id="error_set_default"></div>
                           <div class="clr"></div>
 
-                       <div id="append" class="class-add"></div>
-                          <div class="error_msg" id="error_business_image" ></div>
-                          <div class="error_msg" id="error_business_image1" ></div>
+                      <div id="append" class="class-add"></div>
                        <label class="col-sm-3 col-lg-2 control-label"></label>
                     </div>
                 </div>
@@ -192,6 +193,7 @@
                       </span>
                   </div>
                   <div class="row">
+                  <div class="error_msg" id="error_business_service" ></div>
                     <div class="col-lg-2 label-text">Business Services<span>:</span></div>
                         <div class="col-sm-12 col-md-12 col-lg-10 m_l">
 
@@ -203,7 +205,7 @@
                           <div class="clr"></div>
 
                        <div id="append_service" class="class-add"></div>
-                        <div class="error_msg" id="error_business_service" ></div>
+                        
                         <!-- <div class="error_msg" id="error_business_image1" ></div> -->
                        <label class="col-sm-3 col-lg-2 control-label"></label>
 
@@ -316,14 +318,18 @@
 <script type="text/javascript">
 function delete_gallery(id,image_name)
 {
+
   var _token = $('input[name=_token]').val();
   var dataString = { id:id, image_name:image_name, _token: _token };
+ /* console.log(dataString);
+  return false;*/
   var url_delete= site_url+'/front_users/delete_gallery';
   $.post( url_delete, dataString)
       .done(function( data ) {
         if(data=='done'){
              $('#err_delete_image').html('<div style="color:green">Image deleted successfully.</div>');
-             var request_id=$('.delete_image').parents('.main').attr('data-image');
+             //var request_id=$('.delete_image').parents('.main').attr('data-image');
+             var request_id = image_name;
              $('div[data-image="'+request_id+'"]').remove();
         }
       });
@@ -361,7 +367,7 @@ $('#add-image').click(function()
                   $('#error_business_image').show();
                   $('#error_business_image').css('color','red')
                   $('#error_business_image').fadeIn(3000);
-                  document.getElementById('error_business_image').innerHTML="Business Image Field is required.";
+                  document.getElementById('error_business_image').innerHTML="Business Image field can-not be empty";
                   setTimeout(function(){
                   $('#error_business_image').fadeOut(4000);
                   },3000);
@@ -423,7 +429,7 @@ $('#add-service').click(function()
                   $('#error_business_service').css('color','red');
                   $('#error_business_service').show();
                   $('#error_business_service').fadeIn(3000);
-                  document.getElementById('error_business_service').innerHTML="The Services is required.";
+                  document.getElementById('error_business_service').innerHTML="Services Field can-not be empty.";
                   setTimeout(function(){
                   $('#error_business_service').fadeOut(4000);
                   },3000);

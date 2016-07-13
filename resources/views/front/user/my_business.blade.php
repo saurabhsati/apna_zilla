@@ -126,8 +126,9 @@
                         <div class="p_details"><i class="fa fa-phone"></i><span>  {{$business['mobile_number']}}, {{$business['landline_number']}}</span></div>
                         <div class="p_details"><i class="fa fa-map-marker"></i> <span> {{$business['area']}} <br/> </span>
                         <ul>
-                        <!-- <li><a href="#">SMS/Email</a></li>  -->
+                        {{-- <li><a href="#">SMS/Email</a></li>  --}}
                         <li><a href="{{ url('/front_users/edit_business_step1/'.base64_encode($business['id'])) }}" >Edit</a></li>
+
 
                         <input type="hidden" name="business_id" id="business_id" value="{{$business['id']}}">
                         <input type="hidden" name="business_name" id="business_name" value="{{$business['business_name']}}">
@@ -139,14 +140,19 @@
                         <?php }
                         else
                           {?>
-                              <li><a href="#" class="lst" style="color:green;">Plan Assign</a></li>
+                              <li><a href="javascript:void(0);" class="lst" style="color:green;">Plan Assign</a></li>
                            <?php }?>
-                        <!-- </form>
-                        --> <!-- <li><a href="#" class="lst">Rate This</a></li>         -->
+                         {{-- <li><a href="#" class="lst">Rate This</a></li> --}}
+
                         </ul>
+
                         </div>
                         <div class="p_details">
-                        <!-- <a href="#" style="border-right:0;display:inline-block;"><i class="fa fa-heart"></i><span> Add to favorites</span></a> -->
+                           @if (sizeof($business['membership_plan_details'])>0)
+                                 <span style="border-right:0;display:inline-block;">Plan Expire Date : {!! date('d-M-Y',strtotime($business['membership_plan_details'][0]['expire_date']))!!} </span>
+                                  
+                                  <a href="{{ url('/front_users/assign_membership').'/'.base64_encode($business['id']).'/'.base64_encode($business['business_name']).'/'.Session::get('user_id').'/'.base64_encode($category_id) }}" style="color:green;border-right:0;display:inline-block;"><span>Update Your Plan</span></a>  
+                             @endif 
                         
                         </div>
                         </div>

@@ -260,7 +260,7 @@
                                       src={{ $deal_base_upload_img_path.$image['image_name']}} alt="" />
                                      <div class="caption">
                                      <p class="pull-left">
-                                        <a href="javascript:void(0);"class="delete_image" data-image="{{ $image['image_name'] }}" onclick="javascript: return delete_gallery('<?php echo $image['id'] ;?>','<?php echo $image['image_name'];?>')">
+                                        <a href="javascript:void(0);" class="delete_image" data-image="{{ $image['image_name'] }}" onclick="javascript: return delete_gallery('<?php echo $image['id'] ;?>','<?php echo $image['image_name'];?>')">
                                          <span class="glyphicon glyphicon-minus-sign " style="font-size: 20px;"></span></a>
                                      </p>
                                     </div>
@@ -498,14 +498,19 @@
  var site_url = "{{url('/')}}";
 function delete_gallery(id,image_name)
 {
+  
   var _token = $('input[name=_token]').val();
   var dataString = { id:id, image_name:image_name, _token: _token };
+  //console.log(dataString);
+  //return false;
   var url_delete= site_url+'/web_admin/deals_offers/delete_gallery';
   $.post( url_delete, dataString)
       .done(function( data ) {
         if(data=='done'){
              $('#err_delete_image').html('<div style="color:green">Deals slider images deleted successfully.</div>');
-             var request_id=$('.delete_image').parents('.main').attr('data-image');
+//             var request_id=$('.delete_image').parents('.main').attr('data-image');
+             var request_id=image_name;
+             //console.log(request_id);
              $('div[data-image="'+request_id+'"]').remove();
         }
       });

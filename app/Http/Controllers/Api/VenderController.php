@@ -30,7 +30,9 @@ class VenderController extends Controller
  	{   $arr_data = array();
  		$sales_user_public_id=$request->input('public_id');
        
-        $obj_user = Sentinel::createModel()->orderBy('created_at','DESC')->where('sales_user_public_id','=',$sales_user_public_id)->get();
+        $obj_user = Sentinel::createModel()->orderBy('created_at','DESC')
+        				->where('sales_user_public_id','=',$sales_user_public_id)
+        				->where('role','=','normal')->get();
         if($obj_user)
 		{
 			$obj_user_info = UserModel::get();

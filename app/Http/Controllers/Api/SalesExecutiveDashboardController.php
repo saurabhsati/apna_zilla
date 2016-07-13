@@ -22,7 +22,8 @@ class SalesExecutiveDashboardController extends Controller
    		$vender_count = $business_listing_count = $deals_count = $membership_transaction_count =0;
    		$obj_user     = $obj_business_listing   = $obj_deal    = $obj_transaction =[];
        
-        $obj_user     = Sentinel::createModel()->where('sales_user_public_id','=',$sales_user_public_id)->where('role','=','normal')->get();
+        $obj_user     = Sentinel::createModel()->where('sales_user_public_id','=',$sales_user_public_id)
+                                              ->where('role','=','normal')->get();
        
         if($obj_user!= FALSE)
         {

@@ -43,11 +43,7 @@ class UserController extends Controller
 
 
         $this->BusinessImageUploadModel=new BusinessImageUploadModel();
-
-        $arr_except_auth_methods = array();
-        $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
-
-         $this->objpublic = new GeneratePublicId();
+        $this->objpublic = new GeneratePublicId();
 
         /*$this->business_public_upload_img_path = url('/')."/uploads/business/business_upload_image/";
         $this->business_base_upload_img_path = base_path()."/public/uploads/business/business_upload_image/";*/
@@ -279,7 +275,7 @@ class UserController extends Controller
 
     public function store_personal_details(Request $request)
     {
-
+        //dd($request->all());
         $arr_rules = array();
         $arr_rules['first_name'] = "required";
         //$arr_rules['last_name'] = "required";
