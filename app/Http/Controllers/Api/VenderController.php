@@ -363,7 +363,7 @@ class VenderController extends Controller
         }
 
         $user = Sentinel::findById($id);
-       dd($user);
+    
 
         $status = Sentinel::update($user,$arr_data);
 
