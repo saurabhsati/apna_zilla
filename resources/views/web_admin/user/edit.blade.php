@@ -303,9 +303,9 @@
         $("#removal_handle").show();
     }
 
-    function clearPreviewImage()
+    function clearPreviewImage()   
     {
-        $('#preview_profile_pic').attr('src',site_url+'/images/front/avatar.jpg');
+        $('#preview_profile_pic').attr('src',site_url+'/uploads/users/profile_pic/default.jpg');
         $("#removal_handle").hide();
     }
     function chkeck_marital_status(ref)
