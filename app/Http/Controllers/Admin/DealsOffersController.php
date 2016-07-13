@@ -149,23 +149,23 @@ class DealsOffersController extends Controller
 
     public function store(Request $request)
     {
-    	$arr_rule	= array();
-    	$arr_rule['business']          = 'required';
-    	$arr_rule['deal_main_image']   = 'required';
-    	$arr_rule['title']             = 'required';
-    	$arr_rule['name']              = 'required';
-    	$arr_rule['price']             = 'required';
-    	$arr_rule['discount_price']    = 'required';
-    	$arr_rule['deal_type']         = 'required';
-    	$arr_rule['start_day']         = 'required';
-    	$arr_rule['end_day']           = 'required';
-    	$arr_rule['description']       = 'required';
-    	$arr_rule['things_to_remember']= 'required';
-        $arr_rule['how_to_use']        = 'required';
-    	$arr_rule['about']             = 'required';
-    	$arr_rule['facilities']        = 'required';
-    	$arr_rule['cancellation_policy']= 'required';
-    	$arr_rule['is_active']          = 'required';
+        $arr_rule                         = array();
+        $arr_rule['business']             = 'required';
+        $arr_rule['deal_main_image']      = 'required';
+        $arr_rule['title']                = 'required';
+        $arr_rule['name']                 = 'required';
+        $arr_rule['price']                = 'required';
+        $arr_rule['discount_price']       = 'required';
+        $arr_rule['deal_type']            = 'required';
+        $arr_rule['start_day']            = 'required';
+        $arr_rule['end_day']              = 'required';
+        $arr_rule['description']          = 'required';
+        $arr_rule['things_to_remember']   = 'required';
+        $arr_rule['how_to_use']           = 'required';
+        $arr_rule['about']                = 'required';
+        $arr_rule['facilities']           = 'required';
+        $arr_rule['cancellation_policy']  = 'required';
+        $arr_rule['is_active']            = 'required';
         $arr_rules['json_location_point'] = 'required';
 
     	$validator=Validator::make($request->all(),$arr_rule);
@@ -206,25 +206,25 @@ class DealsOffersController extends Controller
 	    	}
 	     $form_data	= $request->all();
 	    // dd($form_data);
-         $data_arr['business_id']           = $request->input('business');
-         $main_business_cat                        = $request->input('main_business_cat');
-         $sub_category                        = $request->input('business_cat');
-         $data_arr['title']                 = $request->input('title');
-         $data_arr['name']                  = $request->input('name');
-         $data_arr['price']                 = $request->input('price');
-         $data_arr['discount_price']        = $request->input('discount_price');
-         $data_arr['deal_type']             = $request->input('deal_type');
-         $data_arr['deal_image']            = $image_name ;
-         $data_arr['start_day']             = date('Y-m-d',strtotime($request->input('start_day')));
-         $data_arr['end_day']               = date('Y-m-d',strtotime($request->input('end_day')));
-         $data_arr['description']           = $request->input('description');
-         $data_arr['things_to_remember']    = $request->input('things_to_remember');
-         $data_arr['how_to_use']            = $request->input('how_to_use');
-         $data_arr['facilities']            = $request->input('facilities');
-         $data_arr['about']                 = $request->input('about');
-         $data_arr['cancellation_policy']   = $request->input('cancellation_policy');
-         $data_arr['json_location_point']   = $request->input('json_location_point');
-         $data_arr['is_active']             = $request->input('is_active');
+         $data_arr['business_id']         = $request->input('business');
+         $main_business_cat               = $request->input('main_business_cat');
+         $sub_category                    = $request->input('business_cat');
+         $data_arr['title']               = $request->input('title');
+         $data_arr['name']                = $request->input('name');
+         $data_arr['price']               = $request->input('price');
+         $data_arr['discount_price']      = $request->input('discount_price');
+         $data_arr['deal_type']           = $request->input('deal_type');
+         $data_arr['deal_image']          = $image_name ;
+         $data_arr['start_day']           = date('Y-m-d',strtotime($request->input('start_day')));
+         $data_arr['end_day']             = date('Y-m-d',strtotime($request->input('end_day')));
+         $data_arr['description']         = $request->input('description');
+         $data_arr['things_to_remember']  = $request->input('things_to_remember');
+         $data_arr['how_to_use']          = $request->input('how_to_use');
+         $data_arr['facilities']          = $request->input('facilities');
+         $data_arr['about']               = $request->input('about');
+         $data_arr['cancellation_policy'] = $request->input('cancellation_policy');
+         $data_arr['json_location_point'] = $request->input('json_location_point');
+         $data_arr['is_active']           = $request->input('is_active');
         // dd($data_arr);
          $deal_add = DealsOffersModel::create($data_arr);
             $deal_id=$deal_add->id;
@@ -235,7 +235,7 @@ class DealsOffersController extends Controller
          foreach($files as $file) 
          {
          $destinationPath = $this->deal_base_upload_img_path;
-         $fileName = $file->getClientOriginalName();
+         $fileName        = $file->getClientOriginalName();
             $fileExtension  = strtolower($file->getClientOriginalExtension());
             if(in_array($fileExtension,['png','jpg','jpeg']))
             {
@@ -304,22 +304,22 @@ class DealsOffersController extends Controller
     {
 
         //  dd($request->all());
-        $id=    base64_decode($enc_id);
+        $id                               = base64_decode($enc_id);
 
-        $arr_rule['title']             = 'required';
-        $arr_rule['name']              = 'required';
-        $arr_rule['price']             = 'required';
-        $arr_rule['discount_price']    = 'required';
-        $arr_rule['deal_type']         = 'required';
-        $arr_rule['start_day']         = 'required';
-        $arr_rule['end_day']           = 'required';
-        $arr_rule['description']       = 'required';
-        $arr_rule['things_to_remember']= 'required';
-        $arr_rule['how_to_use']        = 'required';
-        $arr_rule['about']             = 'required';
-        $arr_rule['facilities']        = 'required';
-        $arr_rule['cancellation_policy']= 'required';
-        $arr_rule['is_active']          = 'required';
+        $arr_rule['title']                = 'required';
+        $arr_rule['name']                 = 'required';
+        $arr_rule['price']                = 'required';
+        $arr_rule['discount_price']       = 'required';
+        $arr_rule['deal_type']            = 'required';
+        $arr_rule['start_day']            = 'required';
+        $arr_rule['end_day']              = 'required';
+        $arr_rule['description']          = 'required';
+        $arr_rule['things_to_remember']   = 'required';
+        $arr_rule['how_to_use']           = 'required';
+        $arr_rule['about']                = 'required';
+        $arr_rule['facilities']           = 'required';
+        $arr_rule['cancellation_policy']  = 'required';
+        $arr_rule['is_active']            = 'required';
         $arr_rules['json_location_point'] = 'required';
 
         $validator=Validator::make($request->all(),$arr_rule);
@@ -362,7 +362,7 @@ class DealsOffersController extends Controller
         }
          $data_arr['title']                 = $request->input('title');
          $data_arr['name']                  = $request->input('name');
-         $main_business_cat                  = $request->input('main_business_cat');
+         $main_business_cat                 = $request->input('main_business_cat');
          $data_arr['price']                 = $request->input('price');
          $data_arr['discount_price']        = $request->input('discount_price');
          $data_arr['deal_type']             = $request->input('deal_type');
@@ -376,7 +376,7 @@ class DealsOffersController extends Controller
          $data_arr['about']                 = $request->input('about');
          $data_arr['cancellation_policy']   = $request->input('cancellation_policy');
          $data_arr['is_active']             = $request->input('is_active');
-         $data_arr['json_location_point'] = $request->input('json_location_point');
+         $data_arr['json_location_point']   = $request->input('json_location_point');
          $deal_update = DealsOffersModel::where('id',$id)->update($data_arr);
 
 

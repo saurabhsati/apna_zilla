@@ -361,8 +361,8 @@
                     if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1)
                     {
                         $("#image_err").fadeIn();
-                        $("#image_err" ).html("* Please Select Image File !" );
-                        $("#image_err").fadeOut(5000);
+                        $("#image_err" ).html("* Please Select Image File !");
+                        $("#image_err").show();
                         return false;
                     }
                 }
@@ -385,8 +385,8 @@
 $(function () {
     $("#start_day").datepicker({
 
-      alert('jk');
-      /*  numberOfMonths: 2,
+      //alert('jk');
+       /* numberOfMonths: 2,
         onSelect: function (selected) {
           alert('sdafasdf');
             var dt = new Date(selected);
@@ -400,8 +400,8 @@ $(function () {
             var dt = new Date(selected);
             dt.setDate(dt.getDate() - 1);
             $("#start_day").datepicker("option", "maxDate", dt);
-        }*/
-    });
+        }
+    });*/
 });
 </script>
 
