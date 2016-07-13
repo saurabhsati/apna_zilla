@@ -17,6 +17,7 @@ use Hash;
 use Activation;
 use URL;
 use Reminder;
+use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
 
 class AuthController extends Controller
 {
@@ -398,6 +399,7 @@ class AuthController extends Controller
 
     public function process_login_ajax(Request $request)
     {
+
         $json = array();
         $arr_creds =  array();
 
@@ -425,70 +427,77 @@ class AuthController extends Controller
 
 
         $arr_creds['password']  = $request->input('password');
-        //dd($arr_creds);
-        $user = Sentinel::authenticate($arr_creds);
-        
-        if($user)
+       // dd($arr_creds);
+        try
         {
-
-            if($user->is_active== 1)
+            $user = Sentinel::authenticate($arr_creds);
+            if($user)
             {
-                    /* Check if Users Role is Admin */
-                    $role = Sentinel::findRoleBySlug('normal');
-                    if(Sentinel::inRole($role))
-                    {
-                        if(is_numeric($email_or_mobile))
-                        {
-                            $obj_user_info = UserModel::Where('mobile_no','=',$arr_creds['mobile_no'])->get();
 
+                if($user->is_active== 1)
+                {
+                        /* Check if Users Role is Admin */
+                        $role = Sentinel::findRoleBySlug('normal');
+                        if(Sentinel::inRole($role))
+                        {
+                            if(is_numeric($email_or_mobile))
+                            {
+                                $obj_user_info = UserModel::Where('mobile_no','=',$arr_creds['mobile_no'])->get();
+
+                            }
+                            else
+                            {
+                                $obj_user_info = UserModel::where('email','=',$arr_creds['email'])->get();
+                            }
+
+
+                            if($obj_user_info);
+                            {
+                               $arr_user_info = $obj_user_info->toArray();
+                            }
+
+
+                            foreach ($arr_user_info as $user)
+                            {
+                                $user_id = base64_encode($user['id']) ;
+                                Session::put('user_id', $user_id);
+                                Session::put('user_email', $user['email']);
+                                Session::put('mobile_no', $user['mobile_no']);
+                                Session::set('user_name', $user['first_name']);
+                                Session::set('previous_url',redirect()->getUrlGenerator()->previous());
+
+                            }
+                            Session::flash('success','Login Successfull.');
+                            $json = "SUCCESS";
+                            //return redirect('front_users/profile');
                         }
                         else
                         {
-                            $obj_user_info = UserModel::where('email','=',$arr_creds['email'])->get();
+                            //Session::flash('error','Not Sufficient Privileges');
+                            $json =  'No Sufficient Privileges';
                         }
 
-
-                        if($obj_user_info);
-                        {
-                           $arr_user_info = $obj_user_info->toArray();
-                        }
-
-
-                        foreach ($arr_user_info as $user)
-                        {
-                            $user_id = base64_encode($user['id']) ;
-                            Session::put('user_id', $user_id);
-                            Session::put('user_email', $user['email']);
-                            Session::put('mobile_no', $user['mobile_no']);
-                            Session::set('user_name', $user['first_name']);
-                            Session::set('previous_url',redirect()->getUrlGenerator()->previous());
-
-                        }
-                        Session::flash('success','Login Successfull.');
-                        $json = "SUCCESS";
-                        //return redirect('front_users/profile');
-                    }
-                    else
-                    {
-                        //Session::flash('error','Not Sufficient Privileges');
-                        $json =  'No Sufficient Privileges';
-                    }
-
+                }
+                else
+                {
+                    $json =  'ACC_ACT_ERROR';
+                }
             }
             else
             {
-                $json =  'ACC_ACT_ERROR';
+                //Session::flash('error','Invalid Credentials');
+                $json =  'Invalid Credentials';
             }
+
+        
         }
-        else
+        catch (\Cartalyst\Sentinel\Checkpoints\ThrottlingException $e)
         {
-            //Session::flash('error','Invalid Credentials');
-            $json =  'Invalid Credentials';
+            $json = 'THROTTLING_EXCEPTION';
         }
 
-        return response()->json($json);
-
-    }
+    return response()->json($json);
+}
 
     public function process_login(Request $request)
     {
@@ -496,7 +505,6 @@ class AuthController extends Controller
         $arr_creds['email']     = $request->input('email');
         $arr_creds['password']  = $request->input('password');
         $user = Sentinel::authenticate($arr_creds);
-
         if($user)
         {
             /* Check if Users Role is Admin */

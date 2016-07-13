@@ -2,6 +2,7 @@
 
 
     @section('main_content')
+    {{dd('i m here')}}
     <!-- BEGIN Page Title -->
     <div class="page-title">
         <div>

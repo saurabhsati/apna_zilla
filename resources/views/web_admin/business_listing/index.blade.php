@@ -329,14 +329,14 @@
                                         ? 'today'
                                         : $expire_date->diffForHumans($now);
                                        
-                                    if (strpos($difference, 'after') !== false || strpos($difference, 'today') !== false) 
+                                    if (strpos($difference, 'after') !== false || strpos($difference, 'today') !== false && $business['membership_plan_details']['transaction_status'] == "Active") 
                                     {
                                     ?>
                                     @if($check_allow=='0')
                                        <a class="btn btn-error" href="javascript:void(0);">
                                       No Feature
                                         </a>
-                                   @elseif($business['is_active']=="1" && $check_allow=='1')
+                                   @elseif($business['is_active']=="1" && $check_allow=='1' )
                                        <a class="btn btn-success" href="{{ url('/web_admin/deals/'.base64_encode($business['id'])) }}">
                                          View Deals
                                       </a>

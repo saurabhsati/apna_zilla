@@ -334,7 +334,7 @@
 
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
-                <input type="submit"  class="btn btn-primary" value="Create">
+                <input type="submit"  class="btn btn-primary" value="Create" onclick="return setExtraData()">
 
             </div>
         </div>
@@ -347,7 +347,8 @@
 </div>
 <!-- END Main Content -->
 
-
+<link rel="stylesheet" href="{{ url('/') }}/assets/PickMeUp/css/pickmeup.css" type="text/css" />
+<script type="text/javascript" src="{{ url('/') }}/assets/PickMeUp/js/jquery.pickmeup.js"></script>
 
 <script type="text/javascript">
 
@@ -384,24 +385,24 @@
  <script type="text/javascript">
 $(function () {
     $("#start_day").datepicker({
-
-      alert('jk');
-      /*  numberOfMonths: 2,
-        onSelect: function (selected) {
-          alert('sdafasdf');
-            var dt = new Date(selected);
-            dt.setDate(dt.getDate() + 1);
-            $("#end_day").datepicker("option", "minDate", dt);
-        }
+        "setDate": new Date(),
+        "autoclose": true
     });
-    $("#end_day").datepicker({
-        numberOfMonths: 2,
-        onSelect: function (selected) {
-            var dt = new Date(selected);
-            dt.setDate(dt.getDate() - 1);
-            $("#start_day").datepicker("option", "maxDate", dt);
-        }*/
-    });
+     /*$('input.start_date').pickmeup({
+          position    : 'bottom',
+          hide_on_select  : true,
+          format:'d-m-Y',
+          min: new Date(),
+      
+        });
+     
+        $('input.end_date').pickmeup({
+          position    : 'bottom',
+          hide_on_select  : true,
+          format:'d-m-Y',
+          min: new Date(),
+         
+        });*/
 });
 </script>
 
@@ -435,8 +436,14 @@ $(function () {
 
     $(document).ready(function()
     {
-        dt_start_day = $('#start_day').datepicker();
-        dt_end_day = $('#end_day').datepicker();
+        dt_start_day = $('#start_day').datepicker({
+           "setDate": new Date(),
+           "autoclose": true
+        });
+        dt_end_day = $('#end_day').datepicker({
+           "setDate": new Date(),
+           "autoclose": true
+        });
 
         //tp_start_time = $("#start_time").timepicker();
         //tp_end_time = $("#end_time").timepicker();
@@ -450,9 +457,6 @@ $(function () {
         });
 
         $(tp_start_time).on('changeTime.timepicker',checkForInstantDeal);
-
-       
-
     });
 
    
@@ -773,6 +777,7 @@ $('#remove-image').click(function()
   
 
 <script type="text/javascript">
+
   var site_url = "{{ url('/') }}";
 
   var departure_point_map = false;
@@ -1070,9 +1075,22 @@ $('#remove-image').click(function()
 
   function setExtraData()
   {
-    return tinyMCE.triggerSave();
-  }
+    var fileDemo = document.getElementById("deal_main_image");
+    var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(.jpg|.png|.gif)$");
+    if (regex.test(fileDemo.value.toLowerCase())) 
+    {
+      //return true;
+      return tinyMCE.triggerSave();
+    }
+    else
+    {
+        alert('Image Format not supoorted.Please select valid image');
+        document.getElementById("deal_main_image").value = '';
+        return false;
+    }    
+}
   
+
 
 </script>
 @stop

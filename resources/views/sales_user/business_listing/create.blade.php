@@ -162,6 +162,7 @@
                   <option value="pepperoni">Pepperoni</option>
                   <option value="onions">Onions</option> -->
               </select>
+               <div id="no_sub_cat_ava" class="alert alert-danger" style="display:none">Sorry No Sub-Category available Please select different Categroy</div>
               <span class='help-block'>{{ $errors->first('business_cat') }}</span>
                 <div class="alert alert-warning">Note: Firstly Select The Business Main category From Business Main Category Drop-down , Then Click ON None Selected Button  </div>
 
@@ -1085,7 +1086,7 @@ function getSubCategory(ref)
    var categCheck  = $('#example-getting-started').multiselect
                       ({
                          includeSelectAllOption: true,
-                         enableFiltering : true
+                         //enableFiltering : true
                       });
       categCheck.html('');
     jQuery.ajax({
@@ -1120,6 +1121,8 @@ function getSubCategory(ref)
                                   
                                    categCheck.html(option);
                                    categCheck.multiselect('rebuild');
+                                  $("#no_sub_cat_ava").hide();
+
 
                                 }
                                 
@@ -1131,6 +1134,7 @@ function getSubCategory(ref)
                                 //$(".multiselect-container").css("display",'none');
                                 categCheck.html('<option value=""></option>');
                                 $(".multiselect-selected-text").html("No Sub Category Available !");
+                                $("#no_sub_cat_ava").show();
                             }
                             return false;
                         }

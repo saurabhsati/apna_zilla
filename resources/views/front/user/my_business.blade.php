@@ -147,11 +147,14 @@
                         </ul>
 
                         </div>
+
                         <div class="p_details">
+                           {{-- <a href="{{ url('/front_users/assign_membership').'/'.base64_encode($business['id']).'/'.base64_encode($business['business_name']).'/'.Session::get('user_id').'/'.base64_encode($category_id) }}" style="color:green;border-right:0;display:inline-block;"><span>Update Your Plan</span></a> </br>  --}}
                            @if (sizeof($business['membership_plan_details'])>0)
-                                 <span style="border-right:0;display:inline-block;">Plan Expire Date : {!! date('d-M-Y',strtotime($business['membership_plan_details'][0]['expire_date']))!!} </span>
-                                  
-                                  <a href="{{ url('/front_users/assign_membership').'/'.base64_encode($business['id']).'/'.base64_encode($business['business_name']).'/'.Session::get('user_id').'/'.base64_encode($category_id) }}" style="color:green;border-right:0;display:inline-block;"><span>Update Your Plan</span></a>  
+                          {{--  {{dd($business['membership_plan_details'])}} --}}
+                              @foreach($business['membership_plan_details'] as $plan_details)
+                                   <span style="color:#ff704d;border-right:0;display:inline-block;" >Name : {{$plan_details['membership']['title']}} | Expire Date : {!! date('d-M-Y',strtotime($plan_details['expire_date']))!!} | Status : {{$plan_details['transaction_status']}} </span>
+                              @endforeach    
                              @endif 
                         
                         </div>

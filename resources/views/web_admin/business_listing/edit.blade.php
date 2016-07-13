@@ -1220,7 +1220,7 @@ var options  = {
                 location: location,
                 types: ["geocode", "establishment"],
                 markerOptions: {
-                                    draggable: true
+                                    //draggable: true
                                }
               }
 $("#area").geocomplete(options);

@@ -190,6 +190,7 @@
                   <option value="pepperoni">Pepperoni</option>
                   <option value="onions">Onions</option> -->
               </select>
+              <div id="no_sub_cat_ava" class="alert alert-danger" style="display:none">Sorry No Sub-Category available Please select different Categroy</div>
               <span class='help-block'>{{ $errors->first('business_cat') }}</span>
                 <div class="alert alert-warning">Note: Firstly Select The Business Main category From Business Main Category Drop-down , Then Click ON None Selected Button  </div>
             </div>
@@ -361,7 +362,7 @@
             <div class="form-group" >
                 <label class="col-sm-3 col-lg-4 control-label" for="postal_code">Pin-code <i class="red">*</i></label>
                 <div class="col-sm-5 col-lg-8 controls">
-                 <input type="text" data-geo="postal_code" value="{{ isset($business['pincode'])?$business['pincode']:'' }}" id="pincode" name="pincode" class="form-control">
+                 <input type="text"  value="{{ isset($business['pincode'])?$business['pincode']:'' }}" id="pincode" name="pincode" class="form-control">
                   <span class='help-block'>{{ $errors->first('postal code') }}</span>
                 </div>
             </div>
@@ -1262,6 +1263,7 @@ function getSubCategory(ref)
                                    });
                                    categCheck.html(option);
                                    categCheck.multiselect('rebuild');
+                                    $("#no_sub_cat_ava").hide();
 
                                 }
                             }
@@ -1270,6 +1272,7 @@ function getSubCategory(ref)
                                 //$(".multiselect-container").css("display",'none');
                                 categCheck.html('<option value=""></option>');
                                 $(".multiselect-selected-text").html("No Sub Category Available !");
+                                $("#no_sub_cat_ava").show();
                             }
                             return false;
                         }

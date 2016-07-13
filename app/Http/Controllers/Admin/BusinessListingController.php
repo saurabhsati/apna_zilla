@@ -93,7 +93,7 @@ class BusinessListingController extends Controller
                 $business_listing = $obj_business_listing->toArray();
             }
         }
-        //dd($business_listing);
+       // dd($business_listing);
 
         return view('web_admin.business_listing.index',compact('page_title','business_listing','business_public_img_path','arr_main_category','arr_sub_category'));
     }

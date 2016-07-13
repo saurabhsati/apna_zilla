@@ -16,7 +16,7 @@
             <!-- Modal content-->
             <div class="modal-content">
                <div class="modal-header">
-                  <button type="button" class="close login_close1" data-dismiss="modal">&times;</button>
+                  <button type="button" class="close otp_close1" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_poup.png" alt="login logo"/></h4>
                </div>
                <div class="modal-body">
@@ -87,7 +87,7 @@
             <!-- Modal content-->
             <div class="modal-content">
                <div class="modal-header">
-                  <button type="button" class="login_close close" data-dismiss="modal">&times;</button>
+                  <button type="button" id="login_close1" class="login_close close" data-dismiss="modal">&times;</button>
                   <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_poup.png" alt="login logo"/></h4>
                </div>
                <div class="modal-body">
@@ -124,6 +124,10 @@
                 <div class="alert alert-danger alert-dismissible" id="Acc_activation_err_div" style="display: none;">
                     <strong>Error!</strong>
                     Your Account Not Activate Yet.
+                </div>
+
+                <div class="alert alert-danger alert-dismissible" id="throttling_exception" style="display: none;">
+                    To many Login Attempts.Your Ip has been blocked for some time.</br> Please try after Sometime.
                 </div>
 
                   <div class="login_box">
@@ -191,7 +195,7 @@
             <!-- Modal content-->
             <div class="modal-content">
                <div class="modal-header">
-                  <button type="button" class="close login_close1" data-dismiss="modal">&times;</button>
+                  <button type="button" id="forget_password_close1" class="close login_close1" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_poup.png" alt="login logo"/></h4>
                <div style="position:fixed;
                 top: 0;
@@ -211,11 +215,9 @@
                   <div class="login_box">
                      <div class="title_login">Forget Password</div>
                      <div class="alert alert-success fade in " id = "rec_pwd_succ" style="display:none;">
-                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                       <strong>Success!</strong> We have sent you an email with a confirmation link. Please click on the link to confirm your recover password ! ..
                       </div>
                        <div class="alert alert-danger" style="display:none;" id = "rec_pwd_err">
-                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                       <strong>Error!</strong>While Sending Enquiry .
                       </div>
                      <div class="user_box">
@@ -261,7 +263,7 @@
             <!-- Modal content-->
             <div class="modal-content">
                <div class="modal-header">
-                  <button type="button" class="close login_close1" data-dismiss="modal">&times;</button>
+                  <button type="button" id="otp_close1" class="close login_close1" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_poup.png" alt="login logo"/></h4>
                </div>
                <div class="modal-body">
@@ -285,7 +287,7 @@
                  <div class="alert alert-danger alert-dismissible" id="otp_mobile_err_div" style="display: none;">
                     <strong>Error!</strong>
                    Incorrect Mobile No.
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <button type="button"  class="close" data-dismiss="alert" aria-label="Close">
                           <!-- <span aria-hidden="true">&times;</span> -->
                     </button>
                 </div>
@@ -1160,6 +1162,14 @@ If you need any more details on RightNext Verified, please refer to
               $('#error_div').hide();
               $('#mobile_error_div').hide();
             }
+            else if(response == "THROTTLING_EXCEPTION")
+            {
+              $('#throttling_exception').show();
+              $('#Acc_activation_err_div').hide();
+              $('#error_div').hide();
+              $('#mobile_error_div').hide();
+
+            }
             else
             {
 
@@ -1207,28 +1217,30 @@ If you need any more details on RightNext Verified, please refer to
           beforeSend: function()
           {
             $("#subscribr_loader").show();
+            $("#forgot_submit").hide();
           },
           success:function(res)
           {
             if(res=="success")
             {
-               $("#rec_pwd_succ").fadeIn(4000).fadeOut(4000);
+               $("#rec_pwd_succ").fadeIn(2000).fadeOut(2000);
                $("#recover_password").trigger('reset');
             }
             else if(res=="sending_error")
             {
-               $("#rec_pwd_err").fadeIn(4000).fadeOut(4000);
+               $("#rec_pwd_err").fadeIn(2000).fadeOut(2000);
                $("#recover_password").trigger('reset');
             }
             else
             {
 
-              $("#rec_pwd_err").fadeIn(4000).fadeOut(4000);
+              $("#rec_pwd_err").fadeIn(2000).fadeOut(2000);
             }
           },
           complete: function() {
 
           $("#subscribr_loader").hide();
+          $("#forgot_submit").show();
 
           }
         });
@@ -1410,6 +1422,22 @@ if ($("html").hasClass("no-touch")) {
     $(".menu_name").show();
   }
       /*footer script end here*/
+
+
+/*$("#reg_close1").click(function()
+{
+    location.reload();
+});*/
+/*$("#otp_close1").click(function()
+{
+    location.reload();
+});
+
+$("#forget_password_close1").click(function()
+{
+    location.reload();
+});*/
+
 </script>
    </body>
 </html>

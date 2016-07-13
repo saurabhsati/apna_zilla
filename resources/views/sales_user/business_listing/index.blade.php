@@ -332,7 +332,7 @@
                                             ? 'today'
                                             : $expire_date->diffForHumans($now);
                                            
-                                        if (strpos($difference, 'after') !== false || strpos($difference, 'today') !== false) 
+                                        if (strpos($difference, 'after') !== false || strpos($difference, 'today') !== false && $business['membership_plan_details']['transaction_status'] == "Active")  
                                         {
                                       ?>
 
