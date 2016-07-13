@@ -363,6 +363,7 @@ class VenderController extends Controller
         }
 
         $user = Sentinel::findById($id);
+       //dd($user);
 
         $status = Sentinel::update($user,$arr_data);
 
@@ -384,11 +385,11 @@ class VenderController extends Controller
  	}
  	public function toggle_status(Request $request)
  	{
- 		$json               = array();
+		$json   = array();
 
- 		$id             = $request->input('id');
-		$action             = $request->input('action');
-		 if($action=="activate")
+		$id     = $request->input('id');
+		$action = $request->input('action');
+		if($action=="activate")
         {
             $this->_activate($id);
             $json['status']	 = "SUCCESS";

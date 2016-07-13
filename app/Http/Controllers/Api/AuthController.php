@@ -39,10 +39,9 @@ class AuthController extends Controller
         
 
         $email_or_mobile = $request->input('email');
-    	$password = $request->input('password');
+    	$password        = $request->input('password');
         if(is_numeric($email_or_mobile))
-        {
-        	
+        {        	
             if(strlen($email_or_mobile)==10)
             { 
        
@@ -55,13 +54,14 @@ class AuthController extends Controller
             }
         }
         else
-        {
+        {            
         	 $arr_creds['email'] = $email_or_mobile;
         }
         $arr_creds['password']  = $request->input('password');
       
 
         $user = Sentinel::stateless($arr_creds);
+        
 		if($user)
 		{
             $user_info               = $user->toArray();
