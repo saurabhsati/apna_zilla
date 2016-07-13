@@ -71,7 +71,7 @@ class AuthController extends Controller
             $arr_data['profile_pic'] = $profile_image;
 
 
-            $json['data']            = $arr_data;
+            $json['data']    = $arr_data;
             $json['status']  = 'SUCCESS';
 			$json['message'] = 'Login successfully !';
 		}
@@ -338,7 +338,7 @@ class AuthController extends Controller
 
 
 			
-            $arr_data['first_name'] = $request->input('first_name');
+            $arr_data['first_name']   = $request->input('first_name');
 			if($request->input('email')!='')
             {
                 $arr_data['email']          = $request->input('email');
@@ -347,6 +347,7 @@ class AuthController extends Controller
 
 			if($role=='Normal')
 		  	{
+
 		  		/* prefix_name => 0- Mr. 1-Ms. 2.Mrs. */
 		  		$arr_data['prefix_name']         = $request->input('prefix_name');
 

@@ -308,7 +308,7 @@ class VenderController extends Controller
 		$city           = $request->input('city');
 		$pincode        = $request->input('pincode');
 		$area           = $request->input('area');
-		$role           ='sales';
+		$role           ='Normal';
 
 		$profile_pic = FALSE;
         if ($request->hasFile('profile_pic'))
@@ -363,7 +363,7 @@ class VenderController extends Controller
         }
 
         $user = Sentinel::findById($id);
-       //dd($user);
+       dd($user);
 
         $status = Sentinel::update($user,$arr_data);
 
