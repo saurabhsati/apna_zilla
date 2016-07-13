@@ -362,8 +362,8 @@
                     if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1)
                     {
                         $("#image_err").fadeIn();
-                        $("#image_err" ).html("* Please Select Image File !" );
-                        $("#image_err").fadeOut(5000);
+                        $("#image_err" ).html("* Please Select Image File !");
+                        $("#image_err").show();
                         return false;
                     }
                 }
@@ -388,21 +388,25 @@ $(function () {
         "setDate": new Date(),
         "autoclose": true
     });
-     /*$('input.start_date').pickmeup({
-          position    : 'bottom',
-          hide_on_select  : true,
-          format:'d-m-Y',
-          min: new Date(),
-      
-        });
-     
-        $('input.end_date').pickmeup({
-          position    : 'bottom',
-          hide_on_select  : true,
-          format:'d-m-Y',
-          min: new Date(),
-         
-        });*/
+
+
+      //alert('jk');
+       /* numberOfMonths: 2,
+        onSelect: function (selected) {
+          alert('sdafasdf');
+            var dt = new Date(selected);
+            dt.setDate(dt.getDate() + 1);
+            $("#end_day").datepicker("option", "minDate", dt);
+        }
+    });
+    $("#end_day").datepicker({
+        numberOfMonths: 2,
+        onSelect: function (selected) {
+            var dt = new Date(selected);
+            dt.setDate(dt.getDate() - 1);
+            $("#start_day").datepicker("option", "maxDate", dt);
+        }
+    });*/
 });
 </script>
 

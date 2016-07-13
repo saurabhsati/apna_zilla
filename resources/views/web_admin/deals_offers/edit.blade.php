@@ -303,7 +303,7 @@
                              <div id="append" class="class-add"></div>
                               <div class="error_msg" id="error_deal_image" ></div>
                               <div class="error_msg" id="error_deal_image1" ></div>
-                            <label class="col-sm-6 col-lg-12 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px upto only</label>
+                            <label class="col-sm-6 col-lg-12 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px for best result</label>
 
                               </div>
                               </div>
@@ -498,8 +498,7 @@
  var site_url = "{{url('/')}}";
 function delete_gallery(id,image_name)
 {
-  
-  var _token = $('input[name=_token]').val();
+ var _token = $('input[name=_token]').val();
   var dataString = { id:id, image_name:image_name, _token: _token };
   //console.log(dataString);
   //return false;
@@ -725,10 +724,10 @@ function getSubCategory(ref)
     function loadDishes()
     {
         var ref_cat_select = $(this);
-        var cat_id = $(ref_cat_select).val();
-        var restaurant_id = $('#restaurant_id').val();
-        var token = $('input[name="_token"]').val();
-        var url = "{{ url('/web_admin/deals/get_dishes/')}}/"+cat_id+"?_token="+token+"&loaded_dishes="+arr_selected_category_dishes+"&restaurant_id="+restaurant_id;
+        var cat_id         = $(ref_cat_select).val();
+        var restaurant_id  = $('#restaurant_id').val();
+        var token          = $('input[name="_token"]').val();
+        var url            = "{{ url('/web_admin/deals/get_dishes/')}}/"+cat_id+"?_token="+token+"&loaded_dishes="+arr_selected_category_dishes+"&restaurant_id="+restaurant_id;
         var ref_dish_select  = $(ref_cat_select).parent('div')
                                                 .next('label')
                                                 .next('div.category_dish_section')
@@ -738,7 +737,6 @@ function getSubCategory(ref)
         //console.log(url);
         /* Ajax Call*/
         jQuery.ajax({
-
                     url:url,
                     method:"GET",
                     dataType:'json',
@@ -835,7 +833,7 @@ function getSubCategory(ref)
     function getLastDayofWeek(current)
     {
         var weekstart = current.getDate() - current.getDay() +1;    // get weekstart date
-        var weekend = current.getDate();    // current date=0 == weekstart then weekend==weekstart
+        var weekend   = current.getDate();    // current date=0 == weekstart then weekend==weekstart
         if(current.getDay()!=0)
         {
             var weekend = weekstart + 6;       // end day is the first day + 6
@@ -940,13 +938,13 @@ function getSubCategory(ref)
 <script type="text/javascript">
   var site_url = "{{ url('/') }}";
 
-  var departure_point_map = false;
-  var departure_point_autocomplete = false;
+  var departure_point_map               = false;
+  var departure_point_autocomplete      = false;
   var departure_point_autocomplete_elem = $("#geocomplete")[0];
-  var current_marker = false;
-  var glob_arr_marker = [];
-  var existing_lat_lng = [];
-  var glob_info_window = false;
+  var current_marker                    = false;
+  var glob_arr_marker                   = [];
+  var existing_lat_lng                  = [];
+  var glob_info_window                  = false;
 
   /* Departure Point Map */
   function loadScript() 

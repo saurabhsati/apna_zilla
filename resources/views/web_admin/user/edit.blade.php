@@ -80,8 +80,8 @@
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="name">Profile Picture</label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    @if($arr_user_data['profile_pic']=="default.jpg")
-                      <img src="{{$profile_pic_public_path.'/'.$arr_user_data['profile_pic']}}" width="200" height="200" id="preview_profile_pic"  />
+                    @if($arr_user_data['profile_pic']=="")
+                      <img src="{{url('/')}}/uploads/users/profile_pic/default.jpg" width="200" height="200" id="preview_profile_pic"  />
                     @else
                       <img src="{{$profile_pic_public_path.'/'.$arr_user_data['profile_pic']}}" width="200" height="200" id="preview_profile_pic"  />
                     @endif
@@ -303,9 +303,9 @@
         $("#removal_handle").show();
     }
 
-    function clearPreviewImage()
+    function clearPreviewImage()   
     {
-        $('#preview_profile_pic').attr('src',site_url+'/images/front/avatar.jpg');
+        $('#preview_profile_pic').attr('src',site_url+'/uploads/users/profile_pic/default.jpg');
         $("#removal_handle").hide();
     }
     function chkeck_marital_status(ref)

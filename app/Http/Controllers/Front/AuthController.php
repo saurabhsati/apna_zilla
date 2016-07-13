@@ -527,7 +527,7 @@ class AuthController extends Controller
                 {
                     $user_id = base64_encode($user['id']) ;
                      Session::put('user_id', $user_id);
-                    Session::set('user_name', $user['first_name']);
+                     Session::set('user_name', $user['first_name']);
 
                 }
                 Session::flash('success','Login Successfull.');
