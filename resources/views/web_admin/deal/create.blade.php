@@ -180,7 +180,7 @@
                         <span class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </span>
-                        <input name="start_day" id="start_day" class="form-control" type="text"  size="16" data-rule-required="true"/>
+                        <input name="start_day" id="start_day" class="form-control" type="text"  size="16" data-rule-required="true" data-date-end-date="0d"/>
                          <span class='help-block'>{{ $errors->first('start_day') }}</span>
                     </div>
                 </div>
@@ -191,7 +191,7 @@
                         <span class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </span>
-                        <input name="end_day" id="end_day" class="form-control" type="text"  size="16" data-rule-required="true"  value="" />
+                        <input name="end_day" id="end_day" class="form-control" type="text"  size="16" data-rule-required="true" data-date-end-date="0d"  value="" />
                         <span class='help-block'>{{ $errors->first('end_day') }}</span>
                          <input type="hidden" name="expired_date" id="expired_date" value="{{date('m/d/Y',strtotime($expired_date))}}">
                     </div>
@@ -281,7 +281,7 @@
 
 
 
-        </script>
+</script>
 <script type="text/javascript">
     tinymce.init({ selector:'textarea' });
     //tinymce.init('#page_desc');
@@ -317,7 +317,10 @@
 
         bindDynamicDealCategory();
 
-        dt_start_day = $('#start_day').datepicker();
+        dt_start_day = $('#start_day').datepicker({
+                  dateFormat: "mm-dd-yyyy",
+                  minDate: 0,
+            });
         dt_end_day = $('#end_day').datepicker();
 
         //tp_start_time = $("#start_time").timepicker();

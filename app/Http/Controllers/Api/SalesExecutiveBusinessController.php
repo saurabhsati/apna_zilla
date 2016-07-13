@@ -754,7 +754,6 @@ class SalesExecutiveBusinessController extends Controller
                  $json['status']  = 'ERROR';
                  $json['message'] = 'Error Occure while Updating Business.';
             }
-
             return response()->json($json);
     }
 

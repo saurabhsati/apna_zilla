@@ -360,7 +360,7 @@ class UserController extends Controller
         $home_landline   = $request->input('home_landline');
         $office_landline = $request->input('office_landline');
 
-
+//dd($request->all());
         $user=Sentinel::createModel();
 
         if($user->where('mobile_no',$mobile_no)->whereNotIn('id',[$user_id])->get()->count()>0)

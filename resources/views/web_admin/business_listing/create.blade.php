@@ -145,7 +145,7 @@
             <div class="form-group">
               <label class="col-sm-3 col-lg-2 control-label" for="main_business_cat">Business  Sub Category <i class="red">*</i></label>
             <div class="col-sm-6 col-lg-4 controls" id="sub_category_div" name="sub_category_div" style="">
-            <select class="form-control" id="example-getting-started" data-rule-required="true" name="business_cat[]" multiple="multiple">
+            <select class="form-control" id="example-getting-started"  name="business_cat[]" multiple="multiple">
             <option value="">Select Business Sub Category </option>
                <!--   <option value="tomatoes">Tomatoes</option>
                   <option value="mozarella">Mozzarella</option>
