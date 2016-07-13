@@ -188,7 +188,7 @@
                       </div>
 
                    </div>
-                   <div class="col-sm-6 col-lg-4 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px upto only</div>
+                   <div class="col-sm-6 col-lg-4 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px for best result</div>
                     <span class='help-block'>{{ $errors->first('main_image') }}</span>
                      <!--<br/>
                      <button class="btn btn-warning" onclick="return show_more_images()" id="show_more_images_button">Do you want to add slider images ? </button>  -->

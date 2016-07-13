@@ -833,7 +833,7 @@ function getSubCategory(ref)
     function getLastDayofWeek(current)
     {
         var weekstart = current.getDate() - current.getDay() +1;    // get weekstart date
-        var weekend = current.getDate();    // current date=0 == weekstart then weekend==weekstart
+        var weekend   = current.getDate();    // current date=0 == weekstart then weekend==weekstart
         if(current.getDay()!=0)
         {
             var weekend = weekstart + 6;       // end day is the first day + 6
@@ -938,13 +938,13 @@ function getSubCategory(ref)
 <script type="text/javascript">
   var site_url = "{{ url('/') }}";
 
-  var departure_point_map = false;
-  var departure_point_autocomplete = false;
+  var departure_point_map               = false;
+  var departure_point_autocomplete      = false;
   var departure_point_autocomplete_elem = $("#geocomplete")[0];
-  var current_marker = false;
-  var glob_arr_marker = [];
-  var existing_lat_lng = [];
-  var glob_info_window = false;
+  var current_marker                    = false;
+  var glob_arr_marker                   = [];
+  var existing_lat_lng                  = [];
+  var glob_info_window                  = false;
 
   /* Departure Point Map */
   function loadScript() 
