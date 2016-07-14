@@ -774,7 +774,7 @@
         
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
-                <input type="submit"  class="btn btn-primary" value="Submit" onclick="setExtraData()">
+                <input type="submit"  class="btn btn-primary" value="Submit">
 
             </div>
         </div>
@@ -787,10 +787,16 @@
 <!-- END Main Content -->
 
 <script type="text/javascript">
- function setExtraData()
-  {
-    return tinymce.triggerSave();
-  }
+ 
+$(document).ready(function()
+{
+ 
+ $('#validation-form').submit(function(){
+    tinyMCE.triggerSave();
+    
+ }); 
+
+
 function sunday_status(status)
 {
   if(status=='on')
@@ -808,13 +814,6 @@ function sunday_status(status)
   }
 }
 
-
-$(document).ready(function()
-{
-  $("#validation-form").validate();
- /*$('#validation-form').submit(function(){
-    tinyMCE.triggerSave();
- }); */
  var site_url="{{url('/')}}";
  var csrf_token = "{{ csrf_token() }}";
  $("#user_id").autocomplete(
