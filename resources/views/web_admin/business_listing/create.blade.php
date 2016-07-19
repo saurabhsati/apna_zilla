@@ -1,12 +1,8 @@
     @extends('web_admin.template.admin')
     @section('main_content')
     <style type="text/css">
-  .error_msg .error_business_image {
+  .error_msg .error_business_image{
     color:red;
-  }
-
-  .error  {
-   color:red; 
   }
 </style>
     <!-- BEGIN Page Title -->
@@ -131,7 +127,7 @@
               <label class="col-sm-3 col-lg-2 control-label" for="main_business_cat">Business Main Category <i class="red">*</i></label>
             <div class="col-sm-6 col-lg-4 controls">
             <select class="form-control" data-rule-required="true" name="main_business_cat" id="main_business_cat"  onchange="getSubCategory(this)">
-              <option value=""> Select Business Main Categories</option>
+              <option> Select Business Main Categories</option>
              @if(isset($arr_category) && sizeof($arr_category)>0)
              @foreach($arr_category as $category)
               <option  name="sub_cat" id="sub_cat" value="{{ $category['cat_id'] }}" >
@@ -145,7 +141,7 @@
             <div class="form-group">
               <label class="col-sm-3 col-lg-2 control-label" for="main_business_cat">Business  Sub Category <i class="red">*</i></label>
             <div class="col-sm-6 col-lg-4 controls" id="sub_category_div" name="sub_category_div" style="">
-            <select class="form-control" id="example-getting-started"  name="business_cat[]" multiple="multiple">
+            <select class="form-control" id="example-getting-started" data-rule-required="true" name="business_cat[]" multiple="multiple">
             <option value="">Select Business Sub Category </option>
                <!--   <option value="tomatoes">Tomatoes</option>
                   <option value="mozarella">Mozzarella</option>
@@ -153,7 +149,6 @@
                   <option value="pepperoni">Pepperoni</option>
                   <option value="onions">Onions</option> -->
               </select>
-              <div id="no_sub_cat_ava" class="alert alert-danger" style="display:none">Sorry No Sub-Category available Please select different Categroy</div>
               <span class='help-block'>{{ $errors->first('business_cat') }}</span>
                 <div class="alert alert-warning">Note: Firstly Select The Business Main category From Business Main Category Drop-down , Then Click ON None Selected Button  </div>
 
@@ -188,7 +183,7 @@
                       </div>
 
                    </div>
-                   <div class="col-sm-6 col-lg-4 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px for best result</div>
+                   <div class="col-sm-6 col-lg-4 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px upto only</div>
                     <span class='help-block'>{{ $errors->first('main_image') }}</span>
                      <!--<br/>
                      <button class="btn btn-warning" onclick="return show_more_images()" id="show_more_images_button">Do you want to add slider images ? </button>  -->
@@ -342,7 +337,7 @@
                     <span class='help-block'>{{ $errors->first('mobile_number') }}</span>
                 </div>
             </div>
-          {{--  <div class="form-group">
+           <!--  <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="landline_number">Landline Number <i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control"
@@ -409,7 +404,7 @@
                     <span class='help-block'>{{ $errors->first('website') }}</span>
                 </div>
             </div>
- --}}
+ -->
 
 
 
@@ -430,7 +425,7 @@
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control timepicker-default" name="mon_in" id="mon_in" type="text" data-rule-required="true" >
+                        <input class="form-control timepicker-default" name="mon_in" id="mon_in" type="text" data-rule-required="true">
                     </div>
                 </div>
 
@@ -574,7 +569,7 @@
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control  " name="sun_in" id="sun_in" type="text" data-rule-required="true" >
+                        <input class="form-control  " name="sun_in" id="sun_in" type="text"  >
                     </div>
                 </div>
 
@@ -583,7 +578,7 @@
                         <a class="input-group-addon" href="#">
                             <i class="fa fa-clock-o"></i>
                         </a>
-                        <input class="form-control " name="sun_out" id="sun_out" type="text" data-rule-required="true">
+                        <input class="form-control " name="sun_out" id="sun_out" type="text" >
                     </div>
                 </div>
 
@@ -621,7 +616,7 @@
                                 <div class="clr"></div>
 
                              <div id="append_service" class="class-add"></div>
-                              <div class="error_msg" id="error_business_service"></div>
+                              <div class="error_msg" id="error_business_service" ></div>
                               <!-- <div class="error_msg" id="error_business_image1" ></div> -->
                              <label class="col-sm-3 col-lg-2 control-label"></label>
 
@@ -771,10 +766,27 @@
                     <span class='help-block'>{{ $errors->first('keywords') }}</span>
                 </div>
             </div>
-        
+          <!--   <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label" for="youtube_link">Youtube Link<i class="red"></i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                    <input class="form-control"
+                           name="youtube_link"
+                           id="youtube_link"
+                           data-rule-required=""
+                           placeholder="Enter Youtube Link"
+                           value=""
+                           />
+                    <span class='help-block'>{{ $errors->first('youtube_link') }}</span>
+                </div>
+            </div> -->
+                      
+
+
+
+
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
-                <input type="submit"  class="btn btn-primary" value="Submit">
+                <input type="submit"  class="btn btn-primary" value="Submit" onclick="return setExtraData()">
 
             </div>
         </div>
@@ -787,16 +799,6 @@
 <!-- END Main Content -->
 
 <script type="text/javascript">
- 
-$(document).ready(function()
-{
- 
- $('#validation-form').submit(function(){
-    tinyMCE.triggerSave();
-    
- }); 
-
-
 function sunday_status(status)
 {
   if(status=='on')
@@ -814,6 +816,13 @@ function sunday_status(status)
   }
 }
 
+
+$(document).ready(function()
+{
+
+ $('#validation-form').submit(function(){
+    tinyMCE.triggerSave();
+ }); 
  var site_url="{{url('/')}}";
  var csrf_token = "{{ csrf_token() }}";
  $("#user_id").autocomplete(
@@ -919,7 +928,7 @@ $('#add-service').click(function()
 
             if(img_val == "")
             {
-                  $('#error_business_service').css('margin-left','20px');
+                  $('#error_business_service').css('margin-left','120px');
                   $('#error_business_service').show();
                   $('#error_business_service').fadeIn(3000);
                   document.getElementById('error_business_service').innerHTML="The Services is required.";
@@ -1004,7 +1013,7 @@ var options = {
                 map: "#business_location_map",
                 types: ["geocode", "establishment"],
                 markerOptions: {
-                                    //draggable: true
+                                    draggable: true
                                }
               }
   $("#area").geocomplete(options);
@@ -1023,13 +1032,18 @@ $("#area").bind("geocode:dragged", function(event, latLng){
         });
 });
 
+
+$('html, body').animate({
+              scrollTop: $("body").offset().top
+          }, 1000);
+
 function getSubCategory(ref)
 {
    var main_cat_id =$(ref).find("option:selected").val();
    var categCheck  = $('#example-getting-started').multiselect
                       ({
                          includeSelectAllOption: true,
-                         //enableFiltering : true
+                         enableFiltering : true
                       });
       categCheck.html('');
     jQuery.ajax({
@@ -1053,26 +1067,28 @@ function getSubCategory(ref)
                               
                                 if(typeof(response.arr_sub_cat) == "object")
                                 {
+                                  //$(".multiselect-container").css("display",'block');
+                                  // var option = '';
                                    jQuery(response.arr_sub_cat).each(function(index,arr_sub_cat)
                                    {
                                     option+='<option value="'+arr_sub_cat.cat_id+'">'+arr_sub_cat.title+'</option>';
 
                                    });
-                                   $("#no_sub_cat_ava").hide();
+
+                                  
                                    categCheck.html(option);
                                    categCheck.multiselect('rebuild');
 
                                 }
                                 
+                            
+
                             }
                             else
                             {
                                 //$(".multiselect-container").css("display",'none');
                                 categCheck.html('<option value=""></option>');
-                                //includeSelectAllOption: false,
                                 $(".multiselect-selected-text").html("No Sub Category Available !");
-                                $("#no_sub_cat_ava").show();
-
                             }
                             return false;
                         }
@@ -1082,10 +1098,13 @@ function getSubCategory(ref)
 
 </script>
 <script type="text/javascript">
-  tinymce.init({ selector:'textarea' });
+  function setExtraData()
+  {
+    return tinymce.triggerSave();
+  }
+
+    tinymce.init({ selector:'textarea' });
 
 </script>
 
-
 @stop
-

@@ -121,7 +121,7 @@ class BusinessListingController extends Controller
     public function store(Request $request)
     {
         //echo'<pre>';
-      
+     
        $arr_rules                        = array();
        $form_data                        = $request->all();
         //business fields
