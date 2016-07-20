@@ -1,4 +1,3 @@
-
 @extends('web_admin.template.admin')
 @section('main_content')
 <style type="text/css">
@@ -210,8 +209,8 @@
                                       }
                                   }
                                  $category_id;
-                                 $business_id=$business['id'];
-                                 $user_id=$business['user_details']['id'];
+                                 $business_id = $business['id'];
+                                 $user_id     = $business['user_details']['id'];
 
                                  if(!sizeof($business['membership_plan_details'])>0)
                                  {
@@ -319,17 +318,18 @@
                                }
                               ?>
 
+
+
                                 <?php
                                 if(sizeof($business['membership_plan_details']  )>0)
                                 {
-
                                     $expire_date = new \Carbon($business['membership_plan_details'][0]['expire_date']);
                                     $now = Carbon::now();
                                     $difference = ($expire_date->diff($now)->days < 1)
                                         ? 'today'
                                         : $expire_date->diffForHumans($now);
                                        
-                                    if (strpos($difference, 'after') !== false || strpos($difference, 'today') !== false && $business['membership_plan_details']['transaction_status'] == "Active") 
+                                    if(strpos($difference, 'after') !== false || strpos($difference, 'today') !== false && $business['membership_plan_details'][0]['transaction_status'] == "Active") 
                                     {
                                     ?>
                                     @if($check_allow=='0')
@@ -366,9 +366,7 @@
                                    ?>
 
                                 </td>
-
-
-                           
+                          
                                 <td width="width:52%;">
                                 @if( sizeof($business['reviews'])>0)
                                  

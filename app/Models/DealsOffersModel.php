@@ -44,12 +44,11 @@ class DealsOffersModel extends Model
     }
      public function offers_info()
     {
-        return $this->hasMany('App\Models\OffersModel','deal_id','id');
+        return $this->hasMany('App\Models\OffersModel','deal_id','id')->where('is_active',1);
     }
      public function category_info()
     {
         return $this->hasMany('App\Models\DealcategoryModel','deal_id','id');
-        
     }
      
 }

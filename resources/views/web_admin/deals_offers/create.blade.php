@@ -317,9 +317,6 @@
     </div>
 
 <input type="hidden" name="json_location_point" value="" /> 
-
-         
-            
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="is_active">Is Active <i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-1 controls">
@@ -419,7 +416,7 @@ $(function () {
     var dt_start_day;
     var dt_end_day;
 
-   var tp_start_time;
+    var tp_start_time;
     var tp_end_time;
 
     
@@ -637,10 +634,10 @@ function getSubCategory(ref)
 
 $(document).ready(function()
 {
- var site_url="{{url('/')}}";
- var csrf_token = "{{ csrf_token() }}";
- $("#user_id").autocomplete(
-          {
+   var site_url="{{url('/')}}";
+   var csrf_token = "{{ csrf_token() }}";
+   $("#user_id").autocomplete(
+            {
             minLength:3,
             source:site_url+"/web_admin/common/get_public_id",
             search: function( event, ui )
@@ -720,62 +717,60 @@ $(document).ready(function()
                   
            };
 
- $('#add-image').click(function()
- {
-   flag=1;
 
-            var img_val = jQuery("input[name='deal_image[]']:last").val();
+         $('#add-image').click(function()
+         {
+           flag=1;
 
-            var img_length = jQuery("input[name='deal_image[]']").length;
+                    var img_val = jQuery("input[name='deal_image[]']:last").val();
 
-            if(img_val == "")
-            {
-                  $('#error_deal_image').css('margin-left','120px');
-                  $('#error_deal_image').show();
-                  $('#error_deal_image').fadeIn(3000);
-                  document.getElementById('error_deal_image').innerHTML="The Image uploaded is required.";
-                  setTimeout(function(){
-                  $('#error_deal_image').fadeOut(4000);
-                  },3000);
+                    var img_length = jQuery("input[name='deal_image[]']").length;
 
-                 flag=0;
-                 return false;
-            }
-            var chkimg = img_val.split(".");
-            var extension = chkimg[1];
+                    if(img_val == "")
+                    {
+                          $('#error_deal_image').css('margin-left','120px');
+                          $('#error_deal_image').show();
+                          $('#error_deal_image').fadeIn(3000);
+                          document.getElementById('error_deal_image').innerHTML="The Image uploaded is required.";
+                          setTimeout(function(){
+                          $('#error_deal_image').fadeOut(4000);
+                          },3000);
 
-               if(extension!='jpg' && extension!='JPG' && extension!='png' && extension!='PNG' && extension!='jpeg' && extension!='JPEG'
-                 && extension!='gif' && extension!='GIF')
-               {
-                 $('#error_deal_image1').css('margin-left','230px')
-                 $('#error_deal_image1').show();
-                 $('#error_deal_image1').fadeIn(3000);
-                 document.getElementById('error_deal_image1').innerHTML="The file type you are attempting to upload is not allowed.";
-                 setTimeout(function(){
-                  $('#deal_image').css('border-color','#dddfe0');
-                  $('#error_deal_image1').fadeOut(4000);
-               },3000);
-               flag=0;
-                return false;
-              }
-              var html='<div>'+
-                       '<input type="file" name="deal_image[]" id="deal_image" class="pimg" data-rule-required="true"  />'+
-                       '<div class="error" id="error_deal_image">{{ $errors->first("deal_image") }}</div>'+
-                       '</div>'+
-                       '<div class="clr"></div><br/>'+
-                       '<div class="error" id="error_set_default"></div>'+
-                       '<div class="clr"></div>';
-                  jQuery("#append").append(html);
+                         flag=0;
+                         return false;
+                    }
+                    var chkimg = img_val.split(".");
+                    var extension = chkimg[1];
 
-});
-$('#remove-image').click(function()
-{
-     var html= $("#append").find("input[name='deal_image[]']:last");
-     html.remove();
-});
-
-
-           
+                       if(extension!='jpg' && extension!='JPG' && extension!='png' && extension!='PNG' && extension!='jpeg' && extension!='JPEG'
+                         && extension!='gif' && extension!='GIF')
+                       {
+                         $('#error_deal_image1').css('margin-left','230px')
+                         $('#error_deal_image1').show();
+                         $('#error_deal_image1').fadeIn(3000);
+                         document.getElementById('error_deal_image1').innerHTML="The file type you are attempting to upload is not allowed.";
+                         setTimeout(function(){
+                          $('#deal_image').css('border-color','#dddfe0');
+                          $('#error_deal_image1').fadeOut(4000);
+                       },3000);
+                       flag=0;
+                        return false;
+                      }
+                      var html='<div>'+
+                               '<input type="file" name="deal_image[]" id="deal_image" class="pimg" data-rule-required="true"  />'+
+                               '<div class="error" id="error_deal_image">{{ $errors->first("deal_image") }}</div>'+
+                               '</div>'+
+                               '<div class="clr"></div><br/>'+
+                               '<div class="error" id="error_set_default"></div>'+
+                               '<div class="clr"></div>';
+                          jQuery("#append").append(html);
+        });
+        
+        $('#remove-image').click(function()
+        {
+             var html= $("#append").find("input[name='deal_image[]']:last");
+             html.remove();
+        });
  });          
 </script>
   
@@ -1079,19 +1074,19 @@ $('#remove-image').click(function()
 
   function setExtraData()
   {
-    var fileDemo = document.getElementById("deal_main_image");
+    return tinyMCE.triggerSave();
+   /* var fileDemo = document.getElementById("deal_main_image");
     var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(.jpg|.png|.gif)$");
     if (regex.test(fileDemo.value.toLowerCase())) 
     {
-      //return true;
-      return tinyMCE.triggerSave();
+      return true;
+    //  return tinyMCE.triggerSave();
     }
     else
-    {
-        alert('Image Format not supoorted.Please select valid image');
+    {    /alert('Image Format not supoorted.Please select valid image');
         document.getElementById("deal_main_image").value = '';
         return false;
-    }    
+    }    */
 }
   
 

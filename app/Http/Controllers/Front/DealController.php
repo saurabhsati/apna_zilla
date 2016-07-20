@@ -106,10 +106,10 @@ class DealController extends Controller
            $obj_category_info = CategoryModel::where('cat_slug',$sub_cat_slug)->get();
 
         }
-        $arr_category_info=array();
-        $arr_deals_max_dis_info=array();
-        $arr_deals_info=array();
-        $arr_deals_loc_info=array();
+        $arr_category_info      = array();
+        $arr_deals_max_dis_info = array();
+        $arr_deals_info         = array();
+        $arr_deals_loc_info     = array();
 
         //by city
        /* $obj_business_listing_city = CityModel::where('city_title',$city)->get();
@@ -214,12 +214,12 @@ class DealController extends Controller
  	}
  	public function details($deal='deals',$deal_slug,$enc_id)
  	{
- 		 $page_title = "Details";
-     $deal_image_path="uploads/deal";
-     $deal_base_upload_img_path='';
-     $deal_slider_upload_img_path =$this->deal_public_upload_img_path ;
- 		 $id = base64_decode($enc_id);
-     $city = SegmentRequest::segment(1);
+     $page_title                  = "Details";
+     $deal_image_path             = "uploads/deal";
+     $deal_base_upload_img_path   = '';
+     $deal_slider_upload_img_path = $this->deal_public_upload_img_path ;
+     $id                          = base64_decode($enc_id);
+     $city                        = SegmentRequest::segment(1);
 
 
       $obj_business_listing = BusinessListingModel::where('city',$city)->where('is_active','1')->get();
@@ -231,19 +231,21 @@ class DealController extends Controller
      if(sizeof($obj_business_listing)>0)
       {
         foreach ($obj_business_listing as $key => $value) {
-          $key_business_city[$value['id']]=$value['id'];
+          $key_business_city[$value['id']] = $value['id'];
         }
       }
      
 
 
- 		 $obj_deals_info = DealsOffersModel::with(['offers_info','deals_slider_images','category_info'])->where('id',$id)->get();
-     $main_category_ids=$sub_category_ids=[];
-         
-   		if($obj_deals_info)
-   		{
-   			$deals_info = $obj_deals_info->toArray();
-        foreach ($deals_info[0]['category_info'] as $key => $value) 
+ 		 $obj_deals_info = DealsOffersModel::with(['offers_info','deals_slider_images','category_info'])->where('id',$id)->where('is_active','1')->get();
+
+     $main_category_ids = $sub_category_ids=[];
+
+      if($obj_deals_info)
+      {
+        $deals_info = $obj_deals_info->toArray();
+       
+          foreach ($deals_info[0]['category_info'] as $key => $value) 
           {
             if(!array_key_exists( $value['main_cat_id'], $main_category_ids))
              {
@@ -254,8 +256,9 @@ class DealController extends Controller
                   $sub_category_ids[$value['sub_cat_id']]= $value['sub_cat_id'];
              }
           }
-  		}
-      $mete_title = "";
+      }
+     
+        $mete_title = "";
         if(isset($deals_info[0]['name']) && sizeof($deals_info[0]['name']))
         {
            $mete_title = $deals_info[0]['name'];

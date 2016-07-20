@@ -611,7 +611,7 @@
                               <label class="col-sm-3 col-lg-2 control-label">Add More Business Services <i class="red">*</i> </label>
                               <div class="col-sm-6 col-lg-4 controls">
 
-                              <input class="form-control" type="text" name="business_service[]" id="business_service" class="pimg"   />
+                              <input class="form-control" type="text" name="business_service[]" id="business_service" class="pimg" data-rule-required="true"/>
                               <div class="error" id="error_business_service">{{ $errors->first('business_service') }}</div>
 
                               <div class="clr"></div><br/>
@@ -745,12 +745,12 @@
                     <input type="text" class="form-control"
                            name="establish_year"
                            id="establish_year"
-                           data-rule-required="true"
-                           data-rule-number="true"
-                           data-rule-minlength="0"
-                           data-rule-maxlength="4"
-                           placeholder="Enter Establish Year"
-                          value=""/>
+                          data-rule-required  = "true"
+                          data-rule-number    = "true"
+                          data-rule-minlength = "0"
+                          data-rule-maxlength = "4"
+                          placeholder         = "Enter Establish Year"
+                          value               = ""/>
                     <span class='help-block'>{{ $errors->first('establish_year') }}</span>
                 </div>
             </div>
@@ -758,11 +758,11 @@
                 <label class="col-sm-3 col-lg-2 control-label" for="keywords">Meta Keywords<i class="red">*</i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                     <textarea class="form-control"
-                           name="keywords"
-                           id="keywords"
-                           data-rule-required="true"
-                           placeholder="Enter Keywords"
-                           value=""
+                           name               = "keywords"
+                           id                 = "keywords"
+                           data-rule-required = "true"
+                           placeholder        = "Enter Keywords"
+                           value              = ""
                            ></textarea>
                     <span class='help-block'>{{ $errors->first('keywords') }}</span>
                 </div>
@@ -854,7 +854,7 @@ $(document).ready(function()
             {
                  return $("<li></li>")
                  .data("item.autocomplete", item)
-                 .append( item.label +'<span style="color:#7b7b7b"> '+item.span+'</span>')
+                 .append( item.label +'<span style="color:#7b7b7b">'+item.span+'</span>')
                  .appendTo(ul);
            };
 
@@ -941,7 +941,7 @@ $('#add-service').click(function()
             }
 
               var service_html='<div>'+
-                       '<input type="text" class="form-control" name="business_service[]" id="business_service" class="pimg" data-rule-required="true"  />'+
+                       '<input type="text" class="form-control" name="business_service[]" id="business_service" class="pimg" data-rule-required="true"/>'+
                        '<div class="error" id="error_business_image">{{ $errors->first("business_service") }}</div>'+
                        '</div>'+
                        '<div class="clr"></div><br/>'+
@@ -1098,20 +1098,12 @@ function getSubCategory(ref)
 
 </script>
 <script type="text/javascript">
-
-
-jQuery.validator.addMethod("check_date",function(value) {
-
-
-        return parseInt($('#MOBILE').val());
-
-
-}, "Please enter valid Mobile No!");
-
 function checkOpeningHours()
 {
-    var mon_in =$("#mon_in").val();
-    var mon_out =$("#mon_out").val();
+    var mon_in  = $("#mon_in").val();
+    var mon_out = $("#mon_out").val();
+    var tue_in  = $("#tue_in").val();
+    var tue_out = $("#tue_out").val();
     
     if( (mon_in.endsWith('AM') == mon_out.endsWith('AM') ) || (mon_in.endsWith('PM') == mon_out.endsWith('PM')) )
     {          
@@ -1119,8 +1111,8 @@ function checkOpeningHours()
         var mon_res1       = mon_out.substring(0,4);
         var mon_hour_start = mon_res.split(':');
         var mon_hours_end  = mon_res1.split(':');
-        var  sec           = mon_hour_start[0]*3600+mon_hour_start[1]*60;
-        var  sec1          = mon_hours_end[0]*3600+mon_hours_end[1]*60;
+        var sec            = mon_hour_start[0]*3600+mon_hour_start[1]*60;
+        var sec1           = mon_hours_end[0]*3600+mon_hours_end[1]*60;
             
         if(sec > sec1)
         {
@@ -1139,6 +1131,7 @@ function checkOpeningHours()
         return  true;
     }
 }
+ 
   function setExtraData()
   {
     if(!($("#validation-form").valid()))

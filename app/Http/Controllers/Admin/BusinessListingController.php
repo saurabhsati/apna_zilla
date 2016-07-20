@@ -35,7 +35,7 @@ class BusinessListingController extends Controller
     //
     public function __construct()
     {
-    	  $arr_except_auth_methods = array();
+        $arr_except_auth_methods = array();
         $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
         $this->UserModel                       = new UserModel();
         $this->BusinessListingModel            = new BusinessListingModel();
@@ -52,8 +52,8 @@ class BusinessListingController extends Controller
      /* Business Listing Start */
     public function index(Request $request)
     {
-    	$page_title	='Manage Business Listing';
-    	$business_public_img_path = $this->business_public_img_path;
+      $page_title ='Manage Business Listing';
+      $business_public_img_path = $this->business_public_img_path;
 
         $obj_main_category = CategoryModel::where('parent','0')->get();
        if($obj_main_category)
@@ -87,7 +87,7 @@ class BusinessListingController extends Controller
         {
 
           
-        	$obj_business_listing = BusinessListingModel::with(['category','user_details','reviews','membership_plan_details'])->orderBy('created_at','DESC')->get();
+          $obj_business_listing = BusinessListingModel::with(['category','user_details','reviews','membership_plan_details'])->orderBy('created_at','DESC')->get();
             if($obj_business_listing)
             {
                 $business_listing = $obj_business_listing->toArray();
@@ -100,9 +100,9 @@ class BusinessListingController extends Controller
     public function create()
     {
          
-    	$page_title="Create Business List";
+      $page_title="Create Business List";
 
-    	$obj_user_res = UserModel::where('role','normal')->get();
+      $obj_user_res = UserModel::where('role','normal')->get();
         if( $obj_user_res != FALSE)
         {
             $arr_user = $obj_user_res->toArray();
@@ -110,10 +110,10 @@ class BusinessListingController extends Controller
         $obj_category = CategoryModel::where('parent','=',0)->where('is_active',1)->orderBy('title','ASC')->get();
 
 
- 		if($obj_category)
- 		{
- 			$arr_category = $obj_category->toArray();
- 		}
+    if($obj_category)
+    {
+      $arr_category = $obj_category->toArray();
+    }
 
     
         return view('web_admin.business_listing.create',compact('page_title','arr_user','arr_category'));
@@ -177,7 +177,7 @@ class BusinessListingController extends Controller
         $arr_rules['establish_year']       = 'required';
         $arr_rules['keywords']             = 'required';
         //$arr_rules['youtube_link']       = 'required';
-    	$validator = Validator::make($request->all(),$arr_rules);
+      $validator = Validator::make($request->all(),$arr_rules);
 
         if($validator->fails())
         {
@@ -188,12 +188,12 @@ class BusinessListingController extends Controller
         $arr_data['user_id']=$form_data['tmp_user_id'];
 
 
-        $arr_data['is_active']         = '1';
-        $arr_data['business_added_by'] = $form_data['business_added_by'];
-        $arr_data['business_name']     = $form_data['business_name'];
-        $business_cat                  = $form_data['business_cat'];
-        $payment_mode                  = $form_data['payment_mode'];
-        $business_service              = $form_data['business_service'];
+        $arr_data['is_active']='1';
+        $arr_data['business_added_by']=$form_data['business_added_by'];
+        $arr_data['business_name']=$form_data['business_name'];
+        $business_cat=$form_data['business_cat'];
+        $payment_mode=$form_data['payment_mode'];
+        $business_service=$form_data['business_service'];
         if($request->hasFile('main_image'))
         {
             $fileName       = $form_data['main_image'];
@@ -334,7 +334,7 @@ class BusinessListingController extends Controller
             {
                 Session::flash('success','Business Created successfully');
             }
-        	else
+          else
             {
                 Session::flash('error','Error Occurred While Creating Business List ');
             }
@@ -342,7 +342,7 @@ class BusinessListingController extends Controller
         }
         else
         {
-        	Session::flash('error','Error Occurred While Creating Business List ');
+          Session::flash('error','Error Occurred While Creating Business List ');
         }
         return redirect()->back();
 
@@ -383,11 +383,11 @@ class BusinessListingController extends Controller
         $business_data=BusinessListingModel::with(['category','user_details','image_upload_details','service','business_times','payment_mode'])->where('id',$id)->get()->toArray();
         //dd($business_data);
          return view('web_admin.business_listing.edit',compact('page_title','arr_parent_category','business_data','arr_user','arr_category','business_public_img_path','business_base_upload_img_path','arr_upload_image'));
- 	}
- 	public function update(Request $request,$enc_id)
- 	{
+  }
+  public function update(Request $request,$enc_id)
+  {
 
- 		$id	=base64_decode($enc_id);
+    $id =base64_decode($enc_id);
         $arr_all  = array();
         $arr_all=$request->all();
 
@@ -396,13 +396,13 @@ class BusinessListingController extends Controller
         $business_service=$arr_all['business_service'];
         $payment_mode=$request->input('payment_mode');
         //dd($payment_mode);
-        $form_data	= array();
- 		$business_data = array();
- 		$arr_rules = array();
+        $form_data  = array();
+    $business_data = array();
+    $arr_rules = array();
 
- 		$arr_rules['business_name'] = "required";
- 		//$arr_rules['business_cat'] = "required";
- 		$arr_rules['tmp_user_id'] = "required";
+    $arr_rules['business_name'] = "required";
+    //$arr_rules['business_cat'] = "required";
+    $arr_rules['tmp_user_id'] = "required";
 
         //location fields
         //$arr_rules['building']='required';
@@ -444,10 +444,10 @@ class BusinessListingController extends Controller
         } 
 
         //$arr_rules['hours_of_operation']='required';
-    	$arr_rules['company_info']='required';
+      $arr_rules['company_info']='required';
         $arr_rules['establish_year']='required';
-    	$arr_rules['keywords']='required';
-    	//$arr_rules['youtube_link']='required';
+      $arr_rules['keywords']='required';
+      //$arr_rules['youtube_link']='required';
 
 
 
@@ -521,7 +521,7 @@ class BusinessListingController extends Controller
        }
 
         $filename=$request->input('old_image');
-		if($request->hasFile('main_image'))
+    if($request->hasFile('main_image'))
         {
             $fileName       = $request->file('main_image');
             $fileExtension  = strtolower($request->file('main_image')->getClientOriginalExtension());
@@ -566,10 +566,10 @@ class BusinessListingController extends Controller
 
 
         //$business_data['hours_of_operation']=$request->input('hours_of_operation');
-    	$business_data['company_info']=$request->input('company_info');
+      $business_data['company_info']=$request->input('company_info');
         $business_data['establish_year']=$request->input('establish_year');
-    	$business_data['keywords']=$request->input('keywords');
-    	$business_data['youtube_link']=$request->input('youtube_link');
+      $business_data['keywords']=$request->input('keywords');
+      $business_data['youtube_link']=$request->input('youtube_link');
 
          $business_cat_slug=$request->input('business_public_id');
          $chk_business_category=[];
@@ -659,10 +659,10 @@ class BusinessListingController extends Controller
         }
         else
         {
-        	Session::flash('error','Error Occurred While Updating Business List ');
+          Session::flash('error','Error Occurred While Updating Business List ');
         }
         return redirect()->back();
-   	}
+    }
     public function delete_gallery(Request $request)
     {
        $business_base_upload_img_path =$this->business_base_upload_img_path;
@@ -731,7 +731,7 @@ class BusinessListingController extends Controller
          return view('web_admin.business_listing.show',compact('page_title','business_data','business_public_img_path','business_base_upload_img_path','arr_main_category','arr_place','arr_sub_category'));
 
     }
-   	public function toggle_status($enc_id,$action)
+    public function toggle_status($enc_id,$action)
     {
         if($action=="activate")
         {
@@ -869,9 +869,9 @@ class BusinessListingController extends Controller
 
     protected function _delete($enc_id)
     {
-    	$id = base64_decode($enc_id);
+      $id = base64_decode($enc_id);
         $Business = BusinessListingModel::where('id',$id);
-		return $Business->delete();
+    return $Business->delete();
     }
 
     public function assign_membership($enc_business_id,$enc_user_id,$enc_category_id)
