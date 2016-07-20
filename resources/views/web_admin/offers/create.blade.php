@@ -125,7 +125,7 @@
                 <div class="col-sm-6 col-lg-4 controls">
                     <input class="form-control" name="limit" id="limit" data-rule-required="true" data-rule-price="true"/>
                     <span class='help-block'>{{ $errors->first('limit') }}</span>
-                </div>
+                </div><i class="green">User can buy this offer as per Given limit</i>
             </div>
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label">Valid From<i style="color:red;">*</i></label>

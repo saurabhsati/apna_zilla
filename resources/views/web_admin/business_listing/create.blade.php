@@ -1075,20 +1075,18 @@ function getSubCategory(ref)
 
                                    });
 
-                                  
                                    categCheck.html(option);
                                    categCheck.multiselect('rebuild');
 
                                 }
-                                
-                            
-
+                         
                             }
                             else
                             {
                                 //$(".multiselect-container").css("display",'none');
-                                categCheck.html('<option value=""></option>');
-                                $(".multiselect-selected-text").html("No Sub Category Available !");
+                                 categCheck.multiselect('rebuild');
+                                 categCheck.html('<option value=""></option>');
+                                 $(".multiselect-selected-text").html("No Sub Category Available !");
                             }
                             return false;
                         }
