@@ -75,7 +75,9 @@
               id="validation-form"
               method="POST"
               action="{{ url('/web_admin/business_listing/store/') }}"
-              enctype="multipart/form-data">
+              enctype="multipart/form-data"
+              onsubmit="return checkOpeningHours()"
+              >
 
            {{ csrf_field() }}
            <div class="form-group">
@@ -437,6 +439,7 @@
                         <input class="form-control timepicker-default" name="mon_out" id="mon_out" type="text" data-rule-required="true">
                     </div>
                 </div>
+                    <span id="mon_span" style="display:none!important;color:red!important;">Please enter valid Opening hours for Monday</span> 
 
             </div>
 
@@ -622,8 +625,6 @@
 
                             </div>
                         </div>
-
-
 
             <hr/>
             <div class="form-group">
@@ -815,7 +816,6 @@ function sunday_status(status)
     $("#sun_out").timepicker('hideWidget');
   }
 }
-
 
 $(document).ready(function()
 {
@@ -1098,8 +1098,56 @@ function getSubCategory(ref)
 
 </script>
 <script type="text/javascript">
+
+
+jQuery.validator.addMethod("check_date",function(value) {
+
+
+        return parseInt($('#MOBILE').val());
+
+
+}, "Please enter valid Mobile No!");
+
+function checkOpeningHours()
+{
+    var mon_in =$("#mon_in").val();
+    var mon_out =$("#mon_out").val();
+    
+    if( (mon_in.endsWith('AM') == mon_out.endsWith('AM') ) || (mon_in.endsWith('PM') == mon_out.endsWith('PM')) )
+    {          
+        var mon_res        = mon_in.substring(0,4);
+        var mon_res1       = mon_out.substring(0,4);
+        var mon_hour_start = mon_res.split(':');
+        var mon_hours_end  = mon_res1.split(':');
+        var  sec           = mon_hour_start[0]*3600+mon_hour_start[1]*60;
+        var  sec1          = mon_hours_end[0]*3600+mon_hours_end[1]*60;
+            
+        if(sec > sec1)
+        {
+          $("#mon_in").focus();
+          $("#mon_out").focus();
+          $("#mon_span").css("display", "inline").fadeOut(15000);
+          return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    else
+    {
+        return  true;
+    }
+}
   function setExtraData()
   {
+    if(!($("#validation-form").valid()))
+    {
+        $('html, body').animate({
+              scrollTop: $("body").offset().top
+          }, 2000);
+    }
+
     return tinymce.triggerSave();
   }
 
