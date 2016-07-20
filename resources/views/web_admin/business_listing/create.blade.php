@@ -869,13 +869,15 @@ $(document).ready(function()
 
             if(img_val == "")
             {
-                  $('#error_business_image').css('margin-left','120px');
+              alert('The Image uploaded is required.').fadeOut(4000);
+                 /* $('#error_business_image').css('margin-left','30px');
                   $('#error_business_image').show();
                   $('#error_business_image').fadeIn(3000);
-                  document.getElementById('error_business_image').innerHTML="The Image uploaded is required.";
-                  setTimeout(function(){
+                  document.getElementById('error_business_image').innerHTML="The Image uploaded is required.";*/
+
+                  /*setTimeout(function(){
                   $('#error_business_image').fadeOut(4000);
-                  },3000);
+                  },3000);*/
 
                  flag=0;
                  return false;
