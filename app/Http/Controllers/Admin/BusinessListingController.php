@@ -216,7 +216,6 @@ class BusinessListingController extends Controller
             return redirect()->back();
         }
 
-
         //location input array
         $arr_data['building']             = $request->input('building');
         $arr_data['street']               = $request->input('street');
@@ -288,6 +287,7 @@ class BusinessListingController extends Controller
          foreach($files as $file) {
          $destinationPath = $this->business_base_upload_img_path;
          $fileName = $file->getClientOriginalName();
+        
             $fileExtension  = strtolower($file->getClientOriginalExtension());
             if(in_array($fileExtension,['png','jpg','jpeg']))
             {

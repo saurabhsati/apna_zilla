@@ -18,7 +18,7 @@
         <ul class="breadcrumb">
           <li>
             <i class="fa fa-home"></i>
-            <a href="{{ url('/').'/web-admin/dashboard' }}">Dashboard</a>
+            <a href="{{ url('/').'/web_admin/dashboard' }}">Dashboard</a>
           </li>
           <span class="divider">
             <i class="fa fa-angle-right"></i>

@@ -178,14 +178,15 @@
                          <input type="file" class="file-input" data-rule-required="true" name="main_image" id="ad_image"/></span>
                          <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
 
-                         <span  >
+                         <span>
+
 
                          </span>
 
                       </div>
 
                    </div>
-                   <div class="col-sm-6 col-lg-4 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px upto only</div>
+                   <div class="col-sm-6 col-lg-4 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px and Image format jpg,jpeg,png for best result </div>
                     <span class='help-block'>{{ $errors->first('main_image') }}</span>
                      <!--<br/>
                      <button class="btn btn-warning" onclick="return show_more_images()" id="show_more_images_button">Do you want to add slider images ? </button>  -->
@@ -216,7 +217,7 @@
                <div id="append" class="class-add"></div>
                 <div class="error_msg" id="error_business_image" ></div>
                 <div class="error_msg" id="error_business_image1" ></div>
-               <label class="col-sm-6 col-lg-12 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px upto only</label>
+               <label class="col-sm-6 col-lg-12 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px and Image format jpg,jpeg,png for best result</label>
 
                 </div>
 
@@ -1137,6 +1138,7 @@ function checkOpeningHours()
         $('html, body').animate({
               scrollTop: $("body").offset().top
           }, 2000);
+
     }
 
     return tinymce.triggerSave();

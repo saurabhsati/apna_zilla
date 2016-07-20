@@ -155,7 +155,7 @@
                         @endforeach
                       @endif
                   </select>
-                  <div id="no_sub_cat_ava" class="alert alert-danger" style="display:none">Sorry No Sub-Category available Please select different Categroy</div>
+                 
                 <span class='help-block'>{{ $errors->first('business_cat') }}</span>
                 </div>
             </div>
@@ -165,19 +165,19 @@
             </div>
             <div class="add_new_subcategory_div" id="add_new_subcategory_div" style="display:none;">
             <div class="form-group ">
-              <label class="col-sm-3 col-lg-2 control-label" for="main_business_cat">Business Main Category <i class="red">*</i></label>
-            <div class="col-sm-6 col-lg-4 controls">
-            <select class="form-control" name="main_business_cat" id="main_business_cat" onchange="getSubCategory(this)">
-              <option> Select Business Main Categories</option>
-             @if(isset($arr_parent_category) && sizeof($arr_parent_category)>0)
-             @foreach($arr_parent_category as $parent_category)
-              <option  name="sub_cat" id="sub_cat" value="{{ $parent_category['cat_id'] }}" >
-                             {{ $parent_category['title'] }}
-                              </option>
-              @endforeach
-               @endif
-            </select>
-            </div>
+                  <label class="col-sm-3 col-lg-2 control-label" for="main_business_cat">Business Main Category <i class="red">*</i></label>
+                <div class="col-sm-6 col-lg-4 controls">
+                <select class="form-control" name="main_business_cat" id="main_business_cat" onchange="getSubCategory(this)">
+                  <option> Select Business Main Categories</option>
+                 @if(isset($arr_parent_category) && sizeof($arr_parent_category)>0)
+                 @foreach($arr_parent_category as $parent_category)
+                  <option  name="sub_cat" id="sub_cat" value="{{ $parent_category['cat_id'] }}" >
+                                 {{ $parent_category['title'] }}
+                                  </option>
+                  @endforeach
+                   @endif
+                </select>
+                </div>
             </div>
             <div class="form-group">
               <label class="col-sm-3 col-lg-2 control-label" for="main_business_cat">Business Sub Category <i class="red">*</i></label>
@@ -192,6 +192,7 @@
                   <option value="onions">Onions</option> -->
               </select>
               <span class='help-block'>{{ $errors->first('business_cat') }}</span>
+             <div id="no_sub_cat_ava" class="alert alert-danger" style="display:none">Sorry No Sub-Category available Please select different Categroy</div>
                 <div class="alert alert-warning">Note: Firstly Select The Business Main category From Business Main Category Drop-down , Then Click ON None Selected Button  </div>
             </div>
 
@@ -226,7 +227,7 @@
 
                         </div>
                      </div>
-                       <div class="col-sm-6 col-lg-4 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px upto only</div>
+                       <div class="col-sm-6 col-lg-4 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px and Image format jpg,jpeg,png for best result</div>
                       <span class='help-block'>{{ $errors->first('main_image') }}</span>
                        <!--<br/>
                        <button class="btn btn-warning" onclick="return show_more_images()" id="show_more_images_button">Do you want to add slider images ? </button>  -->
@@ -292,7 +293,7 @@
 
                              <div id="append" class="class-add"></div>
                               
-                            <label class="col-sm-6 col-lg-12 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px upto only</label>
+                            <label class="col-sm-6 col-lg-12 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px and Image format jpg,jpeg,png for best result</label>
 
                               </div>
                               </div>
