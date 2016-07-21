@@ -133,6 +133,21 @@ class CategoryController extends Controller
         $arr_cat['is_explore_directory'] =$is_explore_directory;
         $arr_cat['is_allow_to_add_deal'] =$is_allow_to_add_deal;
        // dd($arr_cat);
+        $data_chk_duplicate=[];
+         $data_chk_duplicate=CategoryModel::where('title',$arr_cat['title'])->get();
+        //dd($data_chk_duplicate);
+        if($data_chk_duplicate)
+        {
+            $arr_data_duplicate = $data_chk_duplicate->toArray();
+        }
+        //dd($arr_data_duplicate);
+        if(sizeof($data_chk_duplicate)>0)
+        {
+            Session::flash('error','Category Already Exists');
+            return redirect()->back();
+        }
+
+
         $status=CategoryModel::create($arr_cat);
         $cat_id = $status->id;
         $status->save();

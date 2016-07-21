@@ -344,12 +344,19 @@
 </div>
 <!-- END Main Content -->
 
+<link rel="stylesheet" href="{{ url('/') }}/assets/jquery-ui/jquery-ui.min.css" type="text/css" />
+<script type="text/javascript" src="{{ url('/') }}/assets/jquery-ui/jquery-ui.min.js"></script>
+
+
+{{-- 
 <link rel="stylesheet" href="{{ url('/') }}/assets/PickMeUp/css/pickmeup.css" type="text/css" />
-<script type="text/javascript" src="{{ url('/') }}/assets/PickMeUp/js/jquery.pickmeup.js"></script>
+<script type="text/javascript" src="{{ url('/') }}/assets/PickMeUp/js/jquery.pickmeup.js"></script> --}}
 
 <script type="text/javascript">
 
          $(document).ready(function () {
+
+
             $('#validation-form').submit( function () {
                 tinyMCE.triggerSave();
                 var image =  jQuery('#deal_image').val();
@@ -370,9 +377,6 @@
         });
 
 
-
-        </script>
-<script type="text/javascript">
     tinymce.init({ selector:'textarea' });
     //tinymce.init('#page_desc');
 </script>
@@ -380,38 +384,9 @@
 
 
  <script type="text/javascript">
-$(function () {
-    $("#start_day").datepicker({
-        "setDate": new Date(),
-        "autoclose": true
-    });
 
-
-      //alert('jk');
-       /* numberOfMonths: 2,
-        onSelect: function (selected) {
-          alert('sdafasdf');
-            var dt = new Date(selected);
-            dt.setDate(dt.getDate() + 1);
-            $("#end_day").datepicker("option", "minDate", dt);
-        }
-    });
-    $("#end_day").datepicker({
-        numberOfMonths: 2,
-        onSelect: function (selected) {
-            var dt = new Date(selected);
-            dt.setDate(dt.getDate() - 1);
-            $("#start_day").datepicker("option", "maxDate", dt);
-        }
-    });*/
-});
-</script>
-
-
-<script type="text/javascript">
  var url = "{{ url('/') }}";
-</script>
-<script type="text/javascript">
+
 
     var dt_start_day;
     var dt_end_day;
@@ -438,35 +413,41 @@ $(function () {
     $(document).ready(function()
     {
         dt_start_day = $('#start_day').datepicker({
-           "setDate": new Date(),
-           "autoclose": true
+          minDate:new Date(),
+          onSelect: function (dateText, inst) {
+              $('#end_day').val('');
+              $('#end_day').datepicker("option", "minDate", dateText);
+          }
+           // "setDate": new Date(),
+           // "autoclose": true
         });
         dt_end_day = $('#end_day').datepicker({
-           "setDate": new Date(),
-           "autoclose": true
+            minDate:new Date(),
+           // "setDate": new Date(),
+           // "autoclose": true
         });
 
         //tp_start_time = $("#start_time").timepicker();
         //tp_end_time = $("#end_time").timepicker();
 
         /* Init Default Start and End Date */
-        initStartAndEndDate();
+       /* initStartAndEndDate();
 
         $(dt_start_day).on('changeDate',function(evt)
         {
             $(dt_end_day).datepicker('setDate',getLastDayofWeek(evt.date));
         });
 
-        $(tp_start_time).on('changeTime.timepicker',checkForInstantDeal);
+        $(tp_start_time).on('changeTime.timepicker',checkForInstantDeal);*/
     });
 
    
-    function initStartAndEndDate()
+  /*  function initStartAndEndDate()
     {
 
         $(dt_start_day).datepicker('setDate',new Date());
         $(dt_end_day).datepicker('setDate',getLastDayofWeek(new Date()));
-    }
+    }*/
 
     /* ie Sunday */
     function getLastDayofWeek(current)
@@ -508,12 +489,8 @@ $(function () {
         {
             setEndTimeForInstantDeal();
         }
-
-
-        // var dt_next_hour = convertTimestampToDate(current_timestamp);
-        // console.log(dt_next_hour.getHours());
     }
-
+   
     function convertTimestampToDate(timestamp)
     {
         return new Date(timestamp*1000);
@@ -772,10 +749,7 @@ $(document).ready(function()
              html.remove();
         });
  });          
-</script>
-  
 
-<script type="text/javascript">
 
   var site_url = "{{ url('/') }}";
 

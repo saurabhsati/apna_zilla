@@ -108,7 +108,7 @@
                 <label class="col-sm-3 col-lg-2 control-label" for="city">Start Date<i class="red">*</i></label>
                 <div class="col-sm-2 col-lg-2 controls">
                      <input class="form-control start_date" data-placeholder="Start Date" data-rule-required="true" tabindex="1"
-                       name="start_date" value="{{ date('m/d/Y',strtotime($arr_coupon['start_date']))   }}" readonly="readonly">
+                       name="start_date" id="start_date" value="{{ date('m/d/Y',strtotime($arr_coupon['start_date']))   }}" readonly="readonly">
 
                     <span class='help-block'>{{ $errors->first('start_date') }}</span>
                 </div>
@@ -119,7 +119,7 @@
              <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="city">End Date<i class="red">*</i></label>
                 <div class="col-sm-2 col-lg-2 controls">
-                     <input class="form-control end_date" data-placeholder="End Date" data-rule-required="true" tabindex="1" name="end_date" value="{{ date('m/d/Y',strtotime($arr_coupon['end_date']))   }}" readonly="readonly">
+                     <input class="form-control end_date" data-placeholder="End Date" data-rule-required="true" tabindex="1" name="end_date" id="end_date" value="{{ date('m/d/Y',strtotime($arr_coupon['end_date']))   }}" readonly="readonly">
 
                     <span class='help-block'>{{ $errors->first('end_date') }}</span>
                 </div>
@@ -139,12 +139,33 @@
 </div>
 </div>
 
-<link rel="stylesheet" href="{{ url('/') }}/assets/PickMeUp/css/pickmeup.css" type="text/css" />
+{{-- <link rel="stylesheet" href="{{ url('/') }}/assets/PickMeUp/css/pickmeup.css" type="text/css" />
 <script type="text/javascript" src="{{ url('/') }}/assets/PickMeUp/js/jquery.pickmeup.js"></script>
-
+ --}}
+<link rel="stylesheet" href="{{ url('/') }}/assets/jquery-ui/jquery-ui.min.css" type="text/css" />
+<script type="text/javascript" src="{{ url('/') }}/assets/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript">
 
-var disabled_dates = [];
+ $(document).ready(function()
+    {
+        var  dt_start_day = $('#start_date').datepicker({
+          minDate:new Date(),
+          onSelect: function (dateText, inst) {
+              $('#end_date').val('');
+              $('#end_date').datepicker("option", "minDate", dateText);
+          }           
+         });
+           
+      var  dt_end_day = $('#end_date').datepicker({
+        minDate:new Date(),
+       
+        });
+
+      
+    });
+
+
+/*var disabled_dates = [];
   $(document).ready(function()
   {
    
@@ -167,8 +188,7 @@ var disabled_dates = [];
 
   function getBetweenDates(start_date,end_date)
   {
-    /*console.log(start_date);
-    return;*/
+    
     if(start_date.length>10 || start_date.length<10) return false;
 
     if(end_date.length>10 || end_date.length<10) return false;
@@ -278,7 +298,7 @@ function initStartDate()
       }
     });
   }
-
+*/
 </script>
 <!-- END Main Content -->
  
@@ -286,3 +306,4 @@ function initStartDate()
 
 
 
+ 

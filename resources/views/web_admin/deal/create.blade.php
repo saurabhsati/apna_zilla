@@ -256,8 +256,6 @@
 </div>
 <!-- END Main Content -->
 
-
-
 <script type="text/javascript">
 
          $(document).ready(function () {
@@ -313,7 +311,7 @@
          jQuery(field).insertAfter(parent_ref);
     }
 
-    $(document).ready(function()
+   /* $(document).ready(function()
     {
 
         bindDynamicDealCategory();
@@ -327,7 +325,7 @@
         //tp_start_time = $("#start_time").timepicker();
         //tp_end_time = $("#end_time").timepicker();
 
-        /* Init Default Start and End Date */
+       
         initStartAndEndDate();
 
         $(dt_start_day).on('changeDate',function(evt)
@@ -342,7 +340,26 @@
             get_selected_category_dishes();
         });
 
+    });*/
+
+     $(document).ready(function()
+    {
+          dt_start_day = $('#start_day').datepicker({
+          minDate:new Date(),
+          onSelect: function (dateText, inst) {
+              $('#end_day').val('');
+              $('#end_day').datepicker("option", "minDate", dateText);
+          }           
+         });
+           
+        dt_end_day = $('#end_day').datepicker({
+        minDate:new Date(),
+       
+        });
+
+      
     });
+
 
     function bindDynamicDealCategory()
     {
@@ -397,16 +414,7 @@
 
         });
 
-
-
-
-
-        /*var tmp_category = {};
-        tmp_category.cat_id = cat_id;
-        tmp_category.loaded_dishes = 0;
-
-        push_category(tmp_category);*/
-    }
+   }
 
 /*  function push_category(arr_tmp)
     {

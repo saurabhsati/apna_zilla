@@ -40,7 +40,7 @@
         <script type="text/javascript" src="{{ url('/') }}/assets/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
 
         <!-- Date picker -->
-        <script type="text/javascript" src="{{ url('/') }}/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+        {{-- <script type="text/javascript" src="{{ url('/') }}/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script> --}}
         
         <!--flaty scripts-->
         <script src="{{ url('/') }}/js/admin/flaty.js"></script>

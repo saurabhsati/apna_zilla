@@ -661,7 +661,7 @@ function getSubCategory(ref)
 
     var arr_selected_category_dishes = [];
 
-    $(document).ready(function()
+   /* $(document).ready(function()
     {
 
         bindDynamicDealCategory();
@@ -672,7 +672,6 @@ function getSubCategory(ref)
         //tp_start_time = $("#start_time").timepicker();
        // tp_end_time = $("#end_time").timepicker();
 
-        /* Init Default Start and End Date */
        // initStartAndEndDate();
 
         $(dt_start_day).on('changeDate',function(evt)
@@ -688,7 +687,24 @@ function getSubCategory(ref)
         });
 
     });
+*/
+  $(document).ready(function()
+    {
+          dt_start_day = $('#start_day').datepicker({
+          minDate:new Date(),
+          onSelect: function (dateText, inst) {
+              $('#end_day').val('');
+              $('#end_day').datepicker("option", "minDate", dateText);
+          }           
+         });
+           
+        dt_end_day = $('#end_day').datepicker({
+        minDate:new Date(),
+       
+        });
 
+      
+    });
     function bindDynamicDealCategory()
     {
         $(".deal_category").unbind('change');
@@ -822,13 +838,13 @@ function getSubCategory(ref)
 
     }
 
-    function initStartAndEndDate()
+   /* function initStartAndEndDate()
     {
 
         //$(dt_start_day).datepicker('setDate',new Date());
        // $(dt_end_day).datepicker('setDate',getLastDayofWeek(new Date()));
     }
-
+*/
     /* ie Sunday */
     function getLastDayofWeek(current)
     {

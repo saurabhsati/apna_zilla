@@ -169,15 +169,15 @@ class CountryController extends Controller
 
         if(sizeof($arr_sub_cat)>0)
         {
-            $arr_response['status'] ="SUCCESS";
-            $arr_response['arr_sub_cat'] = $arr_sub_cat;
+            $arr_response['status']       = "SUCCESS";
+            $arr_response['arr_sub_cat']  = $arr_sub_cat;
             $arr_response['arr_main_cat'] = $arr_main_cat;
 
         }
         else
         {
-            $arr_response['status'] ="ERROR";
-            $arr_response['arr_sub_cat'] = array();
+            $arr_response['status']       = "ERROR";
+            $arr_response['arr_sub_cat']  = array();
             $arr_response['arr_main_cat'] = $arr_main_cat;
         }
         return response()->json($arr_response);

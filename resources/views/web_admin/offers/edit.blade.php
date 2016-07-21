@@ -214,7 +214,7 @@
     var tp_end_time;
 
     var arr_selected_category_dishes = [];
-
+/*
     $(document).ready(function()
     {
 
@@ -225,7 +225,7 @@
         //tp_start_time = $("#start_time").timepicker();
        // tp_end_time = $("#end_time").timepicker();
 
-        /* Init Default Start and End Date */
+        
        // initStartAndEndDate();
 
         $(dt_start_day).on('changeDate',function(evt)
@@ -234,8 +234,22 @@
         });
 
         
+    });*/
+  $(document).ready(function()
+    {
+        var  dt_start_day = $('#valid_from').datepicker({
+          minDate:new Date(),
+          onSelect: function (dateText, inst) {
+              $('#valid_until').val('');
+              $('#valid_until').datepicker("option", "minDate", dateText);
+          }           
+         });
+           
+       var dt_end_day = $('#valid_until').datepicker({
+        minDate:new Date(),
+       
+       });
     });
-
 
 
 

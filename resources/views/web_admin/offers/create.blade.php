@@ -190,6 +190,8 @@
 </div>
 <!-- END Main Content -->
 
+<link rel="stylesheet" href="{{ url('/') }}/assets/jquery-ui/jquery-ui.min.css" type="text/css" />
+<script type="text/javascript" src="{{ url('/') }}/assets/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript">
     tinymce.init({ selector:'textarea' });
     //tinymce.init('#page_desc');
@@ -197,13 +199,13 @@
 </script>
 <script type="text/javascript">
   
-    function initStartAndEndDate()
+  /*  function initStartAndEndDate()
     {
 
         $(dt_start_day).datepicker('setDate',new Date());
         $(dt_end_day).datepicker('setDate',getLastDayofWeek(new Date()));
     }
-
+*/
     /* ie Sunday */
     function getLastDayofWeek(current)
     {
@@ -217,7 +219,7 @@
         var sunday = new Date(current.setDate(weekend));
         return sunday;
     }
-    $(document).ready(function()
+  /*  $(document).ready(function()
     {
 
         dt_start_day = $('#valid_from').datepicker();
@@ -226,14 +228,30 @@
         //tp_start_time = $("#start_time").timepicker();
         //tp_end_time = $("#end_time").timepicker();
 
-        /* Init Default Start and End Date */
+       
         initStartAndEndDate();
 
         $(dt_start_day).on('changeDate',function(evt)
         {
             $(dt_end_day).datepicker('setDate',getLastDayofWeek(evt.date));
         });
-     });   
+     });   */
+
+      $(document).ready(function()
+       {
+        var  dt_start_day = $('#valid_from').datepicker({
+          minDate:new Date(),
+          onSelect: function (dateText, inst) {
+              $('#valid_until').val('');
+              $('#valid_until').datepicker("option", "minDate", dateText);
+          }           
+         });
+           
+       var dt_end_day = $('#valid_until').datepicker({
+        minDate:new Date(),
+       
+        });
+        });
 </script>
 
 

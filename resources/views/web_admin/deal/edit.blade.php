@@ -276,6 +276,8 @@
 </div>
 </div>
 <!-- END Main Content -->
+<link rel="stylesheet" href="{{ url('/') }}/assets/jquery-ui/jquery-ui.min.css" type="text/css" />
+<script type="text/javascript" src="{{ url('/') }}/assets/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript">
     tinymce.init({ selector:'textarea' });
     //tinymce.init('#page_desc');
@@ -319,7 +321,7 @@
 
     var arr_selected_category_dishes = [];
 
-    $(document).ready(function()
+  /*  $(document).ready(function()
     {
 
         bindDynamicDealCategory();
@@ -330,7 +332,7 @@
         //tp_start_time = $("#start_time").timepicker();
        // tp_end_time = $("#end_time").timepicker();
 
-        /* Init Default Start and End Date */
+      
        // initStartAndEndDate();
 
         $(dt_start_day).on('changeDate',function(evt)
@@ -345,7 +347,27 @@
             get_selected_category_dishes();
         });
 
+    });*/
+
+     $(document).ready(function()
+    {
+          dt_start_day = $('#start_day').datepicker({
+          minDate:new Date(),
+          onSelect: function (dateText, inst) {
+              $('#end_day').val('');
+              $('#end_day').datepicker("option", "minDate", dateText);
+          }           
+         });
+           
+        dt_end_day = $('#end_day').datepicker({
+        minDate:new Date(),
+       
+        });
+
+      
     });
+
+
 
     function bindDynamicDealCategory()
     {
@@ -481,15 +503,15 @@
 
     }
 
-    function initStartAndEndDate()
+    /*function initStartAndEndDate()
     {
 
         //$(dt_start_day).datepicker('setDate',new Date());
        // $(dt_end_day).datepicker('setDate',getLastDayofWeek(new Date()));
     }
-
+*/
     /* ie Sunday */
-    function getLastDayofWeek(current)
+   /* function getLastDayofWeek(current)
     {
         var weekstart = current.getDate() - current.getDay() +1;    // get weekstart date
         var weekend = current.getDate();    // current date=0 == weekstart then weekend==weekstart
@@ -500,7 +522,7 @@
         var monday = new Date(current.setDate(weekstart));
         var sunday = new Date(current.setDate(weekend));
         return sunday;
-    }
+    }*/
 
     function isInstantDeal(ref)
     {

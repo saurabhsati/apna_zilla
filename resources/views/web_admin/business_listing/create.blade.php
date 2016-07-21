@@ -149,7 +149,7 @@
                   <option value="mozarella">Mozzarella</option>
                   <option value="mushrooms">Mushrooms</option>
                   <option value="pepperoni">Pepperoni</option>
-                  <option value="onions">Onions</option> -->
+                  <option value="onions">Onions</option> --> 
               </select>
               <span class='help-block'>{{ $errors->first('business_cat') }}</span>
                 <div class="alert alert-warning">Note: Firstly Select The Business Main category From Business Main Category Drop-down , Then Click ON None Selected Button  </div>
