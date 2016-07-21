@@ -3,7 +3,13 @@
     <style type="text/css">
   .error_msg .error_business_image{
     color:red;
+
   }
+    .dropdown-menu
+    {
+        overflow: scroll !important;
+        overflow-x: hidden !important;
+    }
 </style>
     <!-- BEGIN Page Title -->
     <div class="page-title">
@@ -143,7 +149,7 @@
             <div class="form-group">
               <label class="col-sm-3 col-lg-2 control-label" for="main_business_cat">Business  Sub Category <i class="red">*</i></label>
             <div class="col-sm-6 col-lg-4 controls" id="sub_category_div" name="sub_category_div" style="">
-            <select class="form-control" id="example-getting-started" data-rule-required="true" name="business_cat[]" multiple="multiple">
+            <select class="form-control" id="example-getting-started" data-rule-required="true" name="business_cat[]" multiple="multiple" style="overflow: scroll; overflow-x: hidden;">
             <option value="">Select Business Sub Category </option>
                <!--   <option value="tomatoes">Tomatoes</option>
                   <option value="mozarella">Mozzarella</option>
@@ -208,7 +214,7 @@
                 <div class="col-sm-6 col-lg-4 controls">
 
                 <input type="file" name="business_image[]" id="business_image" class="pimg" data-rule-required="true"  />
-                <div class="error" id="error_business_image">{{ $errors->first('business_image') }}</div>
+                <div class="error" id="error_business_image" style="color:red;">{{ $errors->first('business_image') }}</div>
 
                 <div class="clr"></div><br/>
                   <div class="error" id="error_set_default"></div>
@@ -340,76 +346,7 @@
                     <span class='help-block'>{{ $errors->first('mobile_number') }}</span>
                 </div>
             </div>
-           <!--  <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="landline_number">Landline Number <i class="red"></i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="landline_number"
-                           id="landline_number"
-                           data-rule-required=""
-                           placeholder="Enter Landline Number"
-                           value=""
-                           />
-                    <span class='help-block'>{{ $errors->first('landline_number') }}</span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="fax_no">Fax No <i class="red"></i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="fax_no"
-                           id="fax_no"
-                           data-rule-required=""
-                           placeholder="Enter Fax No"
-                           value=""
-                           />
-                    <span class='help-block'>{{ $errors->first('fax_no') }}</span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="toll_free_number">Toll Free Number<i class="red"></i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="toll_free_number"
-                           id="toll_free_number"
-                           data-rule-required=""
-                           placeholder="Enter Toll Free Number"
-                           value=""
-                           />
-                    <span class='help-block'>{{ $errors->first('toll_free_number') }}</span>
-                </div>
-            </div>
-              <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="email_id">Email Id <i class="red"></i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="email_id"
-                           id="email_id"
-                           data-rule-required=""
-                           data-rule-email=""
-                           placeholder="Enter Email Id"
-                           value=""
-                           />
-                    <span class='help-block'>{{ $errors->first('email_id') }}</span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label" for="website">Website <i class="red"></i></label>
-                <div class="col-sm-6 col-lg-4 controls">
-                    <input class="form-control"
-                           name="website"
-                           id="website"
-                           data-rule-required=""
-                           placeholder="Enter Website"
-                           value=""
-                           />
-                    <span class='help-block'>{{ $errors->first('website') }}</span>
-                </div>
-            </div>
- -->
-
-
+         
 
 
             <hr/>
@@ -463,6 +400,7 @@
                         <input class="form-control timepicker-default" name="tue_out" id="tue_out" type="text" data-rule-required="true">
                     </div>
                 </div>
+                     <span id="tue_span" style="display:none!important;color:red!important;">Please enter valid Opening hours for Tuesday</span> 
 
             </div>
 
@@ -613,14 +551,14 @@
                               <div class="col-sm-6 col-lg-4 controls">
 
                               <input class="form-control" type="text" name="business_service[]" id="business_service" class="pimg" data-rule-required="true"/>
-                              <div class="error" id="error_business_service">{{ $errors->first('business_service') }}</div>
+                              <div class="error" id="error_business_service" style="color:red;">{{ $errors->first('business_service') }}</div>
 
                               <div class="clr"></div><br/>
                                 <div class="error" id="error_set_default"></div>
                                 <div class="clr"></div>
 
                              <div id="append_service" class="class-add"></div>
-                              <div class="error_msg" id="error_business_service" ></div>
+                              <div class="error_msg" id="error_business_service" style="color:red;"></div>
                               <!-- <div class="error_msg" id="error_business_image1" ></div> -->
                              <label class="col-sm-3 col-lg-2 control-label"></label>
 
@@ -869,15 +807,15 @@ $(document).ready(function()
 
             if(img_val == "")
             {
-              alert('The Image uploaded is required.').fadeOut(4000);
-                 /* $('#error_business_image').css('margin-left','30px');
+              
+                  $('#error_business_image').css('margin-left','30px');
                   $('#error_business_image').show();
                   $('#error_business_image').fadeIn(3000);
-                  document.getElementById('error_business_image').innerHTML="The Image uploaded is required.";*/
+                  document.getElementById('error_business_image').innerHTML="The Image uploaded is required.";
 
-                  /*setTimeout(function(){
+                  setTimeout(function(){
                   $('#error_business_image').fadeOut(4000);
-                  },3000);*/
+                  },3000);
 
                  flag=0;
                  return false;
@@ -899,9 +837,10 @@ $(document).ready(function()
                flag=0;
                 return false;
               }
+              $("#error_business_image").remove();
               var html='<div>'+
                        '<input type="file" name="business_image[]" id="business_image" class="pimg" data-rule-required="true"  />'+
-                       '<div class="error" id="error_business_image">{{ $errors->first("business_image") }}</div>'+
+                       '<div class="error" id="error_business_image" style="color:red;">{{ $errors->first("business_image") }}</div>'+
                        '</div>'+
                        '<div class="clr"></div><br/>'+
                        '<div class="error" id="error_set_default"></div>'+
@@ -929,7 +868,7 @@ $('#add-service').click(function()
 
             var img_length = jQuery("input[name='business_service[]']").length;
 
-            if(img_val == "")
+            if(img_val=="")
             {
                   $('#error_business_service').css('margin-left','120px');
                   $('#error_business_service').show();
@@ -942,10 +881,10 @@ $('#add-service').click(function()
                  flag=0;
                  return false;
             }
-
+              $("#error_business_service").remove();
               var service_html='<div>'+
                        '<input type="text" class="form-control" name="business_service[]" id="business_service" class="pimg" data-rule-required="true"/>'+
-                       '<div class="error" id="error_business_image">{{ $errors->first("business_service") }}</div>'+
+                       '<div class="error" id="error_business_service" style="color:red;">{{ $errors->first("business_service") }}</div>'+
                        '</div>'+
                        '<div class="clr"></div><br/>'+
                        '<div class="error" id="error_set_default"></div>'+
@@ -1103,10 +1042,10 @@ function checkOpeningHours()
 {
     var mon_in  = $("#mon_in").val();
     var mon_out = $("#mon_out").val();
-    var tue_in  = $("#tue_in").val();
-    var tue_out = $("#tue_out").val();
+  
     
-    if( (mon_in.endsWith('AM') == mon_out.endsWith('AM') ) || (mon_in.endsWith('PM') == mon_out.endsWith('PM')) )
+    if( (mon_in.endsWith('AM') == mon_out.endsWith('AM') ) || (mon_in.endsWith('PM') == mon_out.endsWith('PM')) 
+      )
     {          
         var mon_res        = mon_in.substring(0,4);
         var mon_res1       = mon_out.substring(0,4);
@@ -1115,7 +1054,7 @@ function checkOpeningHours()
         var sec            = mon_hour_start[0]*3600+mon_hour_start[1]*60;
         var sec1           = mon_hours_end[0]*3600+mon_hours_end[1]*60;
             
-        if(sec > sec1)
+        if(sec > sec1 || sec == sec1)
         {
           $("#mon_in").focus();
           $("#mon_out").focus();
@@ -1132,6 +1071,45 @@ function checkOpeningHours()
         return  true;
     }
 }
+
+/*
+$.validator.addMethod("checkOpeningHours", function (value, element, options)
+{
+    //we need the validation error to appear on the correct element
+     var mon_in  = $("#mon_in").val();
+     var mon_out = $("#mon_out").val();
+        
+      
+        var mon_res        = mon_in.substring(0,4);
+        var mon_res1       = mon_out.substring(0,4);
+        var mon_hour_start = mon_res.split(':');
+        var mon_hours_end  = mon_res1.split(':');
+        var sec            = mon_hour_start[0]*3600+mon_hour_start[1]*60;
+        var sec1           = mon_hours_end[0]*3600+mon_hours_end[1]*60;
+            
+        if(sec > sec1 || sec == sec1)
+        {
+          $("#mon_in").focus();
+          $("#mon_out").focus();
+          $("#mon_span").css("display", "inline").fadeOut(15000);
+          return false;
+        }
+        else
+        {
+            return true;
+        }
+         
+         return true;
+},
+    "Please enter valid Opening hours."
+);
+
+$("#validation-form").validate({
+    rules:{
+      url:"abc",
+    }
+});
+*/
  
   function setExtraData()
   {
@@ -1140,14 +1118,10 @@ function checkOpeningHours()
         $('html, body').animate({
               scrollTop: $("body").offset().top
           }, 2000);
-
     }
-
     return tinymce.triggerSave();
   }
-
-    tinymce.init({ selector:'textarea' });
-
+  tinymce.init({ selector:'textarea'});
 </script>
 
 @stop

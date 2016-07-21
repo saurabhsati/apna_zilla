@@ -200,7 +200,7 @@
             <div class="form-group">
                 <label class="col-sm-3 col-lg-2 control-label" for="password">Password<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
-                    <input type="text"
+                    <input type="password"
                            class="form-control"
                            name="password"
                            id="password"
