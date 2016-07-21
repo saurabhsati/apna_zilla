@@ -497,7 +497,7 @@
                  <label class="col-sm-3 col-lg-2 control-label" >Sunday<i class="red">*</i></label>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <input type="radio"  name="is_sunday" value="1" onclick="sunday_status('on');"  />
-                  <label >On </label>
+                  <label>On </label>
                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                      <input type="radio"  name="is_sunday" value="0"  onclick="sunday_status('off');" checked=""/>
                   <label  for="is_sunday">Off </label>
@@ -739,6 +739,7 @@
 <!-- END Main Content -->
 
 <script type="text/javascript">
+
 function sunday_status(status)
 {
   if(status=='on')
@@ -1021,11 +1022,9 @@ function getSubCategory(ref)
                                    categCheck.multiselect('rebuild');
 
                                 }
-                         
                             }
                             else
-                            {
-                                //$(".multiselect-container").css("display",'none');
+                            {    //$(".multiselect-container").css("display",'none');
                                  categCheck.multiselect('rebuild');
                                  categCheck.html('<option value=""></option>');
                                  $(".multiselect-selected-text").html("No Sub Category Available !");
@@ -1036,8 +1035,7 @@ function getSubCategory(ref)
 
 }
 
-</script>
-<script type="text/javascript">
+
 function checkOpeningHours()
 {
     var mon_in  = $("#mon_in").val();
@@ -1074,12 +1072,10 @@ function checkOpeningHours()
 
 /*
 $.validator.addMethod("checkOpeningHours", function (value, element, options)
-{
-    //we need the validation error to appear on the correct element
-     var mon_in  = $("#mon_in").val();
-     var mon_out = $("#mon_out").val();
+{        
+        var mon_in  = $("#mon_in").val();
+        var mon_out = $("#mon_out").val();
         
-      
         var mon_res        = mon_in.substring(0,4);
         var mon_res1       = mon_out.substring(0,4);
         var mon_hour_start = mon_res.split(':');
