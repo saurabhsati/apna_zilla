@@ -200,33 +200,7 @@
 
             </div>
 
-          <!--   <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label">Start Time<i style="color:red;">*</i></label>
-                <div class="col-sm-3 col-lg-3 controls">
-                    <div class="input-group">
-                        <a class="input-group-addon" href="#">
-                            <i class="fa fa-clock-o"></i>
-                        </a>
-                        <input class="form-control " name="start_time" id="start_time"  type="text" data-rule-required="true">
-                       <span class='help-block'>{{ $errors->first('start_time') }}</span>
-                    </div>
-                </div>
-
-                <label class="col-sm-3 col-lg-2 control-label">End Time<i style="color:red;">*</i></label>
-               <div class="col-sm-3 col-lg-3 controls">
-                    <div class="input-group">
-                        <a class="input-group-addon" id="end_time_id" href="#">
-                            <i class="fa fa-clock-o"></i>
-                        </a>
-                        <input class="form-control " name="end_time" id="end_time" type="text" data-rule-required="true">
-                        <span class='help-block'>{{ $errors->first('end_time') }}</span>
-                    </div>
-                    <div class="instantDealNote" id="instantDealNote" style="display:none;">
-                        <span class="label label-important">NOTE!</span>
-                        <span>Only 2 Hour Deal</span>
-                    </div>
-                </div>
-            </div> -->
+         
 
             <hr/>
             <div class="form-group">

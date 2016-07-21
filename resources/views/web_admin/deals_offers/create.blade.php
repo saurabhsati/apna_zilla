@@ -170,15 +170,15 @@
                 <div class="col-sm-6 col-lg-4 controls">
 
                 <input type="file" name="deal_image[]" id="deal_image" class="pimg" data-rule-required="true"  />
-                <div class="error" id="error_deal_image">{{ $errors->first('deal_image') }}</div>
+                <div class="error" id="error_deal_image" style="color:red;">{{ $errors->first('deal_image') }}</div>
 
                 <div class="clr"></div><br/>
                   <div class="error" id="error_set_default"></div>
                   <div class="clr"></div>
 
                <div id="append" class="class-add"></div>
-                <div class="error_msg" id="error_deal_image" ></div>
-                <div class="error_msg" id="error_deal_image1" ></div>
+                <div class="error_msg" id="error_deal_image" style="color:red;"></div>
+                <div class="error_msg" id="error_deal_image1" style="color:red;" ></div>
                <label class="col-sm-6 col-lg-12 controls alert alert-warning">Note: Attached Image Size With Width 517px and Height 361px for best result</label>
 
                 </div>
@@ -733,9 +733,11 @@ $(document).ready(function()
                        flag=0;
                         return false;
                       }
-                      var html='<div>'+
+
+                      $("#error_deal_image").remove();
+                      var html='<div class="newly_added">'+
                                '<input type="file" name="deal_image[]" id="deal_image" class="pimg" data-rule-required="true"  />'+
-                               '<div class="error" id="error_deal_image">{{ $errors->first("deal_image") }}</div>'+
+                               '<div class="error" id="error_deal_image" style="color:red;">{{ $errors->first("deal_image") }}</div>'+
                                '</div>'+
                                '<div class="clr"></div><br/>'+
                                '<div class="error" id="error_set_default"></div>'+
@@ -750,7 +752,6 @@ $(document).ready(function()
         });
  });          
 
-
   var site_url = "{{ url('/') }}";
 
   var departure_point_map = false;
@@ -759,8 +760,6 @@ $(document).ready(function()
   var current_marker = false;
   var glob_arr_marker = [];
   var glob_info_window = false;
-
-
 
   /* Departure Point Map */
   function loadScript() 
