@@ -8,38 +8,39 @@ use Watson\Rememberable\Rememberable;
 
 class CategoryModel extends Model
 {
-
-    use SoftDeletes;
     use Rememberable;
-    protected $table = "categories";
-     protected $fillable = ['cat_desc',
-                            'cat_slug',
-                            'title',
-                            'cat_ref_slug',
-                            'cat_meta_description',
-                            'cat_meta_keyword',
-                            'public_id',
-                            'parent',
-                            'cat_img',
-                            'cat_thumb',
-                            'cat_order',
-                            'is_active',
-                            'cat_logo',
-                            'is_popular',
-                            'is_explore_directory',
-                            'is_allow_to_add_deal',
-                            ];
+    use SoftDeletes;
+
+    protected $table = 'categories';
+
+    protected $fillable = ['cat_desc',
+        'cat_slug',
+        'title',
+        'cat_ref_slug',
+        'cat_meta_description',
+        'cat_meta_keyword',
+        'public_id',
+        'parent',
+        'cat_img',
+        'cat_thumb',
+        'cat_order',
+        'is_active',
+        'cat_logo',
+        'is_popular',
+        'is_explore_directory',
+        'is_allow_to_add_deal',
+    ];
 
     /**
      *  Relation with  category_lang record .
      */
 
-     /**
+    /**
      *  Relation with  self .
      */
     public function parent_category()
     {
-        return $this->belongsTo('App\Models\CategoryModel','parent','cat_id');
+        return $this->belongsTo('App\Models\CategoryModel', 'parent', 'cat_id');
     }
 
     /**
@@ -47,18 +48,17 @@ class CategoryModel extends Model
      */
     public function child_category()
     {
-        return $this->hasMany('App\Models\CategoryModel','parent','cat_id');
+        return $this->hasMany('App\Models\CategoryModel', 'parent', 'cat_id');
     }
-
 
     public function brands()
     {
-        return $this->hasMany('App\Models\CategoryBrandModel','fk_cat_id','cat_id');
+        return $this->hasMany('App\Models\CategoryBrandModel', 'fk_cat_id', 'cat_id');
     }
 
     public function ads()
     {
-        return $this->hasMany('App\Models\AdModel','subcategory_id_fk','cat_id');
+        return $this->hasMany('App\Models\AdModel', 'subcategory_id_fk', 'cat_id');
     }
 
     public function paginated_ads()
@@ -73,13 +73,11 @@ class CategoryModel extends Model
 
     public function attribute()
     {
-      return $this->hasMany('App\Models\AttributeModel','fk_category_id','cat_id');
+        return $this->hasMany('App\Models\AttributeModel', 'fk_category_id', 'cat_id');
     }
 
     public function bussinesses()
     {
-      return $this->hasMany('App\Models\BusinessCategoryModel','category_id','cat_id');
+        return $this->hasMany('App\Models\BusinessCategoryModel', 'category_id', 'cat_id');
     }
-
-
 }

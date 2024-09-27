@@ -37,8 +37,8 @@ class Kernel extends HttpKernel
             'throttle:60,1',
         ],
         'sentinel_check' => [
-            \App\Http\Middleware\SentinelCheck::class
-        ]
+            \App\Http\Middleware\SentinelCheck::class,
+        ],
 
     ];
 

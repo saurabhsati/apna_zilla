@@ -2,488 +2,418 @@
 
 namespace App\Http\Controllers\SalesUser;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
-use App\Models\DealsOffersModel;
-use App\Models\CategoryModel;
 use App\Models\BusinessListingModel;
-use App\Models\DealsSliderImagesModel;
+use App\Models\CategoryModel;
 use App\Models\DealcategoryModel;
+use App\Models\DealsOffersModel;
+use App\Models\DealsSliderImagesModel;
 use App\Models\MembershipModel;
-use Validator;
+use Illuminate\Http\Request;
 use Session;
+use Validator;
 
 class DealsOffersController extends Controller
 {
     public function __construct()
     {
-         $this->deal_public_img_path = url('/')."/uploads/deal/";
-         $this->deal_image_path = base_path().'/public/uploads/deal/';
+        $this->deal_public_img_path = url('/').'/uploads/deal/';
+        $this->deal_image_path = base_path().'/public/uploads/deal/';
 
-         $this->deal_public_upload_img_path = url('/')."/uploads/deal/deal_slider_images/";
-        $this->deal_base_upload_img_path = base_path()."/public/uploads/deal/deal_slider_images/";
+        $this->deal_public_upload_img_path = url('/').'/uploads/deal/deal_slider_images/';
+        $this->deal_base_upload_img_path = base_path().'/public/uploads/deal/deal_slider_images/';
 
     }
 
-   
-    public function index($status="all")
+    public function index($status = 'all')
     {
-         $page_title="View Deals";
-         $sales_user_public_id='';   
-         if(Session::has('public_id')){
-          $sales_user_public_id=Session::get('public_id');
-         }else
-         {
+        $page_title = 'View Deals';
+        $sales_user_public_id = '';
+        if (Session::has('public_id')) {
+            $sales_user_public_id = Session::get('public_id');
+        } else {
             return view('sales_user.account.login');
-         }
-        $deal_public_img_path='';
+        }
+        $deal_public_img_path = '';
         $deal_public_img_path = $this->deal_public_img_path;
-        $obj_deal= $arr_deal=[];
-        if($status== 'all')
-        {
-            $obj_deal=DealsOffersModel::where('public_id',$sales_user_public_id)->with(['business_info','offers_info'])->orderBy('created_at','DESC')->get();
-            if($obj_deal)
-             {
+        $obj_deal = $arr_deal = [];
+        if ($status == 'all') {
+            $obj_deal = DealsOffersModel::where('public_id', $sales_user_public_id)->with(['business_info', 'offers_info'])->orderBy('created_at', 'DESC')->get();
+            if ($obj_deal) {
                 $arr_deal = $obj_deal->toArray();
-             }
-        }
-        else if($status== 'active')
-        {
-            $obj_deal=DealsOffersModel::where('public_id',$sales_user_public_id)->with(['business_info','offers_info'])->where('end_day', '>=', date('Y-m-d').' 00:00:00')->orderBy('created_at','DESC')->get();
-            if($obj_deal)
-             {
+            }
+        } elseif ($status == 'active') {
+            $obj_deal = DealsOffersModel::where('public_id', $sales_user_public_id)->with(['business_info', 'offers_info'])->where('end_day', '>=', date('Y-m-d').' 00:00:00')->orderBy('created_at', 'DESC')->get();
+            if ($obj_deal) {
                 $arr_deal = $obj_deal->toArray();
-             }
-        }
-        else if($status== 'expired')
-        {
-            $obj_deal=DealsOffersModel::where('public_id',$sales_user_public_id)->with(['business_info','offers_info'])->where('end_day', '<', date('Y-m-d').' 00:00:00')->orderBy('created_at','DESC')->get();
-            if($obj_deal)
-             {
+            }
+        } elseif ($status == 'expired') {
+            $obj_deal = DealsOffersModel::where('public_id', $sales_user_public_id)->with(['business_info', 'offers_info'])->where('end_day', '<', date('Y-m-d').' 00:00:00')->orderBy('created_at', 'DESC')->get();
+            if ($obj_deal) {
                 $arr_deal = $obj_deal->toArray();
-             }
+            }
         }
-        return view('sales_user.deals_offers.index',compact('page_title','arr_deal','deal_public_img_path'));
+
+        return view('sales_user.deals_offers.index', compact('page_title', 'arr_deal', 'deal_public_img_path'));
 
     }
+
     public function create()
     {
-        $page_title="Create Deals";
-        $obj_main_category = CategoryModel::where('parent','0')->where('is_allow_to_add_deal',1)->get();
-        if($obj_main_category)
-        {
+        $page_title = 'Create Deals';
+        $obj_main_category = CategoryModel::where('parent', '0')->where('is_allow_to_add_deal', 1)->get();
+        if ($obj_main_category) {
             $arr_main_category = $obj_main_category->toArray();
         }
-       
-       
-         return view('sales_user.deals_offers.create',compact('page_title','arr_main_category'));
+
+        return view('sales_user.deals_offers.create', compact('page_title', 'arr_main_category'));
     }
 
     public function get_business_by_user($user_id)
     {
-         $obj_business_listing = BusinessListingModel::where('user_id',$user_id)->with(['membership_plan_details'])->orderBy('created_at','DESC')->get();
-        if($obj_business_listing)
-        {
+        $obj_business_listing = BusinessListingModel::where('user_id', $user_id)->with(['membership_plan_details'])->orderBy('created_at', 'DESC')->get();
+        if ($obj_business_listing) {
             $all_business_listing = $obj_business_listing->toArray();
         }
-        $business_ids=[];
+        $business_ids = [];
         foreach ($all_business_listing as $key => $business) {
-            if(sizeof($business['membership_plan_details'])>0)
-            {
+            if (count($business['membership_plan_details']) > 0) {
                 foreach ($business['membership_plan_details'] as $key => $membership_data) {
-                    if($membership_data['expire_date'] >=date('Y-m-d').' 00:00:00')
-                    {
-                        $plan_id=$membership_data['membership_id'];
-                            if($plan_id==1)
-                            {
-                                $no_of_deals="unlimited";
-                            }
-                            else
-                            {
-                                $obj_plan=MembershipModel::where('plan_id',$plan_id)->first();
-                                if($obj_plan)
-                                {
-                                    $arr_plan=$obj_plan->toArray();
-                                    $no_of_deals=$arr_plan['no_normal_deals'];
+                    if ($membership_data['expire_date'] >= date('Y-m-d').' 00:00:00') {
+                        $plan_id = $membership_data['membership_id'];
+                        if ($plan_id == 1) {
+                            $no_of_deals = 'unlimited';
+                        } else {
+                            $obj_plan = MembershipModel::where('plan_id', $plan_id)->first();
+                            if ($obj_plan) {
+                                $arr_plan = $obj_plan->toArray();
+                                $no_of_deals = $arr_plan['no_normal_deals'];
 
-                                }
                             }
-                             $obj_deal=DealsOffersModel::with('business_info')->where('business_id',$membership_data['business_id'])->get();
-                            if($obj_deal)
-                            {
-                                $arr_deal = $obj_deal->toArray();
-                                $total_deal_count=count($arr_deal);
+                        }
+                        $obj_deal = DealsOffersModel::with('business_info')->where('business_id', $membership_data['business_id'])->get();
+                        if ($obj_deal) {
+                            $arr_deal = $obj_deal->toArray();
+                            $total_deal_count = count($arr_deal);
+                        }
+                        if ($no_of_deals == 'unlimited' || $no_of_deals > $total_deal_count) {
+                            if (! array_key_exists($membership_data['business_id'], $business_ids)) {
+                                $business_ids[$membership_data['business_id']] = $membership_data['business_id'];
                             }
-                             if($no_of_deals=="unlimited" || $no_of_deals>$total_deal_count)
-                            {
-                                if(!array_key_exists($membership_data['business_id'],$business_ids))
-                                {
-                                  $business_ids[$membership_data['business_id']]=$membership_data['business_id'];
-                                }
-                            }   
+                        }
                     }
                 }
-                
+
             }
-            
-        }
-         $obj_business_listing = BusinessListingModel::with(['membership_plan_details'])->whereIn('id',$business_ids)->orderBy('created_at','DESC')->get();
-        if($obj_business_listing)
-        {
-            $business_listing = $obj_business_listing->toArray();
-        }
-         if(sizeof($business_listing)>0)
-        {
-            $arr_response['status'] ="SUCCESS";
-            $arr_response['business_listing'] = $business_listing;
-           
 
         }
-        else
-        {
-            $arr_response['status'] ="ERROR";
-            $arr_response['business_listing'] = array();
-            
+        $obj_business_listing = BusinessListingModel::with(['membership_plan_details'])->whereIn('id', $business_ids)->orderBy('created_at', 'DESC')->get();
+        if ($obj_business_listing) {
+            $business_listing = $obj_business_listing->toArray();
         }
+        if (count($business_listing) > 0) {
+            $arr_response['status'] = 'SUCCESS';
+            $arr_response['business_listing'] = $business_listing;
+
+        } else {
+            $arr_response['status'] = 'ERROR';
+            $arr_response['business_listing'] = [];
+
+        }
+
         return response()->json($arr_response);
     }
 
     public function store(Request $request)
     {
-         $sales_user_public_id='';   
-         if(Session::has('public_id')){
-          $sales_user_public_id=Session::get('public_id');
-         }else
-         {
+        $sales_user_public_id = '';
+        if (Session::has('public_id')) {
+            $sales_user_public_id = Session::get('public_id');
+        } else {
             return view('sales_user.account.login');
-         }
-        $arr_rule   = array();
-        $arr_rule['business']          = 'required';
-        $arr_rule['deal_main_image']   = 'required';
-        $arr_rule['title']             = 'required';
-        $arr_rule['name']              = 'required';
-        $arr_rule['price']             = 'required';
-        $arr_rule['discount_price']    = 'required';
-        $arr_rule['deal_type']         = 'required';
-        $arr_rule['start_day']         = 'required';
-        $arr_rule['end_day']           = 'required';
-        $arr_rule['description']       = 'required';
-        $arr_rule['things_to_remember']= 'required';
-        $arr_rule['how_to_use']        = 'required';
-        $arr_rule['about']             = 'required';
-        $arr_rule['facilities']        = 'required';
-        $arr_rule['cancellation_policy']= 'required';
-        $arr_rule['is_active']          = 'required';
+        }
+        $arr_rule = [];
+        $arr_rule['business'] = 'required';
+        $arr_rule['deal_main_image'] = 'required';
+        $arr_rule['title'] = 'required';
+        $arr_rule['name'] = 'required';
+        $arr_rule['price'] = 'required';
+        $arr_rule['discount_price'] = 'required';
+        $arr_rule['deal_type'] = 'required';
+        $arr_rule['start_day'] = 'required';
+        $arr_rule['end_day'] = 'required';
+        $arr_rule['description'] = 'required';
+        $arr_rule['things_to_remember'] = 'required';
+        $arr_rule['how_to_use'] = 'required';
+        $arr_rule['about'] = 'required';
+        $arr_rule['facilities'] = 'required';
+        $arr_rule['cancellation_policy'] = 'required';
+        $arr_rule['is_active'] = 'required';
         $arr_rules['json_location_point'] = 'required';
 
-        $validator=Validator::make($request->all(),$arr_rule);
-        if($validator->fails())
-        {
+        $validator = Validator::make($request->all(), $arr_rule);
+        if ($validator->fails()) {
             // print_r($validator->errors()->all());exit;
-           
+
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        if($request->hasFile('deal_main_image'))///image loaded/Not
-            {
-                $arr_image               =  array();
-                $arr_image['deal_main_image'] = $request->file('deal_main_image');
-                $arr_image['deal_main_image'] = 'mimes:jpg,jpeg,png';;
+        if ($request->hasFile('deal_main_image')) {///image loaded/Not
+            $arr_image = [];
+            $arr_image['deal_main_image'] = $request->file('deal_main_image');
+            $arr_image['deal_main_image'] = 'mimes:jpg,jpeg,png';
 
-                $image_validate = Validator::make(array('deal_main_image'=>$request->file('deal_main_image')),
-                                                  array('deal_main_image'=>'mimes:jpg,jpeg,png'));
+            $image_validate = Validator::make(['deal_main_image' => $request->file('deal_main_image')],
+                ['deal_main_image' => 'mimes:jpg,jpeg,png']);
 
+            if ($request->file('deal_main_image')->isValid()) {
+                $image_path = $request->file('deal_main_image')->getClientOriginalName();
+                $image_extention = $request->file('deal_main_image')->getClientOriginalExtension();
+                $image_name = sha1(uniqid().$image_path.uniqid()).'.'.$image_extention;
 
-                if($request->file('deal_main_image')->isValid())
-                {
-                    $image_path         =   $request->file('deal_main_image')->getClientOriginalName();
-                    $image_extention    =   $request->file('deal_main_image')->getClientOriginalExtension();
-                    $image_name         =   sha1(uniqid().$image_path.uniqid()).'.'.$image_extention;
+                $final_image = $request->file('deal_main_image')->move($this->deal_image_path, $image_name);
 
-                    $final_image = $request->file('deal_main_image')->move($this->deal_image_path, $image_name);
-
-                }
-                else
-                {
-                    return redirect()->back();
-                }
-            }
-            else
-            {
+            } else {
                 return redirect()->back();
             }
-         $form_data = $request->all();
+        } else {
+            return redirect()->back();
+        }
+        $form_data = $request->all();
         // dd($form_data);
-         $data_arr['business_id']           = $request->input('business');
-         $main_business_cat                 = $request->input('main_business_cat');
-         $sub_category                      = $request->input('business_cat');
-         $data_arr['title']                 = $request->input('title');
-         $data_arr['public_id']             = $sales_user_public_id;
-         $data_arr['name']                  = $request->input('name');
-         $data_arr['price']                 = $request->input('price');
-         $data_arr['discount_price']        = $request->input('discount_price');
-         $data_arr['deal_type']             = $request->input('deal_type');
-         $data_arr['deal_image']            = $image_name ;
-         $data_arr['start_day']             = date('Y-m-d',strtotime($request->input('start_day')));
-         $data_arr['end_day']               = date('Y-m-d',strtotime($request->input('end_day')));
-         $data_arr['description']           = $request->input('description');
-         $data_arr['things_to_remember']    = $request->input('things_to_remember');
-         $data_arr['how_to_use']            = $request->input('how_to_use');
-         $data_arr['facilities']            = $request->input('facilities');
-         $data_arr['about']                 = $request->input('about');
-         $data_arr['cancellation_policy']   = $request->input('cancellation_policy');
-         $data_arr['is_active']             = $request->input('is_active');
-         $data_arr['json_location_point']   = $request->input('json_location_point');
-         //dd($data_arr);
-         $deal_add = DealsOffersModel::create($data_arr);
-         $deal_id=$deal_add->id;
+        $data_arr['business_id'] = $request->input('business');
+        $main_business_cat = $request->input('main_business_cat');
+        $sub_category = $request->input('business_cat');
+        $data_arr['title'] = $request->input('title');
+        $data_arr['public_id'] = $sales_user_public_id;
+        $data_arr['name'] = $request->input('name');
+        $data_arr['price'] = $request->input('price');
+        $data_arr['discount_price'] = $request->input('discount_price');
+        $data_arr['deal_type'] = $request->input('deal_type');
+        $data_arr['deal_image'] = $image_name;
+        $data_arr['start_day'] = date('Y-m-d', strtotime($request->input('start_day')));
+        $data_arr['end_day'] = date('Y-m-d', strtotime($request->input('end_day')));
+        $data_arr['description'] = $request->input('description');
+        $data_arr['things_to_remember'] = $request->input('things_to_remember');
+        $data_arr['how_to_use'] = $request->input('how_to_use');
+        $data_arr['facilities'] = $request->input('facilities');
+        $data_arr['about'] = $request->input('about');
+        $data_arr['cancellation_policy'] = $request->input('cancellation_policy');
+        $data_arr['is_active'] = $request->input('is_active');
+        $data_arr['json_location_point'] = $request->input('json_location_point');
+        //dd($data_arr);
+        $deal_add = DealsOffersModel::create($data_arr);
+        $deal_id = $deal_add->id;
 
-         $files = $request->file('deal_image');
-         $file_count = count($files);
-         $uploadcount = 0;
-         foreach($files as $file) 
-         {
-         $destinationPath = $this->deal_base_upload_img_path;
-         $fileName = $file->getClientOriginalName();
-            $fileExtension  = strtolower($file->getClientOriginalExtension());
-            if(in_array($fileExtension,['png','jpg','jpeg']))
-            {
-                  $filename =sha1(uniqid().$fileName.uniqid()).'.'.$fileExtension;
-                  $file->move($destinationPath,$filename);
-                  $arr_insert['image_name']=$filename;
-                  $arr_insert['deal_id']=$deal_id;
-                  $insert_data1=DealsSliderImagesModel::create($arr_insert);
-                  $uploadcount ++;
-            }
-            else
-            {
-                 Session::flash('error','Invalid file extension');
+        $files = $request->file('deal_image');
+        $file_count = count($files);
+        $uploadcount = 0;
+        foreach ($files as $file) {
+            $destinationPath = $this->deal_base_upload_img_path;
+            $fileName = $file->getClientOriginalName();
+            $fileExtension = strtolower($file->getClientOriginalExtension());
+            if (in_array($fileExtension, ['png', 'jpg', 'jpeg'])) {
+                $filename = sha1(uniqid().$fileName.uniqid()).'.'.$fileExtension;
+                $file->move($destinationPath, $filename);
+                $arr_insert['image_name'] = $filename;
+                $arr_insert['deal_id'] = $deal_id;
+                $insert_data1 = DealsSliderImagesModel::create($arr_insert);
+                $uploadcount++;
+            } else {
+                Session::flash('error', 'Invalid file extension');
             }
         }
-        foreach ($sub_category as $key => $value)
-        {
-            $arr_cat_data['deal_id']=$deal_id;
-            $arr_cat_data['main_cat_id']=$main_business_cat;
-            $arr_cat_data['sub_cat_id']=$value;
+        foreach ($sub_category as $key => $value) {
+            $arr_cat_data['deal_id'] = $deal_id;
+            $arr_cat_data['main_cat_id'] = $main_business_cat;
+            $arr_cat_data['sub_cat_id'] = $value;
             $insert_data = DealcategoryModel::create($arr_cat_data);
 
         }
-          if($deal_add)
-            {
-                Session::flash('success','Deal Created successfully');
-            }
-            else
-            {
-                Session::flash('error','Error Occurred While Creating Deal ');
-            }
+        if ($deal_add) {
+            Session::flash('success', 'Deal Created successfully');
+        } else {
+            Session::flash('error', 'Error Occurred While Creating Deal ');
+        }
 
-            return redirect()->back();
-
-
+        return redirect()->back();
 
     }
+
     public function edit($enc_id)
     {
-        $page_title='Edit Deal';
-        $deal_base_upload_img_path='';
+        $page_title = 'Edit Deal';
+        $deal_base_upload_img_path = '';
 
-        $deal_base_upload_img_path =$this->deal_public_upload_img_path ;
-        $deal_public_img_path =$this->deal_public_img_path;
+        $deal_base_upload_img_path = $this->deal_public_upload_img_path;
+        $deal_public_img_path = $this->deal_public_img_path;
 
-        $id=base64_decode($enc_id);
-        $obj_deal_arr=DealsOffersModel::with(['business_info','deals_slider_images','category_info'])->where('id',$id)->first();
-         if($obj_deal_arr)
-        {
+        $id = base64_decode($enc_id);
+        $obj_deal_arr = DealsOffersModel::with(['business_info', 'deals_slider_images', 'category_info'])->where('id', $id)->first();
+        if ($obj_deal_arr) {
             $deal_arr = $obj_deal_arr->toArray();
         }
-        $obj_main_category = CategoryModel::where('parent','0')->where('is_allow_to_add_deal',1)->get();
-        if($obj_main_category)
-        {
+        $obj_main_category = CategoryModel::where('parent', '0')->where('is_allow_to_add_deal', 1)->get();
+        if ($obj_main_category) {
             $arr_main_category = $obj_main_category->toArray();
         }
-         $obj_category = CategoryModel::where('parent','!=','0')->get();
-        if($obj_category)
-        {
+        $obj_category = CategoryModel::where('parent', '!=', '0')->get();
+        if ($obj_category) {
             $arr_category = $obj_category->toArray();
         }
-       return view('sales_user.deals_offers.edit',compact('page_title','deal_arr','deal_public_img_path','arr_category','arr_main_category','deal_base_upload_img_path'));
+
+        return view('sales_user.deals_offers.edit', compact('page_title', 'deal_arr', 'deal_public_img_path', 'arr_category', 'arr_main_category', 'deal_base_upload_img_path'));
     }
 
-    public function update(Request $request,$enc_id)
+    public function update(Request $request, $enc_id)
     {
-          //dd($request->all());
-        $id=    base64_decode($enc_id);
+        //dd($request->all());
+        $id = base64_decode($enc_id);
 
-        $arr_rule['title']             = 'required';
-        $arr_rule['name']              = 'required';
-        $arr_rule['price']             = 'required';
-        $arr_rule['discount_price']    = 'required';
-        $arr_rule['deal_type']         = 'required';
-        $arr_rule['start_day']         = 'required';
-        $arr_rule['end_day']           = 'required';
-        $arr_rule['description']       = 'required';
-        $arr_rule['things_to_remember']= 'required';
-        $arr_rule['how_to_use']        = 'required';
-        $arr_rule['about']             = 'required';
-        $arr_rule['facilities']        = 'required';
-        $arr_rule['cancellation_policy']= 'required';
-        $arr_rule['is_active']          = 'required';
+        $arr_rule['title'] = 'required';
+        $arr_rule['name'] = 'required';
+        $arr_rule['price'] = 'required';
+        $arr_rule['discount_price'] = 'required';
+        $arr_rule['deal_type'] = 'required';
+        $arr_rule['start_day'] = 'required';
+        $arr_rule['end_day'] = 'required';
+        $arr_rule['description'] = 'required';
+        $arr_rule['things_to_remember'] = 'required';
+        $arr_rule['how_to_use'] = 'required';
+        $arr_rule['about'] = 'required';
+        $arr_rule['facilities'] = 'required';
+        $arr_rule['cancellation_policy'] = 'required';
+        $arr_rule['is_active'] = 'required';
         $arr_rules['json_location_point'] = 'required';
 
-        $validator=Validator::make($request->all(),$arr_rule);
-        if($validator->fails())
-        {
+        $validator = Validator::make($request->all(), $arr_rule);
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        $form_data  = $request->all();
-        $image_name=$form_data['old_image'];
-        if($request->hasFile('deal_main_image'))///image loaded/Not
-        {
-                $arr_image               =  array();
-                $arr_image['deal_main_image'] = $request->file('deal_main_image');
-                $arr_image['deal_main_image'] = 'mimes:jpg,jpeg,png';;
+        $form_data = $request->all();
+        $image_name = $form_data['old_image'];
+        if ($request->hasFile('deal_main_image')) {///image loaded/Not
+            $arr_image = [];
+            $arr_image['deal_main_image'] = $request->file('deal_main_image');
+            $arr_image['deal_main_image'] = 'mimes:jpg,jpeg,png';
 
-                $image_validate = Validator::make(array('deal_main_image'=>$request->file('deal_main_image')),
-                                                  array('deal_main_image'=>'mimes:jpg,jpeg,png'));
+            $image_validate = Validator::make(['deal_main_image' => $request->file('deal_main_image')],
+                ['deal_main_image' => 'mimes:jpg,jpeg,png']);
 
+            if ($request->file('deal_main_image')->isValid()) {
+                $image_path = $request->file('deal_main_image')->getClientOriginalName();
+                $image_extention = $request->file('deal_main_image')->getClientOriginalExtension();
+                $image_name = sha1(uniqid().$image_path.uniqid()).'.'.$image_extention;
 
-                if($request->file('deal_main_image')->isValid() )
-                {
-                    $image_path         =   $request->file('deal_main_image')->getClientOriginalName();
-                    $image_extention    =   $request->file('deal_main_image')->getClientOriginalExtension();
-                    $image_name         =   sha1(uniqid().$image_path.uniqid()).'.'.$image_extention;
+                $final_image = $request->file('deal_main_image')->move($this->deal_image_path, $image_name);
 
-                    $final_image = $request->file('deal_main_image')->move($this->deal_image_path, $image_name);
+                $get_path = $this->deal_image_path.$form_data['old_image'];
+                $unlink_deal_image = false;
+                if (is_readable($get_path)) {
+                    $unlink_deal_image = unlink($get_path);
 
-                    $get_path = $this->deal_image_path.$form_data['old_image'];
-                    $unlink_deal_image = FALSE;
-                    if(is_readable($get_path))
-                    {
-                        $unlink_deal_image = unlink($get_path);
-
-                    }
-               }
-                else
-                {
-                    return redirect()->back();
                 }
+            } else {
+                return redirect()->back();
+            }
         }
         // $data_arr['public_id']             = $sales_user_public_id
-         $data_arr['title']                 = $request->input('title');
-         $data_arr['name']                  = $request->input('name');
-         $main_business_cat                 = $request->input('main_business_cat');
-         $data_arr['price']                 = $request->input('price');
-         $data_arr['discount_price']        = $request->input('discount_price');
-         $data_arr['deal_type']             = $request->input('deal_type');
-         $data_arr['deal_image']            = $image_name ;
-         $data_arr['start_day']             = date('Y-m-d',strtotime($request->input('start_day')));
-         $data_arr['end_day']               = date('Y-m-d',strtotime($request->input('end_day')));
-         $data_arr['description']           = $request->input('description');
-         $data_arr['things_to_remember']    = $request->input('things_to_remember');
-         $data_arr['how_to_use']            = $request->input('how_to_use');
-         $data_arr['facilities']            = $request->input('facilities');
-         $data_arr['about']                 = $request->input('about');
-         $data_arr['cancellation_policy']   = $request->input('cancellation_policy');
-         $data_arr['is_active']             = $request->input('is_active');
-         $data_arr['json_location_point']   = $request->input('json_location_point');
+        $data_arr['title'] = $request->input('title');
+        $data_arr['name'] = $request->input('name');
+        $main_business_cat = $request->input('main_business_cat');
+        $data_arr['price'] = $request->input('price');
+        $data_arr['discount_price'] = $request->input('discount_price');
+        $data_arr['deal_type'] = $request->input('deal_type');
+        $data_arr['deal_image'] = $image_name;
+        $data_arr['start_day'] = date('Y-m-d', strtotime($request->input('start_day')));
+        $data_arr['end_day'] = date('Y-m-d', strtotime($request->input('end_day')));
+        $data_arr['description'] = $request->input('description');
+        $data_arr['things_to_remember'] = $request->input('things_to_remember');
+        $data_arr['how_to_use'] = $request->input('how_to_use');
+        $data_arr['facilities'] = $request->input('facilities');
+        $data_arr['about'] = $request->input('about');
+        $data_arr['cancellation_policy'] = $request->input('cancellation_policy');
+        $data_arr['is_active'] = $request->input('is_active');
+        $data_arr['json_location_point'] = $request->input('json_location_point');
 
-         $deal_update = DealsOffersModel::where('id',$id)->update($data_arr);
+        $deal_update = DealsOffersModel::where('id', $id)->update($data_arr);
 
+        $files = $request->file('deal_image');
 
-         $files = $request->file('deal_image');
-
-         $file_count = count($files);
-         if($file_count>0)
-         {
+        $file_count = count($files);
+        if ($file_count > 0) {
             $uploadcount = 0;
-            foreach($files as $file) 
-            {
-                     if($file!=null)
-                     {
-                         $destinationPath = $this->deal_base_upload_img_path;
-                         $fileName = $file->getClientOriginalName();
-                            $fileExtension  = strtolower($file->getClientOriginalExtension());
+            foreach ($files as $file) {
+                if ($file != null) {
+                    $destinationPath = $this->deal_base_upload_img_path;
+                    $fileName = $file->getClientOriginalName();
+                    $fileExtension = strtolower($file->getClientOriginalExtension());
 
-                            if(in_array($fileExtension,['png','jpg','jpeg']))
-                            {
-                                  $filename =sha1(uniqid().$fileName.uniqid()).'.'.$fileExtension;
-                                  $file->move($destinationPath,$filename);
-                                  $arr_insert['image_name']=$filename;
-                                  $arr_insert['deal_id']=$id;
-                                  $insert_data1=DealsSliderImagesModel::create($arr_insert);
-                                  $uploadcount ++;
-                            }
-                            else
-                            {
-                                 Session::flash('error','Invalid file extension');
-                            }
-                     }
+                    if (in_array($fileExtension, ['png', 'jpg', 'jpeg'])) {
+                        $filename = sha1(uniqid().$fileName.uniqid()).'.'.$fileExtension;
+                        $file->move($destinationPath, $filename);
+                        $arr_insert['image_name'] = $filename;
+                        $arr_insert['deal_id'] = $id;
+                        $insert_data1 = DealsSliderImagesModel::create($arr_insert);
+                        $uploadcount++;
+                    } else {
+                        Session::flash('error', 'Invalid file extension');
+                    }
+                }
             }
-         }
+        }
 
-          $deal_sub_cat=$request->input('business_cat');
-        if(sizeof($deal_sub_cat)>0 && $deal_sub_cat!=null )
-        {
+        $deal_sub_cat = $request->input('business_cat');
+        if (count($deal_sub_cat) > 0 && $deal_sub_cat != null) {
 
-            $deal_category = DealcategoryModel::where('deal_id',$id);
-            $res= $deal_category->delete();
-            foreach ($deal_sub_cat as $key => $value)
-            {
-                $arr_cat_data['deal_id']=$id;
-                $arr_cat_data['main_cat_id']=$main_business_cat;
-                $arr_cat_data['sub_cat_id']=$value;
+            $deal_category = DealcategoryModel::where('deal_id', $id);
+            $res = $deal_category->delete();
+            foreach ($deal_sub_cat as $key => $value) {
+                $arr_cat_data['deal_id'] = $id;
+                $arr_cat_data['main_cat_id'] = $main_business_cat;
+                $arr_cat_data['sub_cat_id'] = $value;
                 $insert_data = DealcategoryModel::create($arr_cat_data);
             }
         }
-        if($deal_update)
-        {
-            Session::flash('success','Deal Updated Successfully');
+        if ($deal_update) {
+            Session::flash('success', 'Deal Updated Successfully');
+        } else {
+            Session::flash('error', 'Problem Occurred While Updating Deal');
         }
-        else
-        {
-            Session::flash('error','Problem Occurred While Updating Deal');
-        }
+
         return redirect()->back();
     }
-     public function delete_gallery(Request $request)
+
+    public function delete_gallery(Request $request)
     {
-        $deal_base_upload_img_path =$this->deal_base_upload_img_path;
-        $image_name=$request->input('image_name');
-        $id=$request->input('id');
-        $Business = DealsSliderImagesModel::where('id',$id);
-        $res= $Business->delete();
-        if($res)
-        {
-             $deal_base_upload_img_path.$image_name;
-           if(unlink($deal_base_upload_img_path.$image_name))
-           {
-            echo "done";
-           }
+        $deal_base_upload_img_path = $this->deal_base_upload_img_path;
+        $image_name = $request->input('image_name');
+        $id = $request->input('id');
+        $Business = DealsSliderImagesModel::where('id', $id);
+        $res = $Business->delete();
+        if ($res) {
+            $deal_base_upload_img_path.$image_name;
+            if (unlink($deal_base_upload_img_path.$image_name)) {
+                echo 'done';
+            }
         }
 
     }
-     public function toggle_status($enc_id,$action)////$enc_id = Deal id
+
+    public function toggle_status($enc_id, $action)////$enc_id = Deal id
     {
-        if($action=="activate")
-        {
+        if ($action == 'activate') {
             $this->_activate($enc_id);
 
-            Session::flash('success','Deal(s) Activated Successfully');
-        }
-        elseif($action=="block")
-        {
+            Session::flash('success', 'Deal(s) Activated Successfully');
+        } elseif ($action == 'block') {
             $this->_block($enc_id);
 
-            Session::flash('success','Deal(s) Blocked Successfully');
-        }
-        elseif($action=="delete")
-        {
+            Session::flash('success', 'Deal(s) Blocked Successfully');
+        } elseif ($action == 'delete') {
             $this->_delete($enc_id);
 
-            Session::flash('success','Deal(s) Deleted Successfully');
+            Session::flash('success', 'Deal(s) Deleted Successfully');
         }
 
         return redirect()->back();
@@ -491,45 +421,43 @@ class DealsOffersController extends Controller
 
     public function delete($enc_id)////$enc_id = Deal id
     {
-        if($this->_delete($enc_id))
-        {
-            Session::flash('success','Deal(s) Deleted Successfully');
+        if ($this->_delete($enc_id)) {
+            Session::flash('success', 'Deal(s) Deleted Successfully');
+        } else {
+            Session::flash('error', 'Problem Occurred While Deleting Deal(s)');
         }
-        else
-        {
-            Session::flash('error','Problem Occurred While Deleting Deal(s)');
-        }
+
         return redirect()->back();
     }
 
     protected function _activate($enc_id)////$enc_id = Deal id
     {
         $id = base64_decode($enc_id);
-        return DealsOffersModel::where('id',$id)->update(array('is_active'=>1));
+
+        return DealsOffersModel::where('id', $id)->update(['is_active' => 1]);
     }
 
     protected function _block($enc_id)////$enc_id = Deal id
     {
         $id = base64_decode($enc_id);
-        return DealsOffersModel::where('id',$id)->update(array('is_active'=>0));
+
+        return DealsOffersModel::where('id', $id)->update(['is_active' => 0]);
     }
 
     protected function _delete($enc_id)////$enc_id = Deal id
     {
         $id = base64_decode($enc_id);
 
-        $arr_deal = DealsOffersModel::select('id','deal_image')->where('id',$id)->first()->toArray();
+        $arr_deal = DealsOffersModel::select('id', 'deal_image')->where('id', $id)->first()->toArray();
 
         $get_path = $this->deal_image_path.$arr_deal['deal_image'];
 
-        $unlink_deal_image = FALSE;
-        if(is_readable($get_path))
-        {
+        $unlink_deal_image = false;
+        if (is_readable($get_path)) {
             $unlink_deal_image = unlink($get_path);  //////////////////Unlink Deal image
 
-            if($unlink_deal_image==TRUE)
-            {
-                return DealsOffersModel::where('id',$id)->delete();//////////Soft Delete Deal
+            if ($unlink_deal_image == true) {
+                return DealsOffersModel::where('id', $id)->delete(); //////////Soft Delete Deal
             }
         }
 
@@ -537,16 +465,15 @@ class DealsOffersController extends Controller
 
     public function multi_action(Request $request)
     {
-        $arr_rules = array();
-        $arr_rules['multi_action'] = "required";
-        $arr_rules['checked_record'] = "required";
+        $arr_rules = [];
+        $arr_rules['multi_action'] = 'required';
+        $arr_rules['checked_record'] = 'required';
 
+        $validator = Validator::make($request->all(), $arr_rules);
 
-        $validator = Validator::make($request->all(),$arr_rules);
+        if ($validator->fails()) {
+            Session::flash('error', 'Please Select Any Record(s)');
 
-        if($validator->fails())
-        {
-            Session::flash('error','Please Select Any Record(s)');
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -554,34 +481,27 @@ class DealsOffersController extends Controller
         $checked_record = $request->input('checked_record');
 
         /* Check if array is supplied*/
-        if(is_array($checked_record) && sizeof($checked_record)<=0)
-        {
-            Session::flash('error','Problem Occured, While Doing Multi Action');
+        if (is_array($checked_record) && count($checked_record) <= 0) {
+            Session::flash('error', 'Problem Occured, While Doing Multi Action');
+
             return redirect()->back();
 
         }
 
-        foreach ($checked_record as $key => $record_id)
-        {
-            if($multi_action=="activate")
-            {
-               $this->_activate($record_id);
-               Session::flash('success','Deal(s) Activated Successfully');
-            }
-            elseif($multi_action=="block")
-            {
-               $this->_block($record_id);
-               Session::flash('success','Deal(s) Blocked Successfully');
-            }
-            elseif($multi_action=="delete")
-            {
-               $this->_delete($record_id);
-                Session::flash('success','Deal(s) Deleted Successfully');
+        foreach ($checked_record as $key => $record_id) {
+            if ($multi_action == 'activate') {
+                $this->_activate($record_id);
+                Session::flash('success', 'Deal(s) Activated Successfully');
+            } elseif ($multi_action == 'block') {
+                $this->_block($record_id);
+                Session::flash('success', 'Deal(s) Blocked Successfully');
+            } elseif ($multi_action == 'delete') {
+                $this->_delete($record_id);
+                Session::flash('success', 'Deal(s) Deleted Successfully');
             }
 
         }
 
         return redirect()->back();
     }
-
 }

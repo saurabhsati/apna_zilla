@@ -62,7 +62,7 @@
                            <td height="10" style="background-color:#202020;"></td>
                         </tr>
                         <tr>
-                           <td style="text-align:center; color:#aeaeae;background-color:#202020; padding-bottom:10px;"> Copyrights © <?php echo date("Y"); ?> by<span style="color:#fff;"> RightNext.com</span> All Rights Reserved. </td>
+                           <td style="text-align:center; color:#aeaeae;background-color:#202020; padding-bottom:10px;"> Copyrights © <?php echo date('Y'); ?> by<span style="color:#fff;"> RightNext.com</span> All Rights Reserved. </td>
                         </tr>
                      </table>
                   </td>
