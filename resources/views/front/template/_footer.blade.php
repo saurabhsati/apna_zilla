@@ -17,7 +17,7 @@
             <div class="modal-content">
                <div class="modal-header">
                   <button type="button" class="close otp_close1" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_poup.png" alt="login logo"/></h4>
+                <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_popup.png" alt="login logo"/></h4>
                </div>
                <div class="modal-body">
 
@@ -88,7 +88,7 @@
             <div class="modal-content">
                <div class="modal-header">
                   <button type="button" id="login_close1" class="login_close close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_poup.png" alt="login logo"/></h4>
+                  <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_popup.png" alt="login logo"/></h4>
                </div>
                <div class="modal-body">
 
@@ -134,8 +134,8 @@
                      <div class="title_login">Login with your email and password</div>
 
                      <div class="user_box">
-                        <div class="label_form">Email/Mobile No.</div>
-                        <input type="text" name="email" id="email_login" class="input_box" data-rule-required="true" placeholder="Enter Email Address/ Mobile No."/>
+                        <div class="label_form">Email.</div>
+                        <input type="text" name="email" id="email_login" class="input_box" data-rule-required="true" placeholder="Enter Email Address"/>
                         <div id="email_login_err" style="display: none;"><i style="color: red;margin-left: -200px;">Please Fill Field</i></div>
                      </div>
                      <div class="user_box">
@@ -196,7 +196,7 @@
             <div class="modal-content">
                <div class="modal-header">
                   <button type="button" id="forget_password_close1" class="close login_close1" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_poup.png" alt="login logo"/></h4>
+                <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_popup.png" alt="login logo"/></h4>
                <div style="position:fixed;
                 top: 0;
                 bottom: 0;
@@ -264,7 +264,7 @@
             <div class="modal-content">
                <div class="modal-header">
                   <button type="button" id="otp_close1" class="close login_close1" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_poup.png" alt="login logo"/></h4>
+                <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_popup.png" alt="login logo"/></h4>
                </div>
                <div class="modal-body">
 
@@ -341,7 +341,7 @@
             <div class="modal-content">
                <div class="modal-header">
                   <button type="button" class="close login_close" id="reg_close1" data-dismiss="modal">&times;</button>
-                   <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_poup.png" alt="login logo"/></h4>
+                   <h4 class="modal-title"><img src="{{ url('/') }}/assets/front/images/logo_popup.png" alt="login logo"/></h4>
                </div>
                <div class="modal-body">
 
@@ -424,17 +424,17 @@
        <div class="modal-body">
           <div class="img-verify"><img src="{{ url('/') }}/assets/front/images/process_done.png" alt=""/></div>
           <div class="center-section">
-           <b class="head-t-center">What is RightNext Verified?</b>
-           <p class="just-v">RightNext Verified(RightNext Verified) is an added service offering.</p>
+           <b class="head-t-center">What is JustDial Verified?</b>
+           <p class="just-v">JustDial Verified(JustDial Verified) is an added service offering.</p>
           </div>
 
-           <p class="sub-c"> RightNext verified means that the information of business establishments, professionals or service providers has been verified as existing and correct at the time of the advertiser's application to register with RightNext.  				</p>
+           <p class="sub-c"> JustDial verified means that the information of business establishments, professionals or service providers has been verified as existing and correct at the time of the advertiser's application to register with JustDial.  				</p>
             <div class="soc-menu-top" style="margin-top:20px; text-align:center;">
-              <b class="head-t-center">What is RightNext Verified?</b>
+              <b class="head-t-center">What is JustDial Verified?</b>
                 <p class="sub-c">Makes short-listing of business establishments, professionals or service providers fast & easy. Information verification time is saved. </p>
                  <p class="sub-c">(PS: There is no documentary evidence gathered for verification)
 <br>
-If you need any more details on RightNext Verified, please refer to
+If you need any more details on JustDial Verified, please refer to
                 <a href="#">terms &amp; conditions</a></p>
             </div>
            <div class="clr"></div>
@@ -519,7 +519,7 @@ If you need any more details on RightNext Verified, please refer to
             <div class="row">
 
                <div class="col-sm-8 col-md-8 col-lg-8 pull-left">
-                  <div class="copyright_l pull-right"><span><a href="#">Copyright</a></span> &copy; 2016 by<span><a href="#"> rightnext.com</a></span> All rights reserved.</div>
+                  <div class="copyright_l pull-right"><span><a href="#">Copyright</a></span> &copy; 2018 by<span><a href="#"> JustDial Clone Script.</a></span> All rights reserved.</div>
                </div>
                 <div class="col-sm-4 col-md-4 col-lg-4">
                   <div class="social-icon-block">

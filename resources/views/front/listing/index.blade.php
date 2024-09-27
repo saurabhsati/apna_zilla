@@ -724,7 +724,7 @@
                    if(view_set=='list_view_is_set')
                     {
                       $("#more_business_list").attr("data-members-current-page-list",data.page);
-                      $("#more_business_list:last").after(data.content); // append received data into the element
+                      $("div#more_business_list:last").after(data.content); // append received data into the element
                       $('#animation_image').hide();// hide loading image
                       var loading = false;
 

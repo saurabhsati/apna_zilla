@@ -9,7 +9,7 @@
       <meta name="author" content="Right Next" />
 
       <!-- ======================================================================== -->
-      <title> Right Next :: {{ isset($page_title)?$page_title:"" }}</title>
+      <title> APNA ZILLA :: {{ isset($page_title)?$page_title:"" }}</title>
 
        {!!Meta::generate() !!}
 

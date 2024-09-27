@@ -285,7 +285,7 @@
                               <div class="col-sm-6 col-lg-4 controls">
                                 
                               <input type="file" name="business_image[]" id="business_image" class="pimg"   />
-                              <div class="error" id="error_business_image">{{ $errors->first('business_image') }}</div>
+                              <div class="error_msg" id="error_business_image">{{ $errors->first('business_image') }}</div>
 
                               <div class="clr"></div><br/>
                                 <div class="error" id="error_set_default"></div>
@@ -1058,6 +1058,7 @@ $('#add-image').click(function()
                flag=0;
                 return false;
               }
+               $("#error_business_image").remove();
               var html='<div>'+
                        '<input type="file" name="business_image[]" id="business_image" class="pimg" data-rule-required="true"  />'+
                        '<div class="error" id="error_business_image">{{ $errors->first("business_image") }}</div>'+
@@ -1106,10 +1107,10 @@ $('#add-service').click(function()
                  flag=0;
                  return false;
             }
-
+              $("#error_business_image").remove();
               var service_html='<div>'+
                        '<input type="text" class="form-control" name="business_service[]" id="business_service" class="pimg" data-rule-required="true"  />'+
-                       '<div class="error" id="error_business_image">{{ $errors->first("business_service") }}</div>'+
+                       '<div class="error_msg" id="error_business_image">{{ $errors->first("business_service") }}</div>'+
                        '</div>'+
                        '<div class="clr"></div><br/>'+
                        '<div class="error" id="error_set_default"></div>'+
@@ -1203,7 +1204,7 @@ $('#remove-payment').click(function()
  var url = "{{ url('/') }}";
 </script>
 
-<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyAEKnsSxbtF8dK6u31DSrx3BR40TqBvRD4"></script>
 <script src="{{ url('/') }}/assets/front/js/jquery.geocomplete.min.js"></script>
 <script>
 $(function () {

@@ -3,7 +3,9 @@
             <div class="row">
                     <div class="col-lg-12">
               <div class="logo-block">
-                  <a href="{{ url('/') }}" class="logo hidden-xs"><img src="{{ url('/') }}/assets/front/images/logo_header.png" alt="logo" /></a>
+                  <a href="{{ url('/') }}" class="logo hidden-xs">
+                      <img src="{{ url('/') }}/assets/front/images/logo_header1.png" alt="logo" />
+                  </a>
                     <a href="{{ url('/') }}" class="hidden-sm hidden-md hidden-lg logo"><img src="{{ url('/') }}/assets/front/images/logo_mobile.png" alt="logo" /></a>
 
                </div>

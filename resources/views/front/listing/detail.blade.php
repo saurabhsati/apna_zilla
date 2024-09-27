@@ -172,7 +172,11 @@
                         @if(isset($arr_business_details['business_times']) && sizeof($arr_business_details['business_times'])>0)
                          @foreach($arr_business_details['business_times'] as $time)
                         <?php
-                           $current_day = strtolower(date("D"));
+                           $current_day = strtolower(date("D")); 
+			   if($current_day=='thu')
+                           {
+                              $current_day='thus';
+                           }
                            $open_time = $current_day.'_open';
                            $close_time = $current_day.'_close';
                            ?>

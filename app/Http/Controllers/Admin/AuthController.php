@@ -46,7 +46,6 @@ class AuthController extends Controller
 
 		$user = Sentinel::findById(1);
 		//$user = Sentinel::getUser();
-
 		$user->roles()->attach($role);
 
 	}

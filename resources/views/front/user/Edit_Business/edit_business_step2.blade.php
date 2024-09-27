@@ -238,7 +238,7 @@
  var url = "{{ url('/') }}";
 </script>
 
-<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyAEKnsSxbtF8dK6u31DSrx3BR40TqBvRD4"></script>
 <script src="{{ url('/') }}/assets/front/js/jquery.geocomplete.min.js"></script>
 <script>
 $(function () {

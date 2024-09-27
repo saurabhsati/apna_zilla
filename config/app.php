@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'url' => 'http://localhost',
+    'url' => 'http://l9tslhne-site.itempurl.com/justdialclone/',
 
     /*
     |--------------------------------------------------------------------------
@@ -225,7 +225,7 @@ return [
 
 
     'project' => [
-                    'name'=>'RightNext',
+                    'name'=>'JustDial',
                     'img_path' =>[
                                 'user_profile_pic'=>'/uploads/users/profile_pic',
                                 'category' => '/uploads/category',
