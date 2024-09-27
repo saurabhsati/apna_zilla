@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'fetch' => PDO::FETCH_CLASS,
+    'fetch' => PDO::FETCH_OBJ,
 
     /*
     |--------------------------------------------------------------------------
@@ -48,41 +48,35 @@ return [
 
         'sqlite' => [
             'driver' => 'sqlite',
-            'database' => database_path('database.sqlite'),
+            'database' => env('DB_DATABASE', database_path('database.sqlite')),
             'prefix' => '',
         ],
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '192.168.1.58'),
-            'database' => env('DB_DATABASE', 'justdial'),
-            'username' => env('DB_USERNAME', 'root'),
-            'password' => env('DB_PASSWORD', 'root'),
+            'host' => env('DB_HOST', 'localhost'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE', 'forge'),
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
-            'prefix' => 'e_',
-            'strict' => false,
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
         ],
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => env('DB_HOST', '192.168.1.58'),
-            'database' => env('DB_DATABASE', 'justdial'),
-            'username' => env('DB_USERNAME', 'root'),
-            'password' => env('DB_PASSWORD', 'root'),
+            'host' => env('DB_HOST', 'localhost'),
+            'port' => env('DB_PORT', '5432'),
+            'database' => env('DB_DATABASE', 'forge'),
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'public',
-        ],
-
-        'sqlsrv' => [
-            'driver' => 'sqlsrv',
-            'host' => env('DB_HOST', '192.168.1.58'),
-            'database' => env('DB_DATABASE', 'justdial'),
-            'username' => env('DB_USERNAME', 'root'),
-            'password' => env('DB_PASSWORD', 'root'),
-            'charset' => 'utf8',
-            'prefix' => '',
+            'sslmode' => 'prefer',
         ],
 
     ],
