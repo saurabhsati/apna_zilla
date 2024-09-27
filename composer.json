@@ -10,7 +10,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.6.4",
-        "laravel/framework": "5.3.*",
+        "laravel/framework": "5.4.*",
         "cartalyst/sentinel": "2.0.*",
         "barryvdh/laravel-debugbar": "2.1",
         "intervention/image": "^2.3",
@@ -18,14 +18,14 @@
         "maatwebsite/excel": "^2.1",
         "watson/rememberable": "^1.0",
         "hashids/hashids": "1.0",
-        "orzcc/autometa": "dev-master"
+        "orzcc/autometa": "dev-master",
+        "laravel/tinker": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~5.0",
-        "symfony/css-selector": "3.1.*",
-        "symfony/dom-crawler": "3.1.*"
+        "phpunit/phpunit": "~5.7",
+        "laravel/browser-kit-testing": "^1.0"
     },
     "autoload": {
         "classmap": [
@@ -37,7 +37,8 @@
     },
     "autoload-dev": {
         "classmap": [
-            "tests/TestCase.php"
+            "tests/TestCase.php",
+            "tests/BrowserKitTestCase.php"
         ]
     },
     "scripts": {
