@@ -34,7 +34,7 @@ class SalesAccountController extends Controller
        $arr_except_auth_methods[] = 'login';
        $arr_except_auth_methods[] = 'process_login';
 
-       $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
+       $this->middleware(\App\Http\Middleware\SentinelCheck::class,['except' => $arr_except_auth_methods]);
 
         $this->UserModel = new UserModel();
         $this->BusinessListingModel = new BusinessListingModel();

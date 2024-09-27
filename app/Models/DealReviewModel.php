@@ -19,6 +19,6 @@ class DealReviewModel extends Model
 
     public function deal_info()
     {
-        return $this->belongsTo('App\Models\DealModel', 'deal_id', 'id');
+        return $this->belongsTo(\App\Models\DealModel::class, 'deal_id', 'id');
     }
 }

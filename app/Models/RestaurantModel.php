@@ -27,7 +27,7 @@ class RestaurantModel extends Model
 
     public function parent_user()
     {
-        return $this->belongsTo('App\Models\UserModel', 'user_id', 'id');
+        return $this->belongsTo(\App\Models\UserModel::class, 'user_id', 'id');
     }
 
     public function parent_cuisine()
@@ -37,6 +37,6 @@ class RestaurantModel extends Model
 
     public function restaurant_schedule()
     {
-        return $this->hasOne('App\Models\RestaurantScheduleModel', 'restaurant_id', 'id');
+        return $this->hasOne(\App\Models\RestaurantScheduleModel::class, 'restaurant_id', 'id');
     }
 }

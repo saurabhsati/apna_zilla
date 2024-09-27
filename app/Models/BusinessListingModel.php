@@ -48,82 +48,82 @@ class BusinessListingModel extends Model
 
     public function user_details()
     {
-        return $this->belongsTo('App\Models\UserModel', 'user_id', 'id');
+        return $this->belongsTo(\App\Models\UserModel::class, 'user_id', 'id');
     }
 
     public function category()
     {
-        return $this->hasMany('App\Models\BusinessCategoryModel', 'business_id', 'id');
+        return $this->hasMany(\App\Models\BusinessCategoryModel::class, 'business_id', 'id');
     }
 
     public function category_details()
     {
-        return $this->belongsTo('App\Models\BusinessCategoryModel', 'id', 'business_id');
+        return $this->belongsTo(\App\Models\BusinessCategoryModel::class, 'id', 'business_id');
     }
 
     public function get_sub_category()
     {
-        return $this->hasMany('App\Models\BusinessCategoryModel', 'business_id', 'id');
+        return $this->hasMany(\App\Models\BusinessCategoryModel::class, 'business_id', 'id');
     }
 
     public function reviews()
     {
         //(forign key ,local key)
-        return $this->hasMany('App\Models\ReviewsModel', 'business_id', 'id');
+        return $this->hasMany(\App\Models\ReviewsModel::class, 'business_id', 'id');
     }
 
     public function country_details()
     {
-        return $this->belongsTo('App\Models\CountryModel', 'country', 'id');
+        return $this->belongsTo(\App\Models\CountryModel::class, 'country', 'id');
     }
 
     public function state_details()
     {
-        return $this->belongsTo('App\Models\StateModel', 'state', 'id');
+        return $this->belongsTo(\App\Models\StateModel::class, 'state', 'id');
     }
 
     public function city_details()
     {
-        return $this->belongsTo('App\Models\CityModel', 'city', 'id');
+        return $this->belongsTo(\App\Models\CityModel::class, 'city', 'id');
     }
 
     public function zipcode_details()
     {
-        return $this->belongsTo('App\Models\PlaceModel', 'pincode', 'id');
+        return $this->belongsTo(\App\Models\PlaceModel::class, 'pincode', 'id');
     }
 
     public function image_upload_details()
     {
-        return $this->hasMany('App\Models\BusinessImageUploadModel', 'business_id', 'id');
+        return $this->hasMany(\App\Models\BusinessImageUploadModel::class, 'business_id', 'id');
     }
 
     public function services()
     {
-        return $this->hasMany('App\Models\BusinessImageUploadModel', 'business_id', 'id');
+        return $this->hasMany(\App\Models\BusinessImageUploadModel::class, 'business_id', 'id');
     }
 
     public function service()
     {
-        return $this->hasMany('App\Models\BusinessServiceModel', 'business_id', 'id');
+        return $this->hasMany(\App\Models\BusinessServiceModel::class, 'business_id', 'id');
     }
 
     public function business_times()
     {
-        return $this->hasMany('App\Models\BusinessTimeModel', 'business_id', 'id');
+        return $this->hasMany(\App\Models\BusinessTimeModel::class, 'business_id', 'id');
     }
 
     public function also_list_category()
     {
-        return $this->hasMany('App\Models\BusinessCategoryModel', 'business_id', 'id');
+        return $this->hasMany(\App\Models\BusinessCategoryModel::class, 'business_id', 'id');
     }
 
     public function payment_mode()
     {
-        return $this->hasMany('App\Models\BusinessPaymentModeModel', 'business_id', 'id');
+        return $this->hasMany(\App\Models\BusinessPaymentModeModel::class, 'business_id', 'id');
     }
 
     public function membership_plan_details()
     {
-        return $this->hasMany('App\Models\TransactionModel', 'business_id', 'id');
+        return $this->hasMany(\App\Models\TransactionModel::class, 'business_id', 'id');
     }
 }

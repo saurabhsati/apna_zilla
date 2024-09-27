@@ -22,11 +22,11 @@ class DishModel extends Model
 
     public function restaurant()
     {
-        return $this->belongsTo('App\Models\RestaurantModel', 'restaurant_id', 'id');
+        return $this->belongsTo(\App\Models\RestaurantModel::class, 'restaurant_id', 'id');
     }
 
     public function category()
     {
-        return $this->belongsTo('App\Models\CategoryModel', 'category_id', 'id');
+        return $this->belongsTo(\App\Models\CategoryModel::class, 'category_id', 'id');
     }
 }

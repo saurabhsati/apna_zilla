@@ -14,7 +14,7 @@ class FrontSliderController extends Controller
     public function __construct()
     {
         $arr_except_auth_methods = [];
-        $this->middleware('\App\Http\Middleware\SentinelCheck', ['except' => $arr_except_auth_methods]);
+        $this->middleware(\App\Http\Middleware\SentinelCheck::class, ['except' => $arr_except_auth_methods]);
 
         $this->slider_public_img_path = url('/').'/uploads/slider/';
         $this->slider_base_img_path = base_path().'/public/uploads/slider/';

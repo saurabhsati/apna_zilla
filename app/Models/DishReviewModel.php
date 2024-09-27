@@ -19,6 +19,6 @@ class DishReviewModel extends Model
 
     public function dish_info()
     {
-        return $this->belongsTo('App\Models\DishModel', 'dish_id', 'id');
+        return $this->belongsTo(\App\Models\DishModel::class, 'dish_id', 'id');
     }
 }

@@ -43,7 +43,7 @@ class UserModel extends Model
 
     public function favourite_businesses()
     {
-        return $this->belongsToMany('App\Models\BusinessListingModel', 'favourite_businesses',
+        return $this->belongsToMany(\App\Models\BusinessListingModel::class, 'favourite_businesses',
             'user_id', 'business_id')->where('is_favourite', '1');
     }
 }

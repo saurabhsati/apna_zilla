@@ -24,16 +24,16 @@ class DealsTransactionModel extends Model
 
     public function user_records()
     {
-        return $this->belongsTo('App\Models\UserModel', 'user_id', 'id');
+        return $this->belongsTo(\App\Models\UserModel::class, 'user_id', 'id');
     }
 
     public function user_orders()
     {
-        return $this->hasMany('App\Models\UsersOrderModel', 'order_id', 'order_id');
+        return $this->hasMany(\App\Models\UsersOrderModel::class, 'order_id', 'order_id');
     }
 
     public function order_deal()
     {
-        return $this->belongsTo('App\Models\DealsOffersModel', 'deal_id', 'id');
+        return $this->belongsTo(\App\Models\DealsOffersModel::class, 'deal_id', 'id');
     }
 }

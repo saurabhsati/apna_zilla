@@ -40,7 +40,7 @@ class CategoryModel extends Model
      */
     public function parent_category()
     {
-        return $this->belongsTo('App\Models\CategoryModel', 'parent', 'cat_id');
+        return $this->belongsTo(\App\Models\CategoryModel::class, 'parent', 'cat_id');
     }
 
     /**
@@ -48,7 +48,7 @@ class CategoryModel extends Model
      */
     public function child_category()
     {
-        return $this->hasMany('App\Models\CategoryModel', 'parent', 'cat_id');
+        return $this->hasMany(\App\Models\CategoryModel::class, 'parent', 'cat_id');
     }
 
     public function brands()
@@ -73,11 +73,11 @@ class CategoryModel extends Model
 
     public function attribute()
     {
-        return $this->hasMany('App\Models\AttributeModel', 'fk_category_id', 'cat_id');
+        return $this->hasMany(\App\Models\AttributeModel::class, 'fk_category_id', 'cat_id');
     }
 
     public function bussinesses()
     {
-        return $this->hasMany('App\Models\BusinessCategoryModel', 'category_id', 'cat_id');
+        return $this->hasMany(\App\Models\BusinessCategoryModel::class, 'category_id', 'cat_id');
     }
 }

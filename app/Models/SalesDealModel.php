@@ -27,6 +27,6 @@ class SalesDealModel extends Model
 
     public function business_info()
     {
-        return $this->belongsTo('App\Models\BusinessListingModel', 'business_id', 'id');
+        return $this->belongsTo(\App\Models\BusinessListingModel::class, 'business_id', 'id');
     }
 }

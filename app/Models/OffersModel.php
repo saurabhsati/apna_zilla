@@ -27,6 +27,6 @@ class OffersModel extends Model
 
     public function deal_info()
     {
-        return $this->belongsTo('App\Models\DealsOffersModel', 'deal_id', 'id');
+        return $this->belongsTo(\App\Models\DealsOffersModel::class, 'deal_id', 'id');
     }
 }

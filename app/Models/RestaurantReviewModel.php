@@ -19,6 +19,6 @@ class RestaurantReviewModel extends Model
 
     public function restaurant_deatails()
     {
-        return $this->belongsTo('App\Models\RestaurantModel', 'restaurant_id', 'id');
+        return $this->belongsTo(\App\Models\RestaurantModel::class, 'restaurant_id', 'id');
     }
 }

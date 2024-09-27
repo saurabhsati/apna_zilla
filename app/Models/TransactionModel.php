@@ -26,21 +26,21 @@ class TransactionModel extends Model
 
     public function user_records()
     {
-        return $this->belongsTo('App\Models\UserModel', 'user_id', 'id');
+        return $this->belongsTo(\App\Models\UserModel::class, 'user_id', 'id');
     }
 
     public function membership()
     {
-        return $this->belongsTo('App\Models\MembershipModel', 'membership_id', 'plan_id');
+        return $this->belongsTo(\App\Models\MembershipModel::class, 'membership_id', 'plan_id');
     }
 
     public function business()
     {
-        return $this->belongsTo('App\Models\BusinessListingModel', 'business_id', 'id');
+        return $this->belongsTo(\App\Models\BusinessListingModel::class, 'business_id', 'id');
     }
 
     public function category()
     {
-        return $this->belongsTo('App\Models\CategoryModel', 'category_id', 'cat_id');
+        return $this->belongsTo(\App\Models\CategoryModel::class, 'category_id', 'cat_id');
     }
 }

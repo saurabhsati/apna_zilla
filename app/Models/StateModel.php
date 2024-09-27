@@ -18,6 +18,6 @@ class StateModel extends Model
 
     public function country_details()
     {
-        return $this->belongsTo('App\Models\CountryModel', 'country_id', 'id');
+        return $this->belongsTo(\App\Models\CountryModel::class, 'country_id', 'id');
     }
 }

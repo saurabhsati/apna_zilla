@@ -19,7 +19,7 @@ class SalesController extends Controller
     public function __construct()
     {
         $arr_except_auth_methods = [];
-        $this->middleware('\App\Http\Middleware\SentinelCheck', ['except' => $arr_except_auth_methods]);
+        $this->middleware(\App\Http\Middleware\SentinelCheck::class, ['except' => $arr_except_auth_methods]);
 
         $this->profile_pic_base_path = base_path().'/public'.config('app.project.img_path.user_profile_pic');
         $this->profile_pic_public_path = url('/').config('app.project.img_path.user_profile_pic');

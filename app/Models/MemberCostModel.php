@@ -20,6 +20,6 @@ class MemberCostModel extends Model
 
     public function category()
     {
-        return $this->belongsTo('App\Models\CategoryModel', 'category_id', 'cat_id');
+        return $this->belongsTo(\App\Models\CategoryModel::class, 'category_id', 'cat_id');
     }
 }

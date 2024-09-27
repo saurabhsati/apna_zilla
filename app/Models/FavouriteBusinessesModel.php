@@ -22,7 +22,7 @@ class FavouriteBusinessesModel extends Model
 
     public function business()
     {
-        return $this->hasMany('App\Models\BusinessListingModel',
+        return $this->hasMany(\App\Models\BusinessListingModel::class,
             'id', 'business_id');
     }
 }

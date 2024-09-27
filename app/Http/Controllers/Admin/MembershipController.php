@@ -13,7 +13,7 @@ class MembershipController extends Controller
     public function __construct()
     {
         $arr_except_auth_methods = [];
-        $this->middleware('\App\Http\Middleware\SentinelCheck', ['except' => $arr_except_auth_methods]);
+        $this->middleware(\App\Http\Middleware\SentinelCheck::class, ['except' => $arr_except_auth_methods]);
     }
 
     /**

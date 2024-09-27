@@ -24,16 +24,16 @@ class PlaceModel extends Model
 
     public function country_details()
     {
-        return $this->belongsTo('App\Models\CountryModel', 'country_id', 'id');
+        return $this->belongsTo(\App\Models\CountryModel::class, 'country_id', 'id');
     }
 
     public function state_details()
     {
-        return $this->belongsTo('App\Models\StateModel', 'state_id', 'id');
+        return $this->belongsTo(\App\Models\StateModel::class, 'state_id', 'id');
     }
 
     public function city_details()
     {
-        return $this->belongsTo('App\Models\CityModel', 'city_id', 'id');
+        return $this->belongsTo(\App\Models\CityModel::class, 'city_id', 'id');
     }
 }

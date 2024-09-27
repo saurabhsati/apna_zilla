@@ -37,21 +37,21 @@ class DealsOffersModel extends Model
 
     public function business_info()
     {
-        return $this->belongsTo('App\Models\BusinessListingModel', 'business_id', 'id');
+        return $this->belongsTo(\App\Models\BusinessListingModel::class, 'business_id', 'id');
     }
 
     public function deals_slider_images()
     {
-        return $this->hasMany('App\Models\DealsSliderImagesModel', 'deal_id', 'id');
+        return $this->hasMany(\App\Models\DealsSliderImagesModel::class, 'deal_id', 'id');
     }
 
     public function offers_info()
     {
-        return $this->hasMany('App\Models\OffersModel', 'deal_id', 'id')->where('is_active', 1);
+        return $this->hasMany(\App\Models\OffersModel::class, 'deal_id', 'id')->where('is_active', 1);
     }
 
     public function category_info()
     {
-        return $this->hasMany('App\Models\DealcategoryModel', 'deal_id', 'id');
+        return $this->hasMany(\App\Models\DealcategoryModel::class, 'deal_id', 'id');
     }
 }

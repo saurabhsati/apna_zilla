@@ -23,6 +23,6 @@ class BuyInBulkModel extends Model
 
     public function order_deal()
     {
-        return $this->belongsTo('App\Models\DealsOffersModel', 'deal_id', 'id');
+        return $this->belongsTo(\App\Models\DealsOffersModel::class, 'deal_id', 'id');
     }
 }
