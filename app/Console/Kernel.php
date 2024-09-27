@@ -32,6 +32,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('business_membership:update_expired')
             ->daily();
     }
+
     /**
      * Register the Closure based commands for the application.
      *
