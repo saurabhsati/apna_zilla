@@ -131,7 +131,7 @@
                  </textarea> 
                     <span class='help-block'>{{ $errors->first('template_html') }}</span>
                     <?php
-                         $arr_variables = isset($arr_email_template['template_variables'])?explode("~",$arr_email_template['template_variables']):array();
+                         $arr_variables = isset($arr_email_template['template_variables'])?explode("~",$arr_email_template['template_variables']):[];
                     ?> 
                     <span>Variables:</span>
                     @if(sizeof($arr_variables)>0)

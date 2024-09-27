@@ -139,7 +139,7 @@
                 <label class="col-sm-3 col-lg-2 control-label" for="business_cat">Business Categories<i class="red"></i></label>
                 <div class="col-sm-6 col-lg-4 controls">
                 <?php
-                $arr_selected=array();
+                $arr_selected=[];
                  foreach($business['category'] as $sel_category){
                   array_push($arr_selected,$sel_category['category_id']);}
 

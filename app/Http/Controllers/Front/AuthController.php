@@ -28,7 +28,7 @@ class AuthController extends Controller
 
     public function register_via_google_plus(Request $request)
     {
-        $arr_rules = array();
+        $arr_rules = [];
         $arr_rules['name'] = "required";
         $arr_rules['email'] = "required|email";
 
@@ -110,7 +110,7 @@ class AuthController extends Controller
             $user->roles()->attach($role); /* Assign Normal Users Role */
             $public_id = $this->objpublic->generate_public_id($id);
 
-            $insert_public_id = UserModel::where('id', '=', $id)->update(array('public_id' => $public_id));
+            $insert_public_id = UserModel::where('id', '=', $id)->update(['public_id' => $public_id]);
             // /$preferences = $this->create_preferences($status->id);  /* Create Preference for user */
 
             $email_id = $email;
@@ -138,7 +138,7 @@ class AuthController extends Controller
 
      public function register_via_normal(Request $request)
     {   
-        $arr_rules = array();
+        $arr_rules = [];
         $arr_rules['first_name']   =   "required";
         $arr_rules['last_name']    =   "required";
         $arr_rules['mobile']       =   "required";
@@ -215,7 +215,7 @@ class AuthController extends Controller
                         //$public_id=uniqid( 'RTN_' ,false);
                         $public_id = $this->objpublic->generate_public_id($enc_id);
 
-                        $insert_public_id = UserModel::where('id', '=', $enc_id)->update(array('public_id' => $public_id));
+                        $insert_public_id = UserModel::where('id', '=', $enc_id)->update(['public_id' => $public_id]);
 
                         //$user = Sentinel::getUser();
 
@@ -266,7 +266,7 @@ class AuthController extends Controller
     
     public function register_via_facebook(Request $request)
     {
-        $arr_rules = array();
+        $arr_rules = [];
         $arr_rules['fname'] = "required";
         $arr_rules['lname'] = "required";
         $arr_rules['email'] = "required|email";
@@ -338,7 +338,7 @@ class AuthController extends Controller
             $user->roles()->attach($role); /* Assign Normal Users Role */
             $public_id = $this->objpublic->generate_public_id($id);
 
-            $insert_public_id = UserModel::where('id', '=', $id)->update(array('public_id' => $public_id));
+            $insert_public_id = UserModel::where('id', '=', $id)->update(['public_id' => $public_id]);
             //$preferences = $this->create_preferences($status->id);  /* Create Preference for user */
 
             $email_id = $email;
@@ -385,7 +385,7 @@ class AuthController extends Controller
             $content = view('email.general',compact('content'))->render();
             $content = html_entity_decode($content);
 
-            $send_mail = Mail::send(array(),array(), function($message) use($arr_data,$arr_email_template,$content)
+            $send_mail = Mail::send([],[], function($message) use($arr_data,$arr_email_template,$content)
                         {
                             $message->from($arr_email_template['template_from_mail'], $arr_email_template['template_from']);
                             $message->to($arr_data['email'], $arr_data['first_name'])
@@ -400,8 +400,8 @@ class AuthController extends Controller
     public function process_login_ajax(Request $request)
     {
 
-        $json = array();
-        $arr_creds =  array();
+        $json = [];
+        $arr_creds =  [];
 
         $email_or_mobile = $request->input('email');
 
@@ -501,7 +501,7 @@ class AuthController extends Controller
 
     public function process_login(Request $request)
     {
-        $arr_creds =  array();
+        $arr_creds =  [];
         $arr_creds['email']     = $request->input('email');
         $arr_creds['password']  = $request->input('password');
         $user = Sentinel::authenticate($arr_creds);
@@ -551,7 +551,7 @@ class AuthController extends Controller
     public function process_login_for_share(Request $request,$enc_id)
     {
 
-        $arr_creds =  array();
+        $arr_creds =  [];
         $arr_creds['email'] = $request->input('email');
         $arr_creds['password'] = $request->input('password');
 
@@ -621,7 +621,7 @@ class AuthController extends Controller
     public function update_password(Request $request)
     {
         $obj_user = Sentinel::getUser();////Get Admin all information
-        $arr_rules                      = array();
+        $arr_rules                      = [];
         $arr_rules['current_password']  = 'required';
         $arr_rules['new_password']      = 'required';
         $arr_rules['confirm_password']  = 'required';
@@ -662,7 +662,7 @@ class AuthController extends Controller
     }
     public function recover_password(Request $request)
     {
-        $arr_rules = array();
+        $arr_rules = [];
 
         $arr_rules['recover_email'] = "required";
         $validator = Validator::make($request->all(),$arr_rules);
@@ -717,7 +717,7 @@ class AuthController extends Controller
                 $content = view('email.front_general',compact('content'))->render();
                 $content = html_entity_decode($content);
 
-                $send_mail = Mail::send(array(),array(), function($message) use($user,$arr_email_template,$content)
+                $send_mail = Mail::send([],[], function($message) use($user,$arr_email_template,$content)
                             {
                                 $message->from($arr_email_template['template_from_mail'], $arr_email_template['template_from']);
                                 $message->to($user->email, $user->first_name)
@@ -768,7 +768,7 @@ class AuthController extends Controller
      public function reset_password(Request $request)
     {
        // dd($request->all());
-        $arr_rules = array();
+        $arr_rules = [];
         $arr_rules['password'] = "required|confirmed";
         $arr_rules['enc_id'] = "required";
         $arr_rules['enc_reminder_code'] = "required";

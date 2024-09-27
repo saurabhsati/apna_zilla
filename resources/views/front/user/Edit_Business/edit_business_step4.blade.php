@@ -107,7 +107,7 @@
                        </div>
                     </div>
                     <br/>
-                    <?php $selected_paymnt_arr=array();?>
+                    <?php $selected_paymnt_arr=[];?>
                            @if(sizeof($business['payment_mode'])>0)
                              @foreach($business['payment_mode'] as $payment_mode)
                                 <?php $selected_paymnt_arr[]=$payment_mode['title'];?>
