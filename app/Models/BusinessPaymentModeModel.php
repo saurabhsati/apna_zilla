@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BusinessPaymentModeModel extends Model
 {
-
     use SoftDeletes;
-     protected $table="business_payment_mode";
-     protected $fillable=['business_id',
-     					  'title'
-                         ];
+
+    protected $table = 'business_payment_mode';
+
+    protected $fillable = ['business_id',
+        'title',
+    ];
 }

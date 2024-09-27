@@ -1,203 +1,183 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Requests;
+use App\Http\Controllers\Common\GeneratorController;
 use App\Http\Controllers\Controller;
 use App\Models\CategoryModel;
+use Illuminate\Http\Request;
 use Session;
 use Validator;
-use DB;
-use App\Http\Controllers\Common\GeneratorController;
 
 class CategoryController extends Controller
 {
- 	public function __construct()
- 	{
- 		$arr_except_auth_methods = array();
- 		$this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
+    public function __construct()
+    {
+        $arr_except_auth_methods = [];
+        $this->middleware(\App\Http\Middleware\SentinelCheck::class, ['except' => $arr_except_auth_methods]);
         $this->cat_img_path = base_path().'/public'.config('app.project.img_path.category');
         $this->cat_img_public_path = url('/').config('app.project.img_path.category');
 
- 	}
+    }
 
- 	public function index()
- 	{
- 		$page_title = "Category: Manage ";
+    public function index()
+    {
+        $page_title = 'Category: Manage ';
 
- 		$arr_category = array();
- 		$obj_category = CategoryModel::orderBy('cat_id','DESC')->where('parent','0')->get();
+        $arr_category = [];
+        $obj_category = CategoryModel::orderBy('cat_id', 'DESC')->where('parent', '0')->get();
 
- 		if($obj_category)
- 		{
- 			$arr_category = $obj_category->toArray();
- 		}
-
- 		return view('web_admin.category.index',compact('page_title','arr_category'));
- 	}
-
- 	public function create(Request $request,$enc_cat_id=FALSE)
- 	{
- 		$page_title = "Create Category";
-
-        $arr_category = array();
-        $obj_category = CategoryModel::where('parent',0)->where('is_active',1)->orderBy('title','ASC')->get();
-
-        if($obj_category!=FALSE)
-        {
-        foreach ($obj_category as $key => $category)
-        {
+        if ($obj_category) {
             $arr_category = $obj_category->toArray();
         }
 
-        }
-        return view('web_admin.category.create',compact('page_title','arr_category','enc_cat_id'));
+        return view('web_admin.category.index', compact('page_title', 'arr_category'));
     }
 
-
- 	public function store(Request $request)
+    public function create(Request $request, $enc_cat_id = false)
     {
-        $arr_rules                         = array();
-        $arr_rules['category']             = "required";
-        $arr_rules['title']                = "required";
-        $arr_rules['cat_ref_slug']         = "required";
-        $arr_rules['cat_meta_keyword']     = "required";
-        $arr_rules['cat_meta_description'] = "required";
-        
+        $page_title = 'Create Category';
 
-        $validator = Validator::make($request->all(),$arr_rules);
+        $arr_category = [];
+        $obj_category = CategoryModel::where('parent', 0)->where('is_active', 1)->orderBy('title', 'ASC')->get();
 
-        if($validator->fails()==TRUE)
-        {
+        if ($obj_category != false) {
+            foreach ($obj_category as $key => $category) {
+                $arr_category = $obj_category->toArray();
+            }
+
+        }
+
+        return view('web_admin.category.create', compact('page_title', 'arr_category', 'enc_cat_id'));
+    }
+
+    public function store(Request $request)
+    {
+        $arr_rules = [];
+        $arr_rules['category'] = 'required';
+        $arr_rules['title'] = 'required';
+        $arr_rules['cat_ref_slug'] = 'required';
+        $arr_rules['cat_meta_keyword'] = 'required';
+        $arr_rules['cat_meta_description'] = 'required';
+
+        $validator = Validator::make($request->all(), $arr_rules);
+
+        if ($validator->fails() == true) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $category             = $request->input('category');
-        $title                = $request->input('title');
-        $cat_ref_slug         = $request->input('cat_ref_slug');
-        $is_priceable         = $request->input('is_priceable','0');
-        $cat_meta_keyword     = $request->input('cat_meta_keyword');
+        $category = $request->input('category');
+        $title = $request->input('title');
+        $cat_ref_slug = $request->input('cat_ref_slug');
+        $is_priceable = $request->input('is_priceable', '0');
+        $cat_meta_keyword = $request->input('cat_meta_keyword');
         $cat_meta_description = $request->input('cat_meta_description');
-        $is_popular           = $request->input('is_popular')==null?'0':$request->input('is_popular');
-        $is_explore_directory = $request->input('is_explore_directory')==null?'0':$request->input('is_explore_directory');
-        $is_allow_to_add_deal = $request->input('is_allow_to_add_deal')==null?'0':$request->input('is_allow_to_add_deal');
+        $is_popular = $request->input('is_popular') == null ? '0' : $request->input('is_popular');
+        $is_explore_directory = $request->input('is_explore_directory') == null ? '0' : $request->input('is_explore_directory');
+        $is_allow_to_add_deal = $request->input('is_allow_to_add_deal') == null ? '0' : $request->input('is_allow_to_add_deal');
 
-        $cat_slug             = str_slug($title);
+        $cat_slug = str_slug($title);
 
-         /* update public key in Category table*/
+        /* update public key in Category table*/
 
         //echo $public_id;exit;
-        $cat_img = "default_category.png";
-        if((int)$category==0)
-        {
-            if ($request->hasFile('cat_img'))
-            {
-                $cv_valiator = Validator::make(array('cat_img'=>$request->file('cat_img')),array(
-                                                    'cat_img' => 'mimes:jpg,jpeg,png'
-                                                ));
+        $cat_img = 'default_category.png';
+        if ((int) $category == 0) {
+            if ($request->hasFile('cat_img')) {
+                $cv_valiator = Validator::make(['cat_img' => $request->file('cat_img')], [
+                    'cat_img' => 'mimes:jpg,jpeg,png',
+                ]);
 
-                if ($request->file('cat_img')->isValid() && $cv_valiator->passes())
-                {
+                if ($request->file('cat_img')->isValid() && $cv_valiator->passes()) {
 
                     $cv_path = $request->file('cat_img')->getClientOriginalName();
                     $image_extension = $request->file('cat_img')->getClientOriginalExtension();
                     $image_name = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
                     $request->file('cat_img')->move(
-                    $this->cat_img_path, $image_name
+                        $this->cat_img_path, $image_name
                     );
 
                     $cat_img = $image_name;
-                }
-                else
-                {
+                } else {
                     return redirect()->back();
                 }
 
             }
         }
 
-        $arr_cat = array();
+        $arr_cat = [];
         //$arr_cat['public_id']=$public_id;
-        $arr_cat['cat_desc'] = "NA";
+        $arr_cat['cat_desc'] = 'NA';
         $arr_cat['cat_slug'] = $cat_slug;
         $arr_cat['parent'] = $category;
-        $arr_cat['cat_order'] = "0";
-        $arr_cat['is_active'] = "1";
+        $arr_cat['cat_order'] = '0';
+        $arr_cat['is_active'] = '1';
         $arr_cat['cat_img'] = $cat_img;
-        $arr_cat['cat_thumb'] =$cat_img;
+        $arr_cat['cat_thumb'] = $cat_img;
         $arr_cat['title'] = $title;
         $arr_cat['cat_ref_slug'] = $cat_ref_slug;
-        $arr_cat['cat_meta_keyword'] =$cat_meta_keyword;
-        $arr_cat['cat_meta_description'] =$cat_meta_description;
-        $arr_cat['is_popular'] =$is_popular;
-        $arr_cat['is_explore_directory'] =$is_explore_directory;
-        $arr_cat['is_allow_to_add_deal'] =$is_allow_to_add_deal;
-       // dd($arr_cat);
-        $data_chk_duplicate=[];
-         $data_chk_duplicate=CategoryModel::where('title',$arr_cat['title'])->get();
+        $arr_cat['cat_meta_keyword'] = $cat_meta_keyword;
+        $arr_cat['cat_meta_description'] = $cat_meta_description;
+        $arr_cat['is_popular'] = $is_popular;
+        $arr_cat['is_explore_directory'] = $is_explore_directory;
+        $arr_cat['is_allow_to_add_deal'] = $is_allow_to_add_deal;
+        // dd($arr_cat);
+        $data_chk_duplicate = [];
+        $data_chk_duplicate = CategoryModel::where('title', $arr_cat['title'])->get();
         //dd($data_chk_duplicate);
-        if($data_chk_duplicate)
-        {
+        if ($data_chk_duplicate) {
             $arr_data_duplicate = $data_chk_duplicate->toArray();
         }
         //dd($arr_data_duplicate);
-        if(sizeof($data_chk_duplicate)>0)
-        {
-            Session::flash('error','Category Already Exists');
+        if (count($data_chk_duplicate) > 0) {
+            Session::flash('error', 'Category Already Exists');
+
             return redirect()->back();
         }
 
-
-        $status=CategoryModel::create($arr_cat);
+        $status = CategoryModel::create($arr_cat);
         $cat_id = $status->id;
         $status->save();
         /* Insert in Category Lang */
 
-        if($status)
-        {
+        if ($status) {
             // $cat_id=CategoryModel::first()->cat_id;
-             $public_id = (new GeneratorController)->alphaID($cat_id);
-             $arr_update_cat['public_id']=$public_id;
-             CategoryModel::where('cat_id',$cat_id)->update($arr_update_cat);
+            $public_id = (new GeneratorController)->alphaID($cat_id);
+            $arr_update_cat['public_id'] = $public_id;
+            CategoryModel::where('cat_id', $cat_id)->update($arr_update_cat);
 
-            Session::flash('success','Category Added Successfully');
-        }
-        else
-        {
-            Session::flash('error','Problem Occured, While Adding Category');
+            Session::flash('success', 'Category Added Successfully');
+        } else {
+            Session::flash('error', 'Problem Occured, While Adding Category');
         }
 
         return redirect()->back();
     }
 
-
-
- 	public function edit($enc_id)
- 	{
- 		$id = base64_decode($enc_id);
- 		$page_title = "Category: Edit ";
-
- 		$arr_data = array();
- 		$obj_data = CategoryModel::where('cat_id',$id)->first();
-
- 		if($obj_data)
- 		{
- 			$arr_data = $obj_data->toArray();
- 		}
-
- 		return view('web_admin.category.edit',compact('page_title','arr_data'));
- 	}
-
- 	public function update(Request $request, $enc_id)
+    public function edit($enc_id)
     {
         $id = base64_decode($enc_id);
-        $arr_rules = array();
-        $arr_rules['category'] = "required";
-        $arr_rules['cat_meta_description'] = "required";
-        
-        $validator = Validator::make($request->all(),$arr_rules);
-        if($validator->fails())
-        {
+        $page_title = 'Category: Edit ';
+
+        $arr_data = [];
+        $obj_data = CategoryModel::where('cat_id', $id)->first();
+
+        if ($obj_data) {
+            $arr_data = $obj_data->toArray();
+        }
+
+        return view('web_admin.category.edit', compact('page_title', 'arr_data'));
+    }
+
+    public function update(Request $request, $enc_id)
+    {
+        $id = base64_decode($enc_id);
+        $arr_rules = [];
+        $arr_rules['category'] = 'required';
+        $arr_rules['cat_meta_description'] = 'required';
+
+        $validator = Validator::make($request->all(), $arr_rules);
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -207,43 +187,42 @@ class CategoryController extends Controller
         $cat_meta_description = $request->input('cat_meta_description');
         $is_active = $request->input('is_active');
         $check_popular = $request->input('is_popular');
-        if($check_popular=="on")
-        $is_popular = 1;
-        else
-        $is_popular = 0;
+        if ($check_popular == 'on') {
+            $is_popular = 1;
+        } else {
+            $is_popular = 0;
+        }
 
         $is_explore_directory = $request->input('is_explore_directory');
-        if($is_explore_directory=="on")
-        $is_explore_directory = 1;
-        else
-        $is_explore_directory = 0;
+        if ($is_explore_directory == 'on') {
+            $is_explore_directory = 1;
+        } else {
+            $is_explore_directory = 0;
+        }
 
         $is_allow_to_add_deal = $request->input('is_allow_to_add_deal');
-        if($is_allow_to_add_deal=="on")
-        $is_allow_to_add_deal = 1;
-        else
-        $is_allow_to_add_deal = 0;
-        $cat_img = FALSE;
-        if ($request->hasFile('cat_img'))
-        {
-            $cv_valiator = Validator::make(array('cat_img'=>$request->file('cat_img')),array(
-                                                'cat_img' => 'mimes:jpg,jpeg,png'
-                                            ));
+        if ($is_allow_to_add_deal == 'on') {
+            $is_allow_to_add_deal = 1;
+        } else {
+            $is_allow_to_add_deal = 0;
+        }
+        $cat_img = false;
+        if ($request->hasFile('cat_img')) {
+            $cv_valiator = Validator::make(['cat_img' => $request->file('cat_img')], [
+                'cat_img' => 'mimes:jpg,jpeg,png',
+            ]);
 
-            if ($request->file('cat_img')->isValid() && $cv_valiator->passes())
-            {
+            if ($request->file('cat_img')->isValid() && $cv_valiator->passes()) {
 
                 $cv_path = $request->file('cat_img')->getClientOriginalName();
                 $image_extension = $request->file('cat_img')->getClientOriginalExtension();
                 $image_name = sha1(uniqid().$cv_path.uniqid()).'.'.$image_extension;
                 $request->file('cat_img')->move(
-                $this->cat_img_path, $image_name
+                    $this->cat_img_path, $image_name
                 );
 
                 $cat_img = $image_name;
-            }
-            else
-            {
+            } else {
                 return redirect()->back();
             }
         }
@@ -254,96 +233,83 @@ class CategoryController extends Controller
             'cat_meta_description' => $cat_meta_description,
             'is_popular' => $is_popular,
             'is_explore_directory' => $is_explore_directory,
-            'is_allow_to_add_deal'=>$is_allow_to_add_deal,
+            'is_allow_to_add_deal' => $is_allow_to_add_deal,
         ];
         //dd($arr_data);
 
-
-        if($cat_img!=FALSE)
-        {
+        if ($cat_img != false) {
             $arr_data['cat_img'] = $cat_img;
         }
-       $data_chk_duplicate=CategoryModel::where('title',$arr_data['title'])->where('cat_id','!=',$id)->get();
+        $data_chk_duplicate = CategoryModel::where('title', $arr_data['title'])->where('cat_id', '!=', $id)->get();
         //dd($data_chk_duplicate);
-        if($data_chk_duplicate)
-        {
+        if ($data_chk_duplicate) {
             $arr_data_duplicate = $data_chk_duplicate->toArray();
         }
         //dd($arr_data_duplicate);
-        if(sizeof($data_chk_duplicate)>0)
-        {
-            Session::flash('error','Category Already Exists');
+        if (count($data_chk_duplicate) > 0) {
+            Session::flash('error', 'Category Already Exists');
+
             return redirect()->back();
         }
 
-        $status = CategoryModel::where('cat_id',$id)->update($arr_data);
+        $status = CategoryModel::where('cat_id', $id)->update($arr_data);
 
-        if($status)
-        {
-            Session::flash('success','Category Updated Successfully');
-        }
-        else
-        {
-            Session::flash('error','Problem Occured While Updating Category ');
+        if ($status) {
+            Session::flash('success', 'Category Updated Successfully');
+        } else {
+            Session::flash('error', 'Problem Occured While Updating Category ');
         }
 
         return redirect()->back();
     }
 
-     public function show_sub_categories($enc_id)
+    public function show_sub_categories($enc_id)
     {
         $parent_cat_id = base64_decode($enc_id);
-        $page_title = "Manage Category/Sub Category";
+        $page_title = 'Manage Category/Sub Category';
 
         /* Get Current Category Name */
 
-        $obj_main_category = CategoryModel::where('cat_id',$parent_cat_id)->first();
+        $obj_main_category = CategoryModel::where('cat_id', $parent_cat_id)->first();
 
-        if($obj_main_category!=FALSE)
-        {
+        if ($obj_main_category != false) {
             $arr_main_category = $obj_main_category->toArray();
         }
 
-
         /* Fetch Complete List*/
-        $arr_sub_category = array();
-        $arr_category = array();
+        $arr_sub_category = [];
+        $arr_category = [];
 
-        $obj_category = CategoryModel::where('parent',$parent_cat_id)->get();
+        $obj_category = CategoryModel::where('parent', $parent_cat_id)->get();
 
-        if($obj_category!=FALSE)
-        {
-            foreach ($obj_category as $key => $category)
-            {
-               $category->child_category;
+        if ($obj_category != false) {
+            foreach ($obj_category as $key => $category) {
+                $category->child_category;
             }
             $arr_sub_category = $obj_category->toArray();
         }
 
         /* Get All Parent Category */
-        $obj_category = CategoryModel::where('parent',0)->get();
+        $obj_category = CategoryModel::where('parent', 0)->get();
 
-        if($obj_category!=FALSE)
-        {
-          $arr_category = $obj_category->toArray();
+        if ($obj_category != false) {
+            $arr_category = $obj_category->toArray();
         }
 
-        return view('web_admin.category.show_sub_categories',compact('page_title','arr_sub_category','arr_category','enc_id'));
+        return view('web_admin.category.show_sub_categories', compact('page_title', 'arr_sub_category', 'arr_category', 'enc_id'));
     }
 
-
- 	public function multi_action(Request $request)
+    public function multi_action(Request $request)
     {
-        $arr_rules = array();
-        $arr_rules['multi_action'] = "required";
-        $arr_rules['checked_record'] = "required";
+        $arr_rules = [];
+        $arr_rules['multi_action'] = 'required';
+        $arr_rules['checked_record'] = 'required';
 
+        $validator = Validator::make($request->all(), $arr_rules);
 
-        $validator = Validator::make($request->all(),$arr_rules);
+        if ($validator->fails()) {
+            Session::flash('error', 'Please Select Any Record(s)');
 
-        if($validator->fails())
-        {
-            Session::flash('error','Please Select Any Record(s)');
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -351,29 +317,23 @@ class CategoryController extends Controller
         $checked_record = $request->input('checked_record');
 
         /* Check if array is supplied*/
-        if(is_array($checked_record) && sizeof($checked_record)<=0)
-        {
-            Session::flash('error','Problem Occured, While Doing Multi Action');
+        if (is_array($checked_record) && count($checked_record) <= 0) {
+            Session::flash('error', 'Problem Occured, While Doing Multi Action');
+
             return redirect()->back();
 
         }
 
-        foreach ($checked_record as $key => $record_id)
-        {
-            if($multi_action=="activate")
-            {
-               $this->_activate($record_id);
-               Session::flash('success','Category(s) Activated Successfully');
-            }
-            elseif($multi_action=="block")
-            {
-               $this->_block($record_id);
-               Session::flash('success','Category(s) Blocked Successfully');
-            }
-            elseif($multi_action=="delete")
-            {
-               $this->_delete($record_id);
-               Session::flash('success','Category(s) Deleted Successfully');
+        foreach ($checked_record as $key => $record_id) {
+            if ($multi_action == 'activate') {
+                $this->_activate($record_id);
+                Session::flash('success', 'Category(s) Activated Successfully');
+            } elseif ($multi_action == 'block') {
+                $this->_block($record_id);
+                Session::flash('success', 'Category(s) Blocked Successfully');
+            } elseif ($multi_action == 'delete') {
+                $this->_delete($record_id);
+                Session::flash('success', 'Category(s) Deleted Successfully');
             }
 
         }
@@ -381,91 +341,86 @@ class CategoryController extends Controller
         return redirect()->back();
     }
 
-
-    public function toggle_status($enc_id,$action)
+    public function toggle_status($enc_id, $action)
     {
-        if($action=="activate")
-        {
+        if ($action == 'activate') {
             $this->_activate($enc_id);
 
-            Session::flash('success','Category(s) Activated Successfully');
-        }
-        elseif($action=="block")
-        {
+            Session::flash('success', 'Category(s) Activated Successfully');
+        } elseif ($action == 'block') {
             $this->_block($enc_id);
 
-            Session::flash('success','Category(s) Blocked Successfully');
+            Session::flash('success', 'Category(s) Blocked Successfully');
         }
+
         return redirect()->back();
     }
 
     public function delete($enc_id)
     {
-        if($this->_delete($enc_id))
-        {
-            Session::flash('success','Category(s) Deleted Successfully');
+        if ($this->_delete($enc_id)) {
+            Session::flash('success', 'Category(s) Deleted Successfully');
+        } else {
+            Session::flash('error', 'Problem Occured While Deleting Category(s)');
         }
-        else
-        {
-            Session::flash('error','Problem Occured While Deleting Category(s)');
-        }
+
         return redirect()->back();
     }
 
     protected function _activate($enc_id)
     {
         $id = base64_decode($enc_id);
-        return CategoryModel::where('cat_id',$id)->update(array('is_active'=>1));
+
+        return CategoryModel::where('cat_id', $id)->update(['is_active' => 1]);
     }
 
     protected function _block($enc_id)
     {
         $id = base64_decode($enc_id);
-        return CategoryModel::where('cat_id',$id)->update(array('is_active'=>0));
+
+        return CategoryModel::where('cat_id', $id)->update(['is_active' => 0]);
     }
 
     protected function _delete($enc_id)
     {
-    	$id = base64_decode($enc_id);
-		return CategoryModel::where('cat_id',$id)->delete();
+        $id = base64_decode($enc_id);
+
+        return CategoryModel::where('cat_id', $id)->delete();
     }
 
-      public function __update_unique_category_id($id)
+    public function __update_unique_category_id($id)
     {
-        if(!$id) return FALSE;
-        return CategoryModel::where('cat_id',$id)->update(array('public_id'=>alpha_id($id)));
+        if (! $id) {
+            return false;
+        }
+
+        return CategoryModel::where('cat_id', $id)->update(['public_id' => alpha_id($id)]);
     }
 
-    public function export_excel($format="csv")//export excel file
+    public function export_excel($format = 'csv')//export excel file
     {
-        if($format=="csv")
-        {
-            $arr_category_list = array();
-            $obj_category_list = CategoryModel::where('parent','!=','0')->with(['parent_category'])->get();
+        if ($format == 'csv') {
+            $arr_category_list = [];
+            $obj_category_list = CategoryModel::where('parent', '!=', '0')->with(['parent_category'])->get();
             //dd($obj_category_list);
 
-            if($obj_category_list)
-            {
+            if ($obj_category_list) {
                 $arr_category_list = $obj_category_list->toArray();
 
-                \Excel::create('BUSINESS_LIST-'.date('Ymd').uniqid(), function($excel) use($arr_category_list)
-                {
-                    $excel->sheet('Business_list', function($sheet) use($arr_category_list)
-                    {
+                \Excel::create('BUSINESS_LIST-'.date('Ymd').uniqid(), function ($excel) use ($arr_category_list) {
+                    $excel->sheet('Business_list', function ($sheet) use ($arr_category_list) {
                         // $sheet->cell('A1', function($cell) {
                         //     $cell->setValue('Generated on :'.date("d-m-Y H:i:s"));
                         // });
 
-                        $sheet->row(3, array(
-                            'Sr.No.','Category Name','Sub-Category Name'
-                        ));
+                        $sheet->row(3, [
+                            'Sr.No.', 'Category Name', 'Sub-Category Name',
+                        ]);
 
-                        if(sizeof($arr_category_list)>0)
-                        {
-                            $arr_tmp = array();
-                            foreach ($arr_category_list as $key => $category)
-                            {
-                                $arr_tmp[$key][] = $key+1;
+                        if (count($arr_category_list) > 0) {
+                            $arr_tmp = [];
+                            foreach ($arr_category_list as $key => $category) {
+                                $arr_tmp[$key][] = $key + 1;
                                 $arr_tmp[$key][] = $category['parent_category']['title'];
                                 $arr_tmp[$key][] = $category['title'];
                             }
@@ -482,18 +437,14 @@ class CategoryController extends Controller
 
     public function check_explore_count()
     {
-        $obj_explore_category = CategoryModel::where('is_explore_directory','1')->get();
+        $obj_explore_category = CategoryModel::where('is_explore_directory', '1')->get();
 
-        if($obj_explore_category)
-        {
+        if ($obj_explore_category) {
             $arr_explore_category = $obj_explore_category->toArray();
-            $cat_count=sizeof($arr_explore_category);
-            if($cat_count>=6)
-            {
+            $cat_count = count($arr_explore_category);
+            if ($cat_count >= 6) {
                 echo 'reached';
-            }
-            else
-            {
+            } else {
                 echo 'allow';
             }
             exit;

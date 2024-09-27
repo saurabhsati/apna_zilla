@@ -7,48 +7,51 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DealsOffersModel extends Model
 {
-       use SoftDeletes;
+    use SoftDeletes;
 
     protected $table = 'deals';
+
     protected $fillable = [
-                          'business_id',
-                           'title',
-              					   'name',
-              					   'price',
-                           'discount_price',
-              					   'description',
-              					   'deal_image',
-              					   'deal_type',
-              					   'start_day',
-              					   'end_day',
-                           'start_time',
-                           'end_time',
-                           'description',
-                           'things_to_remember',
-                           'how_to_use',
-                           'about',
-                           'facilities',
-                           'cancellation_policy',
-                           'parent_category_id',
-                           'public_id',
-                           'json_location_point'
-                           ];
+        'business_id',
+        'title',
+        'name',
+        'price',
+        'discount_price',
+        'description',
+        'deal_image',
+        'deal_type',
+        'start_day',
+        'end_day',
+        'start_time',
+        'end_time',
+        'description',
+        'things_to_remember',
+        'how_to_use',
+        'about',
+        'facilities',
+        'cancellation_policy',
+        'parent_category_id',
+        'public_id',
+        'json_location_point',
+    ];
 
     public function business_info()
     {
-        return $this->belongsTo('App\Models\BusinessListingModel','business_id','id');
+        return $this->belongsTo(\App\Models\BusinessListingModel::class, 'business_id', 'id');
     }
-       public function deals_slider_images()
+
+    public function deals_slider_images()
     {
-        return $this->hasMany('App\Models\DealsSliderImagesModel','deal_id','id');
+        return $this->hasMany(\App\Models\DealsSliderImagesModel::class, 'deal_id', 'id');
     }
-     public function offers_info()
+
+    public function offers_info()
     {
-        return $this->hasMany('App\Models\OffersModel','deal_id','id')->where('is_active',1);
+        return $this->hasMany(\App\Models\OffersModel::class, 'deal_id', 'id')->where('is_active', 1);
     }
-     public function category_info()
+
+    public function category_info()
     {
-        return $this->hasMany('App\Models\DealcategoryModel','deal_id','id');
+        return $this->hasMany(\App\Models\DealcategoryModel::class, 'deal_id', 'id');
     }
-     
 }

@@ -4,11 +4,13 @@
 session_start();
 
 // If the session is not present, set the variable to an error message
-if(!isset($_SESSION['captcha_id']))
-	$str = 'ERROR!';
+if (! isset($_SESSION['captcha_id'])) {
+    $str = 'ERROR!';
+}
 // Else if it is present, set the variable to the session contents
-else
-	$str = $_SESSION['captcha_id'];
+else {
+    $str = $_SESSION['captcha_id'];
+}
 
 // Set the content type
 //header('Content-type: image/png');
@@ -31,5 +33,3 @@ imagettftext($image, 14, $rotate, 18, 30, $colour, $font, $str);
 
 // Output the image as a png
 imagepng($image);
-
-?>

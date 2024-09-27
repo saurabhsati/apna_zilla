@@ -124,7 +124,7 @@
                                   @foreach($arr_category as $subcategory)
                                     @if( $subcategory['parent']==$category['cat_id'])
                                   <?php
-                                    $arr_selected=array();
+                                    $arr_selected=[];
                                     foreach($business['category'] as $sel_category)
                                     {
                                        array_push($arr_selected,$sel_category['category_id']);

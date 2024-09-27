@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BusinessImageUploadModel extends Model
 {
-
     use SoftDeletes;
-    protected $table="business_upload_image";
-     protected $fillable=['business_id',
-     					  'image_name'
-                         ];
+
+    protected $table = 'business_upload_image';
+
+    protected $fillable = ['business_id',
+        'image_name',
+    ];
 }

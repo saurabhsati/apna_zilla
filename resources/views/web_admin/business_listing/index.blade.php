@@ -243,7 +243,7 @@
 
                               <td width="width:5%;">
                                <?php
-                               $categoty=$subcategory=array();
+                               $categoty=$subcategory=[];
                                if(isset($business['category']) && sizeof($business['category'])>0){
                                foreach ($business['category'] as $business_category) {
                                foreach ($arr_sub_category as $sub_category) {

@@ -2,11 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-
 use App\Models\UserModel;
-use SMS;
-use Mail;
+use Illuminate\Console\Command;
 
 class HappyBirthday extends Command
 {
@@ -41,28 +38,27 @@ class HappyBirthday extends Command
      */
     public function handle()
     {
-        $obj_users=UserModel::whereRaw('MONTH(d_o_b) = MONTH(NOW())')
-                        ->whereRaw('Day(d_o_b) = Day(NOW())')
-                        ->get();
-        if($obj_users)
-        {
-            $users=$obj_users->toArray();
+        $obj_users = UserModel::whereRaw('MONTH(d_o_b) = MONTH(NOW())')
+            ->whereRaw('Day(d_o_b) = Day(NOW())')
+            ->get();
+        if ($obj_users) {
+            $users = $obj_users->toArray();
             //dd($users);
-           /* if(sizeof($users)>0 && isset($users))
-            {
-               foreach( $users as $user )
-               {
-                if($user['mobile_no']!='')
-                 {
-                   \Sms::send($user['mobile_no'])
-                   ->msg('Dear ' . $user->first_name . ', I wish you a happy birthday!')
-                   ->send();
-                 } 
-                 
-               }
-           }*/
-     }
+            /* if(sizeof($users)>0 && isset($users))
+             {
+                foreach( $users as $user )
+                {
+                 if($user['mobile_no']!='')
+                  {
+                    \Sms::send($user['mobile_no'])
+                    ->msg('Dear ' . $user->first_name . ', I wish you a happy birthday!')
+                    ->send();
+                  }
 
-         $this->info('The happy birthday messages were sent successfully!');
-     }    
+                }
+            }*/
+        }
+
+        $this->info('The happy birthday messages were sent successfully!');
+    }
 }

@@ -30,11 +30,11 @@ class SalesAccountController extends Controller
 {
  	public function __construct()
     {
-       $arr_except_auth_methods = array();
+       $arr_except_auth_methods = [];
        $arr_except_auth_methods[] = 'login';
        $arr_except_auth_methods[] = 'process_login';
 
-       $this->middleware('\App\Http\Middleware\SentinelCheck',['except' => $arr_except_auth_methods]);
+       $this->middleware(\App\Http\Middleware\SentinelCheck::class,['except' => $arr_except_auth_methods]);
 
         $this->UserModel = new UserModel();
         $this->BusinessListingModel = new BusinessListingModel();
@@ -127,7 +127,7 @@ class SalesAccountController extends Controller
 
     public function process_login(Request $request)
     {
-        $arr_creds =  array();
+        $arr_creds =  [];
         $arr_creds['email'] = $request->input('email');
         $arr_creds['password'] = $request->input('password');
 
@@ -203,7 +203,7 @@ class SalesAccountController extends Controller
             $arr_sales_user = $obj_sales_user->toArray();
         }
 
-        $arr_rules = array();
+        $arr_rules = [];
         $arr_rules['office_landline']   = 'required';
         $arr_rules['street_address']    = 'required';
         $arr_rules['first_name']    = 'required';
@@ -219,9 +219,9 @@ class SalesAccountController extends Controller
 
         if ($request->hasFile('profile_pic'))
         {
-            $profile_pic_valiator = Validator::make(array('profile_pic'=>$request->file('profile_pic')),array(
+            $profile_pic_valiator = Validator::make(['profile_pic'=>$request->file('profile_pic')],[
                                                 'profile_pic' => 'mimes:jpg,jpeg,png'
-                                            ));
+                                            ]);
 
             if ($request->file('profile_pic')->isValid() && $profile_pic_valiator->passes())
             {
@@ -245,8 +245,8 @@ class SalesAccountController extends Controller
         $office_landline      = $request->input('office_landline');
         $street_address = $request->input('street_address');
         $first_name = $request->input('first_name');
-        $update_arr =array();
-        $update_arr=array('profile_pic'=>$profile_pic,'office_landline'=>$office_landline,'street_address'=>$street_address,'first_name'=>$first_name);
+        $update_arr =[];
+        $update_arr=['profile_pic'=>$profile_pic,'office_landline'=>$office_landline,'street_address'=>$street_address,'first_name'=>$first_name];
         $update_profile = Sentinel::update($obj_sales_user,$update_arr);
 
         if($update_profile)
@@ -271,7 +271,7 @@ class SalesAccountController extends Controller
     {
         $obj_sales_user = Sentinel::getUser();////Get Admin all information
 
-        $arr_rules                      = array();
+        $arr_rules                      = [];
         $arr_rules['current_password']  = 'required';
         $arr_rules['new_password']      = 'required';
         $arr_rules['confirm_password']  = 'required';

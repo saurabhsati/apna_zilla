@@ -7,13 +7,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CountryModel extends Model
 {
-
     use SoftDeletes;
-    protected $table = 'countries';
-    protected $primaryKey = 'id';
-     protected $fillable = [
-						      'country_code',
-						      'country_name',
 
-						       ];
+    protected $table = 'countries';
+
+    protected $primaryKey = 'id';
+
+    protected $fillable = [
+        'country_code',
+        'country_name',
+
+    ];
 }

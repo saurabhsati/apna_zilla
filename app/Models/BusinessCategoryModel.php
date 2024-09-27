@@ -8,42 +8,45 @@ use Watson\Rememberable\Rememberable;
 
 class BusinessCategoryModel extends Model
 {
-
-    use SoftDeletes;
     use Rememberable;
-     protected $table='business_category';
-     protected $fillable=[
-                         'business_id',
-                         'category_id'
-                         ];
+    use SoftDeletes;
 
-   public function business_details()
+    protected $table = 'business_category';
+
+    protected $fillable = [
+        'business_id',
+        'category_id',
+    ];
+
+    public function business_details()
     {
-        return $this->belongsTo('App\Models\BusinessListingModel','business_id','id');
+        return $this->belongsTo(\App\Models\BusinessListingModel::class, 'business_id', 'id');
     }
+
     // Get business by category
     public function business_by_category()
     {
 
-        return $this->belongsTo('App\Models\BusinessListingModel','business_id','id');
+        return $this->belongsTo(\App\Models\BusinessListingModel::class, 'business_id', 'id');
     }
 
     public function business_rating()
     {
-        return $this->hasMany('App\Models\ReviewsModel','business_id','business_id');
+        return $this->hasMany(\App\Models\ReviewsModel::class, 'business_id', 'business_id');
     }
+
     public function match_city_name()
     {
-        return $this->belongsTo('App\Models\CityModel','city','id');
+        return $this->belongsTo(\App\Models\CityModel::class, 'city', 'id');
     }
 
     public function category_list()
     {
-        return $this->belongsTo('App\Models\CategoryModel','category_id','cat_id');
+        return $this->belongsTo(\App\Models\CategoryModel::class, 'category_id', 'cat_id');
     }
 
     public function category_business()
     {
-        return $this->belongsTo('App\Models\CategoryModel','id','cat_id');
+        return $this->belongsTo(\App\Models\CategoryModel::class, 'id', 'cat_id');
     }
 }

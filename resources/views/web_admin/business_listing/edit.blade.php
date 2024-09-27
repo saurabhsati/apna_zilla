@@ -135,7 +135,7 @@
                                   @foreach($arr_category as $subcategory)
                                     @if( $subcategory['parent']==$category['cat_id'])
                                   <?php
-                                    $arr_selected=array();
+                                    $arr_selected=[];
                                     foreach($business['category'] as $sel_category)
                                     {
                                        array_push($arr_selected,$sel_category['category_id']);
@@ -738,7 +738,7 @@
                                   <h4><b>Payment Modes</b></h4>
                               </div>
                           </div>
-                          <?php $selected_paymnt_arr=array();?>
+                          <?php $selected_paymnt_arr=[];?>
                            @if(sizeof($business['payment_mode'])>0)
                              @foreach($business['payment_mode'] as $payment_mode)
                                 <?php $selected_paymnt_arr[]=$payment_mode['title'];?>
@@ -748,7 +748,7 @@
                             <label class="col-sm-3 col-lg-2 control-label"> Payment Mode  <i class="red">*</i> </label>
                             <div class="col-sm-9 col-lg-10 controls">
                                <div class="fileupload fileupload-new business_upload_image_" data-provides="fileupload">
-                               <?php $selected_paymnt_arr=array();?>
+                               <?php $selected_paymnt_arr=[];?>
                                @if(sizeof($business['payment_mode'])>0)
                                  @foreach($business['payment_mode'] as $payment_mode)
                                     <?php $selected_paymnt_arr[]=$payment_mode['title'];?>

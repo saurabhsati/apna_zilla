@@ -2,11 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
+use App\Models\UserModel;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 //use App\Models\UserMembershipModel;
-use App\Models\UserModel;
-
+use Closure;
 
 class SentinelCheck
 {
@@ -14,7 +13,6 @@ class SentinelCheck
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -22,28 +20,23 @@ class SentinelCheck
 
         $user = Sentinel::check();
 
-        if($user)
-        {
+        if ($user) {
             $role = Sentinel::findRoleBySlug('sales');
 
-            if(Sentinel::inRole($role))
-            {
+            if (Sentinel::inRole($role)) {
 
-                $arr_condition           = array('id'=>$user->id,'is_active'=>'1');
+                $arr_condition = ['id' => $user->id, 'is_active' => '1'];
 
-                $sale_user_active  = UserModel::where($arr_condition)->first();
+                $sale_user_active = UserModel::where($arr_condition)->first();
                 //$user_membership_active  = UserMembershipModel::where($arr_condition)->first();
 
-                if(!$sale_user_active)
-                {
+                if (! $sale_user_active) {
                     return redirect('/sales_user/');
                 }
 
             }
 
-        }
-        else
-        {
+        } else {
             return redirect('/');
 
         }

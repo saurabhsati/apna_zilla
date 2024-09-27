@@ -1,16 +1,16 @@
 <?php
 
 /**
- *
  * FusionCharts Exporter - 'SVG Conversion Resource' handles
  * FusionCharts (since XTT) Server Side Export feature that
  * helps FusionCharts JavaScript charts to get exported.
  *
  *
  *    @author FusionCharts
- *    @description FusionCharts Exporter (Server-Side - PHP)
- *    @version 0.0.0.1 [ 32 December 2012 ]
  *
+ *    @description FusionCharts Exporter (Server-Side - PHP)
+ *
+ *    @version 0.0.0.1 [ 32 December 2012 ]
  */
 /**
  * Copyright (c) 2012 Infosoft Global Private Limited
@@ -46,8 +46,6 @@
  *
  *  It either saves the binary as file to a server side directory or push it as
  *  Download or open in a new browser window/frame.
- *
- *
  */
 /**
  *   @requires	index.php  A file that includes this resource
@@ -90,7 +88,6 @@
  * 		   The function would return the file path on success or return false on failure.
  *
  *      [ The other code in the resource file can be anything that support this architecture ]
- *
  */
 // =============================================================================
 // ==                  Constants and  Variables                               ==
@@ -106,11 +103,11 @@ ini_set('magic_quotes_gpc', 'off');
 // This constant lists the mime types related to each export format this resource handles
 // The value is semicolon separated key value pair for each format
 // Each key is the format and value is the mime type
-define("MIMETYPES", "jpg=image/jpeg;jpeg=image/jpeg;gif=image/gif;png=image/png;pdf=application/pdf;svg=image/svg+xml");
+define('MIMETYPES', 'jpg=image/jpeg;jpeg=image/jpeg;gif=image/gif;png=image/png;pdf=application/pdf;svg=image/svg+xml');
 // This constant lists all the file extensions for the export formats
 // The value is semicolon separated key value pair for each format
 // Each key is the format and value is the file extension
-define("EXTENSIONS", "jpg=jpg;jpeg=jpg;gif=gif;png=png;pdf=pdf;svg=svg");
+define('EXTENSIONS', 'jpg=jpg;jpeg=jpg;gif=gif;png=png;pdf=pdf;svg=svg');
 
 define('TEMP_PATH', 'temp/');
 define('INKSCAPE_PATH', '/usr/bin/inkscape');
@@ -121,15 +118,17 @@ define('CONVERT_PATH', '/usr/bin/convert'); // imagemagic
 
 /**
  *  Gets Export data from FCExporter - main module and build the export binary/objct.
- *  @param	$stream 	(string) export image data in FusionCharts compressed format
- *      	$meta		{array)	Image meta data in keys "width", "heigth" and "bgColor"
- *              $exportParams   {array} Export related parameters
- *  @return 			image object/binary
+ *
+ * @param  $stream  (string) export image data in FusionCharts compressed format
+ *                 $meta		{array)	Image meta data in keys "width", "heigth" and "bgColor"
+ *                 $exportParams   {array} Export related parameters
+ * @return image object/binary
  */
-function exportProcessor($stream, $meta, $exportParams) {
+function exportProcessor($stream, $meta, $exportParams)
+{
 
     // get mime type list parsing MIMETYPES constant declared in Export Resource PHP file
-    $ext = strtolower($exportParams["exportformat"]);
+    $ext = strtolower($exportParams['exportformat']);
     $ext2 = '';
     $mimeList = bang(@MIMETYPES);
     $mimeType = $mimeList[$ext];
@@ -141,15 +140,15 @@ function exportProcessor($stream, $meta, $exportParams) {
 
     // create a new export data
     $tempFileName = md5(rand());
-    if ('jpeg' == $ext || 'jpg' == $ext) {
+    if ($ext == 'jpeg' || $ext == 'jpg') {
         $ext = 'png';
         $ext2 = 'jpg';
     }
 
-    $tempInputSVGFile = realpath(TEMP_PATH) . "/{$tempFileName}.svg";
-    $tempOutputFile = realpath(TEMP_PATH) . "/{$tempFileName}.{$ext}";
-    $tempOutputJpgFile = realpath(TEMP_PATH) . "/{$tempFileName}.jpg";
-    $tempOutputPngFile = realpath(TEMP_PATH) . "/{$tempFileName}.png";
+    $tempInputSVGFile = realpath(TEMP_PATH)."/{$tempFileName}.svg";
+    $tempOutputFile = realpath(TEMP_PATH)."/{$tempFileName}.{$ext}";
+    $tempOutputJpgFile = realpath(TEMP_PATH)."/{$tempFileName}.jpg";
+    $tempOutputPngFile = realpath(TEMP_PATH)."/{$tempFileName}.png";
 
     if ($ext != 'svg') {
 
@@ -158,39 +157,39 @@ function exportProcessor($stream, $meta, $exportParams) {
         $height = @$meta['height'];
 
         $size = '';
-        if (!empty($width) && !empty($height)) {
+        if (! empty($width) && ! empty($height)) {
             $size = "-w {$width} -h {$height}";
         }
         // override the size in case of pdf output
-        if ('pdf' == $ext) {
+        if ($ext == 'pdf') {
             $size = '';
         }
 
         //batik bg color format
         $bg = @$meta['bgColor'];
         if ($bg) {
-            $bg = " --export-background=".$bg;
+            $bg = ' --export-background='.$bg;
         }
 
         // generate the temporary file
-        if (!file_put_contents($tempInputSVGFile, $stream)) {
-            die("Couldn't create temporary file. Check that the directory permissions for
-			the " . TEMP_PATH . " directory are set to 777.");
+        if (! file_put_contents($tempInputSVGFile, $stream)) {
+            exit("Couldn't create temporary file. Check that the directory permissions for
+			the ".TEMP_PATH.' directory are set to 777.');
         }
 
         // do the conversion
-        $command = INKSCAPE_PATH . "$bg --without-gui {$tempInputSVGFile} --export-{$ext} $tempOutputFile {$size}";
+        $command = INKSCAPE_PATH."$bg --without-gui {$tempInputSVGFile} --export-{$ext} $tempOutputFile {$size}";
 
         $output = shell_exec($command);
-        if ('jpg' == $ext2) {
-            $comandJpg = CONVERT_PATH . " -quality 100 $tempOutputFile $tempOutputJpgFile";
+        if ($ext2 == 'jpg') {
+            $comandJpg = CONVERT_PATH." -quality 100 $tempOutputFile $tempOutputJpgFile";
             $tempOutputFile = $tempOutputJpgFile;
 
             $output .= shell_exec($comandJpg);
         }
-        
+
         // catch error
-        if (!is_file($tempOutputFile) || filesize($tempOutputFile) < 10) {
+        if (! is_file($tempOutputFile) || filesize($tempOutputFile) < 10) {
             $return_binary = $output;
             raise_error($output, true);
         }
@@ -211,10 +210,10 @@ function exportProcessor($stream, $meta, $exportParams) {
         }
 
         // SVG can be streamed back directly
-    } else if ($ext == 'svg') {
+    } elseif ($ext == 'svg') {
         $return_binary = $stream;
     } else {
-        raise_error("Invalid Export Format.", true);
+        raise_error('Invalid Export Format.', true);
     }
 
     // return export ready binary data
@@ -223,24 +222,25 @@ function exportProcessor($stream, $meta, $exportParams) {
 
 /**
  *  exports (save/download) SVG to export formats.
- *  @param	$exportObj 		(mixed) binary/objct exported by exportProcessor
- * 	@param	$exportSettings	(array) various server-side export settings stored in keys like
- * 					"type", "ready" "filepath" etc. Required for 'save' expotAction.
- * 					For 'download' action "filepath" is blank (this is checked to find
- * 					whether the action is "download" or not.
- * 	@param	$quality		(integer) quality factor 0-1 (1 being the best quality). As of now we always pass 1.
  *
- *  @return 				false is fails. {filepath} if succeeds. Only returned when action is 'save'.
+ * @param  $exportObj  (mixed) binary/objct exported by exportProcessor
+ * @param  $exportSettings  (array) various server-side export settings stored in keys like
+ *                         "type", "ready" "filepath" etc. Required for 'save' expotAction.
+ *                         For 'download' action "filepath" is blank (this is checked to find
+ *                         whether the action is "download" or not.
+ * @param  $quality  (integer) quality factor 0-1 (1 being the best quality). As of now we always pass 1.
+ * @return false is fails. {filepath} if succeeds. Only returned when action is 'save'.
  */
-function exportOutput($exportObj, $exportSettings, $quality = 1) {
+function exportOutput($exportObj, $exportSettings, $quality = 1)
+{
 
     // calls svgparser function that saves/downloads binary
     // store saving status in $doneExport which receives false if fails and true on success
-    $doneExport = filesaver($exportObj, @$exportSettings ['filepath']);
+    $doneExport = filesaver($exportObj, @$exportSettings['filepath']);
 
     // check $doneExport and if true sets status to {filepath}'s value
     // set false if fails
-    $status = ( $doneExport ? basename(@$exportSettings ['filepath']) : false );
+    $status = ($doneExport ? basename(@$exportSettings['filepath']) : false);
 
     // return status
     return $status;
@@ -248,22 +248,24 @@ function exportOutput($exportObj, $exportSettings, $quality = 1) {
 
 /**
  *  emulates imagepng/imagegif/imagejpeg. It saves data to server
- *  @param	$exportObj 	(resource) binary exported by exportProcessor
- *  @param	$filepath	(string) Path where the exported is to be stored
- *                              when the action is "download" it is null.
  *
- *  @return     (boolean) false is fails. true if succeeds. Only returned when action is 'save'.
+ * @param  $exportObj  (resource) binary exported by exportProcessor
+ * @param  $filepath  (string) Path where the exported is to be stored
+ *                   when the action is "download" it is null.
+ * @return (bool) false is fails. true if succeeds. Only returned when action is 'save'.
  */
-function filesaver($exportObject, $filepath) {
+function filesaver($exportObject, $filepath)
+{
 
     // when filepath is null the action is 'download'
     // hence write the  bimary to response stream and immediately terminate/close/end stream
     // to prevent any garbage that might get into response and corrupt the  binary
-    if (!@$filepath)
-        die($exportObject);
+    if (! @$filepath) {
+        exit($exportObject);
+    }
 
     // open file path in write mode
-    $fp = @fopen($filepath, "w");
+    $fp = @fopen($filepath, 'w');
 
     if ($fp) {
         // write  binary
@@ -279,26 +281,28 @@ function filesaver($exportObject, $filepath) {
 /**
  * Converts Hex color values to rgb
  *
- * @param string $h Hex values
- * @param string $sep rgb value separator
+ * @param  string  $h  Hex values
+ * @param  string  $sep  rgb value separator
  * @return string
  */
-function hex2rgb($h, $sep = "") {
-    $h = str_replace("#", "", $h);
+function hex2rgb($h, $sep = '')
+{
+    $h = str_replace('#', '', $h);
 
     if (strlen($h) == 3) {
-        $r = hexdec(substr($h, 0, 1) . substr($h, 0, 1));
-        $g = hexdec(substr($h, 1, 1) . substr($h, 1, 1));
-        $b = hexdec(substr($h, 2, 1) . substr($h, 2, 1));
+        $r = hexdec(substr($h, 0, 1).substr($h, 0, 1));
+        $g = hexdec(substr($h, 1, 1).substr($h, 1, 1));
+        $b = hexdec(substr($h, 2, 1).substr($h, 2, 1));
     } else {
         $r = hexdec(substr($h, 0, 2));
         $g = hexdec(substr($h, 2, 2));
         $b = hexdec(substr($h, 4, 2));
     }
-    $rgb = array($r, $g, $b);
+    $rgb = [$r, $g, $b];
     if ($sep) {
         $rgb = implode($sep, $rgb);
     }
+
     return $rgb;
 }
 
