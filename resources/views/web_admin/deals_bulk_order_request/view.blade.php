@@ -92,10 +92,10 @@
                                                     <td class="center">1</td>
                                                    
                                                    <td> {{ isset($arr_single_request['order_deal']) ? ucfirst($arr_single_request['order_deal']['title']):'' }}</td>
-                                                     <td>{{ $arr_single_request['name'] or ''}} </td>
-                                                     <td>{{ $arr_single_request['email'] or ''}} </td>
-                                                     <td>{{ $arr_single_request['phone_no'] or ''}} </td>
-                                                    <td>{{ $arr_single_request['quantity'] or ''}} </td>
+                                                     <td>{{ $arr_single_request['name'] ?? ''}} </td>
+                                                     <td>{{ $arr_single_request['email'] ?? ''}} </td>
+                                                     <td>{{ $arr_single_request['phone_no'] ?? ''}} </td>
+                                                    <td>{{ $arr_single_request['quantity'] ?? ''}} </td>
                                                 </tr>
 
                                             </tbody>

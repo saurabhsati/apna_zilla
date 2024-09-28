@@ -133,7 +133,7 @@
                        <strong><h4> Sorry , No Orders Found !! </h4> </strong>
                     </div>
                  @endif
-                {!! $arr_paginate_my_order or '' !!}
+                {!! $arr_paginate_my_order ?? '' !!}
            </div>
            </div>
 

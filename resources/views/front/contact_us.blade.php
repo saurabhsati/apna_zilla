@@ -65,15 +65,15 @@
            @if($user)
                <div class="bor_grn">&nbsp;</div>
                <div class="user_box">
-               <input class="input_acct " type="text" name="name" id="name" value="{{$user['first_name'] or ''}}" placeholder="Name">
+               <input class="input_acct " type="text" name="name" id="name" value="{{$user['first_name'] ?? ''}}" placeholder="Name">
                <div class="error_msg" id="err_name"></div>
                </div>
                <div class="user_box">
-               <input class="input_acct" type="text" name="mobile_no" id="mobile_no" value="{{$user['mobile_no'] or ''}}" placeholder="Mobile No">
+               <input class="input_acct" type="text" name="mobile_no" id="mobile_no" value="{{$user['mobile_no'] ?? ''}}" placeholder="Mobile No">
                <div class="error_msg" id="err_mobile_no"></div>
                </div>
                <div class="user_box">
-               <input class="input_acct" type="text" name="email" id="email" value="{{$user['email'] or ''}}" placeholder="Email">
+               <input class="input_acct" type="text" name="email" id="email" value="{{$user['email'] ?? ''}}" placeholder="Email">
                <div class="error_msg" id="err_email"></div>
                </div>
                <div class="user_box">

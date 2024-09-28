@@ -68,8 +68,8 @@
                           <div class="error_msg" id="err_name"></div>
                         </div>
                         <br/>
-                           <input type="hidden" name="enc_id" value="{{ $enc_id or '' }}" />
-                      <input type="hidden" name="enc_reminder_code"  value="{{ $enc_reminder_code or '' }}"/>
+                           <input type="hidden" name="enc_id" value="{{ $enc_id ?? '' }}" />
+                      <input type="hidden" name="enc_reminder_code"  value="{{ $enc_reminder_code ?? '' }}"/>
                        <br/>
                       <button class="pull-left btn btn-post" id="change_pwd_submit" type="submit" name="change_pwd_submit"> Reset Password</button>
                      <div class="clearfix"></div>

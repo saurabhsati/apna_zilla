@@ -162,7 +162,7 @@ $(document).ready(function(){
 
    window.onload = function() {
 
-   var city="{{Session::get('city') or Session::get('search_city_title')  }}";
+   var city="{{Session::get('city') ?? Session::get('search_city_title')  }}";
    if(city=='')
       {
           getLocation();

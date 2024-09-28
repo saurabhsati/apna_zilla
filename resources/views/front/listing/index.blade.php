@@ -326,9 +326,9 @@
       @foreach($arr_business as $key => $restaurants)
 
       <div class="product_list_view" id="more_business_list" @if($key==0)
-        data-members-pages="{{ $total_pages or '0' }}"
-        data-members-current-page-list="{{ $current_page or '1' }}"
-        data-members-perpage="{{ $per_page or '2' }}" @endif >
+        data-members-pages="{{ $total_pages ?? '0' }}"
+        data-members-current-page-list="{{ $current_page ?? '1' }}"
+        data-members-perpage="{{ $per_page ?? '2' }}" @endif >
        <div class="row" >
          <div class="col-sm-3 col-md-3 col-lg-4">
           <div class="product_img">
@@ -455,9 +455,9 @@
       <!--Product Grid Start  -->
       <div  id="grid_view" style="display: none;">
         <div class="row" class="product_list_view" id="more_business_list1"
-        data-members-pages="{{ $total_pages or '0' }}"
-        data-members-current-page-grid="{{ $current_page or '1' }}"
-        data-members-perpage="{{ $per_page or '2' }}" >
+        data-members-pages="{{ $total_pages ?? '0' }}"
+        data-members-current-page-grid="{{ $current_page ?? '1' }}"
+        data-members-perpage="{{ $per_page ?? '2' }}" >
          @if(isset($arr_business) && sizeof($arr_business)>0)
           @foreach($arr_business as $restaurants)
           <div class="col-sm-6 col-md-6 col-lg-6">

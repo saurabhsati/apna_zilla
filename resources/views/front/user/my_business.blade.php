@@ -171,7 +171,7 @@
                        <strong><h4> Sorry , You Have Not Added Your Business !! </h4> </strong>
                     </div>
                  @endif
-                {!! $pagination_links or '' !!}
+                {!! $pagination_links ?? '' !!}
             </div>
          </div>
        </div>
