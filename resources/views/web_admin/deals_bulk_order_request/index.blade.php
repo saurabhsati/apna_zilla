@@ -141,10 +141,10 @@
                   
                     
                     <td> {{ isset($request['order_deal']) ? ucfirst($request['order_deal']['title']):'' }}</td>
-                     <td>{{ $request['name'] or ''}} </td>
-                     <td>{{ $request['email'] or ''}} </td>
-                     <td>{{ $request['phone_no'] or '' }} </td>
-                    <td>{{ $request['quantity'] or '' }} </td>
+                     <td>{{ $request['name'] ?? ''}} </td>
+                     <td>{{ $request['email'] ?? ''}} </td>
+                     <td>{{ $request['phone_no'] ?? '' }} </td>
+                    <td>{{ $request['quantity'] ?? '' }} </td>
 
                    
 

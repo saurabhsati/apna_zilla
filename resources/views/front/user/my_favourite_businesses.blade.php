@@ -118,7 +118,7 @@
         @else
         <span>Sorry ,You Have Not Added Any Favorite Business !!</span>
       @endif
-      {!! $arr_paginate_business or '' !!}
+      {!! $arr_paginate_business ?? '' !!}
       </div>
 
 </div>
