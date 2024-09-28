@@ -9,27 +9,26 @@
     "type": "project",
     "minimum-stability": "dev",
     "require": {
-        "php": "^7.1.3",
-        "laravel/framework": "5.8.*",
-        "cartalyst/sentinel": "2.0.*",
-        "barryvdh/laravel-debugbar": "2.1",
+        "php": "^7.2|^8.0",
+        "laravel/framework": "^6.20",
+        "cartalyst/sentinel": "^3.0",
+        "barryvdh/laravel-debugbar": "^3.2",
         "intervention/image": "^2.3",
         "paypal/rest-api-sdk-php": "*",
         "maatwebsite/excel": "^3.1.8",
-        "watson/rememberable": "^1.0",
+        "watson/rememberable": "^3.1",
         "hashids/hashids": "1.0",
         "orzcc/autometa": "dev-master",
-        "laravel/tinker": "~1.0",
-        "fideloper/proxy": "^4.0"
+        "laravel/tinker": "^2.5",
+        "fideloper/proxy": "^4.4"
     },
     "require-dev": {
-        "fzaninotto/faker": "~1.4",
         "mockery/mockery": "~1.0",
-        "phpunit/phpunit": "^7.5",
-        "laravel/browser-kit-testing": "^2.0",
-        "filp/whoops": "~2.0",
+        "phpunit/phpunit": "^8.5.8|^9.3.3",
+        "laravel/browser-kit-testing": "^5.1",
         "nunomaduro/collision": "^3.0",
-        "beyondcode/laravel-dump-server": "^1.0"
+        "fakerphp/faker": "^1.9.1",
+        "facade/ignition": "^1.16.4"
     },
     "autoload": {
         "classmap": [
