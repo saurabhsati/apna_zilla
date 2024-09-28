@@ -210,7 +210,7 @@
                 />
 
               @if(isset($sub_category))
-               <input type="hidden" class="input-searchbx " id="search_under_category" value="@if(isset($sub_category[0]['title'])){{str_slug($sub_category[0]['title'])}}@endif" />
+               <input type="hidden" class="input-searchbx " id="search_under_category" value="@if(isset($sub_category[0]['title'])){{Str::slug($sub_category[0]['title'])}}@endif" />
                @endif
                </div>
 

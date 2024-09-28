@@ -111,8 +111,8 @@
                              @if(isset($business_listing) && sizeof($business_listing)>0)
                              @foreach($business_listing as $key => $business)
                               <?php
-                             $slug_business=str_slug($business['business_name']);
-                             $slug_area=str_slug($business['area']);
+                             $slug_business=Str::slug($business['business_name']);
+                             $slug_area=Str::slug($business['area']);
                              $business_area=$slug_business.'@'.$slug_area;
                               if(!empty($business['city']))
                               {

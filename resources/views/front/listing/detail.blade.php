@@ -245,8 +245,8 @@
                 </div>
                   </div>
                </div> <?php
-                           $slug_business=str_slug($arr_business_details['business_name']);
-                           $slug_area=str_slug($arr_business_details['area']);
+                           $slug_business=Str::slug($arr_business_details['business_name']);
+                           $slug_area=Str::slug($arr_business_details['area']);
                            $business_area=$slug_business.'@'.$slug_area;
                            ?>
  <input type="hidden" name="history" id="history" value="{{urldecode(Request::segment(1))}}/{{$business_area}}/{{base64_encode($arr_business_details['id'])}}">
@@ -674,8 +674,8 @@
                   <div class="product_info">
                      <div class="p_images-detail">
                         <?php
-                           $slug_business=str_slug($related_business['business_name']);
-                           $slug_area=str_slug($related_business['area']);
+                           $slug_business=Str::slug($related_business['business_name']);
+                           $slug_area=Str::slug($related_business['area']);
                            $business_area=$slug_business.'@'.$slug_area;
                            ?>
                         <div class="name_product"> <a href="{{url('/')}}/{{$city}}/{{$business_area}}/{{base64_encode($related_business['id'])}}" style="color: #ffffff;">{{ $related_business['business_name'] }}</a></div>

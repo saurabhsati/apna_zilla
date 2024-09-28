@@ -6,6 +6,7 @@ use App\Http\Controllers\Common\GeneratorController;
 use App\Http\Controllers\Controller;
 use App\Models\CategoryModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Session;
 use Validator;
 
@@ -76,7 +77,7 @@ class CategoryController extends Controller
         $is_explore_directory = $request->input('is_explore_directory') == null ? '0' : $request->input('is_explore_directory');
         $is_allow_to_add_deal = $request->input('is_allow_to_add_deal') == null ? '0' : $request->input('is_allow_to_add_deal');
 
-        $cat_slug = str_slug($title);
+        $cat_slug = Str::slug($title);
 
         /* update public key in Category table*/
 

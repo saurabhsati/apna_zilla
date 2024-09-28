@@ -10,6 +10,7 @@ use App\Models\CityModel;
 use App\Models\DealModel;
 use App\Models\PlaceModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Session;
 
 class HomeController extends Controller
@@ -275,8 +276,8 @@ class HomeController extends Controller
                 if (count($arr_business) > 0) {
                     foreach ($arr_business as $key => $business) {
 
-                        $slug_business = str_slug($business['business_name']);
-                        $slug_area = str_slug($business['area']);
+                        $slug_business = Str::slug($business['business_name']);
+                        $slug_area = Str::slug($business['area']);
 
                         $arr_final_list[$ckey]['business_id'] = base64_encode($business['id']);
                         $arr_final_list[$ckey]['label'] = $business['business_name'];
@@ -361,7 +362,7 @@ class HomeController extends Controller
                     foreach ($arr_list_location as $key => $list) {
                         $arr_final_location_list[$key]['id'] = $list['id'];
                         $arr_final_location_list[$key]['label'] = $list['place_name'];
-                        $arr_final_location_list[$key]['loc_slug'] = str_slug($list['place_name']);
+                        $arr_final_location_list[$key]['loc_slug'] = Str::slug($list['place_name']);
                         $arr_final_location_list[$key]['loc_lat'] = $list['latitude'];
                         $arr_final_location_list[$key]['loc_lng'] = $list['longitude'];
                         $arr_final_location_list[$key]['loc'] = str_replace('-', ' ', ($list['place_name']));
@@ -477,8 +478,8 @@ class HomeController extends Controller
         $html = '';
         if (count($business_listing) > 0) {
             foreach ($business_listing as $key => $business) {
-                $slug_business = str_slug($business['business_name']);
-                $slug_area = str_slug($business['area']);
+                $slug_business = Str::slug($business['business_name']);
+                $slug_area = Str::slug($business['area']);
                 $business_area = $slug_business.'@'.$slug_area;
                 if (! empty($business['city'])) {
                     $city = $business['city'];

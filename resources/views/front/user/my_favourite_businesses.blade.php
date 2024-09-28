@@ -58,8 +58,8 @@
           <div class="product_details">
             <div class="product_title">
             <?php
-             $slug_business=str_slug($restaurants['business'][0]['business_name']);
-             $slug_area=str_slug($restaurants['business'][0]['area']);
+             $slug_business=Str::slug($restaurants['business'][0]['business_name']);
+             $slug_area=Str::slug($restaurants['business'][0]['area']);
              $business_area=$slug_business.'@'.$slug_area;
             ?>
               <a href="{{url('/')}}/{{$restaurants['business'][0]['city']}}/{{$business_area}}/{{base64_encode($restaurants['business'][0]['id'])}}">
