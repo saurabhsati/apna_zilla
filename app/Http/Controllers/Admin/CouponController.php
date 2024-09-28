@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Models\CouponModel;
 use Illuminate\Http\Request;
@@ -42,8 +43,8 @@ class CouponController extends Controller
             $arr_coupon = $obj_coupon_res->toArray();
         }
         //  dd($arr_coupon);
-        $this->arr_view_data['page_title'] = str_singular($this->module_title);
-        $this->arr_view_data['module_title'] = str_plural($this->module_title);
+        $this->arr_view_data['page_title'] = Str::singular($this->module_title);
+        $this->arr_view_data['module_title'] = Str::plural($this->module_title);
         $this->arr_view_data['module_url_path'] = $this->module_url_path;
         $this->arr_view_data['arr_coupon'] = $arr_coupon;
 
@@ -53,8 +54,8 @@ class CouponController extends Controller
     public function create()
     {
         $page_title = 'Create Coupon';
-        $this->arr_view_data['page_title'] = str_singular($this->module_title);
-        $this->arr_view_data['module_title'] = str_plural($this->module_title);
+        $this->arr_view_data['page_title'] = Str::singular($this->module_title);
+        $this->arr_view_data['module_title'] = Str::plural($this->module_title);
         $this->arr_view_data['module_url_path'] = $this->module_url_path;
 
         return view($this->module_view_folder.'.create', $this->arr_view_data);
@@ -197,8 +198,8 @@ class CouponController extends Controller
         }
 
         $page_title = 'Edit Coupon';
-        $this->arr_view_data['page_title'] = str_singular($this->module_title);
-        $this->arr_view_data['module_title'] = str_plural($this->module_title);
+        $this->arr_view_data['page_title'] = Str::singular($this->module_title);
+        $this->arr_view_data['module_title'] = Str::plural($this->module_title);
         $this->arr_view_data['module_url_path'] = $this->module_url_path;
         $this->arr_view_data['coupon_id'] = $coupon_id;
         $this->arr_view_data['arr_coupon'] = $arr_coupon;

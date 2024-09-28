@@ -459,7 +459,7 @@ If you need any more details on JustDial Verified, please refer to
                          <div class="footer_heading">{{$about_us['page_title'] ?? ''}}</div>
                            <div class="heading_bor"></div>
                            <div class="menu_name more-link">
-                            <?php echo isset($about_us['page_desc'])?str_limit($about_us['page_desc'],250):"";?>
+                            <?php echo isset($about_us['page_desc'])?Str::limit($about_us['page_desc'],250):"";?>
                             <a href="{{ url('/') }}/page/aboutus" class="{{ Request::segment(2)=='aboutus'? 'act':'' }}">View More</a>
                            </div>
                         </div>

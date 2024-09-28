@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Models\FaqModel;
 use Illuminate\Http\Request;
@@ -78,7 +79,7 @@ class FAQController extends Controller
         } else {
             //parent is 0, language is 1=english and page_slug is present
             // $this->FaqModel->language_id_fk  = 1;
-            $this->FaqModel->page_slug = str_slug($form_data['page_slug'], '-');
+            $this->FaqModel->page_slug = Str::slug($form_data['page_slug'], '-');
             $this->FaqModel->is_active = $request->input('is_active', '0');
         }
 
@@ -160,7 +161,7 @@ class FAQController extends Controller
         //$arr_data['is_active'] = $request->input('is_active','0');
 
         if ($is_parent) {
-            $arr_data['page_slug'] = str_slug($form_data['page_slug'], '-');
+            $arr_data['page_slug'] = Str::slug($form_data['page_slug'], '-');
             $arr_data['is_active'] = $request->input('is_active', '0');
         } else {
             $arr_data['is_active'] = $this->_fetch_parent_record_status($arr_pages['parent']);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Models\CityModel;
 use App\Models\CountryModel;
@@ -224,7 +225,7 @@ class CountryController extends Controller
                         $arr_data = [];
                         $arr_data['country_name'] = $ary['country_name'];
                         $arr_data['country_code'] = $ary['country_code'];
-                        $arr_data['country_slug'] = str_slug($ary['country_name'], '-');
+                        $arr_data['country_slug'] = Str::slug($ary['country_name'], '-');
 
                         /* Duplication Check */
                         $success = 1;

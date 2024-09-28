@@ -153,7 +153,7 @@
                              value="{{ base64_encode($faq_pages['id']) }}" />
                     </td> -->
                     <td> {{ $faq_pages['question'] }} </td>
-                    <td> {{ str_limit($faq_pages['answer'], 50,'...') }} </td>
+                    <td> {{ Str::limit($faq_pages['answer'], 50,'...') }} </td>
 
                     <td>
                       &nbsp;

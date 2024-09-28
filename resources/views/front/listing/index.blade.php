@@ -100,7 +100,7 @@
         if(sizeof($sub_category)>0){
         if($sub_category[0]['title']!='')
         {
-          $category_search=str_slug($sub_category[0]['title']);
+          $category_search=Str::slug($sub_category[0]['title']);
         }
 
        }
@@ -219,7 +219,7 @@
                 />
 
               @if(isset($sub_category))
-               <input type="hidden" class="input-searchbx " id="search_under_category" value="@if(isset($sub_category[0]['title'])){{str_slug($sub_category[0]['title'])}}@endif" />
+               <input type="hidden" class="input-searchbx " id="search_under_category" value="@if(isset($sub_category[0]['title'])){{Str::slug($sub_category[0]['title'])}}@endif" />
                @endif
                </div>
 
@@ -341,8 +341,8 @@
           <div class="product_details">
             <div class="product_title">
             <?php
-             $slug_business=str_slug($restaurants['business_name']);
-             $slug_area=str_slug($restaurants['area']);
+             $slug_business=Str::slug($restaurants['business_name']);
+             $slug_area=Str::slug($restaurants['area']);
              $business_area=$slug_business.'@'.$slug_area;
             ?>
             <a href="{{url('/')}}/{{$city}}/{{$business_area}}/{{base64_encode($restaurants['id'])}}">
@@ -465,8 +465,8 @@
                   <div class="p_images">
                      <div class="grid_product">
                        <?php
-                       $slug_business=str_slug($restaurants['business_name']);
-                       $slug_area=str_slug($restaurants['area']);
+                       $slug_business=Str::slug($restaurants['business_name']);
+                       $slug_area=Str::slug($restaurants['area']);
                        $business_area=$slug_business.'@'.$slug_area;
                       ?>
                       <div class="name-grid"><a href="{{url('/')}}/{{$city}}/{{$business_area}}/{{base64_encode($restaurants['id'])}}">{{ $restaurants['business_name'] }}</a></div>

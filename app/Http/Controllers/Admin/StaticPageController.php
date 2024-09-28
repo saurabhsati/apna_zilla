@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Models\StaticPageModel;
 use Illuminate\Http\Request;
@@ -53,7 +54,7 @@ class StaticPageController extends Controller
         }
         $form_data = $request->all();
         $arr_data = [];
-        $arr_data['page_slug'] = str_slug($form_data['page_title']);
+        $arr_data['page_slug'] = Str::slug($form_data['page_title']);
         $arr_data['is_active'] = 1;
         $arr_data['page_title'] = $form_data['page_title'];
         $arr_data['page_desc'] = $form_data['page_desc'];
