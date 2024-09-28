@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Support\Str;
 use App\Http\Controllers\Common\GeneratorController;
 use App\Http\Controllers\Controller;
 use App\Models\CategoryModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Session;
 use Validator;
 

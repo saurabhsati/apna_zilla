@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Models\CouponModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Session;
 use Validator;
 

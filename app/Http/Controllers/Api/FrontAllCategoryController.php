@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Models\BusinessCategoryModel;
 use App\Models\BusinessListingModel;
@@ -15,6 +14,7 @@ use App\Models\ReviewsModel;
 use App\Models\UserModel;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class FrontAllCategoryController extends Controller
 {

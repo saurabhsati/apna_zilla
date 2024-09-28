@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Front;
 
-use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Models\BusinessCategoryModel;
 use App\Models\BusinessListingModel;
@@ -11,6 +10,7 @@ use App\Models\CityModel;
 use App\Models\DealModel;
 use App\Models\PlaceModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Session;
 
 class HomeController extends Controller
