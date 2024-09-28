@@ -597,7 +597,7 @@
 <div style="float:right;" class="pagination">
                                 <ul class="pagination">
                                     <?php
-                                        $arr_get_params = Input::input();
+                                        $arr_get_params = Request::input();
                                     ?>
                                     @for ($i = 1; $i <= $arr_paginate_business['last_page']; $i++)
                                         <?php

@@ -210,7 +210,7 @@
                               <div style="float:right;" class="pagination">
                                 <ul class="pagination">
                                     <?php
-                                        $arr_get_params = Input::input();
+                                        $arr_get_params = Request::input();
                                     ?>
                                     @for ($i = 1; $i <= $arr_paginated_places['last_page']; $i++)
                                         <?php
