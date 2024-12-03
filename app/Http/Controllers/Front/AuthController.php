@@ -75,9 +75,9 @@ class AuthController extends Controller
             }
             //dd($existing_user->toArray());
 
-            Session::set('user_name', $user_first_name);
-            Session::set('user_mail', $user_email);
-            Session::set('user_id', base64_encode($arr_user_info['id']));
+            Session::put('user_name', $user_first_name);
+            Session::put('user_mail', $user_email);
+            Session::put('user_id', base64_encode($arr_user_info['id']));
             $login_status = Sentinel::login($existing_user); // process login a user
 
             Session::flash('success','Login Successfull');
@@ -119,9 +119,9 @@ class AuthController extends Controller
             $data['email']                  = $email;
             $data['plain_text_password']    = $password;
 
-             Session::set('user_name', $status->first_name);
-             Session::set('user_mail', $status->email);
-             Session::set('user_id', base64_encode($id));
+             Session::put('user_name', $status->first_name);
+             Session::put('user_mail', $status->email);
+             Session::put('user_id', base64_encode($id));
              Session::flash('success','Login Successfull');
 
             $data['status'] = "SUCCESS";
@@ -302,11 +302,11 @@ class AuthController extends Controller
             {
                $arr_user_info = $obj_user_info->toArray();
             }
-            Session::set('user_name', $fname);
-            Session::set('user_mail', $email);
-            Session::set('user_id', base64_encode($arr_user_info['id']));
+            Session::put('user_name', $fname);
+            Session::put('user_mail', $email);
+            Session::put('user_id', base64_encode($arr_user_info['id']));
 
-            //Session::set('user_id', $email);
+            //Session::put('user_id', $email);
 
            Session::flash('success','Login Successfull');
 
@@ -348,9 +348,9 @@ class AuthController extends Controller
             $data['plain_text_password']    = $password;
             
 
-            Session::set('user_name', $fname);
-            Session::set('user_mail', $data['email']);
-            Session::set('user_id', base64_encode($id));
+            Session::put('user_name', $fname);
+            Session::put('user_mail', $data['email']);
+            Session::put('user_id', base64_encode($id));
 
             Session::flash('success','Login Successfull');
 
@@ -463,8 +463,8 @@ class AuthController extends Controller
                                 Session::put('user_id', $user_id);
                                 Session::put('user_email', $user['email']);
                                 Session::put('mobile_no', $user['mobile_no']);
-                                Session::set('user_name', $user['first_name']);
-                                Session::set('previous_url',redirect()->getUrlGenerator()->previous());
+                                Session::put('user_name', $user['first_name']);
+                                Session::put('previous_url',redirect()->getUrlGenerator()->previous());
 
                             }
                             Session::flash('success','Login Successfull.');
@@ -527,7 +527,7 @@ class AuthController extends Controller
                 {
                     $user_id = base64_encode($user['id']) ;
                      Session::put('user_id', $user_id);
-                     Session::set('user_name', $user['first_name']);
+                     Session::put('user_name', $user['first_name']);
 
                 }
                 Session::flash('success','Login Successfull.');

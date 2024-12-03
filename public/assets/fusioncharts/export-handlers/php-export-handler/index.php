@@ -348,7 +348,7 @@ function outputExportObject($exportObj, $exportParams)
     // check whether export setting gives a 'ready' flag to true/'download'
     // and call output handler
     // return status back (filename if success, false if not success )
-    return  @$exportActionSettings['ready'] ? exportOutput($exportObj, $exportActionSettings, 1) : false;
+    return @$exportActionSettings['ready'] ? exportOutput($exportObj, $exportActionSettings, 1) : false;
 }
 
 /**
@@ -575,7 +575,7 @@ function getExtension($exportType)
     $exportType = strtolower($exportType);
 
     // if extension type is present in $extensionList return it, otherwise return the type
-    return  @$extensionList[$exportType] ? $extensionList[$exportType] : $exportType;
+    return @$extensionList[$exportType] ? $extensionList[$exportType] : $exportType;
 }
 
 /**
